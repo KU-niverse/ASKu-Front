@@ -1,0 +1,10 @@
+.container {
+    background-color: red;
+    height: 54px;
+}
+@media only screen and (min-width: 768px) {
+    .container {
+        background-color: blue;
+        height: 76px;
+    }
+}
