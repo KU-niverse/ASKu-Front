@@ -3,7 +3,7 @@
     align-items: center;
     background-color: red;
     height: 54px;
-    
+    overflow: hidden;
 }
 @media only screen and (min-width: 768px) {
     .container {
@@ -28,4 +28,11 @@ button {
     background-color: blue;
     border: none;
     cursor: pointer;
+}
+
+input {
+    border: 1px solid #D5D5D5;
+    width: 458px;
+    height: 40px;
+    border-radius: 35px;
 }

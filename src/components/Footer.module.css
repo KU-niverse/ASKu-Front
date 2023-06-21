@@ -6,7 +6,7 @@
 }
 @media only screen and (min-width: 768px) {
     .container {
-        background-color: rgb(132, 132, 255);
+        background-color: blue;
         height: 104px;
     }
 }
