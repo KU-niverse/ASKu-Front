@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    align-items: center;
+    background-color: red;
+    height: 40px;
+}
+@media only screen and (min-width: 768px) {
+    .container {
+        background-color: rgb(132, 132, 255);
+        height: 104px;
+    }
+}
