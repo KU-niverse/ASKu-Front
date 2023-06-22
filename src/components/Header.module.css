@@ -1,38 +1,97 @@
 .container {
-  display: flex;
-  align-items: center;
-  background-color: red;
-  height: 54px;
-  overflow: hidden;
+    display: flex; 
+    height: 60px;
+    border-bottom: 1px solid black;
 }
-@media only screen and (min-width: 768px) {
-  .container {
-      background-color: blue;
-      height: 76px;
-  }
+@media only screen and (max-width: 767px) {
+    .container {
+        /* border-radius: 0px, 0px, 20px, 20px; */
+    }
 }
 
 .headerContainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.navItem {
-  color: white;
-  text-decoration : none;
-  cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
 }
 
 button {
-  color: white;
-  background-color: blue;
-  border: none;
-  cursor: pointer;
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #747474;
+}
+@media only screen and (max-width: 767px) {
+    button {
+        background-color: blue;
+        display: none;
+    }
+}
+.logoContainer {
+    display: flex;
+    min-width: 60px;
+    width: 10vw;
+    justify-content: center;
+}
+
+.flexContainer {
+    display: flex;
+    width: 90vw;
+    height: 25px;
+    justify-content: space-between;
+}
+
+.inputcontainer {
+    display: flex;
+    width: 400px;
+}
+
+.navContainer {
+    display: flex;
+    width: 150px;
+    min-width: 150px;
+    justify-content: space-around;
+    margin-right: 100px;
+    flex-wrap: wrap;
 }
 
 input {
-  border: 1px solid #D5D5D5;
-  width: 458px;
-  height: 40px;
-  border-radius: 35px;
+    border: 1px solid #D5D5D5;
+    border-radius: 35px;
+    width: 400px;
+    height: 25px;
+    margin-right: 200px;
+}
+@media only screen and (max-width: 767px) {
+    input {
+        display: none;
+    }
+}
+
+.searchIcon {
+    display: none;
+    width: 25px;
+    height: 20px;
+}
+@media only screen and (max-width: 767px) {
+    .searchIcon {
+        display: block;
+    }
+}
+
+.searchInput {
+    display: flex;
+    flex: 1;
+}
+.searchInput input::placeholder {
+    font-size: 10px;
+    color: gray;
+  }
+
+.logo {
+    width: 60px;
+    height: 19px;
+    margin-left: 10px;
 }
