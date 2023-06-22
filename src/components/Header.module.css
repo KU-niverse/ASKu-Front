@@ -16,7 +16,7 @@
     width: 100vw;
 }
 
-button {
+.headerButton {
     background-color: #ffffff;
     border: none;
     cursor: pointer;
@@ -24,7 +24,7 @@ button {
     color: #747474;
 }
 @media only screen and (max-width: 767px) {
-    button {
+    .headerButton {
         background-color: blue;
         display: none;
     }
@@ -47,7 +47,7 @@ button {
 
 .inputcontainer {
     display: flex;
-    width: 400px;
+    width: 350px;
 }
 
 .navContainer {
@@ -60,10 +60,10 @@ button {
     right: 10px;
 }
 
-input {
+.headerInput {
     border: 1px solid #D5D5D5;
     border-radius: 35px;
-    width: 400px;
+    width: 350px;
     height: 25px;
     margin-right: 200px;
 }
@@ -73,7 +73,7 @@ input {
     }
 }
 @media only screen and (max-width: 767px) {
-    input {
+    .headerInput {
         display: none;
     }
 }
