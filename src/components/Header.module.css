@@ -41,7 +41,9 @@ button {
     width: 90vw;
     height: 25px;
     justify-content: space-between;
-}
+    /* position: sticky;
+    right: 10px; */
+} 
 
 .inputcontainer {
     display: flex;
@@ -54,7 +56,8 @@ button {
     min-width: 150px;
     justify-content: space-around;
     margin-right: 100px;
-    flex-wrap: wrap;
+    position: sticky;
+    right: 10px;
 }
 
 input {
