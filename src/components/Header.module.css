@@ -1,26 +1,20 @@
 .container {
-    display: flex;
-    align-items: center;
-    background-color: red;
-    height: 54px;
-    overflow: hidden;
+    display: flex; 
+    background-color: blue;
+    height: 60px;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 767px) {
     .container {
-        background-color: blue;
-        height: 76px;
+        background-color: red;
+        /* border-radius: 0px, 0px, 20px, 20px; */
     }
 }
 
 .headerContainer {
     display: flex;
     flex-direction: row;
-}
-
-.navItem {
-    color: white;
-    text-decoration : none;
-    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
 }
 
 button {
@@ -28,11 +22,46 @@ button {
     background-color: blue;
     border: none;
     cursor: pointer;
+    font-size: 12px;
 }
+@media only screen and (max-width: 767px) {
+    button {
+        background-color: blue;
+        display: none;
+    }
+}
+
+/* .navButtons {
+    flex: 1;
+} */
 
 input {
     border: 1px solid #D5D5D5;
-    width: 458px;
-    height: 40px;
     border-radius: 35px;
+    width: 400px;
+    height: 30px;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 767px) {
+    input {
+        height: 20px;
+        display: none;
+    }
+}
+
+.searchInput {
+    display: flex;
+    flex: 1;
+}
+
+.logo {
+    width: 100px;
+    height: 30px;
+}
+@media only screen and (max-width: 767px) {
+    .logo {
+        width: 60px;
+        height: auto;
+    }
 }
