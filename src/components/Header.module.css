@@ -67,6 +67,11 @@ input {
     height: 25px;
     margin-right: 200px;
 }
+@media only screen and (max-width: 900px) {
+    input {
+        visibility: hidden;
+    }
+}
 @media only screen and (max-width: 767px) {
     input {
         display: none;
