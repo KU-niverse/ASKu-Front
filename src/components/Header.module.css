@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  background-color: red;
+  height: 54px;
+  overflow: hidden;
+}
+@media only screen and (min-width: 768px) {
+  .container {
+      background-color: blue;
+      height: 76px;
+  }
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.navItem {
+  color: white;
+  text-decoration : none;
+  cursor: pointer;
+}
+
+button {
+  color: white;
+  background-color: blue;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  border: 1px solid #D5D5D5;
+  width: 458px;
+  height: 40px;
+  border-radius: 35px;
+}
