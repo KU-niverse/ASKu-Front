@@ -7,8 +7,16 @@ import Header from '../components/Header';
 
 const WikiEdit = () => {
     const [desc, setDesc] = useState('');
+    const [charbtn, setCharbtn] = useState('');
     function onEditorChange(value) {
         setDesc(value)
+    }
+
+    function handleCharBtn1() {
+        setCharbtn('나열형')
+    }
+    function handleCharBtn2() {
+        setCharbtn('목차형')
     }
     
     return (
@@ -16,9 +24,16 @@ const WikiEdit = () => {
             <Header />
             <form>
                 <div className={`${styles.edit}`}>
-                    <div>
-                        <h4>문서 제목</h4>
-                        <input required type='text'  placeholder='제목을 입력하세요' className={`${styles.title}`}/>
+                    <div className={`${styles.wikichar}`}>
+                        <div>
+                            <h4>문서 제목</h4>
+                            <input required type='text'  placeholder='제목을 입력하세요' className={`${styles.title}`} />
+                        </div>
+                        <div>
+                            <h4>문서 성격</h4>
+                            <input type='button' className={charbtn === '나열형'? `${styles.char_one} ${styles.btn_sty_one}`:  `${styles.btn_sty_two} ${styles.char_one}`} value='나열형' onClick={handleCharBtn1}/>
+                            <input type='button' className={charbtn === '목차형' ? `${styles.char_two} ${styles.btn_sty_one}` : `${styles.char_two} ${styles.btn_sty_two}`} value='목차형' onClick={handleCharBtn2}/>
+                        </div>
                     </div>
                     <div>
                         <h4>문서 내용</h4>
