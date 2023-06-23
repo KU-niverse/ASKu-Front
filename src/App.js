@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
+import Signin from './pages/Signin';
 
 function App() {
     return ( 
@@ -12,6 +13,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/signin" element={<Signin />} />
             </Routes>
         </Router>
     );
