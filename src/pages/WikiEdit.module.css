@@ -34,14 +34,14 @@
 }
 .submitbox{
     margin-top: 20px;
-    width: 45%;
-    margin-left: 55%;
+    width: 60%;
+    margin-left: 40%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 .submitbox span{
-   font-size: 18px;
+   font-size: 16px;
 }
 .submitbox input{
     width: 15px;
