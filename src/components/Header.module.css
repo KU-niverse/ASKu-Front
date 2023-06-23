@@ -16,7 +16,7 @@
     width: 100vw;
 }
 
-button {
+.headerButton {
     background-color: #ffffff;
     border: none;
     cursor: pointer;
@@ -24,7 +24,7 @@ button {
     color: #747474;
 }
 @media only screen and (max-width: 767px) {
-    button {
+    .headerButton {
         background-color: blue;
         display: none;
     }
@@ -41,11 +41,13 @@ button {
     width: 90vw;
     height: 25px;
     justify-content: space-between;
-}
+    /* position: sticky;
+    right: 10px; */
+} 
 
 .inputcontainer {
     display: flex;
-    width: 400px;
+    width: 350px;
 }
 
 .navContainer {
@@ -54,18 +56,24 @@ button {
     min-width: 150px;
     justify-content: space-around;
     margin-right: 100px;
-    flex-wrap: wrap;
+    position: sticky;
+    right: 10px;
 }
 
-input {
+.headerInput {
     border: 1px solid #D5D5D5;
     border-radius: 35px;
-    width: 400px;
+    width: 350px;
     height: 25px;
     margin-right: 200px;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 900px) {
     input {
+        visibility: hidden;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .headerInput {
         display: none;
     }
 }

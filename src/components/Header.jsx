@@ -13,22 +13,22 @@ function Header() {
                 <div className={`${styles.flexContainer}`}>
                     <div className={`${styles.navContainer}`}>
                         <Link to=''>
-                            <button>최근 변경</button>
+                            <button className={`${styles.headerButton}`}>최근 변경</button>
                         </Link>
                         <Link to=''>
-                            <button>토론</button>
+                            <button className={`${styles.headerButton}`}>토론</button>
                         </Link>
                     </div>
                     <div className={`${styles.inputContainer}`}>
-                        <input placeholder='검색어를 입력하세요.'/>
+                        <input className={`${styles.headerInput}`} placeholder=' 검색어를 입력하세요.'/>
                         <img src={searchIcon} alt='icon' className={`${styles.searchIcon}`} />
                     </div>
                     <div className={`${styles.navContainer}`}>
                         <Link to=''>
-                            <button>회원가입</button>
+                            <button className={`${styles.headerButton}`}>회원가입</button>
                         </Link>
                         <Link to=''>
-                            <button>로그인</button>
+                            <button className={`${styles.headerButton}`}>로그인</button>
                         </Link>
                     </div>
                 </div>
