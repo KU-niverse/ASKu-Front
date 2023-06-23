@@ -7,7 +7,7 @@ import Header from '../components/Header';
 
 const WikiEdit = () => {
     const [desc, setDesc] = useState('');
-    const [charbtn, setCharbtn] = useState('');
+    const [charbtn, setCharbtn] = useState('나열형');
     function onEditorChange(value) {
         setDesc(value)
     }

@@ -14,28 +14,40 @@
     object-fit: contain;
     margin-bottom: 30px;
 }
+.haho{
+    display: none;
+    width: 50%;
+    height: 50%;
+    margin-bottom: 30px;
+}
 .container form{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 425px;
+}
+.login_input{
+    width: 425px;
+    height: auto;
 }
 .login_input input{
-    width: 400px;
-    height: 30px;
+    width: 94%;
+    margin-left: 3%;
+    height: 40px;
     margin-bottom: 10px;
     border-radius: 43px;
     background-color: rgba(240, 240, 240, 1);
     border: 1px solid rgba(213, 213, 213, 1);
     padding: 5px;
-    padding-left: 15px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .login_btn{
-    width: 420px;
+    width: 94%;
     height: 50px;
     background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
     border-radius: 12px;
@@ -47,8 +59,10 @@
     box-shadow: 0px 10px 25px -5px rgba(159, 19, 46, 0.35);
 }
 .login_remem{
-    width: 420px;
+    width: 94%;
     font-size: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 .login_remem input{
     width: 10px;
@@ -57,7 +71,7 @@
 }
 
 .login_signup{
-    width: 420px;
+    width: 94%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,10 +88,45 @@
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    width: 420px;
+    width: 425px;
+    padding: 10px;
+    padding-top: 0px;
+    box-sizing: border-box;
 }
 
 .login_find a{
     color: rgba(116, 116, 116, 1);
     text-decoration-line: none;
+}
+
+
+@media only screen and (max-width: 767px) {
+    h1{
+        display: none;
+    }
+    .container{
+        width: 80%;
+        margin-left: 10%;
+    }
+    .container form{
+        width: 90%;
+
+    }
+    .container img{
+        width: 50%;
+        height: 30%;
+    }
+    .haho{
+        display: block;
+        
+
+    }
+    .login_input {
+        width: 100%;
+
+    }
+    .login_find{
+        width: 90%;
+        font-size: 8px;
+    }
 }

@@ -68,7 +68,7 @@
     margin-right: 200px;
 }
 @media only screen and (max-width: 900px) {
-    input {
+    .headerInput {
         visibility: hidden;
     }
 }
