@@ -10,10 +10,6 @@ const WikiEdit = () => {
     function onEditorChange(value) {
         setDesc(value)
     }
-
-    function handleWikiSubmit (){
-        
-    }
     
     return (
         <div>
@@ -22,7 +18,7 @@ const WikiEdit = () => {
                 <div className={`${styles.edit}`}>
                     <div>
                         <h4>문서 제목</h4>
-                        <input type='text' required disabled='true' value='입실렌티' className={`${styles.title}`}/>
+                        <input required type='text'  placeholder='제목을 입력하세요' className={`${styles.title}`}/>
                     </div>
                     <div>
                         <h4>문서 내용</h4>
