@@ -65,6 +65,7 @@
     width: 350px;
     height: 25px;
     margin-left: -100px;
+    padding-left: 20px;
 }
 @media only screen and (max-width: 900px) {
     .headerInput {
@@ -79,9 +80,8 @@
 
 .searchIcon {
     width: 15px;
-    height: 12px;
+    height: auto;
     position: relative;
-    top: 0px;
     right: 30px;
     z-index: 20;
     cursor: pointer;

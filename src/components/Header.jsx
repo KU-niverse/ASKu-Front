@@ -22,7 +22,7 @@ function Header() {
                         </Link>
                     </div>
                     <div className={styles.inputContainer}>
-                        <input className={styles.headerInput} placeholder=' 검색어를 입력하세요.' />
+                        <input className={styles.headerInput} placeholder='검색어를 입력하세요.' />
                         <img src={searchIcon} alt='icon' className={styles.searchIcon} />
                     </div>
                     <div className={styles.navContainer}>
