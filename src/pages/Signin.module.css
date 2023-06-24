@@ -8,7 +8,7 @@
     margin-top: 80px;
 }
 
-.container img{
+.logo{
     width: 300px;
     height: 100px;
     object-fit: contain;
@@ -67,7 +67,7 @@
 .login_remem input{
     width: 10px;
     height: 10px;
-    accent-color: rgba(116, 116, 116, 1);
+    accent-color: rgba(222, 58, 88, 1);
 }
 
 .login_signup{
@@ -112,9 +112,10 @@
         width: 90%;
 
     }
-    .container img{
+    .logo{
         width: 50%;
         height: 30%;
+        margin-top: 70px;
     }
     .haho{
         display: block;

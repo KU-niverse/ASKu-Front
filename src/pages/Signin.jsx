@@ -7,7 +7,7 @@ import haho_login from '../img/login.png'
 const Signin = () => {
   return (
     <div className={`${styles.container}`}>
-        <img src={logo} alt=''/>
+        <img className={`${styles.logo}`} src={logo} alt=''/>
         <img className={`${styles.haho}`}src={haho_login} alt=''/>
         <h1>LOGIN</h1>
         <form>
