@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import styles from './Signup.module.css'
 import logo from '../img/logo.png'
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 
 const Signup = () => {
+    const nav = useNavigate();
     const [doubleCheck, setDoubleCheck] = useState(false);
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
@@ -49,6 +51,14 @@ const Signup = () => {
             setisPwSame(true);
         }
     }
+
+
+    function handleOnSubmit(e) {
+        e.prevent.default();
+        nav('/signup/completed');
+    }
+
+
 
   return (
     <div className={`${styles.container}`}>
@@ -144,7 +154,7 @@ const Signup = () => {
                 <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
                 <span>더보기</span>
             </div>
-            <button className={`${styles.signup_btn}`}>회원가입</button>
+            <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>회원가입</button>
         </form>
         
     </div>

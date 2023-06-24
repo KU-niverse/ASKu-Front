@@ -49,3 +49,29 @@
 .btn_home{
     background: linear-gradient(to left, rgba(116, 116, 116, 1), rgba(213, 213, 213, 1));
 }
+
+
+@media only screen and (max-width: 767px) {
+    .container{
+        margin-top: 45px;
+    }
+    .logo{
+        width: 40%;
+        height: 20%;
+        min-width: 70px;
+        height: 40px;
+        margin-bottom: 120px;
+    }
+    .arrow{
+        width: 30%;
+        height: 30%;
+        min-width: 140px;
+        min-height: 100px;
+        
+    }
+    .complete_btn button{
+        width: 70%;
+        min-width: 320px;
+    }
+    
+}
