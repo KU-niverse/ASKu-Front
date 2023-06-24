@@ -1,0 +1,83 @@
+.wikiviewer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.wikititle{
+    width: 1164px;
+    height: 80px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+.wikititle h1{
+    margin-left: 20px;
+
+}
+.wikititle_btn{
+    display: flex;
+    justify-content: space-between;
+    width: 210px;
+    margin-right: 20px;
+}
+.wikititle_btn button{
+    width: 98px;
+    height: 36px;
+    border-radius: 30px;
+    border: 2px solid rgba(159, 19, 46, 1);
+    background-color: white;
+    color: rgba(159, 19, 46, 1);
+    cursor: pointer;
+}
+.wikilist_list{
+    width: 1164px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.wikilist{
+    width: 335px;
+    height: 303px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.wikilist_title{
+    display: flex;
+    flex-direction: row;
+}
+.wikiask{
+    width: 335px;
+    height: 303px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.wikiwrite{
+    width: 454px;
+    height: 303px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.wikicontent{
+    width: 1164px;
+    height: auto;
+    min-height: 500px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}

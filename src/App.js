@@ -8,18 +8,21 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import MyPage from './pages/MyPage';
+import WikiViewer from './pages/Wikiviewer';
 
 function App() {
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
                 <Route path="/mypage" element={<MyPage />} />
+
             </Routes>
         </Router>
     );
