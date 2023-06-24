@@ -87,14 +87,23 @@ function MyPage() {
             </div>
             <div className={styles.infoedit}>
                 <button className={styles.edit2}>비밀번호 변경</button>
-                <button className={styles.edit2}>개인정보 변경</button>
+                <button className={styles.edit3}>개인정보 변경</button>
             </div>
           </div>
           <div className={styles.point}>
             <p className={styles.title}>기여 목록</p>
             <div className={styles.point_list}>
               <div className={styles.point_front}>
-                <span className={styles.point_index}>고연전</span>
+                <span className={styles.point_index}>안녕하세요 제이름은 하찮은 호랑이입니다 많이 사랑해주세요</span>
+              </div>
+              <div className={styles.point_back}> 
+                <span className={styles.point_num}>+10p</span>
+                <span className={styles.point_time}>2023.05.26 01:34:32</span>
+              </div>
+            </div>
+            <div className={styles.point_list}>
+              <div className={styles.point_front}>
+                <span className={styles.point_index}>안녕하세요 제이름은 하찮은 호랑이입니다 많이 사랑해주세요</span>
               </div>
               <div className={styles.point_back}> 
                 <span className={styles.point_num}>+10p</span>

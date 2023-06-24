@@ -90,6 +90,8 @@
   font-size: 14px;
   color:rgba(159, 19, 46, 1);
   padding-right: 30px;
+  border: none;
+  background: none;
 }
 
 .rownick, .rowbadge, .rowpoint, .rowname, .rowemail, .rowid{
@@ -154,18 +156,20 @@
   justify-content: flex-end;
 }
 
-.edit2{
+.edit2, .edit3{
   text-align: right;
   font-size: 14px;
   color:rgba(159, 19, 46, 1);
   padding-right: 30px;
+  border: none;
+  background: none;
 }
 
 
 .point_list{
   display: flex;
   font-size: 14px;
-
+  padding-bottom: 10px;
 }
 
 .point_front{
@@ -226,12 +230,30 @@
   .edit{
     display: none;
   }
-  .edit2{
+  .edit2, .edit3{
     padding-top: 10px;
+    font-size: 10px;
+  }
+
+  .edit2{
+    padding-right: 5px;
   }
 
   .badge{
     display: none;
+  }
+
+  .point_front{
+    width: 50%;
+    flex-wrap: wrap;
+  }
+  .point_back{
+    width: 50%;
+  }
+  .point_time{
+    font-size: 10px;
+    margin-left: 10px;
+
   }
 
 }

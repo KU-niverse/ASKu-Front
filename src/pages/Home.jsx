@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     return (
-        <div>
+        <div className="pageWrap">
             <Header />
             <Footer />
         </div>
