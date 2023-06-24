@@ -132,13 +132,13 @@ const Signup = () => {
             <div className={`${styles.signup_email}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>학교 이메일</span>
-                    <span className={`${styles.signup_alert}`}>*학교 이메일은 소속학교 인증 및 개인정보 찾기에 이용됩니다</span>
                 </div>
                 <span>
                     <input 
                      required type='text' onChange={e => setForm({ ...form, emailId: e.target.value})}
                      />@korea.ac.kr
-                </span>  
+                </span>
+                <span className={`${styles.signup_alert}`}>*학교 이메일은 소속학교 인증 및 개인정보 찾기에 이용됩니다</span>  
             </div>
             <div className={`${styles.signup_agree}`}>
                 <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>

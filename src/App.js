@@ -6,6 +6,7 @@ import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import SignupComplete from './pages/SignupComplete';
 
 function App() {
     return ( 
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/signup/completed" element={<SignupComplete />} />
             </Routes>
         </Router>
     );
