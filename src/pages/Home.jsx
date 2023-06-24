@@ -17,7 +17,13 @@ function Home() {
                 </div>
                 <div className={styles.chatBotContainer}>
                     <div className={styles.chatBot}>
-
+                        <div className={styles.sideBar}>
+                            <div className={styles.textWrap}>
+                                <p id={styles.title}>AI 챗봇</p>
+                                <p>채팅 재설정</p>
+                                <p>도움말</p>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.realTime}>
                         <div className={styles.keyWord}>
