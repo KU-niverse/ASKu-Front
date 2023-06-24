@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Editor from '../components/EditorComponent'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 
 const WikiEdit = () => {
@@ -50,7 +51,6 @@ const WikiEdit = () => {
                     </div>
                 </div>
             </form>
-            
             
             
         </div>
