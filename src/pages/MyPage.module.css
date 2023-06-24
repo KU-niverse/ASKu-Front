@@ -6,7 +6,9 @@
   align-items :center;
   background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   height: 80px;
+  width : 100%;
 }
+
 .mypage{
   font-size: 30px;
   font-weight:bolder;
@@ -25,7 +27,6 @@
 
 .leftcontent{
   width: 40%;
-  border : solid;
   border-radius: 12px;
   margin-right: 2px;
   padding-left: 30px;
@@ -34,12 +35,12 @@
 
 .rightcontent{
   width: 60%;
-  border : solid;
   border-radius: 12px;
   margin-left: 2px;
   padding-left: 30px;
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
+
 
 .middlecontent{
   padding: 0px 80px 0;
@@ -48,7 +49,6 @@
 }
 
 .ask{
-  border : solid;
   border-radius: 12px;
   padding-left: 30px;
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
@@ -62,15 +62,139 @@
 }
 
 .comment{
-  border : solid;
   border-radius: 12px;
   padding-left: 30px;
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
+.profileheader, .badgeheader{
+  display: flex;
+  width: 100%;
+  position: relative;
+
+}
+
+.title{
+  width: 40%;
+  text-align: left;
+  font-size: 24px;
+  font-weight :bold;
+  color : rgba(116, 116, 116, 1);
+  padding: 10px 0;
+}
+
+.edit{
+  justify-content: flex-end;
+  width: 60%;
+  text-align: right;
+  font-size: 14px;
+  color:rgba(159, 19, 46, 1);
+  padding-right: 30px;
+}
+
+.rownick, .rowbadge, .rowpoint, .rowname, .rowemail, .rowid{
+  display: table;
+  width: 100%;
+  position: relative;
+  table-layout: fixed;
+}
+
+.profileimg{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.img{
+  border-radius: 100%;
+  height: 100px;
+  width: 100px;
+  border : 1px solid rgba(116, 116, 116, 1)
+}
+
+
+
+.rowtitle{
+  display: table-cell;
+  text-align: center;
+  width: 40%;
+  font-size: 18px;
+  color : rgba(159, 19, 46, 1);
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.text{
+  display: table-cell;
+  width: 60%;
+  font-size: 18px;
+  color : rgba(116, 116, 116, 1);
+}
+
+
+.rank{
+  font-size: 14px;
+  color:rgba(159, 19, 46, 1);
+  text-align: left;
+}
+
+
+
+.badgegrid{
+  padding: 1em 0 1em;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(3,1fr);
+  gap: 20px 15px;
+}
+
+.infoedit{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit2{
+  text-align: right;
+  font-size: 14px;
+  color:rgba(159, 19, 46, 1);
+  padding-right: 30px;
+}
+
+
+.point_list{
+  display: flex;
+  font-size: 14px;
+
+}
+
+.point_front{
+  width: 60%;
+  color: black;
+  font-weight: bold;
+}
+.point_back{
+  width: 40%;
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: 30px;
+}
+
+.poin_num{
+  color:rgba(159, 19, 46, 1);
+}
+
+.point_time{
+  margin-left: 30px;
+  color : rgba(116, 116, 116, 1); 
+
+}
+
+
 @media only screen and (max-width: 767px) {
-  .uppercontent{
+  .uppercontent, .middlecontent, .downcontent{
     display: flex;
+    padding: 20px 20px 0 20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -79,15 +203,36 @@
     width: 100%;
   }
   .leftcontent {
-    margin-bottom: 2px;
+    margin: 0 0 5px 0;
+    padding-bottom: 10px;
   }
   .rightcontent {
-    margin-top: 2px;
+    margin: 5px 0 0 0;
   }
+  .downcontent{
+    margin-bottom: 30px;
+  }
+
+  .ask, .comment{
+    width: 100%;
+  }
+  
+  .title{
+    font-size: 20px;
+    font-weight :bold;
+    color : rgba(116, 116, 116, 1);
+
+  }
+  .edit{
+    display: none;
+  }
+  .edit2{
+    padding-top: 10px;
+  }
+
+  .badge{
+    display: none;
+  }
+
 }
 
-.title{
-  font-size: 24px;
-  font-weight :bold;
-  color : rgba(116, 116, 116, 1);
-}
