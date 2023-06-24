@@ -20,16 +20,16 @@ const WikiEdit = () => {
     }
     
     return (
-        <div>
+        <div className={`${styles.container}`}>
             <Header />
             <form>
                 <div className={`${styles.edit}`}>
                     <div className={`${styles.wikichar}`}>
-                        <div>
+                        <div className={`${styles.wikichar_title}`}>
                             <h4>문서 제목</h4>
                             <input required type='text'  placeholder='제목을 입력하세요' className={`${styles.title}`} />
                         </div>
-                        <div>
+                        <div className={`${styles.wikichar_char}`}>
                             <h4>문서 성격</h4>
                             <input type='button' className={charbtn === '나열형'? `${styles.char_one} ${styles.btn_sty_one}`:  `${styles.btn_sty_two} ${styles.char_one}`} value='나열형' onClick={handleCharBtn1}/>
                             <input type='button' className={charbtn === '목차형' ? `${styles.char_two} ${styles.btn_sty_one}` : `${styles.char_two} ${styles.btn_sty_two}`} value='목차형' onClick={handleCharBtn2}/>
@@ -38,10 +38,11 @@ const WikiEdit = () => {
                     <div>
                         <h4>문서 내용</h4>
                         <div>
-                        <Editor value={desc} onChange={onEditorChange} />
+                            <Editor value={desc} onChange={onEditorChange} />
                         </div>
+                        <br></br>
                         <h4>히스토리 요약</h4>
-                        <textarea required className={`${styles.summary}`} maxLength='100'></textarea>
+                        <textarea required className={`${styles.summary}`} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
                     </div>
                     <div className={`${styles.submitbox}`}>
                         <span><input required type='checkbox'/>정책에 맞게 작성하였음을 확인합니다.</span>
