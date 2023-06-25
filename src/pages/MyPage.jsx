@@ -51,18 +51,18 @@ function MyPage() {
               <button className={styles.edit}>더보기</button>
             </div>            
               <div className={styles.badgegrid}>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
-                <img className={styles.badge_content} src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
+                <img src={haho} alt='haho'/>
               </div>
           </div>
         </div>

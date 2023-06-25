@@ -163,6 +163,15 @@
   align-items: center;
 }
 
+.badgegrid img{
+  
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  border: solid 1px rgba(116, 116, 116, 1);
+  border-radius: 100%;
+}
+
 .infoedit{
   display: flex;
   justify-content: flex-end;
