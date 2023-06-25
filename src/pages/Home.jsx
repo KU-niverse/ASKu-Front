@@ -21,10 +21,50 @@ function Home() {
                     <Chatbot />
                     <div className={styles.realTime}>
                         <div className={styles.keyWord}>
-
+                            <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>1.</p>
+                                    <p className={styles.rankContent}>입실렌티</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>2.</p>
+                                    <p className={styles.rankContent}>고려대학교</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>3.</p>
+                                    <p className={styles.rankContent}>입실렌티 라인업</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>4.</p>
+                                    <p className={styles.rankContent}>출입신청</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>5.</p>
+                                    <p className={styles.rankContent}>입실렌티</p>
+                                </div>
                         </div>
                         <div className={styles.question}>
-
+                        <p className={styles.realTimeTitle}>실시간 인기 질문</p>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>Q.</p>
+                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>Q.</p>
+                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>Q.</p>
+                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>Q.</p>
+                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                </div>
+                                <div className={styles.rankWrap}>
+                                    <p className={styles.numberIcon}>Q.</p>
+                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                </div>
                         </div>
                     </div>
                 </div>
