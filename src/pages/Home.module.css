@@ -121,6 +121,7 @@
     font-weight: 400;
     font-size: 18px;
     color: #9F132E;
+    width: 15px;
 }
 
 .rankContent {
@@ -129,3 +130,4 @@
     font-size: 14px;
     color: black;
 }
+
