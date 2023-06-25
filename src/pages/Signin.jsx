@@ -9,7 +9,7 @@ const Signin = () => {
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <img className={`${styles.haho}`}src={haho_login} alt=''/>
-        <h1>LOGIN</h1>
+        <h1 className={styles.login_headers}>LOGIN</h1>
         <form>
             <div className={`${styles.login_input}`}>
                 <input type='text' placeholder='아이디를 입력하세요'/>
