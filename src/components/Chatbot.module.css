@@ -93,7 +93,7 @@
     position: relative;
     left: 90px;
     top: -20px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .dots {
@@ -107,6 +107,7 @@
 .iconZip {
     display: flex;
     position: relative;
+    bottom: 5px;
     left: 450px;
     flex-direction: row;
     width: 10px;
@@ -119,8 +120,72 @@
     cursor: pointer;
 }
 
+
 .suggest {
+    position: relative;
     display: flex;
     flex-direction: column;
     text-align: right;
+    margin-right: 48px;
+}
+
+#ref {
+    font-weight: 700;
+    color: #9F132E;
+    font-size: 14px;
+}
+
+.textBox {
+    position: relative;
+    left: 330px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+    border: 1px solid #9F132E;
+    width: 250px;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+.textBox:hover {
+    background-color: #9F132E;
+    color: #FFF;
+  }
+
+.promptWrap {
+    position: relative;
+    display: flex;
+}
+.prompt {
+    position: relative;
+    top: 100px;
+    left: 30px;
+    box-sizing: border-box;
+    width: 550px;
+    height: 100px;
+    border: 1px solid #9F132E;
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    resize: none;
+    padding: 20px;
+}
+
+.sendBtn {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 165px;
+    right: 55px;
+    background-image: linear-gradient(to right, #9F132E, #DE3A58);
+    width: 50px;
+    height: 25px;
+    border-radius: 20px;
 }
