@@ -6,6 +6,7 @@ import styles from './Wikiviewer.module.css';
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { GrDocumentText } from "react-icons/gr";
+import WikiBox from '../components/WikiBox';
 
 function WikiViewer() {
     const myDivRef = useRef([]);
@@ -13,22 +14,26 @@ function WikiViewer() {
 
     const data = [
         {
-         'index' : '0',
+            'index' : '1.',
+            'section': '1',
             'title': '일번항목',
             'content': "Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddddddddddddddddddddddddddNostrum, optio, assumenda distinctio autem, nimi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt! " 
         },
          {
-         'index' : '1',
+            'index' : '2.',
+            'section': '2',
              'title': '이번항목',
              'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddddddddddddddddddddddddddddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
          },
          {
-             'index' : '2',
+             'index' : '3.',
+             'section': '3',
              'title': '삼번항목',
              'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitddddddddddddddddddddddddddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
          },
          {
-             'index': '3',
+             'index': '4.',
+             'section': '4',
              'title': '사번항목',
              'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
          },
@@ -68,7 +73,17 @@ function WikiViewer() {
                 <div className={styles.wikiask}></div>
                 <div className={styles.wikiwrite}></div>
                </div>
-               <div className={styles.wikicontent}></div>
+               <div className={styles.wikicontent}>
+                    {data.map((item) => {
+                        return(
+                            <div ref={(el) => (myDivRef.current[item.index] = el)} key={item.index}>
+                                <WikiBox 
+                                title={item.title} content={item.content} index={item.index} section={item.section}
+                                />
+                            </div>
+                        );
+                    })}
+               </div>
             </div>
         </div>
         

@@ -17,6 +17,12 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
+                <Route
+                  path="/wikiedit/:id"
+                  element={
+                    <WikiEdit/>
+                  }
+                />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />

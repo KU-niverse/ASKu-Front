@@ -1,0 +1,52 @@
+.hidden{
+    display: none;
+}
+.wikiContentTitle span{
+    font-size: 18px;
+    font-weight: 700;
+}
+.wikiIndex{
+    color: rgba(222, 58, 88, 1);
+}
+.wikiContentBtns{
+    width: 115px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.wikiContentBtn{
+    width: 52px;
+    height: 26px;
+    border: none;
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+
+}
+.wikiContents hr{
+    width: 100%;
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+.wikiContents{
+    margin: 10px 5px;
+    font-size: 12px;
+    width: 98%;
+    margin-left: 1%;
+}
+.wikiContents li{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0px;
+
+
+}
+.wikiText{
+    font-size: 14px;
+}
