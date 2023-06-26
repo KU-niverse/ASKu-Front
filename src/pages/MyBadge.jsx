@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './MyBadge.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
-import haho from '../img/haho.png';
-import comment_icon from '../img/comment_icon.png';
 import Badge from '../components/Badge'
 
 function MyBadge() {
@@ -21,7 +19,17 @@ function MyBadge() {
           <button className={styles.switch}>최신순</button>
         </div>
         <div className={styles.b_list}>
-          <Badge className={styles.b_comp}/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
+          <Badge/>
         </div>
       </div>
       <div>

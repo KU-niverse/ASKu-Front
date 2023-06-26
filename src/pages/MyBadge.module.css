@@ -19,32 +19,31 @@
   width : 74%;
   margin-left: 13%;
   height: auto;
+  padding: 30px 0px;
 }
 .b_header{
   display: flex;
   justify-content:space-between;
   width: 100%;
   border-radius: 12px;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
 }
 
 .b_headline{
   font-size: 24px;
   font-weight: bold;
-  padding-left: 30px;
+  padding-left: 10px;
 }
 .b_header button{
   background: none;
   box-shadow: none;
   border: none;
-  padding-right: 30px;
 }
 
 .b_list{
   display: flex;
   flex-wrap: wrap;
-}
-.b_comp{
-  flex: 1 1 40%;
+  width: auto;
+  justify-content: space-between;
+  margin: 0 1% 0 1%;
 }
