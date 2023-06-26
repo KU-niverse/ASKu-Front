@@ -122,6 +122,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  justify-content: center;
 }
 
 .q_backfooter span{
