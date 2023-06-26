@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
+import ChatbotMobile from './components/ChatbotMobile';
 import MyPage from './pages/MyPage';
 import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
@@ -18,6 +19,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />

@@ -1,37 +1,10 @@
-
-.chatBot {
+.topBar {
     display: flex;
     flex-direction: row;
-    max-width: 800px;
-    height: 550px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 20px -5px #00000033;
-    margin-bottom: 50px;
-}
-@media only screen and (max-width: 767px) {
-    .chatBot{
-        display: none;
-    }
-}
-
-.sideBar {
-    display: flex;
     background-color: #FEF2F4;
-    min-width: 150px;
-    min-height: 550px;
     height: auto;
-    border-radius: 12px 0px 0px 12px;
-    justify-content: center;
-}
-
-.textWrap {
-    display: flex;
-    flex-direction: column;
-    font-weight: 400;
-    font-size: 12px;
-    color: #747474;
-    margin-top: 20px;
-    margin-right: 25px;
+    width: 100%;
+    align-items: center;
 }
 
 #title {
@@ -39,16 +12,13 @@
     font-size: 18px;
     color: #9F132E;
     cursor: default;
-    text-align: start;
+    text-align: center;
     width: 85px;
     border: none;
     background-color: #FEF2F4;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .button {
-    margin-top: 10px;
     width: 85px;
     border: none;
     color: #747474;
@@ -58,7 +28,7 @@
 }
 
 .chat {
-    width: 800px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -69,7 +39,7 @@
     position: relative;
     background-color: #FEF2F4;
     margin-top: 25px;
-    width: 550px;
+    width: 90%;
     height: 100px;
     border-radius: 12px;
     margin-right: auto;
@@ -107,8 +77,9 @@
 .iconZip {
     display: flex;
     position: relative;
-    bottom: 5px;
-    left: 450px;
+    bottom: 5%;
+    left: 80%;
+    right: 0;
     flex-direction: row;
     width: 10px;
 }
@@ -127,11 +98,11 @@
     flex-direction: column;
     text-align: right;
     margin-right: 48px;
-    opacity: 1;
-    transition: opacity 0.5s ease;
+    width: 100%;
 }
 
 #ref {
+    width: 100 px;
     font-weight: 700;
     color: #9F132E;
     font-size: 14px;

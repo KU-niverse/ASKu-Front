@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../img/logo_big.png';
 import styles from './Home.module.css';
 import searchIcon from '../img/search_icon.png';
+import chatBotBtn from '../img/chatBotBtn.png';
 
 
 function Home() {
@@ -19,6 +20,9 @@ function Home() {
                 </div>
                 <div className={styles.chatBotContainer}>
                     <Chatbot />
+                    <Link to='/chatbot'>
+                        <img src={chatBotBtn} alt='button' className={styles.chatBotBtn} />
+                    </Link>
                     <div className={styles.realTime}>
                         <div className={styles.keyWord}>
                             <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
