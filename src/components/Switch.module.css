@@ -1,0 +1,58 @@
+.toggle-switch {
+  display: inline-block;
+  width: 160px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #fff;
+  padding: 0 10px;
+  line-height: 40px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.text.left {
+  left: 10px;
+  opacity: 1;
+}
+
+.text.right {
+  right: 10px;
+  opacity: 0;
+}
+
+.toggle-switch.on .circle {
+  transform: translateX(120px);
+}
+
+.toggle-switch.on .text.left {
+  opacity: 0;
+}
+
+.toggle-switch.on .text.right {
+  opacity: 1;
+}
+
+.toggle-switch.on {
+  background-color: #4CAF50;
+}
