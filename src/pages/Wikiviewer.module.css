@@ -1,3 +1,6 @@
+.hidden{
+    display: none;
+}
 .wikiviewer{
     display: flex;
     flex-direction: column;
@@ -23,22 +26,33 @@
 }
 .wikititle h1{
     margin-left: 20px;
+    display: flex;
+    align-items: center;
 
 }
-.wikititle_btn{
+.bookmarkImg{
+    margin-left: 10px;
+    cursor: pointer;
+}
+.wikititleBtn{
     display: flex;
     justify-content: space-between;
     width: 210px;
     margin-right: 20px;
 }
-.wikititle_btn button{
-    width: 98px;
+.wikititleBtn button{
+    width: 97px;
     height: 36px;
     border-radius: 30px;
     border: 2px solid rgba(159, 19, 46, 1);
     background-color: white;
     color: rgba(159, 19, 46, 1);
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 13px;
+    box-sizing: border-box;
 }
 .wikiBoxLists{
     width: 100%;
@@ -72,18 +86,18 @@
 }
 
 .wikilistTitle h2{
-    margin-top: 5px;
+    margin: 0px;
 }
 .wikilistTitle button{
     width: 70px;
-    height: 30px;
+    height: 27px;
     border-radius: 30px;
     background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-    font-size: 12px;
+    font-size: 11px;
     border: none;
     color: white;
-    margin: 5px 0px 19.92px 0px;
     cursor: pointer;
+    margin-bottom: 20px;
 }
 .wikiask{
     width: 28%;
@@ -95,6 +109,16 @@
     padding: 18px;
     padding-top: 23px;
     box-sizing: border-box;
+}
+.wikiaskTitle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.wikiaskTitle h2{
+    margin: 0px;
 }
 .wikiwrite{
     width: 38%;
