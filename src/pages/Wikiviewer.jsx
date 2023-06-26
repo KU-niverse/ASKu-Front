@@ -7,10 +7,12 @@ import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { GrDocumentText } from "react-icons/gr";
 import WikiBox from '../components/WikiBox';
+import Switch from '../components/Switch';
 
 function WikiViewer() {
     const myDivRef = useRef([]);
     const nav = useNavigate();
+    const [isToggled, setIsToggled] = useState(false);
 
     const data = [
         {
@@ -72,7 +74,9 @@ function WikiViewer() {
                     </div>
                     
                 </div>
-                <div className={styles.wikiask}></div>
+                <div className={styles.wikiask}>
+                    <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
+                </div>
                 <div className={styles.wikiwrite}></div>
                </div>
                <div className={styles.wikicontent}>
