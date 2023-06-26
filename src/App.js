@@ -2,11 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
-<<<<<<< HEAD
 import ChatbotMobile from './components/ChatbotMobile';
-=======
 import MyPage from './pages/MyPage';
->>>>>>> ad72e56dd868c983331ae94ae802d760df8cf953
 import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
