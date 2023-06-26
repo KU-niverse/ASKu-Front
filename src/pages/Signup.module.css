@@ -1,0 +1,81 @@
+.container{
+    width: 40%;
+    margin-left: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.logo {
+    width: 200px;
+    height: 100px;
+    object-fit: contain;
+}
+.container form{
+    width: 420px;
+    height: auto;
+}
+
+.signup_input{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+    font-size: 11px;
+}
+.signup_input {
+    margin-bottom: 5px;
+}
+.signup_input input{
+    margin-top: 5px;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+}
+
+.signup_btn{
+    width: 100%;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.signup_agree{
+    font-size: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.signup_agree input{
+    width: 10px;
+    height: 10px;
+    accent-color: rgba(222, 58, 88, 1);
+}
+.signup_email{
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+}
+.signup_head{
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+}
+.signup_email input{
+    margin-top: 5px;
+    width: 50%;
+    height: 35px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+}
+.signup_alert{
+    font-size: 8px;
+    color: rgba(222, 58, 88, 1);
+    display: flex;
+    align-items: center;
+}
