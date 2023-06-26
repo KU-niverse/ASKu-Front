@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
+import MyBadge from './pages/MyBadge';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
                 <Route path="/myquestion" element={<MyQuestion/>} />
+                <Route path="/mybadge" element={<MyBadge/>}/>
             </Routes>
         </Router>
     );
