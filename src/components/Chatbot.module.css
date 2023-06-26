@@ -127,6 +127,8 @@
     flex-direction: column;
     text-align: right;
     margin-right: 48px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 #ref {

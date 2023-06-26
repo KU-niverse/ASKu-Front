@@ -12,6 +12,7 @@ function Chatbot () {
     const [inputValue, setInputValue] = useState("");
     const [responseContent, setResponseContent] = useState('');
     const [responseReference, setResponseReference] = useState('');
+    const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
 
     const inputChange = (e) => {
@@ -25,14 +26,14 @@ function Chatbot () {
             reference: "1"
         })
         .then(response => {
-            console.log(response.data);
-            console.log('답변이 생성중입니다');
+            console.log('답변이 생성중입니다...');
         })
         .catch(error => {
             console.error(error);
         });
 
         setInputValue('');
+        setShowSuggest(false);
         inputRef.current.blur();
         };
     }
@@ -79,7 +80,9 @@ function Chatbot () {
                     <img className={styles.icon} src={reference} alt="reference link" />
                 </div>
             </div>
-            <div className={styles.suggest}>
+            <div
+            className={styles.suggest}
+            style={{'opacity': showSuggest ? '1' : '0'}}>
                 <p id={styles.ref}>추천 검색어</p>
                 <div className={styles.textBox}>중도휴학 하는 방법 알려줘!</div>
                 <div className={styles.textBox}>천원학식에 대해 알려줘!</div>
