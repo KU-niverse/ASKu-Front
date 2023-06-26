@@ -146,3 +146,59 @@
 li{
     list-style-type: none;
 }
+@media (min-width: 768px) and (max-width: 1023px) {
+    .wikiBoxLists{
+        display: block;
+    }
+    .wikilist{
+        width: 229px;
+    }
+    .wikiask{
+        display: block;
+        width: 350px;
+    }
+    .wikiwrite{
+        display: block;
+        width: 350px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .wikiviewer{
+        width: 350px;
+        margin: 5%;
+    }
+    .wikiBoxLists{
+        display: block;
+    }
+    .wikilist{
+        width: 229px;
+    }
+    .wikiask{
+        display: block;
+        width: 350px;
+    }
+    .wikiwrite{
+        display: block;
+        width: 350px;
+
+    }
+    .wikititle h1{
+        font-size: 26px;
+    }
+    .wikititleBtn{
+        width: 151px;
+
+    }
+    .wikititleBtn img{
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+    }
+    .wikititleBtn button{
+        width: 72px;
+        font-size: 10px;
+        padding: 6px;
+    }
+
+}
