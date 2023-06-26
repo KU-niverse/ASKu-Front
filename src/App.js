@@ -7,6 +7,8 @@ import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import SignupComplete from './pages/SignupComplete';
+import MyPage from './pages/MyPage';
 
 function App() {
     return ( 
@@ -18,6 +20,8 @@ function App() {
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/signup/completed" element={<SignupComplete />} />
+                <Route path="/mypage" element={<MyPage />} />
             </Routes>
         </Router>
     );
