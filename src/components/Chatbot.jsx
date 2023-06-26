@@ -8,16 +8,10 @@ import arrow from '../img/arrow.png';
 import axios from 'axios';
 import { useState, useEffect, useRef} from 'react'; 
 
-// axios.get('http://223.130.135.214:8080/api/chatbot')
-//   .then(response => {
-//     console.log(response.data);
-//   })
-//   .catch(error => {
-//     console.error(error);
-//   });
-
 function Chatbot () {
     const [inputValue, setInputValue] = useState("");
+    const [responseContent, setResponseContent] = useState('');
+    const [responseReference, setResponseReference] = useState('');
     const inputRef = useRef(null);
 
     const inputChange = (e) => {
@@ -32,6 +26,7 @@ function Chatbot () {
         })
         .then(response => {
             console.log(response.data);
+            console.log('답변이 생성중입니다');
         })
         .catch(error => {
             console.error(error);
@@ -43,14 +38,24 @@ function Chatbot () {
     }
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
-          sendMessage();
+            sendMessage();
         }
-      };
+    };
     
     useEffect(() => {
         inputRef.current.focus();
-      }, []);
-
+    }, []);
+    useEffect(() => {
+    axios.get('http://223.130.135.214:8080/chatbot/')
+        .then(response => {
+            console.log(response.data.content);
+            setResponseContent(response.data.content);
+            setResponseReference(response.data.reference);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }, []);
 
     return (
     <div className={styles.chatBot}>
