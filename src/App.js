@@ -2,20 +2,25 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
+import ChatbotMobile from './components/ChatbotMobile';
+import MyPage from './pages/MyPage';
 import WikiEdit from './pages/WikiEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
-import MyPage from './pages/MyPage';
 import WikiViewer from './pages/Wikiviewer';
 import ChatbotMobile from './components/ChatbotMobile';
+import MyQuestion from './pages/MyQuestion';
+
 
 function App() {
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route
@@ -31,6 +36,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/myquestion" element={<MyQuestion/>} />
             </Routes>
         </Router>
     );

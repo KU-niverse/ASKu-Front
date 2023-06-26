@@ -5,8 +5,53 @@ import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
+import axios from 'axios';
+import { useState, useEffect, useRef} from 'react'; 
+
+// axios.get('http://223.130.135.214:8080/api/chatbot')
+//   .then(response => {
+//     console.log(response.data);
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
 
 function Chatbot () {
+    const [inputValue, setInputValue] = useState("");
+    const inputRef = useRef(null);
+
+    const inputChange = (e) => {
+        setInputValue(e.target.value);
+    }
+
+    const sendMessage = () => {
+    if (inputValue.trim() !== '') {
+        axios.post('http://223.130.135.214:8080/chatbot/', {
+            content: inputValue,
+            reference: "1"
+        })
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        setInputValue('');
+        inputRef.current.blur();
+        };
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && event.target === inputRef.current) {
+          sendMessage();
+        }
+      };
+    
+    useEffect(() => {
+        inputRef.current.focus();
+      }, []);
+
+
     return (
     <div className={styles.chatBot}>
         <div className={styles.sideBar}>
@@ -37,8 +82,15 @@ function Chatbot () {
                 <div className={styles.textBox}>디자인조형학부 홈페이지 주소 보내줘!</div>
             </div>
             <div className={styles.promptWrap}>
-                <textarea className={styles.prompt} placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"/>
-                <div className={styles.sendBtn}>
+                <textarea
+                    className={styles.prompt}
+                    placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
+                    value={inputValue}
+                    onChange={inputChange}
+                    onKeyDown={handleKeyDown}
+                    ref={inputRef}
+                />
+                <div className={styles.sendBtn} onClick={sendMessage}>
                     <img src={arrow} /> 
                 </div>
             </div>

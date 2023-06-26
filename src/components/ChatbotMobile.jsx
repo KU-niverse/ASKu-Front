@@ -6,6 +6,7 @@ import reference from '../img/reference.png';
 import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 import arrow from '../img/arrow.png';
+import axios from 'axios';
 
 function ChatbotMobile() {
     return (
