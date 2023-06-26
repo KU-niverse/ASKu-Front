@@ -55,17 +55,19 @@ function WikiViewer() {
                     <button><GrDocumentText/>히스토리</button>
                   </div>
                </div>
-               <div className={styles.wikilist_list}>
+               <div className={styles.wikiBoxLists}>
                 <div className={styles.wikilist}>
-                    <div className={styles.wikilist_title}>
+                    <div className={styles.wikilistTitle}>
                         <h2>목차</h2>
-                        <button>전체 편집</button>
+                        <button>전체편집</button>
                     </div>
                     <div>
                         {data.map((item) => {
-                                return(
-                                <li onClick={() => handleClick(item.index)} key={item.index}>{item.index} {item.title}</li>
-                                );
+                            return(
+                                <li onClick={() => handleClick(item.index)} key={item.index}>
+                                    <span className={styles.wikiIndex}>{item.index}</span> {item.title}
+                                </li>
+                            );
                         })} 
                     </div>
                     

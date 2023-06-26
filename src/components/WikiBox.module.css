@@ -1,13 +1,19 @@
 .hidden{
     display: none;
 }
+.wikiContentTitle{
+    display: flex;
+    align-items: center;
+}
 .wikiContentTitle span{
     font-size: 18px;
     font-weight: 700;
 }
 .wikiIndex{
     color: rgba(222, 58, 88, 1);
+    font-size: 22px;
 }
+
 .wikiContentBtns{
     width: 115px;
     display: flex;
@@ -32,10 +38,8 @@
   }
 
 .wikiContents{
-    margin: 10px 5px;
-    font-size: 12px;
-    width: 98%;
-    margin-left: 1%;
+    width: 100%;
+    margin-bottom: 20px;
 }
 .wikiContents li{
     list-style-type: none;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import WikiToHtml from './WikiToHtml';
 import styles from './WikiBox.module.css'
+import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 
 const WIkiBox = (props) => {
 
@@ -31,7 +32,12 @@ const WIkiBox = (props) => {
     return (
       <div className={styles.wikiContents} >
         <li onClick={toggleView}>
-            <div className={styles.wikiContentTitle}><span className={styles.wikiIndex}>{index}</span><span>{title}</span></div>
+            <div className={styles.wikiContentTitle}>
+                <span className={isOpen ? {} : `${styles.hidden}`} ><FaChevronRight size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={isOpen ? `${styles.hidden}` : {}} ><FaChevronDown size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={styles.wikiIndex}>&nbsp;{index}</span>
+                <span>{title}</span>
+            </div>
             <div className={styles.wikiContentBtns}>
                 <button onClick={linkToWikiEdit} className={styles.wikiContentBtn}>편집</button>
                 <button onClick={linkToWikiQue} className={styles.wikiContentBtn}>질문</button>
