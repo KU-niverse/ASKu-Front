@@ -15,6 +15,7 @@ function MyPage() {
       <div className={styles.header}>
         <p className={styles.mypage}>MYPAGE</p>
       </div>
+      <div className={styles.mypagecontent}>
       <div className={styles.uppercontent}>
         <div className={styles.leftcontent}>
           <div className={styles.profile}>
@@ -198,6 +199,7 @@ function MyPage() {
             <span className={styles.comment_content}>안 촉촉한 초코칩 나라에 살던 안 촉촉한 초코칩이 촉촉한 초코칩 나라의 촉촉한 초코칩을 보고 촉촉한 초코칩이 되고 싶어서 촉촉한 초코칩 나라에 갔는데, 촉촉한 초코칩 나라의 촉촉한 문지기가 "넌 촉촉한 초코칩이 아니고 안 촉촉한 초코칩이니까 안 촉촉한 초코칩 나라에서 살아"라고 해서 안 촉촉한 초코칩은 촉촉한 초코칩이 되는 것을 포기하고 안 촉촉한 눈물을 흘리며 안 촉촉한 초코칩 나라로 돌아갔다.</span>
           </div>
         </div>
+      </div>
       </div>
       <div>
           <Footer />

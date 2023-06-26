@@ -13,6 +13,8 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import WikiViewer from './pages/Wikiviewer';
+import MyQuestion from './pages/MyQuestion';
+
 
 function App() {
     return ( 
@@ -27,7 +29,7 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
-
+                <Route path="/myquestion" element={<MyQuestion/>} />
             </Routes>
         </Router>
     );
