@@ -46,14 +46,14 @@ function MyQuestion(){
             <div className={styles.q_backfooter}>
               <button className={styles.q_editbtn}>
               <img src={edit} alt="edit"/>
-                질문을 기반으로 문서 수정하기
+              <span>질문을 기반으로 문서 수정하기</span>
               </button>
             </div>
           </div>
         </div>
       </div>
       <div>
-          <Footer/>
+          <Footer />
       </div>
     </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SignupComplete.module.css';
 import logo from '../img/logo.png';
-import Arrow from '../img/Arrow.png';
+import Arrow from '../img/arrow.png';
 import Footer from '../components/Footer';
 
 
