@@ -6,10 +6,9 @@ import haho from '../img/3d_haho.png';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 
-
 function Chatbot () {
     return (
-        <div className={styles.chatBot}>
+    <div className={styles.chatBot}>
         <div className={styles.sideBar}>
             <div className={styles.textWrap}>
                 <button id={styles.title}>AI 챗봇</button>

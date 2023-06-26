@@ -74,9 +74,26 @@
     flex-direction: row;
     margin-top: 40px;
 }
+@media only screen and (max-width: 767px) {
+    .chatBotContainer{
+        flex-direction: column;
+    }
+}
+
+.chatBotBtn {
+    display: none;
+    cursor: pointer;
+}
+@media only screen and (max-width: 767px) {
+    .chatBotBtn{
+        display: block;
+        width: 340px;
+        height: 200px;
+    }
+}
 
 .realTime {
-    width: 350px;
+    width: 320px;
     display: flex;
     flex-direction: column;
     margin-left: 10px;
@@ -85,7 +102,7 @@
 .keyWord {
     display: flex;
     flex-direction: column;
-    width: 350px;
+    width: 320px;
     height: 270px;
     border-radius: 12px;
     box-shadow: 0px 5px 20px -5px #00000033;
@@ -95,7 +112,7 @@
 .question {
     display: flex;
     flex-direction: column;
-    width: 350px;
+    width: 320px;
     height: 270px;
     border-radius: 12px;
     box-shadow: 0px 5px 20px -5px #00000033;
