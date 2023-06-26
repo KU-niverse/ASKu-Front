@@ -10,8 +10,8 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import WikiViewer from './pages/Wikiviewer';
-import ChatbotMobile from './components/ChatbotMobile';
 import MyQuestion from './pages/MyQuestion';
+import History from './pages/History';
 
 
 function App() {
@@ -30,6 +30,10 @@ function App() {
                   }
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/history" element={<History />} />
+
+
+
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
