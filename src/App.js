@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import MyPage from './pages/MyPage';
 import WikiViewer from './pages/Wikiviewer';
+import ChatbotMobile from './components/ChatbotMobile';
 
 function App() {
     return ( 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/signup/completed" element={<SignupComplete />} />
                 <Route path="/mypage" element={<MyPage />} />
 
+                <Route path="/chatbot" element={<ChatbotMobile />} />
             </Routes>
         </Router>
     );

@@ -5,12 +5,12 @@
     align-items: center;
     flex-direction: row;
     position: relative;
-    height: 40px;
+    height: 50px;
     background-color: #ffffff;
 }
 @media only screen and (max-width: 767px) {
     .footer{
-        height: 65px;
+        height: 100px;
     }
 }
 
@@ -25,13 +25,20 @@
     cursor: pointer;
     font-size: 10px;
     color: black;
-    font-weight: 500;
+    font-weight: 400;
+    margin-bottom: 9px;
+    height: 10px;
+}
+@media only screen and (max-width: 767px) {
+    .footerButton{
+        margin-bottom: 10.5px;
+    }
 }
 
 .footerTitle {
+    margin-left: 20px;
     font-weight: 700;
     font-size: 12px;
-    /* min-width: 64px; */
     background-color: #ffffff;
     border: none;
 }
@@ -39,7 +46,6 @@
 .linkContainer {
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 @media only screen and (max-width: 767px) {
     .linkContainer{
@@ -60,10 +66,10 @@
     display: flex;
     align-items: center;
     position: absolute;
-    right: 10px;
+    right: 30px;
 }
 @media only screen and (max-width: 767px) {
     .logoWrap{
-        bottom: 5px;
+        bottom: 15px;
     }
 }
