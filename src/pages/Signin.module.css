@@ -40,6 +40,7 @@
     background-color: rgba(240, 240, 240, 1);
     border: 1px solid rgba(213, 213, 213, 1);
     padding: 5px;
+    padding-left: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

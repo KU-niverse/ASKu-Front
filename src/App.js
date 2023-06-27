@@ -14,6 +14,10 @@ import MyQuestion from './pages/MyQuestion';
 import History from './pages/History';
 import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
+import FindId from './pages/FindId';
+import FindPassword from './pages/FindPassword';
+import FindoutId from './pages/FindoutId';
+import ChangePw from './pages/ChangePw';
 
 
 function App() {
@@ -41,6 +45,10 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
+                <Route path="/findid" element={<FindId />} />
+                <Route path="/findoutid" element={<FindoutId />} />
+                <Route path="/findpw" element={<FindPassword />} />
+                <Route path="/changepw" element={<ChangePw />} />
                 <Route path="/mypage" element={<MyPage />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />

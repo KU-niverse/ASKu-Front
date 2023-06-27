@@ -15,10 +15,10 @@ const Signup = () => {
     
     const [form, setForm] = useState({
         name: '',
+        nick: '',
         id: '',
         password: '',
         checkPw: '',
-        phoneNum: '',
         studentId: '',
         emailId: '',
     });
@@ -77,6 +77,20 @@ const Signup = () => {
             </div>
             <div className={`${styles.signup_input}`}>
                 <div className={`${styles.signup_head}`}>
+                    <span>닉네임</span>
+                    <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
+                </div>
+                <input 
+                 required type='text'
+                 placeholder='닉네임을 입력하세요'
+                 name='nick'
+                 value={form.nick}
+                 maxLength='30'
+                 onChange={e => setForm({ ...form, nick: e.target.value})}
+                 />
+            </div>
+            <div className={`${styles.signup_input}`}>
+                <div className={`${styles.signup_head}`}>
                     <span>아이디</span>
                     <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
                 </div>
@@ -96,7 +110,7 @@ const Signup = () => {
                 </div>
                 <input 
                  required type='text'
-                 placeholder='비밀번호를 입력하세요'
+                 placeholder='8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요'
                  name='password'
                  value={form.password}
                  onChange={onChangePW}
@@ -115,17 +129,6 @@ const Signup = () => {
                  value={form.checkPw}
                  onChange={onChangeCheckPW}
                  maxLength='20'
-                 />
-            </div>
-            <div className={`${styles.signup_input}`}>
-                <span>전화번호</span>
-                <input 
-                 required type='text'
-                 placeholder='ex)01022228888'
-                 name='phoneNum'
-                 value={form.phoneNum}
-                 maxLength='11'
-                 onChange={e => setForm({ ...form, phoneNum: e.target.value})}
                  />
             </div>
             <div className={`${styles.signup_input}`}>
