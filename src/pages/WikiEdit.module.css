@@ -1,13 +1,18 @@
 .container{
-    margin: 10px 0px 10px 0px ;
     width: 100%;
 }
 .edit{
     width: 80%;
     height: auto;
-    margin: 0;
     margin-left: 10%;
-    padding: 30px;
+    margin-top: 60px;
+    position: relative;
+}
+.edit form{
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    margin-top: 50px;
     position: relative;
 }
 
@@ -43,6 +48,14 @@
     height: 45px;
     border-radius: 12px;
     border: 1px solid rgba(213, 213, 213, 1);
+}
+.wikiQues_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.wikiQues_lists{
+    width: auto;
 }
 
 .summary{
@@ -99,7 +112,7 @@
 
 
 @media only screen and (max-width: 767px) {
-    .title{
+    .wikichar_title{
         width: 60%;
     }
     .submitbox{
@@ -119,6 +132,11 @@
         height: 60px;
     }
     .edit{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .edit form{
+        width: 100%;
         margin: 0;
     }
 

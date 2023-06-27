@@ -21,8 +21,8 @@ import FindoutId from './pages/FindoutId';
 import ChangePw from './pages/ChangePw';
 import ChangeInfo from './pages/ChangeInfo';
 import CheckPw from './pages/CheckPw';
-
 import MoreQuestion from './pages/MoreQuestion';
+import QuestionEdit from './pages/QuestionEdit';
 
 function App() {
     return ( 
@@ -33,13 +33,9 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
-                <Route
-                  path="/wikiedit/:id"
-                  element={
-                    <WikiEdit/>
-                  }
-                />
+                <Route path="/wikiedit/:id" element={<WikiEdit/>}/>
                 <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/question/edit" element={<QuestionEdit />}/>
                 <Route path="/allhistory" element={<AllHistory />} />
                 <Route path="/history" element={<History />} />
                 <Route path="/history/diff" element={<HistoryDiff />} />
