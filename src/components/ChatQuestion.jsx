@@ -5,13 +5,14 @@ import unlike from '../img/unlike.png';
 import reference from '../img/reference.png';
 import dots from '../img/dots.png';
 
-const ChatQuestion = () => {
+const ChatQuestion = (props) => {
+  const content = props.content;
   return (
     <div className={styles.questionBox}>
         <div className={styles.characterContainer}>
             <span>나</span>
         </div>
-        <p className={styles.chatText}>고려대 의예과의 졸업요건을 알려줘.</p>
+        <p className={styles.chatText}>{content}</p>
         <img src={dots} className={styles.dots} />
     </div>
   )

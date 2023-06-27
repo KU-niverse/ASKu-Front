@@ -11,6 +11,7 @@ function Chatbot () {
     const [responseReference, setResponseReference] = useState('');
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
+    // const [list, setList] = useState([]);
 
     const chatResponse = [
         {
@@ -45,7 +46,10 @@ function Chatbot () {
         setInputValue('');
         setShowSuggest(false);
         inputRef.current.blur();
-        };
+
+        // if (inputValue.trim() !== '') {
+        //     setList(prevList => [...prevList, inputValue]);
+        // };
     }
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
@@ -79,9 +83,18 @@ function Chatbot () {
         </div>
         <div className={styles.chat}>
             <ChatAnswer />
-            <ChatQuestion />
-            <ChatAnswer />
-            <ChatQuestion />
+            {chatResponse.map((item) => {
+                return(
+                    <ChatQuestion
+                    content = {item.content} />
+                );
+            })}
+            {chatResponse.map((item) => {
+                return(
+                    <ChatAnswer
+                    content = {item.content} />
+                );
+            })}
             <div
             className={styles.suggest}
             style={{'opacity': showSuggest ? '1' : '0'}}>
@@ -90,13 +103,6 @@ function Chatbot () {
                 <span className={styles.textBox}>천원학식에 대해 알려줘!</span>
                 <span className={styles.textBox}>2024년 신입생 수시 모집 기간 알려줘!</span>
                 <span className={styles.textBox}>디자인조형학부 홈페이지 주소 보내줘!</span>
-            </div>
-            <div>
-                {chatResponse.map((item) => {
-                                return(
-                                    null
-                                );
-                        })} 
             </div>
             <div className={styles.promptWrap}>
                 <textarea
