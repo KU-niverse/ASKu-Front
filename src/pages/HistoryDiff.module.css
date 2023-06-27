@@ -22,8 +22,44 @@
     flex-direction: row;
   }
 
-  .historyDiff{
+  .historyCompare{
     width: 74%;
     margin-left: 13%;
     height: auto;
   }
+
+  .historyTitle{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .listTitle{
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 10px;
+  }
+  .listTitle2{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .historyDiff{
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  }
+  .verCompare{
+    width: 100%;
+    height: 70px;
+    color: rgba(159, 19, 46, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(213, 213, 213, 1);
+  }
+  .verCompare span{
+    color: rgba(116, 116, 116, 1);
+    font-size: 24px;
+  }
+  

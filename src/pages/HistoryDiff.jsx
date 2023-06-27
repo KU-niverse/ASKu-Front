@@ -3,6 +3,8 @@ import ReactDiffViewer from 'react-diff-viewer';
 import his2 from '../img/his2.png';
 import styles from './HistoryDiff.module.css';
 import Header from '../components/Header';
+import { useState } from 'react';
+import { useEffect } from 'react';
  
 const oldText = `
 == 잉 ==
@@ -25,21 +27,57 @@ const newText = `
 몇몇 무개념 [[복돌이]]들은 정돌이를 [[호갱]]이나 [[흑우]]로 보지만 정당한 소비를 하는 사람을 어떻게든 모욕할 이유가 없다. 복돌이들은 마치 도둑질해서 무료로 얻었는데 왜 정직하게 사냐는 망언을 하는 거랑 똑같다. 이는 물건을 제 값어치에 사는데 그걸 문제로 삼는 게 심각한 것이다.
 
 `;
- 
+
+
 class HistoryDiff extends PureComponent {
-  render = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSplit: true,
+    };
+    this.mediaQuery = window.matchMedia("(max-width: 767px)");
+  }
+
+  componentDidMount() {
+    this.mediaQuery.addEventListener('change', this.handleMediaQueryChange);
+  }
+
+  componentWillUnmount() {
+    this.mediaQuery.removeEventListener('change', this.handleMediaQueryChange);
+  }
+
+  handleMediaQueryChange = (event) => {
+    if (event.matches) {
+      this.setState({ isSplit: false });
+    } else {
+      this.setState({ isSplit: true });
+    }
+  };
+
+  render() {
+    const { isSplit } = this.state;
+
     return (
       <div className={styles.container}>
         <Header/>
         <div className={styles.header}>
             <span><img src={his2}/>히스토리</span>
         </div >
-        <div className={styles.historyDiff}>
-          <ReactDiffViewer oldValue={oldText} newValue={newText} splitView={true} className={styles.diffBox} showDiffOnly={true}/>
+        <div className={styles.historyCompare}>
+          <div className={styles.historyTitle}><p className={styles.listTitle}>입실렌티</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
+          <div className={styles.historyDiff}>
+            <div className={styles.verCompare}>v3&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>&nbsp;&nbsp;&nbsp;v2</div>
+            <div >
+              <ReactDiffViewer oldValue={oldText} newValue={newText} splitView={isSplit} className={styles.diffBox} showDiffOnly={true}/>
+            </div>
+          </div>
+          
         </div>
+        
       </div>
     );
-  };
+  }
 }
+
 
 export default HistoryDiff;
