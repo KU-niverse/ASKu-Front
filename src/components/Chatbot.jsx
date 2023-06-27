@@ -15,21 +15,6 @@ function Chatbot () {
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
 
-    const chatResponse = [
-        {
-            content: "학석사 통함과정에서도 일반적으로는 졸업요건에 따라 학기가 정해져 있기 때문에 초과학기를 이수할 수 없습니다. 그러나 학교 규정에 따라 해당과정에서 예외적으로 초과학기를 이수할 수 있는 사유와 조건이 정해져 있을 수 있습니다. 따라서 해당 학교의 규정을 확인하여 자세한 내용을 파악하는 것이 좋습니다.",
-            reference: "제21조(대상) 전과의 대상은 다음 각 호와 같다.",
-        },
-        {
-            content: "학석사 통함과정에서도 일반적으로는 졸업요건에 따라 학기가 정해져 있기 때문에 초과학기를 이수할 수 없습니다. 그러나 학교 규정에 따라 해당과정에서 예외적으로 초과학기를 이수할 수 있는 사유와 조건이 정해져 있을 수 있습니다. 따라서 해당 학교의 규정을 확인하여 자세한 내용을 파악하는 것이 좋습니다.",
-            response: "제21조(대상) 전과의 대상은 다음 각 호와 같다.",
-        },
-        {
-            content: "학석사 통함과정에서도 일반적으로는 졸업요건에 따라 학기가 정해져 있기 때문에 초과학기를 이수할 수 없습니다. 그러나 학교 규정에 따라 해당과정에서 예외적으로 초과학기를 이수할 수 있는 사유와 조건이 정해져 있을 수 있습니다. 따라서 해당 학교의 규정을 확인하여 자세한 내용을 파악하는 것이 좋습니다.",
-            response: "제21조(대상) 전과의 대상은 다음 각 호와 같다.",
-        },
-    ];
-
     const inputChange = (e) => {
         setInputValue(e.target.value);
     }
@@ -97,7 +82,7 @@ function Chatbot () {
             </div>
             <div
             className={styles.suggest}
-            style={{'opacity': showSuggest ? '1' : '0', 'z-index': showSuggest ? '0' : '-20'}}>
+            style={{'opacity': showSuggest ? '1' : '0'}}>
                 <p id={styles.ref}>추천 검색어</p>
                 <span className={styles.textBox}>중도휴학 하는 방법 알려줘!</span>
                 <span className={styles.textBox}>천원학식에 대해 알려줘!</span>

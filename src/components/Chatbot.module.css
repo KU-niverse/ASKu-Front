@@ -1,3 +1,4 @@
+
 .chatBot {
     display: flex;
     flex-direction: row;
@@ -138,14 +139,14 @@
 
 .textBox {
     position: relative;
-    left: 350px;
+    left: 330px;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-right: 10px;
     border: 1px solid #9F132E;
-    width: 220px;
+    width: 250px;
     height: 30px;
     border-radius: 20px;
     font-size: 12px;
