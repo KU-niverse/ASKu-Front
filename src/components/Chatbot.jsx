@@ -11,7 +11,6 @@ function Chatbot () {
     const [responseReference, setResponseReference] = useState('');
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
-    // const [list, setList] = useState([]);
 
     const chatResponse = [
         {
@@ -46,10 +45,7 @@ function Chatbot () {
         setInputValue('');
         setShowSuggest(false);
         inputRef.current.blur();
-
-        // if (inputValue.trim() !== '') {
-        //     setList(prevList => [...prevList, inputValue]);
-        // };
+        };
     }
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
@@ -82,7 +78,7 @@ function Chatbot () {
             </div>
         </div>
         <div className={styles.chat}>
-            <ChatAnswer />
+            <ChatAnswer/>
             {chatResponse.map((item) => {
                 return(
                     <ChatQuestion

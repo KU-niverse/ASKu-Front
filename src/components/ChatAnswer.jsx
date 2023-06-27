@@ -6,13 +6,14 @@ import reference from '../img/reference.png';
 import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 
-const ChatAnswer = () => {
-  return (
+const ChatAnswer = (props) => {
+    const content = props.content;
+    return (
     <div className={styles.answerBox}>
         <div className={styles.characterContainer}>
             <img src={haho} alt="character" className={styles.character} />
         </div>
-        <p className={styles.chatText}>안녕하세요. 저에게 무엇이든 질문해 주세요.</p>
+        <p className={styles.chatText}>안녕하세요. 무엇이든 질문해보세요!</p>
         <img src={dots} className={styles.dots} />
         <div className={styles.iconZip}>
             <img className={styles.icon} src={like} alt="like" />
@@ -20,7 +21,7 @@ const ChatAnswer = () => {
             <img className={styles.icon} src={reference} alt="reference link" />
         </div>
     </div>
-  )
+    )
 }
 
 export default ChatAnswer
