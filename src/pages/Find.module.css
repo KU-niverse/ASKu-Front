@@ -76,3 +76,19 @@
 .pwChangeDone{
     display: none;
 }
+
+@media only screen and (max-width: 767px) {
+    .container{
+        width: 90%;
+        margin-left: 5%;
+    }
+    .container form{
+        width: 100%;
+
+    }
+    .logo{
+        width: 40%;
+        height: 30%;
+        margin-top: 70px;
+    }
+}
