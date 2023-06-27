@@ -11,6 +11,7 @@ import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
+import MyBadge from './pages/MyBadge';
 import History from './pages/History';
 import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
@@ -21,6 +22,7 @@ import ChangePw from './pages/ChangePw';
 import ChangeInfo from './pages/ChangeInfo';
 import CheckPw from './pages/CheckPw';
 
+import MoreQuestion from './pages/MoreQuestion';
 
 function App() {
     return ( 
@@ -57,6 +59,8 @@ function App() {
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/myquestion" element={<MyQuestion/>} />
+                <Route path="/mybadge" element={<MyBadge/>}/>
+                <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
             </Routes>
         </Router>
     );

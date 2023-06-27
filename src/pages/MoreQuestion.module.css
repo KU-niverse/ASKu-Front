@@ -1,0 +1,68 @@
+.content{
+  display: flex;
+  padding: 30px 0;
+  flex-direction: column;
+  width: 74%;
+  height: auto;
+  margin-left: 13%;
+} 
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+.frontheader{
+  display: flex;
+  flex-direction: row; 
+}
+
+.switch{
+  padding-right: 30px;
+}
+.q_pagename{
+  font-size: 36px;
+  font-weight: bold;
+  padding-left: 30px;
+  margin: 20px 0px;
+  align-self: center;
+}
+.q_headline{
+  align-self: center;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 15px;
+  margin-top: 30px;
+}
+
+.q_cheader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.q_cfrontheader{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 30px;
+}
+.q_cheadline{
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(159, 19, 46, 1);
+
+}
+
+.q_clastheader{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.q_ctextarea{
+  width: 100%;
+}
