@@ -1,30 +1,43 @@
 import React, { PureComponent } from 'react';
 import ReactDiffViewer from 'react-diff-viewer';
+import his2 from '../img/his2.png';
+import styles from './HistoryDiff.module.css';
+import Header from '../components/Header';
  
-const oldCode = `
-const a = 10
-const b = 10
-const c = () => console.log('foo')
- 
-if(a > 10) {
-  console.log('bar')
-}
- 
-console.log('done')
+const oldText = `
+== 잉 ==
+잉잉잉잉잉잉
+== 개요 ==
+'[[정품]]'과 '~돌이'를 합친 인터넷 ==신조어이자 '[[복돌이]]'의 [[반대말]]로, 정상적인 프로그램 이용자를 일컫는 말. 이 문서에서는 정돌이의 행위를 다루어 설명한다.
+== damm ==
+여기 수정됐지롱 ㅋㅋ 이름이라니 너무 웃기자나
+== 복돌이의 인식 ==
+몇몇 무개념 [[복돌이]]들은 정돌이를 [[호갱]]이나 [[흑우]]로 보지만 정당한 소비를 하는 사람을 어떻게든 모욕할 이유가 없다. 복돌이들은 마치 도둑질해서 무료로 얻었는데 왜 정직하게 사냐는 망언을 하는 거랑 똑같다. 이는 물건을 제 값어치에 사는데 그걸 문제로 삼는 게 심각한 것이다.
 `;
-const newCode = `
-const a = 10
-const boo = 10
- 
-if(a === 10) {
-  console.log('bar')
-}
+const newText = `
+== 잉 ==
+엥엥엥엥엥엥
+== 개요 ==
+'[[정품]]'과 '~돌이'를 합친 인터넷 ==신조어이자 '[[복돌이]]'의 [[반대말]]로, 정상적인 프로그램 이용자를 일컫는 말이다.. 이 문서에서는 정돌이의 행위를 다루어 설명한다.
+== damm ==
+이런이런 잘 되나
+== 복돌이의 인식 ==
+몇몇 무개념 [[복돌이]]들은 정돌이를 [[호갱]]이나 [[흑우]]로 보지만 정당한 소비를 하는 사람을 어떻게든 모욕할 이유가 없다. 복돌이들은 마치 도둑질해서 무료로 얻었는데 왜 정직하게 사냐는 망언을 하는 거랑 똑같다. 이는 물건을 제 값어치에 사는데 그걸 문제로 삼는 게 심각한 것이다.
+
 `;
  
 class HistoryDiff extends PureComponent {
   render = () => {
     return (
-      <ReactDiffViewer oldValue={oldCode} newValue={newCode} splitView={true} />
+      <div className={styles.container}>
+        <Header/>
+        <div className={styles.header}>
+            <span><img src={his2}/>히스토리</span>
+        </div >
+        <div className={styles.historyDiff}>
+          <ReactDiffViewer oldValue={oldText} newValue={newText} splitView={true} className={styles.diffBox} showDiffOnly={true}/>
+        </div>
+      </div>
     );
   };
 }
