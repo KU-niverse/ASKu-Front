@@ -13,7 +13,7 @@ import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
 import MyBadge from './pages/MyBadge';
 import History from './pages/History';
-
+import MoreQuestion from './pages/MoreQuestion';
 
 function App() {
     return ( 
@@ -43,6 +43,7 @@ function App() {
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/myquestion" element={<MyQuestion/>} />
                 <Route path="/mybadge" element={<MyBadge/>}/>
+                <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
             </Routes>
         </Router>
     );
