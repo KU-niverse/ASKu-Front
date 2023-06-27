@@ -3,8 +3,16 @@ import styles from './MyBadge.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
 import Badge from '../components/Badge'
+import Switch from '../components/Switch';
+import { useState } from 'react';
 
+
+
+
+//이렇게 작성
 function MyBadge() {
+  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+
   return (
     <div className={styles.container}>
         <div>
@@ -16,7 +24,7 @@ function MyBadge() {
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>OOO님의 뱃지 목록</p>
-          <button className={styles.switch}>최신순</button>
+          <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
         </div>
         <div className={styles.b_list}>
           <Badge/>
