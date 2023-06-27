@@ -1,5 +1,5 @@
 
-.defaultChat {
+.answerBox {
     position: relative;
     background-color: #FEF2F4;
     margin-top: 25px;
@@ -26,7 +26,7 @@
 .chatText {
     position: relative;
     left: 90px;
-    top: -20px;
+    top: -30px;
     font-size: 12px;
 }
 

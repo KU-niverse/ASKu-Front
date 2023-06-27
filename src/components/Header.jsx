@@ -10,7 +10,9 @@ function Header() {
         <div className={styles.container}>
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
-                    <img src={logo} alt='logo' className={styles.logo} />
+                    <Link to='/' >
+                        <img src={logo} alt='logo' className={styles.logo} />
+                    </Link>
                 </div>
                 <div className={styles.flexContainer}>
                     <div className={styles.navContainer}>

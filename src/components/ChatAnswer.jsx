@@ -8,7 +8,7 @@ import haho from '../img/3d_haho.png';
 
 const ChatAnswer = () => {
   return (
-    <div className={styles.defaultChat}>
+    <div className={styles.answerBox}>
         <div className={styles.characterContainer}>
             <img src={haho} alt="character" className={styles.character} />
         </div>

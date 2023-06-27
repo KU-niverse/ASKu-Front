@@ -64,7 +64,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
-
+/* 
 .defaultChat {
     position: relative;
     background-color: #FEF2F4;
@@ -118,7 +118,7 @@
     height: 15px;
     margin-right: 15px;
     cursor: pointer;
-}
+} */
 
 
 .suggest {
@@ -162,6 +162,7 @@
 .promptWrap {
     position: relative;
     display: flex;
+    margin-bottom: 20px;
 }
 .prompt {
     position: relative;
