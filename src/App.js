@@ -13,6 +13,7 @@ import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
 import History from './pages/History';
 import HistoryDiff from './pages/HistoryDiff';
+import AllHistory from './pages/AllHistory';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                   }
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/allhistory" element={<AllHistory />} />
                 <Route path="/history" element={<History />} />
                 <Route path="/history/diff" element={<HistoryDiff />} />
 
