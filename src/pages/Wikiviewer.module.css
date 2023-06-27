@@ -1,13 +1,18 @@
+.hidden{
+    display: none;
+}
 .wikiviewer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    width: 74%;
+    margin-left: 13%;
 }
 
 .wikititle{
-    width: 1164px;
+    width: 100%;
     height: 80px;
     border: 1px solid rgba(213, 213, 213, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
@@ -21,63 +26,179 @@
 }
 .wikititle h1{
     margin-left: 20px;
+    display: flex;
+    align-items: center;
 
 }
-.wikititle_btn{
+.bookmarkImg{
+    margin-left: 10px;
+    cursor: pointer;
+}
+.wikititleBtn{
     display: flex;
     justify-content: space-between;
     width: 210px;
     margin-right: 20px;
 }
-.wikititle_btn button{
-    width: 98px;
+.wikititleBtn button{
+    width: 97px;
     height: 36px;
     border-radius: 30px;
     border: 2px solid rgba(159, 19, 46, 1);
     background-color: white;
     color: rgba(159, 19, 46, 1);
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 13px;
+    box-sizing: border-box;
 }
-.wikilist_list{
-    width: 1164px;
+.wikiBoxLists{
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 .wikilist{
-    width: 335px;
+    width: 28%;
     height: 303px;
     border: 1px solid rgba(213, 213, 213, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin-bottom: 20px;
+    padding: 18px;
+    padding-top: 23px;
+    box-sizing: border-box;
 }
-.wikilist_title{
+.wikilist li{
+    cursor: pointer;
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+.wikiIndex{
+    color: rgba(222, 58, 88, 1);
+}
+.wikilistTitle{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.wikilistTitle h2{
+    margin: 0px;
+}
+.wikilistTitle button{
+    width: 70px;
+    height: 27px;
+    border-radius: 30px;
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    font-size: 11px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 .wikiask{
-    width: 335px;
+    width: 28%;
     height: 303px;
     border: 1px solid rgba(213, 213, 213, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin-bottom: 20px;
+    padding: 18px;
+    padding-top: 23px;
+    box-sizing: border-box;
+}
+.wikiaskTitle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.wikiaskTitle h2{
+    margin: 0px;
 }
 .wikiwrite{
-    width: 454px;
+    width: 38%;
     height: 303px;
     border: 1px solid rgba(213, 213, 213, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin-bottom: 20px;
+    padding: 18px;
+    padding-top: 23px;
+    box-sizing: border-box;
 }
 .wikicontent{
-    width: 1164px;
+    width: 100%;
     height: auto;
     min-height: 500px;
     border: 1px solid rgba(213, 213, 213, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     margin-bottom: 20px;
+    padding: 18px;
+    padding-top: 23px;
+    box-sizing: border-box;
+}
+li{
+    list-style-type: none;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .wikiBoxLists{
+        display: block;
+    }
+    .wikilist{
+        width: 229px;
+    }
+    .wikiask{
+        display: block;
+        width: 350px;
+    }
+    .wikiwrite{
+        display: block;
+        width: 350px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .wikiviewer{
+        width: 350px;
+        margin: 5%;
+    }
+    .wikiBoxLists{
+        display: block;
+    }
+    .wikilist{
+        width: 229px;
+    }
+    .wikiask{
+        display: block;
+        width: 350px;
+    }
+    .wikiwrite{
+        display: block;
+        width: 350px;
+
+    }
+    .wikititle h1{
+        font-size: 26px;
+    }
+    .wikititleBtn{
+        width: 151px;
+
+    }
+    .wikititleBtn img{
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+    }
+    .wikititleBtn button{
+        width: 72px;
+        font-size: 10px;
+        padding: 6px;
+    }
+
 }

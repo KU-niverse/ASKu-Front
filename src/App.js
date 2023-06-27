@@ -23,10 +23,19 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
+                <Route
+                  path="/wikiedit/:id"
+                  element={
+                    <WikiEdit/>
+                  }
+                />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signup/completed" element={<SignupComplete />} />
+                <Route path="/mypage" element={<MyPage />} />
+
+                <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/myquestion" element={<MyQuestion/>} />
                 <Route path="/mybadge" element={<MyBadge/>}/>
             </Routes>
