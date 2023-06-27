@@ -18,6 +18,8 @@ import FindId from './pages/FindId';
 import FindPassword from './pages/FindPassword';
 import FindoutId from './pages/FindoutId';
 import ChangePw from './pages/ChangePw';
+import ChangeInfo from './pages/ChangeInfo';
+import CheckPw from './pages/CheckPw';
 
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
                 <Route path="/findpw" element={<FindPassword />} />
                 <Route path="/changepw" element={<ChangePw />} />
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/checkpw" element={<CheckPw />} />
+                <Route path="/changeinfo" element={<ChangeInfo />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/myquestion" element={<MyQuestion/>} />
