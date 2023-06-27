@@ -261,6 +261,10 @@
 
 
 @media only screen and (max-width: 767px) {
+  .mypagecontent{
+    width: 90%;
+    margin-left: 5%;
+  }
   .uppercontent, .middlecontent, .downcontent{
     display: flex;
     padding: 0 30px;
@@ -344,6 +348,12 @@
 
   .ask_list, .comment_list{
     font-size: 14px;
+  }
+
+  .comment_icon img{
+    height: 12px;
+    width: 12px;
+    object-fit: cover;
   }
 }
 

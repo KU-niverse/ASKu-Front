@@ -3,7 +3,7 @@ import styles from './MyBadge.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
 import Badge from '../components/Badge'
-import Switch from '../components/Switch';
+import SwitchBadge from '../components/SwitchBadge';
 import { useState } from 'react';
 
 
@@ -24,7 +24,7 @@ function MyBadge() {
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>OOO님의 뱃지 목록</p>
-          <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
+          <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
         </div>
         <div className={styles.b_list}>
           <Badge/>

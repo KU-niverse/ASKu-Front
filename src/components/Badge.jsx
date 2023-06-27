@@ -20,10 +20,10 @@ function Badge(){
           </div>
           <div className={styles.b_listfoot}>
             <span className={styles.b_listfrontfoot}>
-              뱃지 달성자 수 : 1000명
+              달성자 수 : 1000명
             </span>
             <span className={styles.b_listlastfoot}>
-              획득 일자 : 2023. 06. 10
+              획득일 : 2023. 06. 10
             </span>
           </div>
         </div>
