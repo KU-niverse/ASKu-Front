@@ -10,6 +10,7 @@
     "browserify-zlib": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-horizontal-stacked-bar-chart": "^8.15.2",
     "react-icons": "^4.10.1",
     "react-quill": "^2.0.0",
     "react-responsive": "^9.0.2",

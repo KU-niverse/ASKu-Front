@@ -14,6 +14,7 @@ import MyQuestion from './pages/MyQuestion';
 import MyBadge from './pages/MyBadge';
 import History from './pages/History';
 import MoreQuestion from './pages/MoreQuestion';
+import Test from './pages/Test';
 
 function App() {
     return ( 
@@ -44,6 +45,8 @@ function App() {
                 <Route path="/myquestion" element={<MyQuestion/>} />
                 <Route path="/mybadge" element={<MyBadge/>}/>
                 <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
+                <Route path="/Test" element={<Test/>}/>
+
             </Routes>
         </Router>
     );

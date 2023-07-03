@@ -1,0 +1,89 @@
+.dropdown{
+  min-width: 100px;
+  position: relative;
+  margin: 10px;
+}
+
+.dropdown * {
+  box-sizing: border-box;
+}
+
+.select{
+  color:rgba(116, 116, 116, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px black;
+  border-radius: 12%;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* 클릭했을 때 스타일 */
+
+.select-clicked{
+  border: 2px red solid;
+  box-shadow: 0 0 0.8em rgba(116, 116, 116, 1);
+}
+
+.select :hover{
+  background: blue;
+}
+
+.caret{
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid green;
+  transition: 0.3s;
+}
+
+/* 돌려질 때 스타일 */
+
+.caret-rotate{
+  transform: rotate(180deg);
+}
+.menu{
+  list-style: none;
+  padding: 0.2em 0.5em;
+  background: midnightblue;
+  border: 1px red solid;
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  color: aqua;
+  position: absolute;
+  top: 3em;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  opacity: 0;
+  display: none;
+  transition: 0.2s;
+  z-index: 1;
+}
+
+.menu li{
+  padding: 0.7em 0.5em;
+  margin: 0.3em 0;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.menu li:hover{
+  background: blue;
+}
+
+/* active styles */
+
+.active{
+  background: darkmagenta;
+}
+
+/* Open styles */
+
+.menu-open{
+  display: block;
+  opacity: 1;
+}
