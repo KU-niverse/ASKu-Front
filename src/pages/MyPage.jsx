@@ -3,7 +3,6 @@ import styles from './MyPage.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
 import haho from '../img/haho.png';
-import graph from '../img/graph.png';
 import comment_icon from '../img/comment_icon.png';
 import Graph from "../components/Graph";
 

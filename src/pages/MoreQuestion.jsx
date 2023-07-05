@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Question from "../components/Question";
 import Footer from "../components/Footer";
 import Switch from '../components/Switch';
-import Dropdown from "../components/DropDown";
+import DropDown from "../components/DropDown";
 import { useState } from 'react';
 
 const MoreQuestion = () => {
@@ -45,7 +45,7 @@ const MoreQuestion = () => {
           <div className={styles.q_cheader}>
             <div className={styles.q_cfrontheader}>
               <p className={styles.q_cheadline}>질문 생성하기</p>
-              <Dropdown/>
+              <DropDown/>
             </div>
             <div className={styles.q_clastheader}>
               <span className={styles.textnum}>0/200</span>
@@ -63,7 +63,11 @@ const MoreQuestion = () => {
           >
           </textarea >
         </form>
-        
+        <Question/>
+        <Question/>
+        <Question/>
+        <Question/>
+        <Question/>
         <Question/>
       </div>
       <div>
