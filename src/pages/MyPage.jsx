@@ -5,6 +5,7 @@ import Footer from '../components/Footer'
 import haho from '../img/haho.png';
 import comment_icon from '../img/comment_icon.png';
 import Graph from "../components/Graph";
+import { Link } from 'react-router-dom';
 
 function MyPage() {
   const data = [
@@ -76,7 +77,9 @@ function MyPage() {
           <div className={styles.badge}>
             <div className={styles.badgeheader}> 
               <p className={styles.title}>뱃지</p>
-              <button className={styles.edit}>더보기</button>
+              <Link to='/mypage/mybadge'className={styles.b_link} >
+              <button className={styles.edit}> 더보기</button>
+              </Link>
             </div>            
               <div className={styles.badgegrid}>
                 <img src={haho} alt='haho'/>
@@ -177,7 +180,9 @@ function MyPage() {
         <div className={styles.ask}>
           <div className={styles.askheader}>
             <p className={styles.title}>내가 쓴 질문</p>
+            <Link to='/mypage/myquestion' className={styles.q_link}>
             <button className={styles.edit}>더보기</button>
+            </Link>
           </div>
           <div className={styles.ask_list}>
             <span className={styles.ask_icon}>Q. </span>
@@ -205,7 +210,9 @@ function MyPage() {
         <div className={styles.comment}>
           <div className={styles.commentheader}>
             <p className={styles.title}>내가 쓴 댓글</p>
+            <Link to='/mypage/mycomment' className={styles.c_link}>
             <button className={styles.edit}>더보기</button>
+            </Link>
           </div>
           <div className={styles.comment_list}>
             <div className={styles.comment_icon}>

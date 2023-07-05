@@ -28,3 +28,13 @@ cursor: pointer;
 }
 
 
+@media only screen and (max-width: 767px) {
+.dropdown{
+  width: 125px;
+}
+
+.dropdownmenu, .dropdownph{
+  font-size: 14px;
+}
+
+}

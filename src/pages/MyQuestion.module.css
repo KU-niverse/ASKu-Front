@@ -13,6 +13,10 @@
   border-radius: 12px;
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
+  align-items: center;
+}
+.switch{
+  padding-right: 30px;
 }
 
 .question{

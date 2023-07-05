@@ -22,6 +22,10 @@ function MyComment(){
           </div>
         </div>       
         <Comment/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
       </div>
       <div>
         <Footer />

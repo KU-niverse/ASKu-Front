@@ -43,11 +43,11 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/myquestion" element={<MyQuestion/>} />
-                <Route path="/mybadge" element={<MyBadge/>}/>
+                <Route path="/mypage/myquestion" element={<MyQuestion/>} />
+                <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
                 <Route path="/Test" element={<Test/>}/>
-                <Route path="/mycomment" element={<MyComment/>}/>
+                <Route path="/mypage/mycomment" element={<MyComment/>}/>
 
             </Routes>
         </Router>

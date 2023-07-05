@@ -6,7 +6,7 @@ function Graph({data}) {
 
     return (
       <div className={styles.g_container}>
-        <p className={styles.g_name}>기여도</p>
+        <p className={styles.g_name}>문서별 기여도</p>
         <HSBar 
           height={22}
           data={data}

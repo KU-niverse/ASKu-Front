@@ -40,3 +40,26 @@
   font-size: 12px;
   color: rgba(116, 116, 116, 1);
 }
+
+@media only screen and (max-width: 767px) {
+  .g_name{
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 0px;
+  }
+
+  .legend{
+    width: 100%;
+  }
+
+  .legendname {
+    font-size: 12px;
+    margin-right: 5px; 
+  }
+  
+  .legendper{
+    font-size: 12px;
+    color: rgba(116, 116, 116, 1);
+  }
+
+}

@@ -45,23 +45,28 @@ const MoreQuestion = () => {
           <div className={styles.q_cheader}>
             <div className={styles.q_cfrontheader}>
               <p className={styles.q_cheadline}>질문 생성하기</p>
-              <DropDown/>
-            </div>
-            <div className={styles.q_clastheader}>
-              <span className={styles.textnum}>0/200</span>
-              <button className={styles.q_csubmit} onClick={handleSubmit}>생성하기</button>
+              <div className={styles.q_dropdown}>
+                <DropDown/>
+              </div>
             </div>
           </div>
           
-          <textarea 
-            rows="3"
-            className={`${styles.q_ctextarea}`} 
-            placeholder="질문을 입력해주세요."
-            value={questionContent}
-            maxLength={200}
-            onChange={handleChange}
-          >
-          </textarea >
+          <div className={styles.q_cbox}>
+            <textarea
+              rows="4"
+              className={styles.q_ctextarea}
+              placeholder="질문을 입력해주세요."
+              value={questionContent}
+              maxLength={200}
+              onChange={handleChange}
+            />
+            <div className={styles.q_clastheader}>
+              <span className={styles.textnum}>0/200</span>
+              <button className={styles.q_csubmit} onClick={handleSubmit}>
+                생성하기
+              </button>
+            </div>
+          </div>
         </form>
         <Question/>
         <Question/>
