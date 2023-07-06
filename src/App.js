@@ -23,6 +23,8 @@ import ChangeInfo from './pages/ChangeInfo';
 import CheckPw from './pages/CheckPw';
 import MoreQuestion from './pages/MoreQuestion';
 import QuestionEdit from './pages/QuestionEdit';
+import Test from './pages/Test';
+import MyComment from './pages/MyComment';
 
 function App() {
     return ( 
@@ -54,9 +56,12 @@ function App() {
                 <Route path="/changeinfo" element={<ChangeInfo />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/myquestion" element={<MyQuestion/>} />
-                <Route path="/mybadge" element={<MyBadge/>}/>
+                <Route path="/mypage/myquestion" element={<MyQuestion/>} />
+                <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
+                <Route path="/Test" element={<Test/>}/>
+                <Route path="/mypage/mycomment" element={<MyComment/>}/>
+
             </Routes>
         </Router>
     );
