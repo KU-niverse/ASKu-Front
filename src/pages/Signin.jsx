@@ -17,7 +17,6 @@ const Signin = () => {
             </div>
             <div className={`${styles.login_remem}`}>
                 <span><input type='checkbox' id='chkbox'/>아이디 기억하기</span>
-                <Link to="/signup">아이디 비밀번호 찾기</Link>
             </div>
             <button className={`${styles.login_btn}`}>로그인</button>
         </form>
@@ -25,8 +24,8 @@ const Signin = () => {
             <Link to="/signup">회원가입</Link>
         </div>
         <div className={`${styles.login_find}`}>
-            <Link to="/signup">아이디를 잊으셨나요?</Link>
-            <Link to="/signup">비밀번호를 잊으셨나요?</Link>
+            <Link to="/findid">아이디를 잊으셨나요?</Link>
+            <Link to="/findpw">비밀번호를 잊으셨나요?</Link>
         </div>
     </div>
     

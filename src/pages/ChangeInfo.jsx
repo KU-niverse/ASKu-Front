@@ -7,7 +7,7 @@ import logo from '../img/logo.png'
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 
-const Signup = () => {
+const ChangeInfo = () => {
     const nav = useNavigate();
     const [doubleCheck, setDoubleCheck] = useState(false);
     const [isPwValid, setisPwValid] = useState(true);
@@ -16,11 +16,9 @@ const Signup = () => {
     const [form, setForm] = useState({
         name: '',
         nick: '',
-        id: '',
         password: '',
         checkPw: '',
         studentId: '',
-        emailId: '',
     });
 
 
@@ -63,7 +61,7 @@ const Signup = () => {
   return (
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
-        <h1>회원가입</h1>
+        <h1>내 정보 변경</h1>
         <form>
             <div className={`${styles.signup_input}`}>
                 <span>이름</span>
@@ -87,20 +85,6 @@ const Signup = () => {
                  value={form.nick}
                  maxLength='30'
                  onChange={e => setForm({ ...form, nick: e.target.value})}
-                 />
-            </div>
-            <div className={`${styles.signup_input}`}>
-                <div className={`${styles.signup_head}`}>
-                    <span>아이디</span>
-                    <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
-                </div>
-                <input 
-                 required type='text'
-                 placeholder='아이디를 입력하세요'
-                 name='id'
-                 value={form.id}
-                 maxLength='30'
-                 onChange={e => setForm({ ...form, id: e.target.value})}
                  />
             </div>
             <div className={`${styles.signup_input}`}>
@@ -142,26 +126,11 @@ const Signup = () => {
                  onChange={e => setForm({ ...form, studentId: e.target.value})}
                  />
             </div>
-            <div className={`${styles.signup_email}`}>
-                <div className={`${styles.signup_head}`}>
-                    <span>학교 이메일</span>
-                </div>
-                <span>
-                    <input 
-                     required type='text' onChange={e => setForm({ ...form, emailId: e.target.value})}
-                     />@korea.ac.kr
-                </span>
-                <span className={`${styles.signup_alert}`}>*학교 이메일은 소속학교 인증 및 개인정보 찾기에 이용됩니다</span>  
-            </div>
-            <div className={`${styles.signup_agree}`}>
-                <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
-                <span>더보기</span>
-            </div>
-            <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>회원가입</button>
+            <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>내 정보 변경</button>
         </form>
         
     </div>
   )
 }
 
-export default Signup
+export default ChangeInfo
