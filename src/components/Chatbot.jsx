@@ -11,19 +11,13 @@ function Chatbot () {
     const [responseReference, setResponseReference] = useState('');
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
-
-    const chatResponse = [
+    const [chatResponse, setChatResponse] = useState([
         {
-         'index' : '0',
-            'content': '일번항목',
-            'reference': "Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddddddddddddddddddddddddddNostrum, optio, assumenda distinctio autem, nimi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt! " 
+          index: '0',
+          content: '일번항목',
+          reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
         },
-         {
-         'index' : '1',
-             'content': '이번항목',
-             'reference': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddddddddddddddddddddddddddddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-    ]
+      ]);
 
     const inputChange = (e) => {
         setInputValue(e.target.value);
@@ -41,10 +35,11 @@ function Chatbot () {
         .catch(error => {
             console.error(error);
         });
-
-        setInputValue('');
         setShowSuggest(false);
         inputRef.current.blur();
+        const newChatResponse = [...chatResponse, { content: inputValue }];
+        setChatResponse(newChatResponse);
+        setInputValue('');
         };
     }
     const handleKeyDown = (event) => {
