@@ -11,6 +11,7 @@ import Signup from './pages/Signup';
 import SignupComplete from './pages/SignupComplete';
 import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
+import MyBadge from './pages/MyBadge';
 import History from './pages/History';
 import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
@@ -21,6 +22,9 @@ import ChangePw from './pages/ChangePw';
 import ChangeInfo from './pages/ChangeInfo';
 import CheckPw from './pages/CheckPw';
 
+import MoreQuestion from './pages/MoreQuestion';
+import Test from './pages/Test';
+import MyComment from './pages/MyComment';
 
 function App() {
     return ( 
@@ -56,7 +60,12 @@ function App() {
                 <Route path="/changeinfo" element={<ChangeInfo />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/myquestion" element={<MyQuestion/>} />
+                <Route path="/mypage/myquestion" element={<MyQuestion/>} />
+                <Route path="/mypage/mybadge" element={<MyBadge/>}/>
+                <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
+                <Route path="/Test" element={<Test/>}/>
+                <Route path="/mypage/mycomment" element={<MyComment/>}/>
+
             </Routes>
         </Router>
     );

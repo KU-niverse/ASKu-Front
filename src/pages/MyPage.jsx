@@ -3,10 +3,38 @@ import styles from './MyPage.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
 import haho from '../img/haho.png';
-import graph from '../img/graph.png';
 import comment_icon from '../img/comment_icon.png';
+import Graph from "../components/Graph";
+import { Link } from 'react-router-dom';
 
 function MyPage() {
+  const data = [
+    {
+      name: "입실렌티",
+      value: 40,
+      description: "40%",
+      color: "rgba(251, 108, 108, 1)",
+    },
+    {
+      name: "수강신청",
+      value: 30,
+      description: "30%",
+      color: "rgba(255, 214, 0, 1)",
+    },
+    {
+      name: "고연전",
+      value: 16,
+      description: "16%",
+      color: "rgba(251, 193, 108, 1)",
+    },
+    {
+      name: "기타",
+      value: 14,
+      description: "14%",
+      color: "rgba(217, 217, 217, 1)",
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <div>
@@ -49,7 +77,9 @@ function MyPage() {
           <div className={styles.badge}>
             <div className={styles.badgeheader}> 
               <p className={styles.title}>뱃지</p>
-              <button className={styles.edit}>더보기</button>
+              <Link to='/mypage/mybadge'className={styles.b_link} >
+              <button className={styles.edit}> 더보기</button>
+              </Link>
             </div>            
               <div className={styles.badgegrid}>
                 <img src={haho} alt='haho'/>
@@ -95,7 +125,7 @@ function MyPage() {
           <div className={styles.cb}>
             <p className={styles.title}>기여 목록</p>
             <div className={styles.graph}>
-              <img src={graph} alt='graph'/>
+              <Graph data={data} />
             </div>
             <div className={styles.cb_list}>
               <div className={styles.cb_front}>
@@ -150,7 +180,9 @@ function MyPage() {
         <div className={styles.ask}>
           <div className={styles.askheader}>
             <p className={styles.title}>내가 쓴 질문</p>
+            <Link to='/mypage/myquestion' className={styles.q_link}>
             <button className={styles.edit}>더보기</button>
+            </Link>
           </div>
           <div className={styles.ask_list}>
             <span className={styles.ask_icon}>Q. </span>
@@ -178,7 +210,9 @@ function MyPage() {
         <div className={styles.comment}>
           <div className={styles.commentheader}>
             <p className={styles.title}>내가 쓴 댓글</p>
+            <Link to='/mypage/mycomment' className={styles.c_link}>
             <button className={styles.edit}>더보기</button>
+            </Link>
           </div>
           <div className={styles.comment_list}>
             <div className={styles.comment_icon}>
