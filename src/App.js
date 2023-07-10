@@ -25,12 +25,15 @@ import MoreQuestion from './pages/MoreQuestion';
 import QuestionEdit from './pages/QuestionEdit';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
+import MyBookmark from './pages/MyBookmark';
+import SearchResult from './pages/SearchResult';
 
 function App() {
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/result" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer" element={<WikiViewer />} />
@@ -56,6 +59,7 @@ function App() {
                 <Route path="/changeinfo" element={<ChangeInfo />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
