@@ -6,6 +6,7 @@ import logo from '../img/logo_big.png';
 import styles from './Home.module.css';
 import searchIcon from '../img/search_icon.png';
 import chatBotBtn from '../img/chatBotBtn.png';
+import Modal from "../components/Modal";
 
 
 function Home() {
@@ -73,6 +74,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Modal />
             <Footer />
         </div>
     )
