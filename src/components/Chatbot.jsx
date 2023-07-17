@@ -3,7 +3,8 @@ import ChatQuestion from './ChatQuestion';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 import axios from 'axios';
-import { useState, useEffect, useRef} from 'react'; 
+import { useState, useEffect, useRef} from 'react';
+import Modal from "./Modal";
 
 function Chatbot () {
     const [inputValue, setInputValue] = useState("");
@@ -109,6 +110,7 @@ function Chatbot () {
                 </div>
             </div>
         </div>
+        <Modal />
     </div>
     );
 }
