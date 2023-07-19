@@ -29,24 +29,27 @@ const data = [
 
 const MyBookmark = () => {
   return (
-    <div className={styles.content}>
-        <Header/>
-        <div className={styles.header}>
-            <h3>즐겨찾기 한 문서</h3>
-            <div className={styles.texts}><span>문서</span><div className={styles.number}>12</div></div>
-        </div>
-        <div>
-            {data.map((item) => {
-                return(
-                    <div key={item.title}>
-                        <BookmarkBox
-                        title={item.title} content={item.content} bookmark={item.bookmark}
-                        />
-                    </div>
-                );
-            })}
+    <div className={styles.container}>
+            <Header/>
+        <div className={styles.content}>
+            <div className={styles.header}>
+                <h3>즐겨찾기 한 문서</h3>
+                <div className={styles.texts}><span>문서</span><div className={styles.number}>12</div></div>
+            </div>
+            <div>
+                {data.map((item) => {
+                    return(
+                        <div key={item.title}>
+                            <BookmarkBox
+                            title={item.title} content={item.content} bookmark={item.bookmark}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     </div>
+    
     
   )
 }
