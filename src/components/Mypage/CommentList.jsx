@@ -1,5 +1,4 @@
 import styles from "./CommentList.module.css"
-import { Link } from "react-router-dom"
 import comment_icon from "../../img/comment_icon.png"
 
 function CommentList(){
