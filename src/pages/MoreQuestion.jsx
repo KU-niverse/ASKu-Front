@@ -9,13 +9,13 @@ import { useState } from 'react';
 import { useEffect } from "react";
 import axios from "axios";
 
-const MoreQuestion = ({title}) => {
-
+const MoreQuestion = () => {
+  const title="newdocs";
   const [questionData, setQuestionData] = useState([]);
   useEffect(() => {
     const takeQuestion = async () =>{
       try{
-        const res = await axios.get(process.env.REACT_APP_HOST+`question/view/${title}`, {withCredentials: true});
+        const res = await axios.get( `http://118.67.130.57:8080/question/view/${title}`, {withCredentials: true});
         if(res.status === 200){
           setQuestionData(res.data);
         }
@@ -41,7 +41,7 @@ const MoreQuestion = ({title}) => {
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.frontheader}>
-            <p className={styles.q_pagename}>입실렌티</p>
+            <p className={styles.q_pagename}>{title}</p>
             <p className={styles.q_headline}>게시물의 질문</p>
           </div>
           <div className={styles.switch}>

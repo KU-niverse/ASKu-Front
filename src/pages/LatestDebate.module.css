@@ -1,0 +1,75 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items :center;
+  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  height: 80px;
+  width : 100%;
+}
+
+.debate{
+  font-size: 30px;
+  font-weight:bolder;
+  color: white; 
+}
+
+.debatecontent{
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.sidebar{
+  width: 20%;
+  height: auto;
+  background-color: rgba(254, 242, 244, 1);
+}
+.maincontent{
+  background-color: white;
+  width: 80%;
+  height: auto;
+  
+}
+
+.maincontent_box{
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  margin: 37px 12px 21px 12px;
+  padding-bottom: 35px;
+}
+
+.title{
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 0;
+  padding-top: 30px;
+}
+.menu{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 20px;
+  padding: 10px 0;
+  color:rgba(159, 19, 46, 1);
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(213, 213, 213, 1);
+}
+.menu1{
+  margin-left: 14px;
+}
+.menu2{
+  margin-right: 14px;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .debatecontent{
+    width: 86%;
+    margin-left: 7%;
+  }
+}

@@ -17,6 +17,9 @@ import MoreQuestion from './pages/MoreQuestion';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
 import QnA from './pages/QnA';
+import Debate from './pages/Debate'
+import MoreDebate from './pages/MoreDebate';
+import LatestDebate from './pages/LatestDebate';
 
 function App() {
     return ( 
@@ -25,7 +28,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage" element={<MyPage />} />
-                <Route path="/wikiviewer" element={<WikiViewer />} />
+                <Route path="/wikiviewer/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route
                   path="/wikiedit/:id"
@@ -46,10 +49,13 @@ function App() {
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
-                <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
+                <Route path="/wikiviewer/morequestion/:title" element={<MoreQuestion/>}/>
                 <Route path="/wikiviewer/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
+                <Route path="/debate" element={<Debate/>}/>
+                <Route path="/moredebate" element={<MoreDebate/>}/>
+                <Route path="/latestdebate" element={<LatestDebate/>}/>
 
             </Routes>
         </Router>
