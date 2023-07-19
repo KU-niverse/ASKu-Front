@@ -1,0 +1,20 @@
+.ask_list{
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+.ask_icon{
+  color :rgba(159, 19, 46, 1);
+}
+
+.ask_content{
+  padding-left: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .ask_list{
+    font-size: 14px;
+  }
+}
