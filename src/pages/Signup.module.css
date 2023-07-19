@@ -33,7 +33,7 @@
 .signup_input input{
     margin-top: 5px;
     width: 100%;
-    height: 40px;
+    height: 50px;
     border-radius: 12px;
     border: 2px solid rgba(213, 213, 213, 1);
 }
@@ -72,7 +72,7 @@
 .signup_email input{
     margin-top: 5px;
     width: 50%;
-    height: 35px;
+    height: 50px;
     border-radius: 12px;
     border: 2px solid rgba(213, 213, 213, 1);
 }
@@ -91,6 +91,20 @@
 }
 .signup_done{
     display: none;
+}
+.dblcheck{
+    justify-content: center;
+    align-items: center;
+    width: 105px;
+    height: 50px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #DE3A58 0%, #9F132E 100%);
+    color: white;
+    border: none;
+
+
 }
 
 @media only screen and (max-width: 767px) {
