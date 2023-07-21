@@ -24,3 +24,13 @@
   font-size: 14px;
   font-weight: 700;
 }
+
+@media only screen and (max-width: 767px) {
+  .container{
+    margin: 16px 0;
+    padding-left: 20px;
+  }
+
+
+  
+}

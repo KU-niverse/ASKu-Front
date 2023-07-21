@@ -35,8 +35,22 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .debate{
+    font-size: 20px;
+  }
+  
   .debatecontent{
     width: 86%;
-    margin-left: 7%;
+    margin: 0 7%;
+    flex-direction: column;
   }
+
+  .maincontent{
+    width: 100%;
+    height: auto
+  }
+  .sidebar{
+    display: none;
+  }
+  
 }

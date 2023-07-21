@@ -17,3 +17,24 @@
   font-weight: 400;
   color: rgba(116, 116, 116, 1)
 }
+
+@media only screen and (max-width: 767px) {
+  .container{
+    margin:0
+  }
+
+  .title, .date{
+    margin:0
+  }
+
+  .title{
+    font-size: 14px;
+    width: 60%;
+  }
+
+  .date{
+    text-align: right;
+    width: 40%;
+  }
+  
+}

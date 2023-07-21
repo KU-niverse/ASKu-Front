@@ -68,8 +68,34 @@
 
 
 @media only screen and (max-width: 767px) {
+  .debate{
+    font-size: 20px;
+  }
+
   .debatecontent{
     width: 86%;
-    margin-left: 7%;
+    margin: 0 7%;
+
+  }
+
+  .maincontent{
+    width: 100%;
+    height: auto
+  }
+  .sidebar{
+    display: none;
+  }
+
+  .maincontent_box{
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .title{
+    margin-bottom: 19px;
+  }
+
+  .menu, .menu1, .menu2{
+    margin:0
   }
 }

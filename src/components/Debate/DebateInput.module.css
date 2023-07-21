@@ -1,9 +1,8 @@
 .container{
-  margin:0 30px;
+  margin:50px 30px;
   border: 1px solid rgba(213, 213, 213, 1);
   border-radius: 12px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+
 }
 
 .title{
@@ -46,4 +45,14 @@
   padding: 5px;
   border-radius: 12px;
   font-size: 14px;
+}
+
+@media only screen and (max-width: 767px) {
+  .container{
+    margin: 50px 0
+  }
+  .textbox{
+    font-size: 16px;
+  }
+  
 }
