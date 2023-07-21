@@ -4,13 +4,13 @@ import comment_icon from "../img/comment_icon.png"
 import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
 
-function Question(){
+function Question({id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad}){
   return(
           <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
-              <span className={styles.q_mynick}>하호후리스</span>
-              <span className={styles.q_date}>2일전</span>
+              <span className={styles.q_mynick}>{user_id}</span>
+              <span className={styles.q_date}>{created_at}</span>
             </div>
             <div className={styles.q_backhead}>
               <img src={threedots} alt='threedots'/>
@@ -18,7 +18,7 @@ function Question(){
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span className={styles.q_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
+            <span className={styles.q_content}>{content}</span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
@@ -28,7 +28,7 @@ function Question(){
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>
-                <span className={styles.commentCount}>3</span>
+                <span className={styles.commentCount}>{answer_or_not}</span>
               </div>
             </div>
             <div className={styles.q_backfooter}>

@@ -1,0 +1,38 @@
+.Nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px;
+}
+
+.Button{
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  background: white;
+  color: black;
+  font-size: 16px;
+
+  &:hover {
+    background : white;
+    cursor: pointer;
+    color: rgba(159, 19, 46, 1);
+    transform: translateY(-2px);
+  }
+
+  &[disabled] {
+    cursor: revert;
+    transform: revert;
+    color: black;
+  }
+
+  &[aria-current] {
+    background: white;
+    font-weight: bold;
+    cursor: revert;
+    transform: revert;
+    color: rgba(159, 19, 46, 1);
+  }
+}

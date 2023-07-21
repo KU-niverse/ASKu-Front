@@ -248,33 +248,12 @@
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
-.ask_list, .comment_list{
-  display: flex;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 0;
-}
-
-.ask_icon{
-  color :rgba(159, 19, 46, 1);
-}
 
 .comment{
   padding: 0 30px 2em 30px;
 }
 
-.comment_icon{
-  padding-top: 5px;
-}
-.comment_png{
-  object-fit: none;
-  position : relative;
-  vertical-align: top;
-}
 
-.ask_content, .comment_content{
-  padding-left: 10px;
-}
 
 
 @media only screen and (max-width: 767px) {
@@ -360,14 +339,7 @@
     box-shadow: 0 5 2 0 rgba(0, 0, 0, 0.2);
   }
 
-  .ask_list, .comment_list{
-    font-size: 14px;
-  }
 
-  .comment_icon img{
-    height: 12px;
-    width: 12px;
-    object-fit: cover;
-  }
+
 }
 

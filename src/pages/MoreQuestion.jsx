@@ -4,27 +4,34 @@ import Header from "../components/Header";
 import Question from "../components/Question";
 import Footer from "../components/Footer";
 import Switch from '../components/Switch';
-import DropDown from "../components/DropDown";
+import QuestionInput from "../components/QuestionInput";
 import { useState } from 'react';
+import { useEffect } from "react";
+import axios from "axios";
 
 const MoreQuestion = () => {
+  const title="newdocs";
+  const [questionData, setQuestionData] = useState([]);
+  useEffect(() => {
+    const takeQuestion = async () =>{
+      try{
+        const res = await axios.get( `http://118.67.130.57:8080/question/view/${title}`, {withCredentials: true});
+        if(res.status === 200){
+          setQuestionData(res.data);
+        }
+        if(res.status === 404){
+          console.log(res.data.message)
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeQuestion();
+  }, [title]);
+
+
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
-  const [questionContent, setQuestionContent] = useState('');
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    if(value.length<=200) {
-      setQuestionContent(value);
-    }
-  };
-
-  const handleSubmit=() => {
-    if(questionContent.trim()===''){
-      alert('질문을 입력해주세요.');
-      return;
-    }
-    //여기에 질문 제출하는 로직을 추가...
-  }
 
   return(
     <div className={styles.container}>
@@ -34,46 +41,30 @@ const MoreQuestion = () => {
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.frontheader}>
-            <p className={styles.q_pagename}>입실렌티</p>
+            <p className={styles.q_pagename}>{title}</p>
             <p className={styles.q_headline}>게시물의 질문</p>
           </div>
           <div className={styles.switch}>
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
           </div>
         </div>
-        <form className={styles.q_c}>
-          <div className={styles.q_cheader}>
-            <div className={styles.q_cfrontheader}>
-              <p className={styles.q_cheadline}>질문 생성하기</p>
-              <div className={styles.q_dropdown}>
-                <DropDown/>
-              </div>
-            </div>
-          </div>
-          
-          <div className={styles.q_cbox}>
-            <textarea
-              rows="4"
-              className={styles.q_ctextarea}
-              placeholder="질문을 입력해주세요."
-              value={questionContent}
-              maxLength={200}
-              onChange={handleChange}
+        <div>
+          <QuestionInput/>
+        </div>
+        <div>
+          {questionData.map((data) => (
+            <Question
+              id={data.id}
+              doc_id={data.doc_id}
+              user_id={data.user_id}
+              index_title={data.index_title}
+              content={data.content}
+              created_at={data.created_at}
+              answer_or_not={data.answer_or_not}
+              is_bad={data.is_bad}
             />
-            <div className={styles.q_clastheader}>
-              <span className={styles.textnum}>0/200</span>
-              <button className={styles.q_csubmit} onClick={handleSubmit}>
-                생성하기
-              </button>
-            </div>
-          </div>
-        </form>
-        <Question/>
-        <Question/>
-        <Question/>
-        <Question/>
-        <Question/>
-        <Question/>
+          ))}
+        </div>
       </div>
       <div>
         <Footer />

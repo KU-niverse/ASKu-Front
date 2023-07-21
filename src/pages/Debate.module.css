@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items :center;
+  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  height: 80px;
+  width : 100%;
+}
+
+.debate{
+  font-size: 30px;
+  font-weight:bolder;
+  color: white; 
+}
+
+.debatecontent{
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.sidebar{
+  width: 20%;
+  height: auto;
+  background-color: rgba(254, 242, 244, 1);
+}
+.maincontent{
+  background-color: white;
+  width: 80%;
+  height: auto;
+
+}
+
+@media only screen and (max-width: 767px) {
+  .debate{
+    font-size: 20px;
+  }
+  
+  .debatecontent{
+    width: 86%;
+    margin: 0 7%;
+    flex-direction: column;
+  }
+
+  .maincontent{
+    width: 100%;
+    height: auto
+  }
+  .sidebar{
+    display: none;
+  }
+  
+}

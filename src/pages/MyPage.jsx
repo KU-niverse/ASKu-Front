@@ -3,7 +3,8 @@ import styles from './MyPage.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer'
 import haho from '../img/haho.png';
-import comment_icon from '../img/comment_icon.png';
+import CommentList from '../components/Mypage/CommentList'
+import QuestionList from '../components/Mypage/QuestionList'
 import Graph from "../components/Graph";
 import { Link } from 'react-router-dom';
 
@@ -184,26 +185,7 @@ function MyPage() {
             <button className={styles.edit}>더보기</button>
             </Link>
           </div>
-          <div className={styles.ask_list}>
-            <span className={styles.ask_icon}>Q. </span>
-            <span className={styles.ask_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
-          </div>
-          <div className={styles.ask_list}>
-            <span className={styles.ask_icon}>Q. </span>
-            <span className={styles.ask_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
-          </div>
-          <div className={styles.ask_list}>
-            <span className={styles.ask_icon}>Q. </span>
-            <span className={styles.ask_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
-          </div>
-          <div className={styles.ask_list}>
-            <span className={styles.ask_icon}>Q. </span>
-            <span className={styles.ask_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
-          </div>
-          <div className={styles.ask_list}>
-            <span className={styles.ask_icon}>Q. </span>
-            <span className={styles.ask_content}>빼빼로 나라에 사는 빼빼 마른 빼빼로가 아몬드 빼빼로 나라에 사는 친구 안 빼빼 마른 빼빼로를 보고 "살 빼!" 하니까 안 빼빼 마른 빼빼로가 빼액빼액 화를 내며 빼빼로 나라로 돌아갔대요.</span>
-          </div>
+          <QuestionList/>
         </div>
       </div>
       <div className={styles.downcontent}>
@@ -214,24 +196,7 @@ function MyPage() {
             <button className={styles.edit}>더보기</button>
             </Link>
           </div>
-          <div className={styles.comment_list}>
-            <div className={styles.comment_icon}>
-              <img className={styles.comment_png} src={comment_icon} alt='comment_icon'/>
-            </div>
-            <span className={styles.comment_content}>안 촉촉한 초코칩 나라에 살던 안 촉촉한 초코칩이 촉촉한 초코칩 나라의 촉촉한 초코칩을 보고 촉촉한 초코칩이 되고 싶어서 촉촉한 초코칩 나라에 갔는데, 촉촉한 초코칩 나라의 촉촉한 문지기가 "넌 촉촉한 초코칩이 아니고 안 촉촉한 초코칩이니까 안 촉촉한 초코칩 나라에서 살아"라고 해서 안 촉촉한 초코칩은 촉촉한 초코칩이 되는 것을 포기하고 안 촉촉한 눈물을 흘리며 안 촉촉한 초코칩 나라로 돌아갔다.</span>
-          </div>
-          <div className={styles.comment_list}>
-            <div className={styles.comment_icon}>
-              <img className={styles.comment_png} src={comment_icon} alt='comment_icon'/>
-            </div>
-            <span className={styles.comment_content}>안 촉촉한 초코칩 나라에 살던 안 촉촉한 초코칩이 촉촉한 초코칩 나라의 촉촉한 초코칩을 보고 촉촉한 초코칩이 되고 싶어서 촉촉한 초코칩 나라에 갔는데, 촉촉한 초코칩 나라의 촉촉한 문지기가 "넌 촉촉한 초코칩이 아니고 안 촉촉한 초코칩이니까 안 촉촉한 초코칩 나라에서 살아"라고 해서 안 촉촉한 초코칩은 촉촉한 초코칩이 되는 것을 포기하고 안 촉촉한 눈물을 흘리며 안 촉촉한 초코칩 나라로 돌아갔다.</span>
-          </div>
-          <div className={styles.comment_list}>
-            <div className={styles.comment_icon}>
-              <img className={styles.comment_png} src={comment_icon} alt='comment_icon'/>
-            </div>
-            <span className={styles.comment_content}>안 촉촉한 초코칩 나라에 살던 안 촉촉한 초코칩이 촉촉한 초코칩 나라의 촉촉한 초코칩을 보고 촉촉한 초코칩이 되고 싶어서 촉촉한 초코칩 나라에 갔는데, 촉촉한 초코칩 나라의 촉촉한 문지기가 "넌 촉촉한 초코칩이 아니고 안 촉촉한 초코칩이니까 안 촉촉한 초코칩 나라에서 살아"라고 해서 안 촉촉한 초코칩은 촉촉한 초코칩이 되는 것을 포기하고 안 촉촉한 눈물을 흘리며 안 촉촉한 초코칩 나라로 돌아갔다.</span>
-          </div>
+          <CommentList/>
         </div>
       </div>
       </div>

@@ -9,12 +9,14 @@ import debate from '../img/debate.png'
 import his from '../img/his.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
+import { useParams } from 'react-router-dom/dist';
 
 function WikiViewer() {
     const myDivRef = useRef([]);
     const nav = useNavigate();
     const [isToggled, setIsToggled] = useState(false);
     const [isBookmark, setIsBookmark] = useState(false);
+    const {title} = useParams();
 
     const data = [
         {
@@ -87,7 +89,9 @@ function WikiViewer() {
                         <h2>질문</h2>
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
-                    
+                    <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <button>질문 더보기</button>
+                    </Link>
                 </div>
                 <div className={styles.wikiwrite}></div>
                </div>
