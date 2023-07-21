@@ -1,0 +1,32 @@
+.searchTitle{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 19, 46, 1);
+
+
+}
+.inputcontainer {
+    display: flex;
+    width: 350px;
+}
+.headerInput {
+    border: 2px solid #D5D5D5;
+    border-radius: 35px;
+    width: 321px;
+    height: 40px;
+    padding-left: 20px;
+    position: absolute;
+    box-sizing: border-box;
+}
+.searchIcon {
+    width: 21px;
+    height: 18px;
+    position: relative;
+    cursor: pointer;
+    left: 280px;
+    top: 10px;
+    z-index: 20;
+}

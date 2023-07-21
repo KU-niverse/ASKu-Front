@@ -1,0 +1,99 @@
+.hidden{
+    display: none;
+}
+.addTitle{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:rgba(159, 19, 46, 1);
+
+}
+.addTitleMain{
+    font-size: 18px;
+    font-weight: 700;
+    
+
+}
+.addBtn{
+    background: linear-gradient(180deg, rgba(244, 109, 134, 0.3), rgba(244, 109, 134, 0) 100%);
+    border: 1px solid rgba(159, 20, 47, 1);
+    width: 321px;
+    height: 50px;
+    top: 380px;
+    left: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.inputcontainer {
+    display: flex;
+    width: 350px;
+}
+.headerInput {
+    border: 2px solid #D5D5D5;
+    border-radius: 12px;
+    width: 321px;
+    height: 50px;
+    padding-left: 20px;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 767px){
+    .addBtn{
+        width: 300px;
+    }
+    .inputcontainer{
+        width: 300px;
+        
+    }
+    .headerInput{
+        width: 300px;
+    }
+    .createBtn{
+        left: 10px;
+    }
+}
+.createBtn {
+    width: 46px;
+    height: 24px;
+    border-radius: 20px;
+    position: relative;
+    left: 260px;
+    top: 14px;
+    z-index: 20;
+    background: linear-gradient(180deg, #9F132E 31.77%, #DE3A58 100%);
+    border: none;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.addLists{
+    display: flex;
+    flex-direction: column;
+}
+.addLists ul{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0;
+}
+.listTitle{
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+.listTimestamp{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: rgba(116, 116, 116, 1);
+}
