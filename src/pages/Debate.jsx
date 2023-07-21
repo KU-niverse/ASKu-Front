@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import DebateTitle from '../components/Debate/DebateTitle';
 import DebateContent from '../components/Debate/DebateContent';
 import DebateInput from '../components/Debate/DebateInput';
+import DebateSearch from '../components/Debate/DebateSearch';
+import DebateAdd from '../components/Debate/DebateAdd';
+import DebateRecent from '../components/Debate/DebateRecent';
 
 function Debate() {
 
@@ -20,8 +23,7 @@ function Debate() {
       </div>
 
       <div className={styles.debatecontent}>
-        <div className={styles.sidebar}>
-        </div>
+        
         <div className={styles.maincontent}>
           <DebateTitle/>
           <DebateContent/>
@@ -29,6 +31,18 @@ function Debate() {
           <div className={styles.input}>
             <DebateInput/>
           </div>
+        </div>
+        <div className={styles.sidebar}>
+          <div className={styles.debateSearch}>
+            <DebateSearch/>
+          </div>
+          <div className={styles.debateAdd}>
+            <DebateAdd/>
+          </div>
+          <div className={styles.debateRecent}>
+            <DebateRecent/>
+          </div>
+          
         </div>
       </div>
 
