@@ -7,13 +7,13 @@ import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 
 const ChatAnswer = (props) => {
-    const content = props.content;
+    const {content} = props;
     return (
     <div className={styles.answerBox}>
         <div className={styles.characterContainer}>
             <img src={haho} alt="character" className={styles.character} />
         </div>
-        <p className={styles.chatText}>안녕하세요. 무엇이든 질문해보세요!</p>
+        <p className={styles.chatText}>{content}</p>
         <img src={dots} className={styles.dots} />
         <div className={styles.iconZip}>
             <img className={styles.icon} src={like} alt="like" />

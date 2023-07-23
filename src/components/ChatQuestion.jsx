@@ -6,7 +6,7 @@ import reference from '../img/reference.png';
 import dots from '../img/dots.png';
 
 const ChatQuestion = (props) => {
-  const content = props.content;
+  const {content} = props;
   return (
     <div className={styles.questionBox}>
         <div className={styles.characterContainer}>

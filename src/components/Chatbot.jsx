@@ -3,7 +3,7 @@ import ChatQuestion from './ChatQuestion';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 import axios from 'axios';
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef, Fragment} from 'react';
 import Modal from "./Modal";
 
 function Chatbot () {
@@ -13,13 +13,18 @@ function Chatbot () {
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([
-        {
-          index: '0',
-          content: '일번항목',
-          reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        },
+        // {
+        //   index: '0',
+        //   content: '일번항목',
+        //   reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        // },
+        // {
+        //   index: '1',
+        //   content: '이번항목',
+        //   reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        // },
       ]);
-
+    
     const inputChange = (e) => {
         setInputValue(e.target.value);
     }
@@ -31,7 +36,15 @@ function Chatbot () {
             reference: "1"
         })
         .then(response => {
-            console.log('답변이 생성중입니다...');
+            setShowSuggest(false);
+            inputRef.current.blur();
+            const newChatResponse = [
+            ...chatResponse,
+            { content: inputValue }, // 사용자의 질문 추가
+            { content: response.data.content, reference: response.data.reference } // 서버 응답 추가
+            ];
+            setChatResponse(newChatResponse);
+            setInputValue('');
         })
         .catch(error => {
             console.error(error);
@@ -56,8 +69,11 @@ function Chatbot () {
     axios.get('http://223.130.135.214:8080/chatbot/')
         .then(response => {
             console.log(response.data.content);
-            setResponseContent(response.data.content);
-            setResponseReference(response.data.reference);
+            const newChatResponse = [
+                ...chatResponse,
+                { content: response.data.content, reference: response.data.reference }
+            ];
+            setChatResponse(newChatResponse);
         })
         .catch(error => {
             console.error(error);
@@ -74,27 +90,23 @@ function Chatbot () {
             </div>
         </div>
         <div className={styles.chat}>
-            <ChatAnswer/>
-            {chatResponse.map((item) => {
+            <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+            {chatResponse.map((item, index) => {
                 return(
-                    <ChatQuestion
-                    content = {item.content} />
-                );
-            })}
-            {chatResponse.map((item) => {
-                return(
-                    <ChatAnswer
-                    content = {item.content} />
+                    <Fragment key={index}>
+                        <ChatQuestion content={item.content} />
+                        <ChatAnswer content={item.content} />
+                    </Fragment>
                 );
             })}
             <div
             className={styles.suggest}
             style={{'opacity': showSuggest ? '1' : '0'}}>
                 <p id={styles.ref}>추천 검색어</p>
-                <span className={styles.textBox}>중도휴학 하는 방법 알려줘!</span>
-                <span className={styles.textBox}>천원학식에 대해 알려줘!</span>
-                <span className={styles.textBox}>2024년 신입생 수시 모집 기간 알려줘!</span>
-                <span className={styles.textBox}>디자인조형학부 홈페이지 주소 보내줘!</span>
+                <span id='ref_res_1' className={styles.textBox}>중도휴학 하는 방법 알려줘!</span>
+                <span id='ref_res_2' className={styles.textBox}>천원학식에 대해 알려줘!</span>
+                <span id='ref_res_3' className={styles.textBox}>2024년 신입생 수시 모집 기간 알려줘!</span>
+                <span id='ref_res_4' className={styles.textBox}>디자인조형학부 홈페이지 주소 보내줘!</span>
             </div>
             <div className={styles.promptWrap}>
                 <textarea
