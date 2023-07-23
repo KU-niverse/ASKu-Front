@@ -13,6 +13,7 @@ const Signup = () => {
     const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
     const [idDoubleCheck, setIdDoubleCheck] = useState(false);
     const [emailDoubleCheck, setEmailDoubleCheck] = useState(false);
+    const [isIdValid, setisIdValid] = useState(true);
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
     
@@ -82,7 +83,18 @@ const Signup = () => {
             alert(error.message)
         }
     };
+    
+    function onChangeId(e){
+        const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,15}$/
+        const idCurrent = e.target.value
+        setForm({...form, id:idCurrent})
 
+        if (!idRegex.test(idCurrent)) {
+            setisIdValid(false);
+        } else {
+            setisIdValid(true);
+        }
+    }
 
 
     function onChangePW(e){
@@ -154,33 +166,43 @@ const Signup = () => {
                  onChange={e => setForm({ ...form, name: e.target.value})}
                  />
             </div>
-            <div className={`${styles.signup_input}`}>
+            <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>닉네임</span>
                     <span className={nickDoubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleNickDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
                 </div>
-                <input 
-                 required type='text'
-                 placeholder='닉네임을 입력하세요'
-                 name='nick'
-                 value={form.nick}
-                 maxLength='30'
-                 onChange={e => setForm({ ...form, nick: e.target.value})}
-                 />
+                <div className={`${styles.checkInput}`}>
+                    <input 
+                     required type='text'
+                     placeholder='닉네임을 입력하세요'
+                     name='nick'
+                     value={form.nick}
+                     maxLength='30'
+                     onChange={e => setForm({ ...form, nick: e.target.value})}
+                     className={`${styles.checkInput}`}
+                     />
+                     <button className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>중복확인</button>
+                </div>
+                
             </div>
-            <div className={`${styles.signup_input}`}>
+            <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>아이디</span>
-                    <span className={idDoubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleIdDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
+                    <span className={isIdValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;6자이상-15자미만, 영문, 숫자로 입력해주세요</span>
                 </div>
-                <input 
-                 required type='text'
-                 placeholder='아이디를 입력하세요'
-                 name='id'
-                 value={form.id}
-                 maxLength='30'
-                 onChange={e => setForm({ ...form, id: e.target.value})}
-                 />
+                <div className={`${styles.checkInput}`}>
+                    <input 
+                     required type='text'
+                     placeholder='아이디를 입력하세요'
+                     name='id'
+                     value={form.id}
+                     maxLength='30'
+                     onChange={onChangeId}
+                     
+                     />
+                    <button className={`${styles.dblcheck}`} onClick={handleIdDoubleCheck}>중복확인</button>
+                </div>
+                
             </div>
             <div className={`${styles.signup_input}`}>
                 <div className={`${styles.signup_head}`}>
