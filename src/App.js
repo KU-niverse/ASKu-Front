@@ -22,12 +22,11 @@ import QnA from './pages/QnA';
 import Debate from './pages/Debate'
 import MoreDebate from './pages/MoreDebate';
 import LatestDebate from './pages/LatestDebate';
-import FindId from './pages/ChangePw';
+import FindId from './pages/FindId';
 import FindoutId from './pages/FindoutId';
 import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
-import CheckPw from './pages/CheckPw';
 
 function App() {
     return ( 
@@ -52,13 +51,12 @@ function App() {
 
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/signup/completed" element={<SignupComplete />} />
+                <Route path="/signup/complete/:auth" element={<SignupComplete />} />
                 <Route path="/findid" element={<FindId />} />
                 <Route path="/findoutid" element={<FindoutId />} />
                 <Route path="/findpw" element={<FindPassword />} />
                 <Route path="/changeinfo" element={<ChangeInfo />} />
-                <Route path="/changepw" element={<ChangePw />} />
-                <Route path="/checkpw" element={<CheckPw />} />
+                <Route path="/changepw/:auth" element={<ChangePw />} />
                 <Route path="/mypage" element={<MyPage />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />

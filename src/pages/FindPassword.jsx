@@ -4,16 +4,37 @@ import styles from './Find.module.css'
 import logo from '../img/logo.png'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const FindPassword = () => {
 
-    const [email, setEmail] = useState('')
+    const [id, setId] = useState('')
     const nav = useNavigate();
+
+    const findUserPw = async () => {
+        try{
+            const response = await axios.post('http://118.67.130.57:8080/user/auth/findpw', {
+                login_id: id
+            }, {
+                withCredentials: true
+            });
+            if (response.data.success === true) {
+                return alert(response.data.message)
+            } else {
+                return alert(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    }
 
 
     function handleOnClick() {
-        
+        findUserPw();
+        nav('/findoutid');
     }
+    
 
   return (
     <div className={`${styles.container}`}>
@@ -27,8 +48,8 @@ const FindPassword = () => {
                 <span>
                     <input 
                      required type='text' 
-                     onChange={e => setEmail(e.target.value)}
-                     value={email}
+                     onChange={e => setId(e.target.value)}
+                     value={id}
                      />
                 </span> 
             </div>

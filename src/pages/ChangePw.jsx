@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 import styles from './Find.module.css'
 import logo from '../img/logo.png'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
+import axios from 'axios';
 
 const FindId = () => {
 
+    const location = useLocation();
+    const authId = location.state;
     const [password, setPassword] = useState('');
     const [checkPw, setCheckPw] = useState('');
     const [isPwValid, setisPwValid] = useState(true);
@@ -39,7 +42,29 @@ const FindId = () => {
         }
     }
 
+    const changeUserPw = async () => {
+
+        try{
+            const response = await axios.put( 'http://118.67.130.57:8080/user/auth/changepw', {
+                login_id: '', //얘는 어디서 가지고 와?/
+                hashed_login_id: authId,
+                password: password,
+            }, {
+                withCredentials: true
+            });
+            if (response.data.success === true) {
+                return alert(response.data.message)
+            } else {
+                return alert(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    }
+
     function handleOnClick() {
+
         nav('/findoutid');
     }
 

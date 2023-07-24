@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import styles from './Find.module.css'
 import logo from '../img/logo.png'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const FindoutId = () => {
 
-    const [id, setId] = useState('hello')
+    const location = useLocation();
+    const loginId = location.state;
+    const [id, setId] = useState(loginId);
     const nav = useNavigate();
-
+    
 
     function handleOnClick() {
         nav('/signin');

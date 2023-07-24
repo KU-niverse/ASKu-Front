@@ -31,18 +31,18 @@ const Signup = () => {
         try{
             const result = await axios.get(`http://118.67.130.57:8080/user/auth/nickdupcheck/${form.nick}`);
 
-            if (result.success == true){
-                alert(result.message);
+            if (result.data.success === true){
+                alert(result.data.message);
                 setNickDoubleCheck(true);
             }
             else{
-                alert(result.message);
+                alert(result.data.message);
                 setNickDoubleCheck(false);
             }
             
         } catch (error) {
             console.error(error);
-            alert(error.message);
+            alert(error.response.data.message);
         }
     };
 
@@ -50,18 +50,18 @@ const Signup = () => {
         try{
             const result = await axios.get(`http://118.67.130.57:8080/user/auth/iddupcheck/${form.id}`);
 
-            if (result.success == true){
-                alert(result.message);
+            if (result.data.success === true){
+                alert(result.data.message);
                 setIdDoubleCheck(true);
             }
             else{
-                alert(result.message);
+                alert(result.data.message);
                 setIdDoubleCheck(false);
             }
             
         } catch (error) {
             console.error(error);
-            alert(error.message)
+            alert(error.response.data.message)
         }
     };
 
@@ -69,18 +69,18 @@ const Signup = () => {
         try{
             const result = await axios.get(`http://118.67.130.57:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
 
-            if (result.success == true){
-                alert(result.message);
+            if (result.data.success === true){
+                alert(result.data.message);
                 setEmailDoubleCheck(true);
             }
             else{
-                alert(result.message)
+                alert(result.data.message)
                 setEmailDoubleCheck(false);
             }
             
         } catch (error) {
             console.error(error);
-            alert(error.message)
+            alert(error.response.data.message)
         }
     };
     
@@ -124,6 +124,7 @@ const Signup = () => {
         //event.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
         if(isPwValid === false || nickDoubleCheck === false || idDoubleCheck === false || isPwSame === false){
+            
             e.preventDefault();
             return alert('형식이 올바르지 않습니다.');
             
@@ -134,18 +135,19 @@ const Signup = () => {
                 login_id: form.id,
                 name: form.name,
                 stu_id: form.studentId,
-                email: form.emailId + "@korea.ac.kr",
+                email: `${form.emailId}@korea.ac.kr`,
                 password: form.password,
                 nickname: form.nick
             }, {
                 withCredentials: true
             });
-            if (response.status === 201) {
+            if (response.data.success === true) {
+                alert(response.data.message);
                 nav('/signup/completed');
             }
         } catch (error) {
             console.error(error);
-            alert(error.message)
+            return alert('뭔가 잘못됨');
         }
     
     }

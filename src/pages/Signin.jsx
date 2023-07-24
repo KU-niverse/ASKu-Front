@@ -32,7 +32,7 @@ const Signin = () => {
             }
         } catch (error) {
             console.error(error);
-            return alert(error.data.message);
+            return alert(error.response.data.message);
         }
     }
     
