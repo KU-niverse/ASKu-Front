@@ -5,11 +5,14 @@ import arrow from '../img/arrow.png';
 import axios from 'axios';
 import { useState, useEffect, useRef, Fragment} from 'react';
 import Modal from "./Modal";
+import haho from "../img/3d_haho.png";
+import Spinner from "./Spinner";
 
 function Chatbot () {
     const [inputValue, setInputValue] = useState("");
     const [responseContent, setResponseContent] = useState('');
     const [responseReference, setResponseReference] = useState('');
+    const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([
@@ -31,9 +34,11 @@ function Chatbot () {
 
     const sendMessage = () => {
     if (inputValue.trim() !== '') {
+        setLoading(true);
+        //content 대신 q_content, user_id 반드시 보내야 함
         axios.post('http://223.130.135.214:8080/chatbot/', {
-            content: inputValue,
-            reference: "1"
+            q_content: inputValue,
+            // reference: "1"
         })
         .then(response => {
             setShowSuggest(false);
@@ -41,9 +46,10 @@ function Chatbot () {
             const newChatResponse = [
             ...chatResponse,
             { content: inputValue }, // 사용자의 질문 추가
-            { content: response.data.content, reference: response.data.reference } // 서버 응답 추가
+            { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
             ];
             setChatResponse(newChatResponse);
+            setLoading(false);
             setInputValue('');
         })
         .catch(error => {
@@ -64,20 +70,17 @@ function Chatbot () {
     
     useEffect(() => {
         inputRef.current.focus();
-    }, []);
-    useEffect(() => {
-    axios.get('http://223.130.135.214:8080/chatbot/')
-        .then(response => {
-            console.log(response.data.content);
-            const newChatResponse = [
-                ...chatResponse,
-                { content: response.data.content, reference: response.data.reference }
-            ];
-            setChatResponse(newChatResponse);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        axios.get('http://223.130.135.214:8080/chatbot/')
+            .then(response => {
+                console.log(response.data);
+                const { content, reference } = response.data;
+                if (content && reference) {
+                    setChatResponse([...chatResponse, { content, reference }]);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, []);
 
     return (
@@ -92,22 +95,24 @@ function Chatbot () {
         <div className={styles.chat}>
             <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
             {chatResponse.map((item, index) => {
-                return(
-                    <Fragment key={index}>
-                        <ChatQuestion content={item.content} />
-                        <ChatAnswer content={item.content} />
-                    </Fragment>
-                );
+                if (index % 2 === 0) {
+                return <ChatQuestion key={index} content={item.content} />;
+                } else {
+                return <ChatAnswer key={index} content={item.content} reference={item.reference} />;
+                }
             })}
             <div
             className={styles.suggest}
-            style={{'opacity': showSuggest ? '1' : '0'}}>
+            style={{ display: showSuggest ? 'block' : 'none' }}>
                 <p id={styles.ref}>추천 검색어</p>
                 <span id='ref_res_1' className={styles.textBox}>중도휴학 하는 방법 알려줘!</span>
                 <span id='ref_res_2' className={styles.textBox}>천원학식에 대해 알려줘!</span>
                 <span id='ref_res_3' className={styles.textBox}>2024년 신입생 수시 모집 기간 알려줘!</span>
                 <span id='ref_res_4' className={styles.textBox}>디자인조형학부 홈페이지 주소 보내줘!</span>
             </div>
+            {loading && (
+                    <Spinner/>
+                )}
             <div className={styles.promptWrap}>
                 <textarea
                     className={styles.prompt}

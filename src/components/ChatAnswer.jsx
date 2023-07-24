@@ -7,7 +7,7 @@ import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 
 const ChatAnswer = (props) => {
-    const {content} = props;
+    const {content, reference} = props;
     return (
     <div className={styles.answerBox}>
         <div className={styles.characterContainer}>
