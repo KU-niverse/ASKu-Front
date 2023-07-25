@@ -29,8 +29,11 @@ const SignupComplete = () => {
             });
             if (response.data.success) {
                 return alert(response.data.message);
+                
             } else {
-                return alert(response.data.message);
+                alert(response.data.message);
+                nav('/signin');
+            
             }
         } catch (error) {
             console.error(error);
