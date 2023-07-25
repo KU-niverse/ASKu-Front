@@ -3,14 +3,19 @@ import like from "../img/like.png"
 import comment_icon from "../img/comment_icon.png"
 import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
+import FormatDate from "./FormatDate"
+
+
 
 function Question({id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad}){
+  const formattedDate = FormatDate(created_at);
+
   return(
           <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
               <span className={styles.q_mynick}>{user_id}</span>
-              <span className={styles.q_date}>{created_at}</span>
+              <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
               <img src={threedots} alt='threedots'/>

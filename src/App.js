@@ -20,14 +20,16 @@ import QnA from './pages/QnA';
 import Debate from './pages/Debate'
 import MoreDebate from './pages/MoreDebate';
 import LatestDebate from './pages/LatestDebate';
+import { useState } from 'react';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route
@@ -42,10 +44,10 @@ function App() {
 
 
                 <Route path="/signin" element={<Signin />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup" element={<Signup />}/>
                 <Route path="/signup/completed" element={<SignupComplete />} />
-                <Route path="/mypage" element={<MyPage />} />
-
+                
+                <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>

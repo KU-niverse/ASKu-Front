@@ -11,8 +11,55 @@ import { Link } from 'react-router-dom';
 import MyBadge from '../components/Mypage/MyBadge';
 import MyProfile from '../components/Mypage/MyProfile';
 import MyInfo from '../components/Mypage/MyInfo';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function MyPage() {
+function MyPage({loggedIn, setLoggedIn}) {
+  const Navigate = useNavigate();
+  useEffect(() => {
+  const checkLoginStatus = async () => {
+    try {
+        const res = await axios.get("http://118.67.130.57:8080/user/auth/issignedin", {withCredentials: true});
+        if (res.status===201 && res.data.success===true) {
+            setLoggedIn(true);
+        } else if(res.status === 401){
+            setLoggedIn(false);
+            Navigate('/signin');
+        }
+    } catch (error) {
+        console.error(error);
+        setLoggedIn(false);
+        Navigate('/signin');
+    }
+  };
+  
+  checkLoginStatus();
+}, [Navigate, setLoggedIn]);
+
+
+
+  const [mypageData, setMypageData] = useState([]);
+  useEffect(() => {
+    const takeMypage = async () =>{
+      try{
+        const res = await axios.get( `http://118.67.130.57:8080/user/mypage/info`, {withCredentials: true});
+        if(res.status === 201){
+          setMypageData(res.data);
+        }
+        if(res.status === 401){
+          console.log(res.data.message)
+        }
+        if(res.status === 500){
+          console.log(res.data.message)
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeMypage();
+  }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행됩니다.
 
 
   return (
@@ -31,7 +78,12 @@ function MyPage() {
                 <p className={styles.title}>내 프로필</p>
                 <button className={styles.edit}>수정하기</button>
               </div>
-              <MyProfile/>
+              {mypageData.map((data)=>(
+                <MyProfile
+                  nick={data.nickname}
+                  point={data.point}
+                />
+              ))}
             </div>                
             <div className={styles.badge}>
               <div className={styles.badgeheader}> 
@@ -49,7 +101,13 @@ function MyPage() {
               <div className={styles.infoheader}>
                 <p className={styles.title}>내 정보</p>
               </div>
-              <MyInfo/>
+              {mypageData.map((data)=>(
+                <MyInfo
+                  name={data.name}
+                  email={data.email}
+                  stu_id={data.stu_id}
+                />
+              ))}
               <div className={styles.infoedit}>
                   <button className={styles.edit2}>비밀번호 변경</button>
                   <button className={styles.edit3}>개인정보 변경</button>
