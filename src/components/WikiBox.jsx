@@ -21,7 +21,7 @@ const WIkiBox = (props) => {
     
     }
     const linkToWikiQue = () => {
-        Navigator(`/wikiedit/${section}`, {state: section});
+        Navigator(`/questionedit/${section}`, {state: section});
     
     }
   

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ChatbotMobile from './components/ChatbotMobile';
 import MyPage from './pages/MyPage';
 import WikiEdit from './pages/WikiEdit';
+import QuestionEdit from './pages/QuestionEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wikiviewer/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
+                <Route path="/questionedit" element={<QuestionEdit />} />
                 <Route
                   path="/wikiedit/:id"
                   element={
