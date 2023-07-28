@@ -6,10 +6,14 @@ import styles from './Signup.module.css'
 import logo from '../img/logo.png'
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
+import axios from 'axios';
 
 const Signup = () => {
     const nav = useNavigate();
-    const [doubleCheck, setDoubleCheck] = useState(false);
+    const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
+    const [idDoubleCheck, setIdDoubleCheck] = useState(false);
+    const [emailDoubleCheck, setEmailDoubleCheck] = useState(false);
+    const [isIdValid, setisIdValid] = useState(true);
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
     
@@ -23,12 +27,75 @@ const Signup = () => {
         emailId: '',
     });
 
+    const handleNickDoubleCheck = async () => {
+        try{
+            const result = await axios.get(`http://118.67.130.57:8080/user/auth/nickdupcheck/${form.nick}`);
 
+            if (result.data.success === true){
+                alert(result.data.message);
+                setNickDoubleCheck(true);
+            }
+            else{
+                alert(result.data.message);
+                setNickDoubleCheck(false);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            alert(error.response.data.message);
+        }
+    };
 
-    function handleDoubleCheck(){
-        alert('중복확인이 완료되었습니다!')
-        setDoubleCheck(true);
+    const handleIdDoubleCheck = async () => {
+        try{
+            const result = await axios.get(`http://118.67.130.57:8080/user/auth/iddupcheck/${form.id}`);
+
+            if (result.data.success === true){
+                alert(result.data.message);
+                setIdDoubleCheck(true);
+            }
+            else{
+                alert(result.data.message);
+                setIdDoubleCheck(false);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            alert(error.response.data.message)
+        }
+    };
+
+    const handleEmailDoubleCheck = async () => {
+        try{
+            const result = await axios.get(`http://118.67.130.57:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
+
+            if (result.data.success === true){
+                alert(result.data.message);
+                setEmailDoubleCheck(true);
+            }
+            else{
+                alert(result.data.message)
+                setEmailDoubleCheck(false);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            alert(error.response.data.message)
+        }
+    };
+    
+    function onChangeId(e){
+        const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,15}$/
+        const idCurrent = e.target.value
+        setForm({...form, id:idCurrent})
+
+        if (!idRegex.test(idCurrent)) {
+            setisIdValid(false);
+        } else {
+            setisIdValid(true);
+        }
     }
+
 
     function onChangePW(e){
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
@@ -53,11 +120,37 @@ const Signup = () => {
     }
 
 
-    function handleOnSubmit(e) {
-        e.prevent.default();
-        nav('/signup/completed');
-    }
+    const createUserApi = async (e) => {
+        //event.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
+        if(isPwValid === false || nickDoubleCheck === false || idDoubleCheck === false || isPwSame === false){
+            
+            e.preventDefault();
+            return alert('형식이 올바르지 않습니다.');
+            
+        }
+
+        try{
+            const response = await axios.post('http://118.67.130.57:8080/user/auth/signup', {
+                login_id: form.id,
+                name: form.name,
+                stu_id: form.studentId,
+                email: `${form.emailId}@korea.ac.kr`,
+                password: form.password,
+                nickname: form.nick
+            }, {
+                withCredentials: true
+            });
+            if (response.data.success === true) {
+                alert(response.data.message);
+                nav('/signup/completed');
+            }
+        } catch (error) {
+            console.error(error);
+            return alert('뭔가 잘못됨');
+        }
+    
+    }
 
 
   return (
@@ -75,33 +168,43 @@ const Signup = () => {
                  onChange={e => setForm({ ...form, name: e.target.value})}
                  />
             </div>
-            <div className={`${styles.signup_input}`}>
+            <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>닉네임</span>
-                    <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
+                    <span className={nickDoubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleNickDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
                 </div>
-                <input 
-                 required type='text'
-                 placeholder='닉네임을 입력하세요'
-                 name='nick'
-                 value={form.nick}
-                 maxLength='30'
-                 onChange={e => setForm({ ...form, nick: e.target.value})}
-                 />
+                <div className={`${styles.checkInput}`}>
+                    <input 
+                     required type='text'
+                     placeholder='닉네임을 입력하세요'
+                     name='nick'
+                     value={form.nick}
+                     maxLength='30'
+                     onChange={e => setForm({ ...form, nick: e.target.value})}
+                     className={`${styles.checkInput}`}
+                     />
+                     <button className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>중복확인</button>
+                </div>
+                
             </div>
-            <div className={`${styles.signup_input}`}>
+            <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>아이디</span>
-                    <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
+                    <span className={isIdValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;6자이상-15자미만, 영문, 숫자로 입력해주세요</span>
                 </div>
-                <input 
-                 required type='text'
-                 placeholder='아이디를 입력하세요'
-                 name='id'
-                 value={form.id}
-                 maxLength='30'
-                 onChange={e => setForm({ ...form, id: e.target.value})}
-                 />
+                <div className={`${styles.checkInput}`}>
+                    <input 
+                     required type='text'
+                     placeholder='아이디를 입력하세요'
+                     name='id'
+                     value={form.id}
+                     maxLength='30'
+                     onChange={onChangeId}
+                     
+                     />
+                    <button className={`${styles.dblcheck}`} onClick={handleIdDoubleCheck}>중복확인</button>
+                </div>
+                
             </div>
             <div className={`${styles.signup_input}`}>
                 <div className={`${styles.signup_head}`}>
@@ -150,14 +253,16 @@ const Signup = () => {
                     <input 
                      required type='text' onChange={e => setForm({ ...form, emailId: e.target.value})}
                      />@korea.ac.kr
+                     <button className={`${styles.dblcheck}`} onClick={handleEmailDoubleCheck}>중복확인</button>
                 </span>
+
                 <span className={`${styles.signup_alert}`}>*학교 이메일은 소속학교 인증 및 개인정보 찾기에 이용됩니다</span>  
             </div>
             <div className={`${styles.signup_agree}`}>
                 <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
                 <span>더보기</span>
             </div>
-            <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>회원가입</button>
+            <button className={`${styles.signup_btn}`} onClick={createUserApi}>회원가입</button>
         </form>
         
     </div>

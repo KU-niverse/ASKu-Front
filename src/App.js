@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
@@ -16,11 +15,18 @@ import History from './pages/History';
 import MoreQuestion from './pages/MoreQuestion';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
+import MyBookmark from './pages/MyBookmark';
+import SearchResult from './pages/SearchResult';
 import QnA from './pages/QnA';
 import Debate from './pages/Debate'
 import MoreDebate from './pages/MoreDebate';
 import LatestDebate from './pages/LatestDebate';
 import { useState } from 'react';
+import FindId from './pages/FindId';
+import FindoutId from './pages/FindoutId';
+import FindPassword from './pages/FindPassword';
+import ChangeInfo from './pages/ChangeInfo';
+import ChangePw from './pages/ChangePw';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +35,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/result" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/wikiviewer/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
@@ -44,11 +51,17 @@ function App() {
 
 
                 <Route path="/signin" element={<Signin />} />
-                <Route path="/signup" element={<Signup />}/>
-                <Route path="/signup/completed" element={<SignupComplete />} />
-                
-                <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup/complete/:auth" element={<SignupComplete />} />
+                <Route path="/findid" element={<FindId />} />
+                <Route path="/findoutid" element={<FindoutId />} />
+                <Route path="/findpw" element={<FindPassword />} />
+                <Route path="/changeinfo" element={<ChangeInfo />} />
+                <Route path="/changepw/:auth" element={<ChangePw />} />
+                <Route path="/mypage" element={<MyPage />} />
+
                 <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wikiviewer/morequestion/:title" element={<MoreQuestion/>}/>

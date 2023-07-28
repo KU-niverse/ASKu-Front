@@ -66,7 +66,7 @@ const ChangeInfo = () => {
             <div className={`${styles.signup_input}`}>
                 <span>이름</span>
                 <input
-                 required type='text'
+                 disabled type='text'
                  placeholder='이름을 입력하세요'
                  name='name'
                  value={form.name}
@@ -85,34 +85,6 @@ const ChangeInfo = () => {
                  value={form.nick}
                  maxLength='30'
                  onChange={e => setForm({ ...form, nick: e.target.value})}
-                 />
-            </div>
-            <div className={`${styles.signup_input}`}>
-                <div className={`${styles.signup_head}`}>
-                    <span>비밀번호</span>
-                    <span className={isPwValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span>
-                </div>
-                <input 
-                 required type='text'
-                 placeholder='8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요'
-                 name='password'
-                 value={form.password}
-                 onChange={onChangePW}
-                 maxLength='20'
-                 />
-            </div>
-            <div className={`${styles.signup_input}`}>
-                <div className={`${styles.signup_head}`}>
-                    <span>비밀번호 재확인</span>
-                    <span className={isPwSame === false? `${styles.signup_alert}`: `${styles.signup_done}`} onChange={onChangeCheckPW}><FiAlertTriangle size='12'/>&nbsp;비밀번호가 일치하지 않습니다</span>
-                </div>
-                <input 
-                 required type='text'
-                 placeholder='비밀번호를 재입력하세요'
-                 name='checkPw'
-                 value={form.checkPw}
-                 onChange={onChangeCheckPW}
-                 maxLength='20'
                  />
             </div>
             <div className={`${styles.signup_input}`}>
