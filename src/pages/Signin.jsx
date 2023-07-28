@@ -28,7 +28,7 @@ const Signin = () => {
             if (response.data.success) {
                 nav('/');
             } else {
-                return alert(response.data.message);
+                return alert('이상해');
             }
         } catch (error) {
             console.error(error);

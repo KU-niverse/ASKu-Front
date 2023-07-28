@@ -28,6 +28,7 @@ import FindoutId from './pages/FindoutId';
 import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
+import HistoryDiff from './pages/HistoryDiff';
 
 function App() {
     return ( 
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/result" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage" element={<MyPage />} />
-                <Route path="/wikiviewer/:title" element={<WikiViewer />} />
+                <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route path="/questionedit" element={<QuestionEdit />} />
                 <Route
@@ -48,6 +49,7 @@ function App() {
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/history" element={<History />} />
+                <Route path="/history/diff" element={<HistoryDiff />} />
 
 
 

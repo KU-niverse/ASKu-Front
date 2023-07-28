@@ -4,9 +4,9 @@ import Header from '../components/Header'
 import his2 from '../img/his2.png'
 import HistoryBox from '../components/HistoryBox'
 
-const History = () => {
+const History = (props) => {
 
-
+    const title = '입실렌티'
 
     const data = [
         {
@@ -42,12 +42,12 @@ const History = () => {
         </div>
         <div className={styles.history}>
             <div className={styles.historyList}>
-                <div className={styles.historyTitle}><p className={styles.listTitle}>입실렌티</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
+                <div className={styles.historyTitle}><p className={styles.listTitle}>{title}</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
                 {data.map((item) => {
                     return(
                         <div key={item.version}>
                             <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user} timestamp={item.timestamp}
+                            version={item.version} summary={item.summary} user={item.user} timestamp={item.timestamp} title={title}
                             />
                         </div>
                     );
