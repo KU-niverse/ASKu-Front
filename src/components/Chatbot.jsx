@@ -38,6 +38,7 @@ function Chatbot () {
         //content 대신 q_content, user_id 반드시 보내야 함
         axios.post('http://223.130.135.214:8080/chatbot/', {
             q_content: inputValue,
+            user_id: "1",
             // reference: "1"
         })
         .then(response => {

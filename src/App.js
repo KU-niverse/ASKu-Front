@@ -25,15 +25,20 @@ import CheckPw from './pages/CheckPw';
 import MoreQuestion from './pages/MoreQuestion';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
+import QnA from './pages/QnA';
+import Debate from './pages/Debate'
+import MoreDebate from './pages/MoreDebate';
+import LatestDebate from './pages/LatestDebate';
+import { useState } from 'react';
 
 function App() {
+    const [loggedIn, setLoggedIn] = useState(false);
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/wikiviewer" element={<WikiViewer />} />
+                <Route path="/wikiviewer/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit" element={<WikiEdit />} />
                 <Route
                   path="/wikiedit/:id"
@@ -42,29 +47,25 @@ function App() {
                   }
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
-                <Route path="/allhistory" element={<AllHistory />} />
                 <Route path="/history" element={<History />} />
-                <Route path="/history/diff" element={<HistoryDiff />} />
 
 
 
                 <Route path="/signin" element={<Signin />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup" element={<Signup />}/>
                 <Route path="/signup/completed" element={<SignupComplete />} />
-                <Route path="/findid" element={<FindId />} />
-                <Route path="/findoutid" element={<FindoutId />} />
-                <Route path="/findpw" element={<FindPassword />} />
-                <Route path="/changepw" element={<ChangePw />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/checkpw" element={<CheckPw />} />
-                <Route path="/changeinfo" element={<ChangeInfo />} />
-
+                
+                <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
-                <Route path="/wikiviewer/morequestion" element={<MoreQuestion/>}/>
+                <Route path="/wikiviewer/morequestion/:title" element={<MoreQuestion/>}/>
+                <Route path="/wikiviewer/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
+                <Route path="/debate" element={<Debate/>}/>
+                <Route path="/moredebate" element={<MoreDebate/>}/>
+                <Route path="/latestdebate" element={<LatestDebate/>}/>
 
             </Routes>
         </Router>

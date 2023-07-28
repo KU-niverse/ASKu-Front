@@ -38,73 +38,6 @@
   padding-left: 15px;
 }
 
-.q_cheader{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.q_cfrontheader{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.q_cheadline{
-  font-size: 24px;
-  font-weight: bold;
-  color: rgba(159, 19, 46, 1);
-
-}
-
-
-.q_cbox{
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: auto;
-  font-size: 18px;
-  border-radius: 12px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-sizing:border-box;
-  padding: 10px;
-} 
-.q_ctextarea{
-  resize: none;
-  border: none;
-  width: 100%;
-  height: auto;
-  padding: 5px;
-  border-radius: 12px;
-  font-size: 18px;
-
-}
-
-.q_clastheader{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: auto;
-  margin-top: 7px;
-}
-
-.q_clastheader button{
-  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  width: 100px;
-  border-radius: 12px;
-  height: 35px;
-  font-size: 14px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.textnum{
-  font-size: 14px;
-  color:rgba(116, 116, 116, 1);
-  margin-right: 10px;
-  margin-top: 15px;
-}
 
 @media only screen and (max-width: 767px) {
   .content{
@@ -123,38 +56,4 @@
     padding-left: 10px;
     margin-bottom: 20px;
   }
-
-  .q_cheader{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .q_cfrontheader{
-    flex: 1 1 100%;
-  }
-
-  .q_cheadline{
-    font-size: 18px;
-  }
-
-  .q_clastheader{
-    margin-left: auto;
-  }
-
-  .q_clastheader button{
-    width: 70px;
-    height: 25px;
-    font-size: 12px;
-  }
-
-  .q_ctextarea{
-    font-size: 14px;
-  }
-
-  .textnum{
-    font-size: 12px;
-    margin-top: 10px;
-  }
-  
 }

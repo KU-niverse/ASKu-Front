@@ -1,0 +1,57 @@
+.q_list{
+  width: 100%;
+  border-bottom: 1px solid rgba(213, 213, 213, 1);
+  margin: 0 20px;
+} 
+.q_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 19px;
+}
+
+.q_mynick{
+  font-size: 16px;
+}
+.q_date{
+  margin-left: 16px;
+  font-size: 12px;
+  color: rgba(116, 116, 116, 1);
+}
+.q_backhead{
+  cursor: pointer;
+}
+.q_backhead img{
+  max-height: 6px;
+  max-width: 24px;
+}
+
+.q_middle{
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0 19px 18px 19px;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+ 
+  .q_middle, .q_mynick {
+    font-size: 14px;
+  }
+.q_comment {
+ margin-left: 10px;
+}
+
+
+  .q_date{
+    
+    font-size: 12px;
+  }
+  
+}

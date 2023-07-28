@@ -1,0 +1,34 @@
+.recentTitle{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 19, 46, 1);
+}
+.recentLists{
+    display: flex;
+    flex-direction: column;
+}
+.recentLists ul{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0;
+}
+.listTitle{
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+.listTimestamp{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: rgba(116, 116, 116, 1);
+}

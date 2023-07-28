@@ -1,14 +1,35 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Chatbot from "../components/Chatbot";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../img/logo_big.png';
 import styles from './Home.module.css';
 import searchIcon from '../img/search_icon.png';
 import chatBotBtn from '../img/chatBotBtn.png';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 
-function Home() {
+function Home({loggedIn, setLoggedIn}) {
+//     const Navigate = useNavigate();
+//     useEffect(() => {
+//     const checkLoginStatus = async () => {
+//         try {
+//         const res = await axios.get("http://118.67.130.57:8080/user/auth/issignedin", {withCredentials: true});
+//         if (res.status===201 && res.data.success===true) {
+//             setLoggedIn(true);
+//         } else if(res.status === 401){
+//             setLoggedIn(false);
+//             Navigate('/signin');
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         setLoggedIn(false);
+//         Navigate('/signin');
+//     }
+// };
+//     checkLoginStatus();
+// }, [Navigate, setLoggedIn]);
     return (
         <div className="pageWrap">
             <Header />

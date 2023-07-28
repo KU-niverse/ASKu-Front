@@ -12,7 +12,9 @@ const ChatQuestion = (props) => {
         <div className={styles.characterContainer}>
             <span>나</span>
         </div>
-        <p className={styles.chatText}>{content}</p>
+        <div className={styles.chatTextWrap}>
+            <p className={styles.chatText}>{content}</p>
+        </div>
         <img src={dots} className={styles.dots} />
         <div className={styles.iconZip}>
             <img className={styles.icon} src={like} alt="like" />

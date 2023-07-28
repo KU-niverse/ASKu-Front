@@ -4,20 +4,24 @@ import logo from '../img/logo.png';
 import searchIcon from '../img/search_icon.png';
 import searchIconGray from '../img/search_icon_gray.png';
 import hamburger from '../img/hamburger.png';
+import alarm from '../img/bell.png';
+import bookmark from '../img/bookmark_grey.png';
 
 function Header() {
     return (
         <div className={styles.container}>
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
-                    <img src={logo} alt='logo' className={styles.logo} />
+                    <Link to='/'>
+                        <img src={logo} alt='logo' className={styles.logo} />
+                    </Link>
                 </div>
                 <div className={styles.flexContainer}>
                     <div className={styles.navContainer}>
-                        <Link to=''>
+                        <Link to='/history'>
                             <button className={styles.headerButton}>최근 변경</button>
                         </Link>
-                        <Link to=''>
+                        <Link to='/latestdebate'>
                             <button className={styles.headerButton}>토론</button>
                         </Link>
                     </div>
@@ -26,12 +30,15 @@ function Header() {
                         <img src={searchIcon} alt='icon' className={styles.searchIcon} />
                     </div>
                     <div className={styles.navContainer}>
-                        <Link to=''>
+                        {/* <Link to='/signup'>
                             <button className={styles.headerButton}>회원가입</button>
                         </Link>
-                        <Link to=''>
+                        <Link to='/signin'>
                             <button className={styles.headerButton}>로그인</button>
-                        </Link>
+                        </Link> */}
+                        <img src={bookmark} alt='bookmark_gray' className={styles.signinButton} />
+                        <img src={alarm} alt='alarm' className={styles.signinButton} />
+                        <button className={styles.headerButton}>로그아웃</button>
                     </div>
                     <div className={styles.buttonWrap}>
                         <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />

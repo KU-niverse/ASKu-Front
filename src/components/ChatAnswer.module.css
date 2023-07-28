@@ -4,10 +4,11 @@
     background-color: #FEF2F4;
     margin-top: 25px;
     width: 550px;
-    height: 100px;
+    height: auto;
     border-radius: 12px;
     margin-right: auto;
     margin-left: auto;
+    word-break:keep-all;
 }
 
 .characterContainer {
@@ -28,6 +29,7 @@
     left: 90px;
     top: -20px;
     font-size: 12px;
+    line-height: 150%;
 }
 
 .dots {
@@ -41,7 +43,7 @@
 .iconZip {
     display: flex;
     position: relative;
-    bottom: 5px;
+    bottom: 10px;
     left: 450px;
     flex-direction: row;
     width: 10px;
@@ -53,3 +55,9 @@
     margin-right: 15px;
     cursor: pointer;
 }
+
+.chatTextWrap {
+    max-width: 400px;
+    height: auto;
+}
+

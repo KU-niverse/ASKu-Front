@@ -23,8 +23,9 @@ const WikiEdit = () => {
     return (
         <div className={`${styles.container}`}>
             <Header />
-            <form>
-                <div className={`${styles.edit}`}>
+            
+            <div className={`${styles.edit}`}>
+                <form>
                     <div className={`${styles.wikichar}`}>
                         <div className={`${styles.wikichar_title}`}>
                             <h4>문서 제목</h4>
@@ -49,8 +50,9 @@ const WikiEdit = () => {
                         <span><input required type='checkbox'/>정책에 맞게 작성하였음을 확인합니다.</span>
                         <button className={`${styles.submitWiki}`}>생성하기</button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+           
             
             
         </div>
