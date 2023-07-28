@@ -23,7 +23,7 @@ function Badge({id, user_id, badge_id, time}){
               달성자 수 : 1000명
             </span>
             <span className={styles.b_listlastfoot}>
-              획득일 : 2023. 06. 10 {time}
+              획득일 : {time}
             </span>
           </div>
         </div>

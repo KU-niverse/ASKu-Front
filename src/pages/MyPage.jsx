@@ -156,7 +156,7 @@ function MyPage({loggedIn, setLoggedIn}) {
               {myBadge.map((data)=>(
                 <MyBadge
                   id={data.id}
-                  uesr_id={data.user_id}
+                  user_id={data.user_id}
                   badge_id={data.badge_id}
                   time={data.created_at}
                 />
