@@ -1,12 +1,16 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './SignupComplete.module.css';
 import logo from '../img/logo.png';
 import complete from '../img/Complete.png';
 import Footer from '../components/Footer';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 const SignupComplete = () => {
+    const location = useLocation();
+    const authId = location.state;
     const nav = useNavigate();
 
     function goToLogin(){
@@ -15,6 +19,32 @@ const SignupComplete = () => {
     function goToHome(){
         nav('/');
     }
+
+    const authPost = async () => {
+        try{
+            const response = await axios.post('http://118.67.130.57:8080/user/auth/signup/emailcheck', {
+                auth_uuid: authId
+            }, {
+                withCredentials: true
+            });
+            if (response.data.success) {
+                return alert(response.data.message);
+                
+            } else {
+                alert(response.data.message);
+                nav('/signin');
+            
+            }
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    }
+
+    useEffect(() => {
+        authPost();
+
+    }, []);
 
   return (
     <div className={styles.container}>

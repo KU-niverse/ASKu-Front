@@ -2,11 +2,13 @@ import Header from '../components/Header';
 import { Link } from "react-router-dom/dist";
 import React, {useRef, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom/dist';
+import axios from 'axios';
 import styles from './Wikiviewer.module.css';
 import bookmark from '../img/bookmark.png';
 import bookmarkFill from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'
+import answ from '../img/answ.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
@@ -17,13 +19,40 @@ function WikiViewer() {
     const [isToggled, setIsToggled] = useState(false);
     const [isBookmark, setIsBookmark] = useState(false);
     const {title} = useParams();
+    const [allText, setAllText] = useState('');
+    const [allContent, setAllContent] = useState([]);
 
-    const data = [
+    const Ques = [
+        {
+            'index' : '1.',
+            'number': '1',
+            'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
+        },
+         {
+            'index' : '2.',
+            'number': '2',
+             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+             
+         },
+         {
+             'index' : '3.',
+             'number': '3',
+             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+         },
+         {
+             'index': '4.',
+             'number': '4',
+             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+         },
+     ]
+
+
+     const data = [
         {
             'index' : '1.',
             'section': '1',
             'title': '일번항목',
-            'content': "Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddNostrum, optio, assumenda distinctio autem, nimi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt! " 
+            'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
         },
          {
             'index' : '2.',
@@ -54,12 +83,30 @@ function WikiViewer() {
         setIsBookmark(!isBookmark);
     }
 
+
+    const getWiki = async () => {
+        try{
+            const result = await axios.get(`http://118.67.130.57:8080/wiki/contents/${title}`);
+            setAllText(result.data.text);
+            setAllContent(result.data.contents)
+        } catch (error) {
+            console.error(error);
+            //alert(result.data.message);
+        }
+    };
+
+    useEffect(() => {
+        getWiki();
+        
+    }, []);
+
+
     return (
         <div className={styles.container}>
             <Header />
             <div className={styles.wikiviewer}>
                <div className={styles.wikititle}>
-                  <h1>입실렌티<img src={bookmark} className={isBookmark ? `${styles.hidden}` : `${styles.bookmarkImg}`} onClick={handleClickBookmark}/>
+                  <h1>{title}<img src={bookmark} className={isBookmark ? `${styles.hidden}` : `${styles.bookmarkImg}`} onClick={handleClickBookmark} alt=''/>
                     <img src={bookmarkFill} className={isBookmark ? `${styles.bookmarkImg}`: `${styles.hidden}`} onClick={handleClickBookmark}/>
                   </h1>
                   <div className={styles.wikititleBtn}>
@@ -74,9 +121,9 @@ function WikiViewer() {
                         <button>전체 편집</button>
                     </div>
                     <div>
-                        {data.map((item) => {
+                        {allContent.map((item) => {
                             return(
-                                <li onClick={() => handleClick(item.index)} key={item.index}>
+                                <li onClick={() => handleClick(item.section)} key={item.section}>
                                     <span className={styles.wikiIndex}>{item.index}</span> {item.title}
                                 </li>
                             );
@@ -89,16 +136,36 @@ function WikiViewer() {
                         <h2>질문</h2>
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
-                    <Link to={`/wikiviewer/morequestion/${title}`}>
-                        <button>질문 더보기</button>
-                    </Link>
+                    <div className={styles.quesWrap}>
+                            {Ques.map((item) => {
+                                return(
+                                    <p>
+                                     <hr></hr>
+                                     <ul key={item.title}>
+                                        <span className={styles.quesTitle}>{item.title}</span>
+                                        <span className={styles.quesNum}>{item.number}<img src={answ}/></span>
+                                     </ul>
+                                    </p>
+                                );
+                            })}
+
+                    </div>
+                    <div className={styles.wikiaskFoot}>
+                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                            <button  className={styles.addQues}>나도 질문하기</button>
+                        </Link>
+                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                            <button   className={styles.moreQues}>더보기</button>
+                        </Link>
+                    </div>
+                    
                 </div>
                 <div className={styles.wikiwrite}></div>
                </div>
                <div className={styles.wikicontent}>
-                    {data.map((item) => {
+                    {allContent.map((item) => {
                         return(
-                            <div ref={(el) => (myDivRef.current[item.index] = el)} key={item.index}>
+                            <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
                                 <WikiBox 
                                 title={item.title} content={item.content} index={item.index} section={item.section}
                                 />

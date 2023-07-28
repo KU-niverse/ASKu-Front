@@ -43,21 +43,37 @@
     position: relative;
 }
 
-.navContainer {
+.navContainer_right {
     display: flex;
-    width: 150px;
+    width: 250px;
     min-width: 150px;
     justify-content: space-around;
+    align-items: center;
     margin-right: 0px;
     position: sticky;
     right: 10px;
 }
 @media only screen and (max-width: 767px) {
-    .navContainer {
+    .navContainer_right {
         display: none;
     }
 }
 
+.navContainer_left {
+    display: flex;
+    width: 100px;
+    min-width: 150px;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 0px;
+    position: sticky;
+    right: 10px;
+}
+@media only screen and (max-width: 767px) {
+    .navContainer_left {
+        display: none;
+    }
+}
 .headerInput {
     border: 1px solid #D5D5D5;
     border-radius: 35px;
@@ -118,4 +134,30 @@
     width: 15px;
     height: 18px;
     margin-top: 3px;
+}
+
+.mypageWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100px;
+}
+
+.mypageBtn {
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    left: 0;
+}
+
+.nicknameText {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    min-width: 50px;
+    position: absolute;
+    left: 10px;
+    z-index: 20;
+    color: white;
 }

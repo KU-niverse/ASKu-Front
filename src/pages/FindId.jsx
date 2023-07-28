@@ -4,14 +4,37 @@ import styles from './Find.module.css'
 import logo from '../img/logo.png'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const FindId = () => {
 
     const [email, setEmail] = useState('')
+    const [id, setId] = useState('')
     const nav = useNavigate();
+
+    const findUserId = async () => {
+        try{
+            const response = await axios.post('http://118.67.130.57:8080/user/auth/findid', {
+                email: email
+            }, {
+                withCredentials: true
+            });
+            if (response.data.success) {
+                setId(response.data.login_id);
+                alert(response.data.message);
+                nav('/findoutid', {state:id});
+            } else {
+                return alert(response.data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    }
 
 
     function handleOnClick() {
+        findUserId();
         nav('/findoutid');
     }
 
