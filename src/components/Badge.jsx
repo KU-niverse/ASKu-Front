@@ -3,7 +3,7 @@ import haho from "../img/haho.png";
 import threedots from "../img/threedots.png"
 import styles from "./Badge.module.css"
 
-function Badge(){
+function Badge({id, user_id, badge_id, time}){
   return(
     <div className={styles.b_container}> 
       <div className={styles.b_content}>
@@ -23,7 +23,7 @@ function Badge(){
               달성자 수 : 1000명
             </span>
             <span className={styles.b_listlastfoot}>
-              획득일 : 2023. 06. 10
+              획득일 : 2023. 06. 10 {time}
             </span>
           </div>
         </div>

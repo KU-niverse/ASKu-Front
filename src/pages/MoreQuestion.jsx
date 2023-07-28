@@ -8,9 +8,13 @@ import QuestionInput from "../components/QuestionInput";
 import { useState } from 'react';
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MoreQuestion = () => {
+
+  
   const title="newdocs";
+  const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   useEffect(() => {
     const takeQuestion = async () =>{
@@ -27,7 +31,24 @@ const MoreQuestion = () => {
       }
     }
     takeQuestion();
-  }, [title]);
+  }, [title]); //질문 목록 가져오기
+
+ 
+ 
+ 
+ 
+  const handleQuestionSubmit = async (questionData) => {
+    try {
+      const response = await axios.post(`http://118.67.130.57:8080/question/new/${title}`, questionData);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }; //질문 생성하기
+
+
+
+
 
 
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
@@ -49,7 +70,8 @@ const MoreQuestion = () => {
           </div>
         </div>
         <div>
-          <QuestionInput/>
+          <QuestionInput onQuestionSubmit={handleQuestionSubmit}/>
+          {data && <p>결과: {data}</p>}
         </div>
         <div>
           {questionData.map((data) => (

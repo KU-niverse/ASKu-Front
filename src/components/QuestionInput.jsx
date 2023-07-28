@@ -2,11 +2,18 @@ import React from "react";
 import { useState } from "react";
 import styles from "./QuestionInput.module.css"
 import DropDown from "./DropDown";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function QuestionInput() {
-
+function QuestionInput({onQuestionSubmit}) {
   const [questionContent, setQuestionContent] = useState('');
-  
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const Navigate = useNavigate(); 
+
+
+
+
   const handleChange = (e) => {
     const value = e.target.value;
     if(value.length<=200) {
@@ -14,14 +21,47 @@ function QuestionInput() {
     }
   };
 
-  const handleSubmit=() => {
+  const checkLoginStatus = async () => {
+    try {
+        const res = await axios.get("http://118.67.130.57:8080/user/auth/issignedin", {withCredentials: true});
+        if (res.status===201 && res.data.success===true) {
+            setLoggedIn(true);
+        } else if(res.status === 401){
+            setLoggedIn(false);
+            Navigate('/signin');
+        }
+    } catch (error) {
+        console.error(error);
+        setLoggedIn(false);
+       Navigate('/signin');
+    }
+  };
+
+  const handleSubmit= async (event) => {
+    event.preventDefault(); // 폼 제출을 막음
+    await checkLoginStatus();
+    if (!loggedIn) {
+      alert("로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다.");
+      Navigate("/signin")
+      return;
+      }
+    //로그인 안한 유저 로그인창으로 전송
     if(questionContent.trim()===''){
       alert('질문을 입력해주세요.');
       return;
     }
-    //여기에 질문 제출하는 로직을 추가...
-  }
+  
+  const questionData = {
+    index_title: 1,
+    content: questionContent,
+  };
 
+  onQuestionSubmit(questionData);
+  };
+
+  const countCharacters = () =>{
+    return `${questionContent.length}/200`;
+  }
   return(
     <form className={styles.q_c}>
     <div className={styles.q_cheader}>
@@ -43,7 +83,7 @@ function QuestionInput() {
         onChange={handleChange}
       />
       <div className={styles.q_clastheader}>
-        <span className={styles.textnum}>0/200</span>
+        <span className={styles.textnum}>{countCharacters()}</span>
         <button className={styles.q_csubmit} onClick={handleSubmit}>
           생성하기
         </button>

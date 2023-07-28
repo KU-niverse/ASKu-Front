@@ -58,7 +58,7 @@ function App() {
                 <Route path="/findpw" element={<FindPassword />} />
                 <Route path="/changeinfo" element={<ChangeInfo />} />
                 <Route path="/changepw/:auth" element={<ChangePw />} />
-                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mybookmark" element={<MyBookmark />} />

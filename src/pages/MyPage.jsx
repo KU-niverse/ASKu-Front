@@ -17,6 +17,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function MyPage({loggedIn, setLoggedIn}) {
+  
+  //login status 체크하기
   const Navigate = useNavigate();
   useEffect(() => {
   const checkLoginStatus = async () => {
@@ -31,15 +33,15 @@ function MyPage({loggedIn, setLoggedIn}) {
     } catch (error) {
         console.error(error);
         setLoggedIn(false);
-        Navigate('/signin');
+       Navigate('/signin');
     }
   };
-  
   checkLoginStatus();
 }, [Navigate, setLoggedIn]);
 
 
 
+  //내 정보 불러오기
   const [mypageData, setMypageData] = useState([]);
   useEffect(() => {
     const takeMypage = async () =>{
@@ -59,7 +61,66 @@ function MyPage({loggedIn, setLoggedIn}) {
       }
     }
     takeMypage();
-  }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행됩니다.
+  }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
+
+
+  //질문 기록 불러오기
+  const [myQuestion, setMyQuestion] = useState([]);
+  useEffect(() => {
+    const takeMyQuestion = async () =>{
+      try{
+        const res = await axios.get( `http://118.67.130.57:8080/user/mypage/questionhistory`, {withCredentials: true});
+        if(res.status === 201){
+          setMyQuestion(res.data);
+        }
+        if(res.status === 500){
+          console.log(res.data.message)
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeMyQuestion();
+  }, []);
+
+  //토론 기록 불러오기
+  const [myDebate, setMyDebate] = useState([]);
+  useEffect(() => {
+    const takeMyDebate = async () =>{
+      try{
+        const res = await axios.get( `http://118.67.130.57:8080/user/mypage/debatehistory`, {withCredentials: true});
+        if(res.status === 201){
+          setMyDebate(res.data);
+        }
+        if(res.status === 500){
+          console.log(res.data.message)
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeMyDebate();
+  }, []);
+
+  //뱃지 기록 불러오기
+  const [myBadge, setMyBadge] = useState([]);
+  useEffect(() => {
+    const takeMyBadge = async () =>{
+      try{
+        const res = await axios.get( `http://118.67.130.57:8080/user/mypage/badgehistory`, {withCredentials: true});
+        if(res.status === 201){
+          setMyBadge(res.data);
+        }
+        if(res.status === 401){
+          console.log(res.data.message)
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeMyBadge();
+  }, []);
+
 
 
   return (
@@ -92,7 +153,14 @@ function MyPage({loggedIn, setLoggedIn}) {
                 <button className={styles.edit}> 더보기</button>
                 </Link>
               </div>
-              <MyBadge/>            
+              {myBadge.map((data)=>(
+                <MyBadge
+                  id={data.id}
+                  uesr_id={data.user_id}
+                  badge_id={data.badge_id}
+                  time={data.created_at}
+                />
+              ))}            
             </div>
           </div>
         
@@ -130,18 +198,32 @@ function MyPage({loggedIn, setLoggedIn}) {
               <button className={styles.edit}>더보기</button>
               </Link>
             </div>
-            <QuestionList/>
+            {myQuestion.map((data)=>(
+              <QuestionList
+                id={data.id}
+                content={data.content}
+                time={data.created_at}
+                doc_title={data.doc_title}
+              />
+            ))}            
           </div>
         </div>
         <div className={styles.downcontent}>
           <div className={styles.comment}>
             <div className={styles.commentheader}>
-              <p className={styles.title}>내가 쓴 댓글</p>
+              <p className={styles.title}>내가 쓴 토론</p>
               <Link to='/mypage/mycomment' className={styles.c_link}>
               <button className={styles.edit}>더보기</button>
               </Link>
             </div>
-            <CommentList/>
+            {myDebate.map((data)=>(
+              <CommentList
+                id={data.debate_id}
+                content={data.debate_content}
+                time={data.debate_content_time}
+                doc_title={data.doc_title}
+              />
+            ))}  
           </div>
         </div>
       </div>

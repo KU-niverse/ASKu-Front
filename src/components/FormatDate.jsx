@@ -25,4 +25,4 @@ function FormatDate(targetTime) {
   }
 }
 
-export default FormatDate
+export default FormatDate;
