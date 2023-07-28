@@ -13,6 +13,7 @@ const Signup = () => {
     const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
     const [idDoubleCheck, setIdDoubleCheck] = useState(false);
     const [emailDoubleCheck, setEmailDoubleCheck] = useState(false);
+    const [isNickValid, setisNickValid] = useState(true);
     const [isIdValid, setisIdValid] = useState(true);
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
@@ -83,6 +84,20 @@ const Signup = () => {
             alert(error.response.data.message)
         }
     };
+
+
+
+    function onChangeNick(e){
+        const nickRegex = /^[가-힣]{2,8}$/;
+        const nickCurrent = e.target.value
+        setForm({...form, nick:nickCurrent})
+
+        if (!nickRegex.test(nickCurrent)) {
+            setisNickValid(false);
+        } else {
+            setisNickValid(true);
+        }
+    }
     
     function onChangeId(e){
         const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,15}$/
@@ -95,6 +110,8 @@ const Signup = () => {
             setisIdValid(true);
         }
     }
+
+    
 
 
     function onChangePW(e){
@@ -123,7 +140,12 @@ const Signup = () => {
     const createUserApi = async (e) => {
         //event.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
-        if(isPwValid === false || nickDoubleCheck === false || idDoubleCheck === false || isPwSame === false){
+        if(isNickValid === false || 
+            isIdValid === false || 
+            isPwValid === false || 
+            nickDoubleCheck === false || 
+            idDoubleCheck === false || 
+            isPwSame === false ){
             
             e.preventDefault();
             return alert('형식이 올바르지 않습니다.');
@@ -176,11 +198,11 @@ const Signup = () => {
                 <div className={`${styles.checkInput}`}>
                     <input 
                      required type='text'
-                     placeholder='닉네임을 입력하세요'
+                     placeholder='2-8자 한글로 입력하세요'
                      name='nick'
                      value={form.nick}
                      maxLength='8'
-                     onChange={e => setForm({ ...form, nick: e.target.value})}
+                     onChange={onChangeNick}
                      className={`${styles.checkInput}`}
                      />
                      <button className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>중복확인</button>
