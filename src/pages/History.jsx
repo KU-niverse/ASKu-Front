@@ -3,37 +3,67 @@ import styles from './History.module.css'
 import Header from '../components/Header'
 import his2 from '../img/his2.png'
 import HistoryBox from '../components/HistoryBox'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+
+
+const data = [
+    {
+        'version': 'v1',
+        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'user': '하호후리스',
+        'timestamp': '2023.05.26 01:34:32',
+    },
+    {
+        'version': 'v2',
+        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'user': '하호후리스',
+        'timestamp': '2023.05.26 01:34:32',
+    },
+    {
+        'version': 'v3',
+        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'user': '하호후리스',
+        'timestamp': '2023.05.26 01:34:32',
+    },
+    {
+        'version': 'v4',
+        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'user': '하호후리스',
+        'timestamp': '2023.05.26 01:34:32',
+    },
+]
 
 const History = (props) => {
 
     const title = '입실렌티'
+    const [lists, setLists] = useState([]);
 
-    const data = [
-        {
-            'version': 'v1',
-            'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-            'user': '하호후리스',
-            'timestamp': '2023.05.26 01:34:32',
-        },
-        {
-            'version': 'v2',
-            'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-            'user': '하호후리스',
-            'timestamp': '2023.05.26 01:34:32',
-        },
-        {
-            'version': 'v3',
-            'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-            'user': '하호후리스',
-            'timestamp': '2023.05.26 01:34:32',
-        },
-        {
-            'version': 'v4',
-            'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-            'user': '하호후리스',
-            'timestamp': '2023.05.26 01:34:32',
-        },
-    ]
+    
+
+    const getWiki = async () => {
+        try{
+            const result = await axios.get(`http://118.67.130.57:8080/wiki/historys/${title}`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setLists(result.data.historys);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    };
+
+    useEffect(() => {
+
+        getWiki();
+
+    }, []);
+
+
   return (
     <div className={styles.container}>
         <Header/>
@@ -43,11 +73,11 @@ const History = (props) => {
         <div className={styles.history}>
             <div className={styles.historyList}>
                 <div className={styles.historyTitle}><p className={styles.listTitle}>{title}</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
-                {data.map((item) => {
+                {lists.map((item) => {
                     return(
                         <div key={item.version}>
                             <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user} timestamp={item.timestamp} title={title}
+                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.timestamp} title={title}
                             />
                         </div>
                     );

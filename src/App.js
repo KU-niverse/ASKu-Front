@@ -29,6 +29,7 @@ import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
 import HistoryDiff from './pages/HistoryDiff';
+import AllHistory from './pages/AllHistory';
 
 function App() {
     return ( 
@@ -48,6 +49,7 @@ function App() {
                   }
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path="/history" element={<History />} />
                 <Route path="/history/diff" element={<HistoryDiff />} />
 

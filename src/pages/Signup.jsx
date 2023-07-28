@@ -179,7 +179,7 @@ const Signup = () => {
                      placeholder='닉네임을 입력하세요'
                      name='nick'
                      value={form.nick}
-                     maxLength='30'
+                     maxLength='8'
                      onChange={e => setForm({ ...form, nick: e.target.value})}
                      className={`${styles.checkInput}`}
                      />
