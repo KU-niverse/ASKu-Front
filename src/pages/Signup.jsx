@@ -30,7 +30,7 @@ const Signup = () => {
 
     const handleNickDoubleCheck = async () => {
         try{
-            const result = await axios.get(`http://118.67.130.57:8080/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -49,7 +49,7 @@ const Signup = () => {
 
     const handleIdDoubleCheck = async () => {
         try{
-            const result = await axios.get(`http://118.67.130.57:8080/user/auth/iddupcheck/${form.id}`);
+            const result = await axios.get(`http://localhost:8080/user/auth/iddupcheck/${form.id}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -68,7 +68,7 @@ const Signup = () => {
 
     const handleEmailDoubleCheck = async () => {
         try{
-            const result = await axios.get(`http://118.67.130.57:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
+            const result = await axios.get(`http://localhost:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -125,6 +125,7 @@ const Signup = () => {
             setisPwValid(true);
         }
     }
+
     function onChangeCheckPW(e){
         const checkPWCurrent = e.target.value
         setForm({...form, checkPw:checkPWCurrent})
@@ -152,7 +153,7 @@ const Signup = () => {
         }
 
         try{
-            const response = await axios.post('http://118.67.130.57:8080/user/auth/signup', {
+            const response = await axios.post('http://localhost:8080/user/auth/signup', {
                 login_id: form.id,
                 name: form.name,
                 stu_id: form.studentId,
@@ -164,7 +165,7 @@ const Signup = () => {
             });
             if (response.data.success === true) {
                 alert(response.data.message);
-                nav('/signup/completed');
+                nav('/signup/complete');
             }
         } catch (error) {
             console.error(error);
@@ -283,7 +284,7 @@ const Signup = () => {
                 <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
                 <span>더보기</span>
             </div>
-            <button className={`${styles.signup_btn}`} type='submit'>회원가입</button>
+            <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />
         </form>
         
     </div>
