@@ -3,6 +3,7 @@ import falseBk from '../img/bookmark.png'
 import trueBk from '../img/bookmarkFill.png'
 import styles from './BookmarkBox.module.css'
 import { useState } from 'react'
+import axios from 'axios'
 
 const BookmarkBox = (props) => {
 

@@ -138,7 +138,7 @@ const Signup = () => {
 
 
     const createUserApi = async (e) => {
-        //event.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
+        e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
         if(isNickValid === false || 
             isIdValid === false || 
@@ -147,7 +147,6 @@ const Signup = () => {
             idDoubleCheck === false || 
             isPwSame === false ){
             
-            e.preventDefault();
             return alert('형식이 올바르지 않습니다.');
             
         }
@@ -179,7 +178,7 @@ const Signup = () => {
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <h1>회원가입</h1>
-        <form>
+        <form onSubmit={createUserApi}>
             <div className={`${styles.signup_input}`}>
                 <span>이름</span>
                 <input
@@ -284,7 +283,7 @@ const Signup = () => {
                 <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
                 <span>더보기</span>
             </div>
-            <button className={`${styles.signup_btn}`} onClick={createUserApi}>회원가입</button>
+            <button className={`${styles.signup_btn}`} type='submit'>회원가입</button>
         </form>
         
     </div>

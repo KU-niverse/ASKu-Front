@@ -3,6 +3,7 @@ import BookmarkBox from '../components/BookmarkBox'
 import Header from '../components/Header'
 import styles from './MyBookmark.module.css'
 import axios from 'axios'
+import { useState, useEffect } from 'react'
 
 
 const data = [
