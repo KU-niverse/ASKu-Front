@@ -51,7 +51,7 @@ function App() {
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path="/history" element={<History />} />
-                <Route path="/history/diff" element={<HistoryDiff />} />
+                <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 
 
 

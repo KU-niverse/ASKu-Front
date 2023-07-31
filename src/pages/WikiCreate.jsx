@@ -25,8 +25,10 @@ const WikiEdit = () => {
         setCharbtn('doc');
     }
 
-    const handleCreateBtn = async() => {
+    const handleCreateBtn = async(e) => {
 
+        e.preventDefault();
+        
         console.log(desc);
 
 

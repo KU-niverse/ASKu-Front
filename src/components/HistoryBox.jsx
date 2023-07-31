@@ -42,7 +42,7 @@ const HistoryBox = (props) => {
 
 
     const handleCompare = () => {
-        nav('/history/diff');
+        nav(`/history/${title}/diff/${version}`);
     }
 
   return (
