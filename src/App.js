@@ -30,6 +30,7 @@ import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
 import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
+import WikiPreview from './pages/WikiPreview';
 
 function App() {
     return ( 
@@ -50,6 +51,7 @@ function App() {
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/allhistory" element={<AllHistory/>} />
+                <Route path='/wiki/preview/:title/:ver' element={<WikiPreview/>} />
                 <Route path="/history" element={<History />} />
                 <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 

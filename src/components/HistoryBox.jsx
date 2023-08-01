@@ -5,6 +5,7 @@ import rollback from '../img/return.png';
 import watch from '../img/watch.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import verComp from '../img/verComp.png';
 
 
 const HistoryBox = (props) => {
@@ -17,10 +18,13 @@ const HistoryBox = (props) => {
     const user = props.user;
     const timestamp = props.timestamp;
 
+    const handleView = () => {
+        nav(`/wiki/preview/${title}/${version}`);
+    }
 
     const handleRollback = async() => {
         try{
-            const result = await axios.post(`http://118.67.130.57:8080/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if(result.status === 200){
@@ -61,8 +65,9 @@ const HistoryBox = (props) => {
         <div className={styles.versionText}>
             <div></div>
             <div className={styles.versionBtns}>
+                <span onClick={handleView}><img src={watch}/>이 버전으로 미리보기</span>
                 <span onClick={handleRollback}><img src={rollback}/>이 버전으로 되돌리기</span>
-                <span onClick={handleCompare}><img src={watch}/>전 버전이랑 비교하기</span>
+                <span onClick={handleCompare}><img src={verComp}/>전 버전이랑 비교하기</span>
             </div>
         </div>
     </div>
