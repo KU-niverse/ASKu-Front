@@ -36,7 +36,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/result" element={<SearchResult />} />
+                <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wiki/:title" element={<WikiViewer />} />

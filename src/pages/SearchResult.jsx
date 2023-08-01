@@ -5,7 +5,7 @@ import styles from './SearchResult.module.css'
 import ResultBox from '../components/ResultBox'
 import { useState } from 'react'
 import QuestionFor from '../components/QuestionFor'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 
 
@@ -52,9 +52,34 @@ const SearchResearch = () => {
 
     const [isClicked, setIsClicked] = useState(true);
 
+    const {title} = useParams();
+    const [results, setResults] = useState([])
+
     const handleButtonClick = () => {
         setIsClicked(!isClicked);
       };
+
+
+      const getWiki = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setResults(result.data);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    };
+
+    useEffect(() => {
+
+        getWiki();
+
+    }, []);
     
     
   return (
@@ -75,11 +100,12 @@ const SearchResearch = () => {
             <div className={styles.contents}>
                 <div className={styles.boxes}>
                     <div className={isClicked ? 'default': styles.hidden}>
-                        {data.map((item) => {
+                        {results.map((item) => {
                             return(
                                 <div key={item.title}>
                                     <ResultBox
-                                    title={item.title} content={item.content} bookmark={item.bookmark}
+                                    title={item.title} 
+                                    // content={item.content} bookmark={item.bookmark}
                                     />
                                 </div>
                             );
