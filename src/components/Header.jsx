@@ -42,7 +42,7 @@ function Header() {
                         <button className={styles.headerButton}>로그아웃</button>
                         <Link to='/mypage'>
                             <div className={styles.mypageWrap}>
-                                <p className={styles.nicknameText}>하호 님</p>
+                                <p className={styles.nicknameText}>가나다 님</p>
                                 <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                             </div>
                         </Link>

@@ -145,7 +145,7 @@
 }
 
 .mypageBtn {
-    width: 80px;
+    width: 90px;
     height: 30px;
     position: absolute;
     left: 0;
@@ -155,9 +155,13 @@
     font-size: 12px;
     margin: 0;
     padding: 0;
-    min-width: 50px;
+    width: 50px;
+    max-width: 100px;
     position: absolute;
     left: 10px;
     z-index: 20;
     color: white;
+    overflow: hidden;  
+    text-overflow: ellipsis;  
+    white-space: nowrap;  
 }
