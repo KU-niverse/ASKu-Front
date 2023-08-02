@@ -4,9 +4,9 @@ import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 import axios from 'axios';
 import { useState, useEffect, useRef, Fragment} from 'react';
-import Modal from "./Modal";
 import haho from "../img/3d_haho.png";
 import Spinner from "./Spinner";
+import LoginModal from './LoginModal';
 
 function Chatbot () {
     const [inputValue, setInputValue] = useState("");
@@ -15,18 +15,7 @@ function Chatbot () {
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
-    const [chatResponse, setChatResponse] = useState([
-        // {
-        //   index: '0',
-        //   content: '일번항목',
-        //   reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        // },
-        // {
-        //   index: '1',
-        //   content: '이번항목',
-        //   reference: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        // },
-      ]);
+    const [chatResponse, setChatResponse] = useState([]);
     
     const inputChange = (e) => {
         setInputValue(e.target.value);
@@ -128,7 +117,7 @@ function Chatbot () {
                 </div>
             </div>
         </div>
-        <Modal />
+        <LoginModal />
     </div>
     );
 }
