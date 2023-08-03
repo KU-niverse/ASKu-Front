@@ -52,8 +52,17 @@ const AllHistory = () => {
     useEffect(() => {
         getHistory();
         
-    }, []);
+    }, [type]);
 
+    const allBtn = () =>{
+        setType('all');
+    }
+    const createBtn = () =>{
+        setType('create');
+    }
+    const rollBtn = () =>{
+        setType('roll');
+    }
    
   return (
     <div className={styles.container}>
@@ -62,8 +71,33 @@ const AllHistory = () => {
             <span><img src={his2}/>히스토리</span>
         </div>
         <div className={styles.history}>
-            <div className={styles.historyList}>
-                <div className={styles.historyTitle}><p className={styles.listTitle2}>모든 문서의 최근 변경 내용</p></div>
+            <div className={styles.historyBtn}><p onClick={allBtn}>all</p><p onClick={createBtn}>create</p><p onClick={rollBtn}>rollback</p></div>
+            <div className={type === 'all' ? styles.historyList : styles.hidden}>
+                <div className={styles.historyTitle}><p className={styles.listTitle2}>최근 변경된 모든 문서</p></div>
+                {historys.map((item) => {
+                    return(
+                        <div key={item.version}>
+                            <HistoryBox 
+                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.created_at}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
+            <div className={type === 'create' ? styles.historyList : styles.hidden}>
+                <div className={styles.historyTitle}><p className={styles.listTitle2}>새로 생성된 모든 문서</p></div>
+                {historys.map((item) => {
+                    return(
+                        <div key={item.version}>
+                            <HistoryBox 
+                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.created_at}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
+            <div className={type === 'rollback' ? styles.historyList : styles.hidden}>
+                <div className={styles.historyTitle}><p className={styles.listTitle2}>최근 롤백된 모든 문서</p></div>
                 {historys.map((item) => {
                     return(
                         <div key={item.version}>

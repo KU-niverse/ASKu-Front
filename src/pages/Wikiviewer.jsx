@@ -4,8 +4,8 @@ import React, {useRef, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom/dist';
 import axios from 'axios';
 import styles from './Wikiviewer.module.css';
-import bookmark from '../img/bookmark.png';
-import bookmarkFill from '../img/bookmarkFill.png';
+import falseBk from '../img/bookmark.png';
+import trueBk from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'
 import answ from '../img/answ.png'
@@ -80,8 +80,62 @@ function WikiViewer() {
         
     }
 
+    const [deleted, setDeleted] = useState(true);
+    const [imageSource, setImageSource] = useState(falseBk);
+
+    const addBookmark = async () => {
+        try{
+            const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+                
+            }, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setDeleted(false);
+                console.log(result.data.status);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            if(error.response.status === 401){
+                alert(error.response.data.message);
+                nav('/signin');
+            } else {
+                alert(error.response.data.message);
+            }
+        }
+      };
+  
+  
+      const deleteBookmark = async () => {
+        try{
+            const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setDeleted(true);
+                console.log(result.data.status);
+            } else {
+              alert('문제가 발생하였습니다');
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+      };
+
     function handleClickBookmark() {
-        setIsBookmark(!isBookmark);
+        // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
+      if(deleted === false){
+        deleteBookmark();
+        setImageSource(falseBk);
+
+      } else if (deleted === true){
+        addBookmark();
+        setImageSource(trueBk);
+
+      }
     }
 
     const linkToHistory = () => {
@@ -115,8 +169,7 @@ function WikiViewer() {
             <Header />
             <div className={styles.wikiviewer}>
                <div className={styles.wikititle}>
-                  <h1>{title}<img src={bookmark} className={isBookmark ? `${styles.hidden}` : `${styles.bookmarkImg}`} onClick={handleClickBookmark} alt=''/>
-                    <img src={bookmarkFill} className={isBookmark ? `${styles.bookmarkImg}`: `${styles.hidden}`} onClick={handleClickBookmark}/>
+                  <h1>{title}<img src={imageSource} alt="Image" onClick={handleClickBookmark} className={styles.bookmarkImg}/>
                   </h1>
                   <div className={styles.wikititleBtn}>
                     <button><img src={debate}/>&nbsp;토론하기</button>

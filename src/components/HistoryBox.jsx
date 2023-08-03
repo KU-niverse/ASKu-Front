@@ -22,11 +22,13 @@ const HistoryBox = (props) => {
         nav(`/wiki/preview/${title}/${version}`);
     }
 
-    const handleRollback = async() => {
-        
+    const handleRollback = async(e) => {
+
         try{
             const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
-                withCredentials: true,
+                    
+            }, {
+                withCredentials: true
             }); //전체 텍스트를 가져옴.
             if(result.status === 200){
                 alert(result.data.message);

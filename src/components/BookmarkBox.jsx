@@ -18,7 +18,9 @@ const BookmarkBox = (props) => {
 
     const addBookmark = async () => {
       try{
-          const result = await axios.post(`http://118.67.130.57:8080/wiki/favorite/${title}`, {
+          const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+                  
+          }, {
               withCredentials: true
           });
           if(result.status === 200){
@@ -35,7 +37,7 @@ const BookmarkBox = (props) => {
 
     const deleteBookmark = async () => {
       try{
-          const result = await axios.delete(`http://118.67.130.57:8080//wiki/favorite/${title}`, {
+          const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
               withCredentials: true
           });
           if(result.status === 200){
