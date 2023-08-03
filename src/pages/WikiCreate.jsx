@@ -33,7 +33,7 @@ const WikiEdit = () => {
 
 
         try {
-            const result = await axios.post(` http://localhost:8080/wiki/contents/new/${title}`, {
+            const result = await axios.post(`http://118.67.130.57:8080/wiki/contents/new/${title}`, {
                 text: desc,
                 type: charbtn,
             },{
@@ -41,7 +41,7 @@ const WikiEdit = () => {
             });
             if(result.status === 200){
                 alert("수정에 기여해주셔서 감사합니다.");
-                nav(`/wikiviewer/${title}`);
+                nav(`/wiki/${title}`);
             }
         } catch(error){
             console.log(error);
@@ -55,7 +55,7 @@ const WikiEdit = () => {
             <Header />
             
             <div className={`${styles.edit}`}>
-                <form>
+                <form onSubmit={handleCreateBtn}>
                     <div className={`${styles.wikichar}`}>
                         <div className={`${styles.wikichar_title}`}>
                             <h4>문서 제목</h4>
@@ -70,8 +70,8 @@ const WikiEdit = () => {
                         </div>
                         <div className={`${styles.wikichar_char}`}>
                             <h4>문서 성격</h4>
-                            <input type='button' className={charbtn === 'list'? `${styles.char_one} ${styles.btn_sty_one}`:  `${styles.btn_sty_two} ${styles.char_one}`} value='list' onClick={handleCharBtn1}/>
-                            <input type='button' className={charbtn === 'doc' ? `${styles.char_two} ${styles.btn_sty_one}` : `${styles.char_two} ${styles.btn_sty_two}`} value='doc' onClick={handleCharBtn2}/>
+                            <input type='button' className={charbtn === 'list'? `${styles.char_one} ${styles.btn_sty_one}`:  `${styles.btn_sty_two} ${styles.char_one}`} value='목차형' onClick={handleCharBtn1}/>
+                            <input type='button' className={charbtn === 'doc' ? `${styles.char_two} ${styles.btn_sty_one}` : `${styles.char_two} ${styles.btn_sty_two}`} value='문서형' onClick={handleCharBtn2}/>
                         </div>
                     </div>
                     <div>
@@ -83,7 +83,7 @@ const WikiEdit = () => {
                     </div>
                     <div className={`${styles.submitbox}`}>
                         <span><input required type='checkbox'/>정책에 맞게 작성하였음을 확인합니다.</span>
-                        <button className={`${styles.submitWiki}`} onClick={handleCreateBtn}>생성하기</button>
+                        <input type='submit' value="생성하기" className={`${styles.submitWiki}`} />
                     </div>
                 </form>
             </div>

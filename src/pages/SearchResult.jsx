@@ -3,9 +3,10 @@ import Header from '../components/Header'
 import search from '../img/search_icon.png'
 import styles from './SearchResult.module.css'
 import ResultBox from '../components/ResultBox'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import QuestionFor from '../components/QuestionFor'
 import { Link, useParams } from 'react-router-dom'
+import axios from 'axios'
 
 
 

@@ -83,12 +83,16 @@ function WikiViewer() {
         setIsBookmark(!isBookmark);
     }
 
+    const linkToAllEdit = () => {
+        nav(`/wikiedit/${title}/all`)
+    }
+
 
     const getWiki = async () => {
         try{
             const result = await axios.get(`http://118.67.130.57:8080/wiki/contents/${title}`);
             setAllText(result.data.text);
-            setAllContent(result.data.contents)
+            setAllContent(result.data.contents);
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
@@ -118,7 +122,7 @@ function WikiViewer() {
                 <div className={styles.wikilist}>
                     <div className={styles.wikilistTitle}>
                         <h2>목차</h2>
-                        <button>전체 편집</button>
+                        <button onClick={linkToAllEdit}>전체 편집</button>
                     </div>
                     <div>
                         {allContent.map((item) => {
@@ -167,7 +171,7 @@ function WikiViewer() {
                         return(
                             <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
                                 <WikiBox 
-                                title={item.title} content={item.content} index={item.index} section={item.section}
+                                title={item.title} content={item.content} index={item.index} section={item.section} main={title}
                                 />
                             </div>
                         );

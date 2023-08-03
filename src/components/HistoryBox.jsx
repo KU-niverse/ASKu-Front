@@ -24,7 +24,7 @@ const HistoryBox = (props) => {
 
     const handleRollback = async() => {
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`http://118.67.130.57:8080/wiki/historys/${title}/version/${version}`, {
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if(result.status === 200){

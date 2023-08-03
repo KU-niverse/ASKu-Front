@@ -48,7 +48,7 @@ const HistoryDiff = () => {
 
   const compareHistory = async () => {
     try{
-        const result = await axios.get(`http://localhost:8080/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`, {
+        const result = await axios.get(`http://118.67.130.57:8080/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`, {
             withCredentials: true
         });
         if(result.status === 200){
