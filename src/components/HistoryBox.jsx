@@ -22,8 +22,8 @@ const HistoryBox = (props) => {
         nav(`/wiki/preview/${title}/${version}`);
     }
 
-    const handleRollback = async(e) => {
-        e.preventDefault();
+    const handleRollback = async() => {
+        
         try{
             const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
                 withCredentials: true,
@@ -35,10 +35,10 @@ const HistoryBox = (props) => {
                 alert('something went wrong');
             }
         } catch (error) {
-            if(error.status === 401){
+            if(error.response.status === 401){
                 alert('로그인');
                 nav('/signin');
-            } else if(error.status === 432){
+            } else if(error.response.status === 432){
                 alert(error.response.data.message);
             }
         }

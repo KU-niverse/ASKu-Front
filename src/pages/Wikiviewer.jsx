@@ -84,6 +84,10 @@ function WikiViewer() {
         setIsBookmark(!isBookmark);
     }
 
+    const linkToHistory = () => {
+        nav(`/history/${title}`)
+    }
+
     const linkToAllEdit = () => {
         nav(`/wikiedit/${title}/all`)
     }
@@ -116,7 +120,7 @@ function WikiViewer() {
                   </h1>
                   <div className={styles.wikititleBtn}>
                     <button><img src={debate}/>&nbsp;토론하기</button>
-                    <button><img src={his}/>&nbsp;히스토리</button>
+                    <button onClick={linkToHistory}><img src={his}/>&nbsp;히스토리</button>
                   </div>
                </div>
                <div className={styles.wikiBoxLists}>
