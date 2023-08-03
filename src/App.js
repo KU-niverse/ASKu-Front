@@ -43,7 +43,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
-                <Route path="/wikiedit/:title/:section" element={<WikiEdit />} />
+                <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
                 <Route path="/questionedit" element={<QuestionEdit />} />
                 <Route
                   path="/wikiedit/:id"
@@ -54,7 +54,7 @@ function App() {
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path='/wiki/preview/:title/:ver' element={<WikiPreview/>} />
-                <Route path="/history" element={<History />} />
+                <Route path="/history/:title" element={<History />} />
                 <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 
 

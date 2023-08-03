@@ -22,24 +22,24 @@ const HistoryBox = (props) => {
         nav(`/wiki/preview/${title}/${version}`);
     }
 
-    const handleRollback = async() => {
+    const handleRollback = async(e) => {
+        e.preventDefault();
         try{
-            const result = await axios.post(`http://118.67.130.57:8080/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if(result.status === 200){
                 alert(result.data.message);
                 nav(`/wiki/${title}`);
-            } else
-            {
+            } else{
                 alert('something went wrong');
             }
         } catch (error) {
             if(error.status === 401){
-                alert(error.data.message);
+                alert('로그인');
                 nav('/signin');
             } else if(error.status === 432){
-                alert(error.data.message);
+                alert(error.response.data.message);
             }
         }
     };

@@ -12,6 +12,7 @@ import answ from '../img/answ.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
+import WikiToHtml from '../components/Wiki/WikiToHtml';
 
 function WikiViewer() {
     const myDivRef = useRef([]);
@@ -87,10 +88,10 @@ function WikiViewer() {
         nav(`/wikiedit/${title}/all`)
     }
 
-
+    //contents가 비었으면 글이라도 띄우도록. 
     const getWiki = async () => {
         try{
-            const result = await axios.get(`http://118.67.130.57:8080/wiki/contents/${title}`);
+            const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
             setAllText(result.data.text);
             setAllContent(result.data.contents);
         } catch (error) {
@@ -143,13 +144,13 @@ function WikiViewer() {
                     <div className={styles.quesWrap}>
                             {Ques.map((item) => {
                                 return(
-                                    <p>
+                                    <div>
                                      <hr></hr>
                                      <ul key={item.title}>
                                         <span className={styles.quesTitle}>{item.title}</span>
                                         <span className={styles.quesNum}>{item.number}<img src={answ}/></span>
                                      </ul>
-                                    </p>
+                                    </div>
                                 );
                             })}
 

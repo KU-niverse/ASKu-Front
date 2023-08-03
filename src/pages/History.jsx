@@ -5,6 +5,7 @@ import his2 from '../img/his2.png'
 import HistoryBox from '../components/HistoryBox'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 
 
@@ -37,14 +38,14 @@ const data = [
 
 const History = (props) => {
 
-    const title = '입실렌티'
+    const {title} = useParams();
     const [lists, setLists] = useState([]);
 
     
 
     const getWiki = async () => {
         try{
-            const result = await axios.get(`http://118.67.130.57:8080/wiki/historys/${title}`, {
+            const result = await axios.get(`http://localhost:8080/wiki/historys/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){

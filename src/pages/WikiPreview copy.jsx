@@ -12,6 +12,7 @@ import answ from '../img/answ.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
+import WikiToHtml from '../components/Wiki/WikiToHtml';
 
 function WikiViewer() {
     const {title, ver} = useParams();
@@ -87,8 +88,8 @@ function WikiViewer() {
     const getWiki = async () => {
         try{
             const result = await axios.get(`http://localhost:8080/wiki/historys/${title}/version/${ver}`);
-            setAllText(result.data.text);
-            setAllContent(result.data.contents)
+            setAllText(WikiToHtml(result.data.jsonData.text));
+            setAllContent(result.data.contents);
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
@@ -121,27 +122,19 @@ function WikiViewer() {
                         <button>전체 편집</button>
                     </div>
                     <div>
-                        {allContent.map((item) => {
+                        {/* {allContent.map((item) => {
                             return(
                                 <li onClick={() => handleClick(item.section)} key={item.section}>
                                     <span className={styles.wikiIndex}>{item.index}</span> {item.title}
                                 </li>
                             );
-                        })} 
+                        })}  */}
                     </div>
                     
                 </div>
                </div>
-               <div className={styles.wikicontent}>
-                    {allContent.map((item) => {
-                        return(
-                            <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
-                                <WikiBox 
-                                title={item.title} content={item.content} index={item.index} section={item.section}
-                                />
-                            </div>
-                        );
-                    })}
+               <div  className={styles.wikicontent}>
+                    <div dangerouslySetInnerHTML={{ __html: allText }}></div>
                </div>
             </div>
         </div>

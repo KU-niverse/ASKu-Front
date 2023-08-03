@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import WikiToHtml from './WikiToHtml';
+import WikiToHtml from './Wiki/WikiToHtml';
 import styles from './WikiBox.module.css'
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 
