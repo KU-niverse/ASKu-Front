@@ -51,23 +51,24 @@ const lists = [
 
 const SearchResearch = () => {
 
-    const [isClicked, setIsClicked] = useState(true);
+    const [isClicked, setIsClicked] = useState(true); //true: 문서 false: 질문
 
     const {title} = useParams();
-    const [results, setResults] = useState([])
+    const [docs, setDocs] = useState([]);
+    const [ques, setQues] = useState([]);
 
     const handleButtonClick = () => {
         setIsClicked(!isClicked);
       };
 
 
-      const getWiki = async () => {
+      const getDocs = async () => {
         try{
             const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
-                setResults(result.data);
+                setDocs(result.data);
             }
             
         } catch (error) {
@@ -76,9 +77,27 @@ const SearchResearch = () => {
         }
     };
 
+    const getQues = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setQues(result.data);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    };
+
+    
+
     useEffect(() => {
 
-        getWiki();
+        getDocs();
+        getQues();
 
     }, []);
     
@@ -101,7 +120,7 @@ const SearchResearch = () => {
             <div className={styles.contents}>
                 <div className={styles.boxes}>
                     <div className={isClicked ? 'default': styles.hidden}>
-                        {results.map((item) => {
+                        {docs.map((item) => {
                             return(
                                 <div key={item.title}>
                                     <ResultBox
@@ -113,10 +132,11 @@ const SearchResearch = () => {
                         })}
                     </div>
                     <div className={isClicked ? styles.hidden : 'default'}>
-                        {data.map((item) => {
+                        {ques.map((item) => {
                             return(
-                                <div key={item.title}>
+                                <div key={item.id}>
                                     <QuestionFor
+                                    content={item.content}
                                     />
                                 </div>
                             );
