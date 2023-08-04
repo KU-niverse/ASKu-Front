@@ -68,7 +68,7 @@ const SearchResearch = () => {
                 withCredentials: true
             });
             if(result.status === 200){
-                setDocs(result.data.message);
+                setDocs(result.message);
             }
             
         } catch (error) {

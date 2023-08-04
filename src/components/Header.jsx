@@ -38,6 +38,7 @@ function Header() {
                                 e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
                                 if (inputValue.trim() !== '') {
                                     window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                    setInputValue('');
                                 }
                             }
                         }} />
@@ -48,6 +49,7 @@ function Header() {
                         onClick={() => {
                                 if (inputValue.trim() !== '') {
                                     window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                    setInputValue('');
                                 }
                             }} />
                     </div>
