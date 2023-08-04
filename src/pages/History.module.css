@@ -1,3 +1,6 @@
+.hidden{
+  display: none;
+}
 .header {
     display: flex;
     justify-content: center;
@@ -6,7 +9,16 @@
     height: 80px;
     width : 100%;
   }
-  
+  .historyBtn{
+    width: 74%;
+    margin-left: 13%;
+    height: auto;
+    display: flex;
+  }
+  .historyBtn p{
+    margin: 0px 10px 0px 10px;
+    cursor: pointer;
+  }
   .header span{
     font-size: 30px;
     font-weight:bolder;

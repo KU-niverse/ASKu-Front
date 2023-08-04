@@ -7,8 +7,10 @@ import hamburger from '../img/hamburger.png';
 import alarm from '../img/bell.png';
 import bookmark from '../img/bookmark_grey.png';
 import mypage from '../img/mypage_btn.png';
+import { useState } from 'react';
 
 function Header() {
+    const [inputValue, setInputValue] = useState('');
     return (
         <div className={styles.container}>
             <div className={styles.headerContainer}>
@@ -27,8 +29,27 @@ function Header() {
                         </Link>
                     </div>
                     <div className={styles.inputContainer}>
-                        <input className={styles.headerInput} placeholder='검색어를 입력하세요.' />
-                        <img src={searchIcon} alt='icon' className={styles.searchIcon} />
+                        <input
+                        className={styles.headerInput}
+                        placeholder='검색어를 입력하세요.'
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') { // 엔터키를 누를 때
+                                e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
+                                if (inputValue.trim() !== '') {
+                                    window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                }
+                            }
+                        }} />
+                        <img
+                        src={searchIcon}
+                        alt='icon'
+                        className={styles.searchIcon}
+                        onClick={() => {
+                                if (inputValue.trim() !== '') {
+                                    window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                }
+                            }} />
                     </div>
                     <div className={styles.navContainer_right}>
                         {/* <Link to='/signup'>
@@ -37,7 +58,11 @@ function Header() {
                         <Link to='/signin'>
                             <button className={styles.headerButton}>로그인</button>
                         </Link> */}
-                        <img src={bookmark} alt='bookmark_gray' className={styles.signinButton} />
+                        <img 
+                        src={bookmark}
+                        alt='bookmark_gray'
+                        className={styles.signinButton}
+                        onClick={() => window.location.href = '/mybookmark'} />
                         <img src={alarm} alt='alarm' className={styles.signinButton} />
                         <button className={styles.headerButton}>로그아웃</button>
                         <Link to='/mypage'>

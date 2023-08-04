@@ -37,10 +37,27 @@ function Home({loggedIn, setLoggedIn}) {
             <div className={styles.homeWrap}>
                 <img src={logo} className={styles.logo} alt="logo" />
                 <div className={styles.inputContainer}>
-                    <input className={styles.searchInput} placeholder='검색어를 입력하세요.' onChange={(e) => setInputValue(e.target.value)} />
-                    <Link to = {`/wikiviewer/${inputValue}`}>
-                        <img src={searchIcon} alt='icon' className={styles.searchIcon} />
-                    </Link>
+                    <input 
+                        className={styles.searchInput} 
+                        placeholder='검색어를 입력하세요.' 
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') { // 엔터키를 누를 때
+                                e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
+                                if (inputValue.trim() !== '') {
+                                    window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                }
+                            }
+                        }} />
+                        <img 
+                            src={searchIcon}
+                            alt='icon'
+                            className={styles.searchIcon}
+                            onClick={() => {
+                                if (inputValue.trim() !== '') {
+                                    window.location.href = `/result/${inputValue}`; // 페이지 이동
+                                }
+                            }} />
                 </div>
                 <div className={styles.chatBotContainer}>
                     <Chatbot />

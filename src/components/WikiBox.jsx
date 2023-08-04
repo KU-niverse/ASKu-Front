@@ -1,27 +1,27 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import WikiToHtml from './WikiToHtml';
+import WikiToHtml from './Wiki/WikiToHtml';
 import styles from './WikiBox.module.css'
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 
-const WIkiBox = (props) => {
-
+const WikiBox = (props) => {
+    const main = props.main;
     const title = props.title;
     const content = WikiToHtml(props.content);
     const index = props.index
     const section = props.section;
-    const Navigator = useNavigate();
+    const nav = useNavigate();
     const [isOpen, setView] = useState(true);  // 메뉴의 초기값을 false로 설정
 
 
 
     const linkToWikiEdit = () => {
-        Navigator(`/wikiedit/${section}`, {state: section});
+        nav(`/wikiedit/${main}/${section}`);
     
     }
     const linkToWikiQue = () => {
-        Navigator(`/wikiedit/${section}`, {state: section});
+        nav(`/questionedit/${main}/${section}`);
     
     }
   
@@ -52,4 +52,4 @@ const WIkiBox = (props) => {
     )
 }
 
-export default WIkiBox
+export default WikiBox
