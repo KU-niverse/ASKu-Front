@@ -7,10 +7,11 @@ import styles from './Home.module.css';
 import searchIcon from '../img/search_icon.png';
 import chatBotBtn from '../img/chatBotBtn.png';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function Home({loggedIn, setLoggedIn}) {
+    const [inputValue, setInputValue] = useState(''); 
 //     const Navigate = useNavigate();
 //     useEffect(() => {
 //     const checkLoginStatus = async () => {
@@ -36,8 +37,10 @@ function Home({loggedIn, setLoggedIn}) {
             <div className={styles.homeWrap}>
                 <img src={logo} className={styles.logo} alt="logo" />
                 <div className={styles.inputContainer}>
-                    <input className={styles.searchInput} placeholder='검색어를 입력하세요.' />
-                    <img src={searchIcon} alt='icon' className={styles.searchIcon} />
+                    <input className={styles.searchInput} placeholder='검색어를 입력하세요.' onChange={(e) => setInputValue(e.target.value)} />
+                    <Link to = {`/wikiviewer/${inputValue}`}>
+                        <img src={searchIcon} alt='icon' className={styles.searchIcon} />
+                    </Link>
                 </div>
                 <div className={styles.chatBotContainer}>
                     <Chatbot />

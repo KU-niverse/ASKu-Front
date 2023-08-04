@@ -43,7 +43,7 @@ function LoginModal() {
                             <img src={closeBtn} alt='close' className={styles.close_btn} onClick={closeModal} />
                         </div>
                         <div className={styles.modal_content}>
-                            <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요</p>
+                            <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요!</p>
                             <img className={styles.haho_login} src={haho_login} alt="character" />
                             <Link to='/signin'>
                                 <button className={styles.signin}>로그인</button>
