@@ -7,6 +7,8 @@ function Spinner() {
             <div className={styles.loader}>
                 <img src={haho} alt="haho" className={styles.haho} />
             </div>
+            <p className={styles.text1}>답변 생성중입니다!</p>
+            <p className={styles.text2}>서버 환경에 따라 약 2분 정도 소요될 수 있습니다</p>
         </div>
     )
 }
