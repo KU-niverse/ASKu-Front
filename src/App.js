@@ -41,7 +41,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
                 <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
