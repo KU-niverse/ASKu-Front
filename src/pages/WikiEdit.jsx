@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import Editor from '../components/EditorComponent'
+import Editor from '../components/Quill'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import axios from 'axios';

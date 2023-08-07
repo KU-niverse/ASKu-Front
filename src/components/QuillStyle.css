@@ -1,0 +1,21 @@
+/* custom-styles.module.css */
+
+/* styles.css (or any other CSS file you're using) */
+
+/* Increase border thickness and set border-radius */
+/* Example using a more specific selector */
+.ql-toolbar.ql-snow {
+  border: 2px solid #ccc;
+  border-radius: 12px 12px 0px 0px;
+}
+.ql-container.ql-snow{
+  border: 2px solid #ccc;
+  border-radius: 0px 0px 12px 12px;
+}
+
+  
+  /* Adjust the focus border color if needed */
+  /* .react-quill:focus {
+    border-color: #333; /* Change this color as needed 
+  } */
+  
