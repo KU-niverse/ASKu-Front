@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import ChatbotMobile from './components/ChatbotMobile';
 import MyPage from './pages/MyPage';
 import WikiEdit from './pages/WikiEdit';
+import WikiAllEdit from './pages/WikiAllEdit';
+import QuestionEdit from './pages/QuestionEdit';
 import WikiCreate from './pages/WikiCreate';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
@@ -12,6 +14,7 @@ import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
 import MyBadge from './pages/MyBadge';
 import History from './pages/History';
+import HistoryDiff from './pages/HistoryDiff';
 import MoreQuestion from './pages/MoreQuestion';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
@@ -21,24 +24,28 @@ import QnA from './pages/QnA';
 import Debate from './pages/Debate'
 import MoreDebate from './pages/MoreDebate';
 import LatestDebate from './pages/LatestDebate';
-import { useState } from 'react';
 import FindId from './pages/FindId';
 import FindoutId from './pages/FindoutId';
 import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
+import AllHistory from './pages/AllHistory';
+import WikiPreview from './pages/WikiPreview';
+import { useState } from 'react';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
+    const [loggedIn, setLoggedIn] = useState(false);
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/result" element={<SearchResult />} />
+                <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/wikiviewer/:title" element={<WikiViewer />} />
-                <Route path="/wikiedit" element={<WikiEdit />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/wiki/:title" element={<WikiViewer />} />
+                <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
+                <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
+                <Route path="/questionedit" element={<QuestionEdit />} />
                 <Route
                   path="/wikiedit/:id"
                   element={
@@ -46,7 +53,10 @@ function App() {
                   }
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
-                <Route path="/history" element={<History />} />
+                <Route path="/allhistory" element={<AllHistory/>} />
+                <Route path='/wiki/preview/:title/:ver' element={<WikiPreview/>} />
+                <Route path="/history/:title" element={<History />} />
+                <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 
 
 

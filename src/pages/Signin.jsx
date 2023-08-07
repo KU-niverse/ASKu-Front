@@ -19,7 +19,7 @@ const Signin = () => {
 
     const userLogin = async () => {
         try{
-            const response = await axios.post('http://118.67.130.57:8080/user/auth/signin', {
+            const response = await axios.post('http://localhost:8080/user/auth/signin', {
                 login_id: id,
                 password: password,
             }, {
@@ -28,7 +28,7 @@ const Signin = () => {
             if (response.data.success) {
                 nav('/');
             } else {
-                return alert(response.data.message);
+                return alert('이상해');
             }
         } catch (error) {
             console.error(error);
@@ -36,7 +36,9 @@ const Signin = () => {
         }
     }
     
-    const handleOnClick = () => {
+    const handleOnSubmit = (e) => {
+
+        e.preventDefault();
 
         if (id === '' || password === ''){
             return alert('아이디 혹은 비밀번호를 제대로 입력해주세요')
@@ -52,7 +54,7 @@ const Signin = () => {
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <img className={`${styles.haho}`}src={haho_login} alt=''/>
         <h1 className={styles.login_headers}>LOGIN</h1>
-        <form>
+        <form onSubmit={handleOnSubmit}>
             <div className={`${styles.login_input}`}>
                 <input type='text' value={id} onChange={e => setId(e.target.value)} placeholder='아이디를 입력하세요'/>
                 <input type='text' value={password} onChange={e => setPassword(e.target.value)} placeholder='비밀번호를 입력하세요' />
@@ -60,7 +62,7 @@ const Signin = () => {
             <div className={`${styles.login_remem}`}>
                 <span><input type='checkbox' id='chkbox'/>아이디 기억하기</span>
             </div>
-            <button className={`${styles.login_btn}`} onClick={handleOnClick}>로그인</button>
+            <button className={`${styles.login_btn}`} type='submit'>로그인</button>
         </form>
         <div className={`${styles.login_signup}`}>
             <Link to="/signup">회원가입</Link>

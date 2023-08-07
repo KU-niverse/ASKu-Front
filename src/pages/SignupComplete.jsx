@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import styles from './SignupComplete.module.css';
 import logo from '../img/logo.png';
 import complete from '../img/Complete.png';
@@ -9,8 +9,8 @@ import axios from 'axios';
 
 
 const SignupComplete = () => {
-    const location = useLocation();
-    const authId = location.state;
+    
+    const {auth} = useParams();
     const nav = useNavigate();
 
     function goToLogin(){
@@ -22,8 +22,8 @@ const SignupComplete = () => {
 
     const authPost = async () => {
         try{
-            const response = await axios.post('http://118.67.130.57:8080/user/auth/signup/emailcheck', {
-                auth_uuid: authId
+            const response = await axios.post('http://localhost:8080/user/auth/signup/emailcheck', {
+                auth_uuid: auth,
             }, {
                 withCredentials: true
             });

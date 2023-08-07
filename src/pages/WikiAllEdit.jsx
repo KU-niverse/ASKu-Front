@@ -5,12 +5,12 @@ import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import WikiToHtml from '../components/Wiki/WikiToHtml';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
+import WikiToHtml from '../components/Wiki/WikiToHtml';
 
 
 const WikiEdit = () => {
-    const {main, section} = useParams();
+    const {title, section} = useParams();
     const nav = useNavigate();
     const [desc, setDesc] = useState('');
     const [wiki, setWiki] = useState('');
@@ -23,24 +23,17 @@ const WikiEdit = () => {
         console.log(desc);
     }
 
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = () => {
-        setIsChecked(prevIsChecked => !prevIsChecked);
-    }
-
 
     useEffect(() => {
-
 
         const getWiki = async () => {
             try{
 
-                const result = await axios.get(`http://localhost:8080/wiki/contents/${main}/section/${section}`,{
+                const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`,{
                     withCredentials: true,
                 }); //전체 텍스트를 가져옴.
                 if (result.status === 200){
-                    setDesc(WikiToHtml(result.data.title + "\n" + result.data.content));
+                    setDesc(WikiToHtml(result.data.text));
                     setVersion(result.data.version);
                 }
     
@@ -55,24 +48,19 @@ const WikiEdit = () => {
                 }
             }
         };
-        
+
         getWiki();
-        setCopy(false);
+        
         
     }, []);
-
 
     const addWikiEdit = async (e) => {
 
         e.preventDefault();
 
         const wikiMarkup = HtmlToWiki(desc);
-
-        if(isChecked === false){
-            return alert('개인정보 이용에 동의해주세요')
-        }
         try {
-            const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${section}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/contents/${title}`, {
                 version: version,
                 new_content: wikiMarkup,
                 summary: summary,
@@ -82,8 +70,8 @@ const WikiEdit = () => {
                 withCredentials: true,
             });
             if (result.status === 200){
-                alert("수정이 완료되었습니다.");
-                nav(`/wiki/${main}`);
+                alert('수정이 완료되었습니다.');
+                nav(`/wiki/${title}`);
             }
         } catch(error){
             if(error.response.status === 401){
@@ -108,7 +96,7 @@ const WikiEdit = () => {
                     <div>
                         <div className={`${styles.wikichar_title}`}>
                             <h4>문서 제목</h4>
-                            <input type='text' disabled='true' value={main} className={`${styles.title}`}/>
+                            <input type='text' disabled='true' value={title} className={`${styles.title}`}/>
                         </div>
                     </div>
                     <div>
@@ -117,10 +105,10 @@ const WikiEdit = () => {
                         <Editor value={desc} onChange={onEditorChange} />
                         </div>
                         <h4>히스토리 요약</h4>
-                        <textarea value={summary} onChange={e => setSummary(e.target.value)} className={`${styles.summary}`} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
+                        <textarea className={`${styles.summary}`} value={summary} onChange={e => setSummary(e.target.value)} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
                     </div>
                     <div className={`${styles.submitbox}`}>
-                        <span><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange}/>정책에 맞게 작성하였음을 확인합니다.</span>
+                        <span><input required type='checkbox' className={styles.chkbox}/>정책에 맞게 작성하였음을 확인합니다.</span>
                         <input type='submit' value="생성하기" className={`${styles.submitWiki}`} />
                     </div>
                 </form>

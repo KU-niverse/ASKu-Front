@@ -2,6 +2,8 @@ import React from 'react'
 import BookmarkBox from '../components/BookmarkBox'
 import Header from '../components/Header'
 import styles from './MyBookmark.module.css'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 
 
 const data = [
@@ -28,6 +30,31 @@ const data = [
 ]
 
 const MyBookmark = () => {
+
+    const [lists, setLists] = useState([]);
+
+    const getBookmarks = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/wiki/favorite`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                setLists(result.data.message);
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    };
+
+    useEffect(() => {
+
+        getBookmarks();
+
+    }, []);
+
+
   return (
     <div className={styles.container}>
             <Header/>
@@ -37,11 +64,11 @@ const MyBookmark = () => {
                 <div className={styles.texts}><span>문서</span><div className={styles.number}>12</div></div>
             </div>
             <div>
-                {data.map((item) => {
+                {lists.map((item) => {
                     return(
                         <div key={item.title}>
                             <BookmarkBox
-                            title={item.title} content={item.content} bookmark={item.bookmark}
+                            title={item.title} content={item.content} deleted={item.is_deleted}
                             />
                         </div>
                     );
