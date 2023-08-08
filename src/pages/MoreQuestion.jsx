@@ -19,7 +19,7 @@ const MoreQuestion = () => {
   useEffect(() => {
     const takeQuestion = async () =>{
       try{
-        const res = await axios.get( `http://118.67.130.57:8080/question/view/${title}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080/question/view/${title}`, {withCredentials: true});
         if(res.status === 200){
           setQuestionData(res.data);
         }
@@ -29,6 +29,7 @@ const MoreQuestion = () => {
       }catch (error){
         console.error(error);
       }
+      console.log('questionData:', questionData);
     }
     takeQuestion();
   }, [title]); //질문 목록 가져오기
@@ -39,7 +40,7 @@ const MoreQuestion = () => {
  
   const handleQuestionSubmit = async (questionData) => {
     try {
-      const response = await axios.post(`http://118.67.130.57:8080/question/new/${title}`, questionData);
+      const response = await axios.post(`http://localhost:8080/question/new/${title}`, questionData);
       setData(response.data);
     } catch (error) {
       console.error(error);

@@ -2,7 +2,7 @@ import styles from "./MyProfile.module.css"
 import haho from "../../img/haho.png"
 
 
-function MyProfile({nick, point}){
+function MyProfile({nick, point, badge, percent}){
   return(
     <div>
       <div className={styles.profileimg}>
@@ -15,13 +15,13 @@ function MyProfile({nick, point}){
         </div>
         <div className={styles.rowbadge}>
           <span className={styles.rowtitle}>대표 뱃지</span>
-          <span className={styles.text}>질문왕</span>
+          <span className={styles.text}>{badge}</span>
         </div>
         <div className={styles.rowpoint}>
           <span className={styles.rowtitle}>포인트</span>
           <div className={styles.text}>
             <span className={styles.point}>{point}p</span> 
-            <span className={styles.rank}> &nbsp;&nbsp;&nbsp;상위 10%</span>
+            <span className={styles.rank}> &nbsp;&nbsp;&nbsp;상위 {percent}%</span>
           </div>
         </div>
       </div>

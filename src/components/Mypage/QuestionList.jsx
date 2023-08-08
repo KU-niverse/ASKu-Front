@@ -1,6 +1,6 @@
 import styles from "./QuestionList.module.css"
 
-function Question({id, content, time, doc_title}){
+function QuestionList({id, content, time, doc_title}){
   return(
     <div className={styles.ask_list}>
       <span className={styles.ask_icon}>Q.</span>
@@ -9,4 +9,4 @@ function Question({id, content, time, doc_title}){
   )
 }
 
-export default Question;
+export default QuestionList;
