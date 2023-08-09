@@ -7,14 +7,14 @@ import ThreedotsMenu from "./ThreedotsMenu"
 
 
 
-function Question({id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad}){
+function Question({id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick}){
   const formattedDate = FormatDate(created_at);
 
   return(
         <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
-              <span className={styles.q_mynick}>{user_id}</span>
+              <span className={styles.q_mynick}>{nick}</span>
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>

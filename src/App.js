@@ -73,8 +73,8 @@ function App() {
                 <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
-                <Route path="/wikiviewer/morequestion/:title" element={<MoreQuestion/>}/>
-                <Route path="/wikiviewer/qna" element={<QnA/>}/>
+                <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>
+                <Route path="/wiki/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
                 <Route path="/debate" element={<Debate/>}/>

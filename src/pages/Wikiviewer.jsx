@@ -213,10 +213,10 @@ function WikiViewer() {
 
                     </div>
                     <div className={styles.wikiaskFoot}>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${title}`}>
                             <button  className={styles.addQues}>나도 질문하기</button>
                         </Link>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${title}`}>
                             <button   className={styles.moreQues}>더보기</button>
                         </Link>
                     </div>

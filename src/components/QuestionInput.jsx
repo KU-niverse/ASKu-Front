@@ -4,14 +4,36 @@ import styles from "./QuestionInput.module.css"
 import DropDown from "./DropDown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 
 function QuestionInput({onQuestionSubmit}) {
   const [questionContent, setQuestionContent] = useState('');
-
+  const [selectedOption, setSelectedOption] = useState(null); // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate(); 
 
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
 
+
+  //dropdown에서 선택한 index 반영
+  const handleSelectedOption = (optionValue) => {
+    setSelectedOption(optionValue);
+  };
 
 
   const handleChange = (e) => {
@@ -21,54 +43,50 @@ function QuestionInput({onQuestionSubmit}) {
     }
   };
 
-  const checkLoginStatus = async () => {
-    try {
-        const res = await axios.get("http://118.67.130.57:8080/user/auth/issignedin", {withCredentials: true});
-        if (res.status===201 && res.data.success===true) {
-            setLoggedIn(true);
-        } else if(res.status === 401){
-            setLoggedIn(false);
-            Navigate('/signin');
-        }
-    } catch (error) {
-        console.error(error);
-        setLoggedIn(false);
-       Navigate('/signin');
-    }
+
+  const submitData = {
+    index_title: selectedOption,
+    content: questionContent,
   };
 
+
+
   const handleSubmit= async (event) => {
-    event.preventDefault(); // 폼 제출을 막음
-    await checkLoginStatus();
     if (!loggedIn) {
       alert("로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다.");
       Navigate("/signin")
       return;
       }
-    //로그인 안한 유저 로그인창으로 전송
+    // 로그인 안한 유저 로그인창으로 전송
+    if (!selectedOption) {
+      alert("목차를 선택해 주세요.");
+      return;
+    }
     if(questionContent.trim()===''){
       alert('질문을 입력해주세요.');
       return;
     }
   
-  const questionData = {
-    index_title: 1,
-    content: questionContent,
-  };
 
-  onQuestionSubmit(questionData);
+
+  onQuestionSubmit(submitData);
   };
 
   const countCharacters = () =>{
     return `${questionContent.length}/200`;
   }
+
+
+
+
+
   return(
     <form className={styles.q_c}>
     <div className={styles.q_cheader}>
       <div className={styles.q_cfrontheader}>
         <p className={styles.q_cheadline}>질문 생성하기</p>
         <div className={styles.q_dropdown}>
-          <DropDown/>
+          <DropDown onSelectedOption={handleSelectedOption}/>
         </div>
       </div>
     </div>

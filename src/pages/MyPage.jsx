@@ -16,10 +16,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-
 function MyPage({ loggedIn, setLoggedIn }) {
   const [loading, setLoading] = useState(true);
   const [myContribute, setMyContribute] = useState([]);
@@ -98,7 +94,10 @@ function MyPage({ loggedIn, setLoggedIn }) {
             <div className={styles.profile}>
               <div className={styles.profileheader}> 
                 <p className={styles.title}>내 프로필</p>
+                <Link to='/changeinfo'className={styles.edit_link} >
                 <button className={styles.edit}>수정하기</button>
+                </Link>
+
               </div>
 
               {mypageData && mypageData.message && myContribute &&myContribute.message && (
@@ -147,8 +146,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 />
               )}
               <div className={styles.infoedit}>
+                  <Link to='/changepw/:auth' >
                   <button className={styles.edit2}>비밀번호 변경</button>
+                  </Link>
+                  <Link to='/changeinfo' >
                   <button className={styles.edit3}>개인정보 변경</button>
+                  </Link>
               </div>
             </div>
             <div className={styles.cb}>
