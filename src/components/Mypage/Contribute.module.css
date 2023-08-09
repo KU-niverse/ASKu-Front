@@ -5,12 +5,12 @@
 }
 
 .cb_front{
-  width: 60%;
+  width: 55%;
   color: black;
   font-weight: bold;
 }
 .cb_back{
-  width: 40%;
+  width: 45%;
   justify-content: flex-end;
   text-align: right;
 }
@@ -21,7 +21,7 @@
 }
 
 .cb_time{
-  margin-left: 30px;
+  margin-left: 15px;
   color : rgba(116, 116, 116, 1); 
 
 }

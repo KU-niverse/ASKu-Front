@@ -7,8 +7,7 @@ import SwitchBadge from '../components/SwitchBadge';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-
-
+import SpinnerMypage from '../components/SpinnerMypage';
 
 function MyBadge() {
   const [loading, setLoading] = useState(true);
@@ -61,7 +60,7 @@ function MyBadge() {
 
   // 로딩 중일 때 표시할 컴포넌트
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div><SpinnerMypage/></div>; 
   }
 
 
@@ -80,19 +79,20 @@ function MyBadge() {
           <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
         </div>
         <div className={styles.b_list}>
-          {myBadge.length > 0 ? (
-            myBadge.map((data) => (
-              <Badge
-                key={data.id} // key prop 추가 (반복되는 엘리먼트는 고유한 key prop을 가져야 함)
-                id={data.id}
-                user_id={data.user_id}
-                badge_id={data.badge_id}
-                time={data.created_at}
-              />
-            ))
-          ) : (
-            <p>아직 획득한 뱃지가 없습니다.</p>
-          )}
+          {myBadge && myBadge.message && myBadge.message.length === 0 ? (
+            <p>아직 획득한 뱃지가 없습니다.</p>)
+            : (
+              myBadge&& myBadge.message&& myBadge.message.map((data) => (
+                <Badge
+                  key={data.id} // key prop 추가 (반복되는 엘리먼트는 고유한 key prop을 가져야 함)
+                  id={data.id}
+                  user_id={data.user_id}
+                  badge_id={data.badge_id}
+                  time={data.created_at}
+                />
+              ))
+            ) 
+          }
         </div>
       </div>
       <div>

@@ -9,10 +9,11 @@ import { useState } from 'react';
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 const MoreQuestion = () => {
   
-  const title="멀틱스";
+  const { title } = useParams();
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   useEffect(() => {
@@ -80,7 +81,7 @@ const MoreQuestion = () => {
           </div>
         </div>
         <div>
-          <QuestionInput onQuestionSubmit={handleQuestionSubmit}/>
+          <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title}/>
           {data && <p>결과: {data}</p>}
         </div>
         <div>

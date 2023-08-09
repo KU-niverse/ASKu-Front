@@ -7,9 +7,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 
-function DropDown({onSelectedOption}) {
+function DropDown({onSelectedOption, title}) {
 
-  const title="멀틱스";
   const [wikiData, setWikiData] = useState([]);
   useEffect(() => {
     const takeWikiData = async () =>{

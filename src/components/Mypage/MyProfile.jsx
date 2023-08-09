@@ -6,7 +6,7 @@ function MyProfile({nick, point, badge, percent}){
   return(
     <div>
       <div className={styles.profileimg}>
-        <img className={styles.profileimg_content} src={haho} alt='haho'/>
+        <img className={styles.profileimg_content} src={badge} alt='haho'/>
       </div>
       <div className={styles.profilerow}>
         <div className={styles.rownick}>

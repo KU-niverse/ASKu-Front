@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import SpinnerMypage from '../components/SpinnerMypage';
 
 function MyPage({ loggedIn, setLoggedIn }) {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const [myQuestion, setMyQuestion] = useState([]);
   const [myDebate, setMyDebate] = useState([]);
   const [myBadge, setMyBadge] = useState([]);
+  const [myWiki, setMyWiki] = useState([]);
 
   //login status 체크하기
   const Navigate = useNavigate();
@@ -41,9 +43,13 @@ function MyPage({ loggedIn, setLoggedIn }) {
       Navigate('/signin');
     }
   };
-  checkLoginStatus();
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+//
 
 
+//데이터 불러오기
   useEffect(() => {
     const getData = async (url, stateSetter) => {
       try {
@@ -65,6 +71,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
     getData('http://localhost:8080/user/mypage/questionhistory', setMyQuestion);
     getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
     getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
+    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
     getData('http://localhost:8080/wiki/contributions', setMyContribute);
   }, []);
 
@@ -73,12 +80,16 @@ function MyPage({ loggedIn, setLoggedIn }) {
   console.log(mypageData)
   console.log(myDebate)
   console.log(myQuestion)
+  console.log(myWiki)
+//
 
 
-  // 로딩 중일 때 표시할 컴포넌트
+// 로딩 중일 때 표시할 컴포넌트
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div><SpinnerMypage/></div>; 
   }
+//
+
 
   return (
     <div className={styles.container}>
@@ -88,7 +99,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
       <div className={styles.header}>
         <p className={styles.mypage}>MYPAGE</p>
       </div>
-      <div className={styles.mypagecontent}>
+      <div className={`${styles.mypagecontent}`}>
         <div className={styles.uppercontent}>
           <div className={styles.leftcontent}>
             <div className={styles.profile}>
@@ -117,19 +128,17 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 <button className={styles.edit}> 더보기</button>
                 </Link>
               </div>
-              {myBadge && myBadge.message &&myBadge.message.length === 0 ? (
-              <p>아직 획득한 뱃지가 없습니다.</p>
-              ) : (
-                myBadge && myBadge.message && myBadge.message.map((badge) => (
-                  <MyBadge
-                    key={badge.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-                    id={badge.id}
-                    user_id={badge.user_id}
-                    badge_id={badge.badge_id}
-                    time={badge.created_at}
-                  />
-                ))
-              )}
+
+
+              <div className={styles.badgegrid}>
+                {myBadge && myBadge.message &&myBadge.message.length === 0 ? (
+                <p>아직 획득한 뱃지가 없습니다.</p>
+                ) : (
+                  myBadge && myBadge.message && myBadge.message.map((badge) => (
+                    <img key={badge.id} src={badge.badge_id} alt='haho'/>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         
@@ -159,12 +168,31 @@ function MyPage({ loggedIn, setLoggedIn }) {
               <div className={styles.graph}>
                 <Graph />
               </div>
-              <Contribute/>   
+              {myWiki&&myWiki.message&&myWiki.message.length===0 ? (
+                <p>아직 기여한 내력이 없습니다.</p>
+              ) : (
+                myWiki&&myWiki.message&&myWiki.message.slice(0,5).map((wiki)=>(
+                  <Contribute
+                    key={wiki.id}
+                    user_id={wiki.user_id}
+                    doc_id={wiki.doc_id}
+                    text_pointer={wiki.textpointer}
+                    version={wiki.version}
+                    summary={wiki.summary}
+                    created_at={wiki.created_at}
+                    count={wiki.count}
+                    diff={wiki.diff}
+                    is_bad={wiki.is_bad}
+                    is_rollback={wiki.is_rollback}
+                    is_q_based={wiki.is_q_based}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
-        <div className={styles.middlecontent}>
-          <div className={styles.ask}>
+        <div className={`${styles.middlecontent}`}>
+          <div className={`${styles.ask}`}>
             <div className={styles.askheader}>
               <p className={styles.title}>내가 쓴 질문</p>
               <Link to='/mypage/myquestion' className={styles.q_link}>
@@ -174,7 +202,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
             {myQuestion && myQuestion.message && myQuestion.message.length === 0 ? (
               <p>아직 작성한 질문이 없습니다.</p>
             ) : (
-              myQuestion && myQuestion.message && myQuestion.message.map((question) => (
+              myQuestion && myQuestion.message && myQuestion.message.slice(0,5).map((question) => (
                 <QuestionList
                   key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                   id={question.id}
@@ -186,7 +214,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
             )}
           </div>
         </div>
-        <div className={styles.downcontent}>
+        <div className={`${styles.downcontent}`}>
           <div className={styles.comment}>
             <div className={styles.commentheader}>
               <p className={styles.title}>내가 쓴 토론</p>
@@ -197,7 +225,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
             {myDebate && myDebate.message && myDebate.message.length === 0 ? (
               <p>아직 작성한 토론이 없습니다.</p>
             ) : (
-              myDebate && myDebate.message && myDebate.message.map((debate) => (
+              myDebate && myDebate.message && myDebate.message.slice(0,5).map((debate) => (
                 <CommentList
                   key={debate.id}
                   id={debate.id}
