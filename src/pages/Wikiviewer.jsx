@@ -14,6 +14,60 @@ import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
 
+
+// const Ques = [
+//     {
+//         'index' : '1.',
+//         'number': '1',
+//         'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
+//     },
+//      {
+//         'index' : '2.',
+//         'number': '2',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+         
+//      },
+//      {
+//          'index' : '3.',
+//          'number': '3',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+//      },
+//      {
+//          'index': '4.',
+//          'number': '4',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+//      },
+//  ]
+
+
+//  const data = [
+//     {
+//         'index' : '1.',
+//         'section': '1',
+//         'title': '일번항목',
+//         'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//     },
+//      {
+//         'index' : '2.',
+//         'section': '2',
+//          'title': '이번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//      {
+//          'index' : '3.',
+//          'section': '3',
+//          'title': '삼번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//      {
+//          'index': '4.',
+//          'section': '4',
+//          'title': '사번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//  ]
+
+
 function WikiViewer() {
     const myDivRef = useRef([]);
     const nav = useNavigate();
@@ -23,57 +77,6 @@ function WikiViewer() {
     const [allText, setAllText] = useState('');
     const [allContent, setAllContent] = useState([]);
 
-    const Ques = [
-        {
-            'index' : '1.',
-            'number': '1',
-            'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
-        },
-         {
-            'index' : '2.',
-            'number': '2',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-             
-         },
-         {
-             'index' : '3.',
-             'number': '3',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-         },
-         {
-             'index': '4.',
-             'number': '4',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-         },
-     ]
-
-
-     const data = [
-        {
-            'index' : '1.',
-            'section': '1',
-            'title': '일번항목',
-            'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-        },
-         {
-            'index' : '2.',
-            'section': '2',
-             'title': '이번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-         {
-             'index' : '3.',
-             'section': '3',
-             'title': '삼번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-         {
-             'index': '4.',
-             'section': '4',
-             'title': '사번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-     ]
 
      function handleClick(index) {
         myDivRef.current[index].scrollIntoView({ behavior: "smooth" });
@@ -83,6 +86,7 @@ function WikiViewer() {
     const [deleted, setDeleted] = useState(true);
     const [imageSource, setImageSource] = useState(falseBk);
 
+    //북마크 추가
     const addBookmark = async () => {
         try{
             const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
@@ -106,7 +110,7 @@ function WikiViewer() {
         }
       };
   
-  
+      //북마크 해제
       const deleteBookmark = async () => {
         try{
             const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
@@ -125,6 +129,7 @@ function WikiViewer() {
         }
       };
 
+    // 북마크 이미지 변경
     function handleClickBookmark() {
         // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
       if(deleted === false){
@@ -138,6 +143,7 @@ function WikiViewer() {
       }
     }
 
+    //버튼 링크 연결 함수들
     const linkToHistory = () => {
         nav(`/history/${title}`)
     }
@@ -147,6 +153,7 @@ function WikiViewer() {
     }
 
     //contents가 비었으면 글이라도 띄우도록. 
+    //위키 데이터 가져오기
     const getWiki = async () => {
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
@@ -157,6 +164,9 @@ function WikiViewer() {
             //alert(result.data.message);
         }
     };
+
+    //질문 데이터 가져오기
+    
 
     useEffect(() => {
         getWiki();
@@ -199,7 +209,7 @@ function WikiViewer() {
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
                     <div className={styles.quesWrap}>
-                            {Ques.map((item) => {
+                            {allContent.map((item) => {
                                 return(
                                     <div>
                                      <hr></hr>
@@ -210,6 +220,7 @@ function WikiViewer() {
                                     </div>
                                 );
                             })}
+                            <div>아직 질문이 없습니다. 질문을 생성해 주세요</div>
 
                     </div>
                     <div className={styles.wikiaskFoot}>
