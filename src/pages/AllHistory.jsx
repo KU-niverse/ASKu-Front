@@ -62,7 +62,7 @@ const AllHistory = () => {
         setType('create');
     }
     const rollBtn = () =>{
-        setType('roll');
+        setType('rollback');
     }
    
     function formatTimeAgo(timeDifference) {
@@ -89,9 +89,15 @@ const AllHistory = () => {
             <span><img src={his2}/>히스토리</span>
         </div>
         <div className={styles.history}>
-            <div className={styles.historyBtn}><p onClick={allBtn}>all</p><p onClick={createBtn}>create</p><p onClick={rollBtn}>rollback</p></div>
             <div className={type === 'all' ? styles.historyList : styles.hidden}>
-                <div className={styles.historyTitle}><p className={styles.listTitle2}>최근 변경된 모든 문서</p></div>
+                <div className={styles.historyTitle}>
+                    <p className={styles.listTitle2}>최근 변경된 모든 문서</p>
+                    <div className={styles.historyTypes}>
+                        <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>all</p>
+                        <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>create</p>
+                        <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
+                    </div>
+                </div>
                 {historys.map((item) => {
                     const inputDate = new Date(item.created_at);
                     const currentDate = new Date();
@@ -107,7 +113,14 @@ const AllHistory = () => {
                 })}
             </div>
             <div className={type === 'create' ? styles.historyList : styles.hidden}>
-                <div className={styles.historyTitle}><p className={styles.listTitle2}>새로 생성된 모든 문서</p></div>
+                <div className={styles.historyTitle}>
+                    <p className={styles.listTitle2}>새로 생성된 모든 문서</p>
+                    <div className={styles.historyTypes}>
+                        <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>all</p>
+                        <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>create</p>
+                        <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
+                    </div>
+                </div>
                 {historys.map((item) => {
                     return(
                         <div key={item.version}>
@@ -119,7 +132,14 @@ const AllHistory = () => {
                 })}
             </div>
             <div className={type === 'rollback' ? styles.historyList : styles.hidden}>
-                <div className={styles.historyTitle}><p className={styles.listTitle2}>최근 롤백된 모든 문서</p></div>
+                <div className={styles.historyTitle}>
+                    <p className={styles.listTitle2}>최근 롤백된 모든 문서</p>
+                    <div className={styles.historyTypes}>
+                        <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>all</p>
+                        <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>create</p>
+                        <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
+                    </div>
+                </div>
                 {historys.map((item) => {
                     return(
                         <div key={item.version}>
