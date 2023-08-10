@@ -81,7 +81,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
   console.log(myDebate)
   console.log(myQuestion)
   console.log(myWiki)
-//
+
+  console.log(myContribute);
+  console.log(myContribute.message);
+
+
+  //
 
 
 // 로딩 중일 때 표시할 컴포넌트
@@ -166,7 +171,15 @@ function MyPage({ loggedIn, setLoggedIn }) {
             <div className={styles.cb}>
               <p className={styles.title}>기여 목록</p>
               <div className={styles.graph}>
-                <Graph />
+              {myContribute&&myContribute.message&&myContribute.message.docs.length===0 ? (
+                <p></p>
+              ):(
+                myContribute&&myContribute.message&&myContribute.message.docs&&
+                  (<Graph 
+                    total_point={myContribute.message.point}
+                    docs={myContribute.message.docs}
+                    />)
+              )}            
               </div>
               {myWiki&&myWiki.message&&myWiki.message.length===0 ? (
                 <p>아직 기여한 내력이 없습니다.</p>

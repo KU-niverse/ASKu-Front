@@ -2,7 +2,7 @@ import threedots from "../img/threedots.png"
 import like from "../img/like.png"
 import edit from "../img/edit.png"
 import styles from "../components/Comment.module.css"
-import ThreedotsMenu from "./ThreedotsMenu"
+import ThreedotsReport from "./ThreedotsReport"
 import FormatDate from "./FormatDate"
 
 function Comment({id, subject, content, created_at, is_bad, docsname, nick}){
@@ -16,7 +16,7 @@ function Comment({id, subject, content, created_at, is_bad, docsname, nick}){
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-            <ThreedotsMenu debateId={id}/>
+            <ThreedotsReport id={id}/>
             </div>
           </div>
           <div className={styles.q_middle}>
