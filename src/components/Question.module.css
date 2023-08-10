@@ -69,7 +69,8 @@
   font-weight: bold;
 }
 
-.q_like span, .q_comment span{
+/* .q_like span,  */
+.q_comment span{
   margin-left: 5px;
   display: flex;
   align-items: center ;
