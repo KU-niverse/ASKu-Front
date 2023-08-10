@@ -6,33 +6,32 @@ import HistoryBox from '../components/HistoryBox'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-const data = [
-    {
-        'version': 'v1',
-        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-        'user': '하호후리스',
-        'timestamp': '2023.05.26 01:34:32',
-    },
-    {
-        'version': 'v2',
-        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-        'user': '하호후리스',
-        'timestamp': '2023.05.26 01:34:32',
-    },
-    {
-        'version': 'v3',
-        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-        'user': '하호후리스',
-        'timestamp': '2023.05.26 01:34:32',
-    },
-    {
-        'version': 'v4',
-        'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-        'user': '하호후리스',
-        'timestamp': '2023.05.26 01:34:32',
-    },
-]
-
+// const data = [
+//     {
+//         'version': 'v1',
+//         'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+//         'user': '하호후리스',
+//         'timestamp': '2023.05.26 01:34:32',
+//     },
+//     {
+//         'version': 'v2',
+//         'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+//         'user': '하호후리스',
+//         'timestamp': '2023.05.26 01:34:32',
+//     },
+//     {
+//         'version': 'v3',
+//         'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+//         'user': '하호후리스',
+//         'timestamp': '2023.05.26 01:34:32',
+//     },
+//     {
+//         'version': 'v4',
+//         'summary': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+//         'user': '하호후리스',
+//         'timestamp': '2023.05.26 01:34:32',
+//     },
+// ]
 
 const AllHistory = () => {
     const [historys, setHistorys] = useState([]);
