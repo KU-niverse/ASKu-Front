@@ -66,10 +66,8 @@ function QuestionInput({onQuestionSubmit, title}) {
       alert('질문을 입력해주세요.');
       return;
     }
-  
-
-
-  onQuestionSubmit(submitData);
+    onQuestionSubmit(submitData);
+    window.location.reload();
   };
 
   const countCharacters = () =>{

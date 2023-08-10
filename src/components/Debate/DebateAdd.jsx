@@ -37,7 +37,7 @@ const DebateAdd = () => {
         </div>
         <button className={isAdd ? styles.hidden: styles.addBtn} onClick={handleAddBtn}><img src={plus}/></button>
         <div className={isAdd ? styles.inputContainer: styles.hidden}>
-            <input className={styles.headerInput} placeholder='검색어를 입력하세요.' />
+            <input className={styles.headerInput} placeholder='생성할 토론방을 입력하세요.' />
             <button className={styles.createBtn}>생성</button>
         </div>
         <div className={styles.addLists}>

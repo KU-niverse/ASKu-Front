@@ -26,7 +26,7 @@ function DropDown({onSelectedOption, title}) {
     }
     takeWikiData();
   }, [title]); //위키 정보 가져오기
- console.log(wikiData)
+ 
  
  if (!wikiData || !wikiData.contents) {
   return null;
@@ -37,7 +37,6 @@ function DropDown({onSelectedOption, title}) {
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
   }));
-  console.log(options);
   
   // [
   //   { value: 'one', label: 'One' },

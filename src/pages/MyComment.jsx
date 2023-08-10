@@ -74,7 +74,7 @@ function MyComment(){
         <div className={styles.header}>
           <p className={styles.comment}>내가 쓴 토론</p>
           <div className={styles.switch}>
-          <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
+          {/* <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
           </div>
         </div>       
         {mypageData&& myDebate && myDebate.message && myDebate.message.length === 0 ? (

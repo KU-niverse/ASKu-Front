@@ -58,6 +58,7 @@
   color: rgba(116, 116, 116, 1);
   font-size: 16px;
   font-weight: bold;
+  align-self: center;
 }
 .q_comment{
   display: flex;
@@ -74,10 +75,11 @@
   align-items: center ;
 }
 
-.q_like img, .q_comment img{
-  object-fit: none;
+.q_comment img{
+  object-fit: contain;
   cursor: pointer;
 }
+
 
 
 .q_backfooter button{

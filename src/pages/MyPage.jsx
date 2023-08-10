@@ -70,7 +70,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
     getData('http://localhost:8080/user/mypage/info', setMypageData);
     getData('http://localhost:8080/user/mypage/questionhistory', setMyQuestion);
     getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
-    getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
+    getData('http://localhost:8080/user/mypage/badges', setMyBadge);
     getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
     getData('http://localhost:8080/wiki/contributions', setMyContribute);
   }, []);
@@ -136,11 +136,11 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
 
               <div className={styles.badgegrid}>
-                {myBadge && myBadge.message &&myBadge.message.length === 0 ? (
+                {myBadge && myBadge.data &&myBadge.data.length === 0 ? (
                 <p>아직 획득한 뱃지가 없습니다.</p>
                 ) : (
-                  myBadge && myBadge.message && myBadge.message.map((badge) => (
-                    <img key={badge.id} src={badge.badge_id} alt='haho'/>
+                  myBadge && myBadge.data && myBadge.data.slice(0,12).map((badge) => (
+                    <img key={badge.id} src={badge.image} alt={badge.name}/>
                   ))
                 )}
               </div>

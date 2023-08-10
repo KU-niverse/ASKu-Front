@@ -7,11 +7,36 @@ import DebateList from '../components/Debate/DebateList';
 import DebateSearch from '../components/Debate/DebateSearch';
 import DebateAdd from '../components/Debate/DebateAdd';
 import DebateRecent from '../components/Debate/DebateRecent';
-
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
 
 function MoreDebate() {
+const {title} = useParams();
+const [debateListData, setDebateListData] = useState([]);
+
+useEffect(() => {
+  const takeDebateList = async () =>{
+    try{
+      const res = await axios.get( `http://localhost:8080/debate/list/${title}`, {withCredentials: true});
+      if(res.status === 200){
+        setDebateListData(res.data);
+      }
+      else{
+        console.log(res.data.message)
+      }
+    }catch (error){
+      console.error(error);
+    }
+    console.log('DebateListData:', debateListData);
+  }
+  takeDebateList();
+}, [title]); //토론방 목록 가져오기
+
+console.log(debateListData.data)
 
   return (
     <div className={styles.container}>
@@ -20,7 +45,7 @@ function MoreDebate() {
       </div>
 
       <div className={styles.header}>
-        <p className={styles.debate}>토론 (OOO OOO)</p>
+        <p className={styles.debate}>토론 ({title})</p>
       </div>
 
       <div className={styles.debatecontent}>
@@ -38,11 +63,25 @@ function MoreDebate() {
                 수정 시간
               </span>
             </div>
-            <DebateList/>
-            <DebateList/>
-            <DebateList/>
-            <DebateList/>
-
+            {debateListData && debateListData.data && debateListData.data.length === 0 ? (
+              <p>아직 생성된 토론방이 없습니다.</p>
+            ) : (
+            debateListData && debateListData.data && debateListData.data.map((data) => (
+              <DebateList
+                key={data.id}
+                id={data.id}
+                doc_id={data.doc_id}
+                user_id={data.user_id}
+                subject={data.subject}
+                created_at={data.created_at}
+                recent_edited_at={data.recent_edited_at}
+                done_or_not={data.done_or_not}
+                done_at={data.done_at}
+                is_bad={data.is_bad}
+                title={title}
+              />
+            ))
+          )}
           </div>
         </div>
         <div className={styles.sidebar}>

@@ -16,10 +16,16 @@ const MoreQuestion = () => {
   const { title } = useParams();
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
+  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+
+  const flag = isToggled ? 1 : 0;  
+  
+
+
   useEffect(() => {
     const takeQuestion = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/question/view/${title}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080/question/view/${flag}/${title}`, {withCredentials: true});
         if(res.status === 200){
           setQuestionData(res.data);
         }
@@ -32,9 +38,8 @@ const MoreQuestion = () => {
       console.log('questionData:', questionData);
     }
     takeQuestion();
-  }, [title]); //질문 목록 가져오기
+  }, [title, flag]); //질문 목록 가져오기
 
- console.log(questionData.data)
  
  
 
@@ -48,12 +53,12 @@ const MoreQuestion = () => {
         setData(res.data);
         alert(res.data.message)
       }
-      if(res.status === 500){
-        console.log(res.data.message)
-        alert(res.data.message)
-      }
     }catch (error){
       console.error(error);
+      if(error.status === 500){
+        console.log(error.data.message)
+        alert(error.data.message)
+      }
     }
   }; //질문 생성하기
 
@@ -62,7 +67,6 @@ const MoreQuestion = () => {
 
 
 
-  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
 
 
   return(
@@ -82,7 +86,6 @@ const MoreQuestion = () => {
         </div>
         <div>
           <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title}/>
-          {data && <p>결과: {data}</p>}
         </div>
         <div>
           {questionData && questionData.data && questionData.data.length === 0 ? (
@@ -100,6 +103,7 @@ const MoreQuestion = () => {
                 answer_or_not={data.answer_or_not}
                 is_bad={data.is_bad}
                 nick={data.nickname}
+                like_count={data.like_count}
               />
             ))
           )}

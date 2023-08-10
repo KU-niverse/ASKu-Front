@@ -43,7 +43,7 @@ function MyBadge() {
   useEffect(() => {
   const takeMyBadge = async () =>{
     try{
-      const res = await axios.get( `http://localhost:8080/user/mypage/badgehistory`, {withCredentials: true});
+      const res = await axios.get( `http://localhost:8080/user/mypage/badges`, {withCredentials: true});
       if(res.status === 201){
         setMyBadge(res.data);
       }
@@ -79,16 +79,18 @@ function MyBadge() {
           <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
         </div>
         <div className={styles.b_list}>
-          {myBadge && myBadge.message && myBadge.message.length === 0 ? (
+          {myBadge && myBadge.data && myBadge.data.length === 0 ? (
             <p>아직 획득한 뱃지가 없습니다.</p>)
             : (
-              myBadge&& myBadge.message&& myBadge.message.map((data) => (
+              myBadge&& myBadge.data&& myBadge.data.map((data) => (
                 <Badge
                   key={data.id} // key prop 추가 (반복되는 엘리먼트는 고유한 key prop을 가져야 함)
                   id={data.id}
-                  user_id={data.user_id}
-                  badge_id={data.badge_id}
-                  time={data.created_at}
+                  name={data.name}
+                  image={data.image}
+                  description={data.description}
+                  event={data.event}
+                  cont={data.cont}
                 />
               ))
             ) 

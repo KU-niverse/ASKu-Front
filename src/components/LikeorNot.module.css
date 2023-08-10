@@ -1,0 +1,18 @@
+.like{
+
+  display: flex;
+  align-items: center;
+}
+
+
+
+.likeimg{
+  height: 19px;
+  width: 18px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.likeCount{
+  margin-left: 5px;
+}

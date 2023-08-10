@@ -4,10 +4,11 @@ import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
+import LikeorNot from "./LikeorNot"
 
 
 
-function Question({id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick}){
+function Question({ id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   return(
@@ -28,8 +29,7 @@ function Question({id, doc_id, user_id, index_title, content, created_at, answer
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
               <div className={styles.q_like}>
-                <img src={like} alt="like"/>
-                <span className={styles.likeCount}>150</span>
+                <LikeorNot questionId={id} like_count={like_count} nick={nick} />
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>
