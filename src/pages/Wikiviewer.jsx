@@ -8,7 +8,7 @@ import falseBk from '../img/bookmark.png';
 import trueBk from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'
-import answ from '../img/answ.png'
+import likeFill from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
@@ -76,6 +76,23 @@ function WikiViewer() {
     const {title} = useParams();
     const [allText, setAllText] = useState('');
     const [allContent, setAllContent] = useState([]);
+    const [ques, setQues] = useState([]);
+    const [flag, setFlag] = useState(0);
+
+    const flagToggle = () =>{
+        if (isToggled === false) {
+            setFlag(0);
+        } else {
+            setFlag(1);
+        }
+    }
+
+    useEffect(() => {
+        getWiki();
+        flagToggle();
+        getQues();
+        
+    }, [isToggled]);
 
 
      function handleClick(index) {
@@ -165,11 +182,31 @@ function WikiViewer() {
         }
     };
 
+    const [blank, setBlank] = useState(false);
+    const [selectQues, setSelectQues] = useState([]);
     //질문 데이터 가져오기
-    
+    const getQues = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            setQues(result.data.data);
+            if (!ques) {
+                setBlank(true);
+            }else{
+                setBlank(false);
+            }
+        } catch (error) {
+            console.error(error);
+            //alert(result.data.message);
+        }
+
+        setSelectQues(ques.slice(0, 5));
+
+    };
 
     useEffect(() => {
         getWiki();
+        getQues();
+        
         
     }, []);
 
@@ -208,19 +245,19 @@ function WikiViewer() {
                         <h2>질문</h2>
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
-                    <div className={styles.quesWrap}>
-                            {allContent.map((item) => {
+                    <div className={blank === false ? styles.quesWrap : styles.hidden}>
+                            {selectQues.map((item) => {
                                 return(
                                     <div>
-                                     <hr></hr>
-                                     <ul key={item.title}>
-                                        <span className={styles.quesTitle}>{item.title}</span>
-                                        <span className={styles.quesNum}>{item.number}<img src={answ}/></span>
+                                     <hr className={styles.customHr}></hr>
+                                     <ul key={item.id}>
+                                        <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
+                                        <span className={styles.quesNum}>{item.like_count}<img src={likeFill}/></span>
                                      </ul>
                                     </div>
                                 );
                             })}
-                            <div>아직 질문이 없습니다. 질문을 생성해 주세요</div>
+                            <div className={blank === true ? styles.default : styles.hidden}>아직 질문이 없습니다. 질문을 생성해 주세요</div>
 
                     </div>
                     <div className={styles.wikiaskFoot}>
