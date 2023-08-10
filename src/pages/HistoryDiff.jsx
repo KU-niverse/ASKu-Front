@@ -77,7 +77,7 @@ useEffect(() => {
         <div className={styles.historyCompare}>
           <div className={styles.historyTitle}><p className={styles.listTitle}>입실렌티</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
           <div className={styles.historyDiff}>
-            <div className={styles.verCompare}>v3&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>&nbsp;&nbsp;&nbsp;v2</div>
+            <div className={styles.verCompare}>VERSION&nbsp;{ver-1}&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</div>
             <div >
               <ReactDiffViewer oldValue={oldText} newValue={newText} splitView={isSplit} className={styles.diffBox} showDiffOnly={true}/>
             </div>
