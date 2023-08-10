@@ -28,7 +28,8 @@ const FindId = () => {
             }
         } catch (error) {
             console.error(error);
-            return alert(error.response.data.message);
+            alert(error.response.data.message);
+            nav('/');
         }
     }
 

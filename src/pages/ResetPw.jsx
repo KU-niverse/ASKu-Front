@@ -7,9 +7,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import axios from 'axios';
 
-const ChangePw = () => {
+const ResetPw = () => {
 
-    const [id, setId] = useState('');
+    const {auth} = useParams();
     const [password, setPassword] = useState('');
     const [checkPw, setCheckPw] = useState('');
     const [isPwValid, setisPwValid] = useState(true);
@@ -41,19 +41,17 @@ const ChangePw = () => {
         }
     }
 
-    const changeUserPw = async (e) => {
+    const changeUserPw = async () => {
 
-        e.preventDefault();
         try{
             const response = await axios.put( 'http://118.67.130.57:8080/user/auth/changepw', {
-                login_id: id,
+                hashed_login_id: auth,
                 password: password,
             }, {
                 withCredentials: true
             });
             if (response.data.success === true) {
-                alert(response.data.message)
-                nav('/signin');
+                return alert(response.data.message)
             } else {
                 return alert(response.data.message);
             }
@@ -64,8 +62,8 @@ const ChangePw = () => {
     }
 
     function handleOnClick() {
-        changeUserPw();
-        
+
+        nav('/signin');
     }
 
   return (
@@ -73,19 +71,6 @@ const ChangePw = () => {
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <h2 className={styles.findTitle}>비밀번호 재설정</h2>
         <form>
-            <div className={`${styles.findInputs}`}>
-                <div className={`${styles.inputHead}`}>
-                        <span>아이디</span>
-                </div>
-                    <input 
-                     required type='text'
-                     placeholder='아이디를 입력하세요'
-                     name='id'
-                     value={id}
-                     maxLength='30'
-                    onChange={e => setId(e.target.value)}                     
-                     />
-            </div>
             <div className={`${styles.findInputs}`}>
                 <div className={`${styles.inputLabel}`}>
                     <div className={`${styles.inputHead}`}>
@@ -125,4 +110,4 @@ const ChangePw = () => {
   )
 }
 
-export default ChangePw;
+export default ResetPw;

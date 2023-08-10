@@ -29,6 +29,7 @@ import FindoutId from './pages/FindoutId';
 import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
+import ResetPw from './pages/ResetPw';
 import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
 import WikiPreview from './pages/WikiPreview';
@@ -66,7 +67,8 @@ function App() {
                 <Route path="/findoutid" element={<FindoutId />} />
                 <Route path="/findpw" element={<FindPassword />} />
                 <Route path="/changeinfo" element={<ChangeInfo />} />
-                <Route path="/changepw/:auth" element={<ChangePw />} />
+                <Route path="/changepw" element={<ChangePw />} />
+                <Route path="/reset/pw/:auth" element={<ResetPw />} />
                 <Route path="/mypage" element={<MyPage />} />
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
