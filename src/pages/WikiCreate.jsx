@@ -33,7 +33,7 @@ const WikiEdit = () => {
 
 
         try {
-            const result = await axios.post(`http://118.67.130.57:8080/wiki/contents/new/${title}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/contents/new/${title}`, {
                 text: desc,
                 type: charbtn,
             },{
