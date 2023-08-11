@@ -12,16 +12,16 @@ function Question({title, id, doc_id, user_id, index_title, content, created_at,
   const formattedDate = FormatDate(created_at);
 
   const nav = useNavigate();
-  const linktoQuestionEdit = ()=>{
-    const state = {
+  const linktoQuestionEdit = () => {
+    ;
+    nav(`/question/edit/${title}`, {state : {
       qid: id,
       user_id: user_id,
       content: content,
       created_at: created_at,
       like_count: like_count,
-      nick: nick
-    };
-    nav(`/question/edit/${title}`, state);
+      nick: nick}
+    });
   }
 
   return(
