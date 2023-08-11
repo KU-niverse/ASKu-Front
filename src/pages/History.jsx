@@ -75,6 +75,9 @@ const History = (props) => {
             <div className={styles.historyList}>
                 <div className={styles.historyTitle}><p className={styles.listTitle}>{title}</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
                 {lists.map((item) => {
+                    if (item.is_bad === 1) {
+                        return null; // 패스 (무시)
+                      }
                     return(
                         <div key={item.version}>
                             <HistoryBox 

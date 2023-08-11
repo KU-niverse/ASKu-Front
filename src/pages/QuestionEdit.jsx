@@ -4,16 +4,18 @@ import Editor from '../components/Quill2.js'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 
 const WikiEdit = () => {
     const {main} = useParams();
+    const location = useLocation();
+    const stateData = location.state;
     const [desc, setDesc] = useState('');
     function onEditorChange(value) {
         setDesc(value)
     }
-
+    //qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집)
     function handleWikiSubmit () {
         
     }
@@ -23,7 +25,12 @@ const WikiEdit = () => {
             <Header />
             <div className={`${styles.edit}`}>
                 <div>
-                    <QuestionFor/>
+                    <QuestionFor 
+                    nick={stateData.nick} 
+                    content={stateData.content} 
+                    like_count={stateData.like_count} 
+                    created_at={stateData.created_at}
+                    />
                 </div>
                 <form>
                     <div className={`${styles.wikiQues_header}`}>
