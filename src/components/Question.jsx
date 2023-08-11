@@ -5,11 +5,24 @@ import styles from "../components/Question.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
 import LikeorNot from "./LikeorNot"
+import { useNavigate } from "react-router-dom"
 
 
-
-function Question({ id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
+
+  const nav = useNavigate();
+  const linktoQuestionEdit = ()=>{
+    const state = {
+      qid: id,
+      user_id: user_id,
+      content: content,
+      created_at: created_at,
+      like_count: like_count,
+      nick: nick
+    };
+    nav(`/question/edit/${title}`, state);
+  }
 
   return(
         <div className={styles.q_list}>
@@ -37,7 +50,7 @@ function Question({ id, doc_id, user_id, index_title, content, created_at, answe
               </div>
             </div>
             <div className={styles.q_backfooter}>
-              <button className={styles.q_editbtn}>
+              <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
                 <img src={edit} alt="edit"/>
                 <span>질문을 기반으로 문서 수정하기</span>
               </button>

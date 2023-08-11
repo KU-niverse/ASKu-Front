@@ -45,7 +45,7 @@ function App() {
                 <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
                 <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
-                <Route path="/question/:main/edit" element={<QuestionEdit />} />
+                <Route path="/question/edit/:main" element={<QuestionEdit />} />
                 <Route
                   path="/wikiedit/:id"
                   element={

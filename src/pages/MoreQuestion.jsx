@@ -104,6 +104,7 @@ const MoreQuestion = () => {
                 is_bad={data.is_bad}
                 nick={data.nickname}
                 like_count={data.like_count}
+                title={title}
               />
             ))
           )}

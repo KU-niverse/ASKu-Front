@@ -121,7 +121,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   nick={mypageData.message.nickname}
                   point={mypageData.message.point}
                   badge={mypageData.message.rep_badge}
-                  percent={myContribute.message.ranking_percentage}
+                  percent={myContribute.message.ranking_percentage.toFixed(2)}
                 />
               )}
             
