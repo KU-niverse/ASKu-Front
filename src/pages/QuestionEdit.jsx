@@ -4,9 +4,11 @@ import Editor from '../components/Quill2.js'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
+import { useParams } from 'react-router-dom';
 
 
 const WikiEdit = () => {
+    const {main} = useParams();
     const [desc, setDesc] = useState('');
     function onEditorChange(value) {
         setDesc(value)
@@ -27,7 +29,7 @@ const WikiEdit = () => {
                     <div className={`${styles.wikiQues_header}`}>
                         <div className={`${styles.wikichar_title}`}>
                             <h4>문서 제목</h4>
-                            <input type='text' required disabled='true' value='입실렌티' className={`${styles.title}`}/>
+                            <input type='text' required disabled='true' value={main} className={`${styles.title}`}/>
                         </div>
                         <div className={`${styles.wikiQues_lists}`}>
                             <h4>목차</h4>

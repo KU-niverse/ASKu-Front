@@ -8,7 +8,7 @@ import falseBk from '../img/bookmark.png';
 import trueBk from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'
-import likeFill from '../img/minilike.png'
+import minilike from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
@@ -261,7 +261,7 @@ function WikiViewer() {
                                      <hr className={styles.customHr}></hr>
                                      <ul key={item.id}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
-                                        <span className={styles.quesNum}>{item.like_count}<img src={likeFill}/></span>
+                                        <span className={styles.quesNum}>{item.like_count}<img src={minilike}/></span>
                                      </ul>
                                     </div>
                                 );

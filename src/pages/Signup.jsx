@@ -169,7 +169,7 @@ const Signup = () => {
             }
         } catch (error) {
             console.error(error);
-            return alert('뭔가 잘못됨');
+            return alert(error.response.data.message);
         }
     
     }
@@ -234,7 +234,7 @@ const Signup = () => {
                     <span className={isPwValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span>
                 </div>
                 <input 
-                 required type='text'
+                 required type='password'
                  placeholder='8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요'
                  name='password'
                  value={form.password}

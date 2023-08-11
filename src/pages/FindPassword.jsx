@@ -19,7 +19,8 @@ const FindPassword = () => {
                 withCredentials: true
             });
             if (response.data.success === true) {
-                return alert(response.data.message)
+                alert(response.data.message);
+                nav('/signin');
             } else {
                 return alert(response.data.message);
             }
@@ -32,7 +33,6 @@ const FindPassword = () => {
 
     function handleOnClick() {
         findUserPw();
-        nav('/signin');
     }
     
 
