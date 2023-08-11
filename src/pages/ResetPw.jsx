@@ -44,7 +44,7 @@ const ResetPw = () => {
     const changeUserPw = async () => {
 
         try{
-            const response = await axios.put( 'http://118.67.130.57:8080/user/auth/changepw', {
+            const response = await axios.put( 'http://localhost:8080/user/auth/changepw', {
                 hashed_login_id: auth,
                 password: password,
             }, {

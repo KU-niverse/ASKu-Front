@@ -113,7 +113,6 @@ function WikiViewer() {
             });
             if(result.status === 200){
                 setDeleted(false);
-                console.log(result.data.status);
             }
             
         } catch (error) {
@@ -172,6 +171,7 @@ function WikiViewer() {
     //contents가 비었으면 글이라도 띄우도록. 
     //위키 데이터 가져오기
     const getWiki = async () => {
+        console.log('나중');
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
             setAllText(result.data.text);
@@ -186,9 +186,11 @@ function WikiViewer() {
     const [selectQues, setSelectQues] = useState([]);
     //질문 데이터 가져오기
     const getQues = async () => {
+        console.log('실행')
         try{
             const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
             setQues(result.data.data);
+            console.log('성공');
             if (!ques) {
                 setBlank(true);
             }else{
@@ -199,13 +201,12 @@ function WikiViewer() {
             //alert(result.data.message);
         }
 
-        setSelectQues(ques.slice(0, 5));
-
     };
 
     useEffect(() => {
-        getWiki();
         getQues();
+        getWiki();
+        
         
         
     }, []);
@@ -246,7 +247,10 @@ function WikiViewer() {
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
                     <div className={blank === false ? styles.quesWrap : styles.hidden}>
-                            {selectQues.map((item) => {
+                            {selectQues.map((item, index) => {
+                                if (index >= 5) {
+                                  return null; // 패스 (무시)
+                                }
                                 return(
                                     <div>
                                      <hr className={styles.customHr}></hr>
