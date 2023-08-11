@@ -5,6 +5,7 @@ import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
 import { useParams, useLocation } from 'react-router-dom';
+import DropDown from "../components/DropDown.jsx";
 
 
 const WikiEdit = () => {
@@ -12,6 +13,10 @@ const WikiEdit = () => {
     const location = useLocation();
     const stateData = location.state;
     const [desc, setDesc] = useState('');
+    const [selectedOption, setSelectedOption] = useState(null); //드롭다운 옵션
+    const qid = stateData.qid;
+
+
     function onEditorChange(value) {
         setDesc(value)
     }
@@ -19,7 +24,10 @@ const WikiEdit = () => {
     function handleWikiSubmit () {
         
     }
-    
+     //dropdown에서 선택한 index 반영
+    const handleSelectedOption = (optionValue) => {
+      setSelectedOption(optionValue);
+    };
     return (
         <div className={`${styles.container}`}>
             <Header />
@@ -40,7 +48,9 @@ const WikiEdit = () => {
                         </div>
                         <div className={`${styles.wikiQues_lists}`}>
                             <h4>목차</h4>
-                            <input type='text' required disabled='true' value='4.3 응원단' className={`${styles.queslist}`}/>
+                            <div className={styles.q_dropdown}>
+                              <DropDown onSelectedOption={handleSelectedOption} title={main}/>
+                            </div>
                         </div>
                     </div>
                     <div>
