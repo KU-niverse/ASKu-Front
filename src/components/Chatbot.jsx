@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
 
 function Chatbot () {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [responseContent, setResponseContent] = useState('');
     const [responseReference, setResponseReference] = useState('');
@@ -16,12 +17,39 @@ function Chatbot () {
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([]);
+    const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+    const closeLoginModal = () => {
+        setLoginModalVisible(false);
+    };
     
     const inputChange = (e) => {
         setInputValue(e.target.value);
     }
 
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
+                    withCredentials: true
+                });
+                if (res.status === 201 && res.data.success === true) {
+                    setIsLoggedIn(true);
+                } else if (res.status === 401) {
+                    setIsLoggedIn(false);
+                }
+            } catch (error) {
+                console.error(error);
+                setIsLoggedIn(false);
+            }
+        };
+        checkLoginStatus();
+    }, []);
+
     const sendMessage = () => {
+    if (!isLoggedIn) {
+        setLoginModalVisible(true);
+        return;
+    }
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
@@ -60,6 +88,10 @@ function Chatbot () {
     }
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
+            if (!isLoggedIn) {
+                setLoginModalVisible(true);
+                return;
+            }
             sendMessage();
         }
     };
@@ -172,7 +204,7 @@ function Chatbot () {
                     </div>
                 </div>
             </div>
-            {/* <LoginModal /> */}
+            {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
         </div>
         );
     }
