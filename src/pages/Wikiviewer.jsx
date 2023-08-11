@@ -171,6 +171,10 @@ function WikiViewer() {
         nav(`/wikiedit/${title}/all`)
     }
 
+    const linkToDebate = () =>{
+        nav(`/debate/${title}`)
+    }
+
     //contents가 비었으면 글이라도 띄우도록. 
     //위키 데이터 가져오기
     const getWiki = async () => {
@@ -225,7 +229,8 @@ function WikiViewer() {
                   <h1>{title}<img src={imageSource} alt="Image" onClick={handleClickBookmark} className={styles.bookmarkImg}/>
                   </h1>
                   <div className={styles.wikititleBtn}>
-                    <button><img src={debate}/>&nbsp;토론하기</button>
+                    <button onClick={linkToDebate}><img src={debate}/>&nbsp;토론하기</button>
+
                     <button onClick={linkToHistory}><img src={his}/>&nbsp;히스토리</button>
                   </div>
                </div>
@@ -270,10 +275,10 @@ function WikiViewer() {
 
                     </div>
                     <div className={styles.wikiaskFoot}>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                             <button  className={styles.addQues}>나도 질문하기</button>
                         </Link>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                             <button   className={styles.moreQues}>더보기</button>
                         </Link>
                     </div>

@@ -4,11 +4,12 @@
     background-color: white;
     margin-top: 25px;
     width: 550px;
-    height: 100px;
+    height: auto;
     border-radius: 12px;
     margin-right: auto;
     margin-left: auto;
     border: 1px solid #D5D5D5;
+    word-break:keep-all;
 }
 
 .characterContainer {
@@ -29,6 +30,7 @@
     left: 90px;
     top: -20px;
     font-size: 12px;
+    line-height: 150%;
 }
 
 .dots {
@@ -54,4 +56,9 @@
     height: 15px;
     margin-right: 15px;
     cursor: pointer;
+}
+
+.chatTextWrap {
+    max-width: 400px;
+    height: auto;
 }

@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 import logoGray from '../img/logo_gray.png';
 function Footer() {
+    const handleOpenNewTab = () => {
+        const url = 'https://www.instagram.com/asku.wiki/'; // 열고자 하는 URL 주소
+        window.open(url, '_blank'); // 새 탭으로 URL 열기
+    };
     return(
             <div className={`${styles.footer}`}>
                 <div className={`${styles.textWrap}`}>
@@ -29,8 +33,8 @@ function Footer() {
                             <Link>
                                 <button className={`${styles.footerButton}`}>팀 소개</button>
                             </Link>
-                            <Link to='https://www.instagram.com/asku.wiki/'>
-                                <button className={`${styles.footerButton}`}>인스타그램</button>
+                            <Link>
+                                <button onClick={handleOpenNewTab} className={`${styles.footerButton}`}>인스타그램</button>
                             </Link>
                         </div>
                         <div className={`${styles.logoWrap}`}>

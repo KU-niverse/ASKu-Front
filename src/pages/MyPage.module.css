@@ -91,7 +91,7 @@
   padding: 10px 0;
 }
 
-.b_link, .c_link, .q_link {
+.b_link, .c_link, .q_link, .edit_link {
   justify-content: flex-end;
   text-align: right;
   width: 60%;
@@ -111,12 +111,7 @@
   align-self: center;  
 }
 
-.rownick, .rowbadge, .rowpoint, .rowname, .rowemail, .rowid{
-  display: table;
-  width: 100%;
-  position: relative;
-  table-layout: fixed;
-}
+
 
 .profileimg{
   display: flex;
@@ -133,31 +128,23 @@
 }
 
 
-
-.rowtitle{
-  display: table-cell;
-  text-align: center;
-  width: 40%;
-  font-size: 18px;
-  color : rgba(159, 19, 46, 1);
-  padding: 10px 0;
-  font-weight: bold;
+.info{
+  padding: 0 30px;
 }
 
-.text{
-  display: table-cell;
-  width: 60%;
-  font-size: 18px;
-  color : rgba(116, 116, 116, 1);
+.infoedit{
+  display: flex;
+  justify-content: flex-end;
 }
 
-
-.rank{
+.edit2, .edit3{
+  text-align: right;
   font-size: 14px;
   color:rgba(159, 19, 46, 1);
-  text-align: left;
+  border: none;
+  background: white;
+  cursor: pointer;
 }
-
 
 
 .badgegrid{
@@ -178,23 +165,7 @@
   border-radius: 10%;
 }
 
-.info{
-  padding: 0 30px;
-}
 
-.infoedit{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.edit2, .edit3{
-  text-align: right;
-  font-size: 14px;
-  color:rgba(159, 19, 46, 1);
-  border: none;
-  background: white;
-  cursor: pointer;
-}
 
 .cb{
   padding: 0 30px 2em 30px;
@@ -213,33 +184,6 @@
   object-fit: contain;
 }
 
-.cb_list{
-  display: flex;
-  font-size: 13px;
-  padding: 10px 0;
-}
-
-.cb_front{
-  width: 60%;
-  color: black;
-  font-weight: bold;
-}
-.cb_back{
-  width: 40%;
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.cb_num{
-  color : rgba(159, 19, 46, 1);
-  font-weight: bold;
-}
-
-.cb_time{
-  margin-left: 30px;
-  color : rgba(116, 116, 116, 1); 
-
-}
 
 
 .ask{
@@ -260,6 +204,8 @@
   .mypagecontent{
     width: 86%;
     margin-left: 7%;
+    display: flex;
+    flex-direction: column;
   }
   .uppercontent, .middlecontent, .downcontent{
     display: flex;
@@ -275,10 +221,18 @@
     margin: 0 0 5px 0;
     padding-bottom: 10px;
   }
-  .downcontent{
-    margin-bottom: 30px;
+
+
+  .middlecontent, .downcontent{
+    margin: 0 30px 0 30px;
+  }
+  .ask, .comment{
+    width: 100%;
   }
 
+  .comment{
+    margin-bottom: 30px;
+  }
   
   .title{
     font-size: 12px;
@@ -298,48 +252,14 @@
     padding-right: 5px;
   }
 
-  .rowtitle, .text, .rank{
-    font-size: 14px;
-  }
-
-  .rowtitle{
-    width: 30%;
-    text-align: left;  
-    font-weight: bold;
-  }
-
-  .text{
-    width: 70%;
-    font-weight: bold;
-  }
-  
-  .rank{
-    font-weight: normal;
-    font-size: 12px;
-  }
-
-  
 
   .badge{
     display: none;
   }
 
-  .cb_front, .cb_back{
-    width: 50%;
-    flex-wrap: wrap;
-    font-size: 14px;
-  }
- 
-  .cb_time{
-    font-size: 10px;
-    margin-left: 10px;
-  }
 
   .leftcontent, .rightcontent, .ask, .comment{
     box-shadow: 0 5 2 0 rgba(0, 0, 0, 0.2);
   }
-
-
-
 }
 

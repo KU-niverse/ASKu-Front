@@ -4,10 +4,11 @@
     background-color: #FEF2F4;
     margin-top: 25px;
     width: 550px;
-    height: 100px;
+    height: auto;
     border-radius: 12px;
     margin-right: auto;
     margin-left: auto;
+    word-break:keep-all;
 }
 
 .characterContainer {
@@ -28,6 +29,7 @@
     left: 90px;
     top: -20px;
     font-size: 12px;
+    line-height: 150%;
 }
 
 .dots {
@@ -41,15 +43,72 @@
 .iconZip {
     display: flex;
     position: relative;
-    bottom: 5px;
+    bottom: 10px;
     left: 450px;
     flex-direction: row;
-    width: 10px;
+    width: 12px;
 }
 
 .icon {
     width: 15px;
+    min-width: 15px;
     height: 15px;
     margin-right: 15px;
     cursor: pointer;
+}
+
+.chatTextWrap {
+    max-width: 400px;
+    height: auto;
+}
+
+.reference_wrap {
+    background-color: white;
+    position: absolute;
+    z-index: 100;
+    margin-top: 10px;
+    margin-left: 115px;
+    width: 450px;
+    min-height: 100px;
+    height: auto;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    border-radius: 12px;
+}
+
+.reference {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.reference_text {
+    font-size: 11px;
+    width:80%;
+    height: auto;
+    word-break:keep-all;
+}
+
+.closeBtn {
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+}
+
+.title {
+    color: #9F132E;
+    font-weight: 800;
+    margin: 0;
+}
+
+.header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100%;
 }

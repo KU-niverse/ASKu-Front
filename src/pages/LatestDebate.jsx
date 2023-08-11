@@ -4,6 +4,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom';
 import LatestDebateList from '../components/Debate/LatestDebateList';
+import DebateSearch from '../components/Debate/DebateSearch';
+import DebateAdd from '../components/Debate/DebateAdd';
+import DebateRecent from '../components/Debate/DebateRecent';
+
+
 
 function LatestDebate() {
 
@@ -18,9 +23,7 @@ function LatestDebate() {
       </div>
 
       <div className={styles.debatecontent}>
-        <div className={styles.sidebar}>
-
-        </div>
+ 
         <div className={styles.maincontent}>
           <div className={styles.maincontent_box}>
             <p className={styles.title}>
@@ -40,6 +43,18 @@ function LatestDebate() {
             <LatestDebateList/>
 
           </div>
+        </div>
+        <div className={styles.sidebar}>
+          <div className={styles.debateSearch}>
+            <DebateSearch/>
+          </div>
+          <div className={styles.debateAdd}>
+            <DebateAdd/>
+          </div>
+          <div className={styles.debateRecent}>
+            <DebateRecent/>
+          </div>
+          
         </div>
       </div>
       <div>

@@ -1,0 +1,66 @@
+.profileimg{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.profileimg_content{
+  border-radius: 100%;
+  height: 100px;
+  width: 100px;
+  border : 1px solid rgba(116, 116, 116, 1)
+}
+
+.rownick, .rowbadge, .rowpoint{
+  display: table;
+  width: 100%;
+  position: relative;
+  table-layout: fixed;
+}
+
+.rowtitle{
+  display: table-cell;
+  text-align: center;
+  width: 40%;
+  font-size: 18px;
+  color : rgba(159, 19, 46, 1);
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.text{
+  display: table-cell;
+  width: 60%;
+  font-size: 18px;
+  color : rgba(116, 116, 116, 1);
+}
+
+
+.rank{
+  font-size: 14px;
+  color:rgba(159, 19, 46, 1);
+  text-align: left;
+}
+
+@media only screen and (max-width: 767px) {
+  .rowtitle, .text, .rank{
+    font-size: 14px;
+  }
+
+  .rowtitle{
+    width: 30%;
+    text-align: left;  
+    font-weight: bold;
+  }
+
+  .text{
+    width: 70%;
+    font-weight: bold;
+  }
+  
+  .rank{
+    font-weight: normal;
+    font-size: 12px;
+  }
+}

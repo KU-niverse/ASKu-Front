@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
@@ -15,6 +14,7 @@ import WikiViewer from './pages/Wikiviewer';
 import MyQuestion from './pages/MyQuestion';
 import MyBadge from './pages/MyBadge';
 import History from './pages/History';
+import HistoryDiff from './pages/HistoryDiff';
 import MoreQuestion from './pages/MoreQuestion';
 import Test from './pages/Test';
 import MyComment from './pages/MyComment';
@@ -30,18 +30,18 @@ import FindPassword from './pages/FindPassword';
 import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
 import ResetPw from './pages/ResetPw';
-import HistoryDiff from './pages/HistoryDiff';
 import AllHistory from './pages/AllHistory';
 import WikiPreview from './pages/WikiPreview';
+import { useState } from 'react';
 
 function App() {
+    const [loggedIn, setLoggedIn] = useState(false);
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<ChatbotMobile />} />
-                <Route path="/mypage" element={<MyPage />} />
                 <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
                 <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
@@ -69,18 +69,18 @@ function App() {
                 <Route path="/changeinfo" element={<ChangeInfo />} />
                 <Route path="/changepw" element={<ChangePw />} />
                 <Route path="/reset/pw/:auth" element={<ResetPw />} />
-                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<ChatbotMobile />} />
                 <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
-                <Route path="/wikiviewer/morequestion/:title" element={<MoreQuestion/>}/>
-                <Route path="/wikiviewer/qna" element={<QnA/>}/>
+                <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>
+                <Route path="/wiki/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
-                <Route path="/debate" element={<Debate/>}/>
-                <Route path="/moredebate" element={<MoreDebate/>}/>
+                <Route path="/debate/:title/:subject/:debateId" element={<Debate/>}/>
+                <Route path="/debate/:title" element={<MoreDebate/>}/>
                 <Route path="/latestdebate" element={<LatestDebate/>}/>
 
             </Routes>
