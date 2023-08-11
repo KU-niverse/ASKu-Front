@@ -1,0 +1,132 @@
+.container{
+    width: 44%;
+    margin-left: 28%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 170px;
+    height: 100px;
+    object-fit: contain;
+}
+.container form{
+    width: 460px;
+    height: auto;
+}
+
+.signup_input{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+    font-size: 14px;
+}
+.signup_input {
+    margin-bottom: 5px;
+}
+.signup_input input{
+    margin-top: 5px;
+    width: 100%;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+}
+.signup_checkinput input{
+    margin-top: 5px;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+    width: 60%;
+    display: flex;
+    
+}
+.checkInput{
+    display: flex;
+}
+
+.signup_btn{
+    width: 100%;
+    height: 45px;
+    padding: 5px;
+    border-radius: 12px;
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+.signup_agree{
+    font-size: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.signup_agree input{
+    width: 12px;
+    height: 12px;
+    accent-color: rgba(222, 58, 88, 1);
+}
+.signup_email{
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+}
+.signup_head{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.signup_email input{
+    margin-top: 5px;
+    width: 50%;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+}
+.signup_alert{
+    font-size: 12px;
+    color: rgba(222, 58, 88, 1);
+    display: flex;
+    align-items: center;
+}
+.signup_check{
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(222, 58, 88, 1);
+    display: flex;
+    align-items: center;
+}
+.signup_done{
+    display: none;
+}
+.dblcheck{
+    justify-content: center;
+    align-items: center;
+    width: 105px;
+    height: 50px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #DE3A58 0%, #9F132E 100%);
+    color: white;
+    border: none;
+
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    .container{
+        width: 86%;
+        margin-left: 7%;
+    }
+    .container form{
+        width: 100%;
+    }
+    
+}

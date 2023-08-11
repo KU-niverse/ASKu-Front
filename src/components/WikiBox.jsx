@@ -1,0 +1,55 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import WikiToHtml from './Wiki/WikiToHtml';
+import styles from './WikiBox.module.css'
+import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
+
+const WikiBox = (props) => {
+    const main = props.main;
+    const title = props.title;
+    const content = WikiToHtml(props.content);
+    const index = props.index
+    const section = props.section;
+    const nav = useNavigate();
+    const [isOpen, setView] = useState(true);  // 메뉴의 초기값을 false로 설정
+
+
+
+    const linkToWikiEdit = () => {
+        nav(`/wikiedit/${main}/${section}`);
+    
+    }
+    const linkToWikiQue = () => {
+        nav(`/questionedit/${main}/${section}`);
+    
+    }
+  
+    const toggleView = () => {
+          setView(isOpen => !isOpen); // on,off 개념 boolean
+      }
+  
+    return (
+      <div className={styles.wikiContents} >
+        <li onClick={toggleView}>
+            <div className={styles.wikiContentTitle}>
+                <span className={isOpen ? {} : `${styles.hidden}`} ><FaChevronRight size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={isOpen ? `${styles.hidden}` : {}} ><FaChevronDown size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={styles.wikiIndex}>&nbsp;{index}</span>
+                <span>{title}</span>
+            </div>
+            <div className={styles.wikiContentBtns}>
+                <button onClick={linkToWikiEdit} className={styles.wikiContentBtn}>편집</button>
+                <button onClick={linkToWikiQue} className={styles.wikiContentBtn}>질문</button>
+            </div>
+            
+        </li>
+        <hr></hr>
+        <div className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`} >
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        </div>
+      </div>
+    )
+}
+
+export default WikiBox

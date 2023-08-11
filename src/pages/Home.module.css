@@ -1,0 +1,151 @@
+.homeWrap {
+    position: relative;
+    width: 100vw;
+    min-height: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    margin-top: 50px;
+    width: 200px;
+    height: auto;
+}
+@media only screen and (max-width: 767px) {
+    .logo {
+        width: 150px;
+        height: auto;
+    }
+}
+
+
+.inputContainer {
+    height: 50px;
+    display: flex;
+    width: 600px;
+    position: relative;
+    margin-top: 30px;
+}
+@media only screen and (max-width: 767px) {
+    .inputContainer {
+        width: calc(100% - 50px);
+        height: 30px;
+        margin-top: 30px;
+    }
+}
+
+.searchInput {
+    border: 1px solid #D5D5D5;
+    border-radius: 35px;
+    width: 600px;
+    height: 50px;
+    padding-left: 50px;
+    box-sizing: border-box;
+}
+@media only screen and (max-width: 767px) {
+    .searchInput{
+        width: calc(100% - 20px);
+        height: 30px;
+        padding-left: 20px;
+    }
+}
+
+.searchIcon {
+    position: relative;
+    top: 10px;
+    right: 65px;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+}
+@media only screen and (max-width: 767px) {
+    .searchIcon{
+        width: 22px;
+        height: 18px;
+        right: 40px;
+        top: 5px;
+    }
+}
+
+.chatBotContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+}
+@media only screen and (max-width: 767px) {
+    .chatBotContainer{
+        flex-direction: column;
+    }
+}
+
+.chatBotBtn {
+    display: none;
+    cursor: pointer;
+}
+@media only screen and (max-width: 767px) {
+    .chatBotBtn{
+        display: block;
+        width: 340px;
+        height: 200px;
+    }
+}
+
+.realTime {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.keyWord {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 270px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px -5px #00000033;
+    margin-bottom: 10px;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 270px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px -5px #00000033;
+    margin-bottom: 10px;
+}
+
+.realTimeTitle {
+    margin-left: 30px;
+    font-weight: 800;
+    font-size: 16px;
+    color: #9F132E;
+}
+
+.rankWrap {
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    align-items: center;
+}
+
+.numberIcon {
+    margin-left: 30px;
+    font-weight: 400;
+    font-size: 18px;
+    color: #9F132E;
+    width: 15px;
+}
+
+.rankContent {
+    margin-left: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    color: black;
+}
+
