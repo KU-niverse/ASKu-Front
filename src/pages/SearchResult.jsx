@@ -4,8 +4,8 @@ import search from '../img/search_icon.png'
 import styles from './SearchResult.module.css'
 import ResultBox from '../components/ResultBox'
 import { useState, useEffect } from 'react'
-import QuestionFor from '../components/QuestionFor'
-import { Link, useParams } from 'react-router-dom'
+import Question from '../components/Question'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -50,7 +50,7 @@ const lists = [
 
 
 const SearchResearch = () => {
-
+    const nav = useNavigate();
     const [isClicked, setIsClicked] = useState(true); //true: 문서 false: 질문
 
     const {title} = useParams();
@@ -60,6 +60,10 @@ const SearchResearch = () => {
     const handleButtonClick = () => {
         setIsClicked(!isClicked);
       };
+    
+    const handleDocsClick = (title) => {
+        nav(`/wiki/${title}`)
+    }
 
 
       const getDocs = async () => {
@@ -83,11 +87,7 @@ const SearchResearch = () => {
                 withCredentials: true
             });
             if(result.status === 200){
-                if (result.data === null){
-                    setQues([0]);
-                }else {
-                    setQues(result.data);
-                }
+                    setQues(result.data.data);
                 
             }
             
@@ -113,7 +113,7 @@ const SearchResearch = () => {
         <div className={styles.results}>
             <div className={styles.header}>
                 <img src={search}/>
-                <h4>"입실렌티" 검색결과</h4>
+                <h4>"{title}" 검색결과</h4>
             </div>
             <div className={styles.typeWrap}>
                 <p className={styles.type}>
@@ -127,7 +127,7 @@ const SearchResearch = () => {
                     <div className={isClicked ? 'default': styles.hidden}>
                         {docs.map((item) => {
                             return(
-                                <div key={item.title}>
+                                <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <ResultBox
                                     title={item.title} 
                                     // content={item.content} bookmark={item.bookmark}
@@ -139,11 +139,20 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : 'default'}>
                         {ques.map((item) => {
                             return(
-                                <div key={item.id}>
-                                    <QuestionFor
-                                    content={item.content}
-                                    />
-                                </div>
+                                <Question
+                                key={item.id}
+                                id={item.id}
+                                doc_id={item.doc_id}
+                                user_id={item.user_id}
+                                index_title={item.index_title}
+                                content={item.content}
+                                created_at={item.created_at}
+                                answer_or_not={item.answer_or_not}
+                                is_bad={item.is_bad}
+                                nick={item.nickname}
+                                like_count={item.like_count}
+                                title={title}
+                              />
                             );
                         })}
                     </div>

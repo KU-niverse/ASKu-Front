@@ -13,6 +13,7 @@ import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
+import Graph from "../components/Mypage/Graph";
 
 
 // const Ques = [
