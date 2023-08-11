@@ -1,35 +1,26 @@
 import styles from './LoginModal.module.css';
 import closeBtn from '../img/close_btn.png';
-import {  useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 
-function LoginModal() {
-    const [isOpen, setIsOpen] = useState(false);
+function LoginModal({ isOpen, onClose }) {
     const modalRef = useRef(null);
-
-    const openModal = () => {
-        setIsOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsOpen(false);
-    };
 
     const handleOutsideClick = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-        closeModal();
+            onClose();
         }
     };
 
     useEffect(() => {
         if (isOpen) {
-        document.addEventListener('mousedown', handleOutsideClick);
+            document.addEventListener('mousedown', handleOutsideClick);
         } else {
-        document.removeEventListener('mousedown', handleOutsideClick);
+            document.removeEventListener('mousedown', handleOutsideClick);
         }
         return () => {
-        document.removeEventListener('mousedown', handleOutsideClick);
+            document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, [isOpen]);
 
@@ -40,7 +31,7 @@ function LoginModal() {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
-                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={closeModal} />
+                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
                             <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요!</p>
@@ -56,9 +47,6 @@ function LoginModal() {
                 </div>
             </div>
         )}
-        <button className={styles.openModalBtn} onClick={openModal}>
-            모달 열기
-        </button>
         </>
     );
 }
