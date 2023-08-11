@@ -172,7 +172,7 @@ function Chatbot () {
                     </div>
                 </div>
             </div>
-            <LoginModal />
+            {/* <LoginModal /> */}
         </div>
         );
     }

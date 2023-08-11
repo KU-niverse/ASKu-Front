@@ -2,10 +2,11 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styles from './Find.module.css'
 import logo from '../img/logo.png'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import axios from 'axios';
+import SpinnerMypage from '../components/SpinnerMypage';
 
 const ResetPw = () => {
 
@@ -14,6 +15,17 @@ const ResetPw = () => {
     const [checkPw, setCheckPw] = useState('');
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // 로딩 중일 때 표시할 컴포넌트
+        if (loading) {
+           return <div><SpinnerMypage/></div>; 
+         }
+        //
+
+    }, []);
+
 
     const nav = useNavigate();
 
@@ -51,19 +63,22 @@ const ResetPw = () => {
                 withCredentials: true
             });
             if (response.data.success === true) {
-                return alert(response.data.message)
+                alert(response.data.message);
+                nav('/signin');
             } else {
                 return alert(response.data.message);
             }
+            setLoading(false);
         } catch (error) {
             console.error(error);
+            setLoading(false);
             return alert(error.response.data.message);
         }
     }
 
     function handleOnClick() {
 
-        nav('/signin');
+        
     }
 
   return (
