@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './HistoryBox.module.css';
-import report from '../img/report.png';
+import dots from '../img/dots.png';
 import rollback from '../img/return.png';
 import watch from '../img/watch.png'
 import axios from 'axios';
@@ -61,7 +61,7 @@ const HistoryBox = (props) => {
             <div className={styles.contentsTwo}>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span><img src={report}/></span>
+                <span><img src={dots}/></span>
             </div>
         </div>
         <div className={styles.versionText}>

@@ -68,7 +68,7 @@ const SearchResearch = () => {
                 withCredentials: true
             });
             if(result.status === 200){
-                setDocs(result.message);
+                setDocs(result.data.message);
             }
             
         } catch (error) {
@@ -83,12 +83,17 @@ const SearchResearch = () => {
                 withCredentials: true
             });
             if(result.status === 200){
-                setQues(result.data.message);
+                if (result.data === null){
+                    setQues([0]);
+                }else {
+                    setQues(result.data);
+                }
+                
             }
             
         } catch (error) {
             console.error(error);
-            return alert(error.response.data.message);
+            return alert(error.response.message);
         }
     };
 

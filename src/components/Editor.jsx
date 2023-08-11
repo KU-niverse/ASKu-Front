@@ -31,7 +31,7 @@ class EditorComponent extends Component{
         return(
             <div >
                 <ReactQuill 
-                  style={{height: "600px", border: '2px solid rgba(213, 213, 213, 1)', borderRadius: '0px 12px 12px 12px',}}
+                  style={{height: "700px", border: '2px solid rgba(213, 213, 213, 1)', borderRadius: '0px 12px 12px 12px',}}
                     theme="snow" 
                     modules={this.modules} 
                     formats={this.formats} 

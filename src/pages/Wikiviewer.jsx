@@ -8,11 +8,65 @@ import falseBk from '../img/bookmark.png';
 import trueBk from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'
-import answ from '../img/answ.png'
+import minilike from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
+
+
+// const Ques = [
+//     {
+//         'index' : '1.',
+//         'number': '1',
+//         'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
+//     },
+//      {
+//         'index' : '2.',
+//         'number': '2',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+         
+//      },
+//      {
+//          'index' : '3.',
+//          'number': '3',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+//      },
+//      {
+//          'index': '4.',
+//          'number': '4',
+//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
+//      },
+//  ]
+
+
+//  const data = [
+//     {
+//         'index' : '1.',
+//         'section': '1',
+//         'title': '일번항목',
+//         'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//     },
+//      {
+//         'index' : '2.',
+//         'section': '2',
+//          'title': '이번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//      {
+//          'index' : '3.',
+//          'section': '3',
+//          'title': '삼번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//      {
+//          'index': '4.',
+//          'section': '4',
+//          'title': '사번항목',
+//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
+//      },
+//  ]
+
 
 function WikiViewer() {
     const myDivRef = useRef([]);
@@ -22,58 +76,27 @@ function WikiViewer() {
     const {title} = useParams();
     const [allText, setAllText] = useState('');
     const [allContent, setAllContent] = useState([]);
+    const [ques, setQues] = useState([]);
+    const [flag, setFlag] = useState(0);
 
-    const Ques = [
-        {
-            'index' : '1.',
-            'number': '1',
-            'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
-        },
-         {
-            'index' : '2.',
-            'number': '2',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-             
-         },
-         {
-             'index' : '3.',
-             'number': '3',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-         },
-         {
-             'index': '4.',
-             'number': '4',
-             'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-         },
-     ]
+    const flagToggle = () =>{
+        if (isToggled === false) {
+            setFlag(0);
+        } else {
+            setFlag(1);
+        }
+    }
 
+    useEffect(() => {
+        flagToggle();
+        
+    }, [isToggled]);
 
-     const data = [
-        {
-            'index' : '1.',
-            'section': '1',
-            'title': '일번항목',
-            'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-        },
-         {
-            'index' : '2.',
-            'section': '2',
-             'title': '이번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-         {
-             'index' : '3.',
-             'section': '3',
-             'title': '삼번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-         {
-             'index': '4.',
-             'section': '4',
-             'title': '사번항목',
-             'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'    
-         },
-     ]
+    useEffect(() => {
+        getQues();
+        
+    }, [flag]);
+
 
      function handleClick(index) {
         myDivRef.current[index].scrollIntoView({ behavior: "smooth" });
@@ -83,6 +106,7 @@ function WikiViewer() {
     const [deleted, setDeleted] = useState(true);
     const [imageSource, setImageSource] = useState(falseBk);
 
+    //북마크 추가
     const addBookmark = async () => {
         try{
             const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
@@ -92,7 +116,6 @@ function WikiViewer() {
             });
             if(result.status === 200){
                 setDeleted(false);
-                console.log(result.data.status);
             }
             
         } catch (error) {
@@ -106,7 +129,7 @@ function WikiViewer() {
         }
       };
   
-  
+      //북마크 해제
       const deleteBookmark = async () => {
         try{
             const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
@@ -125,6 +148,7 @@ function WikiViewer() {
         }
       };
 
+    // 북마크 이미지 변경
     function handleClickBookmark() {
         // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
       if(deleted === false){
@@ -138,6 +162,7 @@ function WikiViewer() {
       }
     }
 
+    //버튼 링크 연결 함수들
     const linkToHistory = () => {
         nav(`/history/${title}`)
     }
@@ -146,20 +171,52 @@ function WikiViewer() {
         nav(`/wikiedit/${title}/all`)
     }
 
+    const linkToDebate = () =>{
+        nav(`/debate/${title}`)
+    }
+
     //contents가 비었으면 글이라도 띄우도록. 
+    //위키 데이터 가져오기
     const getWiki = async () => {
+        console.log('나중');
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
             setAllText(result.data.text);
             setAllContent(result.data.contents);
+            console.log(allContent[0].index);
+            console.log(allContent[0].title);
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
         }
     };
 
+    const [blank, setBlank] = useState(false);
+    const [selectQues, setSelectQues] = useState([]);
+    //질문 데이터 가져오기
+    const getQues = async () => {
+        console.log('실행')
+        try{
+            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            setQues(result.data.data);
+            console.log('성공');
+            if (!ques) {
+                setBlank(true);
+            }else{
+                setBlank(false);
+            }
+        } catch (error) {
+            console.error(error);
+            //alert(result.data.message);
+        }
+
+    };
+
     useEffect(() => {
+        getQues();
         getWiki();
+        
+        
         
     }, []);
 
@@ -172,7 +229,8 @@ function WikiViewer() {
                   <h1>{title}<img src={imageSource} alt="Image" onClick={handleClickBookmark} className={styles.bookmarkImg}/>
                   </h1>
                   <div className={styles.wikititleBtn}>
-                    <button><img src={debate}/>&nbsp;토론하기</button>
+                    <button onClick={linkToDebate}><img src={debate}/>&nbsp;토론하기</button>
+
                     <button onClick={linkToHistory}><img src={his}/>&nbsp;히스토리</button>
                   </div>
                </div>
@@ -198,25 +256,29 @@ function WikiViewer() {
                         <h2>질문</h2>
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
-                    <div className={styles.quesWrap}>
-                            {Ques.map((item) => {
+                    <div className={blank === false ? styles.quesWrap : styles.hidden}>
+                            {ques.map((item, index) => {
+                                if (index >= 5) {
+                                  return null; // 패스 (무시)
+                                }
                                 return(
                                     <div>
-                                     <hr></hr>
-                                     <ul key={item.title}>
-                                        <span className={styles.quesTitle}>{item.title}</span>
-                                        <span className={styles.quesNum}>{item.number}<img src={answ}/></span>
+                                     <hr className={styles.customHr}></hr>
+                                     <ul key={item.id}>
+                                        <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
+                                        <span className={styles.quesNum}>{item.like_count}<img src={minilike}/></span>
                                      </ul>
                                     </div>
                                 );
                             })}
+                            <div className={blank === true ? styles.default : styles.hidden}>아직 질문이 없습니다. 질문을 생성해 주세요</div>
 
                     </div>
                     <div className={styles.wikiaskFoot}>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                             <button  className={styles.addQues}>나도 질문하기</button>
                         </Link>
-                        <Link to={`/wikiviewer/morequestion/${title}`}>
+                        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                             <button   className={styles.moreQues}>더보기</button>
                         </Link>
                     </div>

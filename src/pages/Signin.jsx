@@ -47,17 +47,32 @@ const Signin = () => {
         userLogin();
     }
 
-
+    const signOut = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
+                withCredentials: true
+            });
+            if(result.status === 200){
+                alert(result.data.message);
+                nav('/');
+            }
+            
+        } catch (error) {
+            console.error(error);
+            return alert(error.response.data.message);
+        }
+    };
 
   return (
     <div className={`${styles.container}`}>
+        <button onClick={signOut}>logout</button>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <img className={`${styles.haho}`}src={haho_login} alt=''/>
         <h1 className={styles.login_headers}>LOGIN</h1>
         <form onSubmit={handleOnSubmit}>
             <div className={`${styles.login_input}`}>
                 <input type='text' value={id} onChange={e => setId(e.target.value)} placeholder='아이디를 입력하세요'/>
-                <input type='text' value={password} onChange={e => setPassword(e.target.value)} placeholder='비밀번호를 입력하세요' />
+                <input type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='비밀번호를 입력하세요' />
             </div>
             <div className={`${styles.login_remem}`}>
                 <span><input type='checkbox' id='chkbox'/>아이디 기억하기</span>

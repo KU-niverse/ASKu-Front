@@ -148,10 +148,10 @@
     border: none;
     cursor: pointer;
 }
-.quesWrap hr{
+.customHr{
     margin: 0;
     padding: 0;
-    color: rgba(237, 237, 237, 1);
+    border-color: rgba(237, 237, 237, 1);
 }
 .quesWrap p{
     margin: 0;
@@ -171,6 +171,9 @@
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap;
+    color: black;
+    font-size: 14px;
+    font-weight: 700;;
 }
 .quesNum{
     font-size: 14px;

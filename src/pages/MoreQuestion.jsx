@@ -8,14 +8,24 @@ import QuestionInput from "../components/QuestionInput";
 import { useState } from 'react';
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 const MoreQuestion = () => {
-  const title="newdocs";
+  
+  const { title } = useParams();
+  const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
+  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+
+  const flag = isToggled ? 1 : 0;  
+  
+
+
   useEffect(() => {
     const takeQuestion = async () =>{
       try{
-        const res = await axios.get( `http://118.67.130.57:8080/question/view/${title}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080/question/view/${flag}/${title}`, {withCredentials: true});
         if(res.status === 200){
           setQuestionData(res.data);
         }
@@ -25,12 +35,38 @@ const MoreQuestion = () => {
       }catch (error){
         console.error(error);
       }
+      console.log('questionData:', questionData);
     }
     takeQuestion();
-  }, [title]);
+  }, [title, flag]); //질문 목록 가져오기
+
+ 
+ 
 
 
-  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+
+ 
+  const handleQuestionSubmit = async (submitData) => {
+    try {
+      const res = await axios.post(`http://localhost:8080/question/new/${title}`, submitData, {withCredentials: true});
+      if(res.status === 200){
+        setData(res.data);
+        alert(res.data.message)
+      }
+    }catch (error){
+      console.error(error);
+      if(error.status === 500){
+        console.log(error.data.message)
+        alert(error.data.message)
+      }
+    }
+  }; //질문 생성하기
+
+
+
+
+
+
 
 
   return(
@@ -49,21 +85,28 @@ const MoreQuestion = () => {
           </div>
         </div>
         <div>
-          <QuestionInput/>
+          <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title}/>
         </div>
         <div>
-          {questionData.map((data) => (
-            <Question
-              id={data.id}
-              doc_id={data.doc_id}
-              user_id={data.user_id}
-              index_title={data.index_title}
-              content={data.content}
-              created_at={data.created_at}
-              answer_or_not={data.answer_or_not}
-              is_bad={data.is_bad}
-            />
-          ))}
+          {questionData && questionData.data && questionData.data.length === 0 ? (
+              <p>아직 작성한 질문이 없습니다.</p>
+            ) : (
+            questionData && questionData.data && questionData.data.map((data) => (
+              <Question
+                key={data.id}
+                id={data.id}
+                doc_id={data.doc_id}
+                user_id={data.user_id}
+                index_title={data.index_title}
+                content={data.content}
+                created_at={data.created_at}
+                answer_or_not={data.answer_or_not}
+                is_bad={data.is_bad}
+                nick={data.nickname}
+                like_count={data.like_count}
+              />
+            ))
+          )}
         </div>
       </div>
       <div>

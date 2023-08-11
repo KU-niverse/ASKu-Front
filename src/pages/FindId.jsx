@@ -14,7 +14,7 @@ const FindId = () => {
 
     const findUserId = async () => {
         try{
-            const response = await axios.post('http://118.67.130.57:8080/user/auth/findid', {
+            const response = await axios.post('http://localhost:8080/user/auth/findid', {
                 email: email
             }, {
                 withCredentials: true
@@ -28,7 +28,8 @@ const FindId = () => {
             }
         } catch (error) {
             console.error(error);
-            return alert(error.response.data.message);
+            alert(error.response.data.message);
+            nav('/');
         }
     }
 

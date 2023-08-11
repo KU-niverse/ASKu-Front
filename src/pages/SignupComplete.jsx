@@ -4,14 +4,16 @@ import styles from './SignupComplete.module.css';
 import logo from '../img/logo.png';
 import complete from '../img/Complete.png';
 import Footer from '../components/Footer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import SpinnerMypage from '../components/SpinnerMypage';
 
 
 const SignupComplete = () => {
     
     const {auth} = useParams();
     const nav = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     function goToLogin(){
         nav('/signin');
@@ -19,6 +21,8 @@ const SignupComplete = () => {
     function goToHome(){
         nav('/');
     }
+
+    
 
     const authPost = async () => {
         try{
@@ -35,14 +39,21 @@ const SignupComplete = () => {
                 nav('/signin');
             
             }
+            setLoading(false);
         } catch (error) {
             console.error(error);
+            setLoading(false);
             return alert(error.response.data.message);
         }
     }
 
     useEffect(() => {
         authPost();
+        // 로딩 중일 때 표시할 컴포넌트
+        if (loading) {
+           return <div><SpinnerMypage/></div>; 
+         }
+        //
 
     }, []);
 

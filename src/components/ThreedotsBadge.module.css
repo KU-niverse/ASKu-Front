@@ -1,0 +1,9 @@
+.menubtn{
+  border:none;
+  background: none;
+  cursor: pointer;
+}
+
+.menuitem{
+  width: auto;
+}

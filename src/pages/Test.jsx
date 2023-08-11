@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Posts from "../components/Posts";
+import ThreedotsMenu from "../components/ThreedotsMenu";
 
 function Test(){
 
   
   return(
-    <div><Posts/>
+    <div><ThreedotsMenu/>
     </div>
   )
 };
