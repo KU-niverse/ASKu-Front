@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import Editor from '../components/Quill'
+import Editor from '../components/Quill.js'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import axios from 'axios';
@@ -101,7 +101,7 @@ const WikiEdit = () => {
                     </div>
                     <div>
                         <h4>문서 내용</h4>
-                        <div>
+                        <div className={`${styles.editorbox}`}>
                         <Editor value={desc} onChange={onEditorChange} />
                         </div>
                         <h4>히스토리 요약</h4>

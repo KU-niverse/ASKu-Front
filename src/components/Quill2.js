@@ -6,7 +6,7 @@ import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useMemo, useRef, useState, useEffect } from 'react';
 
-function Quill(props) {
+function Quill2(props) {
   const [value, setValue] = useState(props.value);
   const quillRef = useRef();
 
@@ -106,9 +106,7 @@ function Quill(props) {
     console.log('안의 내용물 전부', quillRef.current.getEditorContents());
   };
 
-
   return (
-    
     <div>
       <ReactQuill
         ref={quillRef}
@@ -121,10 +119,10 @@ function Quill(props) {
         }}
         modules={modules}
         formats={formats}
-        style={{ height: '600px' }}
+        style={{ height: '263px' }}
       />
     </div>
   );
 }
 
-export default Quill;
+export default Quill2;

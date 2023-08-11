@@ -55,9 +55,17 @@
     justify-content: space-between;
 }
 .wikiQues_lists{
-    width: auto;
+    width: 40%;
 }
-
+.queslist{
+    width: 100%;
+    height: 45px;
+    border-radius: 12px;
+    border: 2px solid rgba(213, 213, 213, 1);
+}
+.editorbox{
+    margin-bottom: 60px;
+}
 .summary{
     width: 100%;
     height: 50px;

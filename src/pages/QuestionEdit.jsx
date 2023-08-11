@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import Editor from '../components/Editor'
+import Editor from '../components/Quill2.js'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
@@ -29,14 +29,14 @@ const WikiEdit = () => {
                             <h4>문서 제목</h4>
                             <input type='text' required disabled='true' value='입실렌티' className={`${styles.title}`}/>
                         </div>
-                        <div>
-                            <h4 className={`${styles.wikiQues_lists}`}>목차</h4>
-                            <input type='text' required disabled='true' value='4.3 응원단' className={`${styles.title}`}/>
+                        <div className={`${styles.wikiQues_lists}`}>
+                            <h4>목차</h4>
+                            <input type='text' required disabled='true' value='4.3 응원단' className={`${styles.queslist}`}/>
                         </div>
                     </div>
                     <div>
                         <h4>문서 내용</h4>
-                        <div>
+                        <div className={`${styles.editorbox}`}>
                         <Editor value={desc} onChange={onEditorChange} />
                         </div>
                         <h4>히스토리 요약</h4>

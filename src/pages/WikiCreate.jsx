@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import HtmlToWiki from '../components/Wiki/HtmlToWiki';
 
 
 const WikiEdit = () => {
@@ -16,6 +17,7 @@ const WikiEdit = () => {
 
     function onEditorChange(value) {
         setDesc(value);
+        console.log(value);
     }
 
     function handleCharBtn1() {
@@ -25,16 +27,20 @@ const WikiEdit = () => {
         setCharbtn('doc');
     }
 
+   
+
     const handleCreateBtn = async(e) => {
 
         e.preventDefault();
-        
+
+        const wikiMarkup = HtmlToWiki(desc);
+        console.log(wikiMarkup);
         console.log(desc);
 
 
         try {
             const result = await axios.post(`http://localhost:8080/wiki/contents/new/${title}`, {
-                text: desc,
+                text: wikiMarkup,
                 type: charbtn,
             },{
                 withCredentials: true,
@@ -76,7 +82,7 @@ const WikiEdit = () => {
                     </div>
                     <div>
                         <h4>문서 내용</h4>
-                        <div>
+                        <div className={`${styles.editorbox}`}>
                             <Editor value={desc} onChange={onEditorChange} />
                         </div>
                         <br></br>

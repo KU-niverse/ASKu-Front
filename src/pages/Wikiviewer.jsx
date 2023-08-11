@@ -88,11 +88,14 @@ function WikiViewer() {
     }
 
     useEffect(() => {
-        getWiki();
         flagToggle();
-        getQues();
         
     }, [isToggled]);
+
+    useEffect(() => {
+        getQues();
+        
+    }, [flag]);
 
 
      function handleClick(index) {
@@ -176,6 +179,8 @@ function WikiViewer() {
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
             setAllText(result.data.text);
             setAllContent(result.data.contents);
+            console.log(allContent[0].index);
+            console.log(allContent[0].title);
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
@@ -247,7 +252,7 @@ function WikiViewer() {
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
                     <div className={blank === false ? styles.quesWrap : styles.hidden}>
-                            {selectQues.map((item, index) => {
+                            {ques.map((item, index) => {
                                 if (index >= 5) {
                                   return null; // 패스 (무시)
                                 }
