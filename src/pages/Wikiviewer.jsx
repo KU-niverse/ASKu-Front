@@ -12,7 +12,6 @@ import minilike from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
-import WikiToHtml from '../components/Wiki/WikiToHtml';
 import Graph from "../components/Mypage/Graph";
 
 
@@ -182,15 +181,19 @@ function WikiViewer() {
         console.log('나중');
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
-            setAllText(result.data.text);
             setAllContent(result.data.contents);
-            console.log(allContent[0].index);
-            console.log(allContent[0].title);
+            console.log(result.data.contents);
+            console.log(allContent);
+
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
         }
     };
+
+    useEffect(() => {
+        setAllContent(allContent);
+      }, [allContent]);
 
     const [blank, setBlank] = useState(false);
     const [selectQues, setSelectQues] = useState([]);

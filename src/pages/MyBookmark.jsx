@@ -65,6 +65,7 @@ const MyBookmark = () => {
             </div>
             <div>
                 {lists.map((item) => {
+                    
                     return(
                         <div key={item.title}>
                             <BookmarkBox

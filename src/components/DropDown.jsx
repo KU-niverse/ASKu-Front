@@ -10,12 +10,14 @@ import axios from 'axios';
 function DropDown({onSelectedOption, title}) {
 
   const [wikiData, setWikiData] = useState([]);
-  useEffect(() => {
-    const takeWikiData = async () =>{
+
+  const takeWikiData = async () =>{
       try{
         const res = await axios.get( `http://localhost:8080/wiki/contents/${title}`, {withCredentials: true});
         if(res.status === 200){
           setWikiData(res.data);
+          console.log(res.data);
+          console.log(wikiData);
         }
         if(res.status === 404){
           console.log(res.data.message)
@@ -24,9 +26,15 @@ function DropDown({onSelectedOption, title}) {
         console.error(error);
       }
     }
+  useEffect(() => {
+    
     takeWikiData();
+    console.log(wikiData);
   }, [title]); //위키 정보 가져오기
  
+ useEffect(()=>{
+  takeWikiData();
+ }, [wikiData]);
  
  if (!wikiData || !wikiData.contents) {
   return null;

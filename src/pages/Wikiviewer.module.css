@@ -251,19 +251,20 @@ li{
 
     }
     .wikititle h1{
-        font-size: 26px;
+        font-size: 24px;
     }
     .wikititleBtn{
         width: 151px;
 
     }
     .wikititleBtn img{
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 10px;
         object-fit: contain;
     }
     .wikititleBtn button{
-        width: 72px;
+        width: 69px;
+        height: 25px;
         font-size: 10px;
         padding: 6px;
     }

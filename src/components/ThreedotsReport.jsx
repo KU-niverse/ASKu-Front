@@ -11,7 +11,9 @@ import ReportModal from './ReportModal';
 
 function ThreedotsReport({target, reason_id}) {
   const nav = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -42,7 +44,7 @@ function ThreedotsReport({target, reason_id}) {
 
   return (
     <Menu
-    menuButton={<MenuButton  className={styles.menubtn}><img src={threedots} alt="Menu" /></MenuButton>}      onItemClick={(e) => console.log(`${e.value} clicked`)}
+    menuButton={<MenuButton  className={styles.menubtn}><img src={threedots} alt="Menu" /></MenuButton>} onItemClick={(e) => {console.log(`${e.value} clicked`)}}
     >
   
 
@@ -50,16 +52,17 @@ function ThreedotsReport({target, reason_id}) {
         className={styles.menuitem} 
         value="신고하기"
         onClick={(e) =>{
-          console.log(`${e.value} clicked`);
-          e.stopPropagation=true;
-          e.keepOpen=true;
+          console.log(`${e.value} 클릭`);
           e.preventDefault=true;
-          <ReportModal isOpen={isOpen} onClose={closeModal} />
+          setIsOpen(true);
 
       
         }}
       >신고하기</MenuItem>
+      <ReportModal isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+      
     </Menu>
+    
   )}
 
 export default ThreedotsReport;
