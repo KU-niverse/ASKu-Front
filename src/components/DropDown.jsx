@@ -5,19 +5,18 @@ import './DropDown.css'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import SpinnerMypage from './SpinnerMypage';
 
 
 function DropDown({onSelectedOption, title}) {
-
   const [wikiData, setWikiData] = useState([]);
 
-  const takeWikiData = async () =>{
+  useEffect(() => {
+    const takeWikiData = async () =>{
       try{
         const res = await axios.get( `http://localhost:8080/wiki/contents/${title}`, {withCredentials: true});
         if(res.status === 200){
           setWikiData(res.data);
-          console.log(res.data);
-          console.log(wikiData);
         }
         if(res.status === 404){
           console.log(res.data.message)
@@ -26,26 +25,28 @@ function DropDown({onSelectedOption, title}) {
         console.error(error);
       }
     }
-  useEffect(() => {
-    
     takeWikiData();
-    console.log(wikiData);
   }, [title]); //위키 정보 가져오기
- 
- useEffect(()=>{
-  takeWikiData();
- }, [wikiData]);
- 
- if (!wikiData || !wikiData.contents) {
-  return null;
-}
 
-  const options = wikiData.contents.map((content) => ({
+
+
+ 
+ console.log(wikiData)
+
+
+
+ let options=[]
+ if (wikiData.contents && wikiData.contents[0]){
+    options = wikiData.contents[0].map((content) => ({
     value: `${content.index} ${content.title}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
-  }));
+  }))};
+
   
+
+  
+
   // [
   //   { value: 'one', label: 'One' },
   //   { value: 'two', label: 'Two', className: 'myOptionClassName' },
@@ -62,6 +63,8 @@ function DropDown({onSelectedOption, title}) {
   //    ]
   //   }
   // ];
+
+
   const defaultOption = "목차 선택";
 
   const onSelect = (selectedOption) => {
