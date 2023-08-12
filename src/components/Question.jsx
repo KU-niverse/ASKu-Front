@@ -1,4 +1,3 @@
-import like from "../img/like.png"
 import comment_icon from "../img/comment_icon.png"
 import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
