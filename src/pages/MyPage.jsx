@@ -184,7 +184,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     />)
               )}            
               </div>
-              {myWiki&&myWiki.message&&myWiki.message.length===0 ? (
+              {myWiki&&myWiki.message&&myWiki.data.length===0 ? (
                 <p>아직 기여한 내력이 없습니다.</p>
               ) : (
                 myWiki&&myWiki.message&&myWiki.data.slice(0,5).map((wiki)=>(

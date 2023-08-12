@@ -123,7 +123,7 @@ return (
           {allBadge && allBadge.data && allBadge.data.length === 0 ? (
             <p></p>)
             : (
-              allBadge&& allBadge.data&& sortedBadges.map((data) => (
+              allBadge&& allBadge.data&&sortedBadges&& sortedBadges.map((data) => (
 
                <Badge
                   key={data.id} // key prop 추가 (반복되는 엘리먼트는 고유한 key prop을 가져야 함)

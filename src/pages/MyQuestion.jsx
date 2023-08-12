@@ -91,7 +91,7 @@ function MyQuestion(){
               answer_or_not={question.answer_or_not}
               is_bad={question.is_bad}
               docsname={question.doc_title}
-              nick={mypageData.message.nickname}
+              nick={mypageData.data[0].nickname}
               like_count={question.like_count}
             />
           ))

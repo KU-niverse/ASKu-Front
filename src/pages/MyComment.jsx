@@ -63,7 +63,7 @@ function MyComment(){
     }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
 
    
-
+    console.log(mypageData)
 
   return(
     <div className={styles.container}>
@@ -89,7 +89,7 @@ function MyComment(){
               created_at={debate.debate_content_time}
               is_bad={debate.is_bad}
               docsname={debate.doc_title}
-              nick={mypageData.message.nickname}
+              nick={mypageData.data[0].nickname}
             />
           ))
         )}

@@ -63,8 +63,9 @@ console.log(debateListData.data)
                 수정 시간
               </span>
             </div>
+            
             {debateListData && debateListData.data && debateListData.data.length === 0 ? (
-              <p>아직 생성된 토론방이 없습니다.</p>
+              <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
             debateListData && debateListData.data && debateListData.data.map((data) => (
               <DebateList
