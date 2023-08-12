@@ -59,7 +59,7 @@ function ThreedotsReport({target, reason_id}) {
       
         }}
       >신고하기</MenuItem>
-      <ReportModal isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+      <ReportModal isOpen={openModal} closeModal={() => setIsOpen(false)} />
       
     </Menu>
     

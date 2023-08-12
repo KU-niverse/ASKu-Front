@@ -9,7 +9,7 @@ const BookmarkBox = (props) => {
 
     const title = props.title;
     const content = props.content;
-    const [deleted, setDeleted] = props.deleted;
+    const [deleted, setDeleted] = useState(props.deleted);
     const [imageSource, setImageSource] = useState(trueBk);
 
 

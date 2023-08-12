@@ -181,8 +181,8 @@ function WikiViewer() {
         console.log('나중');
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
-            setAllContent(result.data.contents);
-            console.log(result.data.contents);
+            setAllContent(result.data.contents[0]);
+            console.log(result.data.contents[0]);
             console.log(allContent);
 
         } catch (error) {
