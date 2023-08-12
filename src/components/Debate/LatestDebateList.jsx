@@ -1,13 +1,21 @@
 import styles from "./LatestDebateList.module.css"
+import FormatDate from "../FormatDate";
+import { useNavigate } from "react-router-dom";
 
-function LatestDebateList(){
+function LatestDebateList({id, doc_id, user_id, subject, created_at, recent_edited_at, done_or_not, done_at, is_bad, title}){
+const formattedDate=FormatDate(recent_edited_at)
+const nav=useNavigate();
+const linktoDebateRoom=()=>{
+  window.history.replaceState(null, '', `/latestdebate`);  
+  nav(`/debate/${title}/${subject}/${id}`);
+}
   return(
     <div className={styles.container}>
-      <span className={styles.title}>
-        학관학식과 애기능학식 비교에 대해 질문드립니다.
+      <span onClick={linktoDebateRoom} className={styles.title}>
+        {subject}
       </span>
       <span className={styles.date}>
-        2023.05.26 01:34:32
+        {formattedDate}
       </span>
     </div>
   )

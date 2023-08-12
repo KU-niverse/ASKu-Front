@@ -21,7 +21,7 @@ function Badge({id, name, image, description, event, cont}){
           <div className={styles.b_listhead}>
             <span className={styles.b_listfronthead}>{name}</span>
             <ThreedotsBadge badge_id={name}/> 
-         </div>
+          </div>
           <div className={styles.b_listmid}>
             <p className={styles.midtext}>{description}</p>
           </div>

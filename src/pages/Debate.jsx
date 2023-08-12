@@ -78,14 +78,15 @@ const handleDebateSubmit = async (submitData) => {
           {debateContentData&&debateContentData.message&&debateContentData.message.data===0 ? (
                 <p>아직 작성된 토론 메세지가 없습니다.</p>
               ) : (
-                debateContentData&&debateContentData.message&&debateContentData.data.map((debate)=>(
+                debateContentData&&debateContentData.message&&debateContentData.data.map((debate, index)=>(
                   <DebateContent
                     key={debate.id}
-                    id={debate.id}
+                    id={index+1}
                     user_id={debate.user_id}
                     content={debate.content}
                     created_at={debate.created_at}
                     is_bad={debate.is_bad}
+                    nick={debate.nickname}
                   />
                 ))
               )}

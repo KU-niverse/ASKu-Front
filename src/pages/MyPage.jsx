@@ -25,7 +25,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const [myDebate, setMyDebate] = useState([]);
   const [myBadge, setMyBadge] = useState([]);
   const [myWiki, setMyWiki] = useState([]);
-
+  
   //login status 체크하기
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
@@ -68,7 +68,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
     };
   
     getData('http://localhost:8080/user/mypage/info', setMypageData);
-    getData('http://localhost:8080/user/mypage/questionhistory', setMyQuestion);
+    getData(`http://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
     getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
     getData('http://localhost:8080/user/mypage/badges', setMyBadge);
     getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
@@ -212,10 +212,10 @@ function MyPage({ loggedIn, setLoggedIn }) {
               <button className={styles.edit}>더보기</button>
               </Link>
             </div>
-            {myQuestion && myQuestion.message && myQuestion.message.length === 0 ? (
+            {myQuestion && myQuestion.message && myQuestion.data.length === 0 ? (
               <p>아직 작성한 질문이 없습니다.</p>
             ) : (
-              myQuestion && myQuestion.message && myQuestion.message.slice(0,5).map((question) => (
+              myQuestion && myQuestion.message && myQuestion.data&& myQuestion.data.slice(0,5).map((question) => (
                 <QuestionList
                   key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                   id={question.id}
