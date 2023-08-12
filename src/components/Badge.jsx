@@ -2,36 +2,34 @@ import React from "react";
 import haho from "../img/haho.png";
 import styles from "./Badge.module.css"
 import ThreedotsBadge from "./ThreedotsBadge"
+import FormatDate from "./FormatDate";
 
-function Badge({id, name, image, description, event, cont}){
+function Badge({myBadgeIds, id, name, image, description, event, count}){
 
-  const formatTime = (rawTime) => {
-    const dateObj = new Date(rawTime);
-    return `${dateObj.getFullYear()}. ${String(dateObj.getMonth() + 1).padStart(2, '0')}. ${String(dateObj.getDate()).padStart(2, '0')}`;
-  };
-  //포맷팅 함수
-  const time= "2021-05-20T14:48:00.000Z"
+  // console.log(created_at)
   return(
-    <div className={styles.b_container}> 
-      <div className={styles.b_content}>
-        <div className={styles.b_thumb}>
+    <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}> 
+      <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>        
+        <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
           <img src={image} alt={name}/>
         </div>
-        <div className={styles.b_right}>
-          <div className={styles.b_listhead}>
-            <span className={styles.b_listfronthead}>{name}</span>
-            <ThreedotsBadge badge_id={name}/> 
+        <div className={`${styles.b_right} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+          <div className={`${styles.b_listhead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+            <span className={`${styles.b_listfronthead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>{name}</span>
+            <div className={`${styles.b_listput} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+              <ThreedotsBadge badge_id={id}/> 
+            </div>
           </div>
-          <div className={styles.b_listmid}>
-            <p className={styles.midtext}>{description}</p>
+          <div className={`${styles.b_listmid} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+            <p className={`${styles.midtext} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>{description}</p>
           </div>
-          <div className={styles.b_listfoot}>
-            <span className={styles.b_listfrontfoot}>
-              달성자 수 : {cont}명
+          <div className={`${styles.b_listfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+            <span className={`${styles.b_listfrontfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+              달성자 수 : {count}명
             </span>
-            <span className={styles.b_listlastfoot}>
-              획득일 : {formatTime(time)}
-            </span>
+            {/* <span className={`${styles.b_listlastfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+              획득일 : {formattedDate}
+            </span> */}
           </div>
         </div>
       </div>

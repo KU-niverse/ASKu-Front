@@ -23,6 +23,7 @@ function Question({title, id, doc_id, user_id, index_title, content, created_at,
     });
   }
 
+
   return(
         <div className={styles.q_list}>
           <div className={styles.q_header}>

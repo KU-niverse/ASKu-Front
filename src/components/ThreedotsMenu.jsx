@@ -6,10 +6,14 @@ import styles from "./ThreedotsMenu.module.css"
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoginModal from './LoginModal';
 
 
 function ThreedotsMenu({questionId}) {
-
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+  const closeLoginModal = () => {
+      setLoginModalVisible(false);
+  };
   const [loggedIn, setLoggedIn] = useState(false);
 
   //login status 체크하기
@@ -73,11 +77,13 @@ function ThreedotsMenu({questionId}) {
           // Keep the menu open after this menu item is clicked
           e.keepOpen = true;
           e.preventDefault=true;
-
+          setLoginModalVisible(true);
+          
         }}
       >
         수정하기
       </MenuItem>
+      {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
 
       <MenuItem 
         className={styles.menuitem} 
