@@ -2,11 +2,11 @@ import styles from "./MyProfile.module.css"
 import haho from "../../img/haho.png"
 
 
-function MyProfile({nick, point, badge, percent}){
+function MyProfile({nick, point, badge, percent, badgeimg}){
   return(
     <div>
       <div className={styles.profileimg}>
-        <img className={styles.profileimg_content} src={badge} alt='haho'/>
+        <img className={styles.profileimg_content} src={badgeimg} alt='haho'/>
       </div>
       <div className={styles.profilerow}>
         <div className={styles.rownick}>
