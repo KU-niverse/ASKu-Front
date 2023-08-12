@@ -6,6 +6,7 @@
     margin-bottom: 20px;
     padding: 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .contents{
     width: 100%;

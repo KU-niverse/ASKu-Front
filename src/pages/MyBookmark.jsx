@@ -32,6 +32,7 @@ const data = [
 const MyBookmark = () => {
 
     const [lists, setLists] = useState([]);
+    const [bookCount, setBookCount] = useState(0);
 
     const getBookmarks = async () => {
         try{
@@ -40,6 +41,7 @@ const MyBookmark = () => {
             });
             if(result.status === 200){
                 setLists(result.data.message);
+                setBookCount(lists.length);
             }
             
         } catch (error) {
@@ -61,10 +63,11 @@ const MyBookmark = () => {
         <div className={styles.content}>
             <div className={styles.header}>
                 <h3>즐겨찾기 한 문서</h3>
-                <div className={styles.texts}><span>문서</span><div className={styles.number}>12</div></div>
+                <div className={styles.texts}><span>문서</span><div className={styles.number}>{bookCount}</div></div>
             </div>
             <div>
                 {lists.map((item) => {
+                    
                     return(
                         <div key={item.title}>
                             <BookmarkBox

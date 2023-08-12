@@ -6,6 +6,7 @@ import watch from '../img/watch.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import verComp from '../img/verComp.png';
+import ThreedotsReport from "./ThreedotsReport"
 
 
 const HistoryBox = (props) => {
@@ -61,7 +62,7 @@ const HistoryBox = (props) => {
             <div className={styles.contentsTwo}>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span><img src={dots}/></span>
+                <span><ThreedotsReport target={1} reason_id={2}/></span>
             </div>
         </div>
         <div className={styles.versionText}>
