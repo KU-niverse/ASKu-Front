@@ -17,7 +17,7 @@ function Badge({myBadgeIds, id, name, image, description, event, count}){
           <div className={`${styles.b_listhead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
             <span className={`${styles.b_listfronthead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>{name}</span>
             <div className={`${styles.b_listput} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-              <ThreedotsBadge badge_id={name}/> 
+              <ThreedotsBadge badge_id={id}/> 
             </div>
           </div>
           <div className={`${styles.b_listmid} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
