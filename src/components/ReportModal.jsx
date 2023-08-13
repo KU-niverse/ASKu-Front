@@ -4,7 +4,7 @@ import {  useState, useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 
-function ReportModal({isOpen, closeModal}) {
+function ReportModal({isOpen, onClose}) {
     const modalRef = useRef(null);
 
     const handlereportType = () => {
@@ -13,7 +13,7 @@ function ReportModal({isOpen, closeModal}) {
 
     const handleOutsideClick = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-        closeModal();
+        onClose();
         }
     };
 
@@ -38,7 +38,7 @@ function ReportModal({isOpen, closeModal}) {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
-                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={() => closeModal()} />
+                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
                             <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요!</p>
