@@ -7,12 +7,17 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import EditModal from './EditModal';
+import ReportModal from './ReportModal';
 
 
 function ThreedotsMenu({ questionId}) {
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const closeEditModal = () => {
       setEditModalVisible(false);
+  };
+  const [isReportModalVisible, setReportModalVisible] = useState(false);
+  const closeReportModal = () => {
+      setReportModalVisible(false);
   };
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -62,9 +67,22 @@ function ThreedotsMenu({ questionId}) {
     <Menu
     menuButton={<MenuButton  className={styles.menubtn}><img src={threedots} alt="Menu" /></MenuButton>}      onItemClick={(e) => console.log(`${e.value} clicked`)}
     >
-      <MenuItem className={styles.menuitem} value="신고하기" onClick={(e) => console.log(`${e.value} clicked`)}>
+      <MenuItem 
+        className={styles.menuitem} 
+        value="신고하기" 
+        onClick={(e) => {
+          checkLoginStatus();
+          console.log(`${e.value} clicked`);
+          e.stopPropagation = true;
+          e.keepOpen = true;
+          e.preventDefault=true;
+          setReportModalVisible(true);
+      }}
+      >
         신고하기
       </MenuItem>
+      {isReportModalVisible && <ReportModal questionId={questionId} isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
+
 
       <MenuItem 
         className={styles.menuitem}

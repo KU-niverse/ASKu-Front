@@ -12,14 +12,10 @@ import ReportModal from './ReportModal';
 function ThreedotsReport({target, reason_id}) {
   const nav = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false);
+const[isReportModalVisible, setReportModalVisible]= useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeReportModal = () => {
+    setReportModalVisible(false);
   };
 
   const onReport = async () => {
@@ -53,13 +49,17 @@ function ThreedotsReport({target, reason_id}) {
         value="신고하기"
         onClick={(e) =>{
           console.log(`${e.value} 클릭`);
+          e.stopPropagation = true;
+          e.keepOpen = true;
           e.preventDefault=true;
-          setIsOpen(true);
+          setReportModalVisible(true);
 
       
         }}
-      >신고하기</MenuItem>
-      <ReportModal isOpen={openModal} closeModal={() => setIsOpen(false)} />
+      >
+        신고하기
+      </MenuItem>
+      {isReportModalVisible && <ReportModal isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
       
     </Menu>
     
