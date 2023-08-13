@@ -5,7 +5,7 @@ import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
 import { useParams, useLocation } from 'react-router-dom';
-import DropDown from "../components/DropDown.jsx";
+import WikiDropDown from "../components/WikiDropDown.jsx";
 
 
 const WikiEdit = () => {
@@ -49,7 +49,7 @@ const WikiEdit = () => {
                         <div className={`${styles.wikiQues_lists}`}>
                             <h4>목차</h4>
                             <div className={styles.q_dropdown}>
-                              <DropDown onSelectedOption={handleSelectedOption} title={main}/>
+                              <WikiDropDown onSelectedOption={handleSelectedOption} title={main}/>
                             </div>
                         </div>
                     </div>
