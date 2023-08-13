@@ -22,7 +22,7 @@ function DropDown({onSelectedOption}) {
   value: 'doc', 
   label: '문서형',
   className: 'myOptionClassName'
- }]
+ }];
 //  if (wikiData.contents && wikiData.contents[0]){
 //     options = wikiData.contents[0].map((content) => ({
 //     value: `${content.index} ${content.title}`, 

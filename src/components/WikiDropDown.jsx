@@ -8,40 +8,49 @@ import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
 
-function DropDown({onSelectedOption, title}) {
+function DropDown({ onSelectedOption, title, isOptionDisabled }) {
   const [wikiData, setWikiData] = useState([]);
 
   useEffect(() => {
-    const takeWikiData = async () =>{
-      try{
-        const res = await axios.get( `http://localhost:8080/wiki/contents/${title}`, {withCredentials: true});
-        if(res.status === 200){
-          setWikiData(res.data);
+    if (!isOptionDisabled) {
+      const takeWikiData = async () => {
+        try {
+          const res = await axios.get(`http://localhost:8080/wiki/contents/${title}`, { withCredentials: true });
+          if (res.status === 200) {
+            setWikiData(res.data);
+          }
+          if (res.status === 404) {
+            console.log(res.data.message);
+          }
+        } catch (error) {
+          console.error(error);
         }
-        if(res.status === 404){
-          console.log(res.data.message)
-        }
-      }catch (error){
-        console.error(error);
-      }
+      };
+      takeWikiData();
     }
-    takeWikiData();
-  }, [title]); //위키 정보 가져오기
+  }, [title, isOptionDisabled]);
+  //위키 정보 가져오기
 
 
 
  
- console.log(wikiData)
+ console.log(wikiData);
 
 
 
  let options=[]
- if (wikiData.contents && wikiData.contents[0]){
+ if (!isOptionDisabled && wikiData.contents && wikiData.contents[0]){
     options = wikiData.contents[0].map((content) => ({
     value: `${content.index} ${content.title}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
-  }))};
+  }))} else if(isOptionDisabled === true){
+    options=[{
+      value: 'all', 
+      label: '전체 편집',
+      className: 'myOptionClassName'
+     },]
+  }
 
   
 

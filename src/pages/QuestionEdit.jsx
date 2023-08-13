@@ -1,11 +1,12 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Editor from '../components/Quill2.js'
 import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import QuestionFor from '../components/QuestionFor';
 import { useParams, useLocation } from 'react-router-dom';
 import WikiDropDown from "../components/WikiDropDown.jsx";
+import axios from 'axios';
 
 
 const WikiEdit = () => {
@@ -14,16 +15,48 @@ const WikiEdit = () => {
     const stateData = location.state;
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(null); //드롭다운 옵션
+    const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
 
 
     function onEditorChange(value) {
         setDesc(value)
     }
-    //qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집)
-    function handleWikiSubmit () {
+    //qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집
+    const checkSameIndex = async() => {
+
+        console.log(selectedOption);
+        console.log(qid);
+
+
+        try {
+            const result = await axios.get(`http://localhost:8080/wiki/contents/question/${qid}`, {
+                withCredentials: true,
+            });
+            if(result.status === 200){
+                if(result.data.based_on_section === true) {
+                    setSelectedOption(`${result.data.contents.index} ${result.data.contents.title}`)
+                    console.log(selectedOption);
+                } else{
+                    setSelectedOption('all');
+                    setIsOptDisabled(false);
+                    console.log(selectedOption);
+                    
+                }
+                
+            }
+        } catch(error){
+            console.log(error);
+            return alert(error.response.data.message);
+        };
         
-    }
+    };
+
+    useEffect(() => {
+        checkSameIndex();
+      }, [qid]);
+
+
      //dropdown에서 선택한 index 반영
     const handleSelectedOption = (optionValue) => {
       setSelectedOption(optionValue);
@@ -49,7 +82,11 @@ const WikiEdit = () => {
                         <div className={`${styles.wikiQues_lists}`}>
                             <h4>목차</h4>
                             <div className={styles.q_dropdown}>
-                              <WikiDropDown onSelectedOption={handleSelectedOption} title={main}/>
+                              <WikiDropDown 
+                              onSelectedOption={handleSelectedOption}
+                              title={main}
+                              isOptionDisabled={isOptDisabled}
+                              />
                             </div>
                         </div>
                     </div>
