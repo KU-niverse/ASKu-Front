@@ -1,8 +1,13 @@
 import styles from "./MyProfile.module.css"
 import haho from "../../img/haho.png"
+import { useState } from "react";
+import BadgeModal from "../BadgeModal";
 
-
-function MyProfile({nick, point, badge, percent, badgeimg}){
+function MyProfile({ nick, point, badge, percent, badgeimg}){
+  // const [isBadgeModalVisible, setBadgeModalVisible] = useState(false);
+  // const closeBadgeModal = () => {
+  //     setBadgeModalVisible(false);
+  // };
   return(
     <div>
       <div className={styles.profileimg}>
@@ -16,6 +21,9 @@ function MyProfile({nick, point, badge, percent, badgeimg}){
         <div className={styles.rowbadge}>
           <span className={styles.rowtitle}>대표 뱃지</span>
           <span className={styles.text}>{badge}</span>
+          {/* <span className={styles.edit} onClick={setBadgeModalVisible(true)}>수정</span> */}
+          {/* {isBadgeModalVisible && <BadgeModal isOpen={isBadgeModalVisible} onClose={() => setBadgeModalVisible(false)} />} */}
+
         </div>
         <div className={styles.rowpoint}>
           <span className={styles.rowtitle}>포인트</span>
