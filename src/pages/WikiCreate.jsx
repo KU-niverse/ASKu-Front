@@ -7,24 +7,18 @@ import Footer from '../components/Footer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
+import TypeDrop from '../components/TypeDrop';
 
 
-const WikiEdit = () => {
+const WikiCreate = () => {
     const nav = useNavigate();
     const [desc, setDesc] = useState('');
-    const [charbtn, setCharbtn] = useState('list');
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState('');
+    const [selectedOption, setSelectedOption] = useState(null); //드롭다운 옵션
 
     function onEditorChange(value) {
         setDesc(value);
         console.log(value);
-    }
-
-    function handleCharBtn1() {
-        setCharbtn('list');
-    }
-    function handleCharBtn2() {
-        setCharbtn('doc');
     }
 
    
@@ -34,14 +28,13 @@ const WikiEdit = () => {
         e.preventDefault();
 
         const wikiMarkup = HtmlToWiki(desc);
-        console.log(wikiMarkup);
-        console.log(desc);
+        console.log(selectedOption);
 
 
         try {
             const result = await axios.post(`http://localhost:8080/wiki/contents/new/${title}`, {
                 text: wikiMarkup,
-                type: charbtn,
+                type: selectedOption,
             },{
                 withCredentials: true,
             });
@@ -55,6 +48,11 @@ const WikiEdit = () => {
         };
         
     };
+
+    const handleSelectedOption = (optionValue) => {
+        setSelectedOption(optionValue);
+        console.log(selectedOption);
+      };
     
     return (
         <div className={`${styles.container}`}>
@@ -76,8 +74,7 @@ const WikiEdit = () => {
                         </div>
                         <div className={`${styles.wikichar_char}`}>
                             <h4>문서 성격</h4>
-                            <input type='button' className={charbtn === 'list'? `${styles.char_one} ${styles.btn_sty_one}`:  `${styles.btn_sty_two} ${styles.char_one}`} value='목차형' onClick={handleCharBtn1}/>
-                            <input type='button' className={charbtn === 'doc' ? `${styles.char_two} ${styles.btn_sty_one}` : `${styles.char_two} ${styles.btn_sty_two}`} value='문서형' onClick={handleCharBtn2}/>
+                            <TypeDrop onSelectedOption={handleSelectedOption}/>
                         </div>
                     </div>
                     <div>
@@ -102,5 +99,5 @@ const WikiEdit = () => {
 
 }
 
-export default WikiEdit;
+export default WikiCreate;
 

@@ -33,14 +33,12 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    position: relative;
  }
  .wikichar_title{
     width: 70%;
  }
  .wikichar_char{
-    position: absolute;
-    right: 0;
+    width: 25%;
 
  }
 .title{
