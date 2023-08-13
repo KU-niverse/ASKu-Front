@@ -7,7 +7,7 @@ import LikeorNot from "./LikeorNot"
 import { useNavigate } from "react-router-dom"
 
 
-function Question({title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({ title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   const nav = useNavigate();
@@ -32,7 +32,7 @@ function Question({title, id, doc_id, user_id, index_title, content, created_at,
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <ThreedotsMenu questionId={id}/>
+              <ThreedotsMenu  questionId={id}/>
             </div>
           </div>
           <div className={styles.q_middle}>
