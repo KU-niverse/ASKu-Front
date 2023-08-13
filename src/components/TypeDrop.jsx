@@ -55,7 +55,7 @@ function DropDown({onSelectedOption}) {
   const defaultOption = "문서 성격";
 
   const onSelect = (selectedOption) => {
-    console.log(selectedOption);
+    console.log(selectedOption.value);
     onSelectedOption(selectedOption.value);
     // 처리할 로직을 여기에 추가
   };
