@@ -116,7 +116,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
               </div>
 
-              {mypageData && mypageData.data && myContribute &&myContribute.message && (
+              {mypageData && mypageData.data &&myBadge.data&& myContribute &&myContribute.message && (
                 <MyProfile
                   nick={mypageData.data[0].nickname}
                   point={mypageData.data[0].point}
