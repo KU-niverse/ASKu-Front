@@ -27,7 +27,7 @@ function BadgeModal({  isOpen, onClose }) {
     useEffect(()=>{
       const takeMyBadge = async() => {
         try{
-          const res= await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, {withCredentials:true})
+          const res= await axios.get(`https://asku.wiki/user/mypage/badgehistory`, {withCredentials:true})
           if (res.status===200){
             setMyBadge(res.data)
             console.log(res.data.message)
@@ -45,7 +45,7 @@ function BadgeModal({  isOpen, onClose }) {
 
     const handleRepBadge = async () => {
       try {
-        const response = await axios.post(`${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`, {rep_badge_id : myBadge.data.badge_id}, {withCredentials: true});
+        const response = await axios.post(`https://asku.wiki/user/mypage/setrepbadge`, {rep_badge_id : myBadge.data.badge_id}, {withCredentials: true});
         if(response.status===200){
           console.log(response.data);
           alert("대표뱃지가 변경되었습니다.");

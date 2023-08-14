@@ -13,7 +13,7 @@ const FindPassword = () => {
 
     const findUserPw = async () => {
         try{
-            const response = await axios.post('${process.env.REACT_APP_HOST}/user/auth/findpw', {
+            const response = await axios.post('https://asku.wiki/user/auth/findpw', {
                 login_id: id
             }, {
                 withCredentials: true

@@ -19,7 +19,7 @@ const Signin = () => {
 
     const userLogin = async () => {
         try{
-            const response = await axios.post('${process.env.REACT_APP_HOST}/user/auth/signin', {
+            const response = await axios.post('https://asku.wiki/user/auth/signin', {
                 login_id: id,
                 password: password,
             }, {
@@ -49,7 +49,7 @@ const Signin = () => {
 
     const signOut = async () => {
         try{
-            const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/signout`, {
+            const result = await axios.get(`https://asku.wiki/user/auth/signout`, {
                 withCredentials: true
             });
             if(result.status === 200){

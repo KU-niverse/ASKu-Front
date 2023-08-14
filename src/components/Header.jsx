@@ -26,7 +26,7 @@ function Header() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("${process.env.REACT_APP_HOST}/user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -50,7 +50,7 @@ function Header() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("${process.env.REACT_APP_HOST}/user/mypage/info", {
+                const response = await axios.get("https://asku.wiki/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -69,7 +69,7 @@ function Header() {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/signout`, {
+            const result = await axios.get(`https://asku.wiki/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {

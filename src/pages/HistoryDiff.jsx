@@ -48,7 +48,7 @@ const HistoryDiff = () => {
 
   const compareHistory = async () => {
     try{
-        const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`, {
+        const result = await axios.get(`https://asku.wiki/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`, {
             withCredentials: true
         });
         if(result.status === 200){

@@ -15,7 +15,7 @@ function DropDown({ onSelectedOption, title, isOptionDisabled }) {
     if (!isOptionDisabled) {
       const takeWikiData = async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, { withCredentials: true });
+          const res = await axios.get(`https://asku.wiki/wiki/contents/${title}`, { withCredentials: true });
           if (res.status === 200) {
             setWikiData(res.data);
           }

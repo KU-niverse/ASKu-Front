@@ -21,7 +21,7 @@ const [debateListData, setDebateListData] = useState([]);
 useEffect(() => {
   const takeDebateList = async () =>{
     try{
-      const res = await axios.get( `${process.env.REACT_APP_HOST}/debate/list/${title}`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki/debate/list/${title}`, {withCredentials: true});
       if(res.status === 200){
         setDebateListData(res.data);
       }

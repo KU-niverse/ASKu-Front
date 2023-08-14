@@ -25,7 +25,7 @@ const [debateContentData, setDebateContentData] = useState([]);
 useEffect(() => {
   const takeDebateContent = async () =>{
     try{
-      const res = await axios.get( `${process.env.REACT_APP_HOST}/debate/view/${title}/${debateId}`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki/debate/view/${title}/${debateId}`, {withCredentials: true});
       if(res.status === 200){
         setDebateContentData(res.data);
       }
@@ -44,7 +44,7 @@ useEffect(() => {
 
 const handleDebateSubmit = async (submitData) => {
   try {
-    const res = await axios.post(`${process.env.REACT_APP_HOST}/debate/${title}/new/${debateId}`, submitData, {withCredentials: true});
+    const res = await axios.post(`https://asku.wiki/debate/${title}/new/${debateId}`, submitData, {withCredentials: true});
     if(res.status === 200){
       setData(res.data);
       alert(res.data.message)
