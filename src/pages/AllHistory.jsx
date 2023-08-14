@@ -40,7 +40,7 @@ const AllHistory = () => {
 
     const getHistory = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/wiki/historys?type=${type}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
             console.log(historys);
         } catch (error) {

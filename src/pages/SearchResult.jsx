@@ -68,7 +68,7 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/wiki/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -83,7 +83,7 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/question/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){

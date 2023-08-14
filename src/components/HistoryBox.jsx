@@ -26,7 +26,7 @@ const HistoryBox = (props) => {
     const handleRollback = async(e) => {
 
         try{
-            const result = await axios.post(`https://asku.wiki/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/historys/${title}/version/${version}`, {
                     
             }, {
                 withCredentials: true

@@ -30,7 +30,7 @@ const WikiEdit = () => {
 
 
         try {
-            const result = await axios.get(`https://asku.wiki/wiki/contents/question/${qid}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/contents/question/${qid}`, {
                 withCredentials: true,
             });
             if(result.status === 200){
