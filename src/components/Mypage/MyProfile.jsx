@@ -2,12 +2,31 @@ import styles from "./MyProfile.module.css"
 import haho from "../../img/haho.png"
 import { useState } from "react";
 import BadgeModal from "../BadgeModal";
+import NickEditModal from "./NickEditModal"
 
 function MyProfile({ nick, point, badge, percent, badgeimg}){
   // const [isBadgeModalVisible, setBadgeModalVisible] = useState(false);
   // const closeBadgeModal = () => {
   //     setBadgeModalVisible(false);
   // };
+
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const closeEditModal = () => {
+      setEditModalVisible(false);
+  };
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleNickEdit = () => {
+    console.log("클릭");
+    setEditModalVisible(true);
+    console.log(isEditModalVisible);
+  }
+
+  {isEditModalVisible && <NickEditModal isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />}
+
+
+
   return(
     <div>
       <div className={styles.profileimg}>
@@ -17,6 +36,8 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
         <div className={styles.rownick}>
             <span className={styles.rowtitle}>닉네임</span>
             <span className={styles.text}>{nick}</span>
+            <button className={styles.editbtn} onClick={handleNickEdit}>수정</button>
+            {isEditModalVisible && <NickEditModal isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />}
         </div>
         <div className={styles.rowbadge}>
           <span className={styles.rowtitle}>대표 뱃지</span>
