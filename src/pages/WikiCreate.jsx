@@ -32,7 +32,7 @@ const WikiCreate = () => {
 
 
         try {
-            const result = await axios.post(`http://localhost:8080/wiki/contents/new/${title}`, {
+            const result = await axios.post(`${process.env.REACT_APP_HOST}/wiki/contents/new/${title}`, {
                 text: wikiMarkup,
                 type: selectedOption,
             },{

@@ -18,7 +18,7 @@ const BookmarkBox = (props) => {
 
     const addBookmark = async () => {
       try{
-          const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.post(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
                   
           }, {
               withCredentials: true
@@ -37,7 +37,7 @@ const BookmarkBox = (props) => {
 
     const deleteBookmark = async () => {
       try{
-          const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
               withCredentials: true
           });
           if(result.status === 200){

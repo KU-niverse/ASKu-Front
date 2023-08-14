@@ -18,7 +18,7 @@ function MyQuestion(){
   useEffect(() => {
     const takeMyQuestion = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/user/mypage/questionhistory/${arrange}`, {withCredentials: true});
+        const res = await axios.get( `${process.env.REACT_APP_HOST}/user/mypage/questionhistory/${arrange}`, {withCredentials: true});
         if(res.status === 201){
           console.log(res.data)
           setMyQuestion(res.data);
@@ -43,7 +43,7 @@ function MyQuestion(){
     useEffect(() => {
       const takeMypage = async () =>{
         try{
-          const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+          const res = await axios.get( `${process.env.REACT_APP_HOST}/user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
             setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트

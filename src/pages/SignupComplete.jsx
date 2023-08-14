@@ -26,7 +26,7 @@ const SignupComplete = () => {
 
     const authPost = async () => {
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/signup/emailcheck', {
+            const response = await axios.post('${process.env.REACT_APP_HOST}/user/auth/signup/emailcheck', {
                 auth_uuid: auth,
             }, {
                 withCredentials: true

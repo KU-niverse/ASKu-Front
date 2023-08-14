@@ -30,7 +30,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" ${process.env.REACT_APP_HOST}/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -67,12 +67,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
-    getData('http://localhost:8080/user/mypage/info', setMypageData);
-    getData(`http://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
-    getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
-    getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
-    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
-    getData('http://localhost:8080/wiki/contributions', setMyContribute);
+    getData('${process.env.REACT_APP_HOST}/user/mypage/info', setMypageData);
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('${process.env.REACT_APP_HOST}/user/mypage/debatehistory', setMyDebate);
+    getData('${process.env.REACT_APP_HOST}/user/mypage/badgehistory', setMyBadge);
+    getData('${process.env.REACT_APP_HOST}/user/mypage/wikihistory', setMyWiki);
+    getData('${process.env.REACT_APP_HOST}/wiki/contributions', setMyContribute);
   }, []);
 
   console.log(myBadge)

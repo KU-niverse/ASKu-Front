@@ -20,7 +20,7 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
 
   const onReport = async () => {
     try {
-      const result = await axios.post(`http://localhost:8080/report/${reason_id}`, {
+      const result = await axios.post(`${process.env.REACT_APP_HOST}/report/${reason_id}`, {
           target: target,
           reason_id: reason_id,
       },{

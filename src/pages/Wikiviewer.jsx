@@ -116,7 +116,7 @@ function WikiViewer() {
     //북마크 추가
     const addBookmark = async () => {
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.post(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
                 
             }, {
                 withCredentials: true
@@ -139,7 +139,7 @@ function WikiViewer() {
       //북마크 해제
       const deleteBookmark = async () => {
         try{
-            const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -187,7 +187,7 @@ function WikiViewer() {
     const getWiki = async () => {
         console.log('나중');
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`);
             setAllContent(result.data.contents);
             console.log(result.data.contents);
             console.log(allContent);
@@ -204,7 +204,7 @@ function WikiViewer() {
     const getQues = async () => {
         console.log('실행')
         try{
-            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/question/view/${flag}/${title}`);
             setQues(result.data.data);
             console.log('성공');
             if (result.data.data.length===0) {
@@ -222,7 +222,7 @@ function WikiViewer() {
     //질문 데이터 가져오기
     const getContribute = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contributions/${title}`);
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`);
             console.log('기여도');
             setContribute(result.data.message);
             console.log(contribute);

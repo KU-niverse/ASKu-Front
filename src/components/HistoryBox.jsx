@@ -26,7 +26,7 @@ const HistoryBox = (props) => {
     const handleRollback = async(e) => {
 
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`, {
                     
             }, {
                 withCredentials: true

@@ -1,10 +1,10 @@
-import 'react-quill/dist/quill.snow.css';
-import './QuillStyle.css'
+import "react-quill/dist/quill.snow.css";
+import "./QuillStyle.css";
 // Quill 에디터 가져오기
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill";
 // axios
-import axios from 'axios';
-import { useMemo, useRef, useState, useEffect } from 'react';
+import axios from "axios";
+import { useMemo, useRef, useState, useEffect } from "react";
 
 function Quill(props) {
   const [value, setValue] = useState(props.value);
@@ -16,27 +16,31 @@ function Quill(props) {
 
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
-    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
+    console.log("에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!");
 
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    const input = document.createElement('input');
+    const input = document.createElement("input");
     // 속성 써주기
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
     // input이 클릭되면 파일 선택창이 나타난다.
 
     // input에 변화가 생긴다면 = 이미지를 선택
-    input.addEventListener('change', async () => {
-      console.log('온체인지');
+    input.addEventListener("change", async () => {
+      console.log("온체인지");
       const file = input.files[0];
       // multer에 맞는 형식으로 데이터 만들어준다.
       const formData = new FormData();
-      formData.append('image', file); // formData는 키-밸류 구조
+      formData.append("image", file); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post('http://localhost:8080/wiki/image', formData, {withCredentials: true});
-        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
+        const result = await axios.post(
+          "${process.env.REACT_APP_HOST}/wiki/image",
+          formData,
+          { withCredentials: true }
+        );
+        console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
         const IMG_URL = result.data.url;
         // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
         // src가 base64가 아닌 짧은 URL이기 때문에 데이터베이스에 에디터의 전체 글 내용을 저장할 수있게된다
@@ -53,9 +57,9 @@ function Quill(props) {
         // 2. 현재 에디터 커서 위치값을 가져온다
         const range = editor.getSelection();
         // 가져온 위치에 이미지를 삽입한다
-        editor.insertEmbed(range, 'image', IMG_URL);
+        editor.insertEmbed(range, "image", IMG_URL);
       } catch (error) {
-        console.log('실패했어요ㅠ');
+        console.log("실패했어요ㅠ");
         alert(error.response.data.message);
       }
     });
@@ -70,10 +74,10 @@ function Quill(props) {
       toolbar: {
         container: [
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-          [{'list': 'ordered'}, {'list': 'bullet'}],
-          ['link'],
-          ['image'],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["link"],
+          ["image"],
         ],
         handlers: {
           // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
@@ -84,16 +88,20 @@ function Quill(props) {
   }, []);
   // 위에서 설정한 모듈들 foramts을 설정한다
   const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'image',
-    'list', 'bullet', 'indent',
-    'link',
-    'align', 'color', 'background', 
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "image",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "align",
+    "color",
+    "background",
   ];
 
   // 이벤트 핸들러
@@ -103,25 +111,23 @@ function Quill(props) {
     console.log(editor.root); // 에디터 안의 내용 HTML 태그
 
     // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
-    console.log('안의 내용물 전부', quillRef.current.getEditorContents());
+    console.log("안의 내용물 전부", quillRef.current.getEditorContents());
   };
 
-
   return (
-    
     <div>
       <ReactQuill
         ref={quillRef}
-        theme='snow'
-        placeholder='플레이스 홀더'
+        theme="snow"
+        placeholder="플레이스 홀더"
         value={value}
-        onChange={newValue => {
+        onChange={(newValue) => {
           setValue(newValue);
           props.onChange(newValue); // 내부 상태 변경 후, 부모 컴포넌트로 업데이트된 값을 전달
         }}
         modules={modules}
         formats={formats}
-        style={{ height: '600px' }}
+        style={{ height: "600px" }}
       />
     </div>
   );

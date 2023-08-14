@@ -30,7 +30,7 @@ const WikiEdit = () => {
 
 
         try {
-            const result = await axios.get(`http://localhost:8080/wiki/contents/question/${qid}`, {
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/question/${qid}`, {
                 withCredentials: true,
             });
             if(result.status === 200){

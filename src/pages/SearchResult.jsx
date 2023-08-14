@@ -68,7 +68,7 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -83,7 +83,7 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
+            const result = await axios.get(`${process.env.REACT_APP_HOST}/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
