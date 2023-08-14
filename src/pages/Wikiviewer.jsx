@@ -12,7 +12,7 @@ import minilike from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
-import Graph from "../components/Mypage/Graph";
+import WikiGraph from "../components/Wiki/WikiGraph";
 
 
 // const Ques = [
@@ -77,7 +77,15 @@ function WikiViewer() {
     const [allText, setAllText] = useState('');
     const [allContent, setAllContent] = useState([]);
     const [ques, setQues] = useState([]);
+    const [contribute, setContribute] = useState([]);
+    const [totalPoint, setTotalPoint] = useState(null);
     const [flag, setFlag] = useState(0);
+    const [blank, setBlank] = useState(false); 
+//문서: 아직 내용이 없습니다. 전체 편집에서 작성해보세요!
+//기여도: 문서를 편집한 회원이 없습니다. 전체 편집으로 기여해보세요!
+// 질문: 해당 문서에 대한 질문이 없습니다. 
+    const [deleted, setDeleted] = useState(true);
+    const [imageSource, setImageSource] = useState(falseBk);
 
     const flagToggle = () =>{
         if (isToggled === false) {
@@ -103,8 +111,7 @@ function WikiViewer() {
         
     }
 
-    const [deleted, setDeleted] = useState(true);
-    const [imageSource, setImageSource] = useState(falseBk);
+    
 
     //북마크 추가
     const addBookmark = async () => {
@@ -181,8 +188,8 @@ function WikiViewer() {
         console.log('나중');
         try{
             const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
-            setAllContent(result.data.contents[0]);
-            console.log(result.data.contents[0]);
+            setAllContent(result.data.contents);
+            console.log(result.data.contents);
             console.log(allContent);
 
         } catch (error) {
@@ -191,12 +198,8 @@ function WikiViewer() {
         }
     };
 
-    useEffect(() => {
-        setAllContent(allContent);
-      }, [allContent]);
 
-    const [blank, setBlank] = useState(false);
-    const [selectQues, setSelectQues] = useState([]);
+   
     //질문 데이터 가져오기
     const getQues = async () => {
         console.log('실행')
@@ -204,8 +207,38 @@ function WikiViewer() {
             const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
             setQues(result.data.data);
             console.log('성공');
-            if (!ques) {
-                setBlank(true);
+            if (result.data.data.length===0) {
+                setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자. 
+
+            }else{
+                setBlank(false);
+            }
+        } catch (error) {
+            console.error(error);
+            //alert(result.data.message);
+        }
+
+    };
+    //질문 데이터 가져오기
+    const getContribute = async () => {
+        try{
+            const result = await axios.get(`http://localhost:8080/wiki/contributions/${title}`);
+            console.log('기여도');
+            setContribute(result.data.message);
+            console.log(contribute);
+            console.log('성공');
+
+            if(contribute.length !== 0){
+                console.log(contribute);
+                const total = contribute.reduce((acc, item) => acc + parseInt(item.point), 0);
+                setTotalPoint(total);
+            } else{
+                alert('기여도 없음');
+            }
+
+            if (!contribute) {
+                setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자. 
+
             }else{
                 setBlank(false);
             }
@@ -217,12 +250,16 @@ function WikiViewer() {
     };
 
     useEffect(() => {
-        getQues();
         getWiki();
-        
-        
-        
+        getQues();
+        getContribute();
     }, []);
+
+
+    //데이터 불러오기
+
+  
+
 
 
     return (
@@ -288,7 +325,17 @@ function WikiViewer() {
                     </div>
                     
                 </div>
-                <div className={styles.wikiwrite}></div>
+                <div className={styles.wikigraph}>
+                    {contribute.length===0 ? (
+                    <p></p>
+                    ):(
+                    contribute&&totalPoint&&
+                      (<WikiGraph 
+                        total_point={totalPoint}
+                        users={contribute}
+                        />)
+                    )}            
+                </div>
                </div>
                <div className={styles.wikicontent}>
                     {allContent.map((item) => {

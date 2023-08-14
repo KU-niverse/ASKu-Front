@@ -187,7 +187,7 @@
 }
 
 
-.wikiwrite{
+.wikigraph{
     width: 38%;
     height: 303px;
     border: 1px solid rgba(213, 213, 213, 1);
@@ -224,7 +224,7 @@ li{
         display: block;
         width: 350px;
     }
-    .wikiwrite{
+    .wikigraph{
         display: block;
         width: 350px;
     }
@@ -245,7 +245,7 @@ li{
         display: block;
         width: 350px;
     }
-    .wikiwrite{
+    .wikigraph{
         display: block;
         width: 350px;
 
