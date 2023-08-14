@@ -21,7 +21,7 @@ function WikiGraph({ total_point, users }) {
 
   // Calculate contributions and sort them
   const contributions = users.map((user) => ({
-    name: user.user_id,
+    name: user.nickname,
     value: (user.point / total_point) * 100,
     description: `${((user.point / total_point) * 100).toFixed(2)}%`,
     // color: getColor(doc.doc_title),
