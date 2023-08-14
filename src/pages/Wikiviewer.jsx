@@ -13,6 +13,7 @@ import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
 import WikiGraph from "../components/Wiki/WikiGraph";
+import SpinnerMypage from '../components/SpinnerMypage';
 
 
 // const Ques = [
@@ -72,6 +73,7 @@ function WikiViewer() {
     const myDivRef = useRef([]);
     const nav = useNavigate();
     const [isToggled, setIsToggled] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [isBookmark, setIsBookmark] = useState(false);
     const {title} = useParams();
     const [allText, setAllText] = useState('');
@@ -110,7 +112,8 @@ function WikiViewer() {
         myDivRef.current[index].scrollIntoView({ behavior: "smooth" });
         
     }
-
+ 
+//
     
 
     //북마크 추가
@@ -213,6 +216,7 @@ function WikiViewer() {
             }else{
                 setBlank(false);
             }
+
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
@@ -233,7 +237,7 @@ function WikiViewer() {
                 const total = contribute.reduce((acc, item) => acc + parseInt(item.point), 0);
                 setTotalPoint(total);
             } else{
-                alert('기여도 없음');
+                console.log('기여도 없음');
             }
 
             if (!contribute) {
@@ -242,19 +246,41 @@ function WikiViewer() {
             }else{
                 setBlank(false);
             }
+
+            setLoading(false);
         } catch (error) {
             console.error(error);
+            setLoading(false);
             //alert(result.data.message);
         }
 
     };
 
     useEffect(() => {
-        getWiki();
-        getQues();
-        getContribute();
+        const fetchData = async () => {
+            getWiki();
+            getQues();
+            getContribute();
+    
+            
+        };
+    
+        fetchData();
     }, []);
 
+    useEffect(() => {
+        
+        getContribute();
+    
+    }, [contribute]);
+    
+       // 로딩 중일 때 표시할 컴포넌트
+  if (loading) {
+    return <div><SpinnerMypage/></div>; 
+  }
+    
+
+    
 
     //데이터 불러오기
 
@@ -326,15 +352,12 @@ function WikiViewer() {
                     
                 </div>
                 <div className={styles.wikigraph}>
-                    {contribute.length===0 ? (
-                    <p></p>
-                    ):(
-                    contribute&&totalPoint&&
-                      (<WikiGraph 
-                        total_point={totalPoint}
-                        users={contribute}
-                        />)
-                    )}            
+                    {contribute && totalPoint && (
+                       <WikiGraph 
+                         total_point={totalPoint}
+                         users={contribute}
+                       />
+                     )}              
                 </div>
                </div>
                <div className={styles.wikicontent}>
