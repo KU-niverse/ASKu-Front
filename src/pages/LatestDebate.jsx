@@ -86,12 +86,6 @@ function LatestDebate() {
           <div className={styles.debateSearch}>
             <DebateSearch/>
           </div>
-          <div className={styles.debateAdd}>
-            <DebateAdd/>
-          </div>
-          <div className={styles.debateRecent}>
-            <DebateRecent/>
-          </div>
           
         </div>
       </div>

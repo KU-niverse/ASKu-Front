@@ -6,6 +6,8 @@ import HistoryBox from '../components/HistoryBox'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import Paging from '../components/Paging';
+
 
 
 
@@ -40,6 +42,17 @@ const History = (props) => {
 
     const {title} = useParams();
     const [lists, setLists] = useState([]);
+    const [typeCount, setTypeCount] = useState(0);
+    const [page, setPage] = useState(1); // 현재 페이지 상태 추가
+    const perPage = 6; // 페이지당 보여줄 컴포넌트 갯수
+    // 현재 페이지에 해당하는 데이터만 추출
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const visibleHistorys = lists.slice(startIndex, endIndex);
+
+    const handlePageChange = (pageNumber) => {
+      setPage(pageNumber); // 페이지 번호 업데이트
+    };
 
     
 
@@ -50,6 +63,7 @@ const History = (props) => {
             });
             if(result.status === 200){
                 setLists(result.data.historys);
+                setTypeCount(result.data.historys.length)
             }
             
         } catch (error) {
@@ -74,18 +88,24 @@ const History = (props) => {
         <div className={styles.history}>
             <div className={styles.historyList}>
                 <div className={styles.historyTitle}><p className={styles.listTitle}>{title}</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
-                {lists.map((item) => {
+                {visibleHistorys.map((item) => {
                     if (item.is_bad === 1) {
                         return null; // 패스 (무시)
                       }
                     return(
                         <div key={item.version}>
                             <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.timestamp} title={title}
+                            version={item.version} summary={item.summary} user={item.nick} timestamp={item.timestamp} title={title}
                             />
                         </div>
                     );
                 })}
+                <Paging
+                    total={typeCount}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
             </div>
         </div>
     </div>

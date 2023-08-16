@@ -76,7 +76,6 @@ function Quill(props) {
           [{ header: [1, 2, 3, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
           [{ list: "ordered" }, { list: "bullet" }],
-          ["link"],
           ["image"],
         ],
         handlers: {
@@ -98,7 +97,6 @@ function Quill(props) {
     "list",
     "bullet",
     "indent",
-    "link",
     "align",
     "color",
     "background",
@@ -127,7 +125,7 @@ function Quill(props) {
         }}
         modules={modules}
         formats={formats}
-        style={{ height: "600px" }}
+        
       />
     </div>
   );

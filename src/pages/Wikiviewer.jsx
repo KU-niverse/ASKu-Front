@@ -298,7 +298,7 @@ function WikiViewer() {
                   <div className={styles.wikititleBtn}>
                     <button onClick={linkToDebate}><img src={debate}/>&nbsp;토론하기</button>
 
-                    <button onClick={linkToHistory}><img src={his}/>&nbsp;히스토리</button>
+                    <button onClick={linkToHistory}><img src={his}/>&nbsp;&nbsp;히스토리</button>
                   </div>
                </div>
                <div className={styles.wikiBoxLists}>
@@ -309,13 +309,17 @@ function WikiViewer() {
                     </div>
                     <div>
                         {allContent.map((item) => {
-                            return(
+                            const tabCount = item.index.split('.').length - 1;
+                            const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount); // 탭은 유니코드 공백 문자 사용
+                        
+                            return (
                                 <li onClick={() => handleClick(item.section)} key={item.section}>
-                                    <span className={styles.wikiIndex}>{item.index}</span> {item.title}
+                                    <span className={styles.wikiIndex}>{tabs}{item.index}.</span> {item.title}
                                 </li>
                             );
-                        })} 
+                        })}
                     </div>
+
                     
                 </div>
                 <div className={styles.wikiask}>
@@ -329,11 +333,11 @@ function WikiViewer() {
                                   return null; // 패스 (무시)
                                 }
                                 return(
-                                    <div>
+                                    <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
                                      <ul key={item.id}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
-                                        <span className={styles.quesNum}>{item.like_count}<img src={minilike}/></span>
+                                        <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
                                      </ul>
                                     </div>
                                 );

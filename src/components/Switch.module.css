@@ -5,21 +5,21 @@
     position: absolute;
     font-size: 11px;
     color: white;
-    left: 9px;
-    top: 7px;
+    left: 10px;
+    top: 8px;
 }
 .toggleText2{
     position: absolute;
     font-size: 11px;
     color: white;
-    right: 9px;
-    top: 7px;
+    right: 10px;
+    top: 8px;
 }
 .switch{
     position: relative;
     display: inline-block;
     justify-content: center;
-    width: 68px;
+    width: 70px;
     height: 27px;
 }
 
@@ -46,9 +46,9 @@
 .slider:before{
     position: absolute;
     content: "";
-    height: 21px;
-    width: 21px;
-    bottom: 3px;
+    height: 22px;
+    width: 22px;
+    bottom: 2.5px;
     background-color: white;
     transition: 0.3s;
 
@@ -57,7 +57,7 @@ input:checked + .slider{
     background-color: aqua;
 }
 input:checked + .slider:before{
-    transform: translateX(39px);
+    transform: translateX(41.5px);
 }
 .slider.rounded{
     border-radius: 34px;

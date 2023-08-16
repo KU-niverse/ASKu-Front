@@ -17,6 +17,11 @@ const Signup = () => {
     const [isIdValid, setisIdValid] = useState(true);
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(prevIsChecked => !prevIsChecked);
+    }
     
     const [form, setForm] = useState({
         name: '',
@@ -152,6 +157,10 @@ const Signup = () => {
             
         }
 
+        if(isChecked === false){
+            return alert('개인정보 수집에 동의해주십시오');
+        }
+
         try{
             const response = await axios.post('https://asku.wiki/api/user/auth/signup', {
                 login_id: form.id,
@@ -193,7 +202,6 @@ const Signup = () => {
             <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>닉네임</span>
-                    <span className={nickDoubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleNickDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
                 </div>
                 <div className={`${styles.checkInput}`}>
                     <input 
@@ -281,7 +289,7 @@ const Signup = () => {
                 <span className={`${styles.signup_alert}`}>*학교 이메일은 소속학교 인증 및 개인정보 찾기에 이용됩니다</span>  
             </div>
             <div className={`${styles.signup_agree}`}>
-                <span><input required type='checkbox'/>개인정보 수집에 동의합니다.</span>
+                <span><input type='checkbox' checked={isChecked} onChange={handleCheckboxChange}/>개인정보 수집에 동의합니다.</span>
                 <span>더보기</span>
             </div>
             <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />

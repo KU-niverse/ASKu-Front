@@ -18,6 +18,7 @@ const HistoryBox = (props) => {
     const summary = props.summary;
     const user = props.user;
     const timestamp = props.timestamp;
+    const doctitle = props.doctitle;
 
     const handleView = () => {
         nav(`/wiki/preview/${title}/${version}`);
@@ -56,10 +57,11 @@ const HistoryBox = (props) => {
     <div className={styles.historyBox}>
         <div className={styles.contents}>
             <div className={styles.contentsOne}>
-                <span className={styles.version}>{version}</span>
+                <span className={styles.version}>V{version}</span>
                 <span className={styles.summary}>수정요약: {summary}</span>
             </div>
             <div className={styles.contentsTwo}>
+                <span className={styles.docTitle}>{doctitle}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
                 <span><ThreedotsReport target={1} reason_id={2}/></span>

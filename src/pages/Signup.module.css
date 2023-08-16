@@ -26,9 +26,18 @@
     flex-direction: column;
     color: rgba(125, 125, 125, 1);
     font-size: 14px;
-}
-.signup_input {
     margin-bottom: 5px;
+}
+
+.signup_checkinput {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+    font-size: 14px;
+    margin-bottom: 5px;
+    position: relative;
 }
 .signup_input input{
     margin-top: 5px;
@@ -38,6 +47,9 @@
     padding-left: 15px;
     box-sizing: border-box;
     border: 2px solid rgba(213, 213, 213, 1);
+}
+.signup_input input:focus{
+ border: 2px solid rgba(222, 58, 88, 1);
 }
 .signup_checkinput input{
     margin-top: 5px;
@@ -81,6 +93,7 @@
     display: flex;
     flex-direction: column;
     color: rgba(125, 125, 125, 1);
+    position: relative;
 }
 .signup_head{
     display: flex;
@@ -124,6 +137,9 @@
     color: white;
     border: none;
     box-sizing: border-box;
+    margin-top: 5px;
+    position: absolute;
+    right: 0;
     
 
 

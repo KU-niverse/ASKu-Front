@@ -41,7 +41,7 @@ const MyBookmark = () => {
             });
             if(result.status === 200){
                 setLists(result.data.message);
-                setBookCount(lists.length);
+                setBookCount(result.data.message.length);
             }
             
         } catch (error) {
@@ -71,7 +71,7 @@ const MyBookmark = () => {
                     return(
                         <div key={item.title}>
                             <BookmarkBox
-                            title={item.title} content={item.content} deleted={item.is_deleted}
+                            title={item.title} content={item.recent_filtered_content} deleted={item.is_deleted}
                             />
                         </div>
                     );

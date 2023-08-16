@@ -15,6 +15,11 @@ const WikiCreate = () => {
     const [desc, setDesc] = useState('');
     const [title, setTitle] = useState('');
     const [selectedOption, setSelectedOption] = useState(null); //드롭다운 옵션
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(prevIsChecked => !prevIsChecked);
+    }
 
     function onEditorChange(value) {
         setDesc(value);
@@ -82,10 +87,9 @@ const WikiCreate = () => {
                         <div className={`${styles.editorbox}`}>
                             <Editor value={desc} onChange={onEditorChange} />
                         </div>
-                        <br></br>
                     </div>
                     <div className={`${styles.submitbox}`}>
-                        <span><input required type='checkbox'/>정책에 맞게 작성하였음을 확인합니다.</span>
+                    <span className={`${styles.chkdiv}`}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className={`${styles.chkbox}`}/><span>정책에 맞게 작성하였음을 확인합니다.</span></span>
                         <input type='submit' value="생성하기" className={`${styles.submitWiki}`} />
                     </div>
                 </form>

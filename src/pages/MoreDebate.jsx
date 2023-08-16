@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 function MoreDebate() {
 const {title} = useParams();
 const [debateListData, setDebateListData] = useState([]);
+const [recentListData, setRecentListData] = useState([]);
 
 useEffect(() => {
   const takeDebateList = async () =>{
@@ -32,9 +33,12 @@ useEffect(() => {
       console.error(error);
     }
     console.log('DebateListData:', debateListData);
-  }
+  };
+
+  
   takeDebateList();
 }, [title]); //토론방 목록 가져오기
+
 
 console.log(debateListData.data)
 
@@ -85,15 +89,15 @@ console.log(debateListData.data)
           )}
           </div>
         </div>
-        <div className={styles.sidebar}>
+        <div className={recentListData && debateListData ? styles.sidebar : styles.hidden}>
           <div className={styles.debateSearch}>
-            <DebateSearch/>
+            <DebateSearch title={title}/>
           </div>
           <div className={styles.debateAdd}>
-            <DebateAdd/>
+            <DebateAdd title={title} debateList={debateListData}/>
           </div>
           <div className={styles.debateRecent}>
-            <DebateRecent/>
+            <DebateRecent title={title} recentData={recentListData}/>
           </div>
           
         </div>
