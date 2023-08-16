@@ -8,7 +8,12 @@
     letter-spacing: 0em;
     text-align: left;
     color:rgba(159, 19, 46, 1);
+    margin-bottom: 0px;
 
+}
+.addTitle p{
+    margin: 0;
+    margin-bottom: 10px;
 }
 .addTitleMain{
     font-size: 18px;
@@ -19,7 +24,7 @@
 .addBtn{
     background: linear-gradient(180deg, rgba(244, 109, 134, 0.3), rgba(244, 109, 134, 0) 100%);
     border: 1px solid rgba(159, 20, 47, 1);
-    width: 321px;
+    width: 100%;
     height: 50px;
     top: 380px;
     left: 20px;
@@ -29,12 +34,12 @@
 
 .inputcontainer {
     display: flex;
-    width: 350px;
+    width: 25%;
 }
 .headerInput {
     border: 2px solid #D5D5D5;
     border-radius: 12px;
-    width: 321px;
+    width: 20%;
     height: 50px;
     padding-left: 20px;
     position: absolute;
@@ -57,11 +62,11 @@
     }
 }
 .createBtn {
-    width: 46px;
+    width: 20%;
     height: 24px;
     border-radius: 20px;
     position: relative;
-    left: 260px;
+    left: 220px;
     top: 14px;
     z-index: 20;
     background: linear-gradient(180deg, #9F132E 31.77%, #DE3A58 100%);

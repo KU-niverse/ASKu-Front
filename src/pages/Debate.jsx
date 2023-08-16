@@ -100,8 +100,8 @@ const handleDebateSubmit = async (submitData) => {
           </div>
         </div>
         <div className={styles.sidebar}>
-          <div className={styles.debateSearch}>
-            <DebateSearch/>
+          <div className={styles.debateSearch}> 
+            <DebateSearch title={title}/>
           </div>
           <div className={styles.debateAdd}>
             <DebateAdd

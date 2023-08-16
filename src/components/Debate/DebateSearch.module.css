@@ -1,3 +1,6 @@
+.hidden{
+    display: none;
+}
 .searchTitle{
     font-size: 18px;
     font-weight: 700;
@@ -10,12 +13,12 @@
 }
 .inputcontainer {
     display: flex;
-    width: 350px;
+    width: 25%;
 }
 .headerInput {
     border: 2px solid #D5D5D5;
     border-radius: 35px;
-    width: 321px;
+    width: 20%;
     height: 40px;
     padding-left: 20px;
     position: absolute;
@@ -26,7 +29,21 @@
     height: 18px;
     position: relative;
     cursor: pointer;
-    left: 280px;
+    left: 90%;
     top: 10px;
     z-index: 20;
+}
+.resultContainer{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+.resultList{
+    width: 90%;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    color: black;
+    font-size: 14px;
+    font-weight: 700;;
 }

@@ -14,6 +14,11 @@
     display: flex;
     justify-content: space-between;
     padding-left: 0;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    color: black;
+    font-size: 14px;
 }
 .listTitle{
     font-family: Pretendard;

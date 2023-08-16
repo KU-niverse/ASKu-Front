@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 function MoreDebate() {
 const {title} = useParams();
 const [debateListData, setDebateListData] = useState([]);
+const [recentListData, setRecentListData] = useState([]);
 
 useEffect(() => {
   const takeDebateList = async () =>{
@@ -33,8 +34,24 @@ useEffect(() => {
     }
     console.log('DebateListData:', debateListData);
   }
+  const takeRecentList = async () =>{
+    try{
+      const res = await axios.get( `https://asku.wiki/api/debate/all/recent`, {withCredentials: true});
+      if(res.status === 200){
+        setRecentListData(res.data);
+      }
+      else{
+        console.log(res.data.message)
+      }
+    }catch (error){
+      console.error(error);
+    }
+    console.log('recentListData:', recentListData);
+  }
+  takeRecentList();
   takeDebateList();
 }, [title]); //토론방 목록 가져오기
+
 
 console.log(debateListData.data)
 
@@ -87,13 +104,13 @@ console.log(debateListData.data)
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
-            <DebateSearch/>
+            <DebateSearch title={title}/>
           </div>
           <div className={styles.debateAdd}>
-            <DebateAdd/>
+            <DebateAdd title={title} debateList={debateListData}/>
           </div>
           <div className={styles.debateRecent}>
-            <DebateRecent/>
+            <DebateRecent title={title} recentData={recentListData}/>
           </div>
           
         </div>
