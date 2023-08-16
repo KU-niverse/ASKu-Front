@@ -1,61 +1,65 @@
-import React from 'react'
-import plus from '../../img/Vector.png'
-import styles from './DebateAdd.module.css'
-import { useState } from 'react'
-import searchIcon from '../../img/search_icon.png'
+import React, { useState, useEffect } from 'react';
+import plus from '../../img/Vector.png';
+import styles from './DebateAdd.module.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
+const DebateAdd = ({ title }) => {
+  const [debateListData, setDebateListData] = useState(null);
+  const [isAdd, setIsAdd] = useState(false);
+  const [word, setWord] = useState('');
 
-
-const lists = [
-    {
-        'title': '여기 틀린거 같습니다',
-    },
-    {
-        'title': '여기 틀린거 같습니다',
-    },
-    {
-        'title': '여기 틀린거 같습니다',
-    },
-    {
-        'title': '여기 틀린거 같습니다',
-    },
-]
-
-const DebateAdd = ({title, debateList}) => {
-
-    const [isAdd, setIsAdd] = useState(false);
-    const [word, setWord] = useState('');
-
-
-    const handleAddBtn = () =>{
-        setIsAdd(true);
-    }
-    const debateAdd = async () => {
-        try{
-            const response = await axios.post(`http://localhost:8080/debate/new/${title}`, {
-               subject : word,
-            }, {
-                withCredentials: true
-            });
-            if (response.data.success) {
-                alert(response.data.message);
-                window.location.reload(); // 성공 시 페이지 새로고침
-
-            } else {
-                return alert('이상해');
-            }
-        } catch (error) {
-            console.error(error);
-            return alert(error.response.data.message);
+  useEffect(() => {
+    const takeDebateList = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/debate/list/${title}`, { withCredentials: true });
+        if (res.status === 200) {
+          setDebateListData(res.data);
+        } else {
+          console.log(res.data.message);
         }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    takeDebateList();
+  }, [title]); // Fetch debate list data when the title changes
+
+  const handleAddBtn = () => {
+    setIsAdd(true);
+  };
+
+  const debateAdd = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/debate/new/${title}`,
+        {
+          subject: word,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        alert(response.data.message);
+        window.location.reload(); // Refresh the page after successful creation
+      } else {
+        return alert('Failed to add debate.');
+      }
+    } catch (error) {
+      console.error(error);
+      return alert(error.response.data.message);
     }
-    const handleNewDebate = () => {
-        debateAdd();
-    }
+  };
+
+  const handleNewDebate = () => {
+    debateAdd();
+  };
+
   return (
     <div>
-        <div className={styles.addTitle}>
+       <div className={styles.addTitle}>
             <p className={styles.addTitleMain}>행복의 심리학</p>
             <p >문서의 다른 토론 (7)</p>
         </div>
@@ -68,19 +72,23 @@ const DebateAdd = ({title, debateList}) => {
                 <input className={styles.headerInput} type="text" value={word} onChange={e => setWord(e.target.value)} placeholder='생성할 토론방을 입력하세요.' />
                 <button className={styles.createBtn} onClick={handleNewDebate}>생성</button>
             </div>
-            
         </div>
-        <div className={styles.addLists}>
-            {debateList.map((item) => {
-                return(
-                    <ul key={item.id}>
-                        <span className={styles.listTitle}>{item.subject}</span>
-                    </ul>
-                );
-            })}
-        </div>
+      <div className={styles.addLists}>
+        {debateListData === null ? (
+          <p className={styles.none}>데이터를 불러오는 중입니다.</p>
+        ) : debateListData.data.length === 0 ? (
+          <p>"최근 변경된 토론이 없습니다."</p>
+        ) : (
+          debateListData.data.map((item) => (
+            <Link to={`/debate/${title}/${item.subject}/${item.id}`} className={styles.linkTo}>
+            <ul key={item.id}>
+              <span className={styles.listTitle}>{item.subject}</span>
+            </ul></Link>
+          ))
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default DebateAdd
+export default DebateAdd;

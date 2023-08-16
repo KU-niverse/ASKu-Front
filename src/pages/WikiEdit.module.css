@@ -13,7 +13,8 @@
 }
 h4{
     margin: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
+    font-size: 20px;
 }
 
 .wikichar{
@@ -35,6 +36,8 @@ h4{
     height: 45px;
     border-radius: 12px;
     border: 2px solid rgba(213, 213, 213, 1);
+    padding-left: 15px;
+    box-sizing: border-box;
 }
 .wikiQues_header{
     display: flex;

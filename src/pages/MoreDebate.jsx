@@ -22,7 +22,7 @@ const [recentListData, setRecentListData] = useState([]);
 useEffect(() => {
   const takeDebateList = async () =>{
     try{
-      const res = await axios.get( `https://asku.wiki/api/debate/list/${title}`, {withCredentials: true});
+      const res = await axios.get( `http://localhost:8080/debate/list/${title}`, {withCredentials: true});
       if(res.status === 200){
         setDebateListData(res.data);
       }
@@ -33,22 +33,9 @@ useEffect(() => {
       console.error(error);
     }
     console.log('DebateListData:', debateListData);
-  }
-  const takeRecentList = async () =>{
-    try{
-      const res = await axios.get( `https://asku.wiki/api/debate/all/recent`, {withCredentials: true});
-      if(res.status === 200){
-        setRecentListData(res.data);
-      }
-      else{
-        console.log(res.data.message)
-      }
-    }catch (error){
-      console.error(error);
-    }
-    console.log('recentListData:', recentListData);
-  }
-  takeRecentList();
+  };
+
+  
   takeDebateList();
 }, [title]); //토론방 목록 가져오기
 
@@ -102,7 +89,7 @@ console.log(debateListData.data)
           )}
           </div>
         </div>
-        <div className={styles.sidebar}>
+        <div className={recentListData && debateListData ? styles.sidebar : styles.hidden}>
           <div className={styles.debateSearch}>
             <DebateSearch title={title}/>
           </div>
