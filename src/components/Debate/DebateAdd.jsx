@@ -33,7 +33,7 @@ const DebateAdd = ({ title }) => {
   const debateAdd = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/debate/new/${title}`,
+        `https://asku.wiki/api/debate/new/${title}`,
         {
           subject: word,
         },
