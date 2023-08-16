@@ -36,12 +36,12 @@ const MyBookmark = () => {
 
     const getBookmarks = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/wiki/favorite`, {
+            const result = await axios.get(`http://localhost:8080/wiki/favorite`, {
                 withCredentials: true
             });
             if(result.status === 200){
                 setLists(result.data.message);
-                setBookCount(lists.length);
+                setBookCount(result.data.message.length);
             }
             
         } catch (error) {
@@ -71,7 +71,7 @@ const MyBookmark = () => {
                     return(
                         <div key={item.title}>
                             <BookmarkBox
-                            title={item.title} content={item.content} deleted={item.is_deleted}
+                            title={item.title} content={item.recent_filtered_content} deleted={item.is_deleted}
                             />
                         </div>
                     );

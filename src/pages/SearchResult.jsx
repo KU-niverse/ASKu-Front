@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ResultQues from '../components/ResultQues';
 import FormatTimeAgo from '../components/FormatTimeAgo';
+import BookmarkBox from '../components/ResultBox';
 
 
 
@@ -149,7 +150,7 @@ const SearchResearch = () => {
                         {docs.map((item) => {
                             return(
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
-                                    <ResultBox
+                                    <BookmarkBox
                                     title={item.title} 
                                     content={item.recent_filtered_content} bookmark={item.bookmark}
                                     />

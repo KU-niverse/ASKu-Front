@@ -11,6 +11,11 @@ const BookmarkBox = (props) => {
     const content = props.content;
     const [deleted, setDeleted] = useState(props.deleted);
     const [imageSource, setImageSource] = useState(trueBk);
+    const [expanded, setExpanded] = useState(false);
+
+    const toggleExpand = () => {
+      setExpanded(!expanded);
+    };
 
 
 
@@ -77,9 +82,14 @@ const BookmarkBox = (props) => {
             <div className={styles.title}>{title}</div>
             <div><img src={imageSource} alt="Image" onClick={handleClick}/></div>
         </div>
-        <div>
-            {content}
-        </div>
+        <div className={`${styles.content} ${expanded ? styles.expanded : ''}`}>
+        {content}
+          {!expanded && (
+            <span className={styles.moreLink} onClick={toggleExpand}>
+              ... 더보기
+            </span>
+          )}
+      </div>
     </div>
   )
 }

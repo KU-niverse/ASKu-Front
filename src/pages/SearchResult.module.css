@@ -1,6 +1,22 @@
 .hidden{
   display: none;
 }
+.content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 최대 2줄 표시 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.expanded {
+  -webkit-line-clamp: unset; /* 모든 텍스트 표시 */
+}
+
+.moreLink {
+  color: blue;
+  cursor: pointer;
+}
 .results{
     display: flex;
     padding: 30px;
