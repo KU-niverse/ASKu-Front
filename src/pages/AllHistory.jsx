@@ -6,6 +6,7 @@ import HistoryBox from '../components/HistoryBox'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Paging from '../components/Paging';
+import FormatTimeAgo from '../components/FormatTimeAgo';
 
 // const data = [
 //     {
@@ -76,21 +77,6 @@ const AllHistory = () => {
         setType('rollback');
     }
    
-    function formatTimeAgo(timeDifference) {
-        const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-        if (daysAgo >= 1) {
-          return `${daysAgo}일 전`;
-        } else {
-          const hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
-          if (hoursAgo >= 1) {
-            return `${hoursAgo}시간 전`;
-          } else {
-            const minutesAgo = Math.floor(timeDifference / (1000 * 60));
-            return `${minutesAgo}분 전`;
-          }
-        }
-    }
 
 
   return (
@@ -110,10 +96,7 @@ const AllHistory = () => {
                     </div>
                 </div>
                 {visibleHistorys.map((item) => {
-                    const inputDate = new Date(item.created_at);
-                    const currentDate = new Date();
-                    const timeDifference = Math.abs(currentDate - inputDate);
-                    const timestamp = formatTimeAgo(timeDifference);
+                    const timestamp = FormatTimeAgo(item.created_at);
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
@@ -144,10 +127,7 @@ const AllHistory = () => {
                     </div>
                 </div>
                 {visibleHistorys.map((item) => {
-                    const inputDate = new Date(item.created_at);
-                    const currentDate = new Date();
-                    const timeDifference = Math.abs(currentDate - inputDate);
-                    const timestamp = formatTimeAgo(timeDifference);
+                    const timestamp = FormatTimeAgo(item.created_at);
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
@@ -177,10 +157,7 @@ const AllHistory = () => {
                     </div>
                 </div>
                 {visibleHistorys.map((item) => {
-                    const inputDate = new Date(item.created_at);
-                    const currentDate = new Date();
-                    const timeDifference = Math.abs(currentDate - inputDate);
-                    const timestamp = formatTimeAgo(timeDifference);
+                    const timestamp = FormatTimeAgo(item.created_at);
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
