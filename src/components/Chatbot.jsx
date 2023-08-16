@@ -53,7 +53,7 @@ function Chatbot () {
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post('http://223.130.135.214:8080/chatbot/', {
+        axios.post('https://asku.wiki/ai/chatbot/', {
             q_content: inputValue,
             user_id: "1",
             // reference: "1"
@@ -135,7 +135,7 @@ function Chatbot () {
     
     useEffect(() => {
         inputRef.current.focus();
-        axios.get('http://223.130.135.214:8080/chatbot/')
+        axios.get('https://asku.wiki/ai/chatbot/')
             .then(response => {
                 console.log(response.data);
                 const { content, reference } = response.data;
