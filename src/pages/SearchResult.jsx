@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import Question from '../components/Question'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import Paging from '../components/Paging'
 
 
 
@@ -55,6 +56,8 @@ const SearchResearch = () => {
 
     const {title} = useParams();
     const [docs, setDocs] = useState([]);
+    const [docsCount, setDocsCount] = useState(0);
+    const [quesCount, setQuesCount] = useState(0);    
     const [ques, setQues] = useState([]);
 
     const handleButtonClick = () => {
@@ -68,11 +71,12 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/wiki/query/${title}`, {
+            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
                 setDocs(result.data.message);
+                setDocsCount(result.data.message.length);
             }
             
         } catch (error) {
@@ -83,11 +87,12 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/question/query/${title}`, {
+            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
                     setQues(result.data.data);
+                    setQuesCount(result.data.data.length);
                 
             }
             
@@ -103,6 +108,8 @@ const SearchResearch = () => {
 
         getDocs();
         getQues();
+        
+        
 
     }, []);
     
@@ -135,6 +142,7 @@ const SearchResearch = () => {
                                 </div>
                             );
                         })}
+                        <Paging total={docsCount} perPage={4}/>
                     </div>
                     <div className={isClicked ? styles.hidden : 'default'}>
                         {ques.map((item) => {
@@ -155,8 +163,10 @@ const SearchResearch = () => {
                               />
                             );
                         })}
+                        <Paging total={quesCount} perPage={4}/>
                     </div>
                     <div className={styles.linkToNew}><Link to='/newwiki' className={styles.link}>원하시는 질문이 없으신가요? 새로운 질문을 생성해보세요</Link></div>
+                    
                 </div>
                 <div className={styles.recents}>
                     <div className={styles.recentWrap}>
@@ -172,8 +182,8 @@ const SearchResearch = () => {
                     </div>
                     
                 </div>
+                
             </div>
-
         </div>
     </div>
   )

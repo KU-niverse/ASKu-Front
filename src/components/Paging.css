@@ -1,0 +1,13 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+    
+}
+li a{
+    color: rgba(116, 116, 116, 1);
+    padding: 5px;
+    text-decoration: none;
+}
+.active a {
+    color: rgba(159, 19, 46, 1)
+}
