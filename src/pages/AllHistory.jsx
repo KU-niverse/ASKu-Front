@@ -5,6 +5,7 @@ import his2 from '../img/his2.png'
 import HistoryBox from '../components/HistoryBox'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import Paging from '../components/Paging';
 
 // const data = [
 //     {
@@ -36,13 +37,24 @@ import { useState, useEffect } from 'react'
 const AllHistory = () => {
     const [historys, setHistorys] = useState([]);
     const [type, setType] = useState('all');
-    
+    const [typeCount, setTypeCount] = useState(0);
+    const [page, setPage] = useState(1); // 현재 페이지 상태 추가
+    const perPage = 10; // 페이지당 보여줄 컴포넌트 갯수
+    // 현재 페이지에 해당하는 데이터만 추출
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const visibleHistorys = historys.slice(startIndex, endIndex);
+
+    const handlePageChange = (pageNumber) => {
+      setPage(pageNumber); // 페이지 번호 업데이트
+    };
 
     const getHistory = async () => {
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
-            console.log(historys);
+            setTypeCount(result.data.message.length);
+            console.log(typeCount);
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
@@ -85,7 +97,7 @@ const AllHistory = () => {
     <div className={styles.container}>
         <Header/>
         <div className={styles.header}>
-            <span><img src={his2}/>히스토리</span>
+            <span><img src={his2}/>최근 변경</span>
         </div>
         <div className={styles.history}>
             <div className={type === 'all' ? styles.historyList : styles.hidden}>
@@ -97,19 +109,30 @@ const AllHistory = () => {
                         <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
                     </div>
                 </div>
-                {historys.map((item) => {
+                {visibleHistorys.map((item) => {
                     const inputDate = new Date(item.created_at);
                     const currentDate = new Date();
                     const timeDifference = Math.abs(currentDate - inputDate);
                     const timestamp = formatTimeAgo(timeDifference);
-                    return(
-                        <div key={item.timestamp}>
-                            <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user_id} timestamp={timestamp}
-                            />
-                        </div>
+                    return (
+                      <div key={item.timestamp}>
+                        <HistoryBox
+                          version={item.version}
+                          summary={item.summary}
+                          user={item.nick}
+                          timestamp={timestamp}
+                          doctitle={item.doc_title}
+                        />
+                      </div>
                     );
-                })}
+                  })}
+                  <Paging
+                    total={typeCount}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
+                
             </div>
             <div className={type === 'create' ? styles.historyList : styles.hidden}>
                 <div className={styles.historyTitle}>
@@ -120,15 +143,29 @@ const AllHistory = () => {
                         <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
                     </div>
                 </div>
-                {historys.map((item) => {
-                    return(
-                        <div key={item.version}>
-                            <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.created_at}
-                            />
-                        </div>
+                {visibleHistorys.map((item) => {
+                    const inputDate = new Date(item.created_at);
+                    const currentDate = new Date();
+                    const timeDifference = Math.abs(currentDate - inputDate);
+                    const timestamp = formatTimeAgo(timeDifference);
+                    return (
+                      <div key={item.timestamp}>
+                        <HistoryBox
+                          version={item.version}
+                          summary={item.summary}
+                          user={item.nick}
+                          timestamp={timestamp}
+                          doctitle={item.doc_title}
+                        />
+                      </div>
                     );
-                })}
+                  })}
+                  <Paging
+                    total={typeCount}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
             </div>
             <div className={type === 'rollback' ? styles.historyList : styles.hidden}>
                 <div className={styles.historyTitle}>
@@ -139,15 +176,29 @@ const AllHistory = () => {
                         <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>rollback</p>
                     </div>
                 </div>
-                {historys.map((item) => {
-                    return(
-                        <div key={item.version}>
-                            <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.user_id} timestamp={item.created_at}
-                            />
-                        </div>
+                {visibleHistorys.map((item) => {
+                    const inputDate = new Date(item.created_at);
+                    const currentDate = new Date();
+                    const timeDifference = Math.abs(currentDate - inputDate);
+                    const timestamp = formatTimeAgo(timeDifference);
+                    return (
+                      <div key={item.timestamp}>
+                        <HistoryBox
+                          version={item.version}
+                          summary={item.summary}
+                          user={item.nick}
+                          timestamp={timestamp}
+                          doctitle={item.doc_title}
+                        />
+                      </div>
                     );
-                })}
+                  })}
+                  <Paging
+                    total={typeCount}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
             </div>
         </div>
     </div>

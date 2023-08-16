@@ -1,13 +1,14 @@
-import React from 'react'
-import Header from '../components/Header'
-import search from '../img/search_icon.png'
-import styles from './SearchResult.module.css'
-import ResultBox from '../components/ResultBox'
-import { useState, useEffect } from 'react'
-import Question from '../components/Question'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import Paging from '../components/Paging'
+import React from 'react';
+import Header from '../components/Header';
+import search from '../img/search_icon.png';
+import styles from './SearchResult.module.css';
+import ResultBox from '../components/ResultBox';
+import { useState, useEffect } from 'react';
+import Question from '../components/Question';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import Paging from '../components/Paging';
+import ResultQues from '../components/ResultQues';
 
 
 
@@ -147,7 +148,7 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : 'default'}>
                         {ques.map((item) => {
                             return(
-                                <Question
+                            <ResultQues
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
@@ -160,7 +161,7 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
-                              />
+                            />
                             );
                         })}
                         <Paging total={quesCount} perPage={4}/>
