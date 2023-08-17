@@ -16,6 +16,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SpinnerMypage from '../components/SpinnerMypage';
+import Paging from '../components/Paging';
 
 function MyPage({ loggedIn, setLoggedIn }) {
   const [loading, setLoading] = useState(true);
@@ -147,6 +148,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
               
               </div>
+              <Paging/>
             </div>
           </div>
         
@@ -187,7 +189,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               {myWiki&&myWiki.message&&myWiki.data.length===0 ? (
                 <p>아직 기여한 내력이 없습니다.</p>
               ) : (
-                myWiki&&myWiki.message&&myWiki.data.slice(0,5).map((wiki)=>(
+                myWiki&&myWiki.message&&myWiki.data.slice(0,7).map((wiki)=>(
                   <Contribute
                     key={wiki.id}
                     user_id={wiki.user_id}
