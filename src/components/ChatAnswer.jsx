@@ -8,12 +8,16 @@ import referenceIcon from '../img/reference.png';
 import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 import closeBtn from '../img/close_btn.png';
+import LikeModal from './LikeModal';
+import UnlikeModal from './UnlikeModal';
 
 const ChatAnswer = (props) => {
     const { content, reference } = props;
     const [likeHovered, setLikeHovered] = useState(false);
     const [unlikeHovered, setUnlikeHovered] = useState(false);
     const [referenceOpen, setReferenceOpen] = useState(false);
+    const [likeModalOpen, setLikeModalOpen] = useState(false);
+    const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
 
     const handleLikeMouseOver = () => {
         setLikeHovered(true);
@@ -43,6 +47,14 @@ const ChatAnswer = (props) => {
         setReferenceOpen(false);
     };
 
+    const handleLikeClick = () => {
+        setLikeModalOpen(true);
+    }
+
+    const handleUnlikeClick = () => {
+        setUnlikeModalOpen(true);
+    }
+
     return (
         <div>
             <div className={styles.answerBox}>
@@ -61,6 +73,7 @@ const ChatAnswer = (props) => {
                         alt="like"
                         onMouseOver={handleLikeMouseOver}
                         onMouseLeave={handleLikeMouseLeave}
+                        onClick={handleLikeClick}
                     />
                     <img
                         id={styles.unlike}
@@ -69,6 +82,7 @@ const ChatAnswer = (props) => {
                         alt="unlike"
                         onMouseOver={handleUnlikeMouseOver}
                         onMouseLeave={handleUnlikeMouseLeave}
+                        onClick={handleUnlikeClick}
                     />
                     <img
                         id={styles.referenceIcon}
@@ -86,11 +100,12 @@ const ChatAnswer = (props) => {
                         <img className={styles.closeBtn} src={closeBtn} alt="close button" onClick={handleReferenceClose}/> 
                     </div>
                     <div className={styles.reference_text}>
-                        {/* <p>dkdkdk dkdkdkd kdkdkdk dkdkdkdk dkdkdkdkdkdkdk dkdkdk dkdkdkdkdkdk dkdkdkd kdkdkdkdkdk dkdkdkdkdk dkdkdkdkd kdkdkdkdkd kdkdk dkdk dkdkdkdk dkdkd kdkdkdkdk dkdkdkdk dkdkdkdkdkdk dkdkdkdk dkdkdkdk dkdk dkdkdkd kdkdk dkdkdk dkdkd kdk dkdkdkdk dkdkdkdkdkdk dkdkdkdkd kdkdkd kdkd kdk dkdk dkdkdkd kdkdkdkd kdkdkdkdkd dkdkdkdkd kdkdkd kdkd kdkdkdkdkdkdkd kdkdkdkdkd kdkdkdkd kdkdkdk dkdkdkdk dkdkd kdkdkdk dkdkdk dkdkdkdkdkd kdkdkdkd kdkd kdkdkdkdkdkdk dkdkdkdkdkdkdkd kdkdkdkdkdkdkdkdkdkd kdkdkdkdkdkdkdkdkdkdkdkdkdkdkdk</p> */}
                         <p>{reference}</p>
                     </div>
                 </div>
             </div>
+            {likeModalOpen && <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} />}
+            {unlikeModalOpen && <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} />}
         </div>
     );
 };

@@ -96,10 +96,7 @@ const SearchResearch = () => {
             });
             if(result.status === 200){
                     setQues(result.data.data);
-<<<<<<< HEAD
-=======
                     setQuesCount(result.data.data.length);
->>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                 
             }
             
@@ -152,13 +149,8 @@ const SearchResearch = () => {
                     <div className={isClicked ? 'default': styles.hidden}>
                         {docs.map((item) => {
                             return(
-<<<<<<< HEAD
-                                <div key={item.title} onClick={handleDocsClick(item.title)}>
-                                    <ResultBox
-=======
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <BookmarkBox
->>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                                     title={item.title} 
                                     content={item.recent_filtered_content} bookmark={item.bookmark}
                                     />
@@ -169,11 +161,7 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : 'default'}>
                         {ques.map((item) => {
                             return(
-<<<<<<< HEAD
-                                <Question
-=======
                             <ResultQues
->>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
@@ -186,11 +174,7 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
-<<<<<<< HEAD
-                              />
-=======
                             />
->>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                             );
                         })}
                     </div>

@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 function Home({loggedIn, setLoggedIn}) {
     const [inputValue, setInputValue] = useState('');
     const [popularKeywords, setPopularKeywords] = useState([]);
+    const [popularQuestions, setPopularQuestions] = useState([]);
 //     const Navigate = useNavigate();
 //     useEffect(() => {
 //     const checkLoginStatus = async () => {
@@ -45,6 +46,20 @@ function Home({loggedIn, setLoggedIn}) {
         };
 
         fetchPopularKeywords();
+    }, []);
+    useEffect(() => {
+        const fetchPopularQuestions = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/question/popular');
+                if (response.data.success) {
+                    setPopularQuestions(response.data.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        fetchPopularQuestions();
     }, []);
     return (
         <div className="pageWrap">
@@ -84,58 +99,21 @@ function Home({loggedIn, setLoggedIn}) {
                     <div className={styles.realTime}>
                         <div className={styles.keyWord}>
                             <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>1.</p>
-                                    <p className={styles.rankContent}>입실렌티</p>
+                            {popularKeywords.map((keyword, index) => (
+                                <div className={styles.rankWrap} key={index}>
+                                    <p className={styles.numberIcon}>{index + 1}.</p>
+                                    <p className={styles.rankContent}>{keyword.keyword}</p>
                                 </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>2.</p>
-                                    <p className={styles.rankContent}>고려대학교</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>3.</p>
-                                    <p className={styles.rankContent}>입실렌티 라인업</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>4.</p>
-                                    <p className={styles.rankContent}>출입신청</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>5.</p>
-                                    <p className={styles.rankContent}>입실렌티</p>
-                                </div>
-                                {/* <div className={styles.keyWord}>
-                                    <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
-                                    {popularKeywords.map((keyword, index) => (
-                                        <div className={styles.rankWrap} key={index}>
-                                            <p className={styles.numberIcon}>{index + 1}.</p>
-                                            <p className={styles.rankContent}>{keyword.keyword}</p>
-                                        </div>
-                                    ))}
-                                </div> */}
+                            ))}
                         </div>
                         <div className={styles.question}>
-                        <p className={styles.realTimeTitle}>실시간 인기 질문</p>
-                                <div className={styles.rankWrap}>
+                            <p className={styles.realTimeTitle}>실시간 인기 질문</p>
+                            {popularQuestions.map((question, index) => (
+                                <div className={styles.rankWrap} key={index}>
                                     <p className={styles.numberIcon}>Q.</p>
-                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
+                                    <p className={styles.rankContent}>{question.content}</p>
                                 </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>Q.</p>
-                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>Q.</p>
-                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>Q.</p>
-                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
-                                </div>
-                                <div className={styles.rankWrap}>
-                                    <p className={styles.numberIcon}>Q.</p>
-                                    <p className={styles.rankContent}>교환학생 1지망 다들 어디로 했어?</p>
-                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
