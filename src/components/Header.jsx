@@ -17,6 +17,7 @@ function Header() {
     const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px');
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
+    const [isAlarmVisible, setIsAlarmVisible] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -150,6 +151,9 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
+                                <div className={styles.alarmContainer}>
+
+                                </div>
                             </>
                         ) : (
                             <>

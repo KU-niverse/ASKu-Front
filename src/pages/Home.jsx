@@ -11,7 +11,8 @@ import { useState, useEffect } from 'react';
 
 
 function Home({loggedIn, setLoggedIn}) {
-    const [inputValue, setInputValue] = useState(''); 
+    const [inputValue, setInputValue] = useState('');
+    const [popularKeywords, setPopularKeywords] = useState([]);
 //     const Navigate = useNavigate();
 //     useEffect(() => {
 //     const checkLoginStatus = async () => {
@@ -31,6 +32,20 @@ function Home({loggedIn, setLoggedIn}) {
 // };
 //     checkLoginStatus();
 // }, [Navigate, setLoggedIn]);
+    useEffect(() => {
+        const fetchPopularKeywords = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/search/popular');
+                if (response.data.success) {
+                    setPopularKeywords(response.data.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchPopularKeywords();
+    }, []);
     return (
         <div className="pageWrap">
             <Header />
@@ -89,6 +104,15 @@ function Home({loggedIn, setLoggedIn}) {
                                     <p className={styles.numberIcon}>5.</p>
                                     <p className={styles.rankContent}>입실렌티</p>
                                 </div>
+                                {/* <div className={styles.keyWord}>
+                                    <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
+                                    {popularKeywords.map((keyword, index) => (
+                                        <div className={styles.rankWrap} key={index}>
+                                            <p className={styles.numberIcon}>{index + 1}.</p>
+                                            <p className={styles.rankContent}>{keyword.keyword}</p>
+                                        </div>
+                                    ))}
+                                </div> */}
                         </div>
                         <div className={styles.question}>
                         <p className={styles.realTimeTitle}>실시간 인기 질문</p>
