@@ -17,6 +17,7 @@ function Header() {
     const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px');
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
+    const [isAlarmVisible, setIsAlarmVisible] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -26,7 +27,7 @@ function Header() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -50,7 +51,7 @@ function Header() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                const response = await axios.get("http://localhost:8080/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -69,7 +70,7 @@ function Header() {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`https://asku.wiki/api/user/auth/signout`, {
+            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {
@@ -150,6 +151,9 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
+                                <div className={styles.alarmContainer}>
+
+                                </div>
                             </>
                         ) : (
                             <>
