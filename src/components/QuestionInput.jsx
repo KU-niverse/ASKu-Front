@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
-function QuestionInput({onQuestionSubmit, title}) {
+function QuestionInput({onQuestionSubmit, title, wikiData}) {
   const [questionContent, setQuestionContent] = useState('');
   const [selectedOption, setSelectedOption] = useState(null); // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false);
@@ -14,7 +14,7 @@ function QuestionInput({onQuestionSubmit, title}) {
 
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -84,7 +84,7 @@ function QuestionInput({onQuestionSubmit, title}) {
       <div className={styles.q_cfrontheader}>
         <p className={styles.q_cheadline}>질문 생성하기</p>
         <div className={styles.q_dropdown}>
-          <DropDown onSelectedOption={handleSelectedOption} title={title}/>
+          <DropDown onSelectedOption={handleSelectedOption} title={title} wikiData={wikiData}/>
         </div>
       </div>
     </div>

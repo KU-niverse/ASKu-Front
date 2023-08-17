@@ -1,3 +1,14 @@
+ /* 스타일을 초기화하고 싶은 경우 */
+ .linkTo {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 기본 텍스트 색상 유지 */
+  }
+  
+  /* 클릭 시 스타일 변경하고 싶은 경우 */
+  .linkTo:hover {
+    text-decoration: underline;
+    text-decoration: none; /* 클릭 시 밑줄 표시 */
+  }
 .recentTitle{
     font-size: 18px;
     font-weight: 700;
@@ -14,6 +25,11 @@
     display: flex;
     justify-content: space-between;
     padding-left: 0;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    color: black;
+    font-size: 14px;
 }
 .listTitle{
     font-family: Pretendard;

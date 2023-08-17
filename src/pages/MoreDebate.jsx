@@ -17,11 +17,12 @@ import { useParams } from 'react-router-dom';
 function MoreDebate() {
 const {title} = useParams();
 const [debateListData, setDebateListData] = useState([]);
+const [recentListData, setRecentListData] = useState([]);
 
 useEffect(() => {
   const takeDebateList = async () =>{
     try{
-      const res = await axios.get( `http://localhost:8080/debate/list/${title}`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki/api/debate/list/${title}`, {withCredentials: true});
       if(res.status === 200){
         setDebateListData(res.data);
       }
@@ -32,9 +33,12 @@ useEffect(() => {
       console.error(error);
     }
     console.log('DebateListData:', debateListData);
-  }
+  };
+
+  
   takeDebateList();
 }, [title]); //토론방 목록 가져오기
+
 
 console.log(debateListData.data)
 
@@ -63,8 +67,9 @@ console.log(debateListData.data)
                 수정 시간
               </span>
             </div>
+            
             {debateListData && debateListData.data && debateListData.data.length === 0 ? (
-              <p>아직 생성된 토론방이 없습니다.</p>
+              <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
             debateListData && debateListData.data && debateListData.data.map((data) => (
               <DebateList
@@ -84,15 +89,15 @@ console.log(debateListData.data)
           )}
           </div>
         </div>
-        <div className={styles.sidebar}>
+        <div className={recentListData && debateListData ? styles.sidebar : styles.hidden}>
           <div className={styles.debateSearch}>
-            <DebateSearch/>
+            <DebateSearch title={title}/>
           </div>
           <div className={styles.debateAdd}>
-            <DebateAdd/>
+            <DebateAdd title={title} debateList={debateListData}/>
           </div>
           <div className={styles.debateRecent}>
-            <DebateRecent/>
+            <DebateRecent title={title} recentData={recentListData}/>
           </div>
           
         </div>

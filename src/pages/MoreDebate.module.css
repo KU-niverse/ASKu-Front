@@ -1,3 +1,6 @@
+.hidden{
+  display: none;
+}
 .header {
   display: flex;
   justify-content: center;
@@ -38,7 +41,7 @@
 }
 .maincontent{
   background-color: white;
-  width: 80%;
+  width: 75%;
   height: auto;
   
 }
@@ -75,6 +78,9 @@
   margin-right: 14px;
 }
 
+.none{
+  margin-left: 34px;
+}
 
 @media only screen and (max-width: 767px) {
   .debate{

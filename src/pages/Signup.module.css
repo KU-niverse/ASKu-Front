@@ -26,24 +26,41 @@
     flex-direction: column;
     color: rgba(125, 125, 125, 1);
     font-size: 14px;
-}
-.signup_input {
     margin-bottom: 5px;
+}
+
+.signup_checkinput {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(125, 125, 125, 1);
+    font-size: 14px;
+    margin-bottom: 5px;
+    position: relative;
 }
 .signup_input input{
     margin-top: 5px;
     width: 100%;
     height: 50px;
     border-radius: 12px;
+    padding-left: 15px;
+    box-sizing: border-box;
     border: 2px solid rgba(213, 213, 213, 1);
+}
+.signup_input input:focus{
+ border: 2px solid rgba(222, 58, 88, 1);
 }
 .signup_checkinput input{
     margin-top: 5px;
     height: 50px;
     border-radius: 12px;
+    padding-left: 15px;
+    box-sizing: border-box;
     border: 2px solid rgba(213, 213, 213, 1);
-    width: 60%;
+    width: 70%;
     display: flex;
+    margin-right: 30px;
     
 }
 .checkInput{
@@ -52,8 +69,9 @@
 
 .signup_btn{
     width: 100%;
-    height: 45px;
+    height: 50px;
     padding: 5px;
+    box-sizing: border-box;
     border-radius: 12px;
     background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
     color: white;
@@ -75,6 +93,7 @@
     display: flex;
     flex-direction: column;
     color: rgba(125, 125, 125, 1);
+    position: relative;
 }
 .signup_head{
     display: flex;
@@ -87,6 +106,8 @@
     height: 50px;
     border-radius: 12px;
     border: 2px solid rgba(213, 213, 213, 1);
+    box-sizing: border-box;
+    padding-left: 15px;
 }
 .signup_alert{
     font-size: 12px;
@@ -115,6 +136,11 @@
     background: linear-gradient(90deg, #DE3A58 0%, #9F132E 100%);
     color: white;
     border: none;
+    box-sizing: border-box;
+    margin-top: 5px;
+    position: absolute;
+    right: 0;
+    
 
 
 }

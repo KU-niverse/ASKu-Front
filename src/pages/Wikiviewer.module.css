@@ -9,6 +9,7 @@
     margin-top: 50px;
     width: 74%;
     margin-left: 13%;
+    margin-bottom: 30px;
 }
 
 .wikititle{
@@ -85,9 +86,12 @@
     justify-content: space-between;
 }
 
-.wikilistTitle h2{
+h2{
     margin: 0px;
+    font-size: 18px;
+    font-weight: 700;
 }
+
 .wikilistTitle button{
     width: 70px;
     height: 27px;
@@ -125,11 +129,12 @@
 .wikiaskFoot{
     width: 90%;
     position: absolute;
-    bottom: 30px;
+    bottom: 25px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    
 
 }
 .addQues{
@@ -151,18 +156,19 @@
 .customHr{
     margin: 0;
     padding: 0;
-    border-color: rgba(237, 237, 237, 1);
+    border-color: rgba(237, 237, 237, 0.5);
 }
 .quesWrap p{
     margin: 0;
     padding: 0;
 }
 .quesWrap ul{ 
-    padding: 0;
+    padding: 3px 0px 3px 0px;
     display: flex;
     justify-content: space-between;
     margin: 5px 0px 5px 0px;
     font-size: 14px;
+    align-items: center;
     
    
 }
@@ -179,15 +185,20 @@
     font-size: 14px;
     font-weight: 700;
     color: rgba(116, 116, 116, 1);
+    display: flex;
+    align-items: center;
 
 }
 .quesNum img{
     margin-left: 10px;
     cursor: pointer;
+    width: 18px;
+    height: 17px;
+    object-fit: contain;
 }
 
 
-.wikiwrite{
+.wikigraph{
     width: 38%;
     height: 303px;
     border: 1px solid rgba(213, 213, 213, 1);
@@ -224,7 +235,7 @@ li{
         display: block;
         width: 350px;
     }
-    .wikiwrite{
+    .wikigraph{
         display: block;
         width: 350px;
     }
@@ -245,25 +256,26 @@ li{
         display: block;
         width: 350px;
     }
-    .wikiwrite{
+    .wikigraph{
         display: block;
         width: 350px;
 
     }
     .wikititle h1{
-        font-size: 26px;
+        font-size: 24px;
     }
     .wikititleBtn{
         width: 151px;
 
     }
     .wikititleBtn img{
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 10px;
         object-fit: contain;
     }
     .wikititleBtn button{
-        width: 72px;
+        width: 69px;
+        height: 25px;
         font-size: 10px;
         padding: 6px;
     }

@@ -1,11 +1,13 @@
 .bkbox{
     width: 100%;
-    height: 120px;
+    height: 140px;
     border-radius: 12px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     margin-bottom: 20px;
     padding: 20px;
     box-sizing: border-box;
+    cursor: pointer;
+    border: 0.5px solid rgba(213, 213, 213, 1);
 }
 .contents{
     width: 100%;

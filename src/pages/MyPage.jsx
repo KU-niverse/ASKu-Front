@@ -25,12 +25,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const [myDebate, setMyDebate] = useState([]);
   const [myBadge, setMyBadge] = useState([]);
   const [myWiki, setMyWiki] = useState([]);
-
+  
   //login status 체크하기
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -67,12 +67,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
-    getData('http://localhost:8080/user/mypage/info', setMypageData);
-    getData('http://localhost:8080/user/mypage/questionhistory', setMyQuestion);
-    getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
-    getData('http://localhost:8080/user/mypage/badges', setMyBadge);
-    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
-    getData('http://localhost:8080/wiki/contributions', setMyContribute);
+    getData('https://asku.wiki/api/user/mypage/info', setMypageData);
+    getData(`https://asku.wiki/api/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
+    getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
+    getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
+    getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
   }, []);
 
   console.log(myBadge)
@@ -116,11 +116,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
               </div>
 
-              {mypageData && mypageData.message && myContribute &&myContribute.message && (
+              {mypageData && mypageData.data &&myBadge.data&& myContribute &&myContribute.message && (
                 <MyProfile
-                  nick={mypageData.message.nickname}
-                  point={mypageData.message.point}
-                  badge={mypageData.message.rep_badge}
+                  nick={mypageData.data[0].nickname}
+                  point={mypageData.data[0].point}
+                  badge={mypageData.data[0].rep_badge_name}
+                  badgeimg={mypageData.data[0].rep_badge_image}
                   percent={myContribute.message.ranking_percentage.toFixed(2)}
                 />
               )}
@@ -143,6 +144,8 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     <img key={badge.id} src={badge.image} alt={badge.name}/>
                   ))
                 )}
+
+              
               </div>
             </div>
           </div>
@@ -152,11 +155,11 @@ function MyPage({ loggedIn, setLoggedIn }) {
               <div className={styles.infoheader}>
                 <p className={styles.title}>내 정보</p>
               </div>
-              {mypageData && mypageData.message && (
+              {mypageData && mypageData.data && (
                 <MyInfo
-                  name={mypageData.message.name}
-                  email={mypageData.message.email}
-                  stu_id={mypageData.message.stu_id}
+                  name={mypageData.data[0].name}
+                  email={mypageData.data[0].email}
+                  stu_id={mypageData.data[0].stu_id}
                 />
               )}
               <div className={styles.infoedit}>
@@ -181,10 +184,10 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     />)
               )}            
               </div>
-              {myWiki&&myWiki.message&&myWiki.message.length===0 ? (
+              {myWiki&&myWiki.message&&myWiki.data.length===0 ? (
                 <p>아직 기여한 내력이 없습니다.</p>
               ) : (
-                myWiki&&myWiki.message&&myWiki.message.slice(0,5).map((wiki)=>(
+                myWiki&&myWiki.message&&myWiki.data.slice(0,5).map((wiki)=>(
                   <Contribute
                     key={wiki.id}
                     user_id={wiki.user_id}
@@ -212,10 +215,10 @@ function MyPage({ loggedIn, setLoggedIn }) {
               <button className={styles.edit}>더보기</button>
               </Link>
             </div>
-            {myQuestion && myQuestion.message && myQuestion.message.length === 0 ? (
+            {myQuestion && myQuestion.message && myQuestion.data.length === 0 ? (
               <p>아직 작성한 질문이 없습니다.</p>
             ) : (
-              myQuestion && myQuestion.message && myQuestion.message.slice(0,5).map((question) => (
+              myQuestion && myQuestion.message && myQuestion.data&& myQuestion.data.slice(0,5).map((question) => (
                 <QuestionList
                   key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                   id={question.id}

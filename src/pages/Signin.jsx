@@ -19,7 +19,7 @@ const Signin = () => {
 
     const userLogin = async () => {
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/signin', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/signin', {
                 login_id: id,
                 password: password,
             }, {
@@ -47,25 +47,9 @@ const Signin = () => {
         userLogin();
     }
 
-    const signOut = async () => {
-        try{
-            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
-                withCredentials: true
-            });
-            if(result.status === 200){
-                alert(result.data.message);
-                nav('/');
-            }
-            
-        } catch (error) {
-            console.error(error);
-            return alert(error.response.data.message);
-        }
-    };
 
   return (
     <div className={`${styles.container}`}>
-        <button onClick={signOut}>logout</button>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <img className={`${styles.haho}`}src={haho_login} alt=''/>
         <h1 className={styles.login_headers}>LOGIN</h1>

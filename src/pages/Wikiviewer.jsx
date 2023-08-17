@@ -12,7 +12,8 @@ import minilike from '../img/minilike.png'
 import WikiBox from '../components/WikiBox';
 import Switch from '../components/Switch';
 import { useParams } from 'react-router-dom/dist';
-import WikiToHtml from '../components/Wiki/WikiToHtml';
+import WikiGraph from "../components/Wiki/WikiGraph";
+import SpinnerMypage from '../components/SpinnerMypage';
 
 
 // const Ques = [
@@ -72,12 +73,21 @@ function WikiViewer() {
     const myDivRef = useRef([]);
     const nav = useNavigate();
     const [isToggled, setIsToggled] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [isBookmark, setIsBookmark] = useState(false);
     const {title} = useParams();
     const [allText, setAllText] = useState('');
     const [allContent, setAllContent] = useState([]);
     const [ques, setQues] = useState([]);
+    const [contribute, setContribute] = useState([]);
+    const [totalPoint, setTotalPoint] = useState(null);
     const [flag, setFlag] = useState(0);
+    const [blank, setBlank] = useState(false); 
+//문서: 아직 내용이 없습니다. 전체 편집에서 작성해보세요!
+//기여도: 문서를 편집한 회원이 없습니다. 전체 편집으로 기여해보세요!
+// 질문: 해당 문서에 대한 질문이 없습니다. 
+    const [deleted, setDeleted] = useState(true);
+    const [imageSource, setImageSource] = useState(falseBk);
 
     const flagToggle = () =>{
         if (isToggled === false) {
@@ -102,14 +112,14 @@ function WikiViewer() {
         myDivRef.current[index].scrollIntoView({ behavior: "smooth" });
         
     }
-
-    const [deleted, setDeleted] = useState(true);
-    const [imageSource, setImageSource] = useState(falseBk);
+ 
+//
+    
 
     //북마크 추가
     const addBookmark = async () => {
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 
             }, {
                 withCredentials: true
@@ -132,7 +142,7 @@ function WikiViewer() {
       //북마크 해제
       const deleteBookmark = async () => {
         try{
-            const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -180,45 +190,102 @@ function WikiViewer() {
     const getWiki = async () => {
         console.log('나중');
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
-            setAllText(result.data.text);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
-            console.log(allContent[0].index);
-            console.log(allContent[0].title);
+            console.log(result.data.contents);
+            console.log(allContent);
+
         } catch (error) {
             console.error(error);
             //alert(result.data.message);
         }
     };
 
-    const [blank, setBlank] = useState(false);
-    const [selectQues, setSelectQues] = useState([]);
+
+   
     //질문 데이터 가져오기
     const getQues = async () => {
         console.log('실행')
         try{
-            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`);
             setQues(result.data.data);
             console.log('성공');
-            if (!ques) {
-                setBlank(true);
+            if (result.data.data.length===0) {
+                setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자. 
+
             }else{
                 setBlank(false);
             }
+
         } catch (error) {
             console.error(error);
+            //alert(result.data.message);
+        }
+
+    };
+    //질문 데이터 가져오기
+    const getContribute = async () => {
+        try{
+            const result = await axios.get(`https://asku.wiki/api/wiki/contributions/${title}`);
+            console.log('기여도');
+            setContribute(result.data.message);
+            console.log(contribute);
+            console.log('성공');
+
+            if(contribute.length !== 0){
+                console.log(contribute);
+                const total = contribute.reduce((acc, item) => acc + parseInt(item.point), 0);
+                setTotalPoint(total);
+            } else{
+                console.log('기여도 없음');
+            }
+
+            if (!contribute) {
+                setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자. 
+
+            }else{
+                setBlank(false);
+            }
+
+            setLoading(false);
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
             //alert(result.data.message);
         }
 
     };
 
     useEffect(() => {
-        getQues();
-        getWiki();
-        
-        
-        
+        const fetchData = async () => {
+            getWiki();
+            getQues();
+            getContribute();
+    
+            
+        };
+    
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        
+        getContribute();
+    
+    }, [contribute]);
+    
+       // 로딩 중일 때 표시할 컴포넌트
+  if (loading) {
+    return <div><SpinnerMypage/></div>; 
+  }
+    
+
+    
+
+    //데이터 불러오기
+
+  
+
 
 
     return (
@@ -231,7 +298,7 @@ function WikiViewer() {
                   <div className={styles.wikititleBtn}>
                     <button onClick={linkToDebate}><img src={debate}/>&nbsp;토론하기</button>
 
-                    <button onClick={linkToHistory}><img src={his}/>&nbsp;히스토리</button>
+                    <button onClick={linkToHistory}><img src={his}/>&nbsp;&nbsp;히스토리</button>
                   </div>
                </div>
                <div className={styles.wikiBoxLists}>
@@ -242,13 +309,17 @@ function WikiViewer() {
                     </div>
                     <div>
                         {allContent.map((item) => {
-                            return(
+                            const tabCount = item.index.split('.').length - 1;
+                            const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount); // 탭은 유니코드 공백 문자 사용
+                        
+                            return (
                                 <li onClick={() => handleClick(item.section)} key={item.section}>
-                                    <span className={styles.wikiIndex}>{item.index}</span> {item.title}
+                                    <span className={styles.wikiIndex}>{tabs}{item.index}.</span> {item.title}
                                 </li>
                             );
-                        })} 
+                        })}
                     </div>
+
                     
                 </div>
                 <div className={styles.wikiask}>
@@ -262,11 +333,11 @@ function WikiViewer() {
                                   return null; // 패스 (무시)
                                 }
                                 return(
-                                    <div>
+                                    <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
                                      <ul key={item.id}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
-                                        <span className={styles.quesNum}>{item.like_count}<img src={minilike}/></span>
+                                        <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
                                      </ul>
                                     </div>
                                 );
@@ -284,7 +355,14 @@ function WikiViewer() {
                     </div>
                     
                 </div>
-                <div className={styles.wikiwrite}></div>
+                <div className={styles.wikigraph}>
+                    {contribute && totalPoint && (
+                       <WikiGraph 
+                         total_point={totalPoint}
+                         users={contribute}
+                       />
+                     )}              
+                </div>
                </div>
                <div className={styles.wikicontent}>
                     {allContent.map((item) => {

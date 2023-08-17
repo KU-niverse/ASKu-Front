@@ -6,17 +6,26 @@ import styles from "./ThreedotsMenu.module.css"
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import EditModal from './EditModal';
+import ReportModal from './ReportModal';
 
 
-function ThreedotsMenu({questionId}) {
-
+function ThreedotsMenu({ questionId}) {
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const closeEditModal = () => {
+      setEditModalVisible(false);
+  };
+  const [isReportModalVisible, setReportModalVisible] = useState(false);
+  const closeReportModal = () => {
+      setReportModalVisible(false);
+  };
   const [loggedIn, setLoggedIn] = useState(false);
 
   //login status 체크하기
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -35,7 +44,7 @@ function ThreedotsMenu({questionId}) {
 
   const onQuestionDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/question/delete/${questionId}`, {withCredentials: true});
+      const response = await axios.delete(`https://asku.wiki/api/question/delete/${questionId}`, {withCredentials: true});
       if(response.status===200){
         console.log(response.data);
         alert(response.data.message);
@@ -58,9 +67,22 @@ function ThreedotsMenu({questionId}) {
     <Menu
     menuButton={<MenuButton  className={styles.menubtn}><img src={threedots} alt="Menu" /></MenuButton>}      onItemClick={(e) => console.log(`${e.value} clicked`)}
     >
-      <MenuItem className={styles.menuitem} value="신고하기" onClick={(e) => console.log(`${e.value} clicked`)}>
+      <MenuItem 
+        className={styles.menuitem} 
+        value="신고하기" 
+        onClick={(e) => {
+          checkLoginStatus();
+          console.log(`${e.value} clicked`);
+          e.stopPropagation = true;
+          e.keepOpen = true;
+          e.preventDefault=true;
+          setReportModalVisible(true);
+      }}
+      >
         신고하기
       </MenuItem>
+      {isReportModalVisible && <ReportModal questionId={questionId} isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
+
 
       <MenuItem 
         className={styles.menuitem}
@@ -73,11 +95,13 @@ function ThreedotsMenu({questionId}) {
           // Keep the menu open after this menu item is clicked
           e.keepOpen = true;
           e.preventDefault=true;
-
+          setEditModalVisible(true);
+          
         }}
       >
         수정하기
       </MenuItem>
+      {isEditModalVisible && <EditModal questionId={questionId} isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />}
 
       <MenuItem 
         className={styles.menuitem} 

@@ -31,7 +31,7 @@ import ChangeInfo from './pages/ChangeInfo';
 import ChangePw from './pages/ChangePw';
 import ResetPw from './pages/ResetPw';
 import AllHistory from './pages/AllHistory';
-import WikiPreview from './pages/WikiPreview';
+import WikiRawPrev from './pages/WikiRawPrev';
 import { useState } from 'react';
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/allhistory" element={<AllHistory/>} />
-                <Route path='/wiki/preview/:title/:ver' element={<WikiPreview/>} />
+                <Route path='/wiki/preview/:title/:ver' element={<WikiRawPrev/>} />
                 <Route path="/history/:title" element={<History />} />
                 <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 

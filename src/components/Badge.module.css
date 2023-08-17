@@ -1,4 +1,7 @@
-.b_content {
+.myBadgeStyle .b_container{
+  display: flex;
+}
+.myBadgeStyle .b_content {
   display: flex;
   flex-direction: row;
   font-size: 10px;
@@ -8,7 +11,7 @@
   padding: 16px 0 16px 0;
   margin-top: 10px;
 }
-.b_thumb {
+.myBadgeStyle .b_thumb {
   align-items: center;
   justify-content: center;
   display: flex;
@@ -16,14 +19,14 @@
   padding-right: 15px;
   width: 30%;
 }
-.b_thumb img{
+.myBadgeStyle .b_thumb img{
   border-radius: 10%;
   height: 100px;
   width: 100px;
   border : 1px solid rgba(116, 116, 116, 1);
   object-fit: contain ;
 }
-.b_right{
+.myBadgeStyle .b_right{
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -32,7 +35,7 @@
   padding-left: 15px;
   width: 70%;
 }
-.b_listhead{
+.myBadgeStyle .b_listhead{
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -40,17 +43,17 @@
   font-size: 14px;
 }
 
-.b_listhead img{
+.myBadgeStyle .b_listhead img{
   object-fit: none;
   cursor: pointer;
 }
-.b_listmid{
+.myBadgeStyle .b_listmid{
   display: flex;
   width: 100%;
   font-size: 20px;
   font-weight: bold;
 }
-.b_listfoot{
+.myBadgeStyle .b_listfoot{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -59,6 +62,85 @@
   font-size: 10px;
   color: rgba(116, 116, 116, 1);
 }
+
+/* normalBadgeStyle */
+.normalBadgeStyle .b_container{
+  display: flex;
+}
+
+.normalBadgeStyle .b_content {
+  display: flex;
+  flex-direction: row;
+  font-size: 10px;
+  width: 420px;
+  border-radius: 12px;
+  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  padding: 16px 0 16px 0;
+  margin-top: 10px;
+
+}
+.normalBadgeStyle .b_thumb {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding-left: 30px;
+  padding-right: 15px;
+  width: 30%;
+}
+.normalBadgeStyle .b_thumb img{
+  border-radius: 10%;
+  height: 100px;
+  width: 100px;
+  border : 1px solid rgba(116, 116, 116, 1);
+  object-fit: contain ;
+  filter: blur(5px)
+}
+.normalBadgeStyle .b_right{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  height: auto;
+  padding-right: 30px;
+  padding-left: 15px;
+  width: 70%;
+}
+.normalBadgeStyle .b_listhead{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+  font-size: 14px;
+  color: #D5D5D5;
+}
+
+.normalBadgeStyle .b_listhead img{
+  object-fit: none;
+  cursor: pointer;
+}
+.normalBadgeStyle .b_listmid{
+  display: flex;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  color: #D5D5D5;;
+}
+.normalBadgeStyle .b_listfoot{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content:baseline;
+  width: 100%;
+  font-size: 10px;
+  color: #D5D5D5;
+}
+.normalBadgeStyle .b_listlastfoot{
+  display: none;
+}
+
+.normalBadgeStyle .b_listput{
+  display: none;
+}
+
 
 @media only screen and (max-width: 767px) {
   .b_content {

@@ -9,8 +9,13 @@ const BookmarkBox = (props) => {
 
     const title = props.title;
     const content = props.content;
-    const [deleted, setDeleted] = props.deleted;
+    const [deleted, setDeleted] = useState(props.deleted);
     const [imageSource, setImageSource] = useState(trueBk);
+    const [expanded, setExpanded] = useState(false);
+
+    const toggleExpand = () => {
+      setExpanded(!expanded);
+    };
 
 
 
@@ -18,7 +23,7 @@ const BookmarkBox = (props) => {
 
     const addBookmark = async () => {
       try{
-          const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
                   
           }, {
               withCredentials: true
@@ -37,7 +42,7 @@ const BookmarkBox = (props) => {
 
     const deleteBookmark = async () => {
       try{
-          const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
               withCredentials: true
           });
           if(result.status === 200){
@@ -77,9 +82,14 @@ const BookmarkBox = (props) => {
             <div className={styles.title}>{title}</div>
             <div><img src={imageSource} alt="Image" onClick={handleClick}/></div>
         </div>
-        <div>
-            {content}
-        </div>
+        <div className={`${styles.content} ${expanded ? styles.expanded : ''}`}>
+        {content}
+          {!expanded && (
+            <span className={styles.moreLink} onClick={toggleExpand}>
+              ... 더보기
+            </span>
+          )}
+      </div>
     </div>
   )
 }

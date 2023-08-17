@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react'
 import Question from '../components/Question'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import ResultQues from '../components/ResultQues';
+import FormatTimeAgo from '../components/FormatTimeAgo';
+import BookmarkBox from '../components/ResultBox';
 
 
 
@@ -55,6 +58,10 @@ const SearchResearch = () => {
 
     const {title} = useParams();
     const [docs, setDocs] = useState([]);
+    const [historys, setHistorys] = useState([]);
+    const [type, setType] = useState('all');
+    const [docsCount, setDocsCount] = useState(0);
+    const [quesCount, setQuesCount] = useState(0);    
     const [ques, setQues] = useState([]);
 
     const handleButtonClick = () => {
@@ -68,11 +75,12 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
                 setDocs(result.data.message);
+                setDocsCount(result.data.message.length);
             }
             
         } catch (error) {
@@ -83,11 +91,15 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
                     setQues(result.data.data);
+<<<<<<< HEAD
+=======
+                    setQuesCount(result.data.data.length);
+>>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                 
             }
             
@@ -96,13 +108,26 @@ const SearchResearch = () => {
             return alert(error.response.message);
         }
     };
-
+    
+    //최근변경 리스트
+    const getHistory = async () => {
+        try{
+            const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
+            setHistorys(result.data.message);
+        } catch (error) {
+            console.error(error);
+            //alert(result.data.message);
+        }
+    };
     
 
     useEffect(() => {
 
         getDocs();
         getQues();
+        getHistory();
+        
+        
 
     }, []);
     
@@ -127,10 +152,15 @@ const SearchResearch = () => {
                     <div className={isClicked ? 'default': styles.hidden}>
                         {docs.map((item) => {
                             return(
+<<<<<<< HEAD
                                 <div key={item.title} onClick={handleDocsClick(item.title)}>
                                     <ResultBox
+=======
+                                <div key={item.title} onClick={() => handleDocsClick(item.title)}>
+                                    <BookmarkBox
+>>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                                     title={item.title} 
-                                    // content={item.content} bookmark={item.bookmark}
+                                    content={item.recent_filtered_content} bookmark={item.bookmark}
                                     />
                                 </div>
                             );
@@ -139,7 +169,11 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : 'default'}>
                         {ques.map((item) => {
                             return(
+<<<<<<< HEAD
                                 <Question
+=======
+                            <ResultQues
+>>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
@@ -152,28 +186,39 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
+<<<<<<< HEAD
                               />
+=======
+                            />
+>>>>>>> 700d8676fc0fcb339ab72fcc0bb4281b17ce0182
                             );
                         })}
                     </div>
                     <div className={styles.linkToNew}><Link to='/newwiki' className={styles.link}>원하시는 질문이 없으신가요? 새로운 질문을 생성해보세요</Link></div>
+                    
                 </div>
                 <div className={styles.recents}>
                     <div className={styles.recentWrap}>
-                    {lists.map((item) => {
+
+                    {historys.slice(0,8).map((item) => {
+                        const timestamp = FormatTimeAgo(item.created_at);
                             return(
+                                
                                 <ul key={item.title}>
-                                    <span className={styles.listTitle}>{item.title}</span>
-                                    <span className={styles.listTimestamp}>{item.timestamp}</span>
+                                    <Link to={`/wiki/${item.doc_title}`} className={styles.linkTo}>
+                                        <span className={styles.listTitle}>{item.doc_title}</span>
+                                    </Link>
+                                    <span className={styles.listTimestamp}>{timestamp}</span>
                                 </ul>
+                                
                             );
                         })}
 
                     </div>
                     
                 </div>
+                
             </div>
-
         </div>
     </div>
   )

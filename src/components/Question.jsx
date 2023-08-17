@@ -1,4 +1,3 @@
-import like from "../img/like.png"
 import comment_icon from "../img/comment_icon.png"
 import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
@@ -8,21 +7,22 @@ import LikeorNot from "./LikeorNot"
 import { useNavigate } from "react-router-dom"
 
 
-function Question({title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({ title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   const nav = useNavigate();
-  const linktoQuestionEdit = ()=>{
-    const state = {
+  const linktoQuestionEdit = () => {
+    ;
+    nav(`/question/edit/${title}`, {state : {
       qid: id,
       user_id: user_id,
       content: content,
       created_at: created_at,
       like_count: like_count,
-      nick: nick
-    };
-    nav(`/question/edit/${title}`, state);
+      nick: nick}
+    });
   }
+
 
   return(
         <div className={styles.q_list}>
@@ -32,7 +32,7 @@ function Question({title, id, doc_id, user_id, index_title, content, created_at,
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <ThreedotsMenu questionId={id}/>
+              <ThreedotsMenu  questionId={id}/>
             </div>
           </div>
           <div className={styles.q_middle}>

@@ -6,6 +6,7 @@ import watch from '../img/watch.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import verComp from '../img/verComp.png';
+import ThreedotsReport from "./ThreedotsReport"
 
 
 const HistoryBox = (props) => {
@@ -17,6 +18,7 @@ const HistoryBox = (props) => {
     const summary = props.summary;
     const user = props.user;
     const timestamp = props.timestamp;
+    const doctitle = props.doctitle;
 
     const handleView = () => {
         nav(`/wiki/preview/${title}/${version}`);
@@ -25,7 +27,7 @@ const HistoryBox = (props) => {
     const handleRollback = async(e) => {
 
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/historys/${title}/version/${version}`, {
                     
             }, {
                 withCredentials: true
@@ -55,13 +57,14 @@ const HistoryBox = (props) => {
     <div className={styles.historyBox}>
         <div className={styles.contents}>
             <div className={styles.contentsOne}>
-                <span className={styles.version}>{version}</span>
+                <span className={styles.version}>V{version}</span>
                 <span className={styles.summary}>수정요약: {summary}</span>
             </div>
             <div className={styles.contentsTwo}>
+                <span className={styles.docTitle}>{doctitle}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span><img src={dots}/></span>
+                <span><ThreedotsReport target={1} reason_id={2}/></span>
             </div>
         </div>
         <div className={styles.versionText}>

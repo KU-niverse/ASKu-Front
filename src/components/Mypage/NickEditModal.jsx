@@ -1,0 +1,143 @@
+import styles from './NickEditModal.module.css';
+import closeBtn from '../../img/close_btn.png';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { BsCheck2All } from "react-icons/bs";
+
+function EditModal({ isOpen, onClose}) {
+    const modalRef = useRef(null);
+    const [nick, setNick] = useState('');
+    const [isNickValid, setisNickValid] = useState(true);
+    const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
+
+    const handleOutsideClick = (event) => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+            onClose();
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('mousedown', handleOutsideClick);
+        } else {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [isOpen]);
+
+
+    function onChangeNick(e){
+      const nickRegex = /^[가-힣]{2,8}$/;
+      const nickCurrent = e.target.value
+      setNick(nickCurrent)
+
+      if (!nickRegex.test(nickCurrent)) {
+          setisNickValid(false);
+      } else {
+          setisNickValid(true);
+      }
+  }
+
+  const handleNickDoubleCheck = async () => {
+    try{
+        const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${nick}`);
+
+        if (result.data.success === true){
+            alert(result.data.message);
+            setNickDoubleCheck(true);
+        }
+        else{
+            alert(result.data.message);
+            setNickDoubleCheck(false);
+        }
+        
+    } catch (error) {
+        console.error(error);
+        alert(error.response.data.message);
+    }
+  };
+
+  //  const editData = {
+    //  new_content:questionContent,
+    //};/
+
+    const PostNickEdit = async () => {
+      try {
+        const response = await axios.put(`https://asku.wiki/api/user/mypage/editnick`, 
+          {
+            nickname: nick
+          }, {
+            withCredentials: true
+          });
+        if(response.data.success===true){
+          alert(response.data.message);
+          onClose(); //모달이 닫히고 내가 마이페이지에서 새로고침해야 변경된거 확인 가능
+
+        }
+      }
+      catch (error) {
+        console.error(error);
+        if (error.response.status === 400) {
+          alert(error.response.data.message);
+          window.location.reload();
+        } else {
+          alert("알 수 없는 오류가 발생했습니다.");
+        }
+      }
+    };//질문 수정하기
+
+
+  
+
+    
+    return (
+        <>
+        {isOpen && (
+            <div className={styles.modal_overlay}>
+                <div ref={modalRef} className={styles.modal_wrapper}>
+                    <div className={styles.modal_inside}>
+                        <div className={styles.modal_close}>
+                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
+                        </div>
+                        <div className={styles.modal_content}>
+                            <p className={styles.modal_text}>닉네임 변경하기</p>
+                            <div className={styles.q_cbox}>
+                              <div className={`${styles.checkInput}`}>
+                                  <input 
+                                   required type='text'
+                                   placeholder='2-8자 한글로 입력하세요'
+                                   name='nick'
+                                   value={nick}
+                                   maxLength='8'
+                                   onChange={onChangeNick}
+                                   className={`${styles.nick_input}`}
+                                   />
+                                   <button className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>중복확인</button>
+                              </div>                         
+                              {/* <div className={styles.q_clastheader}>
+                                <span className={styles.textnum}>{countCharacters()}</span>
+                              </div> */}
+
+                            </div>
+                            <div className={styles.div_btns}>
+                              <button className={`${styles.c_btn}`} onClick={onClose}>
+                                    취소
+                              </button>
+                              <button className={styles.submit_btn} onClick={PostNickEdit}>
+                                    변경하기
+                              </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+        </>
+    );
+}
+
+export default EditModal;

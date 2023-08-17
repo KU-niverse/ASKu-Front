@@ -18,7 +18,7 @@ function MyComment(){
   useEffect(() => {
     const takeMyDebate = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/user/mypage/debatehistory`, {withCredentials: true});
+        const res = await axios.get( `https://asku.wiki/api/user/mypage/debatehistory`, {withCredentials: true});
         if(res.status === 201){
           console.log(res.data)
           setMyDebate(res.data);
@@ -43,7 +43,7 @@ function MyComment(){
     useEffect(() => {
       const takeMypage = async () =>{
         try{
-          const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+          const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
             setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
@@ -63,7 +63,7 @@ function MyComment(){
     }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
 
    
-
+    console.log(mypageData)
 
   return(
     <div className={styles.container}>
@@ -89,7 +89,7 @@ function MyComment(){
               created_at={debate.debate_content_time}
               is_bad={debate.is_bad}
               docsname={debate.doc_title}
-              nick={mypageData.message.nickname}
+              nick={mypageData.data[0].nickname}
             />
           ))
         )}

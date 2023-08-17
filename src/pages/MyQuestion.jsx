@@ -11,14 +11,14 @@ import axios from "axios";
 function MyQuestion(){
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [loading, setLoading] = useState(true);
-
+  const arrange= isToggled ? "popularity" : "latest";
 
   //질문 기록 불러오기
   const [myQuestion, setMyQuestion] = useState([]);
   useEffect(() => {
     const takeMyQuestion = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/user/mypage/questionhistory`, {withCredentials: true});
+        const res = await axios.get( `https://asku.wiki/api/user/mypage/questionhistory/${arrange}`, {withCredentials: true});
         if(res.status === 201){
           console.log(res.data)
           setMyQuestion(res.data);
@@ -33,8 +33,8 @@ function MyQuestion(){
         }
       }
       takeMyQuestion();
-    }, []);
-    console.log(myQuestion.message)
+    }, [arrange]);
+    console.log(myQuestion.success)
     console.log(myQuestion)
 
 
@@ -43,7 +43,7 @@ function MyQuestion(){
     useEffect(() => {
       const takeMypage = async () =>{
         try{
-          const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+          const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
             setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
@@ -76,10 +76,10 @@ function MyQuestion(){
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
           </div>        
         </div>
-        {mypageData&&myQuestion && myQuestion.message && myQuestion.message.length === 0 ? (
+        {mypageData&&myQuestion && myQuestion.success && myQuestion.data.length === 0 ? (
           <p>아직 작성한 질문이 없습니다.</p>
         ) : (
-          mypageData && myQuestion && myQuestion.message && myQuestion.message.map((question) => (
+          mypageData && myQuestion && myQuestion.success && myQuestion.data.map((question) => (
             <Question
               key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
               id={question.id}
@@ -90,8 +90,9 @@ function MyQuestion(){
               created_at={question.created_at}
               answer_or_not={question.answer_or_not}
               is_bad={question.is_bad}
-              docsname={question.docsname}
-              nick={mypageData.message.nickname}
+              docsname={question.doc_title}
+              nick={mypageData.data[0].nickname}
+              like_count={question.like_count}
             />
           ))
         )}
