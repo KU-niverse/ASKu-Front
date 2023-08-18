@@ -117,7 +117,7 @@ return (
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>{mypageData.data[0].nickname} 님의 뱃지 목록</p>
-          <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
+          {/* <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
         </div>
         <div className={styles.b_list}>
           {allBadge && allBadge.data && allBadge.data.length === 0 ? (
