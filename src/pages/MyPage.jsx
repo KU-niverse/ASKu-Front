@@ -26,7 +26,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const [myDebate, setMyDebate] = useState([]);
   const [myBadge, setMyBadge] = useState([]);
   const [myWiki, setMyWiki] = useState([]);
-  
+  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
+  const perPage = 12; // 페이지당 보여줄 컴포넌트 갯수
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber); // 페이지 번호 업데이트
+  };
+
   //login status 체크하기
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
@@ -138,17 +143,28 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
 
               <div className={styles.badgegrid}>
-                {myBadge && myBadge.data &&myBadge.data.length === 0 ? (
-                <p>아직 획득한 뱃지가 없습니다.</p>
+                {myBadge && myBadge.data && myBadge.data.length === 0 ? (
+                  <p>아직 획득한 뱃지가 없습니다.</p>
                 ) : (
-                  myBadge && myBadge.data && myBadge.data.slice(0,12).map((badge) => (
-                    <img key={badge.id} src={badge.image} alt={badge.name}/>
-                  ))
+                  <>
+                    {myBadge&&myBadge.data.slice((page - 1) * perPage, page * perPage).map((badge) => (
+                      <img key={badge.id} src={badge.image} alt={badge.name} className={styles.badgeImage} />
+                    ))}
+                  </>
                 )}
-
-              
               </div>
-              <Paging/>
+
+              <div className={styles.paginationWrapper}>
+                {myBadge.data.length > perPage && (
+                  <Paging
+                    total={myBadge.data.length}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
+                )}
+              </div>
+
             </div>
           </div>
         

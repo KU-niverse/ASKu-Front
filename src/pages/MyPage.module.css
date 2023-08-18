@@ -147,22 +147,30 @@
 }
 
 
-.badgegrid{
-  padding: 0 0px 2em 0px;
+.badgegrid {
+  padding: 0 0px 10px 0px;
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  grid-template-rows: repeat(3,1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 20px 15px;
   justify-items: center;
   align-items: center;
 }
 
-.badgegrid img{
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
+.badgeImage {
+  width: 100%; /* 원하는 크기로 조정 */
+  height: 100%; /* 원하는 크기로 조정 */
+  object-fit: contain; /* 이미지가 잘리지 않고 유지되도록 설정 */
   border: solid 1px rgba(116, 116, 116, 1);
   border-radius: 10%;
+}
+
+.paginationWrapper{
+  padding-bottom: 1em;
+}
+
+.paginationWrapper ul{
+  padding: initial;
 }
 
 
