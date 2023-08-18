@@ -36,8 +36,8 @@ function DropDown({onSelectedOption, title}) {
 
 
  let options=[]
- if (wikiData.contents && wikiData.contents[0]){
-    options = wikiData.contents[0].map((content) => ({
+ if (wikiData && wikiData.contents){
+    options = wikiData.contents.map((content) => ({
     value: `${content.index} ${content.title}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
