@@ -147,7 +147,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   <p>아직 획득한 뱃지가 없습니다.</p>
                 ) : (
                   <>
-                    {myBadge&&myBadge.data.slice((page - 1) * perPage, page * perPage).map((badge) => (
+                    {myBadge&&myBadge.data&&myBadge.data.slice((page - 1) * perPage, page * perPage).map((badge) => (
                       <img key={badge.id} src={badge.image} alt={badge.name} className={styles.badgeImage} />
                     ))}
                   </>
@@ -155,7 +155,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               </div>
 
               <div className={styles.paginationWrapper}>
-                {myBadge.data.length > perPage && (
+                {myBadge.data&& myBadge.data.length > perPage && (
                   <Paging
                     total={myBadge.data.length}
                     perPage={perPage}

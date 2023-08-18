@@ -11,8 +11,6 @@ import LoginModal from './LoginModal';
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [responseContent, setResponseContent] = useState('');
-    const [responseReference, setResponseReference] = useState('');
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
@@ -29,7 +27,7 @@ function Chatbot () {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
