@@ -11,8 +11,6 @@ import LoginModal from './LoginModal';
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [responseContent, setResponseContent] = useState('');
-    const [responseReference, setResponseReference] = useState('');
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
     const inputRef = useRef(null);
