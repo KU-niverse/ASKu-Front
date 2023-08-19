@@ -23,7 +23,7 @@ const BookmarkBox = (props) => {
 
     const addBookmark = async () => {
       try{
-          const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
+          const result = await axios.post(`https://localhost:8080/wiki/favorite/${title}`, {
                   
           }, {
               withCredentials: true
@@ -42,7 +42,7 @@ const BookmarkBox = (props) => {
 
     const deleteBookmark = async () => {
       try{
-          const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
+          const result = await axios.delete(`https://localhost:8080/wiki/favorite/${title}`, {
               withCredentials: true
           });
           if(result.status === 200){

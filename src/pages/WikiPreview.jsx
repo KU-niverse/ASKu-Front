@@ -86,7 +86,7 @@ function WikiViewer() {
 
     const getWiki = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/wiki/historys/${title}/version/${ver}`);
+            const result = await axios.get(`https://localhost:8080/wiki/historys/${title}/version/${ver}`);
             setAllText(result.data.text);
             setAllContent(result.data.contents)
         } catch (error) {

@@ -5,14 +5,14 @@ import axios from 'axios';
 import { useState } from 'react';
 
 const DebateSearch = ({title}) => {
-  const [word, setWord] = useState('')
+  const [word, setWord] = useState('');
   const [results, setResults] = useState([]);
   const [resultCount, setResultCount] = useState(0);
   const [onClick, setOnClick] = useState(false);
 
   const searchDebate = async () => {
     try{
-        const result = await axios.get(`https://asku.wiki/api/debate/search/${title}/${word}`, {
+        const result = await axios.get(`https://localhost:8080/debate/search/${title}/${word}`, {
             withCredentials: true
         });
         if(result.status === 200){

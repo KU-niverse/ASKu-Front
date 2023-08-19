@@ -30,7 +30,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://localhost:8080/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -67,12 +67,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
-    getData('https://asku.wiki/api/user/mypage/info', setMypageData);
-    getData(`https://asku.wiki/api/user/mypage/questionhistory/latest`, setMyQuestion);
-    getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
-    getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
-    getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
-    getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
+    getData('https://localhost:8080/user/mypage/info', setMypageData);
+    getData(`https://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('https://localhost:8080/user/mypage/debatehistory', setMyDebate);
+    getData('https://localhost:8080/user/mypage/badgehistory', setMyBadge);
+    getData('https://localhost:8080/user/mypage/wikihistory', setMyWiki);
+    getData('https://localhost:8080/wiki/contributions', setMyContribute);
   }, []);
 
   console.log(myBadge)
