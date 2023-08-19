@@ -16,6 +16,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SpinnerMypage from '../components/SpinnerMypage';
+import Paging from '../components/Paging';
 
 function MyPage({ loggedIn, setLoggedIn }) {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const [myDebate, setMyDebate] = useState([]);
   const [myBadge, setMyBadge] = useState([]);
   const [myWiki, setMyWiki] = useState([]);
-  
+  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
+  const perPage = 12; // 페이지당 보여줄 컴포넌트 갯수
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber); // 페이지 번호 업데이트
+  };
+
   //login status 체크하기
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
@@ -137,16 +143,28 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
 
               <div className={styles.badgegrid}>
-                {myBadge && myBadge.data &&myBadge.data.length === 0 ? (
-                <p>아직 획득한 뱃지가 없습니다.</p>
+                {myBadge && myBadge.data && myBadge.data.length === 0 ? (
+                  <p>아직 획득한 뱃지가 없습니다.</p>
                 ) : (
-                  myBadge && myBadge.data && myBadge.data.slice(0,12).map((badge) => (
-                    <img key={badge.id} src={badge.image} alt={badge.name}/>
-                  ))
+                  <>
+                    {myBadge&&myBadge.data&&myBadge.data.slice((page - 1) * perPage, page * perPage).map((badge) => (
+                      <img key={badge.id} src={badge.image} alt={badge.name} className={styles.badgeImage} />
+                    ))}
+                  </>
                 )}
-
-              
               </div>
+
+              <div className={styles.paginationWrapper}>
+                {myBadge.data&& myBadge.data.length > perPage && (
+                  <Paging
+                    total={myBadge.data.length}
+                    perPage={perPage}
+                    activePage={page}
+                    onChange={handlePageChange}
+                  />
+                )}
+              </div>
+
             </div>
           </div>
         
@@ -166,9 +184,9 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   <Link to='/changepw' >
                   <button className={styles.edit2}>비밀번호 변경</button>
                   </Link>
-                  <Link to='/changeinfo' >
+                  {/* <Link to='/changeinfo' >
                   <button className={styles.edit3}>개인정보 변경</button>
-                  </Link>
+                  </Link> */}
               </div>
             </div>
             <div className={styles.cb}>
@@ -187,7 +205,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               {myWiki&&myWiki.message&&myWiki.data.length===0 ? (
                 <p>아직 기여한 내력이 없습니다.</p>
               ) : (
-                myWiki&&myWiki.message&&myWiki.data.slice(0,5).map((wiki)=>(
+                myWiki&&myWiki.message&&myWiki.data.slice(0,7).map((wiki)=>(
                   <Contribute
                     key={wiki.id}
                     user_id={wiki.user_id}

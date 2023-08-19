@@ -43,7 +43,7 @@ function ChatbotMobile() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("http:///user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {

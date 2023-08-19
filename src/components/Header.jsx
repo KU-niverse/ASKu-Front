@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import logo from '../img/logo.png';
 import searchIcon from '../img/search_icon.png';
@@ -9,7 +8,7 @@ import bookmark from '../img/bookmark_grey.png';
 import mypage from '../img/mypage_btn.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header() {
     const [inputValue, setInputValue] = useState('');
@@ -18,6 +17,9 @@ function Header() {
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
     const [isAlarmVisible, setIsAlarmVisible] = useState(false);
+    const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
+    const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
+    const [mobileSearch, setMobileSearch] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -27,7 +29,7 @@ function Header() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("http:///user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -51,7 +53,7 @@ function Header() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("http:///user/mypage/info", {
+                const response = await axios.get("https://asku.wiki/api/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -70,7 +72,7 @@ function Header() {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`http:///user/auth/signout`, {
+            const result = await axios.get(`https://asku.wiki/api/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {
@@ -84,8 +86,19 @@ function Header() {
         }
     };
 
+    const handleMobileHeader= () => {
+        if (mobileHeaderOpen) {
+            setMobileHeaderOpen(false);
+            setMobileHeaderHeight('60px');
+        } else {
+        setMobileHeaderOpen(true);
+        setMobileHeaderHeight('240px');
+        }
+    };
+
+
     return (
-        <div className={styles.container}>
+        <div className={styles.container}  style={{ height: mobileHeaderHeight }}>
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -165,10 +178,50 @@ function Header() {
                                 </Link>
                             </>
                         )}
+                        
                     </div>
                     <div className={styles.buttonWrap}>
                         <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
-                        <img src={hamburger} alt='hamburger' className={styles.mobileButton} />
+                        <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileHeader}/>
+                        {mobileHeaderOpen && (isLoggedIn ? (
+                            <div className={styles.mobileHamburger}>
+                                <Link to='/mypage'>
+                                    <div className={styles.mobileHamburgerMenu}>
+                                        <img src="" alt="" />
+                                        <p>마이페이지</p>
+                                    </div>
+                                </Link>
+                                <Link to='/mybookmark'>
+                                    <div className={styles.mobileHamburgerMenu}>
+                                        <img src="" alt="" />
+                                        <p>즐겨찾기</p>
+                                    </div>
+                                </Link>
+                                {isAlarmVisible && (
+                                    <Link to='/myalerts'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src="" alt="" />
+                                            <p>알림</p>
+                                        </div>
+                                    </Link>
+                                )}
+                            </div>
+                        ) : (
+                            <div className={styles.mobileHamburger}>
+                                <Link to='/signin'>
+                                    <div className={styles.mobileHamburgerMenu}>
+                                        <img src="" alt="" />
+                                        <p>로그인</p>
+                                    </div>
+                                </Link>
+                                <Link to='/signup'>
+                                    <div className={styles.mobileHamburgerMenu}>
+                                        <img src="" alt="" />
+                                        <p>회원가입</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
