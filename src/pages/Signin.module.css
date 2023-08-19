@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 70px;
 }
 
 .logo{
@@ -111,6 +111,7 @@
     .container{
         width: 90%;
         margin-left: 5%;
+        margin-top: 20px;
     }
     .container form{
         width: 100%;
@@ -119,7 +120,7 @@
     .logo{
         width: 50%;
         height: 30%;
-        margin-top: 70px;
+        margin-top: 120px;
     }
     .haho{
         display: block;
@@ -132,6 +133,6 @@
     }
     .login_find{
         width: 90%;
-        font-size: 8px;
+        font-size: 13px;
     }
 }

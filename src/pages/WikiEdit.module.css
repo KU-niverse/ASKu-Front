@@ -13,7 +13,7 @@
 }
 h4{
     margin: 0px;
-    margin-bottom: 13px;
+    margin-bottom: 15px;
     font-size: 20px;
 }
 
@@ -26,6 +26,7 @@ h4{
  }
  .wikichar_title{
     width: 70%;
+    margin-bottom: 20px;
  }
  .wikichar_char{
     width: 25%;
@@ -54,6 +55,7 @@ h4{
     border: 2px solid rgba(213, 213, 213, 1);
 }
 .editorbox{
+    margin-bottom: 20px;
 }
 .summary{
     width: 100%;

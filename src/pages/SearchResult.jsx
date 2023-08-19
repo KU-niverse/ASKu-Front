@@ -17,19 +17,19 @@ import BookmarkBox from '../components/ResultBox';
 const data = [
     {
         'title': '입실렌티',
-        'content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'recent_filtered_content': '개요 벨 연구소에서 멀틱스 프로젝트에 참여한 바 있던 켄 톰슨, 데니스 리치 등이 멀틱스의 일부 아이디어를 가져와서 소형 컴퓨터에서도 작동할 수 있는 단순한 운영 체제를 만든 후 유닉스(UNIX)라는 이름을 붙였다. 유닉스는 1969년도부터 개발되기 시작하여 1973년 10월에 운영체제 분야의 최상위 학술대회인 ACM Symposium on Operating Systems Principles(SOSP)에서 공개되었다. 하하하하하호호호호호 히히 키키키키키키킼키키키키gggg BSD AT&T에서 학교에 비교적 저렴한 비용으로 연구용 유닉스의 소스 코드를 배포했는데, 이 소스 코드를 확보한 캘리포니아 대학교 버클리 캠퍼스의 대학원생이었던 빌 조이(Bill Joy) 등이 유닉스의 소스 코드를 개선하고 새로운 프로그램을 추가한 BSD를 만들어 1978년에 배포하였다. ​ 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 리눅스 Linux|리눅스는 유닉스의 직접적인 후계자는 아니지만 유닉스의 설계 개념 등에 영향을 받았다. 리눅스는 유닉스의 POSIX 규격을 거의 대부분 따른다. 따라서 리눅스도 그 족보를 거슬러 올라가면 멀틱스로부터 갈라져나온 셈ㄴㅁㅇㄻㄴㅇ. 분류:멀틱스 rhrhrh 고양이 고양이는 정말 귀여워원하시는 질문이 없으신가요? 새로운 질문을 생',
     },
     {
         'title': '입실렌티',
-        'content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'recent_filtered_content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
     },
     {
         'title': '입실렌티',
-        'content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'recent_filtered_content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
     },
     {
         'title': '입실렌티',
-        'content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        'recent_filtered_content': 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
     },
 ]
 const lists = [
@@ -75,7 +75,7 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/wiki/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -91,7 +91,7 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/question/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -109,7 +109,7 @@ const SearchResearch = () => {
     //최근변경 리스트
     const getHistory = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/wiki/historys?type=${type}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
         } catch (error) {
             console.error(error);
@@ -147,12 +147,12 @@ const SearchResearch = () => {
             <div className={styles.contents}>
                 <div className={styles.boxes}>
                     <div className={isClicked ? 'default': styles.hidden}>
-                        {docs.map((item) => {
+                        {data.map((item) => {
                             return(
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <BookmarkBox
                                     title={item.title} 
-                                    content={item.recent_filtered_content} bookmark={item.bookmark}
+                                    content={item.recent_filtered_content} bookmark={item.is_deleted}
                                     />
                                 </div>
                             );

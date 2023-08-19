@@ -2,7 +2,7 @@ import React from 'react'
 import falseBk from '../img/bookmark.png'
 import trueBk from '../img/bookmarkFill.png'
 import styles from './BookmarkBox.module.css'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 
 const BookmarkBox = (props) => {
@@ -23,7 +23,7 @@ const BookmarkBox = (props) => {
 
     const addBookmark = async () => {
       try{
-          const result = await axios.post(`https://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
                   
           }, {
               withCredentials: true
@@ -42,7 +42,7 @@ const BookmarkBox = (props) => {
 
     const deleteBookmark = async () => {
       try{
-          const result = await axios.delete(`https://localhost:8080/wiki/favorite/${title}`, {
+          const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
               withCredentials: true
           });
           if(result.status === 200){
@@ -75,23 +75,41 @@ const BookmarkBox = (props) => {
     };
 
 
+    const contentRef = useRef(null);
 
-  return (
-    <div className={styles.bkbox}>
+    useEffect(() => {
+      if (contentRef.current) {
+        const element = contentRef.current;
+        if (element.scrollHeight > element.clientHeight) {
+          setExpanded(true);
+        }
+      }
+    }, []);
+  
+    return (
+      <div className={styles.bkbox}>
         <div className={styles.contents}>
-            <div className={styles.title}>{title}</div>
-            <div><img src={imageSource} alt="Image" onClick={handleClick}/></div>
+          <div className={styles.title}>{title}</div>
+          <div>
+            <img src={imageSource} alt="Image" onClick={handleClick} />
+          </div>
         </div>
-        <div className={`${styles.content} ${expanded ? styles.expanded : ''}`}>
-        {content}
-          {!expanded && (
-            <span className={styles.moreLink} onClick={toggleExpand}>
-              ... 더보기
-            </span>
+        <div className={`${styles.content}`} ref={contentRef}>
+          {expanded ? (
+            content
+          ) : (
+            <>
+              {content}
+              <span className={styles.moreLink} onClick={toggleExpand}>
+                더보기
+              </span>
+            </>
           )}
+        </div>
       </div>
-    </div>
-  )
+    );
+    
+    
 }
 
 export default BookmarkBox

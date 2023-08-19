@@ -35,7 +35,7 @@ const Signup = () => {
 
     const handleNickDoubleCheck = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -54,7 +54,7 @@ const Signup = () => {
 
     const handleIdDoubleCheck = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/user/auth/iddupcheck/${form.id}`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/iddupcheck/${form.id}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -73,7 +73,7 @@ const Signup = () => {
 
     const handleEmailDoubleCheck = async () => {
         try{
-            const result = await axios.get(`https://localhost:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -162,7 +162,7 @@ const Signup = () => {
         }
 
         try{
-            const response = await axios.post('https://localhost:8080/user/auth/signup', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/signup', {
                 login_id: form.id,
                 name: form.name,
                 stu_id: form.studentId,
