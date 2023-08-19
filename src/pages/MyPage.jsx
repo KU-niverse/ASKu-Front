@@ -184,9 +184,9 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   <Link to='/changepw' >
                   <button className={styles.edit2}>비밀번호 변경</button>
                   </Link>
-                  <Link to='/changeinfo' >
+                  {/* <Link to='/changeinfo' >
                   <button className={styles.edit3}>개인정보 변경</button>
-                  </Link>
+                  </Link> */}
               </div>
             </div>
             <div className={styles.cb}>
