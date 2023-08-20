@@ -138,4 +138,8 @@
   .menu, .menu1, .menu2{
     margin:0
   }
+
+  .menu{
+    font-size: 14px;
+  }
 }
