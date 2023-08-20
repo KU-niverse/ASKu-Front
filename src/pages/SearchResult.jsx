@@ -147,7 +147,7 @@ const SearchResearch = () => {
             <div className={styles.contents}>
                 <div className={styles.boxes}>
                     <div className={isClicked ? 'default': styles.hidden}>
-                        {data.map((item) => {
+                        {docs.map((item) => {
                             return(
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <BookmarkBox
