@@ -30,11 +30,11 @@
   .cb_front, .cb_back{
     width: 50%;
     flex-wrap: wrap;
-    font-size: 14px;
+    font-size: 10px;
   }
  
   .cb_time{
     font-size: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
   }
 }

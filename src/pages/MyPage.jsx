@@ -116,9 +116,9 @@ function MyPage({ loggedIn, setLoggedIn }) {
             <div className={styles.profile}>
               <div className={styles.profileheader}> 
                 <p className={styles.title}>내 프로필</p>
-                <Link to='/changeinfo'className={styles.edit_link} >
+                {/* <Link to='/changeinfo'className={styles.edit_link} >
                 <button className={styles.edit}>수정하기</button>
-                </Link>
+                </Link> */}
 
               </div>
 
