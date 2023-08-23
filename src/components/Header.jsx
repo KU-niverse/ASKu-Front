@@ -123,7 +123,7 @@ function Header() {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     if (inputValue.trim() !== '') {
-                                        window.location.href = `/result/${inputValue}`;
+                                        window.location.href = `/result/${encodeURIComponent(inputValue)}`;
                                         setInputValue('');
                                     }
                                 }
@@ -134,7 +134,7 @@ function Header() {
                             className={styles.searchIcon}
                             onClick={() => {
                                 if (inputValue.trim() !== '') {
-                                    window.location.href = `/result/${inputValue}`;
+                                    window.location.href = `/result/${encodeURIComponent(inputValue)}`;
                                     setInputValue('');
                                 }
                             }} />
