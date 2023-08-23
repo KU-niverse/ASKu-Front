@@ -16,7 +16,7 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -36,7 +36,14 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
 
   const handleLikeClick = async () => {
     try {
-      const res = await axios.post(`https://asku.wiki/api/question/like/${questionId}`,{},{ withCredentials: true });
+
+      await checkLoginStatus();
+      if (!loggedIn) {
+        return; // 로그인 상태가 아니라면 아무 작업도 하지 않음
+      }
+  
+
+      const res = await axios.post(`http://localhost:8080/question/like/${questionId}`,{},{ withCredentials: true });
       if (res.status === 200) {
         const newIsLiked=!isLiked;
         setIsLiked(newIsLiked)
@@ -51,7 +58,7 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
       console.error(error);
       if(error.response && error.response.status === 400){ 
         alert("이미 좋아요를 눌렀습니다.")
-      } else if(error.response && error.response.status === 401){
+      } else if( error.response && error.response.status === 401){
         alert("본인의 질문에는 좋아요를 누를 수 없습니다.")
       } else{
         alert("알 수 없는 오류가 발생했습니다.")
@@ -77,7 +84,6 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
         src={isLiked ? likeFill : like}
         alt="like"
         onClick={()=>{
-          checkLoginStatus();
           handleLikeClick(questionId)}
         }
       />
