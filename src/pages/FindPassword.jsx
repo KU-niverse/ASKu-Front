@@ -23,7 +23,7 @@ const FindPassword = () => {
             });
             if (response.data.success === true) {
                 alert(response.data.message);
-                nav('/signin');
+                nav('/');
             } else {
                 return alert(response.data.message);
             }
