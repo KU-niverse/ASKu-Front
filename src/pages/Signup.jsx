@@ -35,7 +35,7 @@ const Signup = () => {
 
     const handleNickDoubleCheck = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);

@@ -172,3 +172,22 @@
     text-overflow: ellipsis;  
     white-space: nowrap;  
 }
+
+.mobileHamburgerMenu {
+    width: 120px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.mobileMenuText {
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.mobileMenuWrap {
+    display: flex;
+    flex-direction: column;
+}

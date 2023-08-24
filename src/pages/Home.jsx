@@ -36,7 +36,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularKeywords = async () => {
             try {
-                const response = await axios.get('https://asku.wiki/api/search/popular');
+                const response = await axios.get('http://localhost:8080/search/popular');
                 if (response.data.success) {
                     setPopularKeywords(response.data.data);
                 }
@@ -50,7 +50,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularQuestions = async () => {
             try {
-                const response = await axios.get('https://asku.wiki/api/question/popular');
+                const response = await axios.get('http://localhost:8080/question/popular');
                 if (response.data.success) {
                     setPopularQuestions(response.data.data);
                 }
@@ -99,7 +99,7 @@ function Home({loggedIn, setLoggedIn}) {
                     <div className={styles.realTime}>
                         <div className={styles.keyWord}>
                             <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
-                            {popularKeywords.map((keyword, index) => (
+                            {popularKeywords.slice(0, 5).map((keyword, index) => (
                                 <div className={styles.rankWrap} key={index}>
                                     <p className={styles.numberIcon}>{index + 1}.</p>
                                     <p className={styles.rankContent}>{keyword.keyword}</p>
