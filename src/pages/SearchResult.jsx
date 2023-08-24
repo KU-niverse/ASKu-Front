@@ -85,7 +85,7 @@ const SearchResearch = () => {
             
         } catch (error) {
             console.error(error);
-            return alert(error.response.data.message);
+            // return alert(error.response.data.message);
         }
     };
 
@@ -102,7 +102,7 @@ const SearchResearch = () => {
             
         } catch (error) {
             console.error(error);
-            return alert(error.response.message);
+            //return alert(error.response.message);
         }
     };
     
