@@ -33,7 +33,12 @@ const Signup = () => {
         emailId: '',
     });
 
-    const handleNickDoubleCheck = async () => {
+    const handleNickDoubleCheck = async (e) => {
+
+        e.preventDefault();
+        if(isNickValid === false){
+            return alert('닉네임 형식이 올바르지 않습니다.');
+        }
         try{
             const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
 
@@ -52,7 +57,11 @@ const Signup = () => {
         }
     };
 
-    const handleIdDoubleCheck = async () => {
+    const handleIdDoubleCheck = async (e) => {
+        e.preventDefault();
+        if(isIdValid === false){
+            return alert('아이디 형식이 올바르지 않습니다.');
+        }
         try{
             const result = await axios.get(`https://asku.wiki/api/user/auth/iddupcheck/${form.id}`);
 
@@ -71,7 +80,8 @@ const Signup = () => {
         }
     };
 
-    const handleEmailDoubleCheck = async () => {
+    const handleEmailDoubleCheck = async (e) => {
+        e.preventDefault();
         try{
             const result = await axios.get(`https://asku.wiki/api/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
 
@@ -93,7 +103,7 @@ const Signup = () => {
 
 
     function onChangeNick(e){
-        const nickRegex = /^[가-힣]{2,8}$/;
+        const nickRegex = /^[가-힣a-zA-Z]{2,8}$/;
         const nickCurrent = e.target.value
         setForm({...form, nick:nickCurrent})
 
@@ -105,8 +115,8 @@ const Signup = () => {
     }
     
     function onChangeId(e){
-        const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,15}$/
-        const idCurrent = e.target.value
+        const idRegex = /^[a-zA-Z0-9]{6,15}$/;
+        const idCurrent = e.target.value;
         setForm({...form, id:idCurrent})
 
         if (!idRegex.test(idCurrent)) {
@@ -146,17 +156,21 @@ const Signup = () => {
     const createUserApi = async (e) => {
         e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
-        if(isNickValid === false || 
-            isIdValid === false || 
-            isPwValid === false || 
-            nickDoubleCheck === false || 
-            idDoubleCheck === false || 
-            isPwSame === false ){
-            
-            return alert('형식이 올바르지 않습니다.');
-            
-        }
 
+        if(isNickValid === false){
+            return alert('닉네임 형식이 올바르지 않습니다');
+        } else if (isIdValid === false) {
+            return alert('아이디 형식이 올바르지 않습니다');
+        } else if(isPwValid === false) {
+            return alert('비밀번호 형식이 올바르지 않습니다');
+        } else if(isPwSame) {
+            return alert('비밀번호가 일치하지 않습니다');
+        } else if(idDoubleCheck === false) {
+            return alert('아이디 중복을 확인해주세요');
+        } else if(nickDoubleCheck) {
+            return alert('닉네임 중복을 확인해주세요');
+        }
+        
         if(isChecked === false){
             return alert('개인정보 수집에 동의해주십시오');
         }
@@ -174,7 +188,7 @@ const Signup = () => {
             });
             if (response.data.success === true) {
                 alert(response.data.message);
-                nav('/signup/complete');
+                nav('/');
             }
         } catch (error) {
             console.error(error);
@@ -186,7 +200,7 @@ const Signup = () => {
 
   return (
     <div className={`${styles.container}`}>
-        <img className={`${styles.logo}`} src={logo} alt=''/>
+        <img className={`${styles.logo}`} src={logo} alt='' onClick={() => nav('/')}/>
         <h1>회원가입</h1>
         <form onSubmit={createUserApi}>
             <div className={`${styles.signup_input}`}>
@@ -202,11 +216,12 @@ const Signup = () => {
             <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>닉네임</span>
+                    <span className={isNickValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;2자이상-8자미만, 한글 또는 영문으로 입력해주세요</span>
                 </div>
                 <div className={`${styles.checkInput}`}>
                     <input 
                      required type='text'
-                     placeholder='2-8자 한글로 입력하세요'
+                     placeholder='2-8자 한글 또는 영문으로 입력하세요'
                      name='nick'
                      value={form.nick}
                      maxLength='8'
@@ -256,7 +271,7 @@ const Signup = () => {
                     <span className={isPwSame === false? `${styles.signup_alert}`: `${styles.signup_done}`} onChange={onChangeCheckPW}><FiAlertTriangle size='12'/>&nbsp;비밀번호가 일치하지 않습니다</span>
                 </div>
                 <input 
-                 required type='text'
+                 required type='password'
                  placeholder='비밀번호를 재입력하세요'
                  name='checkPw'
                  value={form.checkPw}
@@ -282,7 +297,7 @@ const Signup = () => {
                 <span>
                     <input 
                      required type='text' onChange={e => setForm({ ...form, emailId: e.target.value})}
-                     />@korea.ac.kr
+                     />&nbsp;@korea.ac.kr
                      <button className={`${styles.dblcheck}`} onClick={handleEmailDoubleCheck}>중복확인</button>
                 </span>
 

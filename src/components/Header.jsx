@@ -114,7 +114,7 @@ function Header() {
                 </div>
                 <div className={styles.flexContainer}>
                     <div className={styles.navContainer_left}>
-                        <Link to='/history'>
+                        <Link to='/allhistory'>
                             <button className={styles.headerButton}>최근 변경</button>
                         </Link>
                         <Link to='/latestdebate'>
@@ -130,7 +130,7 @@ function Header() {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     if (inputValue.trim() !== '') {
-                                        window.location.href = `/result/${inputValue}`;
+                                        window.location.href = `/result/${encodeURIComponent(inputValue)}`;
                                         setInputValue('');
                                     }
                                 }
@@ -141,7 +141,7 @@ function Header() {
                             className={styles.searchIcon}
                             onClick={() => {
                                 if (inputValue.trim() !== '') {
-                                    window.location.href = `/result/${inputValue}`;
+                                    window.location.href = `/result/${encodeURIComponent(inputValue)}`;
                                     setInputValue('');
                                 }
                             }} />

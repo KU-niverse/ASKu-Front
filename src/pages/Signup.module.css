@@ -13,6 +13,7 @@
     width: 170px;
     height: 100px;
     object-fit: contain;
+    cursor: pointer;
 }
 .container form{
     width: 460px;
@@ -51,6 +52,13 @@
 .signup_input input:focus{
  border: 2px solid rgba(222, 58, 88, 1);
 }
+@media only screen and (max-width: 767px) {
+    .signup_input input{
+        height: 45px;
+        font-size: 10px;
+    }
+    
+}
 .signup_checkinput input{
     margin-top: 5px;
     height: 50px;
@@ -61,6 +69,13 @@
     width: 70%;
     display: flex;
     margin-right: 30px;
+    
+}
+@media only screen and (max-width: 767px) {
+    .signup_checkinput input{
+        height: 45px;
+        font-size: 10px;
+    }
     
 }
 .checkInput{
@@ -78,6 +93,12 @@
     border: none;
     cursor: pointer;
     font-size: 18px;
+}
+@media only screen and (max-width: 767px) {
+    .signup_btn{
+        height: 47px;
+    }
+    
 }
 .signup_agree{
     font-size: 12px;
@@ -109,11 +130,19 @@
     box-sizing: border-box;
     padding-left: 15px;
 }
+@media only screen and (max-width: 767px) {
+    .signup_email input{
+        width: 40%;
+        height: 45px;
+    }
+    
+}
 .signup_alert{
     font-size: 12px;
     color: rgba(222, 58, 88, 1);
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 .signup_check{
     cursor: pointer;
@@ -140,9 +169,18 @@
     margin-top: 5px;
     position: absolute;
     right: 0;
+    cursor: pointer;
     
 
 
+}
+@media only screen and (max-width: 767px) {
+    .dblcheck{
+        width: 25%;
+        font-size: 12px;
+        height: 45px;
+    }
+    
 }
 
 
