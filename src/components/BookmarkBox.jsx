@@ -72,16 +72,7 @@ const BookmarkBox = (props) => {
     };
 
 
-    const contentRef = useRef(null);
-
-    useEffect(() => {
-      if (contentRef.current) {
-        const element = contentRef.current;
-        if (element.scrollHeight > element.clientHeight) {
-          setExpanded(true);
-        }
-      }
-    }, []);
+    
   
     return (
       <div className={styles.bkbox}>
