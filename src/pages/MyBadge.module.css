@@ -42,10 +42,13 @@
 }
 
 .b_list{
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
   width: auto;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   margin: 0 1% 0 1%;
 }
 @media only screen and (max-width: 767px) {
