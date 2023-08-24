@@ -58,7 +58,7 @@ const History = (props) => {
 
     const getWiki = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/historys/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/historys/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
