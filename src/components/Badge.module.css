@@ -77,7 +77,7 @@
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
   padding: 16px 0 16px 0;
   margin-top:  10px;
-  background-color: rgba(0,0,0,0.1);
+  background-color:white;
 
 }
 .normalBadgeStyle .b_thumb {
@@ -94,7 +94,7 @@
   width: 100px;
   border : 1px solid rgba(116, 116, 116, 1);
   object-fit: contain ;
-  filter: blur(5px)
+  opacity: 0.5;
 }
 .normalBadgeStyle .b_right{
   display: flex;
