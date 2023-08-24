@@ -52,7 +52,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .modal_text {
@@ -62,12 +62,28 @@
     color: #9F132E;
 }
 
+
+
+.modal_title {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    align-items: center;
+    margin-right: 200px;
+    margin-top: -20px;
+    justify-content: flex-start;
+}
 #feedback_icon {
     width: 30px;
     height: 30px;
     margin-left: 80px;
     margin-right: 20px;
     margin-top: 15px;
+}
+@media screen and (max-width: 768px) {
+    #feedback_icon {
+        margin-left: 250px;
+    }
 }
 
 #red_title {
@@ -83,16 +99,6 @@
     margin: 0;
     width: 350px;
 }
-
-.modal_title {
-    display: flex;
-    flex-direction: row;
-    height: 100px;
-    align-items: center;
-    margin-right: 200px;
-    margin-top: -20px;
-}
-
 .feedback_text {
     width: 95%;
     height: 60px;
