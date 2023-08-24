@@ -9,7 +9,7 @@ const DebateRecent = ({ title }) => {
   useEffect(() => {
     const takeRecentList = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/debate/all/recent`, { withCredentials: true });
+        const res = await axios.get(`https://asku.wiki/api/debate/all/recent`, { withCredentials: true });
         if (res.status === 200) {
           setRecentListData(res.data);
         } else {
