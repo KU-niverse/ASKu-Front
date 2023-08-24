@@ -13,8 +13,8 @@
 
 .modal_wrapper {
     z-index: 100;
-    width: 800px;
-    height: 400px;
+    width: 700px;
+    height: 300px;
     background-color: white;
     border-radius: 12px;
     max-width: 90%;
@@ -46,7 +46,6 @@
 }
 
 .modal_content {
-    margin-top: 20px;
     width: 80%;
     height: 80%;
     z-index: 200;
@@ -63,30 +62,60 @@
     color: #9F132E;
 }
 
-.haho_login {
-    width: 150px;
-    height: auto;
-}
-.signin {
-    margin-top: 30px;
-    margin-left: 10px;
-    background-image: linear-gradient(to left, #9F132E, #DE3A58);
-    border: none;
-    border-radius: 30px;
-    color: white;
-    width: 220px;
-    height: 40px;
-    cursor: pointer;
+#feedback_icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 80px;
+    margin-right: 20px;
+    margin-top: 15px;
 }
 
-.signup {
-    margin-top: 10px;
-    margin-left: 10px;
-    background-image: linear-gradient(to left, #747474, #D5D5D5);
+#red_title {
+    color: #9F132E;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+#gray_title {
+    color: #747474;
+    font-size: 14px;
+    margin: 0;
+    width: 350px;
+}
+
+.modal_title {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    align-items: center;
+    margin-right: 200px;
+    margin-top: -20px;
+}
+
+.feedback_text {
+    width: 95%;
+    height: 60px;
+    border-radius: 12px;
+    border: 1px solid #d5d5d5;
+    resize: none;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.feedback_title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+}
+
+.feedback_btn {
     border: none;
+    background-image: linear-gradient(to left, #9F132E, #DE3A58);
     color: white;
-    border-radius: 30px;
-    width: 220px;
-    height: 40px;
     cursor: pointer;
+    border-radius: 12px;
+    width: 80px;
+    height: 40px;
 }
