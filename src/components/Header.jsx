@@ -107,7 +107,7 @@ function Header() {
                 </div>
                 <div className={styles.flexContainer}>
                     <div className={styles.navContainer_left}>
-                        <Link to='/history'>
+                        <Link to='/allhistory'>
                             <button className={styles.headerButton}>최근 변경</button>
                         </Link>
                         <Link to='/latestdebate'>

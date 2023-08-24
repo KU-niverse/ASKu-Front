@@ -9,7 +9,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import ResultQues from '../components/ResultQues';
 import FormatTimeAgo from '../components/FormatTimeAgo';
-import BookmarkBox from '../components/ResultBox';
+import BookmarkBox from '../components/BookmarkBox';
 
 
 
@@ -139,14 +139,14 @@ const SearchResearch = () => {
             </div>
             <div className={styles.typeWrap}>
                 <p className={styles.type}>
-                    <button onClick={handleButtonClick} className={isClicked ? styles.btnRed: styles.btnGray}>문서<div className={isClicked ? styles.numberRed : styles.numberGray}>12</div></button>
-                    <button onClick={handleButtonClick} className={isClicked ? styles.btnGray : styles.btnRed}>질문<div className={isClicked ? styles.numberGray : styles.numberRed}>12</div></button>
+                    <button onClick={handleButtonClick} className={isClicked ? styles.btnRed: styles.btnGray}>문서<div className={isClicked ? styles.numberRed : styles.numberGray}>{docs.length}</div></button>
+                    <button onClick={handleButtonClick} className={isClicked ? styles.btnGray : styles.btnRed}>질문<div className={isClicked ? styles.numberGray : styles.numberRed}>{ques.length}</div></button>
                 </p>
                 <p className={styles.title}>최근 변경</p>
             </div>
             <div className={styles.contents}>
                 <div className={styles.boxes}>
-                    <div className={isClicked ? 'default': styles.hidden}>
+                    <div className={isClicked ? '': styles.hidden}>
                         {docs.map((item) => {
                             return(
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
@@ -158,7 +158,7 @@ const SearchResearch = () => {
                             );
                         })}
                     </div>
-                    <div className={isClicked ? styles.hidden : 'default'}>
+                    <div className={isClicked ? styles.hidden : ''}>
                         {ques.map((item) => {
                             return(
                             <ResultQues
@@ -174,6 +174,7 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
+                                onClick={()=> nav(`/wiki/morequestion/${item.title}`)}
                             />
                             );
                         })}

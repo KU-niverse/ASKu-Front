@@ -103,7 +103,7 @@ const Signup = () => {
 
 
     function onChangeNick(e){
-        const nickRegex = /^[가-힣]{2,8}$/;
+        const nickRegex = /^[가-힣a-zA-Z]{2,8}$/;
         const nickCurrent = e.target.value
         setForm({...form, nick:nickCurrent})
 
@@ -158,9 +158,9 @@ const Signup = () => {
 
 
         if(isNickValid === false){
-            return alert('닉네임 형식이 올바르지 않습니다 \n 한글 2-8자로 입력해주세요');
+            return alert('닉네임 형식이 올바르지 않습니다');
         } else if (isIdValid === false) {
-            return alert('아이디 형식이 올바르지 않습니다 \n 영문 숫자 6-15자로 입력해주세요');
+            return alert('아이디 형식이 올바르지 않습니다');
         } else if(isPwValid === false) {
             return alert('비밀번호 형식이 올바르지 않습니다');
         } else if(isPwSame) {
@@ -216,12 +216,12 @@ const Signup = () => {
             <div className={`${styles.signup_checkinput}`}>
                 <div className={`${styles.signup_head}`}>
                     <span>닉네임</span>
-                    <span className={isNickValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;2자이상-8자미만, 한글로 입력해주세요</span>
+                    <span className={isNickValid === false? `${styles.signup_alert}`: `${styles.signup_done}`}><FiAlertCircle size='12'/>&nbsp;2자이상-8자미만, 한글 또는 영문으로 입력해주세요</span>
                 </div>
                 <div className={`${styles.checkInput}`}>
                     <input 
                      required type='text'
-                     placeholder='2-8자 한글로 입력하세요'
+                     placeholder='2-8자 한글 또는 영문으로 입력하세요'
                      name='nick'
                      value={form.nick}
                      maxLength='8'
