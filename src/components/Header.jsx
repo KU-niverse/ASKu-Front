@@ -9,6 +9,14 @@ import mypage from '../img/mypage_btn.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import mobilemypage from '../img/mobile_mypage.png';
+import mobilealarm from '../img/mobile_alarm.png';
+import mobilelogout from '../img/mobile_logout.png';
+import mobiledebate from '../img/mobile_debate.png';
+import mobilebookmark from '../img/mobile_bookmark.png';
+import mobilehistory from '../img/mobile_history.png';
+import AlarmModal from './AlarmModal';
+
 
 function Header() {
     const [inputValue, setInputValue] = useState('');
@@ -17,9 +25,9 @@ function Header() {
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
     const [isAlarmVisible, setIsAlarmVisible] = useState(false);
-    const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
-    const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
-    const [mobileSearch, setMobileSearch] = useState(false);
+    // const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
+    // const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
+    // const [mobileSearch, setMobileSearch] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -29,7 +37,7 @@ function Header() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -53,7 +61,7 @@ function Header() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                const response = await axios.get("http://localhost:8080/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -72,7 +80,7 @@ function Header() {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`https://asku.wiki/api/user/auth/signout`, {
+            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {
@@ -86,19 +94,32 @@ function Header() {
         }
     };
 
-    const handleMobileHeader= () => {
-        if (mobileHeaderOpen) {
-            setMobileHeaderOpen(false);
-            setMobileHeaderHeight('60px');
+    // const handleMobileHeader= () => {
+    //     if (mobileHeaderOpen) {
+    //         setMobileHeaderOpen(false);
+    //         setMobileHeaderHeight('60px');
+    //     } else {
+    //     setMobileHeaderOpen(true);
+    //     setMobileHeaderHeight('240px');
+    //     }
+    // };
+
+    const handleAlarm = () => {
+        if (isAlarmVisible) {
+            setIsAlarmVisible(false);
+            console.log(isAlarmVisible);
         } else {
-        setMobileHeaderOpen(true);
-        setMobileHeaderHeight('240px');
+            setIsAlarmVisible(true);
+            console.log(isAlarmVisible);
         }
     };
 
 
+
+
     return (
-        <div className={styles.container}  style={{ height: mobileHeaderHeight }}>
+        // style={{ height: mobileHeaderHeight }}
+        <div className={styles.container}  >
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -138,6 +159,7 @@ function Header() {
                                     setInputValue('');
                                 }
                             }} />
+                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm}/>
                     </div>
                     <div 
                     className={styles.navContainer_right} 
@@ -153,7 +175,11 @@ function Header() {
                                     alt='bookmark_gray'
                                     className={styles.signinButton}
                                     onClick={() => window.location.href = '/mybookmark'} />
-                                <img src={alarm} alt='alarm' className={styles.signinButton} />
+                                <img 
+                                    src={alarm}
+                                    alt='alarm'
+                                    className={styles.signinButton}
+                                    onClick={handleAlarm}/>
                                 <button
                                 className={styles.headerButton}
                                 onClick={signOut}
@@ -164,9 +190,6 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
-                                <div className={styles.alarmContainer}>
-
-                                </div>
                             </>
                         ) : (
                             <>
@@ -178,50 +201,69 @@ function Header() {
                                 </Link>
                             </>
                         )}
-                        
                     </div>
-                    <div className={styles.buttonWrap}>
-                        <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
-                        <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileHeader}/>
-                        {mobileHeaderOpen && (isLoggedIn ? (
-                            <div className={styles.mobileHamburger}>
-                                <Link to='/mypage'>
-                                    <div className={styles.mobileHamburgerMenu}>
-                                        <img src="" alt="" />
-                                        <p>마이페이지</p>
-                                    </div>
-                                </Link>
-                                <Link to='/mybookmark'>
-                                    <div className={styles.mobileHamburgerMenu}>
-                                        <img src="" alt="" />
-                                        <p>즐겨찾기</p>
-                                    </div>
-                                </Link>
-                                {isAlarmVisible && (
-                                    <Link to='/myalerts'>
+                    <div className={styles.mobileHeader}>
+                        <div className={styles.buttonWrap}>
+                            <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} />
+                        </div>
+                        {/* <div className={styles.mobileMenuWrap}>
+                            {(isLoggedIn ? (
+                                <div className={styles.mobileHamburger}>
+                                    <Link to='/mypage'>
                                         <div className={styles.mobileHamburgerMenu}>
-                                            <img src="" alt="" />
-                                            <p>알림</p>
+                                            <img src={mobilemypage} alt="" />
+                                            <p className={styles.mobileMenuText}>마이페이지</p>
                                         </div>
                                     </Link>
-                                )}
-                            </div>
-                        ) : (
-                            <div className={styles.mobileHamburger}>
-                                <Link to='/signin'>
-                                    <div className={styles.mobileHamburgerMenu}>
-                                        <img src="" alt="" />
-                                        <p>로그인</p>
-                                    </div>
-                                </Link>
-                                <Link to='/signup'>
-                                    <div className={styles.mobileHamburgerMenu}>
-                                        <img src="" alt="" />
-                                        <p>회원가입</p>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
+                                    <Link to='/mybookmark'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src={mobilebookmark} alt="" />
+                                            <p className={styles.mobileMenuText}>즐겨찾기</p>
+                                        </div>
+                                    </Link>
+                                    <Link>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src={mobilealarm} alt="" />
+                                            <p className={styles.mobileMenuText}>알림</p>
+                                        </div>
+                                    </Link>
+                                    <Link to='/history'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src={mobilehistory} alt="" />
+                                            <p className={styles.mobileMenuText}>최근변경</p>
+                                        </div>
+                                    </Link>
+                                    <Link to='/latestdebate'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src={mobiledebate} alt="" />
+                                            <p>토론</p>
+                                        </div>
+                                    </Link>
+                                    <Link to='/latestdebate'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src={mobilelogout} alt="" />
+                                            <p>로그아웃</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div className={styles.mobileHamburger}>
+                                    <Link>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src="" alt="" />
+                                            <p>로그아웃</p>
+                                        </div>
+                                    </Link>
+                                    <Link to='/signup'>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img src="" alt="" />
+                                            <p>회원가입</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div> */}
                     </div>
                 </div>
             </div>

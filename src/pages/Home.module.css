@@ -132,6 +132,7 @@
     flex-direction: row;
     height: 35px;
     align-items: center;
+    text-decoration: none;
 }
 
 .numberIcon {

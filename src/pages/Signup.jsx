@@ -40,7 +40,7 @@ const Signup = () => {
             return alert('닉네임 형식이 올바르지 않습니다.');
         }
         try{
-            const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);

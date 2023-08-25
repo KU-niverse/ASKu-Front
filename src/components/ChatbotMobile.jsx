@@ -166,8 +166,9 @@ function ChatbotMobile() {
 
     return (
         <div>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
             <Header />
-            <div>
+            <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
                     <p id={styles.title}>AI 챗봇</p>
                     <button className={styles.button}>채팅 비우기</button>

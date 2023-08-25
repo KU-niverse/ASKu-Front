@@ -34,18 +34,18 @@ function UnlikeModal({ isOpen, onClose }) {
                         </div>
                         <div className={styles.modal_content}>
                             <div className={styles.modal_title}>
-                                <img src={unlike}/>
-                                <div>
-                                    <h1>이번 답변은 어떠셨나요?</h1>
-                                    <p>피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.</p>
+                                <img id={styles.feedback_icon} src={unlike}/>
+                                <div className={styles.feedback_title}>
+                                    <h1 id={styles.red_title}>이번 답변은 어떠셨나요?</h1>
+                                    <p id={styles.gray_title}>피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.</p>
                                 </div>
                             </div>
                             <textarea className={styles.feedback_text}/>
-                            <button>작성하기</button>
-                            </div>
+                            <button className={styles.feedback_btn}>작성하기</button>
                         </div>
                     </div>
                 </div>
+            </div>
         )}
         </>
     );
