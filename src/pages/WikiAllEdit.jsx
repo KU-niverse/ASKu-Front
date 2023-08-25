@@ -29,7 +29,7 @@ const WikiEdit = () => {
         const getWiki = async () => {
             try{
 
-                const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`,{
+                const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`,{
                     withCredentials: true,
                 }); //전체 텍스트를 가져옴.
                 if (result.status === 200){
@@ -60,7 +60,7 @@ const WikiEdit = () => {
 
         const wikiMarkup = HtmlToWiki(desc);
         try {
-            const result = await axios.post(`https://asku.wiki/api/wiki/contents/${title}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/contents/${title}`, {
                 version: version,
                 new_content: wikiMarkup,
                 summary: summary,
