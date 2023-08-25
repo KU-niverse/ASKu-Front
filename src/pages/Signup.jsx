@@ -40,7 +40,7 @@ const Signup = () => {
             return alert('닉네임 형식이 올바르지 않습니다.');
         }
         try{
-            const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -303,7 +303,7 @@ const Signup = () => {
             </div>
             <div className={`${styles.signup_agree}`}>
                 <span><input type='checkbox' checked={isChecked} onChange={handleCheckboxChange}/>개인정보 수집에 동의합니다.</span>
-                <span>더보기</span>
+                <span onClick={() => nav('https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052')} className={`${styles.moreLink}`}>[더보기]</span>
             </div>
             <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />
         </form>

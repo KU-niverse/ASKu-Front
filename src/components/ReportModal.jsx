@@ -1,10 +1,10 @@
-import styles from './LoginModal.module.css';
+import styles from './ReportModal.module.css';
 import closeBtn from '../img/close_btn.png';
 import {  useState, useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 
-function ReportModal({isOpen, onClose}) {
+function ReportModal({type, isOpen, onClose}) {
     const modalRef = useRef(null);
 
     const handlereportType = () => {
@@ -42,13 +42,13 @@ function ReportModal({isOpen, onClose}) {
                         </div>
                         <div className={styles.modal_content}>
                             <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요!</p>
-                            <p onClick={handlereportType}>상업적 광고 및 판매</p>
-                            <p onClick={handlereportType}>정치인 비하 및 선거운동</p>
-                            <p onClick={handlereportType}>게시판 성격에 부적절함</p>
-                            <p onClick={handlereportType}>음란물</p>
-                            <p onClick={handlereportType}>낚시/놀람/도배</p>
-                            <p onClick={handlereportType}>사칭사기</p>
-                            <p onClick={handlereportType}>욕설비하</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>상업적 광고 및 판매</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>정치인 비하 및 선거운동</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>게시판 성격에 부적절함</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>음란물</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>낚시/놀람/도배</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>사칭사기</p>
+                            <p onClick={handlereportType} className={styles.modal_report}>욕설비하</p>
                         </div>
                     </div>
                 </div>

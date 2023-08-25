@@ -64,13 +64,13 @@ const HistoryBox = (props) => {
                 <span className={styles.docTitle}>{doctitle}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span><ThreedotsReport target={1} reason_id={2}/></span>
+                <span className={styles.threedot}><ThreedotsReport target={1} reason_id={2}/></span>
             </div>
         </div>
         <div className={styles.versionText}>
             <div></div>
             <div className={styles.versionBtns}>
-                <span onClick={handleView}><img src={watch}/>이 버전으로 미리보기</span>
+                <span onClick={handleView}><img src={watch}/>RAW버전 미리보기</span>
                 <span onClick={handleRollback}><img src={rollback}/>이 버전으로 되돌리기</span>
                 <span onClick={handleCompare}><img src={verComp}/>전 버전이랑 비교하기</span>
             </div>

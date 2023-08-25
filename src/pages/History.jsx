@@ -49,6 +49,7 @@ const History = (props) => {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
   const visibleHistorys = lists.slice(startIndex, endIndex);
+  const [blank, setBlank] = useState(false);
 
     const handlePageChange = (pageNumber) => {
       setPage(pageNumber); // 페이지 번호 업데이트
@@ -63,7 +64,10 @@ const History = (props) => {
             });
             if(result.status === 200){
                 setLists(result.data.historys);
-                setTypeCount(result.data.historys.length)
+                setTypeCount(result.data.historys.length);
+                if(result.data.historys.length === 0){
+                    setBlank(true);
+                }
             }
             
         } catch (error) {
@@ -88,18 +92,27 @@ const History = (props) => {
         <div className={styles.history}>
             <div className={styles.historyList}>
                 <div className={styles.historyTitle}><p className={styles.listTitle}>{title}</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
-                {visibleHistorys.map((item) => {
-                    if (item.is_bad === 1) {
-                        return null; // 패스 (무시)
-                      }
-                    return(
-                        <div key={item.version}>
+                {blank ? (
+                      <div>아직 히스토리가 없습니다</div>
+                    ) : (
+                      visibleHistorys.map((item) => {
+                        if (item.is_bad === 1) {
+                          return null; // 패스 (무시)
+                        }
+                        return (
+                          <div key={item.version}>
                             <HistoryBox 
-                            version={item.version} summary={item.summary} user={item.nick} timestamp={item.timestamp} title={title}
+                              version={item.version} 
+                              summary={item.summary} 
+                              user={item.nick} 
+                              timestamp={item.timestamp} 
+                              title={title}
                             />
-                        </div>
-                    );
-                })}
+                          </div>
+                        );
+                      })
+                    )}
+
                 <Paging
                     total={typeCount}
                     perPage={perPage}
