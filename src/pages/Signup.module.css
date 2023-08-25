@@ -8,6 +8,13 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.moreLink{
+    cursor: pointer;
+    margin-left: 5px;
+}
+.moreLink:hover{
+    text-decoration: underline;
+}
 
 .logo {
     width: 170px;
