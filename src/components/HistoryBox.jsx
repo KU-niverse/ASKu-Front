@@ -64,7 +64,7 @@ const HistoryBox = (props) => {
                 <span className={styles.docTitle}>{doctitle}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span><ThreedotsReport target={1} reason_id={2}/></span>
+                <span className={styles.threedot}><ThreedotsReport target={1} reason_id={2}/></span>
             </div>
         </div>
         <div className={styles.versionText}>

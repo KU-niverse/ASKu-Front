@@ -8,9 +8,11 @@
     padding: 20px;
     box-sizing: border-box;
     border: 0.5px solid rgba(213, 213, 213, 1);
+    
 }
 @media only screen and (max-width: 767px) {
     .historyBox{
+        position: relative;
         height: 115px;
         padding: 15px;
     }
@@ -20,6 +22,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+@media only screen and (max-width: 767px) {
+    .contents{
+        margin-top: 10px;
+        padding-bottom: 4px;
+    }
 }
 .contentsOne{
     width: 65%;
@@ -30,6 +40,7 @@
     flex-direction: row;
     align-items: center;
 }
+
 .contentsTwo img{
     cursor: pointer;
 }
@@ -41,7 +52,7 @@
 }
 @media only screen and (max-width: 767px) {
     .version{
-        font-size: 20px;
+        font-size: 18px;
         margin-right: 15px;
     }
 }
@@ -57,7 +68,7 @@
 @media only screen and (max-width: 767px) {
     .summary{
         max-width: 150px;
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 .user{
@@ -67,9 +78,10 @@
 }
 @media only screen and (max-width: 767px) {
     .user{
-        font-size: 12px;
+        font-size: 11px;
     }
 }
+
 .docTitle{
     font-size: 16px;
     color: rgba(159, 19, 46, 1);
@@ -96,9 +108,15 @@
     align-items: center;
     justify-content: space-between;
 }
+@media only screen and (max-width: 767px) {
+    .versionText{
+       position: absolute;
+       bottom: 18px;
+    }
+}
 .versionBtns{
     width: 450px;
-    padding-top: 18px;
+    padding-top: 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -122,18 +140,21 @@
 }
 @media only screen and (max-width: 767px) {
     .versionBtns{
-        width: 350px;
+        width: 100%;
         padding-top: 15px;
+        display: flex;
+        justify-content: space-between;
         
     }
     .versionBtns span{
-        font-size: 14px;
+        font-size: 10px;
+        margin-right: 8px;
     
     
     }
     .versionBtns img{
-        width: 17px;
-        height: 14px;
+        width: 13px;
+        height: 11px;
         margin-right: 5px;
     }
 }
