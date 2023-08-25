@@ -242,7 +242,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   id={question.id}
                   content={question.content}
                   time={question.created_at}
-                  doc_title={question.index_title}
+                  doc_title={question.doc_title}
                 />
               ))
             )}
@@ -262,7 +262,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               myDebate && myDebate.message && myDebate.message.slice(0,5).map((debate) => (
                 <CommentList
                   key={debate.id}
-                  id={debate.id}
+                  id={debate.debate_id}
                   subject={debate.debate_subject}
                   content={debate.debate_content}
                   time={debate.debate_content_time}
