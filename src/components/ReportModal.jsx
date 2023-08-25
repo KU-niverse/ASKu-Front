@@ -4,7 +4,7 @@ import {  useState, useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 
-function ReportModal({isOpen, onClose}) {
+function ReportModal({type, isOpen, onClose}) {
     const modalRef = useRef(null);
 
     const handlereportType = () => {
