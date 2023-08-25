@@ -36,7 +36,7 @@ function Quill2(props) {
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
         const result = await axios.post(
-          "https://asku.wiki/api/wiki/image",
+          "http://localhost:8080/wiki/image",
           formData,
           { withCredentials: true }
         );
