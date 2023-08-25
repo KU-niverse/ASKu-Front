@@ -1,5 +1,5 @@
 import "react-quill/dist/quill.snow.css";
-import "./QuillStyle.css";
+import "./QuillStyle2.css";
 // Quill 에디터 가져오기
 import ReactQuill from "react-quill";
 // axios
@@ -127,7 +127,7 @@ function Quill2(props) {
         }}
         modules={modules}
         formats={formats}
-        style={{ height: "263px" }}
+        style={{ height: "270px" }}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
 
-function DropDown({ onSelectedOption, title, isOptionDisabled }) {
+function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
   const [wikiData, setWikiData] = useState([]);
 
   useEffect(() => {
@@ -40,8 +40,8 @@ function DropDown({ onSelectedOption, title, isOptionDisabled }) {
 
  let options=[]
  if (!isOptionDisabled && wikiData.contents && wikiData.contents[0]){
-    options = wikiData.contents[0].map((content) => ({
-    value: `${content.index} ${content.title}`, 
+    options = wikiData.contents.map((content) => ({
+    value: `${content.section}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
   }))} else if(isOptionDisabled === true){
@@ -74,7 +74,7 @@ function DropDown({ onSelectedOption, title, isOptionDisabled }) {
   // ];
 
 
-  const defaultOption = "목차 선택";
+  const defaultOption = defaultOpt;
 
   const onSelect = (selectedOption) => {
     console.log(selectedOption);

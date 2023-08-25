@@ -5,8 +5,10 @@ import edit from "../img/edit.png"
 import styles from "../components/QuestionFor.module.css"
 import minilike from "../img/minilike.png"
 import { useLocation, useParams } from "react-router-dom"
+import FormatDate from "./FormatDate"
 
 function QuestionFor(props){
+  const timestamp = FormatDate(props.created_at)
 
   
 
@@ -16,10 +18,10 @@ function QuestionFor(props){
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
               <span className={styles.q_mynick}>{props.nick}</span>
-              <span className={styles.q_date}>{props.created_at}</span>
+              <span className={styles.q_date}>{timestamp}</span>
             </div>
             <div className={styles.q_backhead}>
-              <span className={styles.quesNum}>{props.like_count}<img src={minilike}/></span>
+              <span className={styles.q_num}>{props.like_count}<img src={minilike}/></span>
             </div>
           </div>
           <div className={styles.q_middle}>
@@ -28,7 +30,7 @@ function QuestionFor(props){
               <span className={styles.q_content}>{props.content}</span>
             </div>
             <div>
-              <span>해당 질문을 기반으로 문서 수정하기</span>
+              <span className={styles.q_letter}>해당 질문을 기반으로 문서 수정하기</span>
             </div>
             
           </div>
