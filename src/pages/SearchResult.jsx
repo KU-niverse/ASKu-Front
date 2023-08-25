@@ -161,7 +161,8 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : ''}>
                         {ques.map((item) => {
                             return(
-                            <ResultQues
+                                <div className={styles.queboxes}onClick={() => nav(`/wiki/morequestion/${item.title}`)}>
+                                    <ResultQues
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
@@ -174,8 +175,10 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
-                                onClick={()=> nav(`/wiki/morequestion/${item.title}`)}
+
                             />
+                                 </div>
+                            
                             );
                         })}
                     </div>

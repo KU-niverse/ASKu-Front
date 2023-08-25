@@ -172,6 +172,17 @@ function WikiViewer() {
       }
     }
 
+    useEffect(() => {
+        if(deleted === false){
+            setImageSource(falseBk);
+    
+          } else if (deleted === true){
+            setImageSource(trueBk);
+    
+          }
+        
+    }, [deleted]);
+
     //버튼 링크 연결 함수들
     const linkToHistory = () => {
         nav(`/history/${title}`)
@@ -190,8 +201,9 @@ function WikiViewer() {
     const getWiki = async () => {
         console.log('나중');
         try{
-            const result = await axios.get(`http://asku.wiki/api/wiki/contents/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
+            setDeleted(!result.data.is_favorite);
             console.log(result.data.contents);
             console.log(allContent);
 

@@ -163,15 +163,13 @@ const Signup = () => {
             return alert('아이디 형식이 올바르지 않습니다');
         } else if(isPwValid === false) {
             return alert('비밀번호 형식이 올바르지 않습니다');
-        } else if(isPwSame) {
+        } else if(isPwSame === false) {
             return alert('비밀번호가 일치하지 않습니다');
         } else if(idDoubleCheck === false) {
             return alert('아이디 중복을 확인해주세요');
-        } else if(nickDoubleCheck) {
+        } else if(nickDoubleCheck === false) {
             return alert('닉네임 중복을 확인해주세요');
-        }
-        
-        if(isChecked === false){
+        } else if(isChecked === false){
             return alert('개인정보 수집에 동의해주십시오');
         }
 

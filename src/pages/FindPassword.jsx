@@ -11,7 +11,10 @@ const FindPassword = () => {
     const [id, setId] = useState('')
     const nav = useNavigate();
 
-    const findUserPw = async () => {
+    const findUserPw = async (e) => {
+        e.preventDefault();
+        console.log(id);
+
         try{
             const response = await axios.post('https://asku.wiki/api/user/auth/findpw', {
                 login_id: id
@@ -20,7 +23,7 @@ const FindPassword = () => {
             });
             if (response.data.success === true) {
                 alert(response.data.message);
-                nav('/signin');
+                nav('/');
             } else {
                 return alert(response.data.message);
             }
@@ -31,16 +34,13 @@ const FindPassword = () => {
     }
 
 
-    function handleOnClick() {
-        findUserPw();
-    }
     
 
   return (
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <h2 className={styles.findTitle}>비밀번호 찾기</h2>
-        <form>
+        <form onSubmit={findUserPw}>
             <div className={`${styles.findInputs}`}>
                 <div className={`${styles.inputLabel}`}>
                     <span>아이디를 입력하세요</span>
@@ -53,7 +53,7 @@ const FindPassword = () => {
                      />
                 </span> 
             </div>
-            <button className={`${styles.findBtn}`} onClick={handleOnClick}>비밀번호 재설정 메일 받기</button>
+            <input className={`${styles.findBtn}`} type='submit' value='비밀번호 재설정 메일 받기'/>
             <div  className={`${styles.findAlert}`}>비밀번호를 재설정 페이지를 아이디에 해당하는 이메일로 전송합니다. </div>
         </form>
     </div>

@@ -1,7 +1,9 @@
 .hidden{
   display: none;
 }
-
+.queboxes{
+  cursor: pointer;
+}
 
 .expanded {
   -webkit-line-clamp: unset; /* 모든 텍스트 표시 */
