@@ -8,6 +8,7 @@ const DebateAdd = ({ title }) => {
   const [debateListData, setDebateListData] = useState(null);
   const [isAdd, setIsAdd] = useState(false);
   const [word, setWord] = useState('');
+  const [numb, setNumb] = useState(0);
 
   useEffect(() => {
     const takeDebateList = async () => {
@@ -15,6 +16,7 @@ const DebateAdd = ({ title }) => {
         const res = await axios.get(`http://localhost:8080/debate/list/${title}`, { withCredentials: true });
         if (res.status === 200) {
           setDebateListData(res.data);
+          setNumb(res.data.data.length);
         } else {
           console.log(res.data.message);
         }
@@ -61,7 +63,7 @@ const DebateAdd = ({ title }) => {
     <div>
        <div className={styles.addTitle}>
             <p className={styles.addTitleMain}>행복의 심리학</p>
-            <p >문서의 다른 토론 (7)</p>
+            <p >문서의 다른 토론 ({numb})</p>
         </div>
         
         <div>
