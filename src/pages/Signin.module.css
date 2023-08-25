@@ -9,10 +9,11 @@
 }
 
 .logo{
-    width: 300px;
-    height: 100px;
+    width: 280px;
+    height: 90px;
     object-fit: contain;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 .haho{
     display: none;

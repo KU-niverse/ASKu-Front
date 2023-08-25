@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './Signin.module.css'
 import logo from '../img/logo.png'
 import haho_login from '../img/login.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -15,9 +15,28 @@ const Signin = () => {
     const nav = useNavigate();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const LS_KEY_ID = "LS_KEY_ID"; //로컬스토리지에 저장할 키
+    const LS_KEY_SAVE_ID_FLAG = "LS_KEY_SAVE_ID_FLAG"; //아이디 저장하기 체크여부
+    const [saveIDFlag, setSaveIDFlag] = useState(false);
 
+
+    const handleSaveIDFlag = () => {
+        console.log('전' , saveIDFlag);
+        setSaveIDFlag(prev => !prev);
+        console.log('후', saveIDFlag);
+    }
+
+    useEffect(() => {
+        let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
+        if (idFlag !== null) setSaveIDFlag(idFlag);
+        if (idFlag === false) localStorage.setItem(LS_KEY_ID, "");
+      
+        let data = localStorage.getItem(LS_KEY_ID);
+        if (data !== null) setId(data);
+      }, []);
 
     const userLogin = async () => {
+        
         try{
             const response = await axios.post('https://asku.wiki/api/user/auth/signin', {
                 login_id: id,
@@ -26,6 +45,8 @@ const Signin = () => {
                 withCredentials: true
             });
             if (response.data.success) {
+                //로그인 성공시
+                if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id);
                 nav('/');
             } else {
                 return alert('이상해');
@@ -40,18 +61,24 @@ const Signin = () => {
 
         e.preventDefault();
 
-        if (id === '' || password === ''){
-            return alert('아이디 혹은 비밀번호를 제대로 입력해주세요')
+        if (id === "") {
+            alert("아이디를 입력해주세요.");
         }
-
+        if (password === "") {
+          alert("비밀번호를 입력해주세요.");
+        }
         userLogin();
+
+        
+
+        
     }
 
 
   return (
     <div className={`${styles.container}`}>
-        <img className={`${styles.logo}`} src={logo} alt=''/>
-        <img className={`${styles.haho}`}src={haho_login} alt=''/>
+        <img className={`${styles.logo}`} src={logo} alt='logo' onClick={() => nav('/')}/>
+        <img className={`${styles.haho}`}src={haho_login} alt='haho'/>
         <h1 className={styles.login_headers}>LOGIN</h1>
         <form onSubmit={handleOnSubmit}>
             <div className={`${styles.login_input}`}>
@@ -59,7 +86,7 @@ const Signin = () => {
                 <input type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='비밀번호를 입력하세요' />
             </div>
             <div className={`${styles.login_remem}`}>
-                <span><input type='checkbox' id='chkbox'/>아이디 기억하기</span>
+                <span><input type='checkbox' id='chkbox'checked={saveIDFlag} onChange={handleSaveIDFlag}/>아이디 기억하기</span>
             </div>
             <button className={`${styles.login_btn}`} type='submit'>로그인</button>
         </form>
