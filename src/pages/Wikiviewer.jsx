@@ -119,7 +119,7 @@ function WikiViewer() {
     //북마크 추가
     const addBookmark = async () => {
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 
             }, {
                 withCredentials: true
@@ -142,7 +142,7 @@ function WikiViewer() {
       //북마크 해제
       const deleteBookmark = async () => {
         try{
-            const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -201,7 +201,7 @@ function WikiViewer() {
     const getWiki = async () => {
         console.log('나중');
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
             setDeleted(!result.data.is_favorite);
             console.log(result.data.contents);
@@ -219,7 +219,7 @@ function WikiViewer() {
     const getQues = async () => {
         console.log('실행')
         try{
-            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`);
             setQues(result.data.data);
             console.log('성공');
             if (result.data.data.length===0) {
@@ -238,7 +238,7 @@ function WikiViewer() {
     //질문 데이터 가져오기
     const getContribute = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contributions/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contributions/${title}`);
             console.log('기여도');
             setContribute(result.data.message);
             console.log(contribute);
