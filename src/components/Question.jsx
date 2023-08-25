@@ -19,7 +19,8 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
       content: content,
       created_at: created_at,
       like_count: like_count,
-      nick: nick}
+      nick: nick,
+      index_title:index_title}
     });
   }
 

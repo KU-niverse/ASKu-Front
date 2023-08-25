@@ -1,6 +1,9 @@
 .hidden{
     display: none;
 }
+.quesul{
+    cursor: pointer;
+}
 .wikiviewer{
     display: flex;
     flex-direction: column;
