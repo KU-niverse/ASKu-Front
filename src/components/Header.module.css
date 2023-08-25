@@ -4,7 +4,8 @@
     border-bottom: 0.5px solid #D5D5D5;
     box-shadow: 0px 4px 8px 0px #0000001A;
     border-radius: 0px 0px 20px 20px;
-    transition: all 0.5s ease;
+    /* transition: all 0.5s ease; */
+    width: 100vw;
 }
 
 
@@ -12,8 +13,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: auto;
-    min-width: 100%;
+    width: 100%;
+    position: relative;
 }
 
 .headerButton {
@@ -35,7 +36,7 @@
     display: flex;
     width: 90vw;
     height: 25px;
-    justify-content: space-between;
+    justify-content: space-around;
 } 
 
 .inputcontainer {
@@ -84,7 +85,7 @@
     margin-left: -100px;
     padding-left: 20px;
 }
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 1100px) {
     .headerInput {
         display: none;
     }
@@ -103,7 +104,7 @@
     z-index: 20;
     cursor: pointer;
 }
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 1100px) {
     .searchIcon {
         display: none;
     }
@@ -172,3 +173,35 @@
     text-overflow: ellipsis;  
     white-space: nowrap;  
 }
+
+.mobileHeader {
+    margin-left: 300px;
+    display:none;
+}
+@media only screen and (max-width: 767px) {
+    .mobileHeader {
+        display: block;
+        position: absolute;
+        right: 20px;
+    }
+}
+/* 
+.mobileHamburgerMenu {
+    width: 120px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.mobileMenuText {
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.mobileMenuWrap {
+    display: flex;
+    flex-direction: column;
+}
+ */ 

@@ -194,7 +194,7 @@ function Chatbot () {
                         placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
                         value={inputValue}
                         onChange={inputChange}
-                        onKeyDown={handleKeyDown}
+                        onKeyUp={handleKeyDown}
                         ref={inputRef}
                     />
                     <div className={styles.sendBtn} onClick={sendMessage}>

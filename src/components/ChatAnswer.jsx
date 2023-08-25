@@ -92,8 +92,7 @@ const ChatAnswer = (props) => {
                         onClick={handleReferenceOpen}
                     />
                 </div>
-            </div>
-            <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
+                <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
                 <div className={styles.reference}>
                     <div className={styles.header}>
                         <p className={styles.title}>출처</p>
@@ -103,7 +102,9 @@ const ChatAnswer = (props) => {
                         <p>{reference}</p>
                     </div>
                 </div>
+                </div>
             </div>
+            
             {likeModalOpen && <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} />}
             {unlikeModalOpen && <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} />}
         </div>
