@@ -19,7 +19,7 @@ function MyBadge() {
   //   console.log(mypageData)
   //   const takeMypage = async () =>{
   //     try{
-  //       const res = await axios.get( `http://asku.wiki/api/user/mypage/info`, {withCredentials: true});
+  //       const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
   //       if(res.status === 201){
   //         setMypageData(res.data);
   //         console.log(res.data.message)

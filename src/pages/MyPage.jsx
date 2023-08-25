@@ -148,7 +148,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 ) : (
                   <>
                     {myBadge&&myBadge.data&&myBadge.data.slice((page - 1) * perPage, page * perPage).map((badge) => (
-                      <img key={badge.id} src={badge.image} alt={badge.name} className={styles.badgeImage} />
+                      <img title={badge.name} key={badge.id} src={badge.image} alt={badge.name} className={styles.badgeImage} />
                     ))}
                   </>
                 )}
@@ -263,6 +263,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 <CommentList
                   key={debate.id}
                   id={debate.id}
+                  subject={debate.debate_subject}
                   content={debate.debate_content}
                   time={debate.debate_content_time}
                   doc_title={debate.doc_title}
