@@ -13,7 +13,7 @@ function DebateInput({onDebateSubmit, title, debateId}){
 
   const checkLoginStatus = async() => {
     try {
-      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       }

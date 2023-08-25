@@ -75,7 +75,7 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -91,7 +91,7 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki/api/question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -109,7 +109,7 @@ const SearchResearch = () => {
     //최근변경 리스트
     const getHistory = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/historys?type=${type}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
         } catch (error) {
             console.error(error);
@@ -161,7 +161,8 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : ''}>
                         {ques.map((item) => {
                             return(
-                            <ResultQues
+                                <div className={styles.queboxes}onClick={() => nav(`/wiki/morequestion/${item.title}`)}>
+                                    <ResultQues
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
@@ -174,8 +175,10 @@ const SearchResearch = () => {
                                 nick={item.nickname}
                                 like_count={item.like_count}
                                 title={title}
-                                onClick={()=> nav(`/wiki/morequestion/${item.title}`)}
+
                             />
+                                 </div>
+                            
                             );
                         })}
                     </div>
