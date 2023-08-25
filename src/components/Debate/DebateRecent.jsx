@@ -35,7 +35,7 @@ const DebateRecent = ({ title }) => {
           recentListData.data.slice(0, 4).map((item) => {
             const timestamp = FormatTimeAgo(item.recent_edited_at);
             return (
-            <Link to={`/debate/${title}/${item.subject}/${item.id}`} className={styles.linkTo}>
+            <Link to={`/debate/${item.title}/${item.subject}/${item.id}`} className={styles.linkTo}>
               <ul key={item.title}>
                 <span className={styles.listTitle}>{item.subject}</span>
                 <span className={styles.listTimestamp}>{timestamp}</span>
