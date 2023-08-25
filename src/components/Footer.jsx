@@ -24,7 +24,7 @@ function Footer() {
                             <Link>
                                 <button className={`${styles.footerButton}`}>이용약관</button>
                             </Link>
-                            <Link>
+                            <Link to='https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052' target="_blank">
                                 <button className={`${styles.footerButton}`}>개인정보처리방침</button>
                             </Link>
                         </div>

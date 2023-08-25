@@ -15,6 +15,7 @@ import mobilelogout from '../img/mobile_logout.png';
 import mobiledebate from '../img/mobile_debate.png';
 import mobilebookmark from '../img/mobile_bookmark.png';
 import mobilehistory from '../img/mobile_history.png';
+import AlarmModal from './AlarmModal';
 
 
 function Header() {
@@ -24,9 +25,9 @@ function Header() {
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
     const [isAlarmVisible, setIsAlarmVisible] = useState(false);
-    const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
-    const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
-    const [mobileSearch, setMobileSearch] = useState(false);
+    // const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
+    // const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
+    // const [mobileSearch, setMobileSearch] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -93,19 +94,32 @@ function Header() {
         }
     };
 
-    const handleMobileHeader= () => {
-        if (mobileHeaderOpen) {
-            setMobileHeaderOpen(false);
-            setMobileHeaderHeight('60px');
+    // const handleMobileHeader= () => {
+    //     if (mobileHeaderOpen) {
+    //         setMobileHeaderOpen(false);
+    //         setMobileHeaderHeight('60px');
+    //     } else {
+    //     setMobileHeaderOpen(true);
+    //     setMobileHeaderHeight('240px');
+    //     }
+    // };
+
+    const handleAlarm = () => {
+        if (isAlarmVisible) {
+            setIsAlarmVisible(false);
+            console.log(isAlarmVisible);
         } else {
-        setMobileHeaderOpen(true);
-        setMobileHeaderHeight('240px');
+            setIsAlarmVisible(true);
+            console.log(isAlarmVisible);
         }
     };
 
 
+
+
     return (
-        <div className={styles.container}  style={{ height: mobileHeaderHeight }}>
+        // style={{ height: mobileHeaderHeight }}
+        <div className={styles.container}  >
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -145,6 +159,7 @@ function Header() {
                                     setInputValue('');
                                 }
                             }} />
+                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm}/>
                     </div>
                     <div 
                     className={styles.navContainer_right} 
@@ -160,7 +175,11 @@ function Header() {
                                     alt='bookmark_gray'
                                     className={styles.signinButton}
                                     onClick={() => window.location.href = '/mybookmark'} />
-                                <img src={alarm} alt='alarm' className={styles.signinButton} />
+                                <img 
+                                    src={alarm}
+                                    alt='alarm'
+                                    className={styles.signinButton}
+                                    onClick={handleAlarm}/>
                                 <button
                                 className={styles.headerButton}
                                 onClick={signOut}
@@ -171,9 +190,6 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
-                                <div className={styles.alarmContainer}>
-
-                                </div>
                             </>
                         ) : (
                             <>
@@ -185,15 +201,14 @@ function Header() {
                                 </Link>
                             </>
                         )}
-                        
                     </div>
-                    <div>
+                    <div className={styles.mobileHeader}>
                         <div className={styles.buttonWrap}>
                             <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileHeader}/>
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} />
                         </div>
-                        <div className={styles.mobileMenuWrap}>
-                            {mobileHeaderOpen && (isLoggedIn ? (
+                        {/* <div className={styles.mobileMenuWrap}>
+                            {(isLoggedIn ? (
                                 <div className={styles.mobileHamburger}>
                                     <Link to='/mypage'>
                                         <div className={styles.mobileHamburgerMenu}>
@@ -248,7 +263,7 @@ function Header() {
                                     </Link>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

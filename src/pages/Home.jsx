@@ -14,25 +14,7 @@ function Home({loggedIn, setLoggedIn}) {
     const [inputValue, setInputValue] = useState('');
     const [popularKeywords, setPopularKeywords] = useState([]);
     const [popularQuestions, setPopularQuestions] = useState([]);
-//     const Navigate = useNavigate();
-//     useEffect(() => {
-//     const checkLoginStatus = async () => {
-//         try {
-//         const res = await axios.get("http://118.67.130.57:8080/user/auth/issignedin", {withCredentials: true});
-//         if (res.status===201 && res.data.success===true) {
-//             setLoggedIn(true);
-//         } else if(res.status === 401){
-//             setLoggedIn(false);
-//             Navigate('/signin');
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         setLoggedIn(false);
-//         Navigate('/signin');
-//     }
-// };
-//     checkLoginStatus();
-// }, [Navigate, setLoggedIn]);
+
     useEffect(() => {
         const fetchPopularKeywords = async () => {
             try {
@@ -92,7 +74,7 @@ function Home({loggedIn, setLoggedIn}) {
                             }} />
                 </div>
                 <div className={styles.chatBotContainer}>
-                    <Chatbot />
+                    <Chatbot isLoggedIn={loggedIn} />
                     <Link to='/chatbot'>
                         <img src={chatBotBtn} alt='button' className={styles.chatBotBtn} />
                     </Link>
@@ -100,10 +82,10 @@ function Home({loggedIn, setLoggedIn}) {
                         <div className={styles.keyWord}>
                             <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
                             {popularKeywords.slice(0, 5).map((keyword, index) => (
-                                <div className={styles.rankWrap} key={index}>
+                                <Link to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}`} className={styles.rankWrap} key={index}>
                                     <p className={styles.numberIcon}>{index + 1}.</p>
                                     <p className={styles.rankContent}>{keyword.keyword}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                         <div className={styles.question}>
