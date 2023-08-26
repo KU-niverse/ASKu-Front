@@ -54,7 +54,6 @@ function Chatbot () {
         axios.post('https://asku.wiki/ai/chatbot/', {
             q_content: inputValue,
             user_id: "1",
-            // reference: "1"
         })
         .then(response => {
             setShowSuggest(false);
@@ -133,7 +132,7 @@ function Chatbot () {
     
     useEffect(() => {
         inputRef.current.focus();
-        axios.get('https://asku.wiki/ai/chatbot/')
+        axios.get('https://asku.wiki/ai/chatbot/1')
             .then(response => {
                 console.log(response.data);
                 const { content, reference } = response.data;
