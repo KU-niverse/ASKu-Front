@@ -1,5 +1,10 @@
+.mobileChatbotContainer {
+    height: 100%;
+}
+
 .mobileChatbotWrap {
     height: 100%;
+    min-height: 700px;
 }
 
 .topBar {
@@ -37,6 +42,7 @@
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: hidden;
+    min-height: 700px;
 }
 
 .defaultChat {
@@ -105,23 +111,26 @@
     width: 100%;
 }
 
-#ref {
+.ref {
     width: 100 px;
     font-weight: 700;
     color: #9F132E;
     font-size: 14px;
+    position: relative;
+    right: 50px;
 }
 
 .textBox {
     position: relative;
-    left: 330px;
+    right: 100px;
+    margin-left: 300px;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-right: 10px;
     border: 1px solid #9F132E;
-    width: 250px;
+    width: 220px;
     height: 30px;
     border-radius: 20px;
     font-size: 12px;
@@ -132,7 +141,8 @@
 .textBox:hover {
     background-color: #9F132E;
     color: #FFF;
-  }
+}
+
 
 .promptWrap {
     position: relative;
