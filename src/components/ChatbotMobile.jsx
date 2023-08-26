@@ -18,6 +18,7 @@ function ChatbotMobile() {
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+    const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -43,7 +44,7 @@ function ChatbotMobile() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -67,7 +68,7 @@ function ChatbotMobile() {
         if (inputValue.trim() !== '') {
             setLoading(true);
             //content 대신 q_content, user_id 반드시 보내야 함
-            axios.post('https://asku.wiki/ai/chatbot/', {
+            axios.post('http://localhost:8080/ai/chatbot/', {
                 q_content: inputValue,
                 user_id: "1",
                 // reference: "1"
@@ -149,18 +150,15 @@ function ChatbotMobile() {
         
         useEffect(() => {
             inputRef.current.focus();
-            axios.get('https://asku.wiki/ai/chatbot/')
-                .then(response => {
-                    console.log(response.data);
-                    const { content, reference } = response.data;
-                    if (content && reference) {
-                        setChatResponse([...chatResponse, { content, reference }]);
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }, []);
+            axios.get('https://asku.wiki/ai/chatbot/1')
+            .then(response => {
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
     
 
 
@@ -177,6 +175,17 @@ function ChatbotMobile() {
                 <div>
                     <div className={styles.chat}>
                     <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+                    {previousChatHistory.map((item, index) => {
+                        return (
+                            <Fragment key={item.id}>
+                                <ChatQuestion content={item.q_content} />
+                                <ChatAnswer
+                                    content={item.a_content}
+                                    reference={item.reference}
+                                />
+                            </Fragment>
+                        );
+                    })}
                     {chatResponse.map((item, index) => {
                         if (index % 2 === 0) {
                         return <ChatQuestion key={index} content={item.content} />;

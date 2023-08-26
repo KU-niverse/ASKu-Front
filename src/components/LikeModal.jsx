@@ -26,7 +26,7 @@ function LikeModal({ isOpen, onClose }) {
 
     // const sendMessage = () => {
     //     if (inputValue.trim() !== '') {
-    //         axios.post('https://asku.wiki/ai/chatbot/', {
+    //         axios.post('http://localhost:8080/ai/chatbot/', {
     //             q_content: inputValue,
     //             user_id: "1",
     //             // reference: "1"

@@ -3,8 +3,7 @@ import ChatQuestion from './ChatQuestion';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 import axios from 'axios';
-import { useState, useEffect, useRef, Fragment} from 'react';
-import haho from "../img/3d_haho.png";
+import { useState, useEffect, useRef, Fragment } from 'react';
 import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
 
@@ -16,6 +15,7 @@ function Chatbot () {
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+    const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
@@ -27,7 +27,7 @@ function Chatbot () {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -41,6 +41,18 @@ function Chatbot () {
             }
         };
         checkLoginStatus();
+    }, []);
+
+    useEffect(() => {
+        inputRef.current.focus();
+        axios.get('https://asku.wiki/ai/chatbot/1')
+            .then(response => {
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, []);
 
     const sendMessage = () => {
@@ -128,22 +140,6 @@ function Chatbot () {
             setShowSuggest(true);
         }, 5000); // 5초 후에 실행
     };
-    
-    
-    useEffect(() => {
-        inputRef.current.focus();
-        axios.get('https://asku.wiki/ai/chatbot/1')
-            .then(response => {
-                console.log(response.data);
-                const { content, reference } = response.data;
-                if (content && reference) {
-                    setChatResponse([...chatResponse, { content, reference }]);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
 
     return (
         <div className={styles.chatBot}>
@@ -156,6 +152,17 @@ function Chatbot () {
             </div>
             <div className={styles.chat}>
                 <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+                {previousChatHistory.map((item, index) => {
+                    return (
+                        <Fragment key={item.id}>
+                            <ChatQuestion content={item.q_content} />
+                            <ChatAnswer
+                                content={item.a_content}
+                                reference={item.reference}
+                            />
+                        </Fragment>
+                    );
+                })}
                 {chatResponse.map((item, index) => {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
