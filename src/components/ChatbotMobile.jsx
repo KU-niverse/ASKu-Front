@@ -166,7 +166,7 @@ function ChatbotMobile() {
 
     return (
         <div className={styles.mobileChatbotContainer}>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
             <Header />
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>

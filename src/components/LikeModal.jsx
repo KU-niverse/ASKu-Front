@@ -55,7 +55,11 @@ function LikeModal({ isOpen, onClose }) {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
-                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
+                            <img 
+                            src={closeBtn} 
+                            alt='close' 
+                            className={styles.close_btn} 
+                            onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
                             <div className={styles.modal_title}>

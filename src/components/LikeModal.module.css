@@ -31,7 +31,7 @@
 
 .modal_close {
     width: 100%;
-    z-index: 200;
+    z-index: 500;
     height: 30px;
     position: relative;
 }
@@ -39,10 +39,11 @@
 .close_btn {
     cursor: pointer;
     position: absolute;
-    right: 0;
+    left: 320px;
     top: 15px;
     width: 20px;
     height: 20px;
+    z-index: 600;
 }
 
 .modal_content {
@@ -80,9 +81,9 @@
     margin-right: 20px;
     margin-top: 15px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
     #feedback_icon {
-        margin-left: 250px;
+        margin-left: 300px;
     }
 }
 
@@ -95,7 +96,7 @@
 
 #gray_title {
     color: #747474;
-    font-size: 14px;
+    font-size: 12px;
     margin: 0;
     width: 350px;
 }
@@ -107,6 +108,7 @@
     resize: none;
     margin-bottom: 20px;
     padding: 20px;
+    margin-left: 20px;
 }
 
 .feedback_title {
