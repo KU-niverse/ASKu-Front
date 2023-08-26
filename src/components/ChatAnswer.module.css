@@ -12,7 +12,7 @@
 }
 @media screen and (max-width: 767px) {
     .answerBox {
-        width: calc(100vw - 100px);
+        width: calc(100vw - 50px);
     }
 }
 

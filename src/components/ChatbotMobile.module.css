@@ -89,7 +89,7 @@
     position: relative;
     bottom: 5%;
     left: 80%;
-    right: 0;
+    right: 10px;
     flex-direction: row;
     width: 10px;
 }
@@ -122,7 +122,7 @@
 
 .textBox {
     position: relative;
-    right: 100px;
+    right: 160px;
     margin-left: 300px;
     font-weight: 500;
     display: flex;
@@ -170,7 +170,7 @@
     align-items: center;
     justify-content: center;
     top: 165px;
-    right: 55px;
+    right:35px;
     background-image: linear-gradient(to right, #9F132E, #DE3A58);
     width: 50px;
     height: 25px;
