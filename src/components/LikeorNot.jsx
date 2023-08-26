@@ -16,7 +16,7 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" https://asku.wiki/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {

@@ -56,7 +56,7 @@ const ResetPw = () => {
     const changeUserPw = async () => {
 
         try{
-            const response = await axios.put( 'https://asku.wiki/user/auth/changepw', {
+            const response = await axios.put( 'https://asku.wiki/api/user/auth/changepw', {
                 hashed_login_id: auth,
                 password: password,
             }, {
