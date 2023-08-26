@@ -38,7 +38,7 @@ function EditModal({ isOpen, onClose, questionId }) {
 
     const handleQuestionEdit = async () => {
       try {
-        const response = await axios.post(`https://asku.wiki/question/edit/${questionId}`, editData, {withCredentials: true});
+        const response = await axios.post(`https://asku.wiki/api/question/edit/${questionId}`, editData, {withCredentials: true});
         if(response.status===200){
           console.log(response.data);
           alert(response.data.message);
