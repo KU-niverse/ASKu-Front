@@ -10,6 +10,12 @@
     word-break:keep-all;
     position: relative;
 }
+@media screen and (max-width: 767px) {
+    .answerBox {
+        width: calc(100vw - 100px);
+    }
+}
+
 
 .characterContainer {
     position: relative;
@@ -48,7 +54,11 @@
     flex-direction: row;
     width: 12px;
 }
-
+@media screen and (max-width: 767px) {
+    .iconZip {
+        left: 75%;
+    }
+}
 .icon {
     width: 15px;
     min-width: 15px;

@@ -11,6 +11,11 @@
     border: 1px solid #D5D5D5;
     word-break:keep-all;
 }
+@media screen and (max-width: 767px) {
+    .questionBox {
+        width: calc(100vw - 100px);
+    }
+}
 
 .characterContainer {
     position: relative;
