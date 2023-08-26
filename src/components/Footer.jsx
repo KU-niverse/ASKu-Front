@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 import logoGray from '../img/logo_gray.png';
 function Footer() {
     const handleOpenNewTab = () => {
-        const url = 'https://www.instagram.com/asku.wiki/'; // 열고자 하는 URL 주소
+        const url = 'https://www.instagram.com/localhost:8080/'; // 열고자 하는 URL 주소
         window.open(url, '_blank'); // 새 탭으로 URL 열기
     };
     return(

@@ -43,7 +43,7 @@ function EditModal({ isOpen, onClose}) {
 
   const handleNickDoubleCheck = async () => {
     try{
-        const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${nick}`);
+        const result = await axios.get(`https://asku.wiki//user/auth/nickdupcheck/${nick}`);
 
         if (result.data.success === true){
             alert(result.data.message);
@@ -66,7 +66,7 @@ function EditModal({ isOpen, onClose}) {
 
     const PostNickEdit = async () => {
       try {
-        const response = await axios.put(`https://asku.wiki/api/user/mypage/editnick`, 
+        const response = await axios.put(`https://asku.wiki//user/mypage/editnick`, 
           {
             nickname: nick
           }, {

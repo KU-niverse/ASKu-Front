@@ -72,6 +72,13 @@
     height: auto;
 }
 
+@media screen and (max-width: 500px) {
+    .chatTextWrap {
+        max-width: 250px;
+    }
+}
+
+
 .reference_wrap {
     background-color: white;
     position: absolute;

@@ -39,7 +39,7 @@ const QuestionEdit = () => {
     const getAllWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}`,{
+            const result = await axios.get(`https://asku.wiki//wiki/contents/${main}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -63,7 +63,7 @@ const QuestionEdit = () => {
     const getWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}/section/${selectedOption}`,{
+            const result = await axios.get(`https://asku.wiki//wiki/contents/${main}/section/${selectedOption}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -90,7 +90,7 @@ const QuestionEdit = () => {
 
 
         try {
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/question/${qid}`, {
+            const result = await axios.get(`https://asku.wiki//wiki/contents/question/${qid}`, {
                 withCredentials: true,
             });
             if(result.status === 200){
@@ -149,7 +149,7 @@ const QuestionEdit = () => {
             return alert('개인정보 이용에 동의해주세요')
         }
         try {
-            const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}/section/${section}`, {
+            const result = await axios.post(`https://asku.wiki//wiki/contents/${main}/section/${section}`, {
                 version: version,
                 new_content: wikiMarkup,
                 summary: summary,
