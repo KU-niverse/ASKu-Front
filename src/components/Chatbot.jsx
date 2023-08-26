@@ -24,10 +24,11 @@ function Chatbot () {
         setInputValue(e.target.value);
     }
 
+
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki//user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {

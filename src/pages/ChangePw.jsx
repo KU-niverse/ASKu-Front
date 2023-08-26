@@ -45,7 +45,7 @@ const ChangePw = () => {
 
         e.preventDefault();
         try{
-            const response = await axios.put( 'https://asku.wiki//user/auth/changepw', {
+            const response = await axios.put( 'https://asku.wiki/user/auth/changepw', {
                 login_id: id,
                 password: password,
             }, {

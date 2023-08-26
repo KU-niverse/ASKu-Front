@@ -126,7 +126,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
 
     const fetchNotifications = async () => {
         try {
-            const response = await axios.get("https://asku.wiki//notification/user");
+            const response = await axios.get("https://asku.wiki/notification/user");
             setNotifications(response.data.data);
         } catch (error) {
             console.error(error);
