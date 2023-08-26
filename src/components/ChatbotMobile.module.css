@@ -147,6 +147,7 @@
 .promptWrap {
     position: relative;
     display: flex;
+    margin-right: 20px;
 }
 .prompt {
     position: relative;
