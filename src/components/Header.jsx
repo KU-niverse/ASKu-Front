@@ -66,7 +66,7 @@ function Header() {
                 });
 
                 if (response.data.success) {
-                    setNicknameText(response.data.message.nickname);
+                    setNicknameText(response.data.nickname);
                 }
             } catch (error) {
                 console.error(error);
