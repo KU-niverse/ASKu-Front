@@ -12,7 +12,7 @@ const DebateSearch = ({title}) => {
 
   const searchDebate = async () => {
     try{
-        const result = await axios.get(`https://asku.wiki//debate/search/${title}/${word}`, {
+        const result = await axios.get(`https://asku.wiki/debate/search/${title}/${word}`, {
             withCredentials: true
         });
         if(result.status === 200){
