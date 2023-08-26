@@ -44,7 +44,7 @@ function ThreedotsMenu({ questionId}) {
 
   const onQuestionDelete = async () => {
     try {
-      const response = await axios.delete(`https://asku.wiki/question/delete/${questionId}`, {withCredentials: true});
+      const response = await axios.delete(`https://asku.wiki/api/question/delete/${questionId}`, {withCredentials: true});
       if(response.status===200){
         console.log(response.data);
         alert(response.data.message);

@@ -78,7 +78,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
     getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
     getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
     getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
-    getData('https://asku.wiki/wiki/contributions', setMyContribute);
+    getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
   }, []);
 
   console.log(myBadge)
