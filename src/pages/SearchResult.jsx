@@ -75,7 +75,7 @@ const SearchResearch = () => {
 
       const getDocs = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki//wiki/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -91,7 +91,7 @@ const SearchResearch = () => {
 
     const getQues = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/question/query/${title}`, {
+            const result = await axios.get(`https://asku.wiki//question/query/${title}`, {
                 withCredentials: true
             });
             if(result.status === 200){
@@ -109,7 +109,7 @@ const SearchResearch = () => {
     //최근변경 리스트
     const getHistory = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/historys?type=${type}`);
+            const result = await axios.get(`https://asku.wiki//wiki/historys?type=${type}`);
             setHistorys(result.data.message);
         } catch (error) {
             console.error(error);

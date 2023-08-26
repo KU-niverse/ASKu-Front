@@ -22,7 +22,7 @@ const [recentListData, setRecentListData] = useState([]);
 useEffect(() => {
   const takeDebateList = async () =>{
     try{
-      const res = await axios.get( `http://localhost:8080/debate/list/${title}`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki//debate/list/${title}`, {withCredentials: true});
       if(res.status === 200){
         setDebateListData(res.data);
       }

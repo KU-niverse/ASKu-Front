@@ -11,7 +11,7 @@ function ThreedotsBadge({badge_id}) {
 
   const onRepBadge = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/user/mypage/setrepbadge`, { rep_badge_id: badge_id }, {withCredentials: true});
+      const response = await axios.put(`https://asku.wiki//user/mypage/setrepbadge`, { rep_badge_id: badge_id }, {withCredentials: true});
       if(response.status===201){
         console.log(response.data);
         alert("대표 뱃지가 변경되었습니다.");

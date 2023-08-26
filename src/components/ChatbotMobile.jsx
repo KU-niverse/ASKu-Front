@@ -44,7 +44,7 @@ function ChatbotMobile() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
+                const res = await axios.get("https://asku.wiki//user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -68,7 +68,7 @@ function ChatbotMobile() {
         if (inputValue.trim() !== '') {
             setLoading(true);
             //content 대신 q_content, user_id 반드시 보내야 함
-            axios.post('http://localhost:8080/ai/chatbot/', {
+            axios.post('https://asku.wiki//ai/chatbot/', {
                 q_content: inputValue,
                 user_id: "1",
                 // reference: "1"

@@ -18,7 +18,7 @@ function MyComment(){
   useEffect(() => {
     const takeMyDebate = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/user/mypage/debatehistory`, {withCredentials: true});
+        const res = await axios.get( `https://asku.wiki//user/mypage/debatehistory`, {withCredentials: true});
         if(res.status === 201){
           console.log(res.data)
           setMyDebate(res.data);
@@ -43,7 +43,7 @@ function MyComment(){
     useEffect(() => {
       const takeMypage = async () =>{
         try{
-          const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+          const res = await axios.get( `https://asku.wiki//user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
             setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트

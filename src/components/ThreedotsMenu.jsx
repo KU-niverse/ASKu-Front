@@ -25,7 +25,7 @@ function ThreedotsMenu({ questionId}) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" https://asku.wiki//user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -44,7 +44,7 @@ function ThreedotsMenu({ questionId}) {
 
   const onQuestionDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/question/delete/${questionId}`, {withCredentials: true});
+      const response = await axios.delete(`https://asku.wiki//question/delete/${questionId}`, {withCredentials: true});
       if(response.status===200){
         console.log(response.data);
         alert(response.data.message);
