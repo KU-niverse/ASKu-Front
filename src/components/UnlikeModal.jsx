@@ -2,9 +2,16 @@ import styles from './UnlikeModal.module.css';
 import closeBtn from '../img/close_btn.png';
 import { useState, useEffect, useRef } from 'react';
 import unlike from '../img/unlike.png';
+import axios from 'axios';
 
 function UnlikeModal({ isOpen, onClose }) {
     const modalRef = useRef(null);
+    const [inputValue, setInputValue] = useState("");
+    const inputRef = useRef(null);
+
+    const inputChange = (e) => {
+        setInputValue(e.target.value);
+    }
 
     const handleOutsideClick = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -23,6 +30,26 @@ function UnlikeModal({ isOpen, onClose }) {
         };
     }, [isOpen]);
 
+    const sendMessage = () => {
+        if (inputValue.trim() !== '') {
+            axios.post('https://asku.wiki/ai/feedback/comment', {
+                feedback_id: 1,
+                content: inputValue,
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && event.target === inputRef.current) {
+            sendMessage();
+        }
+    };
+
+    
     return (
         <>
         {isOpen && (
@@ -40,8 +67,13 @@ function UnlikeModal({ isOpen, onClose }) {
                                     <p id={styles.gray_title}>피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.</p>
                                 </div>
                             </div>
-                            <textarea className={styles.feedback_text}/>
-                            <button className={styles.feedback_btn}>작성하기</button>
+                            <textarea
+                                className={styles.feedback_text}
+                                value={inputValue}
+                                onChange={inputChange}
+                                onKeyDown={handleKeyDown}
+                            />
+                            <button className={styles.feedback_btn} onClick={sendMessage}>작성하기</button>
                         </div>
                     </div>
                 </div>
@@ -49,6 +81,7 @@ function UnlikeModal({ isOpen, onClose }) {
         )}
         </>
     );
+}
 }
 
 export default UnlikeModal;
