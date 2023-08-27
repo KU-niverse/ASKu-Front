@@ -16,6 +16,7 @@ function Chatbot () {
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
+    const blockIconZip = true;
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
@@ -111,7 +112,7 @@ function Chatbot () {
 
         const newChatResponse = [
             ...chatResponse,
-            { content, isQuestion: true }, // 사용자의 질문 추가
+            { content, isQuestion: true, blockIconZip: true }, // 사용자의 질문 추가
         ];
         setChatResponse(newChatResponse);
     
@@ -134,7 +135,7 @@ function Chatbot () {
             // 답변 컴포넌트를 생성하고 더미 데이터의 답변을 추가합니다.
             const updatedChatResponse = [
                 ...newChatResponse,
-                { content: answer } // 더미 데이터에서 가져온 답변 추가
+                { content: answer, blockIconZip: true } // 더미 데이터에서 가져온 답변 추가
             ];
             setChatResponse(updatedChatResponse);
             setInputValue('');
@@ -152,7 +153,10 @@ function Chatbot () {
                 </div>
             </div>
             <div className={styles.chat}>
-                <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+                <ChatAnswer 
+                    content="안녕하세요! 무엇이든 제게 질문해주세요!"
+                    blockIconZip={blockIconZip}
+                />
                 {previousChatHistory.map((item, index) => {
                     return (
                         <Fragment key={item.id}>
@@ -168,7 +172,7 @@ function Chatbot () {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} />;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} blockIconZip={blockIconZip}/>;
                     }
                 })}
                 <div
