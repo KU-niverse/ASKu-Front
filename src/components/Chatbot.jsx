@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useState, useEffect, useRef, Fragment } from 'react';
 import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
+import ClearModal from './ClearModal';
 
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,6 +18,7 @@ function Chatbot () {
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const blockIconZip = true;
+    const [ClearModalOpen, setClearModalOpen] = useState(false);
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
@@ -25,6 +27,13 @@ function Chatbot () {
         setInputValue(e.target.value);
     }
 
+    const handleClearModal = () => {
+        if (!ClearModalOpen) {
+            setClearModalOpen(true);
+        } else {
+            setClearModalOpen(false);
+        }
+    }
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -142,24 +151,14 @@ function Chatbot () {
             setShowSuggest(true);
         }, 5000); // 5초 후에 실행
     };
-    
-    const handleClearChat = () => {
-        axios.patch('https://asku.wiki/chatbot/1')
-            .then(response => {
-                // 채팅 내역을 비웠을 때 수행할 작업을 여기에 추가할 수 있습니다.
-                console.log('채팅 내역이 비워졌습니다.');
-            })
-            .catch(error => {
-                console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
-            });
-    };
+
 
     return (
         <div className={styles.chatBot}>
             <div className={styles.sideBar}>
                 <div className={styles.textWrap}>
                     <button id={styles.title}>AI 챗봇</button>
-                    <button className={styles.button} onClick={handleClearChat}>채팅 비우기</button>
+                    <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
                     <button className={styles.button}>도움말</button>
                 </div>
             </div>
@@ -168,17 +167,16 @@ function Chatbot () {
                     content="안녕하세요! 무엇이든 제게 질문해주세요!"
                     blockIconZip={blockIconZip}
                 />
-                {previousChatHistory.map((item, index) => {
-                    return (
-                        <Fragment key={item.id}>
-                            <ChatQuestion content={item.q_content} />
-                            <ChatAnswer
-                                content={item.a_content}
-                                reference={item.reference}
-                            />
-                        </Fragment>
-                    );
-                })}
+                {previousChatHistory.length !== 0 && (
+                    <>
+                        {previousChatHistory.map((item, index) => (
+                            <Fragment key={item.id}>
+                                <ChatQuestion content={item.q_content} />
+                                <ChatAnswer content={item.a_content} reference={item.reference} />
+                            </Fragment>
+                        ))}
+                    </>
+                )}
                 {chatResponse.map((item, index) => {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
@@ -216,7 +214,7 @@ function Chatbot () {
                         placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
                         value={inputValue}
                         onChange={inputChange}
-                        onKeyUp={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         ref={inputRef}
                     />
                     <div className={styles.sendBtn} onClick={sendMessage}>
@@ -225,6 +223,8 @@ function Chatbot () {
                 </div>
             </div>
             {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
+            {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)}/>}
+
         </div>
         );
     }
