@@ -25,14 +25,14 @@ function Comment({id, subject, content, created_at, is_bad, docsname, nick}){
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
               <div className={styles.q_like}>
-                <span className={styles.likeCount}>{docsname} 토론방</span>
+                <span className={styles.likeCount}>{subject} 토론방</span>
               </div>
             </div>
             <div className={styles.q_backfooter}>
               {/* <button className={styles.q_editbtn}>
                 <span>Q 질문 보기</span>
               </button> */}
-              <span>{subject}</span>
+              <span>{docsname}</span>
             </div>
           </div>
         </div>
