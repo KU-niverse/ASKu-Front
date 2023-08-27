@@ -142,13 +142,24 @@ function Chatbot () {
             setShowSuggest(true);
         }, 5000); // 5초 후에 실행
     };
+    
+    const handleClearChat = () => {
+        axios.patch('https://asku.wiki/chatbot/1')
+            .then(response => {
+                // 채팅 내역을 비웠을 때 수행할 작업을 여기에 추가할 수 있습니다.
+                console.log('채팅 내역이 비워졌습니다.');
+            })
+            .catch(error => {
+                console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
+            });
+    };
 
     return (
         <div className={styles.chatBot}>
             <div className={styles.sideBar}>
                 <div className={styles.textWrap}>
                     <button id={styles.title}>AI 챗봇</button>
-                    <button className={styles.button}>채팅 비우기</button>
+                    <button className={styles.button} onClick={handleClearChat}>채팅 비우기</button>
                     <button className={styles.button}>도움말</button>
                 </div>
             </div>
