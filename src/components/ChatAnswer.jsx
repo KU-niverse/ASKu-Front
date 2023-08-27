@@ -12,12 +12,13 @@ import LikeModal from './LikeModal';
 import UnlikeModal from './UnlikeModal';
 
 const ChatAnswer = (props) => {
-    const { content, reference } = props;
+    const { content, reference, blockIconZip } = props;
     const [likeHovered, setLikeHovered] = useState(false);
     const [unlikeHovered, setUnlikeHovered] = useState(false);
     const [referenceOpen, setReferenceOpen] = useState(false);
     const [likeModalOpen, setLikeModalOpen] = useState(false);
     const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
+
 
     const handleLikeMouseOver = () => {
         setLikeHovered(true);
@@ -65,7 +66,7 @@ const ChatAnswer = (props) => {
                     <p className={styles.chatText}>{content}</p>
                 </div>
                 <img src={dots} className={styles.dots} />
-                <div className={styles.iconZip}>
+                <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
                     <img
                         id={styles.like}
                         className={styles.icon}

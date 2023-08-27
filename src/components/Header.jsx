@@ -207,7 +207,7 @@ function Header() {
                             <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
                             <img src={hamburger} alt='hamburger' className={styles.mobileButton} />
                         </div>
-                        {/* <div className={styles.mobileMenuWrap}>
+                        <div className={styles.mobileMenuWrap}>
                             {(isLoggedIn ? (
                                 <div className={styles.mobileHamburger}>
                                     <Link to='/mypage'>
@@ -263,7 +263,7 @@ function Header() {
                                     </Link>
                                 </div>
                             ))}
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
