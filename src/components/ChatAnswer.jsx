@@ -112,11 +112,10 @@ const ChatAnswer = (props) => {
                         alt="like"
                         onMouseOver={handleLikeMouseOver}
                         onMouseLeave={handleLikeMouseLeave}
-                        // onClick={() => {
-                        //     handleLikeClick();
-                        //     sendLikeFeedback();
-                        // }}
-                        onClick={handleLikeClick}
+                        onClick={() => {
+                            handleLikeClick();
+                            sendLikeFeedback();
+                        }}
                     />
                     <img
                         id={styles.unlike}
@@ -125,11 +124,10 @@ const ChatAnswer = (props) => {
                         alt="unlike"
                         onMouseOver={handleUnlikeMouseOver}
                         onMouseLeave={handleUnlikeMouseLeave}
-                        // onClick={() => {
-                        //     handleUnlikeClick();
-                        //     sendUnlikeFeedback();
-                        // }}
-                        onClick={handleUnlikeClick}
+                        onClick={() => {
+                            handleUnlikeClick();
+                            sendUnlikeFeedback();
+                        }}
                     />
                     <img
                         id={styles.referenceIcon}
