@@ -10,7 +10,7 @@ function QuestionList({ id, content, time, doc_title }) {
   const nav = useNavigate();
   const linktoQuestion = ()=>{
   nav(`/wiki/morequestion/${title}`)
-}
+} 
 
   return (
     <div className={styles.ask_list}>
