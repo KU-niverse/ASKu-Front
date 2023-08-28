@@ -51,20 +51,20 @@ const ChatAnswer = (props) => {
     const handleLikeClick = () => {
         if (likeModalOpen) {
             setLikeModalOpen(false);
-            console.log("like clicked");
+            console.log("like closed");
         } else {
         setLikeModalOpen(true);
-        console.log("like clicked");
+        console.log("like opened");
     }
 }
 
     const handleUnlikeClick = () => {
         if (unlikeModalOpen) {
             setUnlikeModalOpen(false);
-            console.log("like clicked");
+            console.log("Unlike clicked");
         } else {
         setUnlikeModalOpen(true);
-        console.log("unlike clicked");
+        console.log("Unlike clicked");
     }
 }
 

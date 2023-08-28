@@ -10,6 +10,7 @@ function ClearModal({ isOpen, onClose }) {
     const handleClearChat = () => {
         axios.patch('https://asku.wiki/chatbot/1')
             .then(response => {
+                alert('채팅 내역이 비워졌습니다!')
                 // 채팅 내역을 비웠을 때 수행할 작업을 여기에 추가할 수 있습니다.
                 console.log('채팅 내역이 비워졌습니다.');
             })

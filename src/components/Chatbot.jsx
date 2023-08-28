@@ -181,7 +181,7 @@ function Chatbot () {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} blockIconZip={blockIconZip}/>;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} blockIconZip={!blockIconZip}/>;
                     }
                 })}
                 <div
