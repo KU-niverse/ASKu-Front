@@ -46,12 +46,12 @@ const LikeorNot = ({ questionId, like_count, nick}) => {
       const res = await axios.post(`https://asku.wiki/api/question/like/${questionId}`,{},{ withCredentials: true });
       if (res.status === 200) {
         const newIsLiked=!isLiked;
-        setIsLiked(newIsLiked)
         console.log(res.data.message);
         setCurrentLikeCount(currentLikeCount + 1);
         localStorage.setItem(`likeStatus_${questionId}`, newIsLiked);
         // 현재 로그인한 사용자의 닉네임을 가져온다
         localStorage.setItem(`likeStatus_${userNickname}_${questionId}`, newIsLiked);
+        setIsLiked(newIsLiked)
         alert(res.data.message);
       }
     } catch (error) {
