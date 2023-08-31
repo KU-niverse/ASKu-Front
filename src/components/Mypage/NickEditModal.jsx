@@ -42,6 +42,11 @@ function EditModal({ isOpen, onClose}) {
   }
 
   const handleNickDoubleCheck = async () => {
+
+    if(isNickValid===false){
+      return alert('닉네임 형식이 올바르지 않습니다');
+    }
+
     try{
         const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${nick}`);
 
@@ -65,6 +70,15 @@ function EditModal({ isOpen, onClose}) {
     //};/
 
     const PostNickEdit = async () => {
+
+      if(isNickValid===false){
+        return alert('닉네임 형식이 올바르지 않습니다');
+      }
+
+      if(nickDoubleCheck === false){
+        return alert('닉네임 중복확인이 필요합니다');
+      }
+
       try {
         const response = await axios.put(`http://localhost:8080/user/mypage/editnick`, 
           {
