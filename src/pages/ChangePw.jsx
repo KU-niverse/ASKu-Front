@@ -44,8 +44,22 @@ const ChangePw = () => {
     const changeUserPw = async (e) => {
 
         e.preventDefault();
+
+
+
+        if(id==='' || password===''){
+            return alert('아이디 또는 비밀번호를 입력해주세요');
+
+        }
+
+        if(isPwValid === false){
+            return alert('비밀번호 형식이 올바르지 않습니다');
+        } else if(isPwSame=== false){
+            return alert('비밀번호가 일치하지 않습니다')
+        }
+        
         try{
-            const response = await axios.put( 'https://asku.wiki/api/user/auth/changepw', {
+            const response = await axios.put( 'http://localhost:8080/user/auth/changepw', {
                 login_id: id,
                 password: password,
             }, {
@@ -63,16 +77,12 @@ const ChangePw = () => {
         }
     }
 
-    function handleOnClick() {
-        changeUserPw();
-        
-    }
 
   return (
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <h2 className={styles.findTitle}>비밀번호 재설정</h2>
-        <form>
+        <form onSubmit={changeUserPw}>
             <div className={`${styles.findInputs}`}>
                 <div className={`${styles.inputHead}`}>
                         <span>아이디</span>
@@ -118,7 +128,7 @@ const ChangePw = () => {
                      />
                 </div>
             </div>
-            <button className={`${styles.findBtn}`} onClick={handleOnClick}>비밀번호 변경</button>
+            <input type='submit' className={`${styles.findBtn}`} value='비밀번호 변경' />
         </form>
     </div>
     
