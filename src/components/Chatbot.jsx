@@ -3,10 +3,10 @@ import ChatQuestion from './ChatQuestion';
 import styles from './Chatbot.module.css';
 import arrow from '../img/arrow.png';
 import axios from 'axios';
-import { useState, useEffect, useRef, Fragment} from 'react';
-import haho from "../img/3d_haho.png";
+import { useState, useEffect, useRef, Fragment } from 'react';
 import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
+import ClearModal from './ClearModal';
 
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,12 +16,23 @@ function Chatbot () {
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+    const [previousChatHistory, setPreviousChatHistory] = useState([]);
+    const blockIconZip = true;
+    const [ClearModalOpen, setClearModalOpen] = useState(false);
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
     
     const inputChange = (e) => {
         setInputValue(e.target.value);
+    }
+
+    const handleClearModal = () => {
+        if (!ClearModalOpen) {
+            setClearModalOpen(true);
+        } else {
+            setClearModalOpen(false);
+        }
     }
 
     useEffect(() => {
@@ -43,6 +54,18 @@ function Chatbot () {
         checkLoginStatus();
     }, []);
 
+    useEffect(() => {
+        inputRef.current.focus();
+        axios.get('https://asku.wiki/ai/chatbot/1')
+            .then(response => {
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
     const sendMessage = () => {
     if (!isLoggedIn) {
         setLoginModalVisible(true);
@@ -54,7 +77,6 @@ function Chatbot () {
         axios.post('https://asku.wiki/ai/chatbot/', {
             q_content: inputValue,
             user_id: "1",
-            // reference: "1"
         })
         .then(response => {
             setShowSuggest(false);
@@ -99,7 +121,7 @@ function Chatbot () {
 
         const newChatResponse = [
             ...chatResponse,
-            { content, isQuestion: true }, // 사용자의 질문 추가
+            { content, isQuestion: true, blockIconZip: true }, // 사용자의 질문 추가
         ];
         setChatResponse(newChatResponse);
     
@@ -122,46 +144,44 @@ function Chatbot () {
             // 답변 컴포넌트를 생성하고 더미 데이터의 답변을 추가합니다.
             const updatedChatResponse = [
                 ...newChatResponse,
-                { content: answer } // 더미 데이터에서 가져온 답변 추가
+                { content: answer, blockIconZip: true } // 더미 데이터에서 가져온 답변 추가
             ];
             setChatResponse(updatedChatResponse);
             setInputValue('');
             setShowSuggest(true);
         }, 5000); // 5초 후에 실행
     };
-    
-    
-    useEffect(() => {
-        inputRef.current.focus();
-        axios.get('https://asku.wiki/ai/chatbot/')
-            .then(response => {
-                console.log(response.data);
-                const { content, reference } = response.data;
-                if (content && reference) {
-                    setChatResponse([...chatResponse, { content, reference }]);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+
 
     return (
         <div className={styles.chatBot}>
             <div className={styles.sideBar}>
                 <div className={styles.textWrap}>
                     <button id={styles.title}>AI 챗봇</button>
-                    <button className={styles.button}>채팅 비우기</button>
+                    <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
                     <button className={styles.button}>도움말</button>
                 </div>
             </div>
             <div className={styles.chat}>
-                <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+                <ChatAnswer 
+                    content="안녕하세요! 무엇이든 제게 질문해주세요!"
+                    blockIconZip={blockIconZip}
+                />
+                {previousChatHistory.length !== 0 && (
+                    <>
+                        {previousChatHistory.map((item, index) => (
+                            <Fragment key={item.id}>
+                                <ChatQuestion content={item.q_content} />
+                                <ChatAnswer content={item.a_content} reference={item.reference} />
+                            </Fragment>
+                        ))}
+                    </>
+                )}
                 {chatResponse.map((item, index) => {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} />;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} blockIconZip={!blockIconZip}/>;
                     }
                 })}
                 <div
@@ -194,7 +214,7 @@ function Chatbot () {
                         placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
                         value={inputValue}
                         onChange={inputChange}
-                        onKeyUp={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         ref={inputRef}
                     />
                     <div className={styles.sendBtn} onClick={sendMessage}>
@@ -203,6 +223,8 @@ function Chatbot () {
                 </div>
             </div>
             {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
+            {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)}/>}
+
         </div>
         );
     }

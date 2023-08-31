@@ -5,8 +5,13 @@ import axios from 'axios';
 import like from '../img/like.png';
 
 function LikeModal({ isOpen, onClose }) {
+    const [inputValue, setInputValue] = useState("");
     const modalRef = useRef(null);
+    const inputRef = useRef(null);
 
+    const inputChange = (e) => {
+        setInputValue(e.target.value);
+    }
     const handleOutsideClick = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             onClose();
@@ -24,29 +29,24 @@ function LikeModal({ isOpen, onClose }) {
         };
     }, [isOpen]);
 
-    // const sendMessage = () => {
-    //     if (inputValue.trim() !== '') {
-    //         axios.post('https://asku.wiki/ai/chatbot/', {
-    //             q_content: inputValue,
-    //             user_id: "1",
-    //             // reference: "1"
-    //         })
-    //         .then(response => {
-    //             inputRef.current.blur();
-    
-    //             const newChatResponse = [
-    //             ...chatResponse,
-    //             { content: inputValue }, // 사용자의 질문 추가
-    //             { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
-    //             ];
-    
-    //             setChatResponse(newChatResponse);
-    //             setInputValue('');
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //         });
-    //     }
+    const sendMessage = () => {
+        if (inputValue.trim() !== '') {
+            axios.post('https://asku.wiki/ai/feedback/comment', {
+                feedback_id: 1,
+                content: inputValue,
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && event.target === inputRef.current) {
+            sendMessage();
+        }
+    };
 
     return (
         <>
@@ -55,7 +55,11 @@ function LikeModal({ isOpen, onClose }) {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
-                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
+                            <img 
+                            src={closeBtn} 
+                            alt='close' 
+                            className={styles.close_btn} 
+                            onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
                             <div className={styles.modal_title}>
@@ -65,8 +69,13 @@ function LikeModal({ isOpen, onClose }) {
                                     <p id={styles.gray_title}>피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.</p>
                                 </div>
                             </div>
-                            <textarea className={styles.feedback_text}/>
-                            <button className={styles.feedback_btn}>작성하기</button>
+                            <textarea
+                                className={styles.feedback_text}
+                                value={inputValue}
+                                onChange={inputChange}
+                                onKeyDown={handleKeyDown}
+                                />
+                            <button className={styles.feedback_btn} onClick={sendMessage}>작성하기</button>
                         </div>
                     </div>
                 </div>
@@ -74,6 +83,7 @@ function LikeModal({ isOpen, onClose }) {
         )}
         </>
     );
+}
 }
 
 export default LikeModal;

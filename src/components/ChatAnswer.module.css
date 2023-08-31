@@ -10,6 +10,12 @@
     word-break:keep-all;
     position: relative;
 }
+@media screen and (max-width: 767px) {
+    .answerBox {
+        width: calc(100vw - 50px);
+    }
+}
+
 
 .characterContainer {
     position: relative;
@@ -48,7 +54,11 @@
     flex-direction: row;
     width: 12px;
 }
-
+@media screen and (max-width: 767px) {
+    .iconZip {
+        left: 75%;
+    }
+}
 .icon {
     width: 15px;
     min-width: 15px;
@@ -61,6 +71,13 @@
     max-width: 400px;
     height: auto;
 }
+
+@media screen and (max-width: 500px) {
+    .chatTextWrap {
+        max-width: 250px;
+    }
+}
+
 
 .reference_wrap {
     background-color: white;
@@ -75,6 +92,12 @@
     border-radius: 12px;
     top: 110px;
     right: 5px;
+}
+@media screen and (max-width: 500px) {
+    .reference_wrap {
+        width: calc(100vw - 100px);
+        margin-left: 0px;
+    }
 }
 
 .reference {

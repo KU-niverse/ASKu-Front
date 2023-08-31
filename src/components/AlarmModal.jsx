@@ -105,7 +105,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     // 창 크기 변화 이벤트 핸들러
     const handleWindowResize = () => {
         if (isAlarmVisible) {
-            console.log('창 크기 변화 이벤트 핸들러');
+            
             handleAlarm(); 
         } else {
             return;
@@ -114,24 +114,24 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
 
     
     useEffect(() => {
-        if (isAlarmVisible) {
-            // API 호출 대신 더미 데이터 사용
-            setNotifications(dummyData);
-        }
-    }, [isAlarmVisible]);
-    //     if (isAlarmVisible) {
-    //         fetchNotifications();
+    // if (isAlarmVisible) {
+    //         API 호출 대신 더미 데이터 사용
+    //         setNotifications(dummyData);
     //     }
     // }, [isAlarmVisible]);
+        if (isAlarmVisible) {
+            fetchNotifications();
+        }
+    }, [isAlarmVisible]);
 
-    // const fetchNotifications = async () => {
-    //     try {
-    //         const response = await axios.get("https://localhost:8080/api/notification/user");
-    //         setNotifications(response.data.data);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
+    const fetchNotifications = async () => {
+        try {
+            const response = await axios.get("https://asku.wiki/api/notification/user");
+            setNotifications(response.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>

@@ -10,9 +10,10 @@ import haho from '../img/3d_haho.png';
 import closeBtn from '../img/close_btn.png';
 import LikeModal from './LikeModal';
 import UnlikeModal from './UnlikeModal';
+import axios from 'axios';
 
 const ChatAnswer = (props) => {
-    const { content, reference } = props;
+    const { content, reference, blockIconZip } = props;
     const [likeHovered, setLikeHovered] = useState(false);
     const [unlikeHovered, setUnlikeHovered] = useState(false);
     const [referenceOpen, setReferenceOpen] = useState(false);
@@ -48,12 +49,50 @@ const ChatAnswer = (props) => {
     };
 
     const handleLikeClick = () => {
+        if (likeModalOpen) {
+            setLikeModalOpen(false);
+            console.log("like closed");
+        } else {
         setLikeModalOpen(true);
+        console.log("like opened");
     }
+}
 
     const handleUnlikeClick = () => {
+        if (unlikeModalOpen) {
+            setUnlikeModalOpen(false);
+            console.log("Unlike clicked");
+        } else {
         setUnlikeModalOpen(true);
+        console.log("Unlike clicked");
     }
+}
+
+    const sendLikeFeedback = () => {
+        axios.post('https://asku.wiki/ai/chatbot/feedback/', {
+            qna_id: 1,
+            feedback: true,
+    }).
+    then(response => {
+        console.log(response);
+    }).
+    catch(error => {
+        console.error(error);
+    });
+}
+
+    const sendUnlikeFeedback = () => {
+        axios.post('https://asku.wiki/ai/chatbot/feedback/', {
+            qna_id: 1,
+            feedback: false,
+    }).
+    then(response => {
+        console.log(response);
+    }).
+    catch(error => {
+        console.error(error);
+    });
+}
 
     return (
         <div>
@@ -65,7 +104,7 @@ const ChatAnswer = (props) => {
                     <p className={styles.chatText}>{content}</p>
                 </div>
                 <img src={dots} className={styles.dots} />
-                <div className={styles.iconZip}>
+                <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
                     <img
                         id={styles.like}
                         className={styles.icon}
@@ -73,7 +112,10 @@ const ChatAnswer = (props) => {
                         alt="like"
                         onMouseOver={handleLikeMouseOver}
                         onMouseLeave={handleLikeMouseLeave}
-                        onClick={handleLikeClick}
+                        onClick={() => {
+                            handleLikeClick();
+                            sendLikeFeedback();
+                        }}
                     />
                     <img
                         id={styles.unlike}
@@ -82,7 +124,10 @@ const ChatAnswer = (props) => {
                         alt="unlike"
                         onMouseOver={handleUnlikeMouseOver}
                         onMouseLeave={handleUnlikeMouseLeave}
-                        onClick={handleUnlikeClick}
+                        onClick={() => {
+                            handleUnlikeClick();
+                            sendUnlikeFeedback();
+                        }}
                     />
                     <img
                         id={styles.referenceIcon}

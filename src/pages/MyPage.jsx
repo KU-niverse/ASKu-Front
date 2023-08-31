@@ -160,7 +160,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     total={myBadge.data.length}
                     perPage={perPage}
                     activePage={page}
-                    onChange={handlePageChange}
+                    onChange={handlePageChange} 
                   />
                 )}
               </div>

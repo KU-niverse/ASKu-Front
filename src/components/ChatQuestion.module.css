@@ -11,6 +11,11 @@
     border: 1px solid #D5D5D5;
     word-break:keep-all;
 }
+@media screen and (max-width: 767px) {
+    .questionBox {
+        width: calc(100vw - 50px);
+    }
+}
 
 .characterContainer {
     position: relative;
@@ -61,4 +66,9 @@
 .chatTextWrap {
     max-width: 400px;
     height: auto;
+}
+@media screen and (max-width: 500px) {
+    .chatTextWrap {
+        max-width: 250px;
+    }
 }

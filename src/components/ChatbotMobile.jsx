@@ -18,6 +18,7 @@ function ChatbotMobile() {
     const inputRef = useRef(null);
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+    const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -26,7 +27,7 @@ function ChatbotMobile() {
 
     const handleWindowResize = () => {
         const width = window.innerWidth;
-        if (width >= 768) {
+        if (width >= 500) {
             navigate('/');
         } else {
             navigate('/chatbot');
@@ -149,24 +150,21 @@ function ChatbotMobile() {
         
         useEffect(() => {
             inputRef.current.focus();
-            axios.get('https://asku.wiki/ai/chatbot/')
-                .then(response => {
-                    console.log(response.data);
-                    const { content, reference } = response.data;
-                    if (content && reference) {
-                        setChatResponse([...chatResponse, { content, reference }]);
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }, []);
+            axios.get('https://asku.wiki/ai/chatbot/1')
+            .then(response => {
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
     
 
 
     return (
-        <div>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <div className={styles.mobileChatbotContainer}>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
             <Header />
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
@@ -177,6 +175,17 @@ function ChatbotMobile() {
                 <div>
                     <div className={styles.chat}>
                     <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
+                    {previousChatHistory.map((item, index) => {
+                        return (
+                            <Fragment key={item.id}>
+                                <ChatQuestion content={item.q_content} />
+                                <ChatAnswer
+                                    content={item.a_content}
+                                    reference={item.reference}
+                                />
+                            </Fragment>
+                        );
+                    })}
                     {chatResponse.map((item, index) => {
                         if (index % 2 === 0) {
                         return <ChatQuestion key={index} content={item.content} />;
@@ -187,7 +196,7 @@ function ChatbotMobile() {
                     <div
                     className={styles.suggest}
                     style={{ display: showSuggest ? 'block' : 'none' }}>
-                        <p id={styles.ref}>추천 검색어</p>
+                        <p className={styles.ref}>추천 검색어</p>
                         <span id='ref_res_1' className={styles.textBox}
                             onClick={() => handleSuggestClick('중도휴학 하는 방법 알려줘!')}>
                             중도휴학 하는 방법 알려줘!
