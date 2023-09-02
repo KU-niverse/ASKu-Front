@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import logo from '../img/logo.png';
 import searchIcon from '../img/search_icon.png';
@@ -6,9 +7,6 @@ import hamburger from '../img/hamburger.png';
 import alarm from '../img/bell.png';
 import bookmark from '../img/bookmark_grey.png';
 import mypage from '../img/mypage_btn.png';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
 import mobilemypage from '../img/mobile_mypage.png';
 import mobilealarm from '../img/mobile_alarm.png';
 import mobilelogout from '../img/mobile_logout.png';
@@ -16,7 +14,8 @@ import mobiledebate from '../img/mobile_debate.png';
 import mobilebookmark from '../img/mobile_bookmark.png';
 import mobilehistory from '../img/mobile_history.png';
 import AlarmModal from './AlarmModal';
-
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Header() {
     const [inputValue, setInputValue] = useState('');
@@ -94,7 +93,6 @@ function Header() {
         }
     };
 
-
     const handleMobileSearch = () => {
         setMobileHeaderOpen(false);
         if (mobileSearchOpen) {
@@ -102,7 +100,7 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileSearchOpen(true);
-            setMobileHeaderHeight('90px');
+            setMobileHeaderHeight('100px');
         }
     };
 
@@ -113,22 +111,21 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileHeaderOpen(true);
-            setMobileHeaderHeight('240px');
-        }
-    }
-
-    const handleAlarm = () => {
-        if (isAlarmVisible) {
-            setIsAlarmVisible(false);
-            console.log(isAlarmVisible);
-        } else {
-            setIsAlarmVisible(true);
-            console.log(isAlarmVisible);
+            setMobileHeaderHeight('320px');
         }
     };
 
+    const handleAlarm = () => {
+        setIsAlarmVisible(!isAlarmVisible);
+    };
 
-
+    const handleWindowResize = () => {
+        if (window.innerWidth > 767) {
+            setMobileHeaderOpen(false);
+            setMobileSearchOpen(false);
+            setMobileHeaderHeight('60px');
+        }
+    };
 
     return (
         <div className={styles.container} style={{ height: mobileHeaderHeight }}>
@@ -151,12 +148,13 @@ function Header() {
                         <input
                             className={styles.headerInput}
                             placeholder='검색어를 입력하세요.'
+                            value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
                                     if (inputValue.trim() !== '') {
-                                        window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                        Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`);
                                         setInputValue('');
                                     }
                                 }
@@ -167,18 +165,18 @@ function Header() {
                             className={styles.searchIcon}
                             onClick={() => {
                                 if (inputValue.trim() !== '') {
-                                    window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                    Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`);
                                     setInputValue('');
                                 }
                             }} />
-                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm}/>
+                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} />
                     </div>
-                    <div 
-                    className={styles.navContainer_right} 
-                    style={{ 
-                    width: navContainerRightWidth,
-                    marginRight: navContainerRightMargin,
-                    }}
+                    <div
+                        className={styles.navContainer_right}
+                        style={{
+                            width: navContainerRightWidth,
+                            marginRight: navContainerRightMargin,
+                        }}
                     >
                         {isLoggedIn ? (
                             <>
@@ -186,15 +184,15 @@ function Header() {
                                     src={bookmark}
                                     alt='bookmark_gray'
                                     className={styles.signinButton}
-                                    onClick={() => window.location.href = '/mybookmark'} />
-                                <img 
+                                    onClick={() => Nav('/mybookmark')} />
+                                <img
                                     src={alarm}
                                     alt='alarm'
                                     className={styles.signinButton}
-                                    onClick={handleAlarm}/>
+                                    onClick={handleAlarm} />
                                 <button
-                                className={styles.headerButton}
-                                onClick={signOut}
+                                    className={styles.headerButton}
+                                    onClick={signOut}
                                 >로그아웃</button>
                                 <Link to='/mypage'>
                                     <div className={styles.mypageWrap}>
@@ -217,66 +215,55 @@ function Header() {
                     <div className={styles.mobileHeader}>
                         <div className={styles.buttonWrap}>
                             <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} onClick={handleMobileSearch} />
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu}/>
+                            {isLoggedIn ? (
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
+                            ) : (
+                                <Link to='/signin'>
+                                    <button className={styles.loginbtn}>로그인</button>
+                                </Link>
+                            )}
                         </div>
                         {mobileHeaderOpen && (
-                        <div className={styles.mobileMenuWrap}>
-                            {(isLoggedIn ? (
-                                <div className={styles.mobileHamburger}>
-                                    <Link to='/mypage'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobilemypage} alt="" />
-                                            <p className={styles.mobileMenuText}>마이페이지</p>
-                                        </div>
-                                    </Link>
-                                    <Link to='/mybookmark'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobilebookmark} alt="" />
-                                            <p className={styles.mobileMenuText}>즐겨찾기</p>
-                                        </div>
-                                    </Link>
-                                    <Link>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobilealarm} alt="" />
-                                            <p className={styles.mobileMenuText}>알림</p>
-                                        </div>
-                                    </Link>
-                                    <Link to='/history'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobilehistory} alt="" />
-                                            <p className={styles.mobileMenuText}>최근변경</p>
-                                        </div>
-                                    </Link>
-                                    <Link to='/latestdebate'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobiledebate} alt="" />
-                                            <p>토론</p>
-                                        </div>
-                                    </Link>
-                                    <Link to='/latestdebate'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src={mobilelogout} alt="" />
-                                            <p>로그아웃</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ) : (
-                                <div className={styles.mobileHamburger}>
-                                    <Link>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src="" alt="" />
-                                            <p>로그아웃</p>
-                                        </div>
-                                    </Link>
-                                    <Link to='/signup'>
-                                        <div className={styles.mobileHamburgerMenu}>
-                                            <img src="" alt="" />
-                                            <p>회원가입</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
+                            <div className={styles.mobileMenuWrap}>
+                                    <div className={styles.mobileHamburger}>
+                                        <Link to='/mypage' className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobilemypage} alt="" className={styles.mobileIcon} />
+                                                <p className={styles.mobileMenuText}>마이페이지</p>
+                                            </div>
+                                        </Link>
+                                        <Link to='/mybookmark' className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobilebookmark} alt="" id={styles.mobileBookmark} className={styles.mobileIcon} />
+                                                <p className={styles.mobileMenuText}>즐겨찾기</p>
+                                            </div>
+                                        </Link>
+                                        <Link className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobilealarm} alt=""  className={styles.mobileIcon} />
+                                                <p className={styles.mobileMenuText}>알림</p>
+                                            </div>
+                                        </Link>
+                                        <Link to='/history' className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobilehistory} alt="" className={styles.mobileIcon}  />
+                                                <p className={styles.mobileMenuText}>최근변경</p>
+                                            </div>
+                                        </Link>
+                                        <Link to='/latestdebate' className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobiledebate} alt=""  className={styles.mobileIcon} />
+                                                <p className={styles.mobileMenuText}>토론</p>
+                                            </div>
+                                        </Link>
+                                        <Link to='/latestdebate' className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
+                                                <p className={styles.mobileMenuText}>로그아웃</p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                            </div>
                         )}
                         {mobileSearchOpen && (
                             <div className={styles.mobileSearchWrap}>
@@ -284,12 +271,13 @@ function Header() {
                                     <input
                                         className={styles.mobileHeaderInput}
                                         placeholder='검색어를 입력하세요.'
+                                        value={inputValue}
                                         onChange={(e) => setInputValue(e.target.value)}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
                                                 e.preventDefault();
                                                 if (inputValue.trim() !== '') {
-                                                    window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                                    Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`);
                                                     setInputValue('');
                                                 }
                                             }
@@ -300,18 +288,18 @@ function Header() {
                                         className={styles.mobileSearchIcon}
                                         onClick={() => {
                                             if (inputValue.trim() !== '') {
-                                                window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                                Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`);
                                                 setInputValue('');
                                             }
-                                    }} />
+                                        }} />
                                 </div>
                             </div>
                         )}
-                        </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    );
+}
 
 export default Header;
