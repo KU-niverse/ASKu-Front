@@ -43,7 +43,7 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
               <div className={styles.q_like}>
-                <LikeorNot questionId={id} like_count={like_count} nick={nick} />
+                <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>

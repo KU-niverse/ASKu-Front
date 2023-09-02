@@ -21,8 +21,7 @@ const FindId = () => {
             });
             if (response.data.success) {
                 setId(response.data.login_id);
-                alert(response.data.message);
-                nav('/findoutid', {state:id});
+                nav('/findoutid', {state : response.data.login_id});
             } else {
                 return alert(response.data.message);
             }
