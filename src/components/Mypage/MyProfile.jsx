@@ -47,7 +47,7 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
 
         </div>
         <div className={styles.rowpoint}>
-          <span className={styles.rowtitle}>포인트</span>
+          <span className={styles.rowtitle}>기여도</span>
           <div className={styles.text}>
             <span className={styles.point}>{point}p</span> 
             <span className={styles.rank}> &nbsp;&nbsp;&nbsp;상위 {percent}%</span>
