@@ -26,6 +26,8 @@
     font-size: 18px;
     font-weight: 700;
     color: #747474;
+    display: flex;
+    align-items: center;
   }
   .q_num img{
     margin-left: 8px;
@@ -78,15 +80,8 @@
     font-weight: bold;
   }
   
-  .q_like span, .q_comment span{
-    margin-left: 5px;
-    display: flex;
-    align-items: center ;
-  }
-  
-  .q_like img, .q_comment img{
-    object-fit: none;
-    cursor: pointer;
+  .q_like{
+    margin-left: 3px;
   }
   
   
@@ -122,6 +117,15 @@
     .q_middle, .q_mynick {
       font-size: 14px;
     }
+    .q_num{
+      font-size: 15px;
+
+    }
+    .q_like{
+      margin-left: 1px;
+      width: 18px;
+      height: 18px;
+    }
   .q_comment {
    margin-left: 10px;
   }
@@ -140,6 +144,9 @@
     .q_date, .q_footer span{
       
       font-size: 12px;
+    }
+    .q_letter{
+      display: none;
     }
     
   }

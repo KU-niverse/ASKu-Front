@@ -17,6 +17,7 @@ const MoreQuestion = () => {
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+  const [section, setSection] = useState('');
 
   const flag = isToggled ? 1 : 0;  
   
