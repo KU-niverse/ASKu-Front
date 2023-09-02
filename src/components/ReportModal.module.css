@@ -61,7 +61,7 @@
     font-weight: 800;
     color: #9F132E;
     align-self: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .modal_report{
     margin-top: 7px;
@@ -112,6 +112,6 @@
     border: none;
     color: white;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 15px;
     
   }
