@@ -20,6 +20,12 @@
     width: 100%;
     position: relative;
 }
+@media screen and (max-width: 767px) {
+    .headerContainer {
+        align-items: normal;
+    }
+}
+
 
 .headerButton {
     background-color: #ffffff;
@@ -144,13 +150,16 @@
 
 .buttonWrap {
     display: none;
-    position: relative;
 }
 @media only screen and (max-width: 767px) {
     .buttonWrap {
-        display: block;
-        margin-right: -20px;
-        min-width: 90px;
+        display: flex;
+        position: absolute;
+        top: 20px;
+        right: 0px;
+        flex-direction: row;
+        margin-right: -30px;
+        max-width: 90px;
     }
 }
 
@@ -162,6 +171,7 @@
         display: block;
         cursor: pointer;
         margin-right: 20px;
+        position: relative;
     }
 }
 
@@ -208,7 +218,11 @@
 }
 @media only screen and (max-width: 767px) {
     .mobileHeader {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
     }
 }
 
@@ -247,7 +261,7 @@
 }
 
 .mobileInputContainer {
-    
+
 }
 
 .mobileHeaderInput {
@@ -257,6 +271,7 @@
     height: 25px;
     margin-left: -100px;
     padding-left: 20px;
+    margin-top: 10px;
 }
 
 .mobileSearchIcon {

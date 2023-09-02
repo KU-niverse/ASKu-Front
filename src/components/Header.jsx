@@ -102,7 +102,7 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileSearchOpen(true);
-            setMobileHeaderHeight('120px');
+            setMobileHeaderHeight('90px');
         }
     };
 
