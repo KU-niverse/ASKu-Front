@@ -43,18 +43,18 @@
 }
 .editbtn{
   width: 44px;
-  height: 20px;
+  /* height: 20px; */
   border-radius: 12px;
   background-color: rgba(254, 242, 244, 1);
   border: none;
   font-size: 12px;
   font-weight: 400;
   color: rgba(222, 58, 88, 1);
-  right: 20px;
-  margin: 8px 0px 8px 0px;
+  /* right: 20px; */
+  margin-left: 20px;
   cursor: pointer;
   align-self: center;
-  padding: 3px;
+  padding: 3px 10px;
 }
 
 @media only screen and (max-width: 767px) {

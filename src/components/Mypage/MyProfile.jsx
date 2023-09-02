@@ -36,8 +36,8 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
         <div className={styles.rownick}>
             <span className={styles.rowtitle}>닉네임</span>
             <div className={styles.text}>
-              <span className={styles.point}>{nick}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <span className={styles.editbtn} onClick={handleNickEdit}>&nbsp;&nbsp;수정&nbsp;&nbsp;</span>
+              <span className={styles.point}>{nick}</span>
+              <span className={styles.editbtn} onClick={handleNickEdit}>수정</span>
               {isEditModalVisible && <NickEditModal isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />}
             </div>
         </div>
