@@ -62,8 +62,9 @@
     color: #9F132E;
 }
 .modal_report{
-    margin-top: 12px;
+    margin-top: 7px;
     margin-bottom: 12px;
+    cursor: pointer;
 }
 
 .haho_login {
