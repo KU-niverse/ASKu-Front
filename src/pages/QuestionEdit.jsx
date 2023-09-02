@@ -177,7 +177,7 @@ const QuestionEdit = () => {
                 alert("login이 필요합니다.");
                 nav('/signin');
             } else if(error.response.status === 500){
-                alert("제출해 실패했습니다. 다시 시도해주세요.");
+                alert("제출에 실패했습니다. 다시 시도해주세요.");
                 // setWiki(error.response.data.newContent);
             }else if(error.response.status === 426){
                 alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");

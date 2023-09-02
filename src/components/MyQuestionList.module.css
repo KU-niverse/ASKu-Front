@@ -1,0 +1,134 @@
+.q_list{
+  width: 100%;
+  border-radius: 12px;
+  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  padding: 30px 0;
+  margin-top: 10px;
+} 
+.q_header{
+  display: flex;
+  justify-content: space-between;
+  
+  align-content: center;
+  padding: 0px 30px 8px 30px;
+}
+
+.q_mynick{
+  font-size: 16px;
+}
+.q_date{
+  margin-left: 20px;
+  font-size: 12px;
+  color: rgba(116, 116, 116, 1);
+}
+.q_backhead{
+  cursor: pointer;
+}
+
+.q_middle{
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 30px;
+}
+
+.q_icon{
+  color :rgba(159, 19, 46, 1);
+}
+
+.q_content{
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.q_footer{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px 0px;
+}
+
+.q_frontfooter{
+  display: flex;
+  flex-direction: row;
+  align-content: baseline;
+}
+
+.q_like{
+  display: flex;
+  align-content: center;
+  color: rgba(116, 116, 116, 1);
+  font-size: 16px;
+  font-weight: bold;
+  align-self: center;
+}
+.q_comment{
+  display: flex;
+  align-content: center;
+  margin-left: 20px;
+  color: rgba(116, 116, 116, 1);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* .q_like span,  */
+.q_comment span{
+  margin-left: 5px;
+  display: flex;
+  align-items: center ;
+}
+
+.q_comment img{
+  object-fit: contain;
+  cursor: pointer;
+}
+
+
+
+.q_backfooter button{
+  border-radius: 30px;
+  border-color: rgba(159, 19, 46, 1);
+  border-width: 2px;
+  height: 36px;
+  width: 220px;
+  background-color: white;
+  color: rgba(159, 19, 46, 1);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.q_backfooter span{
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+ 
+  .q_middle, .q_mynick {
+    font-size: 14px;
+  }
+.q_comment {
+ margin-left: 10px;
+}
+
+  .q_footer img{
+    width: 15px;
+    height: 16px;
+    object-fit: contain;
+    align-self: center;
+  }
+  .q_footer button{
+    font-size: 12px;
+    width: max-content;
+    height: max-content;
+  }
+  .q_date, .q_footer span{
+    
+    font-size: 12px;
+  }
+  
+}
