@@ -4,10 +4,14 @@
     border-bottom: 0.5px solid #D5D5D5;
     box-shadow: 0px 4px 8px 0px #0000001A;
     border-radius: 0px 0px 20px 20px;
-    /* transition: all 0.5s ease; */
     width: 100vw;
 }
-
+@media screen and (max-width: 767px) {
+    .container {
+        transition: all 0.3s ease;
+        position: relative;
+    }
+}
 
 .headerContainer {
     display: flex;
@@ -16,6 +20,12 @@
     width: 100%;
     position: relative;
 }
+@media screen and (max-width: 767px) {
+    .headerContainer {
+        align-items: normal;
+    }
+}
+
 
 .headerButton {
     background-color: #ffffff;
@@ -36,13 +46,31 @@
     display: flex;
     width: 90vw;
     height: 25px;
-    justify-content: space-around;
-} 
+    justify-content: space-between;
+    margin-left:100px;
+}
+@media only screen and (max-width: 767px) {
+    .flexContainer {
+        position: relative;
+        right:50px;
+        width: 500px;
+    }
+}
 
 .inputcontainer {
     display: flex;
     width: 350px;
     position: relative;
+}
+@media only screen and (max-width: 767px) {
+    .inputcontainer {
+        position: absolute;
+        top: 20px;
+        right: 100px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
 }
 
 .navContainer_right {
@@ -90,11 +118,7 @@
         display: none;
     }
 }
-@media only screen and (max-width: 767px) {
-    .headerInput {
-        display: none;
-    }
-}
+
 
 .searchIcon {
     width: 15px;
@@ -110,6 +134,7 @@
     }
 }
 
+
 .logo {
     width: 60px;
     height: 19px;
@@ -117,26 +142,42 @@
 }
 @media only screen and (max-width: 767px) {
     .logo {
-        margin-left: 20px;
+        position: absolute;
+        top: 20px;
+        left: 10px;
     }
 }
 
 .buttonWrap {
-    display:none;
-    position: relative;
+    display: none;
 }
 @media only screen and (max-width: 767px) {
     .buttonWrap {
-        display: block;
-        margin-right: -20px;
-        min-width:90px;
+        display: flex;
+        position: absolute;
+        top: 20px;
+        right: 15px;
+        flex-direction: row;
+        margin-right: -30px;
+        max-width: 90px;
     }
 }
 
 .mobileButton {
-    cursor: pointer;
-    margin-right: 20px;
+    display: none;
 }
+@media only screen and (max-width: 767px) {
+    .mobileButton {
+        display: block;
+        cursor: pointer;
+        margin-top: 3px;
+        margin-right: 10px;
+        position: relative;
+        width: 15px;
+        height: 13px;
+    }
+}
+
 
 .signinButton {
     cursor: pointer;
@@ -176,33 +217,117 @@
 }
 
 .mobileHeader {
-    margin-left: 300px;
-    display:none;
+    display: none;
 }
 @media only screen and (max-width: 767px) {
     .mobileHeader {
-        display: block;
-        position: absolute;
-        right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
     }
 }
-/* 
+
+.mobileHamburger {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 80px;
+}
+
 .mobileHamburgerMenu {
-    width: 120px;
+    width: 130px;
     height: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    
 }
 
 .mobileMenuText {
     text-decoration: none;
     margin-left: 10px;
+    color: black;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    margin: 0;
 }
 
 .mobileMenuWrap {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
- */ 
+
+.mobileSearchWrap {
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    transition: all 0.3s ease;
+}
+
+
+.mobileInputContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+}
+
+.mobileHeaderInput {
+    border: 1px solid #D5D5D5;
+    border-radius: 35px;
+    width: 230px;
+    height: 25px;
+    margin-left: 0px;
+    padding-left: 20px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mobileSearchIcon {
+    width: 15px;
+    height: auto;
+    position: relative;
+    right: 30px;
+    top: 5px;
+    z-index: 20;
+    cursor: pointer;
+}
+
+.loginbtn {
+    color: black;
+    background-color: transparent;
+    width: 60px;
+    border: none;
+    font-size: 15px;
+}
+
+.mobileMenuBtn {
+    text-decoration-line: none;
+    color: black;
+    background-color: transparent;
+    width: 150px;
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 80px;
+    margin-top: 10px;
+}
+
+.mobileIcon {
+    width: 22px;
+    height: 22px;
+    padding: 2px;
+    margin-right: 15px;
+}
+
+#mobileBookmark {
+    width: 18px;
+    margin-left: 2px;
+}
