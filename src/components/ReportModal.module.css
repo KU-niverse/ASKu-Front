@@ -51,7 +51,7 @@
     z-index: 200;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     justify-content: center;
 }
 
@@ -60,10 +60,19 @@
     font-size: 14px;
     font-weight: 800;
     color: #9F132E;
+    align-self: center;
+    margin-bottom: 10px;
 }
 .modal_report{
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    accent-color: #9F132E;
+    justify-self: left;
+}
+.label_text{
+    margin-left: 3px;
+    cursor: pointer;
 }
 
 .haho_login {
@@ -93,3 +102,16 @@
     height: 40px;
     cursor: pointer;
 }
+
+.q_csubmit {
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    width: 100px;
+    border-radius: 12px;
+    height: 35px;
+    font-size: 14px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    
+  }

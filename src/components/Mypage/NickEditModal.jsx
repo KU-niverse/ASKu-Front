@@ -89,6 +89,7 @@ function EditModal({ isOpen, onClose}) {
         if(response.data.success===true){
           alert(response.data.message);
           onClose(); //모달이 닫히고 내가 마이페이지에서 새로고침해야 변경된거 확인 가능
+          window.location.reload(); //새로고침
 
         }
       }

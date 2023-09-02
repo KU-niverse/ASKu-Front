@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import ReportModal from './ReportModal';
 
 
-function ThreedotsReport({target, reason_id}) {
+function ThreedotsReport({type, target}) {
   const nav = useNavigate();
 
 const[isReportModalVisible, setReportModalVisible]= useState(false);
@@ -17,23 +17,42 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
   const closeReportModal = () => {
     setReportModalVisible(false);
   };
-
-  const onReport = async () => {
-    try {
-      const result = await axios.post(`https://asku.wiki/api/report/${reason_id}`, {
-          target: target,
-          reason_id: reason_id,
-      },{
-          withCredentials: true,
-      });
-      if(result.status === 200){
-          nav('/'); //신고 완료 모달로 이동
+  const [loggedIn, setLoggedIn] = useState(false);
+  const Navigate = useNavigate();
+  const checkLoginStatus = async () => {
+      try {
+        const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+        if (res.status === 201 && res.data.success === true) {
+          setLoggedIn(true);
+        } else if (res.status === 401) {
+          setLoggedIn(false);
+          alert("로그인이 필요합니다.")
+          Navigate('/signin');
+        }
+      } catch (error) {
+        console.error(error);
+        setLoggedIn(false);
+        alert("로그인이 필요합니다.")
+        Navigate('/signin');
       }
-  } catch(error){
-      console.log(error);
-      return alert(error.response.data.message);
-  };
-  };//신고하기
+    };
+
+  // const onReport = async () => {
+  //   try {
+  //     const result = await axios.post(`https://asku.wiki/api/report/${reason_id}`, {
+  //         target: target,
+  //         reason_id: reason_id,
+  //     },{
+  //         withCredentials: true,
+  //     });
+  //     if(result.status === 200){
+  //         nav('/'); //신고 완료 모달로 이동
+  //     }
+  // } catch(error){
+  //     console.log(error);
+  //     return alert(error.response.data.message);
+  // };
+  // };//신고하기
 
 
 
@@ -49,6 +68,7 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
         value="신고하기"
         onClick={(e) =>{
           console.log(`${e.value} 클릭`);
+          checkLoginStatus();
           e.stopPropagation = true;
           e.keepOpen = true;
           e.preventDefault=true;
@@ -59,7 +79,7 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
       >
         신고하기
       </MenuItem>
-      {isReportModalVisible && <ReportModal isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
+      {isReportModalVisible && <ReportModal type={type} target={target} isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
       
     </Menu>
     

@@ -276,7 +276,6 @@ useEffect(() => {
     
             
         };
-        getContribute();
         fetchData();
     }, []);
 

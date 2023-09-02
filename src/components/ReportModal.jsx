@@ -3,12 +3,35 @@ import closeBtn from '../img/close_btn.png';
 import {  useState, useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function ReportModal({type, isOpen, onClose}) {
+function ReportModal({type, target, isOpen, onClose}) {
     const modalRef = useRef(null);
+    const [selectedReason, setSelectedReason] = useState(null);
+    const requestBody={
+        target: target,
+        reason_id: selectedReason
+    };
 
-    const handlereportType = () => {
 
+
+    const handleSubmit = async (selectedReason) => {
+        if (selectedReason === null) {
+            alert("신고 사유를 선택해주세요.");
+            return;
+        }
+        try {
+            const response = await axios.post(`https://asku.wiki/api/report/${type}`, requestBody,{withCredentials: true});
+            if(response.status===200){
+              console.log(response.data);
+              alert("신고가 완료되었습니다.");
+            }
+          }
+          catch (error) {
+            console.error(error);
+            alert("알 수 없는 오류가 발생했습니다.");
+          }
     }
 
     const handleOutsideClick = (event) => {
@@ -41,15 +64,43 @@ function ReportModal({type, isOpen, onClose}) {
                             <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
-                            <p className={styles.modal_text}>로그인 후 ASKU를 이용해주세요!</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>상업적 광고 및 판매</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>정치인 비하 및 선거운동</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>게시판 성격에 부적절함</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>음란물</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>낚시/놀람/도배</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>사칭사기</p>
-                            <p onClick={handlereportType} className={styles.modal_report}>욕설비하</p>
+                            <p className={styles.modal_text}>신고 사유 선택</p>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="1" onChange={() => setSelectedReason(1)} />
+                                <span className={styles.label_text}>상업적 광고 및 판매</span>
+                            </label>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="2" onChange={() => setSelectedReason(2)} />
+                                <span className={styles.label_text}>정치인 비하 및 선거운동</span>
+                            </label>                          
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="3" onChange={() => setSelectedReason(3)} />
+                                <span className={styles.label_text}>게시판 성격에 부적절함</span>
+                            </label>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="4" onChange={() => setSelectedReason(4)} />
+                                <span className={styles.label_text}>음란물</span>
+                            </label>                                 
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="5" onChange={() => setSelectedReason(5)} />
+                                <span className={styles.label_text}>낚시/놀람/도배</span>
+                            </label>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="6" onChange={() => setSelectedReason(6)} />
+                                <span className={styles.label_text}>사칭사기</span>
+                            </label>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="7" onChange={() => setSelectedReason(7)} />
+                                <span className={styles.label_text}>욕설비하</span>
+                            </label>
+                            <label>
+                                <input className={styles.modal_report} type="radio" name="reason" value="8" onChange={() => setSelectedReason(8)} />
+                                <span className={styles.label_text}>문서훼손</span>
+                            </label>      
                         </div>
+                        <button className={styles.q_csubmit} onClick={handleSubmit}>
+                            신고하기
+                        </button>
                     </div>
                 </div>
             </div>
