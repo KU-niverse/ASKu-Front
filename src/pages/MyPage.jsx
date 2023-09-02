@@ -169,7 +169,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           </div>
         
           <div className={styles.rightcontent}>
-            <div className={styles.info}>
+            <div className={`${styles.info}`}>
               <div className={styles.infoheader}>
                 <p className={styles.title}>내 정보</p>
               </div>
@@ -189,7 +189,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   </Link> */}
               </div>
             </div>
-            <div className={styles.cb}>
+            <div className={`${styles.cb}`}>
               <p className={styles.title}>기여 목록</p>
               <div className={styles.graph}>
               {myContribute&&myContribute.message&&myContribute.message.docs.length===0 ? (

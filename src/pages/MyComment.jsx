@@ -7,11 +7,12 @@ import { useState } from "react";
 import Switch from "../components/Switch";
 import { useEffect } from "react";
 import axios from "axios";
+import SpinnerMypage from "../components/SpinnerMypage";
 
 function MyComment(){
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
-  const [loading, setLoading] = useState(true);
-
+  const [loadingMyDebate, setLoadingMyDebate] = useState(true);
+  const [loadingMypage, setLoadingMypage] = useState(true);
 
  //토론 기록 불러오기
   const [myDebate, setMyDebate] = useState([]);
@@ -22,14 +23,14 @@ function MyComment(){
         if(res.status === 201){
           console.log(res.data)
           setMyDebate(res.data);
-          setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
+          setLoadingMyDebate(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
         if(res.status === 500){
           console.log(res.data.message)
         }
         }catch (error){
           console.error(error);
-          setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
+          setLoadingMyDebate(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
       }
       takeMyDebate();
@@ -46,7 +47,7 @@ function MyComment(){
           const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
-            setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
+            setLoadingMypage(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
           }
           if(res.status === 401){
             console.log(res.data.message)
@@ -56,7 +57,7 @@ function MyComment(){
           }
         }catch (error){
           console.error(error);
-          setLoading(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
+          setLoadingMypage(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
       }
       takeMypage();
@@ -70,6 +71,9 @@ function MyComment(){
       <div>
         <Header/>
       </div>
+      {loadingMyDebate || loadingMypage ? (
+      <div><SpinnerMypage/></div>
+    ) : (
       <div className={styles.content}>
         <div className={styles.header}>
           <p className={styles.comment}>내가 쓴 토론</p>
@@ -95,6 +99,7 @@ function MyComment(){
         )}
 
       </div>
+    )}
       <div>
         <Footer />
       </div>
