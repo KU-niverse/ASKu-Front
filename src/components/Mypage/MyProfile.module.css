@@ -31,7 +31,7 @@
 
 .text{
   display: table-cell;
-  width: 60%;
+  width: 80%;
   font-size: 18px;
   color : rgba(116, 116, 116, 1);
 }
@@ -42,7 +42,7 @@
   text-align: left;
 }
 .editbtn{
-  width: 36px;
+  width: 44px;
   height: 20px;
   border-radius: 12px;
   background-color: rgba(254, 242, 244, 1);
@@ -50,11 +50,13 @@
   font-size: 12px;
   font-weight: 400;
   color: rgba(222, 58, 88, 1);
-  position: absolute;
   right: 20px;
   margin: 8px 0px 8px 0px;
   cursor: pointer;
+  align-self: center;
+  padding: 3px;
 }
+
 @media only screen and (max-width: 767px) {
   .rowtitle, .text, .rank{
     font-size: 14px;
