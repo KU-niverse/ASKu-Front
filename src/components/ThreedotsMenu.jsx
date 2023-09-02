@@ -10,7 +10,7 @@ import EditModal from './EditModal';
 import ReportModal from './ReportModal';
 
 
-function ThreedotsMenu({ questionId}) {
+function ThreedotsMenu({ questionId, type}) {
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const closeEditModal = () => {
       setEditModalVisible(false);
@@ -81,7 +81,7 @@ function ThreedotsMenu({ questionId}) {
       >
         신고하기
       </MenuItem>
-      {isReportModalVisible && <ReportModal questionId={questionId} isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
+      {isReportModalVisible && <ReportModal target={questionId} type={type} isOpen={isReportModalVisible} onClose={() => setReportModalVisible(false)} />}
 
 
       <MenuItem 

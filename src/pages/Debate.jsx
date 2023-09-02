@@ -81,6 +81,7 @@ const handleDebateSubmit = async (submitData) => {
                 debateContentData&&debateContentData.message&&debateContentData.data.map((debate, index)=>(
                   <DebateContent
                     key={debate.id}
+                    r_id={debate.id}
                     id={index+1}
                     user_id={debate.user_id}
                     content={debate.content}

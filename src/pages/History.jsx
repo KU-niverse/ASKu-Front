@@ -107,6 +107,7 @@ const History = (props) => {
                               user={item.nick} 
                               timestamp={item.timestamp} 
                               title={title}
+                              target={item.id}
                             />
                           </div>
                         );
