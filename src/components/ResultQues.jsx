@@ -34,7 +34,7 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
           </div>
-          <div className={styles.q_middle}>
+          <div className={styles.q_middle} onClick={() => nav(`/wiki/morequestion/${title}`)}>
             <span className={styles.q_icon}>Q. </span>
             <span className={styles.q_content}>{content}</span>
           </div>
