@@ -39,7 +39,6 @@
 .rightcontent{
   width: 60%;
   border-radius: 12px;
-  margin-left: 2px;
   box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
@@ -131,6 +130,11 @@
 .info{
   padding: 0 30px;
 }
+@media only screen and (max-width: 767px) {
+.info{
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}}
 
 .infoedit{
   display: flex;
@@ -145,6 +149,12 @@
   background: white;
   cursor: pointer;
 }
+@media only screen and (max-width: 767px) {
+.edit2{
+  padding-bottom: 2em;
+}}
+
+
 
 
 .badgegrid {
@@ -178,6 +188,12 @@
 .cb{
   padding: 0 30px 2em 30px;
 }
+
+@media only screen and (max-width: 767px) {
+.cb{
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}}
 
 .graph {
   display: flex;
@@ -226,7 +242,7 @@
     padding: initial;
   }
   .leftcontent {
-    margin: 0 0 5px 0;
+    margin:  0;
     padding-bottom: 10px;
   }
 
@@ -236,6 +252,7 @@
   }
   .ask, .comment{
     width: 100%;
+    margin-top: 12px;
   }
 
   .comment{
@@ -266,8 +283,14 @@
   }
 
 
-  .leftcontent, .rightcontent, .ask, .comment{
+  /* .leftcontent, .ask, .comment{
     box-shadow: 0 5 2 0 rgba(0, 0, 0, 0.2);
+  } */
+  .rightcontent{
+    box-shadow: initial;
+    border-radius: initial;
   }
+
+
 }
 
