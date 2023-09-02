@@ -159,9 +159,10 @@ function WikiViewer() {
       };
 
     // 북마크 이미지 변경
-    function handleClickBookmark() {
-        // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
-      if(deleted === false){
+   // 북마크 이미지 변경
+function handleClickBookmark() {
+    // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
+    if(deleted === false){
         deleteBookmark();
         setImageSource(falseBk);
 
@@ -170,18 +171,18 @@ function WikiViewer() {
         setImageSource(trueBk);
 
       }
-    }
+}
 
-    useEffect(() => {
-        if(deleted === false){
-            setImageSource(falseBk);
+useEffect(() => {
+    if(deleted === false){
+        setImageSource(trueBk);
+
+      } else if (deleted === true){
+        setImageSource(falseBk);
+
+      }
     
-          } else if (deleted === true){
-            setImageSource(trueBk);
-    
-          }
-        
-    }, [deleted]);
+}, [deleted]);
 
     //버튼 링크 연결 함수들
     const linkToHistory = () => {
@@ -272,11 +273,10 @@ function WikiViewer() {
         const fetchData = async () => {
             getWiki();
             getQues();
-            getContribute();
     
             
         };
-    
+        getContribute();
         fetchData();
     }, []);
 
@@ -284,7 +284,7 @@ function WikiViewer() {
         
         getContribute();
     
-    }, [contribute]);
+    }, [totalPoint]);
     
        // 로딩 중일 때 표시할 컴포넌트
   if (loading) {

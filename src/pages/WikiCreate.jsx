@@ -34,7 +34,10 @@ const WikiCreate = () => {
 
         const wikiMarkup = HtmlToWiki(desc);
         console.log(selectedOption);
-
+        
+        if(isChecked === false){
+            return alert('정책에 맞게 작성하였음을 확인해주세요')
+        }
 
         try {
             const result = await axios.post(`https://asku.wiki/api/wiki/contents/new/${title}`, {

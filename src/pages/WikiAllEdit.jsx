@@ -17,6 +17,11 @@ const WikiEdit = () => {
     const [summary, setSummary] = useState('');
     const [version, setVersion] = useState('');
     const [copy, setCopy] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(prevIsChecked => !prevIsChecked);
+    }
 
     function onEditorChange(value) {
         setDesc(value);
@@ -59,6 +64,9 @@ const WikiEdit = () => {
         e.preventDefault();
 
         const wikiMarkup = HtmlToWiki(desc);
+        if(isChecked === false){
+            return alert('정책에 맞게 작성하였음을 확인해주세요')
+        }
         try {
             const result = await axios.post(`https://asku.wiki/api/wiki/contents/${title}`, {
                 version: version,

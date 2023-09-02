@@ -8,8 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const FindoutId = () => {
 
     const location = useLocation();
-    const loginId = location.state;
-    const [id, setId] = useState(loginId);
+    const id = location.state;
     const nav = useNavigate();
     
 
