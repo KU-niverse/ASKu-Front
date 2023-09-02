@@ -72,7 +72,7 @@ function MyQuestion() {
           <p>아직 작성한 질문이 없습니다.</p>
         ) : (
           mypageData && myQuestion && myQuestion.success && myQuestion.data.map((question) => (
-            <Question
+            <MyQuestionList
               key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
               id={question.id}
               doc_id={question.doc_id}

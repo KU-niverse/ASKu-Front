@@ -7,21 +7,25 @@ import { useNavigate } from "react-router-dom"
 import styles from "./MyQuestionList.module.css"
 
 
-function MyQuestionList({ title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function MyQuestionList({ docsname, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
-  const linktoQuestionEdit = () => {
-    ;
-    nav(`/question/edit/${title}`, {state : {
-      qid: id,
-      user_id: user_id,
-      content: content,
-      created_at: created_at,
-      like_count: like_count,
-      nick: nick,
-      index_title:index_title}
-    });
+  // const linktoQuestionEdit = () => {
+  //   ;
+  //   nav(`/question/edit/${title}`, {state : {
+  //     qid: id,
+  //     user_id: user_id,
+  //     content: content,
+  //     created_at: created_at,
+  //     like_count: like_count,
+  //     nick: nick,
+  //     index_title:index_title}
+  //   });
+  // }
+
+  const linktoQuestion = () => {
+    nav(`/wiki/morequestion/${docsname}`)
   }
 
 
@@ -38,7 +42,7 @@ function MyQuestionList({ title, id, doc_id, user_id, index_title, content, crea
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span className={styles.q_content}>{content}</span>
+            <span onclick={linktoQuestion} className={styles.q_content}>{content}</span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
