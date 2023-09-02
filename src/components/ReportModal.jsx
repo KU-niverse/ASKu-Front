@@ -95,7 +95,7 @@ function ReportModal({type, target, isOpen, onClose}) {
                             </label>
                             <label>
                                 <input className={styles.modal_report} type="radio" name="reason" value="8" onChange={() => setSelectedReason(8)} />
-                                <span className={styles.label_text}>문서훼손</span>
+                                <span className={styles.label_text}>기타</span>
                             </label>      
                         </div>
                         <button className={styles.q_csubmit} onClick={handleSubmit}>
