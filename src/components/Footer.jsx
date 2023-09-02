@@ -21,7 +21,7 @@ function Footer() {
                         </div>
                         <div className={`${styles.linkGroup}`}>
                             <button className={`${styles.footerTitle}`}>서비스</button>
-                            <Link>
+                            <Link to='https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d?pvs=4' target="_blank">
                                 <button className={`${styles.footerButton}`}>이용약관</button>
                             </Link>
                             <Link to='https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052' target="_blank">

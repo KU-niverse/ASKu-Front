@@ -25,9 +25,9 @@ function Header() {
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
     const [isAlarmVisible, setIsAlarmVisible] = useState(false);
-    // const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
-    // const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
-    // const [mobileSearch, setMobileSearch] = useState(false);
+    const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
+    const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
+    const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -94,15 +94,28 @@ function Header() {
         }
     };
 
-    // const handleMobileHeader= () => {
-    //     if (mobileHeaderOpen) {
-    //         setMobileHeaderOpen(false);
-    //         setMobileHeaderHeight('60px');
-    //     } else {
-    //     setMobileHeaderOpen(true);
-    //     setMobileHeaderHeight('240px');
-    //     }
-    // };
+
+    const handleMobileSearch = () => {
+        setMobileHeaderOpen(false);
+        if (mobileSearchOpen) {
+            setMobileSearchOpen(false);
+            setMobileHeaderHeight('60px');
+        } else {
+            setMobileSearchOpen(true);
+            setMobileHeaderHeight('120px');
+        }
+    };
+
+    const handleMobileMenu = () => {
+        setMobileSearchOpen(false);
+        if (mobileHeaderOpen) {
+            setMobileHeaderOpen(false);
+            setMobileHeaderHeight('60px');
+        } else {
+            setMobileHeaderOpen(true);
+            setMobileHeaderHeight('240px');
+        }
+    }
 
     const handleAlarm = () => {
         if (isAlarmVisible) {
@@ -118,8 +131,7 @@ function Header() {
 
 
     return (
-        // style={{ height: mobileHeaderHeight }}
-        <div className={styles.container}  >
+        <div className={styles.container} style={{ height: mobileHeaderHeight }}>
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -204,9 +216,10 @@ function Header() {
                     </div>
                     <div className={styles.mobileHeader}>
                         <div className={styles.buttonWrap}>
-                            <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} />
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} />
+                            <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} onClick={handleMobileSearch} />
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu}/>
                         </div>
+                        {mobileHeaderOpen && (
                         <div className={styles.mobileMenuWrap}>
                             {(isLoggedIn ? (
                                 <div className={styles.mobileHamburger}>
@@ -264,11 +277,41 @@ function Header() {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                        )}
+                        {mobileSearchOpen && (
+                            <div className={styles.mobileSearchWrap}>
+                                <div className={styles.mobileInputContainer}>
+                                    <input
+                                        className={styles.mobileHeaderInput}
+                                        placeholder='검색어를 입력하세요.'
+                                        onChange={(e) => setInputValue(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                if (inputValue.trim() !== '') {
+                                                    window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                                    setInputValue('');
+                                                }
+                                            }
+                                        }} />
+                                    <img
+                                        src={searchIcon}
+                                        alt='icon'
+                                        className={styles.mobileSearchIcon}
+                                        onClick={() => {
+                                            if (inputValue.trim() !== '') {
+                                                window.location.href = `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}`;
+                                                setInputValue('');
+                                            }
+                                    }} />
+                                </div>
+                            </div>
+                        )}
+                        </div>
+                    </div> 
                 </div>
             </div>
-        </div>
-    )
-}
+        )
+    }
 
 export default Header;

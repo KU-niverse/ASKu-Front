@@ -4,10 +4,14 @@
     border-bottom: 0.5px solid #D5D5D5;
     box-shadow: 0px 4px 8px 0px #0000001A;
     border-radius: 0px 0px 20px 20px;
-    /* transition: all 0.5s ease; */
     width: 100vw;
 }
-
+@media screen and (max-width: 767px) {
+    .container {
+        transition: all 0.5s ease;
+        position: relative;
+    }
+}
 
 .headerContainer {
     display: flex;
@@ -36,13 +40,31 @@
     display: flex;
     width: 90vw;
     height: 25px;
-    justify-content: space-around;
-} 
+    justify-content: space-between;
+    margin-left:100px;
+}
+@media only screen and (max-width: 767px) {
+    .flexContainer {
+        position: relative;
+        right:50px;
+        width: 500px;
+    }
+}
 
 .inputcontainer {
     display: flex;
     width: 350px;
     position: relative;
+}
+@media only screen and (max-width: 767px) {
+    .inputcontainer {
+        position: absolute;
+        top: 20px;
+        right: 100px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
 }
 
 .navContainer_right {
@@ -90,11 +112,7 @@
         display: none;
     }
 }
-@media only screen and (max-width: 767px) {
-    .headerInput {
-        display: none;
-    }
-}
+
 
 .searchIcon {
     width: 15px;
@@ -110,6 +128,7 @@
     }
 }
 
+
 .logo {
     width: 60px;
     height: 19px;
@@ -117,26 +136,35 @@
 }
 @media only screen and (max-width: 767px) {
     .logo {
-        margin-left: 20px;
+        position: absolute;
+        top: 20px;
+        left: 10px;
     }
 }
 
 .buttonWrap {
-    display:none;
+    display: none;
     position: relative;
 }
 @media only screen and (max-width: 767px) {
     .buttonWrap {
         display: block;
         margin-right: -20px;
-        min-width:90px;
+        min-width: 90px;
     }
 }
 
 .mobileButton {
-    cursor: pointer;
-    margin-right: 20px;
+    display: none;
 }
+@media only screen and (max-width: 767px) {
+    .mobileButton {
+        display: block;
+        cursor: pointer;
+        margin-right: 20px;
+    }
+}
+
 
 .signinButton {
     cursor: pointer;
@@ -176,24 +204,26 @@
 }
 
 .mobileHeader {
-    margin-left: 300px;
-    display:none;
+    display: none;
 }
 @media only screen and (max-width: 767px) {
     .mobileHeader {
         display: block;
-        position: absolute;
-        right: 20px;
     }
 }
-/* 
+
+.mobileHamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .mobileHamburgerMenu {
     width: 120px;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
 .mobileMenuText {
@@ -205,4 +235,35 @@
     display: flex;
     flex-direction: column;
 }
- */ 
+
+.mobileSearchWrap {
+    display: none;
+}
+@media only screen and (max-width: 767px) {
+    .mobileSearchWrap {
+        display: block;
+        position: relative;
+    }
+}
+
+.mobileInputContainer {
+    
+}
+
+.mobileHeaderInput {
+    border: 1px solid #D5D5D5;
+    border-radius: 35px;
+    width: 350px;
+    height: 25px;
+    margin-left: -100px;
+    padding-left: 20px;
+}
+
+.mobileSearchIcon {
+    width: 15px;
+    height: auto;
+    position: relative;
+    right: 30px;
+    z-index: 20;
+    cursor: pointer;
+}
