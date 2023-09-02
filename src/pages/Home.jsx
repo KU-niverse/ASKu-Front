@@ -18,7 +18,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularKeywords = async () => {
             try {
-                const response = await axios.get('https://asku.wiki/api/search/popular');
+                const response = await axios.get('http://localhost:8080/search/popular');
                 if (response.data.success) {
                     setPopularKeywords(response.data.data);
                 }
@@ -32,7 +32,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularQuestions = async () => {
             try {
-                const response = await axios.get('https://asku.wiki/api/question/popular');
+                const response = await axios.get('http://localhost:8080/question/popular');
                 if (response.data.success) {
                     setPopularQuestions(response.data.data);
                 }
