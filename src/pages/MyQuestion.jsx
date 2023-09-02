@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./MyQuestion.module.css"
 import Header from "../components/Header";
-import Question from "../components/Question";
+import MyQuestionList from "../components/MyQuestionList";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import Switch from "../components/Switch";
