@@ -11,6 +11,7 @@ function MyQuestionList({ docsname, id, doc_id, user_id, index_title, content, c
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
+  const title=docsname
   // const linktoQuestionEdit = () => {
   //   ;
   //   nav(`/question/edit/${title}`, {state : {
@@ -25,7 +26,7 @@ function MyQuestionList({ docsname, id, doc_id, user_id, index_title, content, c
   // }
 
   const linktoQuestion = () => {
-    nav(`/wiki/morequestion/${docsname}`)
+    nav(`/wiki/morequestion/${title}`)
   }
 
 
@@ -42,7 +43,7 @@ function MyQuestionList({ docsname, id, doc_id, user_id, index_title, content, c
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span onclick={linktoQuestion} className={styles.q_content}>{content}</span>
+            <span onClick={linktoQuestion} className={styles.q_content}>{content}</span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
