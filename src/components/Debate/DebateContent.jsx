@@ -3,8 +3,9 @@ import styles from "./DebateContent.module.css"
 import FormatDate from "../FormatDate";
 import ThreedotsReport from "../ThreedotsReport";
 
-function DebateContent({id, debate_id, user_id, content, created_at, is_bad, nick}){
+function DebateContent({key, r_id, id, debate_id, user_id, content, created_at, is_bad, nick}){
 const formattedDate=FormatDate(created_at)
+const type=4
   return(
     <div className={styles.container}>
       <div className={styles.header}>
@@ -14,7 +15,7 @@ const formattedDate=FormatDate(created_at)
         <span className={styles.date}>{formattedDate}</span>
         </div>
         <div className={styles.backheader}>
-        <ThreedotsReport/>
+        <ThreedotsReport type={type} target={r_id}/>
         </div>
       </div>
       <div className={styles.content}>
