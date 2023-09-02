@@ -303,9 +303,11 @@
 .loginbtn {
     color: black;
     background-color: transparent;
-    width: 60px;
+    min-width: 70px;
     border: none;
     font-size: 15px;
+    cursor: pointer;
+    padding: 0;
 }
 
 .mobileMenuBtn {
@@ -318,6 +320,7 @@
     justify-content: flex-start;
     margin-right: 80px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .mobileIcon {

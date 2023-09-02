@@ -218,7 +218,7 @@ function Header() {
                             {isLoggedIn ? (
                             <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
                             ) : (
-                                <Link to='/signin'>
+                                <Link className={styles.loginbtn} to='/signin'>
                                     <button className={styles.loginbtn}>로그인</button>
                                 </Link>
                             )}
@@ -256,7 +256,7 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>토론</p>
                                             </div>
                                         </Link>
-                                        <Link to='/latestdebate' className={styles.mobileMenuBtn}>
+                                        <Link to='/latestdebate' className={styles.mobileMenuBtn} onClick={signOut}>
                                             <div className={styles.mobileHamburgerMenu}>
                                                 <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
                                                 <p className={styles.mobileMenuText}>로그아웃</p>
