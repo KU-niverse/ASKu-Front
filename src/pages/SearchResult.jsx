@@ -81,6 +81,7 @@ const SearchResearch = () => {
             if(result.status === 200){
                 setDocs(result.data.message);
                 setDocsCount(result.data.message.length);
+                console.log(result.data.message.is_deleted);
             }
             
         } catch (error) {
@@ -161,8 +162,8 @@ const SearchResearch = () => {
                     <div className={isClicked ? styles.hidden : ''}>
                         {ques.map((item) => {
                             return(
-                                <div className={styles.queboxes}onClick={() => nav(`/wiki/morequestion/${item.title}`)}>
-                                    <ResultQues
+                                <div className={styles.queboxes}>
+                                <ResultQues
                                 key={item.id}
                                 id={item.id}
                                 doc_id={item.doc_id}
