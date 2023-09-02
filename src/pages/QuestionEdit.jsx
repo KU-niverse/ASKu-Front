@@ -130,10 +130,16 @@ const QuestionEdit = () => {
     }, []);
     
     //첫 설정이 문제..
+    
     useEffect(() => {
         console.log(selectedOption);
 
-        getWiki();
+        if(selectedOption) {
+            getWiki();
+        } else{
+            console.log('section 없음')
+        }
+        
         
         setCopy(false);
         
@@ -146,14 +152,18 @@ const QuestionEdit = () => {
         const wikiMarkup = HtmlToWiki(desc);
 
         if(isChecked === false){
-            return alert('개인정보 이용에 동의해주세요')
+            return alert('정책에 맞게 작성하였음을 확인해주세요');
         }
+        if(summary === ''){
+            return alert('수정요약을 작성해주세요');
+        }
+
         try {
-            const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${section}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`, {
                 version: version,
                 new_content: wikiMarkup,
                 summary: summary,
-                is_q_based: 0,
+                is_q_based: 1,
                 qid: qid,
             },{
                 withCredentials: true,
@@ -218,7 +228,7 @@ const QuestionEdit = () => {
                         <Editor value={desc} onChange={onEditorChange} />
                         </div>
                         <h4>히스토리 요약</h4>
-                        <textarea required className={`${styles.summary}`} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
+                        <textarea value={summary} onChange={e => setSummary(e.target.value)} className={`${styles.summary}`} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
                     </div>
                     <div className={`${styles.submitbox}`}>
                     <span className={`${styles.chkdiv}`}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className={`${styles.chkbox}`}/><span>정책에 맞게 작성하였음을 확인합니다.</span></span>
