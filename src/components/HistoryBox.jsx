@@ -19,6 +19,7 @@ const HistoryBox = (props) => {
     const user = props.user;
     const timestamp = props.timestamp;
     const doctitle = props.doctitle;
+    const target=props.target;
 
     const handleView = () => {
         nav(`/wiki/preview/${title}/${version}`);
@@ -64,7 +65,7 @@ const HistoryBox = (props) => {
                 <span className={styles.docTitle}>{doctitle}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
-                <span className={styles.threedot}><ThreedotsReport target={1} reason_id={2}/></span>
+                <span className={styles.threedot}><ThreedotsReport type={1} target={target}/></span>
             </div>
         </div>
         <div className={styles.versionText}>
