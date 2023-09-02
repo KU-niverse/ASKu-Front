@@ -21,7 +21,7 @@ function QuestionFor(props){
               <span className={styles.q_date}>{timestamp}</span>
             </div>
             <div className={styles.q_backhead}>
-              <span className={styles.q_num}>{props.like_count}<img src={minilike}/></span>
+              <span className={styles.q_num}>{props.like_count}<div className={styles.q_like}><img src={minilike}/></div></span>
             </div>
           </div>
           <div className={styles.q_middle}>
