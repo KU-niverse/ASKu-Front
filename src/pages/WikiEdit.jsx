@@ -69,7 +69,7 @@ const WikiEdit = () => {
         const wikiMarkup = HtmlToWiki(desc);
 
         if(isChecked === false){
-            return alert('개인정보 이용에 동의해주세요')
+            return alert('정책에 맞게 작성하였음을 확인해주세요')
         }
         try {
             const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${section}`, {
