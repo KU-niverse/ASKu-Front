@@ -1,6 +1,6 @@
 import styles from "./Contribute.module.css"
 
-function Contribute({key, user_id, doc_id, text_pointer, version, summary, created_at, count, diff, is_bad, is_rollback, is_q_based}){
+function Contribute({title, key, user_id, doc_id, text_pointer, version, summary, created_at, count, diff, is_bad, is_rollback, is_q_based}){
   // 주어진 created_at 값을 그대로 사용하여 Date 객체 생성
   const utcDate = new Date(created_at);
 
@@ -14,7 +14,7 @@ function Contribute({key, user_id, doc_id, text_pointer, version, summary, creat
   return(
     <div className={styles.cb_list}>
     <div className={styles.cb_front}>
-      <span className={styles.cb_index}>{summary}</span>
+      <span className={styles.cb_index}>{title}</span>
     </div>
     <div className={styles.cb_back}> 
       <span className={styles.cb_num}>+{displayDiff}p</span>
