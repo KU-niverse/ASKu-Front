@@ -99,7 +99,7 @@ function Chatbot () {
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post('https://asku.wiki/ai/chatbot/', {
+        axios.post(`https://asku.wiki/ai/chatbot/${userId}`, {
             q_content: inputValue,
             user_id: userId
         })
