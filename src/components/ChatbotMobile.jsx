@@ -67,11 +67,10 @@ function ChatbotMobile() {
         }
         if (inputValue.trim() !== '') {
             setLoading(true);
-            //content 대신 q_content, user_id 반드시 보내야 함
+            //q_content, user_id 반드시 보내야 함
             axios.post('https://asku.wiki/ai/chatbot/', {
                 q_content: inputValue,
-                user_id: "1",
-                // reference: "1"
+                user_id: "7",
             })
             .then(response => {
                 setShowSuggest(false);
@@ -150,7 +149,7 @@ function ChatbotMobile() {
         
         useEffect(() => {
             inputRef.current.focus();
-            axios.get('https://asku.wiki/ai/chatbot/1')
+            axios.get('https://asku.wiki/ai/chatbot/2')
             .then(response => {
                 const previousHistory = response.data;
                 setPreviousChatHistory(previousHistory);
