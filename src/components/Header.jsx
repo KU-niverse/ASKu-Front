@@ -70,7 +70,6 @@ function Header() {
                 if (response.status===201) {
                     setNicknameText(response.data);
                     setLoadingMypage(false);
-                    console.log(response.data)
                 }
             } catch (error) {
                 console.error(error);

@@ -78,6 +78,9 @@ function Chatbot () {
         inputRef.current.focus();
         axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
             .then(response => {
+                // 삭제 해야됨
+                console.log(response);
+                console.log(userId);
                 const previousHistory = response.data;
                 setPreviousChatHistory(previousHistory);
             })
@@ -96,9 +99,9 @@ function Chatbot () {
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post('https://asku.wiki/ai/chatbot/', {
+        axios.post(`https://asku.wiki/ai/chatbot/${userId}`, {
             q_content: inputValue,
-            user_id: userId,
+            user_id: userId
         })
         .then(response => {
             console.log(response);
@@ -203,7 +206,6 @@ function Chatbot () {
                     <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
                         <button className={styles.button}>도움말</button>
                     </Link>
-                    
                 </div>
             </div>
             <div className={styles.chat}>
@@ -265,6 +267,7 @@ function Chatbot () {
                     onChange={inputChange}
                     onKeyDown={handleKeyDown}
                     ref={inputRef}
+                    disabled={loading}
                 />
                 <div className={styles.sendBtn} onClick={sendMessage}>
                     <img src={arrow} /> 
