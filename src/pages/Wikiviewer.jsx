@@ -86,7 +86,7 @@ function WikiViewer() {
 //문서: 아직 내용이 없습니다. 전체 편집에서 작성해보세요!
 //기여도: 문서를 편집한 회원이 없습니다. 전체 편집으로 기여해보세요!
 // 질문: 해당 문서에 대한 질문이 없습니다. 
-    const [deleted, setDeleted] = useState(true);
+    const [favorite, setFavorite] = useState(false);
     const [imageSource, setImageSource] = useState(falseBk);
 
     const flagToggle = () =>{
@@ -119,14 +119,13 @@ function WikiViewer() {
     //북마크 추가
     const addBookmark = async () => {
         try{
-            const result = await axios.post(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 
             }, {
                 withCredentials: true
             });
             if(result.data.success === true){
-                setDeleted(false);
-                console.log(deleted);
+                setFavorite(true);
             } else {
               alert('문제가 발생하였습니다');
             }
@@ -145,12 +144,11 @@ function WikiViewer() {
       //북마크 해제
       const deleteBookmark = async () => {
         try{
-            const result = await axios.delete(`http://localhost:8080/wiki/favorite/${title}`, {
+            const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 withCredentials: true
             });
             if(result.data.success === true){
-                setDeleted(true);
-                console.log(deleted);
+                setFavorite(false);
             } else {
               alert('문제가 발생하였습니다');
             }
@@ -178,14 +176,14 @@ function WikiViewer() {
 
 async function handleClickBookmark() {
     try {
-      if (deleted === false) {
+      if (favorite === true) {
         await deleteBookmark();
-        setDeleted(true); // Update the state first
-        setImageSource(trueBk);
-      } else if (deleted === true) {
-        await addBookmark();
-        setDeleted(false); // Update the state first
+        setFavorite(false); // Update the state first
         setImageSource(falseBk);
+      } else if (favorite === false) {
+        await addBookmark();
+        setFavorite(true); // Update the state first
+        setImageSource(trueBk);
       }
     } catch (error) {
       console.error(error);
@@ -194,15 +192,15 @@ async function handleClickBookmark() {
   }
 
 useEffect(() => {
-    if(deleted === false){
+    if( favorite === true){
         setImageSource(trueBk);
 
-    } else if (deleted === true){
+    } else if (favorite === false){
         setImageSource(falseBk);
 
     }
     
-}, [deleted]);
+}, [favorite]);
 
     //버튼 링크 연결 함수들
     const linkToHistory = () => {
@@ -222,12 +220,16 @@ useEffect(() => {
     const getWiki = async () => {
         console.log('나중');
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contents/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
-            setDeleted((prevDeleted) => result.data.is_favorite);
-            console.log(result.data.is_favorite)
+            // setDeleted((prevDeleted) => result.data.is_favorite);
+            console.log(result.data);
+            console.log(result.data.is_favorite);
             
-            console.log(deleted);
+            setFavorite(result.data.is_favorite);
+            console.log(favorite);
+            
+           
 
         } catch (error) {
             console.error(error);
@@ -241,7 +243,7 @@ useEffect(() => {
     const getQues = async () => {
         console.log('실행')
         try{
-            const result = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`);
             setQues(result.data.data);
             console.log('성공');
             if (result.data.data.length===0) {
@@ -260,7 +262,7 @@ useEffect(() => {
     //질문 데이터 가져오기
     const getContribute = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080/wiki/contributions/${title}`);
+            const result = await axios.get(`https://asku.wiki/api/wiki/contributions/${title}`);
             console.log('기여도');
             setContribute(result.data.message);
             console.log(contribute);
