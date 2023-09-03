@@ -302,9 +302,12 @@ useEffect(() => {
 
     useEffect(() => {
         
-        getContribute();
+        if(!totalPoint){
+            getContribute();
+        }
+        
     
-    }, [totalPoint]);
+    }, [totalPoint, contribute]);
     
        // 로딩 중일 때 표시할 컴포넌트
   if (loading) {
