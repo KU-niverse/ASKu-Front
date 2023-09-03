@@ -129,5 +129,12 @@
     
     font-size: 12px;
   }
+  .q_header, .q_middle, .q_footer{
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .q_list{
+    padding: 16px 0;
+  }
   
 }
