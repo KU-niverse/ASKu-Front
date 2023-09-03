@@ -219,6 +219,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     is_bad={wiki.is_bad}
                     is_rollback={wiki.is_rollback}
                     is_q_based={wiki.is_q_based}
+                    title={wiki.title}
                   />
                 ))
               )}
