@@ -19,12 +19,13 @@ const QuestionEdit = () => {
     const {main} = useParams();
     const location = useLocation();
     const stateData = location.state;
+    console.log(stateData);
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
-    console.log(defaultOpt);
+    console.log(qid);
     const [section, setSection] = useState('');
     const [isChecked, setIsChecked] = useState(false);
 
