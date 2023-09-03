@@ -19,12 +19,13 @@ const QuestionEdit = () => {
     const {main} = useParams();
     const location = useLocation();
     const stateData = location.state;
+    console.log(stateData);
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
-    console.log(defaultOpt);
+    console.log(qid);
     const [section, setSection] = useState('');
     const [isChecked, setIsChecked] = useState(false);
 
@@ -39,7 +40,7 @@ const QuestionEdit = () => {
     const getAllWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}`,{
+            const result = await axios.get(`http://localhost:8080/wiki/contents/${main}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -63,7 +64,7 @@ const QuestionEdit = () => {
     const getWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}/section/${selectedOption}`,{
+            const result = await axios.get(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -90,7 +91,7 @@ const QuestionEdit = () => {
 
 
         try {
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/question/${qid}`, {
+            const result = await axios.get(`http://localhost:8080/wiki/contents/question/${qid}`, {
                 withCredentials: true,
             });
             if(result.status === 200){
@@ -166,7 +167,7 @@ const QuestionEdit = () => {
 
         if( selectedOption === 'all'){
             try {
-                const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}`, {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}`, {
                     version: version,
                     new_content: wikiMarkup,
                     summary: summary,
@@ -194,7 +195,7 @@ const QuestionEdit = () => {
 
         } else{
             try {
-                const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}/section/${selectedOption}`, {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`, {
                     version: version,
                     new_content: wikiMarkup,
                     summary: summary,
