@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
-function QuestionInput({onQuestionSubmit, title, wikiData}) {
+function QuestionInput({onQuestionSubmit, title, wikiData, defaultOpt}) {
   const [questionContent, setQuestionContent] = useState('');
   const [selectedOption, setSelectedOption] = useState(null); // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false);
@@ -84,7 +84,7 @@ function QuestionInput({onQuestionSubmit, title, wikiData}) {
       <div className={styles.q_cfrontheader}>
         <p className={styles.q_cheadline}>질문 생성하기</p>
         <div className={styles.q_dropdown}>
-          <DropDown onSelectedOption={handleSelectedOption} title={title} wikiData={wikiData}/>
+          <DropDown onSelectedOption={handleSelectedOption} title={title} wikiData={wikiData} defaultOpt={defaultOpt}/>
         </div>
       </div>
     </div>

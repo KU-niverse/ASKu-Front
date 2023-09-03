@@ -29,9 +29,7 @@ function QuestionFor(props){
               <span className={styles.q_icon}>Q. </span>
               <span className={styles.q_content}>{props.content}</span>
             </div>
-            <div>
-              <span className={styles.q_letter}>해당 질문을 기반으로 문서 수정하기</span>
-            </div>
+            
             
           </div>
         </div>
