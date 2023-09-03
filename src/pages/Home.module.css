@@ -149,5 +149,9 @@
     font-weight: 400;
     font-size: 14px;
     color: black;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
