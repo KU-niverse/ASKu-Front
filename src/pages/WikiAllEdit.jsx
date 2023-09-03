@@ -116,8 +116,8 @@ const WikiEdit = () => {
                         <textarea className={`${styles.summary}`} value={summary} onChange={e => setSummary(e.target.value)} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
                     </div>
                     <div className={`${styles.submitbox}`}>
-                        <span><input required type='checkbox' className={styles.chkbox}/>정책에 맞게 작성하였음을 확인합니다.</span>
-                        <input type='submit' value="생성하기" className={`${styles.submitWiki}`} />
+                    <span className={`${styles.chkdiv}`}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className={`${styles.chkbox}`}/><span>정책에 맞게 작성하였음을 확인합니다.</span></span>
+                        <button className={`${styles.submitWiki}`}>생성하기</button>
                     </div>
                 </form>
             </div>

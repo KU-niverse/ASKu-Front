@@ -81,7 +81,6 @@ const SearchResearch = () => {
             if(result.status === 200){
                 setDocs(result.data.message);
                 setDocsCount(result.data.message.length);
-                console.log(result.data.message.is_deleted);
             }
             
         } catch (error) {
@@ -149,6 +148,7 @@ const SearchResearch = () => {
                 <div className={styles.boxes}>
                     <div className={isClicked ? '': styles.hidden}>
                         {docs.map((item) => {
+                            console.log(item.is_deleted)
                             return(
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <BookmarkBox

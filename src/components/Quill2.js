@@ -127,7 +127,7 @@ function Quill2(props) {
         }}
         modules={modules}
         formats={formats}
-        style={{ height: "270px" }}
+        style={{ height: "450px" }}
       />
     </div>
   );
