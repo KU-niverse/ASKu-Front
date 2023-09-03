@@ -16,6 +16,7 @@ import mobilehistory from '../img/mobile_history.png';
 import AlarmModal from './AlarmModal';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SpinnerMypage from './SpinnerMypage';
 
 function Header() {
     const [inputValue, setInputValue] = useState('');
@@ -27,6 +28,8 @@ function Header() {
     const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
     const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+    const [loadingMypage, setLoadingMypage] = useState(true);
+
     const Nav = useNavigate();
 
     const logOut = () => {
@@ -64,11 +67,14 @@ function Header() {
                     withCredentials: true
                 });
 
-                if (response.data.success) {
-                    setNicknameText(response.data[0].nickname);
+                if (response.status===201) {
+                    setNicknameText(response.data);
+                    setLoadingMypage(false);
+                    console.log(response.data)
                 }
             } catch (error) {
                 console.error(error);
+                setLoadingMypage(false);
             }
         };
 
@@ -76,6 +82,8 @@ function Header() {
             fetchUserInfo();
         }
     }, [isLoggedIn]);
+
+    console.log(nicknameText.data);
 
     const signOut = async () => {
         try {
@@ -129,6 +137,9 @@ function Header() {
 
     return (
         <div className={styles.container} style={{ height: mobileHeaderHeight }}>
+        {loadingMypage ? (
+            <div></div>
+        ) : (
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -196,7 +207,7 @@ function Header() {
                                 >로그아웃</button>
                                 <Link to='/mypage'>
                                     <div className={styles.mypageWrap}>
-                                        <p className={styles.nicknameText}>{nicknameText} 님</p>
+                                        <p className={styles.nicknameText}>{nicknameText.data[0].nickname} 님</p>
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
@@ -298,6 +309,7 @@ function Header() {
                     </div>
                 </div>
             </div>
+        )};
         </div>
     );
 }
