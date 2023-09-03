@@ -114,7 +114,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
                 <input type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='비밀번호를 입력하세요' />
             </div>
             <div className={`${styles.login_remem}`}>
-                <span><input type='checkbox' id='chkbox'checked={saveIDFlag} onChange={handleSaveIDFlag}/>아이디 기억하기</span>
+                <span className={`${styles.id_rem}`}><input type='checkbox' id='chkbox'checked={saveIDFlag} onChange={handleSaveIDFlag}/><span>아이디 기억하기</span></span>
             </div>
             <button className={`${styles.login_btn}`} type='submit'>로그인</button>
         </form>
