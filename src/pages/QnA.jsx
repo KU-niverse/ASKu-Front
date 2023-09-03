@@ -40,7 +40,6 @@ const QnA = () => {
     takeAnswer();
   }, [question_id]);
 
-
   return(
     <div className={styles.container}>
       <div>
@@ -70,18 +69,24 @@ const QnA = () => {
           <img src={comment_icon} alt="comment"/>
           <span className={styles.c_headline}>답변</span>
           <span className={styles.c_num}>{stateData.answer_count}</span>
-            {/* <CommentQna
-              id={answerData.data.id}
-              wiki_history_id= {answerData.data.wiki_history_id}
-              question_id= {answerData.data.question_id}
-              created_at= {answerData.data.created_at}
-              user_id= {answerData.data.user_id}
-              nickname= {answerData.data.nickname}
-              rep_badge= {answerData.data.rep_badge}
-              badge_image={answerData.data.badge_image}
-            /> */}
-            <CommentQna/>
-            <CommentQna/>
+            {answerData && answerData.data && answerData.data.length === 0 ? (
+              <p>아직 작성된 답변이 없습니다.</p>
+            ) : (
+            answerData && answerData.data && answerData.data.map((data) => (
+              <CommentQna
+                id={data.id}
+                wiki_history_id= {data.wiki_history_id}
+                question_id= {data.question_id}
+                created_at= {data.created_at}
+                user_id= {data.user_id}
+                nickname= {data.nickname}
+                rep_badge= {data.rep_badge}
+                badge_image={data.badge_image}
+                title={data.title}
+                content={data.content}
+              />
+            ))
+          )}
         </div>
       </div>
       <div>

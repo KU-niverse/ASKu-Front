@@ -28,7 +28,7 @@
 
 .q_middle{
   display: flex;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   padding: 0 12px 18px 12px;
 }
@@ -100,24 +100,34 @@
 .q_comment {
  margin-left: 10px;
 }
+.q_footer img{
+  width: 15px;
+  height: 16px;
+  object-fit: contain;
+  align-self: center;
+}
+.q_footer button{
+  font-size: 12px;
+  width: max-content;
+  height: 25px;
+}
 
-
-  .q_date{
+  .q_date, .q_linkbtn{
     
     font-size: 12px;
   }
+
+  .q_message{
+    font-size: 10px;
+  }
   
-  .q_header{
+  .q_header, .q_middle, .q_footer{
     padding-left: 0px;
     padding-right: 0px;
   }
 
-  .q_middle{
-    padding-left: 0px;
-    padding-right: 0px;
-  }
   .q_list{
-    padding: 16px 0;
+    padding: 0px;
   }
 
 }
