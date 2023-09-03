@@ -23,7 +23,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     //로그인 체크 후 우회
     const checkLoginStatus = async () => {
         try {
-          const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+          const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
           if (res.status === 201 && res.data.success === true) {
             setLoggedIn(true);
             nav('/')
@@ -63,7 +63,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             return alert('닉네임 형식이 올바르지 않습니다.');
         }
         try{
-            const result = await axios.get(`http://localhost:8080/user/auth/nickdupcheck/${form.nick}`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/nickdupcheck/${form.nick}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -86,7 +86,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             return alert('아이디 형식이 올바르지 않습니다.');
         }
         try{
-            const result = await axios.get(`http://localhost:8080/user/auth/iddupcheck/${form.id}`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/iddupcheck/${form.id}`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -106,7 +106,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     const handleEmailDoubleCheck = async (e) => {
         e.preventDefault();
         try{
-            const result = await axios.get(`http://localhost:8080/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
+            const result = await axios.get(`https://asku.wiki/api/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`);
 
             if (result.data.success === true){
                 alert(result.data.message);
@@ -197,7 +197,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
         }
 
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/signup', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/signup', {
                 login_id: form.id,
                 name: form.name,
                 stu_id: form.studentId,
