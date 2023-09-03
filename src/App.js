@@ -60,8 +60,8 @@ function App() {
 
 
 
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signin" element={<Signin loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/signup" element={<Signup loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup/complete/:auth" element={<SignupComplete />} />
                 <Route path="/findid" element={<FindId />} />
                 <Route path="/findoutid" element={<FindoutId />} />

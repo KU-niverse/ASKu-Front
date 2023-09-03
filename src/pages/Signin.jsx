@@ -10,7 +10,7 @@ import axios from 'axios'
 
 
 
-const Signin = () => {
+const Signin = ({ loggedIn, setLoggedIn }) => {
 
     const nav = useNavigate();
     const [id, setId] = useState('');
@@ -20,12 +20,37 @@ const Signin = () => {
     const [saveIDFlag, setSaveIDFlag] = useState(false);
 
 
+
+    //로그인 체크 후 우회
+    const checkLoginStatus = async () => {
+        try {
+          const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+          if (res.status === 201 && res.data.success === true) {
+            setLoggedIn(true);
+            nav('/')
+          } else if (res.status === 401) {
+            setLoggedIn(false);
+            nav('/signin');
+          }
+        } catch (error) {
+          console.error(error);
+          setLoggedIn(false);
+          nav('/signin');
+        }
+      };
+      useEffect(() => {
+        checkLoginStatus();
+      }, []);
+
+
+    //아이디 기억하기 체크 여부
     const handleSaveIDFlag = () => {
         console.log('전' , saveIDFlag);
         setSaveIDFlag(prev => !prev);
         console.log('후', saveIDFlag);
     }
 
+    //아이디 기억하기
     useEffect(() => {
         let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
         if (idFlag !== null) setSaveIDFlag(idFlag);
@@ -35,6 +60,9 @@ const Signin = () => {
         if (data !== null) setId(data);
       }, []);
 
+
+
+    //로그인
     const userLogin = async () => {
         
         try{
