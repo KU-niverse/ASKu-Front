@@ -4,11 +4,11 @@ import edit from "../img/edit.png"
 import styles from "../components/CommentQna.module.css"
 import link_icon from "../img/link_icon.png"
 import FormatDate from "./FormatDate"
-
+import ThreedotsReport from "./ThreedotsReport"
 
 function CommentQna({id, wiki_history_id, created_at, user_id, nickname, rep_badge, badge_image, title, content}){
   const formattedDate = FormatDate(created_at);
-
+  const type=1;
   return(
         <div className={styles.q_list}>
           <div className={`${styles.q_header}`}>
@@ -17,7 +17,7 @@ function CommentQna({id, wiki_history_id, created_at, user_id, nickname, rep_bad
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <img src={threedots} alt='threedots'/>
+            <ThreedotsReport type={type} target={wiki_history_id}/>
             </div>
           </div>
           <div className={styles.q_middle}>
