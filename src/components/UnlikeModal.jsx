@@ -43,12 +43,12 @@ function UnlikeModal({ isOpen, onClose }) {
             console.error(error);
         });
     }
+}
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
             sendMessage();
         }
     };
-
     
     return (
         <>
@@ -82,6 +82,6 @@ function UnlikeModal({ isOpen, onClose }) {
         </>
     );
 }
-}
+
 
 export default UnlikeModal;

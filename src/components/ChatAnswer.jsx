@@ -55,9 +55,8 @@ const ChatAnswer = (props) => {
         } else {
         setLikeModalOpen(true);
         console.log("like opened");
+    };
     }
-}
-
     const handleUnlikeClick = () => {
         if (unlikeModalOpen) {
             setUnlikeModalOpen(false);
@@ -149,7 +148,6 @@ const ChatAnswer = (props) => {
                 </div>
                 </div>
             </div>
-            
             {likeModalOpen && <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} />}
             {unlikeModalOpen && <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} />}
         </div>

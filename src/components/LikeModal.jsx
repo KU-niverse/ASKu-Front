@@ -5,13 +5,14 @@ import axios from 'axios';
 import like from '../img/like.png';
 
 function LikeModal({ isOpen, onClose }) {
-    const [inputValue, setInputValue] = useState("");
     const modalRef = useRef(null);
+    const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
 
     const inputChange = (e) => {
         setInputValue(e.target.value);
     }
+
     const handleOutsideClick = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             onClose();
@@ -42,6 +43,8 @@ function LikeModal({ isOpen, onClose }) {
             console.error(error);
         });
     }
+    onClose();
+}
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
             sendMessage();
@@ -55,11 +58,7 @@ function LikeModal({ isOpen, onClose }) {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
-                            <img 
-                            src={closeBtn} 
-                            alt='close' 
-                            className={styles.close_btn} 
-                            onClick={onClose} />
+                            <img src={closeBtn} alt='close' className={styles.close_btn} onClick={onClose} />
                         </div>
                         <div className={styles.modal_content}>
                             <div className={styles.modal_title}>
@@ -73,9 +72,8 @@ function LikeModal({ isOpen, onClose }) {
                                 className={styles.feedback_text}
                                 value={inputValue}
                                 onChange={inputChange}
-                                onKeyDown={handleKeyDown}
-                                />
-                            <button className={styles.feedback_btn} onClick={sendMessage}>작성하기</button>
+                                onKeyDown={handleKeyDown}/>
+                            <button className={styles.feedback_btn}>작성하기</button>
                         </div>
                     </div>
                 </div>
@@ -83,7 +81,6 @@ function LikeModal({ isOpen, onClose }) {
         )}
         </>
     );
-}
 }
 
 export default LikeModal;
