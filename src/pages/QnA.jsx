@@ -70,7 +70,7 @@ const QnA = () => {
           <span className={styles.c_headline}>답변</span>
           <span className={styles.c_num}>{stateData.answer_count}</span>
             {answerData && answerData.data && answerData.data.length === 0 ? (
-              <p>아직 작성된 답변이 없습니다.</p>
+              <p className={styles.no_answer}>아직 작성된 답변이 없습니다.</p>
             ) : (
             answerData && answerData.data && answerData.data.map((data) => (
               <CommentQna

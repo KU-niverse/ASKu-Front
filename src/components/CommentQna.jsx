@@ -8,7 +8,7 @@ import ThreedotsReport from "./ThreedotsReport"
 
 function CommentQna({id, wiki_history_id, created_at, user_id, nickname, rep_badge, badge_image, title, content}){
   const formattedDate = FormatDate(created_at);
-  const type=5;
+  const type=1;
   return(
         <div className={styles.q_list}>
           <div className={`${styles.q_header}`}>
@@ -17,7 +17,7 @@ function CommentQna({id, wiki_history_id, created_at, user_id, nickname, rep_bad
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-            <ThreedotsReport type={type} target={id}/>
+            <ThreedotsReport type={type} target={wiki_history_id}/>
             </div>
           </div>
           <div className={styles.q_middle}>
