@@ -59,7 +59,6 @@ function App() {
                 <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 
 
-
                 <Route path="/signin" element={<Signin loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup" element={<Signup loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup/complete/:auth" element={<SignupComplete />} />
@@ -82,6 +81,7 @@ function App() {
                 <Route path="/debate/:title/:subject/:debateId" element={<Debate/>}/>
                 <Route path="/debate/:title" element={<MoreDebate/>}/>
                 <Route path="/latestdebate" element={<LatestDebate/>}/>
+                <Route path="/wiki/morequestion/:title/:id" element={<QnA/>}/>
 
             </Routes>
         </Router>

@@ -1,32 +1,28 @@
+import React from "react"
 import comment_icon from "../img/comment_icon.png"
 import edit from "../img/edit.png"
+import styles from "../components/QuestionQnA.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
 import LikeorNot from "./LikeorNot"
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
-import styles from "./MyQuestionList.module.css"
 
-
-function MyQuestionList({answer_count, docsname, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function QuestionQnA({answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
+
   const type=2;
   const nav = useNavigate();
-  const title=docsname
-  // const linktoQuestionEdit = () => {
-  //   ;
-  //   nav(`/question/edit/${title}`, {state : {
-  //     qid: id,
-  //     user_id: user_id,
-  //     content: content,
-  //     created_at: created_at,
-  //     like_count: like_count,
-  //     nick: nick,
-  //     index_title:index_title}
-  //   });
-  // }
-
-  const linktoQuestion = () => {
-    nav(`/wiki/morequestion/${title}`)
+  const linktoQuestionEdit = () => {
+    nav(`/question/edit/${title}`, {state : {
+      qid: id,
+      user_id: user_id,
+      content: content,
+      created_at: created_at,
+      like_count: like_count,
+      nick: nick,
+      index_title:index_title}
+    });
   }
 
 
@@ -43,7 +39,7 @@ function MyQuestionList({answer_count, docsname, id, doc_id, user_id, index_titl
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span onClick={linktoQuestion} className={styles.q_content}>{content}</span>
+            <span className={styles.q_content}>{content}</span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
@@ -56,10 +52,14 @@ function MyQuestionList({answer_count, docsname, id, doc_id, user_id, index_titl
               </div>
             </div>
             <div className={styles.q_backfooter}>
+              <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
+                <img src={edit} alt="edit"/>
+                <span>질문을 기반으로 문서 수정하기</span>
+              </button>
             </div>
           </div>
         </div>
     );
   };
 
-  export default MyQuestionList;
+  export default QuestionQnA;

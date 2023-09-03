@@ -1,13 +1,13 @@
 .q_list{
   width: 100%;
-  border-bottom: 1px solid rgba(213, 213, 213, 1);
+  border-top: 1px solid rgba(213, 213, 213, 1);
   margin: 0 20px;
 } 
 .q_header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 19px;
+  padding: 0px 12px;
 }
 
 .q_mynick{
@@ -28,11 +28,64 @@
 
 .q_middle{
   display: flex;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 0 19px 18px 19px;
+  padding: 0 12px 18px 12px;
 }
 
+.q_footer{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 12px 0px;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.q_frontfooter{
+  display: flex;
+  flex-direction: row;
+  align-content: baseline;
+}
+
+
+.q_message{
+  display: flex;
+  align-content: center;
+  color:  #949494;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+
+.q_backfooter button{
+  border-radius: 30px;
+  border-color: rgba(159, 19, 46, 1);
+  border-width: 2px;
+  height: 36px;
+  width: 128px;
+  background-color: white;
+  color: rgba(159, 19, 46, 1);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.q_backfooter img{
+  height: 15px;
+  width: 18px;
+  object-fit: contain;
+  padding-left: 0px;
+}
+
+.q_backfooter span{
+  display: flex;
+  align-items: center;
+}
 
 
 
@@ -47,11 +100,34 @@
 .q_comment {
  margin-left: 10px;
 }
+.q_footer img{
+  width: 15px;
+  height: 16px;
+  object-fit: contain;
+  align-self: center;
+}
+.q_footer button{
+  font-size: 12px;
+  width: max-content;
+  height: 25px;
+}
 
-
-  .q_date{
+  .q_date, .q_linkbtn{
     
     font-size: 12px;
   }
+
+  .q_message{
+    font-size: 10px;
+  }
   
+  .q_header, .q_middle, .q_footer{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .q_list{
+    padding: 0px;
+  }
+
 }

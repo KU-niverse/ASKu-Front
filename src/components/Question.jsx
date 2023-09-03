@@ -7,12 +7,11 @@ import LikeorNot from "./LikeorNot"
 import { useNavigate } from "react-router-dom"
 
 
-function Question({ title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
   const linktoQuestionEdit = () => {
-    ;
     nav(`/question/edit/${title}`, {state : {
       qid: id,
       user_id: user_id,
@@ -22,6 +21,19 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
       nick: nick,
       index_title:index_title}
     });
+  }
+
+  const linktoAnswer = () => {
+    nav(`/wiki/morequestion/${title}/${id}`, {state:{
+      question_id : id,
+      user_id: user_id,
+      content:content,
+      created_at: created_at,
+      like_count: like_count,
+      nick: nick,
+      index_title:index_title,
+      answer_count: answer_count
+    }})
   }
 
 
@@ -38,7 +50,7 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span className={styles.q_content}>{content}</span>
+            <span onClick={linktoAnswer} className={styles.q_content}>{content}</span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
@@ -47,7 +59,7 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>
-                <span className={styles.commentCount}>{answer_or_not}</span>
+                <span className={styles.commentCount}>{answer_count}</span>
               </div>
             </div>
             <div className={styles.q_backfooter}>
