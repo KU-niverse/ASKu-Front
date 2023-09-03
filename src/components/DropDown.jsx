@@ -8,8 +8,9 @@ import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
 
-function DropDown({onSelectedOption, title}) {
+function DropDown({onSelectedOption, title, defaultOpt}) {
   const [wikiData, setWikiData] = useState([]);
+  console.log(defaultOpt);
 
   useEffect(() => {
     const takeWikiData = async () =>{
@@ -64,8 +65,13 @@ function DropDown({onSelectedOption, title}) {
   //   }
   // ];
 
-
-  const defaultOption = "목차 선택";
+  let defaultOption;
+ if(defaultOpt){
+  defaultOption = defaultOpt;
+ } else{
+  defaultOption = "목차 선택";
+ }
+  
 
   const onSelect = (selectedOption) => {
     console.log(selectedOption);

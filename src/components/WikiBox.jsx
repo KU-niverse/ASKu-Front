@@ -21,7 +21,7 @@ const WikiBox = (props) => {
     
     }
     const linkToWikiQue = () => {
-        nav(`/questionedit/${main}/${section}`);
+        nav(`/wiki/morequestion/${main}`, {state:`${index} ${title}`});
     
     }
   

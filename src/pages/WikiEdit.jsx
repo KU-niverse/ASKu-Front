@@ -18,10 +18,17 @@ const WikiEdit = () => {
     const [version, setVersion] = useState('');
     const [copy, setCopy] = useState(false);
 
-    function onEditorChange(value) {
-        setDesc(value);
+    useEffect(() => {
         console.log(desc);
-    }
+        const wikiMarkup = HtmlToWiki(desc);
+        console.log(wikiMarkup);
+        // You can perform other actions with the updated 'desc' value here
+      }, [desc]);
+    
+      const onEditorChange = (value) => {
+        setDesc(value);
+        // No need to log 'desc' here
+      }
 
     const [isChecked, setIsChecked] = useState(false);
 

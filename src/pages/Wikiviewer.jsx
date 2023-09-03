@@ -378,7 +378,6 @@ useEffect(() => {
                                 );
                             })}
                             <div className={blank === true ? styles.default : styles.hidden}>아직 질문이 없습니다. 질문을 생성해 주세요</div>
-
                     </div>
                     <div className={styles.wikiaskFoot}>
                         <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
