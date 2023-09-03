@@ -271,6 +271,7 @@ li{
     .wikititleBtn{
         width: 155px;
 
+
     }
     .wikititleBtn img{
         width: 16px;
@@ -280,7 +281,7 @@ li{
     .wikititleBtn button{
         width: 69px;
         height: 25px;
-        font-size: 10px;
+        font-size: 9px;
         padding: 6px;
     }
 
