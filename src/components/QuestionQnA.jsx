@@ -8,14 +8,14 @@ import LikeorNot from "./LikeorNot"
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 
-function QuestionQnA({answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function QuestionQnA({answer_count, title, question_id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   const type=2;
   const nav = useNavigate();
   const linktoQuestionEdit = () => {
     nav(`/question/edit/${title}`, {state : {
-      qid: id,
+      qid: question_id,
       user_id: user_id,
       content: content,
       created_at: created_at,
@@ -34,7 +34,7 @@ function QuestionQnA({answer_count, title, id, doc_id, user_id, index_title, con
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <ThreedotsMenu  questionId={id} type={type}/>
+              <ThreedotsMenu  questionId={question_id} type={type}/>
             </div>
           </div>
           <div className={styles.q_middle}>
@@ -44,7 +44,7 @@ function QuestionQnA({answer_count, title, id, doc_id, user_id, index_title, con
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
               <div className={styles.q_like}>
-                <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
+                <LikeorNot questionId={question_id} like_count={like_count} user_id={user_id} />
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>
