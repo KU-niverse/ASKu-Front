@@ -10,6 +10,7 @@ import SpinnerMypage from './SpinnerMypage';
 
 function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
   const [wikiData, setWikiData] = useState([]);
+  console.log(isOptionDisabled)
 
   useEffect(() => {
     if (!isOptionDisabled) {
@@ -39,12 +40,23 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
 
 
  let options=[]
- if (!isOptionDisabled && wikiData.contents && wikiData.contents[0]){
+ if (!isOptionDisabled && wikiData.contents){
     options = wikiData.contents.map((content) => ({
     value: `${content.section}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
-  }))} else if(isOptionDisabled === true){
+  }))
+
+    // "전체 편집" 옵션 추가
+  options.push({
+    value: 'all', 
+    label: '전체 편집',
+    className: 'myOptionClassName'
+  });
+
+
+
+} else if(isOptionDisabled === true){
     options=[{
       value: 'all', 
       label: '전체 편집',
@@ -74,7 +86,16 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
   // ];
 
 
-  const defaultOption = defaultOpt;
+  let defaultOption;
+  if(isOptionDisabled===true){
+    defaultOption = {
+      value: 'all', 
+      label: '전체 편집',
+      className: 'myOptionClassName'
+     }
+  }else{
+    defaultOption = defaultOpt;
+  }
 
   const onSelect = (selectedOption) => {
     console.log(selectedOption);
