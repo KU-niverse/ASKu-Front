@@ -91,10 +91,10 @@ function Home({loggedIn, setLoggedIn}) {
                         <div className={styles.question}>
                             <p className={styles.realTimeTitle}>실시간 인기 질문</p>
                             {popularQuestions.map((question, index) => (
-                                <div className={styles.rankWrap} key={index}>
+                                <Link to={`wiki/morequestion/${encodeURIComponent(question.title).replace(/\./g, '%2E')}`} className={styles.rankWrap} key={index}>
                                     <p className={styles.numberIcon}>Q.</p>
                                     <p className={styles.rankContent}>{question.content}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

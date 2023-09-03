@@ -69,7 +69,7 @@ const ChatAnswer = (props) => {
 
     const sendLikeFeedback = () => {
         axios.post('https://asku.wiki/ai/chatbot/feedback/', {
-            qna_id: 1,
+            qna_id: 501,
             feedback: true,
     }).
     then(response => {
@@ -82,7 +82,7 @@ const ChatAnswer = (props) => {
 
     const sendUnlikeFeedback = () => {
         axios.post('https://asku.wiki/ai/chatbot/feedback/', {
-            qna_id: 1,
+            qna_id: 501,
             feedback: false,
     }).
     then(response => {
