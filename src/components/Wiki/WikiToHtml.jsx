@@ -19,8 +19,8 @@ const WikiToHtml = (wikiText) => {
   // &amp;를 &로 변환
   html = html.replace(/&amp;/g, '&');
 
-  // Convert [[File:...]] to <img> tags
-  html = html.replace(/\[\[File:([^|\]]+)\]\]/g, '<img src="$1" />');
+  // // Convert [[File:...]] to <img> tags
+  // html = html.replace(/\[\[File:([^|\]]+)\]\]/g, '<img src="$1" />');
 
 
   return html;
