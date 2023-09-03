@@ -1,6 +1,6 @@
 .content{
     display: flex;
-    padding: 30px;
+    padding-top: 30px;
     flex-direction: column;
     width: 74%;
     height: auto;
