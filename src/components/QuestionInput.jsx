@@ -67,9 +67,9 @@ function QuestionInput({onQuestionSubmit, title, wikiData, defaultOpt}) {
       alert('질문을 입력해주세요.');
       return;
     }
-    // else {
-    //   window.location.reload();
-    // }
+    else {
+      window.location.reload();
+    }
     const submitData = {
       index_title: selectedOption,
       content: questionContent,
