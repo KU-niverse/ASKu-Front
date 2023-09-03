@@ -52,9 +52,9 @@ const QnA = () => {
             <p className={styles.q_pagename}>{title}</p>
             <p className={styles.q_headline}>게시물의 질문</p>
           </div>
-          <div className={styles.switch}>
+          {/* <div className={styles.switch}>
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
-          </div>
+          </div> */}
         </div>
           <QuestionQnA
             question_id={stateData.question_id}
