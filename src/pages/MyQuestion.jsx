@@ -85,6 +85,7 @@ function MyQuestion() {
               docsname={question.doc_title}
               nick={mypageData.data[0].nickname}
               like_count={question.like_count}
+              answer_count={question.answer_count}
             />
           ))
         )}

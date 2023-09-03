@@ -124,7 +124,7 @@
   .q_footer button{
     font-size: 12px;
     width: max-content;
-    height: max-content;
+    height: 25px;
   }
   .q_date, .q_footer span{
     

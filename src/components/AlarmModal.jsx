@@ -105,7 +105,6 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     // 창 크기 변화 이벤트 핸들러
     const handleWindowResize = () => {
         if (isAlarmVisible) {
-            
             handleAlarm(); 
         } else {
             return;

@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, Fragment } from 'react';
 import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
 import ClearModal from './ClearModal';
+import { Link } from 'react-router-dom';
 
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,10 +55,32 @@ function Chatbot () {
         checkLoginStatus();
     }, []);
 
-    useEffect(() => {
+    const getUserInfo = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                withCredentials: true
+            });
+            if (res.status === 200 && res.data.success === true) {
+                // 사용자 정보에서 id를 가져옴
+                const userId = res.data.data[0].id;
+                // sendMessage 함수 호출하여 채팅 메시지 전송
+                sendMessage(userId);
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    useEffect((userId) => {
         inputRef.current.focus();
-        axios.get('https://asku.wiki/ai/chatbot/1')
+        axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
             .then(response => {
+                // 삭제 해야됨
+                console.log(response);
+                console.log(userId);
                 const previousHistory = response.data;
                 setPreviousChatHistory(previousHistory);
             })
@@ -66,7 +89,9 @@ function Chatbot () {
             });
     }, []);
 
-    const sendMessage = () => {
+
+
+    const sendMessage = (userId) => {
     if (!isLoggedIn) {
         setLoginModalVisible(true);
         return;
@@ -74,11 +99,12 @@ function Chatbot () {
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post('https://asku.wiki/ai/chatbot/', {
+        axios.post(`https://asku.wiki/ai/chatbot/${userId}`, {
             q_content: inputValue,
-            user_id: "1",
+            user_id: userId
         })
         .then(response => {
+            console.log(response);
             setShowSuggest(false);
             inputRef.current.blur();
 
@@ -152,14 +178,34 @@ function Chatbot () {
         }, 5000); // 5초 후에 실행
     };
 
+    const chatBottomRef = useRef(null);
+    const scrollToBottom = () => {
+        chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
+    useEffect(() => {
+        scrollToBottom();
+    }, [chatResponse]);
+
+    useEffect(() => {
+        scrollToBottom();
+      }, [previousChatHistory]);
+
+    //   useEffect(() => {
+    //     chatBottomRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+    // }, [previousChatHistory]);
+
 
     return (
         <div className={styles.chatBot}>
             <div className={styles.sideBar}>
                 <div className={styles.textWrap}>
-                    <button id={styles.title}>AI 챗봇</button>
+                    <button id={styles.title}>AI 하호</button>
                     <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
-                    <button className={styles.button}>도움말</button>
+                    <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
+                        <button className={styles.button}>도움말</button>
+                    </Link>
                 </div>
             </div>
             <div className={styles.chat}>
@@ -205,26 +251,28 @@ function Chatbot () {
                         디자인조형학부 홈페이지 주소 보내줘!
                     </span>
                 </div>
+                <div ref={chatBottomRef}></div> {/* 스크롤 최하단 이동을 위한 빈 div */}
                 {loading && (
                         <Spinner/>
                     )}
-                <div className={styles.promptWrap}>
-                    <textarea
-                        className={styles.prompt}
-                        placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
-                        value={inputValue}
-                        onChange={inputChange}
-                        onKeyDown={handleKeyDown}
-                        ref={inputRef}
-                    />
-                    <div className={styles.sendBtn} onClick={sendMessage}>
-                        <img src={arrow} /> 
-                    </div>
-                </div>
+
             </div>
             {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
             {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)}/>}
-
+            <div className={styles.promptWrap}>
+                <textarea
+                    className={styles.prompt}
+                    placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
+                    value={inputValue}
+                    onChange={inputChange}
+                    onKeyDown={handleKeyDown}
+                    ref={inputRef}
+                    disabled={loading}
+                />
+                <div className={styles.sendBtn} onClick={sendMessage}>
+                    <img src={arrow} /> 
+                </div>
+            </div>
         </div>
         );
     }

@@ -70,7 +70,6 @@ function Header() {
                 if (response.status===201) {
                     setNicknameText(response.data);
                     setLoadingMypage(false);
-                    console.log(response.data)
                 }
             } catch (error) {
                 console.error(error);
@@ -137,9 +136,6 @@ function Header() {
 
     return (
         <div className={styles.container} style={{ height: mobileHeaderHeight }}>
-        {loadingMypage ? (
-            <div></div>
-        ) : (
             <div className={styles.headerContainer}>
                 <div className={styles.logoContainer}>
                     <Link to='/'>
@@ -205,13 +201,18 @@ function Header() {
                                     className={styles.headerButton}
                                     onClick={signOut}
                                 >로그아웃</button>
+                                {loadingMypage ? (
+                                    <div></div>
+                                ) : (
                                 <Link to='/mypage'>
                                     <div className={styles.mypageWrap}>
                                         <p className={styles.nicknameText}>{nicknameText.data[0].nickname} 님</p>
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
+                                )};
                             </>
+                           
                         ) : (
                             <>
                                 <Link to='/signup'>
@@ -309,7 +310,7 @@ function Header() {
                     </div>
                 </div>
             </div>
-        )};
+
         </div>
     );
 }

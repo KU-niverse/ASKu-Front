@@ -110,6 +110,7 @@ const MoreQuestion = () => {
                 nick={data.nickname}
                 like_count={data.like_count}
                 title={title}
+                answer_count={data.answer_count}
               />
             ))
           )}

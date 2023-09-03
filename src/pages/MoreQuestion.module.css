@@ -19,6 +19,7 @@
 .frontheader{
   display: flex;
   flex-direction: row; 
+  align-items: center;
 }
 
 .switch{
@@ -32,7 +33,6 @@
   align-self: center;
 }
 .q_headline{
-  align-self: last baseline;
   font-size: 24px;
   font-weight: bold;
   padding-left: 15px;
@@ -54,6 +54,5 @@
   .q_headline{
     font-size: 16px;
     padding-left: 10px;
-    margin-bottom: 20px;
   }
 }
