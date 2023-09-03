@@ -152,6 +152,24 @@ function Chatbot () {
         }, 5000); // 5초 후에 실행
     };
 
+    const chatBottomRef = useRef(null);
+    const scrollToBottom = () => {
+        chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
+    useEffect(() => {
+        scrollToBottom();
+    }, [chatResponse]);
+
+    useEffect(() => {
+        scrollToBottom();
+      }, [previousChatHistory]);
+
+    //   useEffect(() => {
+    //     chatBottomRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+    // }, [previousChatHistory]);
+
 
     return (
         <div className={styles.chatBot}>
@@ -205,26 +223,27 @@ function Chatbot () {
                         디자인조형학부 홈페이지 주소 보내줘!
                     </span>
                 </div>
+                <div ref={chatBottomRef}></div> {/* 스크롤 최하단 이동을 위한 빈 div */}
                 {loading && (
                         <Spinner/>
                     )}
-                <div className={styles.promptWrap}>
-                    <textarea
-                        className={styles.prompt}
-                        placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
-                        value={inputValue}
-                        onChange={inputChange}
-                        onKeyDown={handleKeyDown}
-                        ref={inputRef}
-                    />
-                    <div className={styles.sendBtn} onClick={sendMessage}>
-                        <img src={arrow} /> 
-                    </div>
-                </div>
+
             </div>
             {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
             {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)}/>}
-
+            <div className={styles.promptWrap}>
+                <textarea
+                    className={styles.prompt}
+                    placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
+                    value={inputValue}
+                    onChange={inputChange}
+                    onKeyDown={handleKeyDown}
+                    ref={inputRef}
+                />
+                <div className={styles.sendBtn} onClick={sendMessage}>
+                    <img src={arrow} /> 
+                </div>
+            </div>
         </div>
         );
     }
