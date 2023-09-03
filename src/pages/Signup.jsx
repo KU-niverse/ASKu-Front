@@ -29,12 +29,10 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             nav('/')
           } else if (res.status === 401) {
             setLoggedIn(false);
-            nav('/signin');
           }
         } catch (error) {
           console.error(error);
           setLoggedIn(false);
-          nav('/signin');
         }
       };
       useEffect(() => {
