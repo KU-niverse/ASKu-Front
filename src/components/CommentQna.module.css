@@ -1,13 +1,13 @@
 .q_list{
   width: 100%;
-  border-bottom: 1px solid rgba(213, 213, 213, 1);
+  border-top: 1px solid rgba(213, 213, 213, 1);
   margin: 0 20px;
 } 
 .q_header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 19px;
+  padding: 0px 12px;
 }
 
 .q_mynick{
@@ -30,7 +30,7 @@
   display: flex;
   font-size: 14px;
   font-weight: 700;
-  padding: 0 19px 18px 19px;
+  padding: 0 12px 18px 12px;
 }
 
 
@@ -54,4 +54,17 @@
     font-size: 12px;
   }
   
+  .q_header{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .q_middle{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .q_list{
+    padding: 16px 0;
+  }
+
 }

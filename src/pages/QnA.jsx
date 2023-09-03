@@ -18,6 +18,7 @@ const QnA = () => {
   const location = useLocation();
   const stateData = location.state;
   const question_id = stateData.question_id;
+  const {title} = useParams();
   console.log(question_id)
 
 
@@ -48,7 +49,7 @@ const QnA = () => {
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.frontheader}>
-            <p className={styles.q_pagename}>입실렌티</p>
+            <p className={styles.q_pagename}>{title}</p>
             <p className={styles.q_headline}>게시물의 질문</p>
           </div>
           <div className={styles.switch}>
@@ -79,6 +80,7 @@ const QnA = () => {
               rep_badge= {answerData.data.rep_badge}
               badge_image={answerData.data.badge_image}
             /> */}
+            <CommentQna/>
             <CommentQna/>
         </div>
       </div>
