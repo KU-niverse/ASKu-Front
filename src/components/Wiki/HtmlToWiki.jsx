@@ -31,10 +31,6 @@ const HtmlToWiki = (html) => {
   // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
   // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
 
-  // // Convert <img> tags to [[File:...]]
-  // wikiText = wikiText.replace(/<img[^>]*src="([^"]+)"[^>]*>/g, '[[File:$1]]');
-
-
   return wikiText;
 };
 

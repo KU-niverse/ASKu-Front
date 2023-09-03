@@ -228,6 +228,14 @@ useEffect(() => {
             
             setFavorite(result.data.is_favorite);
             console.log(favorite);
+
+            if( result.data.is_favorite === true){
+                setImageSource(trueBk);
+        
+            } else if (result.data.is_favorite === false){
+                setImageSource(falseBk);
+        
+            }
             
            
 
