@@ -64,6 +64,7 @@ const QnA = () => {
             created_at={stateData.created_at}
             index_title={stateData.index_title}
             answer_count={stateData.answer_count}
+            title={stateData.title}
           />
         <div className={styles.c_header}>
           <img src={comment_icon} alt="comment"/>

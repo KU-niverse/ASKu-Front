@@ -32,7 +32,8 @@ function Question({answer_count, title, id, doc_id, user_id, index_title, conten
       like_count: like_count,
       nick: nick,
       index_title:index_title,
-      answer_count: answer_count
+      answer_count: answer_count,
+      title : title
     }})
   }
 
