@@ -58,7 +58,7 @@ function Question({answer_count, title, id, doc_id, user_id, index_title, conten
               <div className={styles.q_like}>
                 <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
               </div>
-              <div className={styles.q_comment}>
+              <div onClick={linktoAnswer} className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>
                 <span className={styles.commentCount}>{answer_count}</span>
               </div>
