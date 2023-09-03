@@ -23,6 +23,7 @@ function Chatbot () {
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
+    const [userId, setUserId] = useState('');
     
     const inputChange = (e) => {
         setInputValue(e.target.value);
@@ -36,25 +37,23 @@ function Chatbot () {
         }
     }
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
-                    withCredentials: true
-                });
-                if (res.status === 201 && res.data.success === true) {
-                    setIsLoggedIn(true);
-                } else if (res.status === 401) {
-                    setIsLoggedIn(false);
-                }
-            } catch (error) {
-                console.error(error);
+
+    const checkLoginStatus = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                withCredentials: true
+            });
+            if (res.status === 201 && res.data.success === true) {
+                setIsLoggedIn(true);
+            } else if (res.status === 401) {
                 setIsLoggedIn(false);
             }
-        };
-        checkLoginStatus();
-    }, []);
-
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+    
     const getUserInfo = async () => {
         try {
             const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
@@ -62,9 +61,11 @@ function Chatbot () {
             });
             if (res.status === 200 && res.data.success === true) {
                 // 사용자 정보에서 id를 가져옴
-                const userId = res.data.data[0].id;
-                // sendMessage 함수 호출하여 채팅 메시지 전송
-                sendMessage(userId);
+                const user_id = res.data.data[0].id;
+                setUserId(user_id);
+    
+                // userId를 설정한 이후에 GET 요청을 보냄
+                // fetchPreviousChatHistory(user_id);
             } else {
                 setIsLoggedIn(false);
             }
@@ -74,22 +75,11 @@ function Chatbot () {
         }
     };
 
-    useEffect((userId) => {
-        inputRef.current.focus();
-        axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
-            .then(response => {
-                // 삭제 해야됨
-                console.log(response);
-                console.log(userId);
-                const previousHistory = response.data;
-                setPreviousChatHistory(previousHistory);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    // getUserInfo 함수를 useEffect 내에서 호출
+    useEffect(() => {
+        checkLoginStatus();
+        getUserInfo();
     }, []);
-
-
 
     const sendMessage = (userId) => {
     if (!isLoggedIn) {
@@ -99,12 +89,12 @@ function Chatbot () {
     if (inputValue.trim() !== '') {
         setLoading(true);
         //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post(`https://asku.wiki/ai/chatbot/${userId}`, {
+        axios.post('https://asku.wiki/ai/chatbot/', {
             q_content: inputValue,
-            user_id: userId
+            user_id: userId,
         })
         .then(response => {
-            console.log(response);
+            console.log("챗봇 post 성공");
             setShowSuggest(false);
             inputRef.current.blur();
 
@@ -132,6 +122,7 @@ function Chatbot () {
         setInputValue('');
         };
     }
+
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
             if (!isLoggedIn) {

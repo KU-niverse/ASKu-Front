@@ -82,7 +82,6 @@ function Header() {
         }
     }, [isLoggedIn]);
 
-    console.log(nicknameText.data);
 
     const signOut = async () => {
         try {
@@ -210,7 +209,7 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
-                                )};
+                                )}
                             </>
                            
                         ) : (
