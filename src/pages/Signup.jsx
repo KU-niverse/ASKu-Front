@@ -8,7 +8,7 @@ import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 import axios from 'axios';
 
-const Signup = () => {
+const Signup = ({ loggedIn, setLoggedIn }) => {
     const nav = useNavigate();
     const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
     const [idDoubleCheck, setIdDoubleCheck] = useState(false);
@@ -18,6 +18,29 @@ const Signup = () => {
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
     const [isChecked, setIsChecked] = useState(false);
+
+
+    //로그인 체크 후 우회
+    const checkLoginStatus = async () => {
+        try {
+          const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+          if (res.status === 201 && res.data.success === true) {
+            setLoggedIn(true);
+            nav('/')
+          } else if (res.status === 401) {
+            setLoggedIn(false);
+            nav('/signin');
+          }
+        } catch (error) {
+          console.error(error);
+          setLoggedIn(false);
+          nav('/signin');
+        }
+      };
+      useEffect(() => {
+        checkLoginStatus();
+      }, []);
+
 
     const handleCheckboxChange = () => {
         setIsChecked(prevIsChecked => !prevIsChecked);

@@ -124,8 +124,11 @@ function WikiViewer() {
             }, {
                 withCredentials: true
             });
-            if(result.status === 200){
+            if(result.data.success === true){
                 setDeleted(false);
+                console.log(deleted);
+            } else {
+              alert('문제가 발생하였습니다');
             }
             
         } catch (error) {
@@ -145,9 +148,9 @@ function WikiViewer() {
             const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
                 withCredentials: true
             });
-            if(result.status === 200){
+            if(result.data.success === true){
                 setDeleted(true);
-                console.log(result.data.status);
+                console.log(deleted);
             } else {
               alert('문제가 발생하였습니다');
             }
@@ -160,27 +163,44 @@ function WikiViewer() {
 
     // 북마크 이미지 변경
    // 북마크 이미지 변경
-function handleClickBookmark() {
-    // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
-    if(deleted === false){
-        deleteBookmark();
-        setImageSource(falseBk);
+// function handleClickBookmark() {
+//     // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
+//     if(deleted === false){
+//         deleteBookmark();
+//         setImageSource(falseBk);
 
-      } else if (deleted === true){
-        addBookmark();
+//       } else if (deleted === true){
+//         addBookmark();
+//         setImageSource(trueBk);
+
+//       }
+// }
+
+async function handleClickBookmark() {
+    try {
+      if (deleted === false) {
+        await deleteBookmark();
+        setDeleted(true); // Update the state first
         setImageSource(trueBk);
-
+      } else if (deleted === true) {
+        await addBookmark();
+        setDeleted(false); // Update the state first
+        setImageSource(falseBk);
       }
-}
+    } catch (error) {
+      console.error(error);
+      // Handle error appropriately
+    }
+  }
 
 useEffect(() => {
     if(deleted === false){
         setImageSource(trueBk);
 
-      } else if (deleted === true){
+    } else if (deleted === true){
         setImageSource(falseBk);
 
-      }
+    }
     
 }, [deleted]);
 
@@ -204,9 +224,10 @@ useEffect(() => {
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
-            setDeleted(!result.data.is_favorite);
-            console.log(result.data.contents);
-            console.log(allContent);
+            setDeleted((prevDeleted) => result.data.is_favorite);
+            console.log(result.data.is_favorite)
+            
+            console.log(deleted);
 
         } catch (error) {
             console.error(error);
@@ -281,9 +302,12 @@ useEffect(() => {
 
     useEffect(() => {
         
-        getContribute();
+        if(!totalPoint){
+            getContribute();
+        }
+        
     
-    }, [totalPoint]);
+    }, [totalPoint, contribute]);
     
        // 로딩 중일 때 표시할 컴포넌트
   if (loading) {
@@ -354,7 +378,6 @@ useEffect(() => {
                                 );
                             })}
                             <div className={blank === true ? styles.default : styles.hidden}>아직 질문이 없습니다. 질문을 생성해 주세요</div>
-
                     </div>
                     <div className={styles.wikiaskFoot}>
                         <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>

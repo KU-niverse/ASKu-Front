@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const MoreQuestion = () => {
   
@@ -18,6 +19,9 @@ const MoreQuestion = () => {
   const [questionData, setQuestionData] = useState([]);
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [section, setSection] = useState('');
+  const location = useLocation();
+  const defaultOpt = location.state;
+
 
   const flag = isToggled ? 1 : 0;  
   
@@ -86,7 +90,7 @@ const MoreQuestion = () => {
           </div>
         </div>
         <div>
-          <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title}/>
+          <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt}/>
         </div>
         <div>
           {questionData && questionData.data && questionData.data.length === 0 ? (
