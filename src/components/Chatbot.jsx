@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, Fragment } from 'react';
 import Spinner from "./Spinner";
 import LoginModal from './LoginModal';
 import ClearModal from './ClearModal';
+import { Link } from 'react-router-dom';
 
 function Chatbot () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,9 +55,28 @@ function Chatbot () {
         checkLoginStatus();
     }, []);
 
-    useEffect(() => {
+    const getUserInfo = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                withCredentials: true
+            });
+            if (res.status === 200 && res.data.success === true) {
+                // 사용자 정보에서 id를 가져옴
+                const userId = res.data.data[0].id;
+                // sendMessage 함수 호출하여 채팅 메시지 전송
+                sendMessage(userId);
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    useEffect((userId) => {
         inputRef.current.focus();
-        axios.get('https://asku.wiki/ai/chatbot/1')
+        axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
             .then(response => {
                 const previousHistory = response.data;
                 setPreviousChatHistory(previousHistory);
@@ -66,7 +86,9 @@ function Chatbot () {
             });
     }, []);
 
-    const sendMessage = () => {
+
+
+    const sendMessage = (userId) => {
     if (!isLoggedIn) {
         setLoginModalVisible(true);
         return;
@@ -76,9 +98,10 @@ function Chatbot () {
         //content 대신 q_content, user_id 반드시 보내야 함
         axios.post('https://asku.wiki/ai/chatbot/', {
             q_content: inputValue,
-            user_id: "1",
+            user_id: userId,
         })
         .then(response => {
+            console.log(response);
             setShowSuggest(false);
             inputRef.current.blur();
 
@@ -175,9 +198,12 @@ function Chatbot () {
         <div className={styles.chatBot}>
             <div className={styles.sideBar}>
                 <div className={styles.textWrap}>
-                    <button id={styles.title}>AI 챗봇</button>
+                    <button id={styles.title}>AI 하호</button>
                     <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
-                    <button className={styles.button}>도움말</button>
+                    <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
+                        <button className={styles.button}>도움말</button>
+                    </Link>
+                    
                 </div>
             </div>
             <div className={styles.chat}>
