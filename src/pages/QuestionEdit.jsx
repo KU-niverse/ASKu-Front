@@ -101,7 +101,7 @@ const QuestionEdit = () => {
                    
                 } else{
                     setSelectedOption('all');
-                    setIsOptDisabled(false);
+                    setIsOptDisabled(true);
 
                    
                     
@@ -164,32 +164,63 @@ const QuestionEdit = () => {
             return alert('수정요약을 작성해주세요');
         }
 
-        try {
-            const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`, {
-                version: version,
-                new_content: wikiMarkup,
-                summary: summary,
-                is_q_based: 1,
-                qid: qid,
-            },{
-                withCredentials: true,
-            });
-            if (result.status === 200){
-                alert("수정이 완료되었습니다.");
-                nav(`/wiki/${main}`);
-            }
-        } catch(error){
-            if(error.response.status === 401){
-                alert("login이 필요합니다.");
-                nav('/signin');
-            } else if(error.response.status === 500){
-                alert("제출에 실패했습니다. 다시 시도해주세요.");
-                // setWiki(error.response.data.newContent);
-            }else if(error.response.status === 426){
-                alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
-                setCopy(true);
-            }
-        };
+        if( selectedOption === 'all'){
+            try {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}`, {
+                    version: version,
+                    new_content: wikiMarkup,
+                    summary: summary,
+                    is_q_based: 1,
+                    qid: qid,
+                },{
+                    withCredentials: true,
+                });
+                if (result.status === 200){
+                    alert("수정이 완료되었습니다.");
+                    nav(`/wiki/${main}`);
+                }
+            } catch(error){
+                if(error.response.status === 401){
+                    alert("login이 필요합니다.");
+                    nav('/signin');
+                } else if(error.response.status === 500){
+                    alert("제출에 실패했습니다. 다시 시도해주세요.");
+                    // setWiki(error.response.data.newContent);
+                }else if(error.response.status === 426){
+                    alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
+                    setCopy(true);
+                }
+            };
+
+        } else{
+            try {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`, {
+                    version: version,
+                    new_content: wikiMarkup,
+                    summary: summary,
+                    is_q_based: 1,
+                    qid: qid,
+                },{
+                    withCredentials: true,
+                });
+                if (result.status === 200){
+                    alert("수정이 완료되었습니다.");
+                    nav(`/wiki/${main}`);
+                }
+            } catch(error){
+                if(error.response.status === 401){
+                    alert("login이 필요합니다.");
+                    nav('/signin');
+                } else if(error.response.status === 500){
+                    alert("제출에 실패했습니다. 다시 시도해주세요.");
+                    // setWiki(error.response.data.newContent);
+                }else if(error.response.status === 426){
+                    alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
+                    setCopy(true);
+                }
+            };
+        }
+        
         
     };
      //dropdown에서 선택한 index 반영
