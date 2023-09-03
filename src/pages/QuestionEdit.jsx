@@ -102,7 +102,8 @@ const QuestionEdit = () => {
                 } else{
                     setSelectedOption('all');
                     setIsOptDisabled(false);
-                    getAllWiki();
+
+                   
                     
                 }
                 
@@ -135,12 +136,17 @@ const QuestionEdit = () => {
         console.log(selectedOption);
 
         if(selectedOption) {
-            getWiki();
+            
+            if(selectedOption === 'all'){
+                getAllWiki();
+            } else{
+                getWiki();
+            }
         } else{
             console.log('section 없음')
         }
-        
-        
+
+
         setCopy(false);
         
     }, [selectedOption]);

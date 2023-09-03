@@ -64,6 +64,7 @@ const WikiEdit = () => {
         e.preventDefault();
 
         const wikiMarkup = HtmlToWiki(desc);
+
         if(isChecked === false){
             return alert('정책에 맞게 작성하였음을 확인해주세요')
         }
