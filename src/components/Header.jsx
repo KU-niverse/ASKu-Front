@@ -18,9 +18,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
-function Header({isLoggedIn, setIsLoggedIn}) {
+function Header() {
     const [inputValue, setInputValue] = useState('');
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px');
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
@@ -36,24 +36,24 @@ function Header({isLoggedIn, setIsLoggedIn}) {
         setIsLoggedIn(false);
     };
 
-    // useEffect(() => {
-    //     const checkLoginStatus = async () => {
-    //         try {
-    //             const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
-    //                 withCredentials: true
-    //             });
-    //             if (res.status === 201 && res.data.success === true) {
-    //                 setIsLoggedIn(true);
-    //             } else if (res.status === 401) {
-    //                 setIsLoggedIn(false);
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //             setIsLoggedIn(false);
-    //         }
-    //     };
-    //     checkLoginStatus();
-    // }, []);
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                    withCredentials: true
+                });
+                if (res.status === 201 && res.data.success === true) {
+                    setIsLoggedIn(true);
+                } else if (res.status === 401) {
+                    setIsLoggedIn(false);
+                }
+            } catch (error) {
+                console.error(error);
+                setIsLoggedIn(false);
+            }
+        };
+        checkLoginStatus();
+    }, []);
 
     useEffect(() => {
         setNavContainerRightWidth(isLoggedIn ? '250px' : '150px');

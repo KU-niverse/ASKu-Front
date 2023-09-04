@@ -66,7 +66,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
     }, []);
 
 
-    const sendMessage = async (userId) => {
+    const sendMessage = async () => {
         if (!isLoggedIn) {
             setLoginModalVisible(true);
             return;
@@ -184,6 +184,16 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
         getMessage();
     }, [userId]);
 
+    const scrollToBottomOnLoadingChange = () => {
+        if (loading) {
+            scrollToBottom();
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottomOnLoadingChange();
+    }, [loading]);
+
     return (
         <div className={styles.mobileChatbotContainer}>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
@@ -251,6 +261,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
                             onChange={inputChange}
                             onKeyDown={handleKeyDown}
                             ref={inputRef}
+                            disabled={loading}
                         />
                         <div className={styles.sendBtn} onClick={sendMessage}>
                             <img src={arrow} className={styles.sendBtnArrow}/> 
