@@ -88,6 +88,7 @@ function WikiViewer() {
 // 질문: 해당 문서에 대한 질문이 없습니다. 
     const [favorite, setFavorite] = useState(false);
     const [imageSource, setImageSource] = useState(falseBk);
+    // const [isZero, setIsZero] = useState(false);
 
     const flagToggle = () =>{
         if (isToggled === false) {
@@ -377,7 +378,6 @@ useEffect(() => {
                                 if (index >= 5) {
                                   return null; // 패스 (무시)
                                 }
-                                const question_id = item.id
                                 return(
                                     <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
@@ -425,10 +425,19 @@ useEffect(() => {
                </div>
                <div className={styles.wikicontent}>
                     {allContent.map((item) => {
+                        //0. 들어가며 일시 질문 및 편집 막기 위해 판단
+                        let isZero;
+
+                        if(item.index === '0'){
+                            isZero = true;
+                        } else{
+                            isZero = false;
+                        }
+
                         return(
                             <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
                                 <WikiBox 
-                                title={item.title} content={item.content} index={item.index} section={item.section} main={title}
+                                title={item.title} content={item.content} index={item.index} section={item.section} main={title} isZero={isZero}
                                 />
                             </div>
                         );
