@@ -256,7 +256,7 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>알림</p>
                                             </div>
                                         </Link>
-                                        <Link to='/history' className={styles.mobileMenuBtn}>
+                                        <Link to='/allhistory' className={styles.mobileMenuBtn}>
                                             <div className={styles.mobileHamburgerMenu}>
                                                 <img src={mobilehistory} alt="" className={styles.mobileIcon}  />
                                                 <p className={styles.mobileMenuText}>최근변경</p>
