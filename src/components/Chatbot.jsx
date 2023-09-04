@@ -40,7 +40,7 @@ function Chatbot () {
 
     const checkLoginStatus = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+            const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
@@ -56,14 +56,13 @@ function Chatbot () {
     
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("http://localhost:8080/user/mypage/info", {
                 withCredentials: true
             });
-            if (res.status === 200 && res.data.success === true) {
+            if (res.status === 201 && res.data.success === true) {
                 // 사용자 정보에서 id를 가져옴
-                const user_id = res.data.data[0].id;
-                setUserId(user_id);
-    
+                setUserId(res.data);
+                console.log(userId)
                 // userId를 설정한 이후에 GET 요청을 보냄
                 // fetchPreviousChatHistory(user_id);
             } else {
@@ -81,47 +80,43 @@ function Chatbot () {
         getUserInfo();
     }, []);
 
-    const sendMessage = (userId) => {
-    if (!isLoggedIn) {
-        setLoginModalVisible(true);
-        return;
-    }
-    if (inputValue.trim() !== '') {
-        setLoading(true);
-        //content 대신 q_content, user_id 반드시 보내야 함
-        axios.post('https://asku.wiki/ai/chatbot/', {
-            q_content: inputValue,
-            user_id: userId,
-        })
-        .then(response => {
-            console.log("챗봇 post 성공");
-            setShowSuggest(false);
-            inputRef.current.blur();
 
-            const newChatResponse = [
-            ...chatResponse,
-            { content: inputValue }, // 사용자의 질문 추가
-            { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
-            ];
-
-            setChatResponse(newChatResponse);
-            setInputValue('');
-
-            setTimeout(() => {
-                setLoading(false); // 로딩 스피너 숨기기
-            }, 10000);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-        setShowSuggest(false);
-        inputRef.current.blur();
-
-        const newChatResponse = [...chatResponse, { content: inputValue }];
-        setChatResponse(newChatResponse);
-        setInputValue('');
-        };
-    }
+    const sendMessage = async () => {
+        if (!isLoggedIn) {
+            setLoginModalVisible(true);
+            return;
+        }
+    
+        if (inputValue.trim() !== '') {
+            setLoading(true);
+    
+            try {
+                const response = await axios.post(`https://asku.wiki/ai/chatbot/`, {
+                    q_content: inputValue,
+                    user_id: userId.data[0].id
+                });
+    
+                console.log("챗봇 post 성공");
+                setShowSuggest(false);
+                inputRef.current.blur();
+    
+                const newChatResponse = [
+                    ...chatResponse,
+                    { content: inputValue }, // 사용자의 질문 추가
+                    { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
+                ];
+    
+                setChatResponse(newChatResponse);
+                setInputValue('');
+    
+                setTimeout(() => {
+                    setLoading(false); // 로딩 스피너 숨기기
+                }, 10000);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
@@ -187,6 +182,20 @@ function Chatbot () {
     //     chatBottomRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
     // }, [previousChatHistory]);
 
+    useEffect(() => {
+        const getMessage = async() => {
+        inputRef.current.focus();
+            try {
+                const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+                console.log(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+        } 
+        getMessage();
+    }, [userId]);
 
     return (
         <div className={styles.chatBot}>
