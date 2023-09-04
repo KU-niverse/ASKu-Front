@@ -104,7 +104,9 @@ const AllHistory = () => {
                           summary={item.summary}
                           user={item.nick}
                           timestamp={timestamp}
-                          doctitle={item.doc_title}
+                          title={item.doc_title}
+                          //title={title}
+                          target={item.id}
                         />
                       </div>
                     );

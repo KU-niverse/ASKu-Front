@@ -10,10 +10,10 @@ const BookmarkBox = (props) => {
 
     const title = props.title;
     const content = props.content;
-    const [deleted, setDeleted] = useState(Boolean(props.deleted));
-    console.log(deleted);
+    const [favorite, setFavorite] = useState(Boolean(props.is_favorite));
     const [imageSource, setImageSource] = useState(trueBk);
     const nav = useNavigate();
+    const isResult = props.result;
 
     
 
@@ -27,9 +27,9 @@ const BookmarkBox = (props) => {
           }, {
               withCredentials: true
           });
-          if(result.status === 200){
-              setDeleted(false);
-              console.log(result.data.status);
+          if(result.data.success === true){
+              setFavorite(true);
+              alert('즐겨찾기에 추가되었습니다');
           }
           
       } catch (error) {
@@ -44,8 +44,9 @@ const BookmarkBox = (props) => {
           const result = await axios.delete(`https://asku.wiki/api/wiki/favorite/${title}`, {
               withCredentials: true
           });
-          if(result.status === 200){
-              setDeleted(true);
+          if(result.data.success === true){
+            setFavorite(false);
+            alert('즐겨찾기에서 삭제되었습니다');
           } else {
             alert('문제가 발생하였습니다')
           }
@@ -58,30 +59,33 @@ const BookmarkBox = (props) => {
 
     
 
-      // 북마크 이미지 변경
-    function handleClick() {
-        // 이미지가 변경되었을 때 다른 이미지 경로로 바꾸어줍니다.
-      if(deleted === false){
-        deleteBookmark();
-        setImageSource(falseBk);
-
-      } else if (deleted === true){
-        addBookmark();
-        setImageSource(trueBk);
-
+    async function handleClick() {
+      try {
+        if (favorite === true) {
+          await deleteBookmark();
+          setFavorite(false); // Update the state first
+          setImageSource(falseBk);
+        } else if (favorite === false) {
+          await addBookmark();
+          setFavorite(true); // Update the state first
+          setImageSource(trueBk);
+        }
+      } catch (error) {
+        console.error(error);
+        // Handle error appropriately
       }
     }
-
-    useEffect(() => {
-        if(deleted === false){
-            setImageSource(trueBk);
-    
-          } else if (deleted === true){
-            setImageSource(falseBk);
-    
-          }
-        
-    }, [deleted]);
+  
+  useEffect(() => {
+      if( favorite === true){
+          setImageSource(trueBk);
+  
+      } else if (favorite === false){
+          setImageSource(falseBk);
+  
+      }
+      
+  }, [favorite]);
 
   
 
@@ -92,7 +96,7 @@ const BookmarkBox = (props) => {
         <div className={styles.contents}>
           <div className={styles.title} onClick={() => nav(`/wiki/${title}`)}>{title}</div>
           <div>
-            <img src={imageSource} alt="Image" onClick={handleClick} />
+            <img src={imageSource} alt="Image" onClick={handleClick} className={isResult ? `${styles.hidden}` : ''}/>
           </div>
           
         </div>

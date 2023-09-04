@@ -41,7 +41,7 @@ const WikiToHtml = (wikiText) => {
       return `<img src="${imageUrl}" alt="${displayText || imageUrl}">`;
     } else {
       // Case 1 and 3: Internal link with optional display text
-      const baseUrl = ".."; // Adjust this base URL as needed
+      const baseUrl = "../wiki"; // Adjust this base URL as needed
       return `<a href="${baseUrl}/${url}">${displayText || url}</a>`;
     }
   });

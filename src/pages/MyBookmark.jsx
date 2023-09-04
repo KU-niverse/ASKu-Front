@@ -71,7 +71,7 @@ const MyBookmark = () => {
                     return(
                         <div key={item.title}>
                             <BookmarkBox
-                            title={item.title} content={item.recent_filtered_content} deleted={item.is_deleted}
+                            title={item.title} content={item.recent_filtered_content} is_favorite={true}
                             />
                         </div>
                     );
