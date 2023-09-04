@@ -54,18 +54,19 @@ function Chatbot () {
         }
     };
     
+    // 이 함수는 사용자 정보를 가져오는 GET 요청을 보냅니다.
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("http://localhost:8080/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 200 && res.data.success === true) {
                 // 사용자 정보에서 id를 가져옴
                 const user_id = res.data.data[0].id;
                 setUserId(user_id);
-    
+
                 // userId를 설정한 이후에 GET 요청을 보냄
-                // fetchPreviousChatHistory(user_id);
+                fetchPreviousChatHistory(user_id);
             } else {
                 setIsLoggedIn(false);
             }
@@ -80,6 +81,26 @@ function Chatbot () {
         checkLoginStatus();
         getUserInfo();
     }, []);
+
+    const fetchPreviousChatHistory = (userId) => {
+        axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
+            .then(response => {
+                console.log(response);
+                console.log(typeof(userId));
+                const previousHistory = response.data;
+                setPreviousChatHistory(previousHistory);
+            })
+            .catch(error => {
+                console.error("데이터 가져오기 오류:", error);
+            });
+    };
+    
+    // fetchPreviousChatHistory 함수를 useEffect 내에서 호출
+    useEffect(() => {
+        if (userId) {
+            fetchPreviousChatHistory(userId);
+        }
+    }, [userId]);
 
     const sendMessage = (userId) => {
     if (!isLoggedIn) {
