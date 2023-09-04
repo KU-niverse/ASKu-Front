@@ -20,6 +20,7 @@ function ChatbotMobile() {
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -42,65 +43,87 @@ function ChatbotMobile() {
         };
     }, []);
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
-                    withCredentials: true
-                });
-                if (res.status === 201 && res.data.success === true) {
-                    setIsLoggedIn(true);
-                } else if (res.status === 401) {
-                    setIsLoggedIn(false);
-                }
-            } catch (error) {
-                console.error(error);
+    const checkLoginStatus = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                withCredentials: true
+            });
+            if (res.status === 201 && res.data.success === true) {
+                setIsLoggedIn(true);
+            } else if (res.status === 401) {
                 setIsLoggedIn(false);
             }
-        };
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+    
+    const getUserInfo = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                withCredentials: true
+            });
+            if (res.status === 201 && res.data.success === true) {
+                // 사용자 정보에서 id를 가져옴
+                setUserId(res.data);
+                console.log(userId)
+                // userId를 설정한 이후에 GET 요청을 보냄
+                // fetchPreviousChatHistory(user_id);
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    // getUserInfo 함수를 useEffect 내에서 호출
+    useEffect(() => {
         checkLoginStatus();
+        getUserInfo();
     }, []);
 
-    const sendMessage = () => {
+
+    const sendMessage = async () => {
         if (!isLoggedIn) {
             setLoginModalVisible(true);
             return;
         }
+    
         if (inputValue.trim() !== '') {
             setLoading(true);
-            //q_content, user_id 반드시 보내야 함
-            axios.post('https://asku.wiki/ai/chatbot/', {
-                q_content: inputValue,
-                user_id: "2",
-            })
-            .then(response => {
+    
+            try {
+                const response = await axios.post(`https://asku.wiki/ai/chatbot/`, {
+                    q_content: inputValue,
+                    user_id: userId.data[0].id
+                });
+    
+                console.log("챗봇 post 성공");
                 setShowSuggest(false);
                 inputRef.current.blur();
     
                 const newChatResponse = [
-                ...chatResponse,
-                { content: inputValue }, // 사용자의 질문 추가
-                { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
+                    ...chatResponse,
+                    { content: inputValue }, // 사용자의 질문 추가
+                    { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
                 ];
     
                 setChatResponse(newChatResponse);
                 setInputValue('');
-    
-                setTimeout(() => {
-                    setLoading(false); // 로딩 스피너 숨기기
-                }, 10000);
-            })
-            .catch(error => {
+
+                // axios 요청 완료 후 로딩 스피너를 비활성화
+                setLoading(false); // 로딩 스피너 숨기기
+            } catch (error) {
                 console.error(error);
-            });
-            setShowSuggest(false);
-            inputRef.current.blur();
-    
-            const newChatResponse = [...chatResponse, { content: inputValue }];
-            setChatResponse(newChatResponse);
-            setInputValue('');
-            };
+
+                // axios 요청 실패 시에도 로딩 스피너를 비활성화
+                setLoading(false);
+            }
         }
+    };
         const handleKeyDown = (event) => {
             if (event.key === 'Enter' && event.target === inputRef.current) {
                 if (!isLoggedIn) {
