@@ -32,6 +32,7 @@ import ChangePw from './pages/ChangePw';
 import ResetPw from './pages/ResetPw';
 import AllHistory from './pages/AllHistory';
 import WikiRawPrev from './pages/WikiRawPrev';
+import MobileChatBotPage from './pages/MobileChatbotPage';
 import { useState } from 'react';
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/result/:title" element={<SearchResult />} />
-                <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/chatbot" element={<MobileChatBotPage />} />
                 <Route path="/wiki/:title" element={<WikiViewer />} />
                 <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
                 <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
@@ -70,7 +71,7 @@ function App() {
                 <Route path="/reset/pw/:auth" element={<ResetPw />} />
                 <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
-                <Route path="/chatbot" element={<ChatbotMobile />} />
+                <Route path="/chatbot" element={<MobileChatBotPage />} />
                 <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>

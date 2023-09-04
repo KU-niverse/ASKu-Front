@@ -62,9 +62,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
             if (res.status === 201 && res.data.success === true) {
                 // 사용자 정보에서 id를 가져옴
                 setUserId(res.data);
-                console.log(userId)
-                // userId를 설정한 이후에 GET 요청을 보냄
-                // fetchPreviousChatHistory(user_id);
             } else {
                 setIsLoggedIn(false);
             }
@@ -76,7 +73,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
 
     // getUserInfo 함수를 useEffect 내에서 호출
     useEffect(() => {
-        // checkLoginStatus();
         getUserInfo();
     }, []);
 
@@ -96,7 +92,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     user_id: userId.data[0].id
                 });
     
-                console.log("챗봇 post 성공");
                 setShowSuggest(false);
                 inputRef.current.blur();
     
