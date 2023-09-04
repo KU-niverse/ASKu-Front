@@ -216,6 +216,10 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     
     }
 
+    const handleExternalLink = () => {
+        window.location.href = 'https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052'; // 외부 링크 URL로 이동
+    };
+
 
   return (
     <div className={`${styles.container}`}>
@@ -324,7 +328,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             </div>
             <div className={`${styles.signup_agree}`}>
                 <span><input type='checkbox' checked={isChecked} onChange={handleCheckboxChange}/>개인정보 수집에 동의합니다.</span>
-                <span onClick={() => nav('https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052')} className={`${styles.moreLink}`}>[더보기]</span>
+                <span onClick={handleExternalLink} className={`${styles.moreLink}`}>[더보기]</span>
             </div>
             <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />
         </form>

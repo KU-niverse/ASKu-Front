@@ -377,10 +377,11 @@ useEffect(() => {
                                 if (index >= 5) {
                                   return null; // 패스 (무시)
                                 }
+                                const question_id = item.id
                                 return(
                                     <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
-                                     <ul key={item.id} onClick={() => nav(`/wiki/morequestion/${title}`)} className={styles.quesul}>
+                                     <ul key={item.id} onClick={() => nav(`/wiki/morequestion/${title}/${item.id}`, {state: {question_id}})} className={styles.quesul}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
                                         <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
                                      </ul>
