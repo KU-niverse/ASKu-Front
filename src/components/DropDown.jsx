@@ -42,7 +42,14 @@ function DropDown({onSelectedOption, title, defaultOpt}) {
     value: `${content.index} ${content.title}`, 
     label: `${content.index} ${content.title}`,
     className: 'myOptionClassName'
-  }))};
+  }))
+    // "전체 편집" 옵션 추가
+  options.push({
+    value: 'all', 
+    label: '전체',
+    className: 'myOptionClassName'
+  });
+};
 
   
 
