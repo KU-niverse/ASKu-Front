@@ -127,6 +127,7 @@ function WikiViewer() {
             });
             if(result.data.success === true){
                 setFavorite(true);
+                alert('즐겨찾기에 추가되었습니다');
             } else {
               alert('문제가 발생하였습니다');
             }
@@ -150,6 +151,7 @@ function WikiViewer() {
             });
             if(result.data.success === true){
                 setFavorite(false);
+                alert('즐겨찾기에서 삭제되었습니다');
             } else {
               alert('문제가 발생하였습니다');
             }

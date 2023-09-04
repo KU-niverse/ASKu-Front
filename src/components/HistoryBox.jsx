@@ -41,7 +41,7 @@ const HistoryBox = (props) => {
             }
         } catch (error) {
             if(error.response.status === 401){
-                alert('로그인');
+                alert('로그인이 필요합니다');
                 nav('/signin');
             } else if(error.response.status === 432){
                 alert(error.response.data.message);

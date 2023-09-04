@@ -153,7 +153,8 @@ const SearchResearch = () => {
                                 <div key={item.title} onClick={() => handleDocsClick(item.title)}>
                                     <BookmarkBox
                                     title={item.title} 
-                                    content={item.recent_filtered_content} deleted={item.is_deleted}
+                                    content={item.recent_filtered_content} is_favorite={item.is_favorite}
+                                    result={true}
                                     />
                                 </div>
                             );

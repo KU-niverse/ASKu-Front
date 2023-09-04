@@ -57,7 +57,7 @@ function WikiViewer() {
                   <h1>{title}</h1>
                   <div className={styles.wikititleBtn}>
                     <div></div>
-                    <button><img src={his}/>&nbsp;히스토리</button>
+                    <button onClick={()=>nav(`/history/${title}`)}><img src={his} alt='' />&nbsp;히스토리</button>
                   </div>
                </div>
                <div className={styles.wikiBoxLists}>
