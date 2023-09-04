@@ -381,7 +381,21 @@ useEffect(() => {
                                 return(
                                     <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
-                                     <ul key={item.id} onClick={() => nav(`/wiki/morequestion/${title}/${item.id}`, {state: {question_id}})} className={styles.quesul}>
+                                     <ul key={item.id} 
+                                        onClick={() => nav(`/wiki/morequestion/${title}/${item.id}`, 
+                                        {state:{
+                                            question_id : item.id,
+                                            user_id: item.user_id,
+                                            content: item.content,
+                                            created_at: item.created_at,
+                                            like_count: item.like_count,
+                                            nick: item.nick,
+                                            index_title: item.index_title,
+                                            answer_count: item.answer_count,
+                                            title : title
+                                          }}
+                                     )} 
+                                     className={styles.quesul}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
                                         <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
                                      </ul>
