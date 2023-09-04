@@ -21,29 +21,37 @@ const MoreQuestion = () => {
   const [section, setSection] = useState('');
   const location = useLocation();
   const defaultOpt = location.state;
-
-
-  const flag = isToggled ? 1 : 0;  
-  
-
+  const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
 
   useEffect(() => {
-    const takeQuestion = async () =>{
-      try{
-        const res = await axios.get( `https://asku.wiki/api/question/view/${flag}/${title}`, {withCredentials: true});
-        if(res.status === 200){
-          setQuestionData(res.data);
+    const fetchTitles = async () => {
+      try {
+        const res = await axios.get("https://asku.wiki/api/wiki/titles");
+        if (res.data.success) {
+          setTitles(res.data.titles);
         }
-        if(res.status === 404){
-          console.log(res.data.message)
-        }
-      }catch (error){
+      } catch (error) {
         console.error(error);
       }
-      console.log('questionData:', questionData);
+    };
+
+    const takeQuestion = async () => {
+      try {
+        const flag = isToggled ? 1 : 0;
+        const res = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`, { withCredentials: true });
+        if (res.status === 200) {
+          setQuestionData(res.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTitles();
+    if (title) {
+      takeQuestion();
     }
-    takeQuestion();
-  }, [title, flag]); //질문 목록 가져오기
+  }, [title, isToggled]);
 
  
  
@@ -80,47 +88,53 @@ const MoreQuestion = () => {
         <Header/>
       </div>
       <div className={styles.content}>
-        <div className={styles.header}>
-          <div className={styles.frontheader}>
-            <p className={styles.q_pagename}>{title}</p>
-            <p className={styles.q_headline}>게시물의 질문</p>
-          </div>
-          <div className={styles.switch}>
-          <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
-          </div>
-        </div>
-        <div>
-          <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt}/>
-        </div>
-        <div>
-          {questionData && questionData.data && questionData.data.length === 0 ? (
-              <p>아직 작성한 질문이 없습니다.</p>
-            ) : (
-            questionData && questionData.data && questionData.data.map((data) => (
-              <Question
-                key={data.id}
-                id={data.id}
-                doc_id={data.doc_id}
-                user_id={data.user_id}
-                index_title={data.index_title}
-                content={data.content}
-                created_at={data.created_at}
-                answer_or_not={data.answer_or_not}
-                is_bad={data.is_bad}
-                nick={data.nickname}
-                like_count={data.like_count}
-                title={title}
-                answer_count={data.answer_count}
-              />
-            ))
-          )}
-        </div>
+        {/* 문서 목록에 title이 포함되지 않으면 메시지 표시 */}
+        {!titles.includes(title) ? (
+            <p>존재하지 않는 문서입니다.</p>
+          ) : (
+          <div>
+            <div className={styles.header}>
+              <div className={styles.frontheader}>
+                <p className={styles.q_pagename}>{title}</p>
+                <p className={styles.q_headline}>게시물의 질문</p>
+              </div>
+              <div className={styles.switch}>
+              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
+              </div>
+            </div>
+            <div>
+              <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt}/>
+            </div>
+            <div>
+              {questionData && questionData.data && questionData.data.length === 0 ? (
+                  <p>아직 작성한 질문이 없습니다.</p>
+                ) : (
+                questionData && questionData.data && questionData.data.map((data) => (
+                  <Question
+                    key={data.id}
+                    id={data.id}
+                    doc_id={data.doc_id}
+                    user_id={data.user_id}
+                    index_title={data.index_title}
+                    content={data.content}
+                    created_at={data.created_at}
+                    answer_or_not={data.answer_or_not}
+                    is_bad={data.is_bad}
+                    nick={data.nickname}
+                    like_count={data.like_count}
+                    title={title}
+                    answer_count={data.answer_count}
+                  />
+                ))
+              )}
+            </div>
+          </div>  
+        )}   
       </div>
       <div>
         <Footer />
       </div>
     </div>
-
   );
 };
 
