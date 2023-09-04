@@ -225,14 +225,15 @@ function Header() {
                     </div>
                     <div className={styles.mobileHeader}>
                         <div className={styles.buttonWrap}>
-                            <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} onClick={handleMobileSearch} />
                             {isLoggedIn ? (
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
+                                <></>
                             ) : (
                                 <Link className={styles.loginbtn} to='/signin'>
                                     <button className={styles.loginbtn}>로그인</button>
                                 </Link>
                             )}
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
+                            <img src={searchIconGray} alt='search_icon_gray' id={styles.mobileHeaderSearch} className={styles.mobileButton} onClick={handleMobileSearch} />
                         </div>
                         {mobileHeaderOpen && (
                             <div className={styles.mobileMenuWrap}>
@@ -267,12 +268,21 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>토론</p>
                                             </div>
                                         </Link>
-                                        <Link to='/latestdebate' className={styles.mobileMenuBtn} onClick={signOut}>
-                                            <div className={styles.mobileHamburgerMenu}>
-                                                <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
-                                                <p className={styles.mobileMenuText}>로그아웃</p>
-                                            </div>
-                                        </Link>
+                                        {isLoggedIn ? (
+                                            <Link className={styles.mobileMenuBtn} onClick={signOut}>
+                                                <div className={styles.mobileHamburgerMenu}>
+                                                    <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
+                                                    <p className={styles.mobileMenuText}>로그아웃</p>
+                                                </div>
+                                            </Link>
+                                        ) : (
+                                            <Link to='/signin' className={styles.mobileMenuBtn}>
+                                                <div className={styles.mobileHamburgerMenu}>
+                                                    <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
+                                                    <p className={styles.mobileMenuText}>로그인</p>
+                                                </div>
+                                            </Link>
+                                        )}
                                     </div>
                             </div>
                         )}
