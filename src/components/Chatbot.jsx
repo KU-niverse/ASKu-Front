@@ -76,6 +76,9 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
         getUserInfo();
     }, []);
 
+    const scrollToBottom = () => {
+        chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const sendMessage = async () => {
         if (!isLoggedIn) {
@@ -106,6 +109,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
 
                 // axios 요청 완료 후 로딩 스피너를 비활성화
                 setLoading(false); // 로딩 스피너 숨기기
+                scrollToBottom();
             } catch (error) {
                 console.error(error);
 
@@ -162,9 +166,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     };
 
     const chatBottomRef = useRef(null);
-    const scrollToBottom = () => {
-        chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
-    };
+
 
     // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
     useEffect(() => {
@@ -199,6 +201,17 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
         } 
         getMessage();
     }, [userId]);
+
+    const scrollToBottomOnLoadingChange = () => {
+        if (loading) {
+            scrollToBottom();
+        }
+    };
+    
+    useEffect(() => {
+        scrollToBottomOnLoadingChange();
+    }, [loading]);
+    
 
     return (
         <div className={styles.chatBot}>
