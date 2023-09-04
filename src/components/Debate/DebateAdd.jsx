@@ -62,7 +62,7 @@ const DebateAdd = ({ title }) => {
   return (
     <div>
        <div className={styles.addTitle}>
-            <p className={styles.addTitleMain}>행복의 심리학</p>
+            <p className={styles.addTitleMain}>{title}</p>
             <p >문서의 다른 토론 ({numb})</p>
         </div>
         
