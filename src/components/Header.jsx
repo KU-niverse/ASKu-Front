@@ -39,7 +39,7 @@ function Header({isLoggedIn, setIsLoggedIn}) {
     // useEffect(() => {
     //     const checkLoginStatus = async () => {
     //         try {
-    //             const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+    //             const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
     //                 withCredentials: true
     //             });
     //             if (res.status === 201 && res.data.success === true) {
@@ -63,7 +63,7 @@ function Header({isLoggedIn, setIsLoggedIn}) {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                const response = await axios.get("http://localhost:8080/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -85,7 +85,7 @@ function Header({isLoggedIn, setIsLoggedIn}) {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`https://asku.wiki/api/user/auth/signout`, {
+            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {
