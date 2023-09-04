@@ -88,6 +88,7 @@ function WikiViewer() {
 // 질문: 해당 문서에 대한 질문이 없습니다. 
     const [favorite, setFavorite] = useState(false);
     const [imageSource, setImageSource] = useState(falseBk);
+    // const [isZero, setIsZero] = useState(false);
 
     const flagToggle = () =>{
         if (isToggled === false) {
@@ -380,7 +381,21 @@ useEffect(() => {
                                 return(
                                     <div className={styles.queslist}>
                                      <hr className={styles.customHr}></hr>
-                                     <ul key={item.id} onClick={() => nav(`/wiki/morequestion/${title}`)} className={styles.quesul}>
+                                     <ul key={item.id} 
+                                        onClick={() => nav(`/wiki/morequestion/${title}/${item.id}`, 
+                                        {state:{
+                                            question_id : item.id,
+                                            user_id: item.user_id,
+                                            content: item.content,
+                                            created_at: item.created_at,
+                                            like_count: item.like_count,
+                                            nick: item.nick,
+                                            index_title: item.index_title,
+                                            answer_count: item.answer_count,
+                                            title : title
+                                          }}
+                                     )} 
+                                     className={styles.quesul}>
                                         <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
                                         <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
                                      </ul>
@@ -410,10 +425,19 @@ useEffect(() => {
                </div>
                <div className={styles.wikicontent}>
                     {allContent.map((item) => {
+                        //0. 들어가며 일시 질문 및 편집 막기 위해 판단
+                        let isZero;
+
+                        if(item.index === '0'){
+                            isZero = true;
+                        } else{
+                            isZero = false;
+                        }
+
                         return(
                             <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
                                 <WikiBox 
-                                title={item.title} content={item.content} index={item.index} section={item.section} main={title}
+                                title={item.title} content={item.content} index={item.index} section={item.section} main={title} isZero={isZero}
                                 />
                             </div>
                         );

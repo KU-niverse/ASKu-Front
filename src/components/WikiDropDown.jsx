@@ -40,7 +40,7 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
 
 
  let options=[]
- if (!isOptionDisabled && wikiData.contents){
+ if ( wikiData.contents){
     options = wikiData.contents.map((content) => ({
     value: `${content.section}`, 
     label: `${content.index} ${content.title}`,
@@ -56,13 +56,7 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
 
 
 
-} else if(isOptionDisabled === true){
-    options=[{
-      value: 'all', 
-      label: '전체 편집',
-      className: 'myOptionClassName'
-     },]
-  }
+} 
 
   
 

@@ -24,12 +24,17 @@ const HtmlToWiki = (html) => {
   wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1\n');
   wikiText = wikiText.replace(/<\/?span[^>]*>/g, '');
 
+  
+  // Convert <img> tags to [[File:...]]
+  wikiText = wikiText.replace(/<img[^>]*src="([^"]+)"[^>]*>/g, (_, src) => `[[File:${src}]]`);
+  wikiText = wikiText.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '[[ $2 ]]'); //[[ $2 | $1 ]]
+  wikiText = wikiText.replace(/<a href="(.*?)">(.*?)<\/a>/g, '[[ $1 | $2 ]]');
+  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
+  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
+  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
   wikiText = wikiText.replace(/&nbsp;/g, ' ');
   wikiText = wikiText.replace(/<\/?p[^>]*>/g, '');
-  wikiText = wikiText.replace(/<\/?[^>]*>/g, '')
-  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
-  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
-  // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');
+  wikiText = wikiText.replace(/<\/?[^>]*>/g, '');
 
   return wikiText;
 };

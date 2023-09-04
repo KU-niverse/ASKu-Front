@@ -9,6 +9,7 @@ import WikiDropDown from "../components/WikiDropDown.jsx";
 import axios from 'axios';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
+import WikiToQuill from '../components/Wiki/WikiToQuill';
 
 
 const QuestionEdit = () => {
@@ -44,7 +45,7 @@ const QuestionEdit = () => {
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
-                setDesc(WikiToHtml(result.data.text));
+                setDesc(WikiToQuill(result.data.text));
                 setVersion(result.data.version);
             }
 
