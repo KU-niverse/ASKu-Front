@@ -77,7 +77,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
                 if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id);
                 nav('/');
             } else {
-                return alert('이상해');
+                return null;
             }
         } catch (error) {
             console.error(error);

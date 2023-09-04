@@ -52,6 +52,7 @@ function QuestionInput({onQuestionSubmit, title, wikiData, defaultOpt}) {
 
 
   const handleSubmit= async (event) => {
+    event.preventDefault(); // 이벤트의 기본 동작을 막음
     if (!loggedIn) {
       alert("로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다.");
       Navigate("/signin")
@@ -66,8 +67,15 @@ function QuestionInput({onQuestionSubmit, title, wikiData, defaultOpt}) {
       alert('질문을 입력해주세요.');
       return;
     }
+    else {
+      window.location.reload();
+    }
+    const submitData = {
+      index_title: selectedOption,
+      content: questionContent,
+    };
     onQuestionSubmit(submitData);
-    window.location.reload();
+
   };
 
   const countCharacters = () =>{

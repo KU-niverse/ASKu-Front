@@ -18,9 +18,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
-function Header() {
+function Header({isLoggedIn, setIsLoggedIn}) {
     const [inputValue, setInputValue] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px');
     const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px');
     const [nicknameText, setNicknameText] = useState('');
@@ -36,24 +36,24 @@ function Header() {
         setIsLoggedIn(false);
     };
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
-                    withCredentials: true
-                });
-                if (res.status === 201 && res.data.success === true) {
-                    setIsLoggedIn(true);
-                } else if (res.status === 401) {
-                    setIsLoggedIn(false);
-                }
-            } catch (error) {
-                console.error(error);
-                setIsLoggedIn(false);
-            }
-        };
-        checkLoginStatus();
-    }, []);
+    // useEffect(() => {
+    //     const checkLoginStatus = async () => {
+    //         try {
+    //             const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+    //                 withCredentials: true
+    //             });
+    //             if (res.status === 201 && res.data.success === true) {
+    //                 setIsLoggedIn(true);
+    //             } else if (res.status === 401) {
+    //                 setIsLoggedIn(false);
+    //             }
+    //         } catch (error) {
+    //             console.error(error);
+    //             setIsLoggedIn(false);
+    //         }
+    //     };
+    //     checkLoginStatus();
+    // }, []);
 
     useEffect(() => {
         setNavContainerRightWidth(isLoggedIn ? '250px' : '150px');
@@ -67,7 +67,7 @@ function Header() {
                     withCredentials: true
                 });
 
-                if (response.status===201) {
+                if (response.status === 201) {
                     setNicknameText(response.data);
                     setLoadingMypage(false);
                 }
@@ -82,7 +82,6 @@ function Header() {
         }
     }, [isLoggedIn]);
 
-    console.log(nicknameText.data);
 
     const signOut = async () => {
         try {
@@ -93,6 +92,7 @@ function Header() {
                 alert(result.data.message);
                 Nav('/');
                 logOut();
+                setNicknameText('');
             }
         } catch (error) {
             console.error(error);
@@ -127,6 +127,7 @@ function Header() {
     };
 
     const handleWindowResize = () => {
+        setIsAlarmVisible(false);
         if (window.innerWidth > 767) {
             setMobileHeaderOpen(false);
             setMobileSearchOpen(false);
@@ -210,7 +211,7 @@ function Header() {
                                         <img src={mypage} alt='mypage' className={styles.mypageBtn} />
                                     </div>
                                 </Link>
-                                )};
+                                )}
                             </>
                            
                         ) : (
@@ -226,14 +227,15 @@ function Header() {
                     </div>
                     <div className={styles.mobileHeader}>
                         <div className={styles.buttonWrap}>
-                            <img src={searchIconGray} alt='search_icon_gray' className={styles.mobileButton} onClick={handleMobileSearch} />
                             {isLoggedIn ? (
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
+                                <></>
                             ) : (
                                 <Link className={styles.loginbtn} to='/signin'>
                                     <button className={styles.loginbtn}>로그인</button>
                                 </Link>
                             )}
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
+                            <img src={searchIconGray} alt='search_icon_gray' id={styles.mobileHeaderSearch} className={styles.mobileButton} onClick={handleMobileSearch} />
                         </div>
                         {mobileHeaderOpen && (
                             <div className={styles.mobileMenuWrap}>
@@ -256,7 +258,7 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>알림</p>
                                             </div>
                                         </Link>
-                                        <Link to='/history' className={styles.mobileMenuBtn}>
+                                        <Link to='/allhistory' className={styles.mobileMenuBtn}>
                                             <div className={styles.mobileHamburgerMenu}>
                                                 <img src={mobilehistory} alt="" className={styles.mobileIcon}  />
                                                 <p className={styles.mobileMenuText}>최근변경</p>
@@ -268,12 +270,21 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>토론</p>
                                             </div>
                                         </Link>
-                                        <Link to='/latestdebate' className={styles.mobileMenuBtn} onClick={signOut}>
-                                            <div className={styles.mobileHamburgerMenu}>
-                                                <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
-                                                <p className={styles.mobileMenuText}>로그아웃</p>
-                                            </div>
-                                        </Link>
+                                        {isLoggedIn ? (
+                                            <Link className={styles.mobileMenuBtn} onClick={signOut}>
+                                                <div className={styles.mobileHamburgerMenu}>
+                                                    <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
+                                                    <p className={styles.mobileMenuText}>로그아웃</p>
+                                                </div>
+                                            </Link>
+                                        ) : (
+                                            <Link to='/signin' className={styles.mobileMenuBtn}>
+                                                <div className={styles.mobileHamburgerMenu}>
+                                                    <img src={mobilelogout} alt="" className={styles.mobileIcon}  />
+                                                    <p className={styles.mobileMenuText}>로그인</p>
+                                                </div>
+                                            </Link>
+                                        )}
                                     </div>
                             </div>
                         )}

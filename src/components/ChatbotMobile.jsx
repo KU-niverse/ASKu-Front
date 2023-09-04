@@ -8,10 +8,10 @@ import LoginModal from './LoginModal';
 import { useState, useEffect, useRef, Fragment} from 'react';
 import ChatAnswer from './ChatAnswer';
 import ChatQuestion from './ChatQuestion';
+import { Link } from 'react-router-dom';
 
 
-function ChatbotMobile() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
@@ -19,6 +19,7 @@ function ChatbotMobile() {
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -41,66 +42,67 @@ function ChatbotMobile() {
         };
     }, []);
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
-                    withCredentials: true
-                });
-                if (res.status === 201 && res.data.success === true) {
-                    setIsLoggedIn(true);
-                } else if (res.status === 401) {
-                    setIsLoggedIn(false);
-                }
-            } catch (error) {
-                console.error(error);
+
+    const getUserInfo = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                withCredentials: true
+            });
+            if (res.status === 201 && res.data.success === true) {
+                // 사용자 정보에서 id를 가져옴
+                setUserId(res.data);
+            } else {
                 setIsLoggedIn(false);
             }
-        };
-        checkLoginStatus();
+        } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+        }
+    };
+
+    // getUserInfo 함수를 useEffect 내에서 호출
+    useEffect(() => {
+        getUserInfo();
     }, []);
 
-    const sendMessage = () => {
+
+    const sendMessage = async (userId) => {
         if (!isLoggedIn) {
             setLoginModalVisible(true);
             return;
         }
+    
         if (inputValue.trim() !== '') {
             setLoading(true);
-            //content 대신 q_content, user_id 반드시 보내야 함
-            axios.post('https://asku.wiki/ai/chatbot/', {
-                q_content: inputValue,
-                user_id: "1",
-                // reference: "1"
-            })
-            .then(response => {
+    
+            try {
+                const response = await axios.post(`https://asku.wiki/ai/chatbot/`, {
+                    q_content: inputValue,
+                    user_id: userId.data[0].id
+                });
+    
                 setShowSuggest(false);
                 inputRef.current.blur();
     
                 const newChatResponse = [
-                ...chatResponse,
-                { content: inputValue }, // 사용자의 질문 추가
-                { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
+                    ...chatResponse,
+                    { content: inputValue }, // 사용자의 질문 추가
+                    { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
                 ];
     
                 setChatResponse(newChatResponse);
                 setInputValue('');
-    
-                setTimeout(() => {
-                    setLoading(false); // 로딩 스피너 숨기기
-                }, 10000);
-            })
-            .catch(error => {
+
+                // axios 요청 완료 후 로딩 스피너를 비활성화
+                setLoading(false); // 로딩 스피너 숨기기
+            } catch (error) {
                 console.error(error);
-            });
-            setShowSuggest(false);
-            inputRef.current.blur();
-    
-            const newChatResponse = [...chatResponse, { content: inputValue }];
-            setChatResponse(newChatResponse);
-            setInputValue('');
-            };
+
+                // axios 요청 실패 시에도 로딩 스피너를 비활성화
+                setLoading(false);
+            }
         }
+    };
         const handleKeyDown = (event) => {
             if (event.key === 'Enter' && event.target === inputRef.current) {
                 if (!isLoggedIn) {
@@ -147,30 +149,51 @@ function ChatbotMobile() {
             }, 5000); // 5초 후에 실행
         };
         
-        
-        useEffect(() => {
-            inputRef.current.focus();
-            axios.get('https://asku.wiki/ai/chatbot/1')
-            .then(response => {
-                const previousHistory = response.data;
-                setPreviousChatHistory(previousHistory);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+        const chatBottomRef = useRef(null);
+        const scrollToBottom = () => {
+            chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        };
     
-
+        // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
+        useEffect(() => {
+            scrollToBottom();
+        }, [chatResponse]);
+    
+        useEffect(() => {
+            scrollToBottom();
+            }, [previousChatHistory]);
+            
+        useEffect(() => {
+            if (!isLoggedIn) {
+                setPreviousChatHistory([]); // isLoggedIn이 false일 때 previousChatHistory 초기화
+            }
+        }, [isLoggedIn]);
+    
+        useEffect(() => {
+            const getMessage = async() => {
+            inputRef.current.focus();
+                try {
+                    const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
+                    const previousHistory = response.data;
+                    setPreviousChatHistory(previousHistory);
+                    console.log(response.data)
+                } catch (error) {
+                    console.error(error);
+                }
+            } 
+        getMessage();
+    }, [userId]);
 
     return (
         <div className={styles.mobileChatbotContainer}>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
-            <Header />
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
-                    <p id={styles.title}>AI 챗봇</p>
+                    <p id={styles.title}>AI 하호</p>
                     <button className={styles.button}>채팅 비우기</button>
-                    <button className={styles.button}>도움말</button>
+                    <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
+                        <button className={styles.button}>도움말</button>
+                    </Link>
                 </div>
                 <div>
                     <div className={styles.chat}>
@@ -214,10 +237,13 @@ function ChatbotMobile() {
                             디자인조형학부 홈페이지 주소 보내줘!
                         </span>
                     </div>
+                    <div ref={chatBottomRef}></div> {/* 스크롤 최하단 이동을 위한 빈 div */}
                     {loading && (
                             <Spinner/>
                         )}
-                    <div className={styles.promptWrap}>
+                </div>
+                {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
+                <div className={styles.promptWrap}>
                         <textarea
                             className={styles.prompt}
                             placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
@@ -227,11 +253,9 @@ function ChatbotMobile() {
                             ref={inputRef}
                         />
                         <div className={styles.sendBtn} onClick={sendMessage}>
-                            <img src={arrow} /> 
+                            <img src={arrow} className={styles.sendBtnArrow}/> 
                         </div>
                     </div>
-                </div>
-                {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
                 </div>
             </div>
         </div>

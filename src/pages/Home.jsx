@@ -14,6 +14,24 @@ function Home({loggedIn, setLoggedIn}) {
     const [inputValue, setInputValue] = useState('');
     const [popularKeywords, setPopularKeywords] = useState([]);
     const [popularQuestions, setPopularQuestions] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const checkLoginStatus = async () => {
+        try {
+            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+            if (res.status === 201 && res.data.success === true) {
+                setIsLoggedIn(true);
+            } else if (res.status === 401) {
+                setIsLoggedIn(false);
+            }
+            } catch (error) {
+            console.error(error);
+            setIsLoggedIn(false);
+            }
+        };
+    useEffect(() => {
+        checkLoginStatus();
+    }, []);
 
     useEffect(() => {
         const fetchPopularKeywords = async () => {
@@ -45,7 +63,7 @@ function Home({loggedIn, setLoggedIn}) {
     }, []);
     return (
         <div className="pageWrap">
-            <Header />
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className={styles.homeWrap}>
                 <img src={logo} className={styles.logo} alt="logo" />
                 <div className={styles.inputContainer}>
@@ -74,7 +92,7 @@ function Home({loggedIn, setLoggedIn}) {
                             }} />
                 </div>
                 <div className={styles.chatBotContainer}>
-                    <Chatbot isLoggedIn={loggedIn} />
+                    <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
                     <Link to='/chatbot'>
                         <img src={chatBotBtn} alt='button' className={styles.chatBotBtn} />
                     </Link>
