@@ -63,7 +63,7 @@ function Home({loggedIn, setLoggedIn}) {
     }, []);
     return (
         <div className="pageWrap">
-            <Header  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className={styles.homeWrap}>
                 <img src={logo} className={styles.logo} alt="logo" />
                 <div className={styles.inputContainer}>
@@ -92,7 +92,7 @@ function Home({loggedIn, setLoggedIn}) {
                             }} />
                 </div>
                 <div className={styles.chatBotContainer}>
-                    <Chatbot  isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                    <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
                     <Link to='/chatbot'>
                         <img src={chatBotBtn} alt='button' className={styles.chatBotBtn} />
                     </Link>

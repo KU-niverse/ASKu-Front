@@ -67,7 +67,7 @@ function Header({isLoggedIn, setIsLoggedIn}) {
                     withCredentials: true
                 });
 
-                if (response.status===201) {
+                if (response.status === 201) {
                     setNicknameText(response.data);
                     setLoadingMypage(false);
                 }

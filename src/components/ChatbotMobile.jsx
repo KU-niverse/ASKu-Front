@@ -11,8 +11,7 @@ import ChatQuestion from './ChatQuestion';
 import { Link } from 'react-router-dom';
 
 
-function ChatbotMobile() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
@@ -43,22 +42,7 @@ function ChatbotMobile() {
         };
     }, []);
 
-    const checkLoginStatus = async () => {
-        try {
-            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
-                withCredentials: true
-            });
-            if (res.status === 201 && res.data.success === true) {
-                setIsLoggedIn(true);
-            } else if (res.status === 401) {
-                setIsLoggedIn(false);
-            }
-        } catch (error) {
-            console.error(error);
-            setIsLoggedIn(false);
-        }
-    };
-    
+
     const getUserInfo = async () => {
         try {
             const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
@@ -67,9 +51,6 @@ function ChatbotMobile() {
             if (res.status === 201 && res.data.success === true) {
                 // 사용자 정보에서 id를 가져옴
                 setUserId(res.data);
-                console.log(userId)
-                // userId를 설정한 이후에 GET 요청을 보냄
-                // fetchPreviousChatHistory(user_id);
             } else {
                 setIsLoggedIn(false);
             }
@@ -81,12 +62,11 @@ function ChatbotMobile() {
 
     // getUserInfo 함수를 useEffect 내에서 호출
     useEffect(() => {
-        checkLoginStatus();
         getUserInfo();
     }, []);
 
 
-    const sendMessage = async () => {
+    const sendMessage = async (userId) => {
         if (!isLoggedIn) {
             setLoginModalVisible(true);
             return;
@@ -101,7 +81,6 @@ function ChatbotMobile() {
                     user_id: userId.data[0].id
                 });
     
-                console.log("챗봇 post 성공");
                 setShowSuggest(false);
                 inputRef.current.blur();
     
@@ -182,26 +161,32 @@ function ChatbotMobile() {
     
         useEffect(() => {
             scrollToBottom();
-          }, [previousChatHistory]);
-        
+            }, [previousChatHistory]);
+            
         useEffect(() => {
-            inputRef.current.focus();
-            axios.get('https://asku.wiki/ai/chatbot/2')
-            .then(response => {
-                const previousHistory = response.data;
-                setPreviousChatHistory(previousHistory);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+            if (!isLoggedIn) {
+                setPreviousChatHistory([]); // isLoggedIn이 false일 때 previousChatHistory 초기화
+            }
+        }, [isLoggedIn]);
     
-
+        useEffect(() => {
+            const getMessage = async() => {
+            inputRef.current.focus();
+                try {
+                    const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
+                    const previousHistory = response.data;
+                    setPreviousChatHistory(previousHistory);
+                    console.log(response.data)
+                } catch (error) {
+                    console.error(error);
+                }
+            } 
+        getMessage();
+    }, [userId]);
 
     return (
         <div className={styles.mobileChatbotContainer}>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
-            <Header />
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
                     <p id={styles.title}>AI 하호</p>
