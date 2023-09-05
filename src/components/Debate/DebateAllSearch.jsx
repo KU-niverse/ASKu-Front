@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const DebateSearch = ({title}) => {
+const DebateAllSearch = () => {
   const [word, setWord] = useState('');
   const [results, setResults] = useState([]);
   const [resultCount, setResultCount] = useState(0);
@@ -16,7 +16,7 @@ const nav = useNavigate();
 
   const searchDebate = async () => {
     try{
-        const result = await axios.get(`https://asku.wiki/api/debate/search/${title}/${word}`, {
+        const result = await axios.get(`https://asku.wiki/api/debate/searchall/${word}`, {
             withCredentials: true
         });
         if(result.status === 200){
@@ -32,7 +32,6 @@ const nav = useNavigate();
 
   const handleDebateSearch = () => {
     console.log(word);
-    console.log(title);
     searchDebate();
     setOnClick(true);
 
@@ -50,7 +49,7 @@ const nav = useNavigate();
               <p>"검색결과가 없습니다."</p>
             ) : (
               results.map((item) => {
-                return <ul key={item.id} className={styles.resultList} onClick={() => nav(`/debate/${title}/${item.subject}/${item.id}`)}>{item.subject}</ul>;
+                return <ul key={item.id} className={styles.resultList} onClick={() => nav(`/debate/${item.title}/${item.subject}/${item.id}`)}>{item.subject}</ul>;
               })
             )}
         </div>
@@ -58,4 +57,4 @@ const nav = useNavigate();
   )
 }
 
-export default DebateSearch
+export default DebateAllSearch
