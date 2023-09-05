@@ -20,12 +20,17 @@ const HistoryBox = (props) => {
     const timestamp = props.timestamp;
     const doctitle = props.doctitle;
     const target=props.target;
+    const type = props.type
+
+    console.log(type)
 
     const handleView = () => {
         nav(`/wiki/preview/${title}/${version}`);
     }
 
     const handleRollback = async(e) => {
+
+        
 
         try{
             const result = await axios.post(`http://localhost:8080/wiki/historys/${title}/version/${version}`, {
@@ -51,6 +56,10 @@ const HistoryBox = (props) => {
 
 
     const handleCompare = () => {
+        if(type === 'create'){
+            return alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다');
+        }
+
         nav(`/history/${title}/diff/${version}`);
     }
 
