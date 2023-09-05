@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
+import WikiToQuill from '../components/Wiki/WikiToQuill';
 
 
 const WikiEdit = () => {
@@ -38,7 +39,7 @@ const WikiEdit = () => {
                     withCredentials: true,
                 }); //전체 텍스트를 가져옴.
                 if (result.status === 200){
-                    setDesc(WikiToHtml(result.data.text));
+                    setDesc(WikiToQuill(result.data.text));
                     setVersion(result.data.version);
                 }
     
