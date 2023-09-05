@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import SpinnerMypage from "../components/SpinnerMypage";
 
 const MoreQuestion = () => {
   
@@ -22,6 +23,8 @@ const MoreQuestion = () => {
   const location = useLocation();
   const defaultOpt = location.state;
   const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
+  const [loading, setLoading]=useState(true);
+
 
   useEffect(() => {
     const fetchTitles = async () => {
@@ -30,8 +33,10 @@ const MoreQuestion = () => {
         if (res.data.success) {
           setTitles(res.data.titles);
         }
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -79,7 +84,9 @@ const MoreQuestion = () => {
 
 
 
-
+  if (loading) {
+    return <div><SpinnerMypage/></div>; 
+  }
 
 
   return(
@@ -89,46 +96,46 @@ const MoreQuestion = () => {
       </div>
       <div className={styles.content}>
         {/* 문서 목록에 title이 포함되지 않으면 메시지 표시 */}
-        {!titles.includes(title) ? (
-            <p>존재하지 않는 문서입니다.</p>
-          ) : (
+        {titles.includes(title) ? (
           <div>
-            <div className={styles.header}>
-              <div className={styles.frontheader}>
-                <p className={styles.q_pagename}>{title}</p>
-                <p className={styles.q_headline}>게시물의 질문</p>
-              </div>
-              <div className={styles.switch}>
-              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
-              </div>
+          <div className={styles.header}>
+            <div className={styles.frontheader}>
+              <p className={styles.q_pagename}>{title}</p>
+              <p className={styles.q_headline}>게시물의 질문</p>
             </div>
-            <div>
-              <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt}/>
+            <div className={styles.switch}>
+            <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
             </div>
-            <div>
-              {questionData && questionData.data && questionData.data.length === 0 ? (
-                  <p>아직 작성한 질문이 없습니다.</p>
-                ) : (
-                questionData && questionData.data && questionData.data.map((data) => (
-                  <Question
-                    key={data.id}
-                    id={data.id}
-                    doc_id={data.doc_id}
-                    user_id={data.user_id}
-                    index_title={data.index_title}
-                    content={data.content}
-                    created_at={data.created_at}
-                    answer_or_not={data.answer_or_not}
-                    is_bad={data.is_bad}
-                    nick={data.nickname}
-                    like_count={data.like_count}
-                    title={title}
-                    answer_count={data.answer_count}
-                  />
-                ))
-              )}
-            </div>
-          </div>  
+          </div>
+          <div>
+            <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt}/>
+          </div>
+          <div>
+            {questionData && questionData.data && questionData.data.length === 0 ? (
+                <p>아직 작성한 질문이 없습니다.</p>
+              ) : (
+              questionData && questionData.data && questionData.data.map((data) => (
+                <Question
+                  key={data.id}
+                  id={data.id}
+                  doc_id={data.doc_id}
+                  user_id={data.user_id}
+                  index_title={data.index_title}
+                  content={data.content}
+                  created_at={data.created_at}
+                  answer_or_not={data.answer_or_not}
+                  is_bad={data.is_bad}
+                  nick={data.nickname}
+                  like_count={data.like_count}
+                  title={title}
+                  answer_count={data.answer_count}
+                />
+              ))
+            )}
+          </div>
+        </div>  
+          ) : (
+            <p>존재하지 않는 문서입니다.</p>
         )}   
       </div>
       <div>

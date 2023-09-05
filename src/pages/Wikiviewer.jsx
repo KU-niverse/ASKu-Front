@@ -394,7 +394,7 @@ useEffect(() => {
                                                             content: item.content,
                                                             created_at: item.created_at,
                                                             like_count: item.like_count,
-                                                            nick: item.nick,
+                                                            nick: item.nickname,
                                                             index_title: item.index_title,
                                                             answer_count: item.answer_count,
                                                             title: title,
