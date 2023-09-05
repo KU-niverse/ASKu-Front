@@ -3,12 +3,16 @@ import styles from './DebateSearch.module.css'
 import searchIcon from '../../img/search_icon.png'
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DebateSearch = ({title}) => {
   const [word, setWord] = useState('');
   const [results, setResults] = useState([]);
   const [resultCount, setResultCount] = useState(0);
   const [onClick, setOnClick] = useState(false);
+
+const nav = useNavigate();
+
 
   const searchDebate = async () => {
     try{
@@ -46,7 +50,7 @@ const DebateSearch = ({title}) => {
               <p>"검색결과가 없습니다."</p>
             ) : (
               results.map((item) => {
-                return <ul key={item.id} className={styles.resultList}>{item.subject}</ul>;
+                return <ul key={item.id} className={styles.resultList} onClick={() => nav(`/debate/${title}/${item.subject}/${item.id}`)}>{item.subject}</ul>;
               })
             )}
         </div>
