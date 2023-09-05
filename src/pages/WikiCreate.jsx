@@ -31,6 +31,9 @@ const WikiCreate = () => {
     const handleCreateBtn = async(e) => {
 
         e.preventDefault();
+        if(desc.trim() === ''){
+            return alert('내용을 작성해주세요')
+        }
 
         const wikiMarkup = HtmlToWiki(desc);
         console.log(selectedOption);

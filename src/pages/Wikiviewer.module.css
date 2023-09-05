@@ -4,6 +4,22 @@
 .quesul{
     cursor: pointer;
 }
+.noneComment{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(116, 116, 116, 1);
+}
+.newComment{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(116, 116, 116, 1);
+    cursor: pointer;
+    text-decoration: underline;
+}
+.newComment:hover{
+    color: rgba(116, 116, 116, 0.8);
+    
+}
 .wikiviewer{
     display: flex;
     flex-direction: column;

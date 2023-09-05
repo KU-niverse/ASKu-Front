@@ -64,6 +64,10 @@ const WikiEdit = () => {
 
         e.preventDefault();
 
+        if(desc.trim() === ''){
+            return alert('내용을 작성해주세요')
+        }
+
         const wikiMarkup = HtmlToWiki(desc);
 
         if(isChecked === false){
