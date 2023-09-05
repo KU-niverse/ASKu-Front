@@ -18,7 +18,7 @@ function Home({loggedIn, setLoggedIn}) {
 
     const checkLoginStatus = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
             if (res.status === 201 && res.data.success === true) {
                 setIsLoggedIn(true);
             } else if (res.status === 401) {
@@ -36,7 +36,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularKeywords = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/search/popular');
+                const response = await axios.get('https://asku.wiki/api/search/popular');
                 if (response.data.success) {
                     setPopularKeywords(response.data.data);
                 }
@@ -50,7 +50,7 @@ function Home({loggedIn, setLoggedIn}) {
     useEffect(() => {
         const fetchPopularQuestions = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/question/popular');
+                const response = await axios.get('https://asku.wiki/api/question/popular');
                 if (response.data.success) {
                     setPopularQuestions(response.data.data);
                 }
