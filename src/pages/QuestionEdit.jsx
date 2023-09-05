@@ -24,6 +24,7 @@ const QuestionEdit = () => {
     console.log(stateData);
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
+    const [selectedTitle, setSelectedTitle] = useState(''); //드롭다운 옵션
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
@@ -71,7 +72,7 @@ const QuestionEdit = () => {
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
-                setDesc(WikiToHtml(result.data.title + "\n" + result.data.content));
+                setDesc(WikiToQuill(result.data.title + "\n" + result.data.content));
                 setVersion(result.data.version);
             }
 
@@ -89,8 +90,8 @@ const QuestionEdit = () => {
     //qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집
     const checkSameIndex = async() => {
 
-        console.log(selectedOption);
-        console.log(qid);
+        // console.log(selectedOption);
+        // console.log(qid);
 
 
         try {
@@ -183,6 +184,7 @@ const QuestionEdit = () => {
                     summary: summary,
                     is_q_based: 1,
                     qid: qid,
+                    index_title: selectedTitle, //일단 임시 attribute
                 },{
                     withCredentials: true,
                 });
@@ -234,11 +236,16 @@ const QuestionEdit = () => {
         
         
     };
-     //dropdown에서 선택한 index 반영
+     //dropdown에서 선택한 index 섹션으로 반영
     const handleSelectedOption = (optionValue) => {
       setSelectedOption(optionValue);
       console.log(selectedOption);
     };
+     //dropdown에서 선택한 index title 반영
+     const handleSelectedTitle = (optionValue) => {
+        setSelectedTitle(optionValue);
+        console.log(selectedTitle);
+      };
 
     if (loading) {
         return <div><SpinnerMypage/></div>; 
@@ -268,6 +275,7 @@ const QuestionEdit = () => {
                               <WikiDropDown 
                               defaultOpt={defaultOpt}
                               onSelectedOption={handleSelectedOption}
+                              onSelectedTitle={handleSelectedTitle}
                               title={main}
                               isOptionDisabled={isOptDisabled}
                               />

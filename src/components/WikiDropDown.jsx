@@ -8,7 +8,7 @@ import axios from 'axios';
 import SpinnerMypage from './SpinnerMypage';
 
 
-function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
+function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }) {
   const [wikiData, setWikiData] = useState([]);
   console.log(isOptionDisabled)
 
@@ -93,6 +93,7 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
   const onSelect = (selectedOption) => {
     console.log(selectedOption);
     onSelectedOption(selectedOption.value);
+    onSelectedTitle(selectedOption.label);
     // 처리할 로직을 여기에 추가
   };
 
