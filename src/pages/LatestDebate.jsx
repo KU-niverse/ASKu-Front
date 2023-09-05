@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom';
 import LatestDebateList from '../components/Debate/LatestDebateList';
-import DebateSearch from '../components/Debate/DebateSearch';
+import DebateAllSearch from '../components/Debate/DebateAllSearch';
 import DebateAdd from '../components/Debate/DebateAdd';
 import DebateRecent from '../components/Debate/DebateRecent';
 import { useEffect } from 'react';
@@ -84,7 +84,7 @@ function LatestDebate() {
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
-            <DebateSearch/>
+            <DebateAllSearch/>
           </div>
           
         </div>

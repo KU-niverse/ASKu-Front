@@ -225,9 +225,7 @@ useEffect(() => {
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
-            // setDeleted((prevDeleted) => result.data.is_favorite);
-            console.log(result.data);
-            console.log(result.data.is_favorite);
+            
             
             setFavorite(result.data.is_favorite);
             console.log(favorite);
@@ -376,35 +374,45 @@ useEffect(() => {
                         <Switch  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
                     </div>
                     <div className={blank === false ? styles.quesWrap : styles.hidden}>
-                            {ques.map((item, index) => {
-                                if (index >= 5) {
-                                  return null; // 패스 (무시)
-                                }
-                                return(
-                                    <div className={styles.queslist}>
-                                     <hr className={styles.customHr}></hr>
-                                     <ul key={item.id} 
-                                        onClick={() => nav(`/wiki/morequestion/${title}/${item.id}`, 
-                                        {state:{
-                                            question_id : item.id,
-                                            user_id: item.user_id,
-                                            content: item.content,
-                                            created_at: item.created_at,
-                                            like_count: item.like_count,
-                                            nick: item.nick,
-                                            index_title: item.index_title,
-                                            answer_count: item.answer_count,
-                                            title : title
-                                          }}
-                                     )} 
-                                     className={styles.quesul}>
-                                        <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
-                                        <span className={styles.quesNum}><span>{item.like_count}</span><img src={minilike}/></span>
-                                     </ul>
-                                    </div>
-                                );
-                            })}
-                            <div className={blank === true ? styles.default : styles.hidden}>아직 질문이 없습니다. 질문을 생성해 주세요</div>
+                        {ques.length === 0 ? (
+                                <p className={styles.noneComment}>"질문이 존재하지 않습니다"</p>
+                            ) : (
+                                ques.map((item, index) => {
+                                    if (index >= 5) {
+                                        return null; // 패스 (무시)
+                                    }
+                                    return (
+                                        <div className={styles.queslist}>
+                                            <hr className={styles.customHr}></hr>
+                                            <ul
+                                                key={item.id}
+                                                onClick={() =>
+                                                    nav(`/wiki/morequestion/${title}/${item.id}`, {
+                                                        state: {
+                                                            question_id: item.id,
+                                                            user_id: item.user_id,
+                                                            content: item.content,
+                                                            created_at: item.created_at,
+                                                            like_count: item.like_count,
+                                                            nick: item.nick,
+                                                            index_title: item.index_title,
+                                                            answer_count: item.answer_count,
+                                                            title: title,
+                                                        },
+                                                    })
+                                                }
+                                                className={styles.quesul}
+                                            >
+                                                <span className={styles.quesTitle}>Q.&nbsp;{item.content}</span>
+                                                <span className={styles.quesNum}>
+                                                    <span>{item.like_count}</span>
+                                                    <img src={minilike} />
+                                                </span>
+                                            </ul>
+                                        </div>
+                                    );
+                                })
+                            )}
                     </div>
                     <div className={styles.wikiaskFoot}>
                         <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
@@ -417,33 +425,49 @@ useEffect(() => {
                     
                 </div>
                 <div className={styles.wikigraph}>
-                    {contribute && totalPoint && (
-                       <WikiGraph 
-                         total_point={totalPoint}
-                         users={contribute}
-                       />
-                     )}              
+                    {contribute && totalPoint ? (
+                            <WikiGraph 
+                                total_point={totalPoint}
+                                users={contribute}
+                            />
+                        ) : (
+                            <p className={styles.noneComment}>"기여도가 존재하지 않습니다"</p>
+                        )}
+           
                 </div>
                </div>
                <div className={styles.wikicontent}>
-                    {allContent.map((item) => {
-                        //0. 들어가며 일시 질문 및 편집 막기 위해 판단
-                        let isZero;
+               {allContent.length === 0 ? (
+                        <p>
+                            <span className={styles.noneComment}>"위키 문서가 없습니다. </span>
+                            <span className={styles.newComment} onClick={() => nav('/newwiki')}>새 문서를 생성해주세요"</span>
+                        </p>
+                    ) : (
+                        allContent.map((item) => {
+                            //0. 들어가며 일시 질문 및 편집 막기 위해 판단
+                            let isZero;
+                        
+                            if (item.index === '0') {
+                                isZero = true;
+                            } else {
+                                isZero = false;
+                            }
+                        
+                            return (
+                                <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
+                                    <WikiBox
+                                        title={item.title}
+                                        content={item.content}
+                                        index={item.index}
+                                        section={item.section}
+                                        main={title}
+                                        isZero={isZero}
+                                    />
+                                </div>
+                            );
+                        })
+                    )}
 
-                        if(item.index === '0'){
-                            isZero = true;
-                        } else{
-                            isZero = false;
-                        }
-
-                        return(
-                            <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
-                                <WikiBox 
-                                title={item.title} content={item.content} index={item.index} section={item.section} main={title} isZero={isZero}
-                                />
-                            </div>
-                        );
-                    })}
                </div>
             </div>
         </div>

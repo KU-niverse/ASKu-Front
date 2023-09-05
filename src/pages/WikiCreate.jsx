@@ -31,6 +31,9 @@ const WikiCreate = () => {
     const handleCreateBtn = async(e) => {
 
         e.preventDefault();
+        if(desc.trim() === ''){
+            return alert('내용을 작성해주세요')
+        }
 
         const wikiMarkup = HtmlToWiki(desc);
         console.log(selectedOption);
@@ -47,7 +50,7 @@ const WikiCreate = () => {
                 withCredentials: true,
             });
             if(result.status === 200){
-                alert("수정에 기여해주셔서 감사합니다.");
+                alert("문서를 생성해주셔서 감사합니다.");
                 nav(`/wiki/${title}`);
             }
         } catch(error){

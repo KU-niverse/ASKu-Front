@@ -47,20 +47,21 @@ function Quill2(props) {
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
 
         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-        const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-        // 1. 에디터 root의 innerHTML을 수정해주기
-        // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
-        // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
-         editor.root.innerHTML =
-           editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
-
-        // 2. 현재 에디터 커서 위치값을 가져온다
-        //const range = editor.getSelection();
-        // 가져온 위치에 이미지를 삽입한다
-        //editor.insertEmbed(range, "image", IMG_URL);
-      } catch (error) {
-        console.log("실패했어요ㅠ");
-        alert(error.response.data.message);
+         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
+         const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+         // 1. 에디터 root의 innerHTML을 수정해주기
+         // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
+         // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
+         // editor.root.innerHTML =
+         //    editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
+ 
+         // 2. 현재 에디터 커서 위치값을 가져온다
+         const range = editor.getSelection();
+         // 가져온 위치에 이미지를 삽입한다
+         editor.clipboard.dangerouslyPasteHTML(range.index, `<img src="${IMG_URL}" />`);
+       } catch (error) {
+         console.log("실패했어요ㅠ");
+         alert('이미지 업로드중 오류가 발생하였습니다. \n (최대 용량은 5MB입니다)');
       }
     });
   };
