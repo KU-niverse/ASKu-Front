@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useParams, useLocation } from 'react-router-dom';
 import QuestionQnA from "../components/QuestionQnA";
+import link_icon from "../img/link_icon.png"
 
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
@@ -25,7 +26,7 @@ const QnA = () => {
   useEffect(() => {
     const takeAnswer = async () =>{
       try{
-        const res = await axios.get( `https://asku.wiki/api/question/answer/${question_id}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080/question/answer/${question_id}`, {withCredentials: true});
         if(res.status === 200){
           setAnswerData(res.data);
         }
@@ -50,6 +51,12 @@ const QnA = () => {
           <div className={styles.frontheader}>
             <p className={styles.q_pagename}>{title}</p>
             <p className={styles.q_headline}>게시물의 질문</p>
+          </div>
+          <div className={styles.backheader}>
+            <button className={styles.q_editbtn}>
+              <img src={link_icon} alt="link_icon"/>
+              <span className={styles.q_linkbtn}>문서 바로가기</span>
+            </button>
           </div>
           {/* <div className={styles.switch}>
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>

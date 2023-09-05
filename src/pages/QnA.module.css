@@ -21,6 +21,37 @@
   flex-direction: row;
   align-items: center; 
 }
+.backheader{
+  padding-right: 30px;
+}
+.backheader button{
+  border-radius: 30px;
+  border-color: rgba(159, 19, 46, 1);
+  border-width: 2px;
+  height: 36px;
+  width: 128px;
+  background-color: white;
+  color: rgba(159, 19, 46, 1);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.backheader img{
+  height: 15px;
+  width: 18px;
+  object-fit: contain;
+  padding-left: 0px;
+}
+
+.backheader span{
+  display: flex;
+  align-items: center;
+}
 
 .switch{
   padding-right: 30px;
@@ -96,6 +127,22 @@
   .q_headline{
     font-size: 16px;
     padding-left: 10px;
+  }
+  .backheader img{
+    width: 15px;
+    height: 16px;
+    object-fit: contain;
+    align-self: center;
+  }
+  .backheader button{
+    font-size: 12px;
+    width: max-content;
+    height: 25px;
+  }
+  
+  .q_linkbtn{
+      
+    font-size: 12px;
   }
 
   .q_cheader{

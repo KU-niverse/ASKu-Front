@@ -25,13 +25,15 @@ function CommentQna({id, wiki_history_id, created_at, user_id, nickname, rep_bad
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
-              <span className={styles.q_message}>위 질문을 기반으로 수정된 문서 내용입니다.</span>
+              <span className={styles.q_index}>0. 들어가며</span>
+
             </div>
             <div className={styles.q_backfooter}>
-              <button className={styles.q_editbtn}>
+              {/* <button className={styles.q_editbtn}>
                 <img src={link_icon} alt="link_icon"/>
                 <span className={styles.q_linkbtn}>문서 바로가기</span>
-              </button>
+              </button> */}
+              <span className={styles.q_message}>위 질문을 기반으로 수정된 문서 내용입니다.</span>
             </div>
           </div>
         </div>
