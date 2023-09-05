@@ -47,7 +47,7 @@ const WikiCreate = () => {
                 withCredentials: true,
             });
             if(result.status === 200){
-                alert("수정에 기여해주셔서 감사합니다.");
+                alert("문서를 생성해주셔서 감사합니다.");
                 nav(`/wiki/${title}`);
             }
         } catch(error){
