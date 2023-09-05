@@ -41,7 +41,7 @@ const QuestionEdit = () => {
     const getAllWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}`,{
+            const result = await axios.get(`http://localhost:8080/wiki/contents/${main}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -65,7 +65,7 @@ const QuestionEdit = () => {
     const getWiki = async () => {
         try{
 
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}/section/${selectedOption}`,{
+            const result = await axios.get(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`,{
                 withCredentials: true,
             }); //전체 텍스트를 가져옴.
             if (result.status === 200){
@@ -92,7 +92,7 @@ const QuestionEdit = () => {
 
 
         try {
-            const result = await axios.get(`https://asku.wiki/api/wiki/contents/question/${qid}`, {
+            const result = await axios.get(`http://localhost:8080/wiki/contents/question/${qid}`, {
                 withCredentials: true,
             });
             if(result.status === 200){
@@ -168,7 +168,7 @@ const QuestionEdit = () => {
 
         if( selectedOption === 'all'){
             try {
-                const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}`, {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}`, {
                     version: version,
                     new_content: wikiMarkup,
                     summary: summary,
@@ -196,7 +196,7 @@ const QuestionEdit = () => {
 
         } else{
             try {
-                const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}/section/${selectedOption}`, {
+                const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${selectedOption}`, {
                     version: version,
                     new_content: wikiMarkup,
                     summary: summary,

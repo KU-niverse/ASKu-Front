@@ -45,7 +45,7 @@ const WikiEdit = () => {
         const getWiki = async () => {
             try{
 
-                const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}/section/${section}`,{
+                const result = await axios.get(`http://localhost:8080/wiki/contents/${main}/section/${section}`,{
                     withCredentials: true,
                 }); //전체 텍스트를 가져옴.
                 if (result.status === 200){
@@ -81,7 +81,7 @@ const WikiEdit = () => {
             return alert('정책에 맞게 작성하였음을 확인해주세요')
         }
         try {
-            const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}/section/${section}`, {
+            const result = await axios.post(`http://localhost:8080/wiki/contents/${main}/section/${section}`, {
                 version: version,
                 new_content: wikiMarkup,
                 summary: summary,
