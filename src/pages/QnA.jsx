@@ -96,6 +96,7 @@ const QnA = () => {
                 badge_image={data.badge_image}
                 title={data.title}
                 content={data.content}
+                index_title={data.index_title}
               />
             ))
           )}
