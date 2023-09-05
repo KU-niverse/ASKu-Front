@@ -12,7 +12,7 @@ import axios from "axios";
 import { useParams, useLocation } from 'react-router-dom';
 import QuestionQnA from "../components/QuestionQnA";
 import link_icon from "../img/link_icon.png"
-
+import { useNavigate } from "react-router-dom";
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [answerData, setAnswerData] = useState([]);
@@ -20,6 +20,10 @@ const QnA = () => {
   const stateData = location.state;
   const question_id = stateData.question_id;
   const {title} = useParams();
+  const nav = useNavigate();
+  const linktoWiki = ()=>{
+    nav(`/wiki/${title}`)
+  }
   console.log(question_id)
 
 
@@ -53,7 +57,7 @@ const QnA = () => {
             <p className={styles.q_headline}>게시물의 질문</p>
           </div>
           <div className={styles.backheader}>
-            <button className={styles.q_editbtn}>
+            <button onClick={linktoWiki} className={styles.q_editbtn}>
               <img src={link_icon} alt="link_icon"/>
               <span className={styles.q_linkbtn}>문서 바로가기</span>
             </button>

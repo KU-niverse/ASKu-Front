@@ -25,6 +25,7 @@ const MoreQuestion = () => {
   const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
   const [loading, setLoading]=useState(true);
 
+
   useEffect(() => {
     const fetchTitles = async () => {
       try {
