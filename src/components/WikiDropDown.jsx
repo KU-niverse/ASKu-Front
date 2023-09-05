@@ -13,12 +13,12 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
   console.log(isOptionDisabled)
 
   useEffect(() => {
-    if (!isOptionDisabled) {
       const takeWikiData = async () => {
         try {
           const res = await axios.get(`http://localhost:8080/wiki/contents/${title}`, { withCredentials: true });
           if (res.status === 200) {
             setWikiData(res.data);
+            console.log('돼?')
           }
           if (res.status === 404) {
             console.log(res.data.message);
@@ -28,8 +28,7 @@ function DropDown({ defaultOpt, onSelectedOption, title, isOptionDisabled }) {
         }
       };
       takeWikiData();
-    }
-  }, [title, isOptionDisabled]);
+  }, []);
   //위키 정보 가져오기
 
 

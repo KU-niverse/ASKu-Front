@@ -10,6 +10,7 @@ import axios from 'axios';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
 import WikiToQuill from '../components/Wiki/WikiToQuill';
+import SpinnerMypage from '../components/SpinnerMypage';
 
 
 const QuestionEdit = () => {
@@ -27,12 +28,14 @@ const QuestionEdit = () => {
     const qid = stateData.qid;
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
     console.log(qid);
-    const [section, setSection] = useState('');
+    const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
     const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = () => {
         setIsChecked(prevIsChecked => !prevIsChecked);
     }
+
+    
 
     function onEditorChange(value) {
         setDesc(value)
@@ -48,7 +51,6 @@ const QuestionEdit = () => {
                 setDesc(WikiToQuill(result.data.text));
                 setVersion(result.data.version);
             }
-
         } catch (error) {
             console.error(error);
             if(error.response.status === 401){
@@ -141,8 +143,10 @@ const QuestionEdit = () => {
             
             if(selectedOption === 'all'){
                 getAllWiki();
+                setLoading(false);
             } else{
                 getWiki();
+                setLoading(false);
             }
         } else{
             console.log('section 없음')
@@ -156,6 +160,11 @@ const QuestionEdit = () => {
       const addWikiEdit = async (e) => {
 
         e.preventDefault();
+
+        //본문 내용 입력 필수
+        if(desc.trim() === ''){
+            return alert('내용을 작성해주세요')
+        }
 
         const wikiMarkup = HtmlToWiki(desc);
 
@@ -230,6 +239,10 @@ const QuestionEdit = () => {
       setSelectedOption(optionValue);
       console.log(selectedOption);
     };
+
+    if (loading) {
+        return <div><SpinnerMypage/></div>; 
+      }
 
     return (
         <div className={`${styles.container}`}>
