@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.22.5",
+    "@looop/quill-image-resize-module-react": "^3.1.5",
     "@material-ui/core": "^4.12.4",
     "@szhsin/react-menu": "^4.0.2",
     "@testing-library/jest-dom": "^5.16.5",
