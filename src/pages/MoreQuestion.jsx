@@ -101,7 +101,7 @@ const MoreQuestion = () => {
           <div className={styles.header}>
             <div className={styles.frontheader}>
               <p className={styles.q_pagename}>{title}</p>
-              <p className={styles.q_headline}>게시물의 질문</p>
+              <p className={styles.q_headline}>문서의 질문</p>
             </div>
             <div className={styles.switch}>
             <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>

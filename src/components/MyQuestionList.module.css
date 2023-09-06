@@ -36,6 +36,13 @@
   color :rgba(159, 19, 46, 1);
 }
 
+.q_index{
+  color: #747474;
+  font-size: 14px;
+  font-weight: 700;
+  padding-right: 5px;
+}
+
 .q_content{
   padding-left: 10px;
   cursor: pointer;
@@ -113,6 +120,10 @@
   }
 .q_comment {
  margin-left: 10px;
+}
+
+.q_index{
+  font-size: 12px;
 }
 
   .q_footer img{
