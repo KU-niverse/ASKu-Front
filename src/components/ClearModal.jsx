@@ -5,10 +5,10 @@ import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function ClearModal({ isOpen, onClose }) {
+function ClearModal({ isOpen, onClose, userId }) {
 
     const handleClearChat = () => {
-        axios.patch('https://asku.wiki/chatbot/1')
+        axios.patch(`https://asku.wiki/chatbot/${userId.data[0].id}`)
             .then(response => {
                 alert('채팅 내역이 비워졌습니다!')
                 // 채팅 내역을 비웠을 때 수행할 작업을 여기에 추가할 수 있습니다.
