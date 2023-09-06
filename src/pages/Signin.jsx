@@ -24,7 +24,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
     //로그인 체크 후 우회
     const checkLoginStatus = async () => {
         try {
-          const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+          const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
           if (res.status === 201 && res.data.success === true) {
             setLoggedIn(true);
             nav('/')
@@ -43,30 +43,64 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       }, []);
 
 
-    //아이디 기억하기 체크 여부
+    // //아이디 기억하기 체크 여부
+    // const handleSaveIDFlag = () => {
+    //     console.log('전' , saveIDFlag);
+    //     setSaveIDFlag(prev => !prev);
+    //     console.log('후', saveIDFlag);
+    // }
+
+    // 아이디 기억하기 체크 여부
     const handleSaveIDFlag = () => {
-        console.log('전' , saveIDFlag);
-        setSaveIDFlag(prev => !prev);
-        console.log('후', saveIDFlag);
+      const newFlag = !saveIDFlag;
+      setSaveIDFlag(newFlag);
+    
+      // 아이디 저장하기 체크 여부를 로컬 스토리지에 저장
+      localStorage.setItem(LS_KEY_SAVE_ID_FLAG, JSON.stringify(newFlag));
+    
+      // 아이디 저장하기 체크를 해제할 때 아이디 삭제
+      if (!newFlag) {
+        localStorage.removeItem(LS_KEY_ID);
+      }
     }
 
-    //아이디 기억하기
-    useEffect(() => {
-        let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
-        if (idFlag !== null) setSaveIDFlag(idFlag);
-        if (idFlag === false) localStorage.setItem(LS_KEY_ID, "");
+    // //아이디 기억하기
+    // useEffect(() => {
+    //     let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
+    //     if (idFlag !== null) setSaveIDFlag(idFlag);
+    //     if (idFlag === false) localStorage.setItem(LS_KEY_ID, "");
       
-        let data = localStorage.getItem(LS_KEY_ID);
-        if (data !== null) setId(data);
+    //     let data = localStorage.getItem(LS_KEY_ID);
+    //     if (data !== null) setId(data);
+    //   }, []);
+
+      // 자동으로 체크박스 설정 및 아이디 불러오기
+      useEffect(() => {
+        const idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
+        if (idFlag !== null) {
+          setSaveIDFlag(idFlag);
+        
+          // 아이디 저장하기 체크가 되어 있고, 저장된 아이디가 있으면 아이디를 설정합니다.
+          if (idFlag) {
+            const data = localStorage.getItem(LS_KEY_ID);
+            if (data !== null) {
+              setId(data);
+            }
+          }
+        }
       }, []);
-
-
 
     //로그인
     const userLogin = async () => {
+
+      if (saveIDFlag) {
+        localStorage.setItem(LS_KEY_ID, id);
+      } else {
+        localStorage.removeItem(LS_KEY_ID);
+      }
         
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/signin', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/signin', {
                 login_id: id,
                 password: password,
             }, {

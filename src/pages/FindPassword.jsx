@@ -16,7 +16,7 @@ const FindPassword = () => {
         console.log(id);
 
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/findpw', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/findpw', {
                 login_id: id
             }, {
                 withCredentials: true
@@ -54,7 +54,7 @@ const FindPassword = () => {
                 </span> 
             </div>
             <input className={`${styles.findBtn}`} type='submit' value='비밀번호 재설정 메일 받기'/>
-            <div  className={`${styles.findAlert}`}>비밀번호를 재설정 페이지를 아이디에 해당하는 이메일로 전송합니다. </div>
+            <div  className={`${styles.findAlert}`}>비밀번호 재설정 페이지를 아이디에 해당하는 이메일로 전송합니다. </div>
         </form>
     </div>
     
