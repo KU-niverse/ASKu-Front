@@ -29,7 +29,7 @@ const MoreQuestion = () => {
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const res = await axios.get("https://asku.wiki/api/wiki/titles");
+        const res = await axios.get("http://localhost:8080/wiki/titles");
         if (res.data.success) {
           setTitles(res.data.titles);
         }
@@ -43,7 +43,7 @@ const MoreQuestion = () => {
     const takeQuestion = async () => {
       try {
         const flag = isToggled ? 1 : 0;
-        const res = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:8080/question/view/${flag}/${title}`, { withCredentials: true });
         if (res.status === 200) {
           setQuestionData(res.data);
         }
@@ -66,7 +66,7 @@ const MoreQuestion = () => {
  
   const handleQuestionSubmit = async (submitData) => {
     try {
-      const res = await axios.post(`https://asku.wiki/api/question/new/${title}`, submitData, {withCredentials: true});
+      const res = await axios.post(`http://localhost:8080/question/new/${title}`, submitData, {withCredentials: true});
       if(res.status === 200){
         setData(res.data);
         alert(res.data.message)
