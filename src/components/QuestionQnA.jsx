@@ -39,7 +39,10 @@ function QuestionQnA({answer_count, title, question_id, doc_id, user_id, index_t
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span className={styles.q_content}>{content}</span>
+            <span className={styles.q_content}>
+              <span className={styles.q_index}>[{index_title}]</span>
+              {content}
+            </span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>

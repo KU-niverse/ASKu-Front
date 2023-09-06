@@ -51,7 +51,10 @@ function Question({answer_count, title, id, doc_id, user_id, index_title, conten
           </div>
           <div className={styles.q_middle}>
             <span className={styles.q_icon}>Q. </span>
-            <span onClick={linktoAnswer} className={styles.q_content}>{content}</span>
+            <span onClick={linktoAnswer} className={styles.q_content}>
+                <span className={styles.q_index}>[{index_title}]</span>
+              {content}
+            </span>
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
