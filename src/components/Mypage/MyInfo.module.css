@@ -7,8 +7,8 @@
 
 .rowtitle{
   display: table-cell;
-  text-align: center;
-  width: 40%;
+  text-align: left;
+  width: 15%;
   font-size: 18px;
   color : rgba(159, 19, 46, 1);
   padding: 10px 0;
@@ -17,7 +17,7 @@
 
 .text{
   display: table-cell;
-  width: 60%;
+  width: 85%;
   font-size: 18px;
   color : rgba(116, 116, 116, 1);
 }
