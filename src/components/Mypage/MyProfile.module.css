@@ -12,17 +12,22 @@
   border : 1px solid rgba(116, 116, 116, 1)
 }
 
+.profilerow{
+  display: grid;
+}
+
 .rownick, .rowbadge, .rowpoint{
   display: table;
-  width: 100%;
+  width: 75%;
   position: relative;
   table-layout: fixed;
+  justify-self: center;
 }
 
 .rowtitle{
   display: table-cell;
-  text-align: center;
-  width: 40%;
+  text-align: left;
+  width: 35%;
   font-size: 18px;
   color : rgba(159, 19, 46, 1);
   padding: 10px 0;
@@ -31,7 +36,7 @@
 
 .text{
   display: table-cell;
-  width: 80%;
+  width: 65%;
   font-size: 18px;
   color : rgba(116, 116, 116, 1);
 }
@@ -58,6 +63,10 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .rownick, .rowbadge, .rowpoint{
+    width: 100%;
+  }
+  
   .rowtitle, .text, .rank{
     font-size: 14px;
   }
@@ -66,6 +75,7 @@
     width: 30%;
     text-align: left;  
     font-weight: bold;
+    padding: 10px 0;
   }
 
   .text{
