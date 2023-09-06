@@ -242,8 +242,16 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 <QuestionList
                   key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                   id={question.id}
+                  doc_id={question.doc_id}
+                  user_id={question.user_id}
+                  index_title={question.index_title}
                   content={question.content}
                   time={question.created_at}
+                  is_bad={question.is_bad}
+                  nickname={question.nickname}
+                  rep_badge={question.rep_badge}
+                  badge_image={question.badge_image}
+                  like_count={question.like_count}
                   doc_title={question.doc_title}
                   answer_count={question.answer_count}
                 />
