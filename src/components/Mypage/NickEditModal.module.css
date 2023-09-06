@@ -162,3 +162,10 @@
   display: flex;
   margin-right: 20px;
 }
+
+@media only screen and (max-width: 767px) {
+  .dblcheck{
+    font-size: 14px;
+  }
+
+}
