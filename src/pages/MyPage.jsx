@@ -36,7 +36,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -73,12 +73,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
-    getData('https://asku.wiki/api/user/mypage/info', setMypageData);
-    getData(`https://asku.wiki/api/user/mypage/questionhistory/latest`, setMyQuestion);
-    getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
-    getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
-    getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
-    getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
+    getData('http://localhost:8080/user/mypage/info', setMypageData);
+    getData(`http://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
+    getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
+    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
+    getData('http://localhost:8080/wiki/contributions', setMyContribute);
   }, []);
 
   console.log(myBadge)
@@ -220,6 +220,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     is_rollback={wiki.is_rollback}
                     is_q_based={wiki.is_q_based}
                     title={wiki.title}
+
                   />
                 ))
               )}
@@ -244,6 +245,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   content={question.content}
                   time={question.created_at}
                   doc_title={question.doc_title}
+                  answer_count={question.answer_count}
                 />
               ))
             )}
