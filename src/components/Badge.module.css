@@ -30,11 +30,12 @@
 .myBadgeStyle .b_right{
   display: flex;
   flex-direction: column;
-  align-content: center;
   height: auto;
   padding-right: 30px;
   padding-left: 15px;
   width: 70%;
+  justify-content: center;
+
 }
 .myBadgeStyle .b_listhead{
   display: flex;
@@ -45,7 +46,9 @@
 }
 
 .b_listhead span{
+  font-weight: bold;
   align-self: center;
+
 }
 
 .myBadgeStyle .b_listhead img{
@@ -55,8 +58,8 @@
 .myBadgeStyle .b_listmid{
   display: flex;
   width: 100%;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 400;
 }
 .myBadgeStyle .b_listfoot{
   display: flex;
@@ -104,18 +107,19 @@
 .normalBadgeStyle .b_right{
   display: flex;
   flex-direction: column;
-  align-content: center;
   height: auto;
   padding-right: 30px;
   padding-left: 15px;
   width: 70%;
+  justify-content: center;
 }
-.normalBadgeStyle .b_listhead{
+.normalBadgeStyle .b_listhead {
   display: flex;
   justify-content: space-between;
   align-content: center;
   width: 100%;
   font-size: 14px;
+  font-weight: bold;
   color: #D5D5D5;
 }
 
@@ -126,8 +130,8 @@
 .normalBadgeStyle .b_listmid{
   display: flex;
   width: 100%;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 400;
   color: #D5D5D5;;
 }
 .normalBadgeStyle .b_listfoot{
