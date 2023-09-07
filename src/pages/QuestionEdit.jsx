@@ -184,7 +184,8 @@ const QuestionEdit = () => {
                     summary: summary,
                     is_q_based: 1,
                     qid: qid,
-                    index_title: selectedTitle, //일단 임시 attribute
+                    index_title: '전체',
+                     
                 },{
                     withCredentials: true,
                 });
@@ -213,6 +214,7 @@ const QuestionEdit = () => {
                     summary: summary,
                     is_q_based: 1,
                     qid: qid,
+                    index_title: selectedTitle,
                 },{
                     withCredentials: true,
                 });

@@ -80,6 +80,7 @@ const WikiEdit = () => {
                 summary: summary,
                 is_q_based: 0,
                 qid: 0,
+                index_title: '전체',
             },{
                 withCredentials: true,
             });
