@@ -47,7 +47,7 @@ function QuestionQnA({answer_count, title, question_id, doc_id, user_id, index_t
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
               <div className={styles.q_like}>
-                <LikeorNot questionId={question_id} like_count={like_count} user_id={user_id} />
+                <LikeorNot className={styles.q_likebtn} questionId={question_id} like_count={like_count} user_id={user_id} />
               </div>
               <div className={styles.q_comment}>
                 <img src={comment_icon} alt="comment"/>

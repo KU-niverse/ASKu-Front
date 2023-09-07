@@ -45,7 +45,6 @@
 
 .q_content{
   padding-left: 10px;
-  cursor: pointer;
 }
 
 .q_footer{
@@ -68,6 +67,10 @@
   font-weight: bold;
   align-self: center;
 }
+
+.q_likebtn{
+  pointer-events: none;
+}
 .q_comment{
   display: flex;
   align-content: center;
@@ -86,7 +89,6 @@
 
 .q_comment img{
   object-fit: contain;
-  cursor: pointer;
 }
 
 
