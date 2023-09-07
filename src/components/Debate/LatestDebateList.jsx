@@ -7,7 +7,11 @@ const formattedDate=FormatDate(recent_edited_at)
 const nav=useNavigate();
 const linktoDebateRoom=()=>{
   window.history.replaceState(null, '', `/latestdebate`);  
-  nav(`/debate/${title}/${subject}/${id}`);
+  nav(`/debate/${title}/${subject}`, {state : {
+    title: title,
+    subject: subject,
+    id: id}
+  });
 }
   return(
     <div className={styles.container}>

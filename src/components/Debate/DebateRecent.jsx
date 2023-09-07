@@ -3,13 +3,15 @@ import styles from './DebateRecent.module.css';
 import FormatTimeAgo from '../FormatTimeAgo';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const DebateRecent = ({ title }) => {
   const [recentListData, setRecentListData] = useState(null);
+
 
   useEffect(() => {
     const takeRecentList = async () => {
       try {
-        const res = await axios.get(`https://asku.wiki/api/debate/all/recent`, { withCredentials: true });
+        const res = await axios.get(`https://asku.wik/api/debate/all/recent`, { withCredentials: true });
         if (res.status === 200) {
           setRecentListData(res.data);
         } else {
@@ -23,6 +25,7 @@ const DebateRecent = ({ title }) => {
     takeRecentList();
   }, [title]);
 
+  
   return (
     <div>
       <p className={styles.recentTitle}>최근 토론</p>
@@ -35,7 +38,8 @@ const DebateRecent = ({ title }) => {
           recentListData.data.slice(0, 4).map((item) => {
             const timestamp = FormatTimeAgo(item.recent_edited_at);
             return (
-            <Link to={`/debate/${item.title}/${item.subject}/${item.id}`} className={styles.linkTo}>
+            <Link to={`/debate/${item.title}/${item.subject}`} className={styles.linkTo}>
+
               <ul key={item.title}>
                 <span className={styles.listTitle}>{item.subject}</span>
                 <span className={styles.listTimestamp}>{timestamp}</span>

@@ -12,7 +12,11 @@ function Comment({id, subject, content, created_at, is_bad, docsname, nick}){
   const debateId = id;
   const title=docsname;
   const linktoComment = ()=>{
-    nav(`/debate/${title}/${subject}/${debateId}`)
+    nav(`/debate/${title}/${subject}`, {state : {
+      title: title,
+      subject: subject,
+      id: id}
+    })
   }
 
   return(

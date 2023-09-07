@@ -7,7 +7,13 @@ function DebateList({title, id, doc_id, user_id, subject, created_at, recent_edi
 const formattedDate=FormatDate(recent_edited_at)
 const nav = useNavigate();
 const linktoDebateRoom = ()=>{
-  nav(`/debate/${title}/${subject}/${id}`)
+  nav(`/debate/${title}/${subject}`, {state : {
+    title: title,
+    subject: subject,
+    id: id}
+  });
+
+
 }
 
 console.log(id)

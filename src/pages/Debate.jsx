@@ -13,13 +13,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 function Debate() {
 const [data, setData] = useState(null);
-const {title} = useParams();
-const{subject} = useParams();
-const {debateId}= useParams();
 const [debateContentData, setDebateContentData] = useState([]);
+const location = useLocation();
+const stateData = location.state;
+const debateId = stateData.id;
+const title = stateData.title
+const subject=stateData.subject;
 
 
 useEffect(() => {
@@ -39,6 +42,7 @@ useEffect(() => {
   }
   takeDebateContent();
 }, [title, debateId]); //토론방 메시지 가져오기
+
 
 
 
@@ -74,11 +78,14 @@ const handleDebateSubmit = async (submitData) => {
       <div className={styles.debatecontent}>
         
         <div className={styles.maincontent}>
-          <DebateTitle title={title} subject={subject}/>
+        <DebateTitle title={title} subject={subject}/>
+
           {debateContentData&&debateContentData.message&&debateContentData.message.data===0 ? (
                 <p>아직 작성된 토론 메세지가 없습니다.</p>
               ) : (
+
                 debateContentData&&debateContentData.message&&debateContentData.data.map((debate, index)=>(
+                  
                   <DebateContent
                     key={debate.id}
                     r_id={debate.id}
@@ -89,6 +96,7 @@ const handleDebateSubmit = async (submitData) => {
                     is_bad={debate.is_bad}
                     nick={debate.nickname}
                   />
+                  
                 ))
               )}
           <div className={styles.input}>

@@ -86,7 +86,6 @@ function LatestDebate() {
           <div className={styles.debateSearch}>
             <DebateAllSearch/>
           </div>
-          
         </div>
       </div>
       <div>

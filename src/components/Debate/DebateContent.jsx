@@ -15,7 +15,7 @@ const type=4
         <span className={styles.date}>{formattedDate}</span>
         </div>
         <div className={styles.backheader}>
-        <ThreedotsReport type={type} target={r_id}/>
+          <ThreedotsReport type={type} target={r_id}/>
         </div>
       </div>
       <div className={styles.content}>

@@ -79,7 +79,7 @@ function App() {
                 <Route path="/wiki/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
-                <Route path="/debate/:title/:subject/:debateId" element={<Debate/>}/>
+                <Route path="/debate/:title/:subject/" element={<Debate/>}/>
                 <Route path="/debate/:title" element={<MoreDebate/>}/>
                 <Route path="/latestdebate" element={<LatestDebate/>}/>
                 <Route path="/wiki/morequestion/:title/:id" element={<QnA/>}/>
