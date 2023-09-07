@@ -25,7 +25,7 @@ function CommentQna({index_title, id, wiki_history_id, created_at, user_id, nick
           </div>
           <div className={styles.q_footer}>
             <div className={styles.q_frontfooter}>
-              <span className={styles.q_index}>{index_title}</span>
+              <span className={styles.q_index}>[{index_title}]</span>
 
             </div>
             <div className={styles.q_backfooter}>
