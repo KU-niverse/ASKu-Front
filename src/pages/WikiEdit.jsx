@@ -5,6 +5,7 @@ import styles from './WikiEdit.module.css';
 import Header from '../components/Header';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import WikiToHtml from '../components/Wiki/WikiToHtml';
 import HtmlToWiki from '../components/Wiki/HtmlToWiki';
 import WikiToQuill from '../components/Wiki/WikiToQuill';
@@ -12,6 +13,9 @@ import WikiToQuill from '../components/Wiki/WikiToQuill';
 
 const WikiEdit = () => {
     const {main, section} = useParams();
+    const location = useLocation();
+    const index_title = location.state;
+    console.log(index_title);
     const nav = useNavigate();
     const [desc, setDesc] = useState('');
     const [wiki, setWiki] = useState('');
@@ -91,6 +95,7 @@ const WikiEdit = () => {
                 summary: summary,
                 is_q_based: 0,
                 qid: 0,
+                index_title: index_title,
             },{
                 withCredentials: true,
             });
