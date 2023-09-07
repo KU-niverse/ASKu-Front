@@ -61,6 +61,7 @@ function Home({loggedIn, setLoggedIn}) {
     
         fetchPopularQuestions();
     }, []);
+    
     return (
         <div className="pageWrap">
             <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

@@ -8,25 +8,22 @@ import axios from 'axios';
 function ClearModal({ isOpen, onClose, userId }) {
 
     const handleClearChat = () => {
-    axios.patch(`https://asku.wiki/chatbot/${userId.data[0].id}`, {}, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        withCredentials: true
-    })
-        .then(response => {
-            alert('채팅 내역이 비워졌습니다!');
-            console.log('채팅 내역이 비워졌습니다.');
+        axios.patch(`${process.env.AI_SERVER}/chatbot/7`, {}, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
         })
-        .catch(error => {
-            console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
-        });
+            .then(response => {
+                alert('채팅 내역이 비워졌습니다!');
+                console.log('채팅 내역이 비워졌습니다.');
+            })
+            .catch(error => {
+                console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
+            });
 };
-axios.patch('your_url_here', {}, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+
+
 
     const modalRef = useRef(null);
 
