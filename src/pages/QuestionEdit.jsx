@@ -21,14 +21,15 @@ const QuestionEdit = () => {
     const {main} = useParams();
     const location = useLocation();
     const stateData = location.state;
-    console.log(stateData);
+    //console.log(stateData);
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
-    const [selectedTitle, setSelectedTitle] = useState(''); //드롭다운 옵션
+    const [selectedTitle, setSelectedTitle] = useState(stateData.index_title); //드롭다운 옵션
+    console.log(selectedTitle);
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
-    console.log(qid);
+    //console.log(qid);
     const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
     const [isChecked, setIsChecked] = useState(false);
 
@@ -114,9 +115,16 @@ const QuestionEdit = () => {
                 
             }
         } catch(error){
+            if(error.response.status === 401){
+                setLoading(false);
+                alert("login이 필요합니다.");
+                nav('/signin');
+            } else{
+                alert("제출에 실패했습니다. 다시 시도해주세요.");
             console.log(error);
             return alert(error.response.data.message);
-        };
+            };
+        }
         
     };
     
@@ -129,7 +137,7 @@ const QuestionEdit = () => {
 
 
         checkSameIndex();
-        console.log(selectedOption);
+        //console.log(selectedOption);
         
         setCopy(false);
         
@@ -191,10 +199,12 @@ const QuestionEdit = () => {
                 });
                 if (result.status === 200){
                     alert("수정이 완료되었습니다.");
+                    
                     nav(`/wiki/${main}`);
                 }
             } catch(error){
                 if(error.response.status === 401){
+                    setLoading(false);
                     alert("login이 필요합니다.");
                     nav('/signin');
                 } else if(error.response.status === 500){
@@ -241,7 +251,7 @@ const QuestionEdit = () => {
      //dropdown에서 선택한 index 섹션으로 반영
     const handleSelectedOption = (optionValue) => {
       setSelectedOption(optionValue);
-      console.log(selectedOption);
+      //console.log(selectedOption);
     };
      //dropdown에서 선택한 index title 반영
      const handleSelectedTitle = (optionValue) => {
