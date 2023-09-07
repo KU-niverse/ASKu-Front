@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function ClearModal({ isOpen, onClose, userId }) {
 
-    const handleClearChat = () => {
+    const handleClearChat = ({getMessage}) => {
     axios.patch(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`, {}, {
         headers: {
             'Content-Type': 'application/json'
@@ -16,7 +16,8 @@ function ClearModal({ isOpen, onClose, userId }) {
     })
         .then(response => {
             alert('채팅 내역이 비워졌습니다!');
-            console.log('채팅 내역이 비워졌습니다.');
+            getMessage();
+            onClose();
         })
         .catch(error => {
             console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
