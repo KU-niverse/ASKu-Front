@@ -15,7 +15,7 @@ function CommentList({id, subject, content, time, doc_title}){
   const title=doc_title;
   const nav = useNavigate();
   const linktoComment = ()=>{
-  nav(`/debate/${title}/${subject}/${debateId}`,
+  nav(`/debate/${title}/${subject}`,
   {state : {
     title: title,
     subject: subject,
