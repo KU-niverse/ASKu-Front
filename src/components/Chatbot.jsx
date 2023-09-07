@@ -56,7 +56,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("https://asku.wiki/ai/api/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
