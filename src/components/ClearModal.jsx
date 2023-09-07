@@ -8,7 +8,7 @@ import axios from 'axios';
 function ClearModal({ isOpen, onClose, userId }) {
 
     const handleClearChat = () => {
-    axios.patch(`https://asku.wiki/ai/chatbot/7`, {}, {
+    axios.patch(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`, {}, {
         headers: {
             'Content-Type': 'application/json'
         },
