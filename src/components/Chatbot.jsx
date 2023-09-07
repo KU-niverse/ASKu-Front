@@ -36,27 +36,10 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
             setClearModalOpen(false);
         }
     }
-
-
-    // const checkLoginStatus = async () => {
-    //     try {
-    //         const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
-    //             withCredentials: true
-    //         });
-    //         if (res.status === 201 && res.data.success === true) {
-    //             setIsLoggedIn(true);
-    //         } else if (res.status === 401) {
-    //             setIsLoggedIn(false);
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //         setIsLoggedIn(false);
-    //     }
-    // };
     
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/ai/api/user/mypage/info", {
+            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
