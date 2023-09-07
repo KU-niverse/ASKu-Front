@@ -16,8 +16,7 @@ function ClearModal({ isOpen, onClose, userId }) {
     })
         .then(response => {
             alert('채팅 내역이 비워졌습니다!');
-            getMessage();
-            onClose();
+            window.location.reload();
         })
         .catch(error => {
             console.error('채팅 내역을 비우는 중에 오류가 발생했습니다.', error);
