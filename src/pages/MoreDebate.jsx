@@ -17,7 +17,6 @@ import { useParams } from 'react-router-dom';
 function MoreDebate() {
 const {title} = useParams();
 const [debateListData, setDebateListData] = useState([]);
-const [recentListData, setRecentListData] = useState([]);
 
 useEffect(() => {
   const takeDebateList = async () =>{
@@ -89,15 +88,15 @@ console.log(debateListData.data)
           )}
           </div>
         </div>
-        <div className={recentListData && debateListData ? styles.sidebar : styles.hidden}>
+        <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
             <DebateSearch title={title}/>
           </div>
           <div className={styles.debateAdd}>
-            <DebateAdd title={title} debateList={debateListData}/>
+            <DebateAdd title={title} />
           </div>
           <div className={styles.debateRecent}>
-            <DebateRecent title={title} recentData={recentListData}/>
+            <DebateRecent title={title} />
           </div>
           
         </div>

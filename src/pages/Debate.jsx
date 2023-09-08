@@ -114,7 +114,7 @@ const handleDebateSubmit = async (submitData) => {
           </div>
 
           <div className={styles.debateRecent}>
-            <DebateRecent/>
+            <DebateRecent title={title}/>
           </div>
           
         </div>
