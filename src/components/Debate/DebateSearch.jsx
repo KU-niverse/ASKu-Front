@@ -30,6 +30,19 @@ const nav = useNavigate();
     }
 };
 
+const subject=results.data.subject;
+const id=results.data.id
+
+const linktoDebateRoom = ()=>{
+  nav(`/debate/${title}/${subject}`, {state : {
+    title: title,
+    subject: subject,
+    id: id}
+  });
+
+
+}
+
   const handleDebateSearch = () => {
     console.log(word);
     console.log(title);
