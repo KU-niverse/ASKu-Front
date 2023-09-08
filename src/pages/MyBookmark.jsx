@@ -36,8 +36,7 @@ const MyBookmark = () => {
 
     const getBookmarks = async () => {
         try{
-            const result = await axios.get(`http://localhost:8080
-/wiki/favorite`, {
+            const result = await axios.get(`https://asku.wiki/api/wiki/favorite`, {
                 withCredentials: true
             });
             if(result.status === 200){

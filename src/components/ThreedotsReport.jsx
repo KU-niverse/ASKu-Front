@@ -21,8 +21,7 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
       try {
-        const res = await axios.get(" http://localhost:8080
-/user/auth/issignedin", { withCredentials: true });
+        const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
         if (res.status === 201 && res.data.success === true) {
           setLoggedIn(true);
         } else if (res.status === 401) {
@@ -40,8 +39,7 @@ const[isReportModalVisible, setReportModalVisible]= useState(false);
 
   // const onReport = async () => {
   //   try {
-  //     const result = await axios.post(`http://localhost:8080
-/report/${reason_id}`, {
+  //     const result = await axios.post(`https://asku.wiki/api/report/${reason_id}`, {
   //         target: target,
   //         reason_id: reason_id,
   //     },{

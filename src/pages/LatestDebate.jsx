@@ -18,8 +18,7 @@ function LatestDebate() {
   useEffect(() => {
     const takeDebateList = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080
-/debate/all/recent`, {withCredentials: true});
+        const res = await axios.get( `https://asku.wiki/api/debate/all/recent`, {withCredentials: true});
         if(res.status === 200){
           setDebateListData(res.data);
         }
