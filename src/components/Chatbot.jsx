@@ -39,7 +39,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("http://localhost:8080/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
@@ -145,7 +145,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
             setChatResponse(updatedChatResponse);
             setInputValue('');
             setShowSuggest(true);
-        }, 3000); // 5초 후에 실행
+        }, 3000); // 3초 후에 실행
     };
 
     const chatBottomRef = useRef(null);
@@ -177,6 +177,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
                     const previousHistory = response.data;
                     setPreviousChatHistory(previousHistory);
+
                 } catch (error) {
                     console.error(error);
                 }
