@@ -16,7 +16,7 @@ const linktoDebateRoom=()=>{
   return(
     <div className={styles.container}>
       <span onClick={linktoDebateRoom} className={styles.title}>
-        {subject}
+        {subject} ({title})
       </span>
       <span className={styles.date}>
         {formattedDate}
