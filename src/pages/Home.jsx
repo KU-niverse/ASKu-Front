@@ -118,7 +118,10 @@ function Home({loggedIn, setLoggedIn}) {
                                     created_at: question.created_at,
                                     like_count: question.like_count,
                                     nick: question.nickname,
-                                    index_title: question.index_title}
+                                    index_title: question.index_title,
+                                    answer_count : question.answer_count,
+                                    title: question.title
+                                    }
                                   }
                                 className={styles.rankWrap} 
                                 key={index}>
