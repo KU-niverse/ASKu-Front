@@ -44,6 +44,7 @@
     height: 50px;
     padding-left: 50px;
     box-sizing: border-box;
+    padding-right: 80px;
 }
 @media only screen and (max-width: 767px) {
     .searchInput{
@@ -51,6 +52,7 @@
         height: 40px;
         padding-left: 20px;
         margin-left: 20px;
+        padding-right: 55px;
     }
 }
 
