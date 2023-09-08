@@ -110,7 +110,18 @@ function Home({loggedIn, setLoggedIn}) {
                         <div className={styles.question}>
                             <p className={styles.realTimeTitle}>실시간 인기 질문</p>
                             {popularQuestions.map((question, index) => (
-                                <Link to={`wiki/morequestion/${encodeURIComponent(question.title).replace(/\./g, '%2E')}`} className={styles.rankWrap} key={index}>
+                                <Link to={`wiki/morequestion/${question.title}/${question.id}`} 
+                                state = {{
+                                    qid: question.id,
+                                    user_id: question.user_id,
+                                    content: question.content,
+                                    created_at: question.created_at,
+                                    like_count: question.like_count,
+                                    nick: question.nickname,
+                                    index_title: question.index_title}
+                                  }
+                                className={styles.rankWrap} 
+                                key={index}>
                                     <p className={styles.numberIcon}>Q.</p>
                                     <p className={styles.rankContent}>{question.content}</p>
                                 </Link>
