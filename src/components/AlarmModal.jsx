@@ -10,7 +10,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 1,
         "read_or_not": 0,
-        "message": "알림 메시지 1",
+        "message": "알림  메시지11 1111 111111111 11111111  11111 11111111111 1",
         "created_at": "2023-08-25T00:00:00.000Z",
         "is_admin": 0
     },
@@ -19,7 +19,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 2",
+        "message": "알림 메시지111111111111111111111 2",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -28,7 +28,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 3",
+        "message": "알림 메시지1111111111111111111111111111111111111111111 3",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -37,7 +37,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 4222222222222222222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -46,7 +46,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 4222222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -55,7 +55,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 42222222222222222222222222222222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -64,7 +64,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 422222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -73,7 +73,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 4222222222222222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -82,7 +82,7 @@ const dummyData = [
         "user_id": 1,
         "type_id": 2,
         "read_or_not": 0,
-        "message": "알림 메시지 4",
+        "message": "알림 메시지 4222222222222222222222",
         "created_at": "2023-08-25T01:00:00.000Z",
         "is_admin": 0
     },
@@ -114,7 +114,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     
     useEffect(() => {
     // if (isAlarmVisible) {
-    //         API 호출 대신 더미 데이터 사용
+    //         //API 호출 대신 더미 데이터 사용
     //         setNotifications(dummyData);
     //     }
     // }, [isAlarmVisible]);
@@ -142,9 +142,12 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
                 </div>
                 <div className={styles.alarmContent}>
                     {notifications.map((notification, index) => (
-                        <Link className={styles.alarmText}>
-                            <p key={index}>{notification.message}</p>
+                        <div>
+                        <Link className={styles.alarmLink}>
+                            <p className={styles.alarmText} key={index}>{notification.message}</p>
                         </Link>
+                        {index < notifications.length - 1 && <hr style={{ height: '0.3px', opacity: '0.7', backgroundColor: '#D5D5D5', width: '100%' }} />}
+                        </div>
                     ))}
                 </div>
             </div>
