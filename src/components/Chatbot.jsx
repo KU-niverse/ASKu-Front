@@ -145,7 +145,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
             setChatResponse(updatedChatResponse);
             setInputValue('');
             setShowSuggest(true);
-        }, 5000); // 5초 후에 실행
+        }, 3000); // 5초 후에 실행
     };
 
     const chatBottomRef = useRef(null);
@@ -177,7 +177,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
                     const previousHistory = response.data;
                     setPreviousChatHistory(previousHistory);
-                    console.log(response.data)
                 } catch (error) {
                     console.error(error);
                 }
