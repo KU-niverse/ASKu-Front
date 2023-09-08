@@ -42,9 +42,9 @@ const AllHistory = () => {
     const [page, setPage] = useState(1); // 현재 페이지 상태 추가
     const perPage = 10; // 페이지당 보여줄 컴포넌트 갯수
     // 현재 페이지에 해당하는 데이터만 추출
-  const startIndex = (page - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const visibleHistorys = historys.slice(startIndex, endIndex);
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const visibleHistorys = historys.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber) => {
       setPage(pageNumber); // 페이지 번호 업데이트
@@ -97,6 +97,9 @@ const AllHistory = () => {
                 </div>
                 {visibleHistorys.map((item) => {
                     const timestamp = FormatTimeAgo(item.created_at);
+                    if (item.is_bad === 1) {
+                      return null; // 패스 (무시)
+                    }
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
@@ -105,7 +108,6 @@ const AllHistory = () => {
                           user={item.nick}
                           timestamp={timestamp}
                           title={item.doc_title}
-                          //title={title}
                           target={item.id}
                           type={type}
                         />
@@ -131,6 +133,10 @@ const AllHistory = () => {
                 </div>
                 {visibleHistorys.map((item) => {
                     const timestamp = FormatTimeAgo(item.created_at);
+                    if (item.is_bad === 1) {
+                      return null; // 패스 (무시)
+                    }
+                    
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
@@ -139,7 +145,6 @@ const AllHistory = () => {
                           user={item.nick}
                           timestamp={timestamp}
                           title={item.doc_title}
-                          //title={title}
                           target={item.id}
                           type={type}
                         />
@@ -164,6 +169,10 @@ const AllHistory = () => {
                 </div>
                 {visibleHistorys.map((item) => {
                     const timestamp = FormatTimeAgo(item.created_at);
+                    if (item.is_bad === 1) {
+                      return null; // 패스 (무시)
+                    }
+                    
                     return (
                       <div key={item.timestamp}>
                         <HistoryBox
@@ -172,7 +181,6 @@ const AllHistory = () => {
                           user={item.nick}
                           timestamp={timestamp}
                           title={item.doc_title}
-                          //title={title}
                           target={item.id}
                           type={type}
                         />

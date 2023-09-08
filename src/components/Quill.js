@@ -119,7 +119,7 @@ function Quill(props) {
       <ReactQuill
         ref={quillRef}
         theme="snow"
-        placeholder="플레이스 홀더"
+        placeholder="내용을 작성해주세요(내용을 작성해야 제출이 완료됩니다.)"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

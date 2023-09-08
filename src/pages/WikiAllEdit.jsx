@@ -73,6 +73,11 @@ const WikiEdit = () => {
         if(isChecked === false){
             return alert('정책에 맞게 작성하였음을 확인해주세요')
         }
+        if(summary === ''){
+            return alert('히스토리 요약을 작성해주세요');
+        }
+
+
         try {
             const result = await axios.post(`https://asku.wiki/api/wiki/contents/${title}`, {
                 version: version,
@@ -90,7 +95,7 @@ const WikiEdit = () => {
             }
         } catch(error){
             if(error.response.status === 401){
-                alert("login이 필요합니다.");
+                alert("로그인이 필요합니다.");
                 nav('/signin');
             } else if(error.response.status === 500){
                 alert("제출해 실패했습니다. 다시 시도해주세요.");

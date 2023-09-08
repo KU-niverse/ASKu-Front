@@ -20,9 +20,9 @@ const HistoryBox = (props) => {
     const timestamp = props.timestamp;
     const doctitle = props.doctitle;
     const target=props.target;
-    const type = props.type
+    const type = props.type;
+    const isFirst = props.isFirst;
 
-    console.log(type)
 
     const handleView = () => {
         nav(`/wiki/preview/${title}/${version}`);
@@ -58,6 +58,9 @@ const HistoryBox = (props) => {
     const handleCompare = () => {
         if(type === 'create'){
             return alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다');
+        }
+        if(version===1){
+            return alert('첫번째 히스토리는 지원하지 않는 기능입니다')
         }
 
         nav(`/history/${title}/diff/${version}`);

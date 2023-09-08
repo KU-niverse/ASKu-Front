@@ -31,19 +31,22 @@ const SignupComplete = () => {
             }, {
                 withCredentials: true
             });
-            if (response.data.success) {
-                return alert(response.data.message);
+            if (response.data.success===true) {
+                setLoading(false);
+                alert(response.data.message);
+                
                 
             } else {
+                setLoading(false);
                 alert(response.data.message);
-                nav('/signin');
+                
             
             }
             setLoading(false);
         } catch (error) {
             console.error(error);
             setLoading(false);
-            return alert(error.response.data.message);
+            alert(error.response.data.message);
         }
     }
 

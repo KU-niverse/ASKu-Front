@@ -46,13 +46,29 @@ console.log(title)
 
   }
 
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+        handleDebateSearch();
+    }
+  }
+
+
+
   return (
     <div>
         <p className={styles.searchTitle}>토론 검색</p>
         <div className={styles.inputContainer}>
-            <input className={styles.headerInput} type='text' value={word} onChange={e => setWord(e.target.value)} placeholder='검색어를 입력하세요.' />
-            <img src={searchIcon} alt='icon' className={styles.searchIcon} onClick={handleDebateSearch}/>
+            <input
+                className={styles.headerInput}
+                type='text'
+                value={word}
+                onChange={e => setWord(e.target.value)}
+                placeholder='검색어를 입력하세요.'
+                onKeyDown={handleKeyDown} // Use onKeyDown instead
+            />
+            <img src={searchIcon} alt='icon' className={styles.searchIcon} onClick={handleDebateSearch} />
         </div>
+
         <div className={onClick ? styles.resultContainer : styles.hidden}>
             {resultCount === 0 ? (
               <p>"검색결과가 없습니다."</p>

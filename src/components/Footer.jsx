@@ -8,7 +8,7 @@ function Footer() {
                     <div className={`${styles.linkContainer}`}>
                         <div className={`${styles.linkGroup}`}>
                             <button className={`${styles.footerTitle}`}>고객 센터</button>
-                            <Link to='https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d?pvs=4' target="_blank">
+                            <Link to='https://open.kakao.com/o/s74JtHlf' target="_blank">
                                 <button className={`${styles.footerButton}`}>1:1 문의</button>
                             </Link>
                             <Link to='https://034179.notion.site/FAQ-abb7d9dad73947cebd92d866d7f4c5ea?pvs=4' target="_blank">

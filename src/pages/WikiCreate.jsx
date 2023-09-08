@@ -49,13 +49,21 @@ const WikiCreate = () => {
             },{
                 withCredentials: true,
             });
-            if(result.status === 200){
+            if(result.data.success === true){
                 alert("문서를 생성해주셔서 감사합니다.");
                 nav(`/wiki/${title}`);
             }
         } catch(error){
             console.log(error);
-            return alert(error.response.data.message);
+            if(error.response.status === 401){
+                alert("로그인이 필요합니다.");
+                nav('/signin');
+            } else if(error.response.status === 500){
+                alert("제출해 실패했습니다. 다시 시도해주세요.");
+                // setWiki(error.response.data.newContent);
+            } else {
+                alert(error.response.data.message);
+            }
         };
         
     };
