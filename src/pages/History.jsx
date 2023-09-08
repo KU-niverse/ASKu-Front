@@ -96,9 +96,11 @@ const History = (props) => {
                       <div>아직 히스토리가 없습니다</div>
                     ) : (
                       visibleHistorys.map((item) => {
+                        let isFirst = false
                         if (item.is_bad === 1) {
                           return null; // 패스 (무시)
                         }
+                        
                         return (
                           <div key={item.version}>
                             <HistoryBox 

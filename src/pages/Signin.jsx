@@ -98,6 +98,12 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       } else {
         localStorage.removeItem(LS_KEY_ID);
       }
+
+      if(id.trim()===''){
+        return alert('아이디를 입력해주세요');
+      } else if(password.trim()===''){
+        return alert('비밀번호를 입력해주세요');
+      }
         
         try{
             const response = await axios.post('https://asku.wiki/api/user/auth/signin', {

@@ -73,12 +73,21 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
+<<<<<<< HEAD
+    getData('http://localhost:8080/user/mypage/info', setMypageData);
+    getData(`http://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
+    getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
+    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
+    getData('http://localhost:8080/wiki/contributions', setMyContribute);
+=======
     getData('https://asku.wiki/api/user/mypage/info', setMypageData);
     getData(`https://asku.wiki/api/user/mypage/questionhistory/latest`, setMyQuestion);
     getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
     getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
     getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
     getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
+>>>>>>> 0b193748d406448e92f1d546b4611cc536e50763
   }, []);
 
   console.log(myBadge)

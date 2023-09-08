@@ -159,6 +159,7 @@ const SearchResearch = () => {
                                 </div>
                             );
                         })}
+                        <div className={styles.linkToNew}><Link to='/newwiki' className={styles.link}>원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요</Link></div>
                     </div>
                     <div className={isClicked ? styles.hidden : ''}>
                         {ques.map((item) => {
@@ -184,7 +185,7 @@ const SearchResearch = () => {
                             );
                         })}
                     </div>
-                    <div className={styles.linkToNew}><Link to='/newwiki' className={styles.link}>원하시는 질문이 없으신가요? 새로운 질문을 생성해보세요</Link></div>
+                    
                     
                 </div>
                 <div className={styles.recents}>

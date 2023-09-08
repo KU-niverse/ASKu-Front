@@ -181,7 +181,7 @@ const QuestionEdit = () => {
             return alert('정책에 맞게 작성하였음을 확인해주세요');
         }
         if(summary === ''){
-            return alert('수정요약을 작성해주세요');
+            return alert('히스토리 요약을 작성해주세요');
         }
 
         if( selectedOption === 'all'){

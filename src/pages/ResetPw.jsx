@@ -15,16 +15,7 @@ const ResetPw = () => {
     const [checkPw, setCheckPw] = useState('');
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // 로딩 중일 때 표시할 컴포넌트
-        if (loading) {
-           return <div><SpinnerMypage/></div>; 
-         }
-        //
-
-    }, []);
 
 
     const nav = useNavigate();
@@ -55,8 +46,18 @@ const ResetPw = () => {
 
     const changeUserPw = async () => {
 
+        if(password===''){
+            return alert('비밀번호를 입력해주세요');
+        }
+
+        if(isPwValid===false){
+            return alert('비밀번호 형식을 올바르게 작성해주세요');
+        } else if(isPwSame===false){
+            return alert('비밀번호가 일치하지 않습니다')
+        }
+
         try{
-            const response = await axios.put( 'https://asku.wiki/api/user/auth/changepw', {
+            const response = await axios.put( 'https://asku.wiki/api/user/auth/resetpw', {
                 hashed_login_id: auth,
                 password: password,
             }, {
@@ -68,32 +69,28 @@ const ResetPw = () => {
             } else {
                 return alert(response.data.message);
             }
-            setLoading(false);
+            
         } catch (error) {
             console.error(error);
-            setLoading(false);
             return alert(error.response.data.message);
         }
     }
 
-    function handleOnClick() {
-
-        
-    }
+    
 
   return (
     <div className={`${styles.container}`}>
         <img className={`${styles.logo}`} src={logo} alt=''/>
         <h2 className={styles.findTitle}>비밀번호 재설정</h2>
-        <form>
+        <form onSubmit={changeUserPw}>
             <div className={`${styles.findInputs}`}>
                 <div className={`${styles.inputLabel}`}>
                     <div className={`${styles.inputHead}`}>
-                        <span>비밀번호</span>
+                        <span>새 비밀번호</span>
                         <span className={isPwValid === false? `${styles.pwChangeAlert}`: `${styles.pwChangeDone}`}><FiAlertCircle size='12'/>&nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span>
                     </div>
                     <input 
-                     required type='text'
+                     required type='password'
                      placeholder='8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요'
                      name='password'
                      value={password}
@@ -105,11 +102,11 @@ const ResetPw = () => {
             <div className={`${styles.findInputs}`}>
                 <div className={`${styles.inputLabel}`}>
                     <div className={`${styles.inputHead}`}>
-                        <span>비밀번호 재확인</span>
+                        <span>새 비밀번호 재확인</span>
                         <span className={isPwSame === false? `${styles.pwChangeAlert}`: `${styles.pwChangeDone}`} onChange={onChangeCheckPW}><FiAlertTriangle size='12'/>&nbsp;비밀번호가 일치하지 않습니다</span>
                     </div>
                     <input 
-                     required type='text'
+                     required type='password'
                      placeholder='비밀번호를 재입력하세요'
                      name='checkPw'
                      value={checkPw}
@@ -118,7 +115,7 @@ const ResetPw = () => {
                      />
                 </div>
             </div>
-            <button className={`${styles.findBtn}`} onClick={handleOnClick}>비밀번호 변경</button>
+            <input type='submit' className={`${styles.findBtn}`} value='비밀번호 변경'/>
         </form>
     </div>
     
