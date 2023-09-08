@@ -37,8 +37,8 @@ const WikiBox = (props) => {
       <div className={styles.wikiContents} >
         <li onClick={toggleView}>
             <div className={styles.wikiContentTitle}>
-                <span className={isOpen ? {} : `${styles.hidden}`} ><FaChevronRight size="16" color="rgba(222, 58, 88, 1)"/></span>
-                <span className={isOpen ? `${styles.hidden}` : {}} ><FaChevronDown size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={isOpen ? {} : `${styles.hidden}`} ><FaChevronDown size="16" color="rgba(222, 58, 88, 1)"/></span>
+                <span className={isOpen ? `${styles.hidden}` : {}} ><FaChevronRight size="16" color="rgba(222, 58, 88, 1)"/></span>
                 <span className={styles.wikiIndex}>&nbsp;{index}.&nbsp;</span>
                 <span>{title}</span>
             </div>
