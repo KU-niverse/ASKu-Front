@@ -77,7 +77,6 @@ function Quill2(props) {
           [{ header: [1, 2, 3, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
           [{ list: "ordered" }, { list: "bullet" }],
-          ["link"],
           ["image"],
         ],
         handlers: {

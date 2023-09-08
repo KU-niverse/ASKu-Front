@@ -73,6 +73,11 @@ const WikiEdit = () => {
         if(isChecked === false){
             return alert('정책에 맞게 작성하였음을 확인해주세요')
         }
+        if(summary === ''){
+            return alert('히스토리 요약을 작성해주세요');
+        }
+
+
         try {
             const result = await axios.post(`http://localhost:8080/wiki/contents/${title}`, {
                 version: version,
