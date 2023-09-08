@@ -4,6 +4,7 @@ import searchIcon from '../../img/search_icon.png'
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const DebateAllSearch = () => {
   const [word, setWord] = useState('');
@@ -61,8 +62,15 @@ const nav = useNavigate();
               <p>"검색결과가 없습니다."</p>
             ) : (
               results.map((item) => {
-                return <ul key={item.id} className={styles.resultList} onClick={() => nav(`/debate/${item.title}/${item.subject}/${item.id}`)}>{item.subject}</ul>;
-              })
+                return  (                           
+                <Link to={`/debate/${item.title}/${item.subject}`} state={{ title: item.title, subject: item.subject, id: item.id }} className={styles.linkTo}>
+                <ul key={item.id} className={styles.resultList}>
+                  {item.subject}
+                </ul>
+              </Link> )
+ 
+            
+            })
             )}
         </div>
     </div>
