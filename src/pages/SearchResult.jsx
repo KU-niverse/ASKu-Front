@@ -122,12 +122,20 @@ const SearchResearch = () => {
 
         getDocs();
         getQues();
-        getHistory();
+    
         
         
 
-    }, []);
+    }, [title]);
     
+    useEffect(() => {
+
+        getHistory();
+    
+        
+        
+
+    }, [type]);
     
   return (
     <div>
