@@ -29,6 +29,11 @@
     width: 42px;
     height: 42px;
 }
+.character{
+    width: 42px;
+    height: 42px;
+
+}
 
 .chatText {
     position: relative;
