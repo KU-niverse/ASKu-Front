@@ -30,7 +30,8 @@ const QnA = () => {
   useEffect(() => {
     const takeAnswer = async () =>{
       try{
-        const res = await axios.get( `https://asku.wiki/api/question/answer/${question_id}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080
+/question/answer/${question_id}`, {withCredentials: true});
         if(res.status === 200){
           setAnswerData(res.data);
         }

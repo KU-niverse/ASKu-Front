@@ -16,7 +16,8 @@ const nav = useNavigate();
 
   const searchDebate = async () => {
     try{
-        const result = await axios.get(`https://asku.wiki/api/debate/search/${title}/${word}`, {
+        const result = await axios.get(`http://localhost:8080
+/debate/search/${title}/${word}`, {
             withCredentials: true
         });
         if(result.status === 200){

@@ -14,7 +14,8 @@ const FindId = () => {
 
     const findUserId = async () => {
         try{
-            const response = await axios.post('https://asku.wiki/api/user/auth/findid', {
+            const response = await axios.post('http://localhost:8080
+/user/auth/findid', {
                 email: email
             }, {
                 withCredentials: true

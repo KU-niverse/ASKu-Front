@@ -33,7 +33,8 @@ const HistoryBox = (props) => {
         
 
         try{
-            const result = await axios.post(`https://asku.wiki/api/wiki/historys/${title}/version/${version}`, {
+            const result = await axios.post(`http://localhost:8080
+/wiki/historys/${title}/version/${version}`, {
                     
             }, {
                 withCredentials: true

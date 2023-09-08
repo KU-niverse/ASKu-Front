@@ -73,7 +73,8 @@ const ChangePw = () => {
         }
 
         try{
-            const response = await axios.put( 'https://asku.wiki/api/user/auth/changepw', {
+            const response = await axios.put( 'http://localhost:8080
+/user/auth/changepw', {
                 password: password,
                 new_password: newPassword,
             }, {

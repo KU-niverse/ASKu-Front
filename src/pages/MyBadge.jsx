@@ -19,7 +19,8 @@ function MyBadge() {
   //   console.log(mypageData)
   //   const takeMypage = async () =>{
   //     try{
-  //       const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
+  //       const res = await axios.get( `http://localhost:8080
+/user/mypage/info`, {withCredentials: true});
   //       if(res.status === 201){
   //         setMypageData(res.data);
   //         console.log(res.data.message)
@@ -45,7 +46,8 @@ function MyBadge() {
   useEffect(() => {
   const takeMyBadge = async () =>{
     try{
-      const res = await axios.get( `https://asku.wiki/api/user/mypage/badgehistory`, {withCredentials: true});
+      const res = await axios.get( `http://localhost:8080
+/user/mypage/badgehistory`, {withCredentials: true});
       if(res.status === 201){
         setMyBadge(res.data);
       }
@@ -67,7 +69,8 @@ function MyBadge() {
   useEffect(()=>{
     const takeAllBadge = async () => {
       try{
-        const response = await axios.get(`https://asku.wiki/api/user/mypage/badges`, {withCredentials: true})
+        const response = await axios.get(`http://localhost:8080
+/user/mypage/badges`, {withCredentials: true})
         if(response.status===201){
           setAllBadge(response.data);
           console.log(response.data.message)

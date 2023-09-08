@@ -16,7 +16,8 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
 
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("http://localhost:8080
+/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -38,7 +39,8 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
     }
 
     try {
-      const res = await axios.post(`https://asku.wiki/api/question/like/${questionId}`, {}, { withCredentials: true });
+      const res = await axios.post(`http://localhost:8080
+/question/like/${questionId}`, {}, { withCredentials: true });
       if (res.status === 200) {
         const newIsLiked = !isLiked;
         console.log(res.data.message);
