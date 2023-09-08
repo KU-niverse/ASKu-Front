@@ -170,19 +170,18 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
         }
     }, [isLoggedIn]);
 
-    const getMessage = async() => {
-        inputRef.current.focus();
-            try {
-                const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
-                const previousHistory = response.data;
-                setPreviousChatHistory(previousHistory);
-                console.log(response.data)
-            } catch (error) {
-                console.error(error);
-            }
-        } 
-
     useEffect(() => {
+        const getMessage = async() => {
+            inputRef.current.focus();
+                try {
+                    const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
+                    const previousHistory = response.data;
+                    setPreviousChatHistory(previousHistory);
+                    console.log(response.data)
+                } catch (error) {
+                    console.error(error);
+                }
+            } 
         getMessage();
     }, [userId]);
 
@@ -258,7 +257,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
 
             </div>
             {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
-            {ClearModalOpen && <ClearModal getMessage={getMessage} isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
+            {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
             <div className={styles.promptWrap}>
                 <textarea
                     className={styles.prompt}
