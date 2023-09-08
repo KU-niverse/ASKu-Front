@@ -95,7 +95,7 @@ const WikiEdit = () => {
             }
         } catch(error){
             if(error.response.status === 401){
-                alert("login이 필요합니다.");
+                alert("로그인이 필요합니다.");
                 nav('/signin');
             } else if(error.response.status === 500){
                 alert("제출해 실패했습니다. 다시 시도해주세요.");
