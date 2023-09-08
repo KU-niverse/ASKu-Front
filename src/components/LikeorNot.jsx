@@ -45,7 +45,6 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
         setCurrentLikeCount(currentLikeCount + 1);
         localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked);
         setIsLiked(newIsLiked);
-        alert(res.data.message);
       }
     } catch (error) {
       console.error(error);
