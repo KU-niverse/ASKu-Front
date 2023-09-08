@@ -19,7 +19,7 @@ function CommentList({id, subject, content, time, doc_title}){
   {state : {
     title: title,
     subject: subject,
-    id: id}
+    id: debateId}
   })
 }
 

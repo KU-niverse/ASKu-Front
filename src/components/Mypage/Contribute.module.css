@@ -3,6 +3,11 @@
   font-size: 13px;
   padding: 10px 0;
 }
+.cb_summary{
+  font-weight: 400;
+  color : rgba(116, 116, 116, 1); 
+
+}
 
 .cb_front{
   width: 55%;
@@ -31,8 +36,12 @@
     width: 50%;
     flex-wrap: wrap;
     font-size: 10px;
+    align-self: center;
   }
  
+.cb_summary{
+  display: block;
+}
   .cb_time{
     font-size: 10px;
     margin-left: 5px;

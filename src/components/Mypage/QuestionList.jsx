@@ -31,7 +31,7 @@ function QuestionList({ id, doc_id, user_id, index_title, content, time, is_bad,
     <div className={styles.ask_list}>
       <div className={styles.ask_front}>
         <span className={styles.ask_icon}>Q.</span>
-        <span onClick={linktoQuestion} className={styles.ask_content}>{truncateContent(content)}</span>
+        <span onClick={linktoAnswer} className={styles.ask_content}>{truncateContent(content)}</span>
       </div>
       <div onClick={linktoAnswer} className={styles.comment_icon}>
       {answer_count === 0 ? ( // answer_count가 0일 때

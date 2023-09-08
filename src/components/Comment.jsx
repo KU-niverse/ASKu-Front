@@ -15,7 +15,7 @@ function Comment({id, subject, content, created_at, is_bad, docsname, nick}){
     nav(`/debate/${title}/${subject}`, {state : {
       title: title,
       subject: subject,
-      id: id}
+      id: debateId}
     })
   }
 

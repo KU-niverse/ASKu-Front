@@ -3,6 +3,7 @@ import styles from './DebateSearch.module.css'
 import searchIcon from '../../img/search_icon.png'
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const DebateSearch = ({title}) => {
@@ -11,8 +12,9 @@ const DebateSearch = ({title}) => {
   const [resultCount, setResultCount] = useState(0);
   const [onClick, setOnClick] = useState(false);
 
-const nav = useNavigate();
 
+const nav = useNavigate();
+console.log(title)
 
   const searchDebate = async () => {
     try{
@@ -22,6 +24,8 @@ const nav = useNavigate();
         if(result.status === 200){
                 setResults(result.data.data);
                 setResultCount(result.data.data.length);
+
+
         }
         
     } catch (error) {
@@ -29,6 +33,10 @@ const nav = useNavigate();
         return alert(error.response.message);
     }
 };
+
+
+
+
 
   const handleDebateSearch = () => {
     console.log(word);
@@ -66,8 +74,14 @@ const nav = useNavigate();
               <p>"검색결과가 없습니다."</p>
             ) : (
               results.map((item) => {
-                return <ul key={item.id} className={styles.resultList} onClick={() => nav(`/debate/${title}/${item.subject}/${item.id}`)}>{item.subject}</ul>;
-              })
+                return (
+                <Link to={`/debate/${title}/${item.subject}`} state={{ title: title, subject: item.subject, id: item.id }} className={styles.linkTo}>
+
+                  <ul key={item.id} className={styles.resultList}>
+                    {item.subject}
+                  </ul>
+                </Link>
+              )})
             )}
         </div>
     </div>
