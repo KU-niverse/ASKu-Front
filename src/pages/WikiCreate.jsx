@@ -43,8 +43,7 @@ const WikiCreate = () => {
         }
 
         try {
-            const result = await axios.post(`http://localhost:8080
-/wiki/contents/new/${title}`, {
+            const result = await axios.post(`https://asku.wiki/api/wiki/contents/new/${title}`, {
                 text: wikiMarkup,
                 type: selectedOption,
             },{
