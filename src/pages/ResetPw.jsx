@@ -44,9 +44,11 @@ const ResetPw = () => {
         }
     }
 
-    const changeUserPw = async () => {
+    const changeUserPw = async (e) => {
 
-        if(password===''){
+        e.preventDefault();
+
+        if(password.trim()===''){
             return alert('비밀번호를 입력해주세요');
         }
 
@@ -59,13 +61,13 @@ const ResetPw = () => {
         try{
             const response = await axios.put( 'http://localhost:8080/user/auth/resetpw', {
                 hashed_login_id: auth,
-                password: password,
+                new_password: password,
             }, {
                 withCredentials: true
             });
             if (response.data.success === true) {
                 alert(response.data.message);
-                nav('/signin');
+                nav('/');
             } else {
                 return alert(response.data.message);
             }

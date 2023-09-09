@@ -57,10 +57,10 @@ const ChangePw = () => {
 
         e.preventDefault();
 
-        if(newPassword==='') {
+        if(newPassword.trim()==='') {
             return alert('새 비밀번호를 입력해주세요')
         } 
-        if(password===''){
+        if(password.trim()===''){
             return alert('기존 비밀번호를 입력해주세요')
         }
 
