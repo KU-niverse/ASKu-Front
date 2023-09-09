@@ -112,7 +112,7 @@ function Home({loggedIn, setLoggedIn}) {
                             {popularQuestions.map((question, index) => (
                                 <Link to={`wiki/morequestion/${question.title}/${question.id}`} 
                                 state = {{
-                                    qid: question.id,
+                                    question_id: question.id,
                                     user_id: question.user_id,
                                     content: question.content,
                                     created_at: question.created_at,
