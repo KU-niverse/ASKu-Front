@@ -23,7 +23,7 @@ const WikiCreate = () => {
 
     function onEditorChange(value) {
         setDesc(value);
-        console.log(value);
+        //console.log(value);
     }
 
    
@@ -36,7 +36,7 @@ const WikiCreate = () => {
         }
 
         const wikiMarkup = HtmlToWiki(desc);
-        console.log(selectedOption);
+        //console.log(selectedOption);
         
         if(isChecked === false){
             return alert('정책에 맞게 작성하였음을 확인해주세요')
@@ -54,7 +54,7 @@ const WikiCreate = () => {
                 nav(`/wiki/${title}`);
             }
         } catch(error){
-            console.log(error);
+            console.error(error);
             if(error.response.status === 401){
                 alert("로그인이 필요합니다.");
                 nav('/signin');
@@ -70,7 +70,7 @@ const WikiCreate = () => {
 
     const handleSelectedOption = (optionValue) => {
         setSelectedOption(optionValue);
-        console.log(selectedOption);
+        //console.log(selectedOption);
       };
     
     return (

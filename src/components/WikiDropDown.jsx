@@ -17,7 +17,6 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
           const res = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`, { withCredentials: true });
           if (res.status === 200) {
             setWikiData(res.data);
-            console.log('돼?')
           }
           if (res.status === 404) {
             console.log(res.data.message);
@@ -32,8 +31,7 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
 
 
 
- 
- console.log(wikiData);
+
 
 
 
@@ -90,7 +88,7 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
   }
 
   const onSelect = (selectedOption) => {
-    console.log(selectedOption);
+    //console.log(selectedOption);
     onSelectedOption(selectedOption.value);
     onSelectedTitle(selectedOption.label);
     // 처리할 로직을 여기에 추가

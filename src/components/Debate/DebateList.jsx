@@ -16,7 +16,6 @@ const linktoDebateRoom = ()=>{
 
 }
 
-console.log(id)
 
   return(
     <div className={styles.container}>

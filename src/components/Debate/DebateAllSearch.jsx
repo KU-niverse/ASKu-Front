@@ -32,7 +32,6 @@ const nav = useNavigate();
 };
 
   const handleDebateSearch = () => {
-    console.log(word);
     searchDebate();
     setOnClick(true);
 

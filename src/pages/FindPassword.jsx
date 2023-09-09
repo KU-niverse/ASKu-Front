@@ -14,7 +14,6 @@ const FindPassword = () => {
 
     const findUserPw = async (e) => {
         e.preventDefault();
-        console.log(id);
         setClicked(true);
 
         try{

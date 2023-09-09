@@ -15,7 +15,6 @@ const WikiEdit = () => {
     const {main, section} = useParams();
     const location = useLocation();
     const index_title = location.state;
-    console.log(index_title);
     const nav = useNavigate();
     const [desc, setDesc] = useState('');
     const [wiki, setWiki] = useState('');
@@ -24,9 +23,9 @@ const WikiEdit = () => {
     const [copy, setCopy] = useState(false);
 
     useEffect(() => {
-        console.log(desc);
+        //console.log(desc);
         const wikiMarkup = HtmlToWiki(desc);
-        console.log(wikiMarkup);
+        //console.log(wikiMarkup);
         // You can perform other actions with the updated 'desc' value here
       }, [desc]);
     

@@ -26,7 +26,7 @@ const WikiEdit = () => {
 
     function onEditorChange(value) {
         setDesc(value);
-        console.log(desc);
+        //console.log(desc);
     }
 
 

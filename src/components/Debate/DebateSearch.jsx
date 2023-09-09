@@ -14,7 +14,7 @@ const DebateSearch = ({title}) => {
 
 
 const nav = useNavigate();
-console.log(title)
+
 
   const searchDebate = async () => {
     try{
@@ -39,8 +39,6 @@ console.log(title)
 
 
   const handleDebateSearch = () => {
-    console.log(word);
-    console.log(title);
     searchDebate();
     setOnClick(true);
 

@@ -24,7 +24,7 @@ function ReportModal({type, target, isOpen, onClose}) {
         try {
             const response = await axios.post(`https://asku.wiki/api/report/${type}`, requestBody,{withCredentials: true});
             if(response.status===200){
-              console.log(response.data);
+              //console.log(response.data);
               alert("신고가 완료되었습니다.");
             }
           }

@@ -1,9 +1,9 @@
 const WikiToHtml = (wikiText) => {
   let html = wikiText;
-  console.log("여기가 1번 : ", html);
+  //console.log("여기가 1번 : ", html);
   html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
   html = html.replace(/<p><\/p>/g, '<br>');
-  console.log("여기가 2번 : ", html);
+  //console.log("여기가 2번 : ", html);
 
   // 단락 처리 (p)
   // <p> 태그를 \n으로 변환된 부분을 <p> 태그로 재변환

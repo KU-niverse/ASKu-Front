@@ -55,7 +55,7 @@ const AllHistory = () => {
             const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
             setTypeCount(result.data.message.length);
-            console.log(typeCount);
+           
         } catch (error) {
             console.error(error);
             //alert(result.data.message);

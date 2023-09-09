@@ -221,14 +221,13 @@ useEffect(() => {
     //contents가 비었으면 글이라도 띄우도록. 
     //위키 데이터 가져오기
     const getWiki = async () => {
-        console.log('나중');
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`);
             setAllContent(result.data.contents);
             
             
             setFavorite(result.data.is_favorite);
-            console.log(favorite);
+            //console.log(favorite);
 
             if( result.data.is_favorite === true){
                 setImageSource(trueBk);
@@ -250,11 +249,11 @@ useEffect(() => {
    
     //질문 데이터 가져오기
     const getQues = async () => {
-        console.log('실행')
+        
         try{
             const result = await axios.get(`https://asku.wiki/api/question/view/${flag}/${title}`);
             setQues(result.data.data);
-            console.log('성공');
+            
             if (result.data.data.length===0) {
                 setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자. 
 
@@ -272,17 +271,16 @@ useEffect(() => {
     const getContribute = async () => {
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/contributions/${title}`);
-            console.log('기여도');
+            //console.log('기여도');
             setContribute(result.data.message);
-            console.log(contribute);
-            console.log('성공');
+            //console.log(contribute);
 
             if(contribute.length !== 0){
-                console.log(contribute);
+                //console.log(contribute);
                 const total = contribute.reduce((acc, item) => acc + parseInt(item.point), 0);
                 setTotalPoint(total);
             } else{
-                console.log('기여도 없음');
+                //console.log('기여도 없음');
             }
 
             if (!contribute) {
