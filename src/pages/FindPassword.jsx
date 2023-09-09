@@ -18,7 +18,7 @@ const FindPassword = () => {
         setClicked(true);
 
         try{
-            const response = await axios.post('https://asku.wiki/api/user/auth/findpw', {
+            const response = await axios.post('http://localhost:8080/user/auth/findpw', {
                 login_id: id
             }, {
                 withCredentials: true

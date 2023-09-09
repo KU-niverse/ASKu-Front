@@ -59,7 +59,7 @@ const ResetPw = () => {
         }
 
         try{
-            const response = await axios.put( 'https://asku.wiki/api/user/auth/resetpw', {
+            const response = await axios.put( 'http://localhost:8080/user/auth/resetpw', {
                 hashed_login_id: auth,
                 new_password: password,
             }, {
