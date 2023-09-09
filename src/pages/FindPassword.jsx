@@ -10,10 +10,12 @@ const FindPassword = () => {
 
     const [id, setId] = useState('')
     const nav = useNavigate();
+    const [clicked, setClicked] = useState(false);
 
     const findUserPw = async (e) => {
         e.preventDefault();
         console.log(id);
+        setClicked(true);
 
         try{
             const response = await axios.post('http://localhost:8080/user/auth/findpw', {
@@ -53,8 +55,10 @@ const FindPassword = () => {
                      />
                 </span> 
             </div>
-            <input className={`${styles.findBtn}`} type='submit' value='비밀번호 재설정 메일 받기'/>
-            <div  className={`${styles.findAlert}`}>비밀번호 재설정 페이지를 아이디에 해당하는 이메일로 전송합니다. </div>
+            <input className={clicked ? `${styles.hidden}` : `${styles.findBtn}`} type='submit' value='비밀번호 재설정 메일 받기'/>
+            <div  className={clicked ? `${styles.hidden}` : `${styles.findAlert}`}>비밀번호 재설정 페이지를 아이디에 해당하는 이메일로 전송합니다. </div>
+            <div className={clicked ? `${styles.findBtnTwo}` : `${styles.hidden}`}> 비밀번호 재설정 메일 전송 완료!</div>
+            <div  className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}>5-10초 뒤 전송 완료 창이 뜬 후 확인을 누르고 메일을 확인해주세요. </div>
         </form>
     </div>
     
