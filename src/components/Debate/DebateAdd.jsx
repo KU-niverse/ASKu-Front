@@ -82,7 +82,7 @@ const DebateAdd = ({ title }) => {
           <p>"최근 변경된 토론이 없습니다."</p>
         ) : (
           debateListData.data.map((item) => (
-            <Link to={`/debate/${title}/${item.subject}/${item.id}`} className={styles.linkTo}>
+            <Link to={`/debate/${item.title}/${item.subject}`} state={{ title: item.title, subject: item.subject, id: item.id }} className={styles.linkTo}>
             <ul key={item.id}>
               <span className={styles.listTitle}>{item.subject}</span>
             </ul></Link>

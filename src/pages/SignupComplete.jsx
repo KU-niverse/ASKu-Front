@@ -32,33 +32,39 @@ const SignupComplete = () => {
                 withCredentials: true
             });
             if (response.data.success===true) {
-                setLoading(false);
                 alert(response.data.message);
                 
                 
             } else {
-                setLoading(false);
                 alert(response.data.message);
-                
+                nav('/');
             
             }
             setLoading(false);
         } catch (error) {
             console.error(error);
+            if(error.response.status === 400){
+                alert(error.response.data.message);
+                nav('/');
+            } else if(error.response.status === 500){
+                alert(error.response.data.message);
+                nav('/');
+            } else {
+                alert(error.response.data.message);
+                nav('/');
+            }
             setLoading(false);
-            alert(error.response.data.message);
         }
     }
 
     useEffect(() => {
         authPost();
-        // 로딩 중일 때 표시할 컴포넌트
-        if (loading) {
-           return <div><SpinnerMypage/></div>; 
-         }
-        //
-
     }, []);
+
+    if (loading) {
+        return <div><SpinnerMypage/></div>; 
+      }
+     //
 
   return (
     <div className={styles.container}>
