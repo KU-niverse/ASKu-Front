@@ -31,7 +31,7 @@ const WikiEdit = () => {
     
       const onEditorChange = (value) => {
         setDesc(value);
-        console.log(value);
+        //console.log(value);
         // No need to log 'desc' here
       }
 
