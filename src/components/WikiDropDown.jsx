@@ -10,7 +10,6 @@ import SpinnerMypage from './SpinnerMypage';
 
 function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }) {
   const [wikiData, setWikiData] = useState([]);
-  console.log(isOptionDisabled)
 
   useEffect(() => {
       const takeWikiData = async () => {
