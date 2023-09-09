@@ -181,7 +181,7 @@ const SearchResearch = () => {
                                 index_title={item.index_title}
                                 content={item.content}
                                 created_at={item.created_at}
-                                answer_or_not={item.answer_or_not}
+                                answer_count={item.answer_count}
                                 is_bad={item.is_bad}
                                 nick={item.nickname}
                                 like_count={item.like_count}
