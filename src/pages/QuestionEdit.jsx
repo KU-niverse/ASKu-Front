@@ -25,9 +25,9 @@ const QuestionEdit = () => {
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
     const [selectedTitle, setSelectedTitle] = useState(stateData.index_title); //드롭다운 옵션
-    console.log(selectedTitle);
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
+    console.log(qid);
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
     //console.log(qid);
     const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
@@ -115,14 +115,17 @@ const QuestionEdit = () => {
                 
             }
         } catch(error){
+            setLoading(false);
             if(error.response.status === 401){
                 setLoading(false);
                 alert("login이 필요합니다.");
                 nav('/signin');
-            } else{
-                alert("제출에 실패했습니다. 다시 시도해주세요.");
-            console.log(error);
-            return alert(error.response.data.message);
+            } else {
+                setLoading(false);
+                alert(error.response.data.message);
+                console.log(error);
+                nav('/');
+                
             };
         }
         
