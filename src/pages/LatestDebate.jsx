@@ -23,17 +23,14 @@ function LatestDebate() {
           setDebateListData(res.data);
         }
         else{
-          console.log(res.data.message)
         }
       }catch (error){
         console.error(error);
       }
-      console.log('DebateListData:', debateListData);
     }
     takeDebateList();
   }, []); //토론방 목록 가져오기
   
-  console.log(debateListData.data)
   return (
     <div className={styles.container}>
       <div>

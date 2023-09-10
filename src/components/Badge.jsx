@@ -7,7 +7,6 @@ import lock from "../img/lock.png";
 
 function Badge({myBadgeIds, id, name, image, description, event, count}){
 
-  // console.log(created_at)
   return(
     <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}> 
       <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>        

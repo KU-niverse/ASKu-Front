@@ -15,7 +15,6 @@ const DebateRecent = ({ title }) => {
         if (res.status === 200) {
           setRecentListData(res.data);
         } else {
-          //console.log(res.data.message);
         }
       } catch (error) {
         console.error(error);

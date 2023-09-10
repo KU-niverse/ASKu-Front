@@ -18,9 +18,7 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleNickEdit = () => {
-    console.log("클릭");
     setEditModalVisible(true);
-    console.log(isEditModalVisible);
   }
 
   {isEditModalVisible && <NickEditModal isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />}

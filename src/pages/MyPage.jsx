@@ -64,7 +64,6 @@ function MyPage({ loggedIn, setLoggedIn }) {
         if (res.status === 200 || res.status === 201) {  // 상태 코드에 따라 데이터 처리
           stateSetter(res.data);
         } else if (res.status === 401) {
-          console.log(res.data.message);
         }
         setLoading(false);
       } catch (error) {
@@ -81,15 +80,6 @@ function MyPage({ loggedIn, setLoggedIn }) {
     getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
   }, []);
 
-  console.log(myBadge)
-  console.log(myContribute)
-  console.log(mypageData)
-  console.log(myDebate)
-  console.log(myQuestion)
-  console.log(myWiki)
-
-  console.log(myContribute);
-  console.log(myContribute.message);
 
 
   //

@@ -40,7 +40,6 @@ function MyQuestion() {
         if (res.status === 201) {
           setMypageData(res.data);
           setLoadingMypage(false);
-          console.log(res.data)
         }
       } catch (error) {
         console.error(error);
@@ -50,7 +49,6 @@ function MyQuestion() {
     takeMypage();
   }, []);
 
-  console.log(mypageData.data); 
 
     
   return(

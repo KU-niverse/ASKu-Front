@@ -38,7 +38,6 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
     }
   
     const newIsLiked = !isLiked;
-    // 옵티미스틱 업데이트: UI를 바로 업데이트
     setCurrentLikeCount(currentLikeCount + (newIsLiked ? 1 : -1));
     localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked);
     setIsLiked(newIsLiked);
@@ -46,12 +45,9 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
     try {
       const res = await axios.post(`https://asku.wiki/api/question/like/${questionId}`, {}, { withCredentials: true });
       if (res.status === 200) {
-        console.log(res.data.message);
-        // 서버의 응답이 예상대로 왔을 때는 특별한 처리가 필요 없습니다.
       }
     } catch (error) {
       console.error(error);
-      // 서버 응답이 예상과 다를 때 원래 상태로 되돌립니다.
       setCurrentLikeCount(currentLikeCount);
       setIsLiked(isLiked);
   
@@ -60,7 +56,6 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
       } else if (error.response && error.response.status === 403) {
         alert("본인의 질문에는 좋아요를 누를 수 없습니다.")
       } else {
-        // alert("알 수 없는 오류가 발생했습니다.")
       }
     }
   };

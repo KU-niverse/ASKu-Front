@@ -19,7 +19,6 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
             setWikiData(res.data);
           }
           if (res.status === 404) {
-            console.log(res.data.message);
           }
         } catch (error) {
           console.error(error);
@@ -88,7 +87,6 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
   }
 
   const onSelect = (selectedOption) => {
-    //console.log(selectedOption);
     onSelectedOption(selectedOption.value);
     onSelectedTitle(selectedOption.label);
     // 처리할 로직을 여기에 추가

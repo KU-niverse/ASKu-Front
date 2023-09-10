@@ -33,12 +33,10 @@ useEffect(() => {
         setDebateContentData(res.data);
       }
       else{
-        console.log(res.data.message)
       }
     }catch (error){
       console.error(error);
     }
-    console.log('DebateContentData:', debateContentData);
   }
   takeDebateContent();
 }, [title, debateId]); //토론방 메시지 가져오기
