@@ -205,6 +205,10 @@
 .prompt:focus {
     outline: none;
 }
+.prompt:disabled {
+    background-color: #FFF;
+    color: #747474;
+}
 
 .sendBtn {
     cursor: pointer;

@@ -16,7 +16,7 @@ import mobilehistory from '../img/mobile_history.png';
 import AlarmModal from './AlarmModal';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import SpinnerMypage from './SpinnerMypage';
+import AlarmMobileModal from './AlarmMobileModal';
 
 function Header() {
     const [inputValue, setInputValue] = useState('');
@@ -29,6 +29,7 @@ function Header() {
     const [mobileHeaderHeight, setMobileHeaderHeight] = useState('60px');
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
     const [loadingMypage, setLoadingMypage] = useState(true);
+    const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false);
 
     const Nav = useNavigate();
 
@@ -133,6 +134,11 @@ function Header() {
             setMobileSearchOpen(false);
             setMobileHeaderHeight('60px');
         }
+    };
+
+    const handleMobileAlarmModal = () => {
+        setMobileAlarmModalOpen(!mobileAlarmModalOpen);
+        console.log(mobileAlarmModalOpen);
     };
 
     return (
@@ -252,7 +258,7 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>즐겨찾기</p>
                                             </div>
                                         </Link>
-                                        <Link className={styles.mobileMenuBtn}>
+                                        <Link className={styles.mobileMenuBtn} onClick={handleMobileAlarmModal}>
                                             <div className={styles.mobileHamburgerMenu}>
                                                 <img src={mobilealarm} alt=""  className={styles.mobileIcon} />
                                                 <p className={styles.mobileMenuText}>알림</p>
@@ -318,6 +324,7 @@ function Header() {
                                 </div>
                             </div>
                         )}
+                    {mobileAlarmModalOpen && <AlarmMobileModal isOpen={mobileAlarmModalOpen} handleMobileAlarmModal={handleMobileAlarmModal} />}
                     </div>
                 </div>
             </div>
