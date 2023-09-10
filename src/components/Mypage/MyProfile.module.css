@@ -16,6 +16,10 @@
   display: grid;
 }
 
+.badgeedit{
+  display: none;
+}
+
 .rownick, .rowbadge, .rowpoint{
   display: table;
   width: 75%;
@@ -86,5 +90,13 @@
   .rank{
     font-weight: normal;
     font-size: 12px;
+  }
+
+  .badgeedit{
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: #747474;
+    
   }
 }

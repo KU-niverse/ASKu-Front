@@ -171,7 +171,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           <div className={styles.rightcontent}>
             <div className={`${styles.info}`}>
               <div className={styles.infoheader}>
-                <p className={styles.title}>내 정보</p>
+                <p className={styles.title2}>내 정보</p>
               </div>
               {mypageData && mypageData.data && (
                 <MyInfo
@@ -190,7 +190,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               </div>
             </div>
             <div className={`${styles.cb}`}>
-              <p className={styles.title}>기여 목록</p>
+              <p className={styles.title2}>기여 목록</p>
               <div className={styles.graph}>
               {myContribute&&myContribute.message&&myContribute.message.docs.length===0 ? (
                 <p></p>
