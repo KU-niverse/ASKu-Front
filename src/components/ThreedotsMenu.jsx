@@ -25,7 +25,7 @@ function ThreedotsMenu({ questionId, type}) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(" http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get(" https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -46,7 +46,6 @@ function ThreedotsMenu({ questionId, type}) {
     try {
       const response = await axios.delete(`https://asku.wiki/api/question/delete/${questionId}`, {withCredentials: true});
       if(response.status===200){
-        console.log(response.data);
         alert(response.data.message);
         window.location.reload();
       }
@@ -72,7 +71,6 @@ function ThreedotsMenu({ questionId, type}) {
         value="신고하기" 
         onClick={(e) => {
           checkLoginStatus();
-          console.log(`${e.value} clicked`);
           e.stopPropagation = true;
           e.keepOpen = true;
           e.preventDefault=true;
@@ -89,7 +87,6 @@ function ThreedotsMenu({ questionId, type}) {
         value="수정하기"
         onClick={(e) => {
           checkLoginStatus();
-          console.log(`${e.value} clicked`);
           // Stop the `onItemClick` of root menu component from firing
           e.stopPropagation = true;
           // Keep the menu open after this menu item is clicked
@@ -108,7 +105,6 @@ function ThreedotsMenu({ questionId, type}) {
         value="삭제하기"
         onClick={(e) =>{
           checkLoginStatus();
-          console.log(`${e.value} clicked`);
           e.stopPropagation=true;
           e.keepOpen=true;
           e.preventDefault=true;

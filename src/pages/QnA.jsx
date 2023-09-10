@@ -24,7 +24,6 @@ const QnA = () => {
   const linktoWiki = ()=>{
     nav(`/wiki/${title}`)
   }
-  console.log(question_id)
 
 
   useEffect(() => {
@@ -35,12 +34,10 @@ const QnA = () => {
           setAnswerData(res.data);
         }
         if(res.status === 500){
-          console.log(res.data.message)
         }
       }catch (error){
         console.error(error);
       }
-      console.log('answerData:', answerData);
     }
     takeAnswer();
   }, [question_id]);

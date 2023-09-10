@@ -11,15 +11,12 @@ function ThreedotsBadge({badge_id}) {
 
   const onRepBadge = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/user/mypage/setrepbadge`, { rep_badge_id: badge_id }, {withCredentials: true});
+      const response = await axios.put(`https://asku.wiki/api/user/mypage/setrepbadge`, { rep_badge_id: badge_id }, {withCredentials: true});
       if(response.status===201){
-        console.log(response.data);
         alert("대표 뱃지가 변경되었습니다.");
       } else if(response.status===400){
-        console.log(response.data)
         alert(response.data.message)
       } else {
-        console.log(response.data);
         alert("알 수 없는 오류가 발생했습니다.");
       }
     }
@@ -39,7 +36,6 @@ function ThreedotsBadge({badge_id}) {
         className={styles.menuitem} 
         value="대표 뱃지로 설정"
         onClick={(e) =>{
-          console.log(`${e.value} clicked`);
           e.stopPropagation=true;
           e.preventDefault=true;
          onRepBadge(badge_id);

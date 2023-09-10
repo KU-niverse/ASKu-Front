@@ -81,7 +81,7 @@
   border : 1px solid rgba(116, 116, 116, 1)
 }
 
-.title{
+.title, .title2{
   width: 40%;
   text-align: left;
   font-size: 24px;
@@ -259,10 +259,14 @@
     margin-bottom: 30px;
   }
   
-  .title{
+  .title, .title2{
     font-size: 12px;
     font-weight :bold;
     color : rgba(116, 116, 116, 1);
+  }
+
+  .title2{
+    padding-top: 22px;
   }
   
   .edit{
@@ -290,6 +294,7 @@
     box-shadow: initial;
     border-radius: initial;
   }
+
 
 
 }

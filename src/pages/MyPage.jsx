@@ -36,7 +36,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const Navigate = useNavigate();
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -64,7 +64,6 @@ function MyPage({ loggedIn, setLoggedIn }) {
         if (res.status === 200 || res.status === 201) {  // 상태 코드에 따라 데이터 처리
           stateSetter(res.data);
         } else if (res.status === 401) {
-          console.log(res.data.message);
         }
         setLoading(false);
       } catch (error) {
@@ -73,23 +72,14 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
   
-    getData('http://localhost:8080/user/mypage/info', setMypageData);
-    getData(`http://localhost:8080/user/mypage/questionhistory/latest`, setMyQuestion);
-    getData('http://localhost:8080/user/mypage/debatehistory', setMyDebate);
-    getData('http://localhost:8080/user/mypage/badgehistory', setMyBadge);
-    getData('http://localhost:8080/user/mypage/wikihistory', setMyWiki);
+    getData('https://asku.wiki/api/user/mypage/info', setMypageData);
+    getData(`https://asku.wiki/api/user/mypage/questionhistory/latest`, setMyQuestion);
+    getData('https://asku.wiki/api/user/mypage/debatehistory', setMyDebate);
+    getData('https://asku.wiki/api/user/mypage/badgehistory', setMyBadge);
+    getData('https://asku.wiki/api/user/mypage/wikihistory', setMyWiki);
     getData('https://asku.wiki/api/wiki/contributions', setMyContribute);
   }, []);
 
-  console.log(myBadge)
-  console.log(myContribute)
-  console.log(mypageData)
-  console.log(myDebate)
-  console.log(myQuestion)
-  console.log(myWiki)
-
-  console.log(myContribute);
-  console.log(myContribute.message);
 
 
   //
@@ -171,7 +161,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           <div className={styles.rightcontent}>
             <div className={`${styles.info}`}>
               <div className={styles.infoheader}>
-                <p className={styles.title}>내 정보</p>
+                <p className={styles.title2}>내 정보</p>
               </div>
               {mypageData && mypageData.data && (
                 <MyInfo
@@ -190,7 +180,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               </div>
             </div>
             <div className={`${styles.cb}`}>
-              <p className={styles.title}>기여 목록</p>
+              <p className={styles.title2}>기여 목록</p>
               <div className={styles.graph}>
               {myContribute&&myContribute.message&&myContribute.message.docs.length===0 ? (
                 <p></p>

@@ -3,19 +3,19 @@ import haho from "../img/haho.png";
 import styles from "./Badge.module.css"
 import ThreedotsBadge from "./ThreedotsBadge"
 import FormatDate from "./FormatDate";
+import lock from "../img/lock.png";
 
 function Badge({myBadgeIds, id, name, image, description, event, count}){
 
-  // console.log(created_at)
   return(
     <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}> 
       <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>        
         <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-          <img src={image} alt={name}/>
+        <img src={myBadgeIds.has(id) ? image : lock} alt={name}/>          
         </div>
         <div className={`${styles.b_right} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
           <div className={`${styles.b_listhead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-            <span className={`${styles.b_listfronthead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>{name}</span>
+            <span className={`${styles.b_listfronthead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>{myBadgeIds.has(id) ? name : "잠긴 뱃지입니다."}</span>
             <div className={`${styles.b_listput} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
               <ThreedotsBadge badge_id={id}/> 
             </div>

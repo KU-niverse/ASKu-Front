@@ -11,6 +11,7 @@ import SpinnerMypage from '../components/SpinnerMypage';
 
 function MyBadge() {
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   // const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
 
   //이름 정보 가져오기
@@ -19,7 +20,7 @@ function MyBadge() {
   //   console.log(mypageData)
   //   const takeMypage = async () =>{
   //     try{
-  //       const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+  //       const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
   //       if(res.status === 201){
   //         setMypageData(res.data);
   //         console.log(res.data.message)
@@ -40,17 +41,18 @@ function MyBadge() {
 
   // console.log(mypageData)
 
+=======
+>>>>>>> cb462612de610ab104bce9393c6798f80fe05174
   //뱃지 데이터 불러오기
   const [myBadge, setMyBadge] = useState([]);
   useEffect(() => {
   const takeMyBadge = async () =>{
     try{
-      const res = await axios.get( `http://localhost:8080/user/mypage/badgehistory`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki/api/user/mypage/badgehistory`, {withCredentials: true});
       if(res.status === 201){
         setMyBadge(res.data);
       }
       if(res.status === 401){
-        console.log(res.data.message)
       }
     }catch (error){
       console.error(error);
@@ -60,20 +62,17 @@ function MyBadge() {
   }, []);
 
 
-  console.log(myBadge.data)
 
   //모든 뱃지 데이터 가져오기
   const[allBadge, setAllBadge] = useState([]);
   useEffect(()=>{
     const takeAllBadge = async () => {
       try{
-        const response = await axios.get(`http://localhost:8080/user/mypage/badges`, {withCredentials: true})
+        const response = await axios.get(`https://asku.wiki/api/user/mypage/badges`, {withCredentials: true})
         if(response.status===201){
           setAllBadge(response.data);
-          console.log(response.data.message)
         }
         if(response.status===401){
-          console.log(response.data.message)
         }
       }catch(error){
         console.error(error);
@@ -84,8 +83,6 @@ function MyBadge() {
       takeAllBadge();
     }, [])
 
-    console.log(allBadge)
-    console.log(allBadge.data)
 
 
   // 로딩 중일 때 표시할 컴포넌트
@@ -121,7 +118,6 @@ return (
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>나의 뱃지 목록</p>
-          {/* <SwitchBadge  isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
         </div>
         <div className={styles.b_list}>
           {allBadge && allBadge.data && allBadge.data.length === 0 ? (
@@ -138,7 +134,6 @@ return (
                   event={data.event}
                   count={data.history_count}
                   myBadgeIds={myBadgeIds}
-                  // className={myBadgeIds.has(data.id) ? styles.myBadgeStyle : styles.normalBadgeStyle}                
                 />            
               ))
             ) 

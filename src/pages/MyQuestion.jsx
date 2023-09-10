@@ -20,7 +20,7 @@ function MyQuestion() {
   useEffect(() => {
     const takeMyQuestion = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/user/mypage/questionhistory/${arrange}`, { withCredentials: true });
+        const res = await axios.get(`https://asku.wiki/api/user/mypage/questionhistory/${arrange}`, { withCredentials: true });
         if (res.status === 201) {
           setMyQuestion(res.data);
           setLoadingMyQuestion(false);
@@ -36,11 +36,10 @@ function MyQuestion() {
   useEffect(() => {
     const takeMypage = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/user/mypage/info`, { withCredentials: true });
+        const res = await axios.get(`https://asku.wiki/api/user/mypage/info`, { withCredentials: true });
         if (res.status === 201) {
           setMypageData(res.data);
           setLoadingMypage(false);
-          console.log(res.data)
         }
       } catch (error) {
         console.error(error);
@@ -50,7 +49,6 @@ function MyQuestion() {
     takeMypage();
   }, []);
 
-  console.log(mypageData.data); 
 
     
   return(

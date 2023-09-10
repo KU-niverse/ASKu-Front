@@ -16,7 +16,7 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
 
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+      const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
@@ -36,24 +36,26 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
     if (!loggedIn) {
       await checkLoginStatus();
     }
-
+  
+    const newIsLiked = !isLiked;
+    setCurrentLikeCount(currentLikeCount + (newIsLiked ? 1 : -1));
+    localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked);
+    setIsLiked(newIsLiked);
+  
     try {
       const res = await axios.post(`https://asku.wiki/api/question/like/${questionId}`, {}, { withCredentials: true });
       if (res.status === 200) {
-        const newIsLiked = !isLiked;
-        console.log(res.data.message);
-        setCurrentLikeCount(currentLikeCount + 1);
-        localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked);
-        setIsLiked(newIsLiked);
       }
     } catch (error) {
       console.error(error);
+      setCurrentLikeCount(currentLikeCount);
+      setIsLiked(isLiked);
+  
       if (error.response && error.response.status === 400) {
         alert("이미 좋아요를 눌렀습니다.")
       } else if (error.response && error.response.status === 403) {
         alert("본인의 질문에는 좋아요를 누를 수 없습니다.")
       } else {
-        // alert("알 수 없는 오류가 발생했습니다.")
       }
     }
   };

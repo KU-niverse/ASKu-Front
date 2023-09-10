@@ -21,15 +21,12 @@ const QuestionEdit = () => {
     const {main} = useParams();
     const location = useLocation();
     const stateData = location.state;
-    //console.log(stateData);
     const [desc, setDesc] = useState('');
     const [selectedOption, setSelectedOption] = useState(''); //드롭다운 옵션
     const [selectedTitle, setSelectedTitle] = useState(stateData.index_title); //드롭다운 옵션
     const [isOptDisabled, setIsOptDisabled] = useState(false); //같은 목차 없을 시 true
     const qid = stateData.qid;
-    console.log(qid);
     const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
-    //console.log(qid);
     const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
     const [isChecked, setIsChecked] = useState(false);
 
@@ -91,8 +88,6 @@ const QuestionEdit = () => {
     //qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집
     const checkSameIndex = async() => {
 
-        // console.log(selectedOption);
-        // console.log(qid);
 
 
         try {
@@ -102,8 +97,6 @@ const QuestionEdit = () => {
             if(result.status === 200){
                 if(result.data.based_on_section === true) {
                     setSelectedOption(result.data.section);
-                    console.log(result.data.section);
-                    console.log(selectedOption);
                    
                 } else{
                     setSelectedOption('all');
@@ -140,7 +133,6 @@ const QuestionEdit = () => {
 
 
         checkSameIndex();
-        //console.log(selectedOption);
         
         setCopy(false);
         
@@ -149,7 +141,6 @@ const QuestionEdit = () => {
     //첫 설정이 문제..
     
     useEffect(() => {
-        console.log(selectedOption);
 
         if(selectedOption) {
             
@@ -161,7 +152,6 @@ const QuestionEdit = () => {
                 setLoading(false);
             }
         } else{
-            console.log('section 없음')
         }
 
 
@@ -254,12 +244,10 @@ const QuestionEdit = () => {
      //dropdown에서 선택한 index 섹션으로 반영
     const handleSelectedOption = (optionValue) => {
       setSelectedOption(optionValue);
-      //console.log(selectedOption);
     };
      //dropdown에서 선택한 index title 반영
      const handleSelectedTitle = (optionValue) => {
         setSelectedTitle(optionValue);
-        console.log(selectedTitle);
       };
 
     if (loading) {

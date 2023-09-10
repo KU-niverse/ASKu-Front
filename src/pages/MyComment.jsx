@@ -19,14 +19,12 @@ function MyComment(){
   useEffect(() => {
     const takeMyDebate = async () =>{
       try{
-        const res = await axios.get( `http://localhost:8080/user/mypage/debatehistory`, {withCredentials: true});
+        const res = await axios.get( `https://asku.wiki/api/user/mypage/debatehistory`, {withCredentials: true});
         if(res.status === 201){
-          console.log(res.data)
           setMyDebate(res.data);
           setLoadingMyDebate(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
         if(res.status === 500){
-          console.log(res.data.message)
         }
         }catch (error){
           console.error(error);
@@ -35,8 +33,6 @@ function MyComment(){
       }
       takeMyDebate();
     }, []);
-    console.log(myDebate.message)
-    console.log(myDebate)
 
 
     //내 정보 불러오기
@@ -44,16 +40,14 @@ function MyComment(){
     useEffect(() => {
       const takeMypage = async () =>{
         try{
-          const res = await axios.get( `http://localhost:8080/user/mypage/info`, {withCredentials: true});
+          const res = await axios.get( `https://asku.wiki/api/user/mypage/info`, {withCredentials: true});
           if(res.status === 201){
             setMypageData(res.data);
             setLoadingMypage(false); // 데이터 로딩 완료 시 로딩 상태 업데이트
           }
           if(res.status === 401){
-            console.log(res.data.message)
           }
           if(res.status === 500){
-            console.log(res.data.message)
           }
         }catch (error){
           console.error(error);
@@ -64,7 +58,6 @@ function MyComment(){
     }, []); // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
 
    
-    console.log(mypageData)
 
   return(
     <div className={styles.container}>
