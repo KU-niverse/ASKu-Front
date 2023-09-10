@@ -122,7 +122,7 @@ function Home({loggedIn, setLoggedIn}) {
                                     answer_count : question.answer_count,
                                     title: question.title
                                     }
-                                  }
+                                }
                                 className={styles.rankWrap} 
                                 key={index}>
                                     <p className={styles.numberIcon}>Q.</p>
