@@ -74,7 +74,7 @@ const HistoryBox = (props) => {
                 <span className={styles.summary}>수정요약: {summary}</span>
             </div>
             <div className={styles.contentsTwo}>
-                <span className={styles.docTitle}>{doctitle}</span>
+                <span className={styles.docTitle}>{title}</span>
                 <span className={styles.user}>{user}</span>
                 <span className={styles.timestamp}>{timestamp}</span>
                 <span className={styles.threedot}><ThreedotsReport type={1} target={target}/></span>
