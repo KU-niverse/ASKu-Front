@@ -181,14 +181,27 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                             <img src={closeBtn} alt='close' className={styles.close_btn} onClick={handleMobileAlarmModal} />
                         </div>
                         <div className={styles.modal_content}>
-                            {notifications.map((notification, index) => (
-                                <div>
-                                <Link to={generateLink(notification)} className={styles.alarmLink}>
-                                    <p className={styles.alarmText} key={index}>{notification.message}</p>
-                                </Link>
-                                {index < notifications.length - 1 && <hr style={{ height: '0.3px', opacity: '0.7', backgroundColor: '#D5D5D5', width: '100%' }} />}
+                        {notifications.length > 0 ? (
+                            notifications.map((notification, index) => (
+                                <div key={index}>
+                                    <Link to={generateLink(notification)} className={styles.alarmLink}>
+                                        <p className={styles.alarmText}>{notification.message}</p>
+                                    </Link>
+                                    {index < notifications.length - 1 && (
+                                        <hr
+                                            style={{
+                                                height: '0.3px',
+                                                opacity: '0.7',
+                                                backgroundColor: '#D5D5D5',
+                                                width: '100%',
+                                            }}
+                                        />
+                                    )}
                                 </div>
-                        ))}
+                            ))
+                        ) : (
+                            null
+                        )}
                         </div>
                     </div>
                 </div>

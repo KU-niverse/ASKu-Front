@@ -92,9 +92,12 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
                 })
                 .catch((error) => {
                     console.error('Error fetching notifications:', error);
+                    // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
+                    setNotifications([]);
                 });
         }
     }, [isAlarmVisible]);
+
 
     const removeIdFromMessage = (message) => {
         return message.replace(/\(\d+\)/g, "");
@@ -181,14 +184,27 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
                     <img src={closeBtn} alt='close' className={styles.close_btn} onClick={handleAlarm} />
                 </div>
                 <div className={styles.alarmContent}>
-                    {notifications.map((notification, index) => (
+                {notifications.length > 0 ? (
+                    notifications.map((notification, index) => (
                         <div key={index}>
                             <Link to={generateLink(notification)} className={styles.alarmLink}>
                                 <p className={styles.alarmText}>{notification.message}</p>
                             </Link>
-                            {index < notifications.length - 1 && <hr style={{ height: '0.3px', opacity: '0.7', backgroundColor: '#D5D5D5', width: '100%' }} />}
+                            {index < notifications.length - 1 && (
+                                <hr
+                                    style={{
+                                        height: '0.3px',
+                                        opacity: '0.7',
+                                        backgroundColor: '#D5D5D5',
+                                        width: '100%',
+                                    }}
+                                />
+                            )}
                         </div>
-                    ))}
+                    ))
+                ) : (
+                    null
+                )}
                 </div>
             </div>
         )}
