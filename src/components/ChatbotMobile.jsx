@@ -8,6 +8,7 @@ import LoginModal from './LoginModal';
 import { useState, useEffect, useRef, Fragment} from 'react';
 import ChatAnswer from './ChatAnswer';
 import ChatQuestion from './ChatQuestion';
+import ClearModal from './ClearModal';
 import { Link } from 'react-router-dom';
 
 
@@ -20,6 +21,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const [userId, setUserId] = useState('');
+    const [ClearModalOpen, setClearModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -45,7 +47,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
 
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("http://localhost:8080/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
@@ -194,13 +196,26 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
         scrollToBottomOnLoadingChange();
     }, [loading]);
 
+    const handleClearModal = () => {
+        if (!isLoggedIn) {
+            if (!ClearModalOpen) {
+                setClearModalOpen(true);
+            } else {
+                setClearModalOpen(false);
+            }
+        }
+        else {
+            setLoginModalVisible(true);
+        }
+    }
+
     return (
         <div className={styles.mobileChatbotContainer}>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
                     <p id={styles.title}>AI 하호</p>
-                    <button className={styles.button}>채팅 비우기</button>
+                    <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
                     <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
                         <button className={styles.button}>도움말</button>
                     </Link>
@@ -253,6 +268,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
                         )}
                 </div>
                 {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
+                {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
                 <div className={styles.promptWrap}>
                         <textarea
                             className={styles.prompt}

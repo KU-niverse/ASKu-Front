@@ -154,24 +154,38 @@
     position: relative;
     display: flex;
     position: fixed;
-    bottom: 0vh;
-    left:0vw;
-    height: 120px;
-    width: 100vw;
+    bottom: 5vh;
+    height: 100px;
+    left: 10vw;
+    width: 80vw;
     background-color: white;
     z-index: 10;
-}
-.prompt {
-    position: relative;
-    top: 20px;
-    left: 10vw;
-    box-sizing: border-box;
-    width: 80vw;
-    max-height: 80px;
     border: 1px solid #9F132E;
     border-radius: 20px;
+}
+.prompt {
+    overflow-y: scroll;
+    position: relative;
+    top: 20px;
+    left: 10px;
+    box-sizing: border-box;
+    width: 80vw;
+    line-height: 15px;
+    max-height: 30px;
     resize: none;
-    padding: 20px;
+    border: none;
+}
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.prompt::-webkit-scrollbar {
+    display: none;
+  }
+
+.prompt:focus {
+    outline: none;
+}
+.prompt:disabled {
+    background-color: #FFF;
+    color: #747474;
 }
 
 .sendBtn {
