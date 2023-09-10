@@ -8,11 +8,10 @@ import LoginModal from './LoginModal';
 import { useState, useEffect, useRef, Fragment} from 'react';
 import ChatAnswer from './ChatAnswer';
 import ChatQuestion from './ChatQuestion';
-import ClearModal from './ClearModal';
 import { Link } from 'react-router-dom';
+import ClearModal from './ClearModal';
 
-
-function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
+function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
@@ -20,8 +19,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
     const [chatResponse, setChatResponse] = useState([]);
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
-    const [userId, setUserId] = useState('');
-    const [ClearModalOpen, setClearModalOpen] = useState(false);
+    const [clearModalOpen, setClearModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -42,29 +40,6 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
         return () => {
             window.removeEventListener('resize', handleWindowResize);
         };
-    }, []);
-
-
-    const getUserInfo = async () => {
-        try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
-                withCredentials: true
-            });
-            if (res.status === 201 && res.data.success === true) {
-                // 사용자 정보에서 id를 가져옴
-                setUserId(res.data);
-            } else {
-                setIsLoggedIn(false);
-            }
-        } catch (error) {
-            console.error(error);
-            setIsLoggedIn(false);
-        }
-    };
-
-    // getUserInfo 함수를 useEffect 내에서 호출
-    useEffect(() => {
-        getUserInfo();
     }, []);
 
 
@@ -198,16 +173,12 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
 
     const handleClearModal = () => {
         if (!isLoggedIn) {
-            if (!ClearModalOpen) {
-                setClearModalOpen(true);
-            } else {
-                setClearModalOpen(false);
-            }
-        }
-        else {
             setLoginModalVisible(true);
+            return;
+        } else{
+        setClearModalOpen(true);
         }
-    }
+    };
 
     return (
         <div className={styles.mobileChatbotContainer}>
@@ -223,17 +194,16 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
                 <div>
                     <div className={styles.chat}>
                     <ChatAnswer content="안녕하세요! 무엇이든 제게 질문해주세요!" />
-                    {previousChatHistory.map((item, index) => {
-                        return (
-                            <Fragment key={item.id}>
-                                <ChatQuestion content={item.q_content} />
-                                <ChatAnswer
-                                    content={item.a_content}
-                                    reference={item.reference}
-                                />
-                            </Fragment>
-                        );
-                    })}
+                    {previousChatHistory.length !== 0 && (
+                        <>
+                            {previousChatHistory.map((item, index) => (
+                                <Fragment key={item.id}>
+                                    <ChatQuestion content={item.q_content} />
+                                    <ChatAnswer content={item.a_content} reference={item.reference} />
+                                </Fragment>
+                            ))}
+                        </>
+                    )}
                     {chatResponse.map((item, index) => {
                         if (index % 2 === 0) {
                         return <ChatQuestion key={index} content={item.content} />;
@@ -268,7 +238,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn}) {
                         )}
                 </div>
                 {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
-                {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
+                {clearModalOpen && <ClearModal isOpen={clearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
                 <div className={styles.promptWrap}>
                         <textarea
                             className={styles.prompt}
