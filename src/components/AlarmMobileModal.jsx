@@ -63,7 +63,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     // }, [isOpen]);
 
     useEffect(() => {
-        if (isOpen) {
+        if (isAlarmVisible) {
             // Axios를 사용하여 데이터 가져오기
             axios.get('https://asku.wiki/api/notification/user') // API 엔드포인트를 적절히 수정하세요
                 .then((response) => {
@@ -71,9 +71,12 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                 })
                 .catch((error) => {
                     console.error('Error fetching notifications:', error);
+                    // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
+                    setNotifications([]);
                 });
         }
-    }, [isOpen]);
+    }, [isAlarmVisible]);
+
 
     const removeIdFromMessage = (message) => {
         return message.replace(/\(\d+\)/g, "");
