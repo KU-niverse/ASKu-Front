@@ -43,10 +43,12 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
         </div>
         <div className={styles.rowbadge}>
           <span className={styles.rowtitle}>대표 뱃지</span>
-          <span className={styles.text}>{badge}</span>
+          <span className={styles.text}>{badge}
+          <p className={`${styles.badgeedit}`}>뱃지 수정은 PC에서만 가능합니다.</p>
+
+          </span>
           {/* <span className={styles.edit} onClick={setBadgeModalVisible(true)}>수정</span> */}
           {/* {isBadgeModalVisible && <BadgeModal isOpen={isBadgeModalVisible} onClose={() => setBadgeModalVisible(false)} />} */}
-
         </div>
         <div className={styles.rowpoint}>
           <span className={styles.rowtitle}>기여도</span>
