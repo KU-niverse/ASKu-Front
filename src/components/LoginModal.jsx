@@ -1,6 +1,6 @@
 import styles from './LoginModal.module.css';
 import closeBtn from '../img/close_btn.png';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
 import { Link } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ function LoginModal({ isOpen, onClose }) {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, [isOpen]);
+    
 
     return (
         <>
