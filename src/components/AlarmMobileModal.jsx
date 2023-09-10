@@ -71,9 +71,12 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                 })
                 .catch((error) => {
                     console.error('Error fetching notifications:', error);
+                    // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
+                    setNotifications([]);
                 });
         }
     }, [isOpen]);
+
 
     const removeIdFromMessage = (message) => {
         return message.replace(/\(\d+\)/g, "");
