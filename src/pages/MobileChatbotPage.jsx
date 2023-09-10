@@ -6,9 +6,10 @@ import axios from 'axios';
 
 const MobileChatBotPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setUserId] = useState(null);
     const checkLoginStatus = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
+            const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
             if (res.status === 201 && res.data.success === true) {
                 setIsLoggedIn(true);
             } else if (res.status === 401) {
@@ -19,13 +20,33 @@ const MobileChatBotPage = () => {
             setIsLoggedIn(false);
             }
         };
+    
+        const getUserInfo = async () => {
+            try {
+                const res = await axios.get("http://localhost:8080/user/mypage/info", {
+                    withCredentials: true
+                });
+                if (res.status === 201 && res.data.success === true) {
+                    // 사용자 정보에서 id를 가져옴
+                    setUserId(res.data);
+                } else {
+                    setIsLoggedIn(false);
+                }
+            } catch (error) {
+                console.error(error);
+                setIsLoggedIn(false);
+            }
+        };
+
     useEffect(() => {
         checkLoginStatus();
+        getUserInfo();
     }, []);
+
     return (
         <>
             <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-            <ChatbotMobile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         </>
     );
 }
