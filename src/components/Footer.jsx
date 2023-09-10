@@ -26,7 +26,7 @@ function Footer() {
                         </div>
                         <div className={`${styles.linkGroup}`}>
                             <button className={`${styles.footerTitle}`}>K-Universe</button>
-                            <Link>
+                            <Link to='https://www.notion.so/ASKu-9d6da8cb08e640db8f746524c231937e' target='_blank'>
                                 <button className={`${styles.footerButton}`}>팀 소개</button>
                             </Link>
                             <Link to='https://www.instagram.com/asku.wiki/' target='_blank'>
