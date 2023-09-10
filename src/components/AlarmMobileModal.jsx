@@ -63,7 +63,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     // }, [isOpen]);
 
     useEffect(() => {
-        if (isAlarmVisible) {
+        if (isOpen) {
             // Axios를 사용하여 데이터 가져오기
             axios.get('https://asku.wiki/api/notification/user') // API 엔드포인트를 적절히 수정하세요
                 .then((response) => {
@@ -75,7 +75,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                     setNotifications([]);
                 });
         }
-    }, [isAlarmVisible]);
+    }, [isOpen]);
 
 
     const removeIdFromMessage = (message) => {
