@@ -53,6 +53,7 @@
 .bookmarkImg{
     margin-left: 10px;
     cursor: pointer;
+    width: 20px;
 }
 .wikititleBtn{
     display: flex;
