@@ -80,12 +80,16 @@ const HistoryBox = (props) => {
                 <span className={styles.threedot}><ThreedotsReport type={1} target={target}/></span>
             </div>
         </div>
-        <div className={styles.versionText}>
-            <div></div>
-            <div className={styles.versionBtns}>
-                <span onClick={handleView} className={`${styles.versionbtn}`}><img src={watch}/>RAW버전 미리보기</span>
-                <span onClick={handleRollback} className={`${styles.versionbtn}`}><img src={rollback}/>이 버전으로 되돌리기</span>
-                <span onClick={handleCompare} className={`${styles.versionbtn}`}><img src={verComp}/>전 버전이랑 비교하기</span>
+        <div className={styles.allversionText}>
+            <div className={styles.allversionBtns}>
+                <div className={styles.docTitle}>
+                    <span className={styles.docTitle} onClick={() => nav(`/wiki/${title}`)}>{title}</span>
+                </div>
+                <div className={styles.allVerBtn}>
+                    <span onClick={handleView} className={`${styles.versionbtn}`}><img src={watch}/>RAW버전 미리보기</span>
+                    <span onClick={handleCompare} className={`${styles.versionbtn}`}><img src={verComp}/>전 버전이랑 비교하기</span>
+                </div>
+                
             </div>
         </div>
     </div>

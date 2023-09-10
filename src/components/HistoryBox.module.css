@@ -1,6 +1,7 @@
 .hidden{
     display: none;
 }
+
 .historyBox{
     width: 100%;
     height: 101px;
@@ -81,6 +82,7 @@
 @media only screen and (max-width: 767px) {
     .user{
         font-size: 11px;
+        margin-right: 5px;
     }
 }
 
@@ -88,10 +90,12 @@
     font-size: 16px;
     color: rgba(159, 19, 46, 1);
     margin-right: 20px;
+    cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
     .docTitle{
         font-size: 12px;
+        margin-right: 5px;
     }
 }
 .timestamp{
@@ -110,15 +114,26 @@
     align-items: center;
     justify-content: space-between;
 }
+.allversionText{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 @media only screen and (max-width: 767px) {
     .versionText{
+       position: absolute;
+       bottom: 18px;
+    }
+    .allversionText{
+       width: 100%;
        position: absolute;
        bottom: 18px;
     }
 }
 .versionBtns{
     width: 450px;
-    padding-top: 20px;
+    padding-top: 18px;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -126,16 +141,36 @@
     justify-content: space-between;
 
 }
-.versionBtns span{
+.allversionBtns{
+    width: 100%;
+    padding-top: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.allVerBtn{
     display: flex;
     flex-direction: row;
     align-items: center;
     font-size: 14px;
     color: rgba(116, 116, 116, 1);
     cursor: pointer;
+    margin-left: 10px;
+}
+.versionbtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(116, 116, 116, 1);
+    cursor: pointer;
+    margin-left: 10px;
 
 }
-.versionBtns img{
+.versionbtn img{
     width: 20px;
     height: 16px;
     margin-right: 5px;
@@ -146,17 +181,34 @@
         padding-top: 15px;
         display: flex;
         justify-content: space-between;
+
         
     }
-    .versionBtns span{
-        font-size: 10px;
-        margin-right: 8px;
+    .allversionBtns{
+        width: 90%;
+        padding-top: 15px;
+        display: flex;
+        justify-content: space-between;
+
+        
+    }
+    .allVerBtn{
+        width: 74%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .versionbtn{
+        font-size: 11px;
+        margin-left: 0px;
+        margin-right: 6px;
     
     
     }
-    .versionBtns img{
+    .versionbtn img{
         width: 13px;
         height: 11px;
-        margin-right: 5px;
+        margin-right: 3px;
     }
+    
 }

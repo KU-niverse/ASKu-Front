@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './History.module.css'
 import Header from '../components/Header'
 import his2 from '../img/his2.png'
-import HistoryBox from '../components/HistoryBox'
+import AllHistoryBox from '../components/AllHistoryBox'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Paging from '../components/Paging';
@@ -52,7 +52,7 @@ const AllHistory = () => {
 
     const getHistory = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/wiki/historys?type=${type}`);
+            const result = await axios.get(`http://localhost:8080/wiki/historys?type=${type}`);
             setHistorys(result.data.message);
             setTypeCount(result.data.message.length);
            
@@ -102,7 +102,7 @@ const AllHistory = () => {
                     }
                     return (
                       <div key={item.timestamp}>
-                        <HistoryBox
+                        <AllHistoryBox
                           version={item.version}
                           summary={item.summary}
                           user={item.nick}
@@ -139,7 +139,7 @@ const AllHistory = () => {
                     
                     return (
                       <div key={item.timestamp}>
-                        <HistoryBox
+                        <AllHistoryBox
                           version={item.version}
                           summary={item.summary}
                           user={item.nick}
@@ -175,7 +175,7 @@ const AllHistory = () => {
                     
                     return (
                       <div key={item.timestamp}>
-                        <HistoryBox
+                        <AllHistoryBox
                           version={item.version}
                           summary={item.summary}
                           user={item.nick}
