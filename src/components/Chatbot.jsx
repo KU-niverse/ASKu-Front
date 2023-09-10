@@ -10,7 +10,6 @@ import ClearModal from './ClearModal';
 import { Link } from 'react-router-dom';
 
 function Chatbot ({isLoggedIn, setIsLoggedIn}) {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [showSuggest, setShowSuggest] = useState(true);
@@ -30,10 +29,15 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     }
 
     const handleClearModal = () => {
-        if (!ClearModalOpen) {
-            setClearModalOpen(true);
-        } else {
-            setClearModalOpen(false);
+        if (isLoggedIn) {
+            if (!ClearModalOpen) {
+                setClearModalOpen(true);
+            } else {
+                setClearModalOpen(false);
+            }
+        }
+        else {
+            setLoginModalVisible(true);
         }
     }
     
@@ -268,7 +272,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     ref={inputRef}
                     disabled={loading}
                 />
-                <div className={styles.sendBtn} onClick={sendMessage}>
+                <div className={styles.sendBtn} onClick={loading ? null : sendMessage} style={{ cursor: loading ? 'not-allowed' : 'pointer' }}>
                     <img src={arrow} /> 
                 </div>
             </div>

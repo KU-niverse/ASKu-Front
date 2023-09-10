@@ -171,24 +171,39 @@
     position: relative;
     display: flex;
     position: absolute;
-    top: 430px;
-    left: 170px;
-    bottom: 120px;
-    height: 100px;
-}
-.prompt {
-    position: relative;
-    top: 0px;
-    left: 30px;
-    box-sizing: border-box;
     width: 550px;
+    height: 100px;
+    top: 430px;
+    left: 190px;
+    bottom: 120px;
     height: 100px;
     border: 1px solid #9F132E;
     border-radius: 20px;
+}
+.prompt {
+    overflow-y: scroll;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+    width: 450px;
+    line-height: 15px;
+    max-height: 30px;
+    border: none;
+    margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     resize: none;
-    padding: 20px;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.prompt::-webkit-scrollbar {
+    display: none;
+  }
+
+.prompt:focus {
+    outline: none;
 }
 
 .sendBtn {
@@ -197,7 +212,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 55px;
+    top: 65px;
     right: 40px;
     background-image: linear-gradient(to right, #9F132E, #DE3A58);
     width: 50px;
