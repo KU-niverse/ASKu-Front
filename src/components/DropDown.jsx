@@ -42,7 +42,7 @@ function DropDown({onSelectedOption, title, defaultOpt}) {
   }))
     // "전체 편집" 옵션 추가
   options.push({
-    value: 'all', 
+    value: '전체', 
     label: '전체',
     className: 'myOptionClassName'
   });
