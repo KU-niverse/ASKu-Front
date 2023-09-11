@@ -88,7 +88,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
             // Axios를 사용하여 데이터 가져오기
             axios.get('https://asku.wiki/api/notification/user') // API 엔드포인트를 적절히 수정하세요
                 .then((response) => {
-                    setNotifications(response.data);
+                    setNotifications(response.data.data);
                 })
                 .catch((error) => {
                     console.error('Error fetching notifications:', error);
