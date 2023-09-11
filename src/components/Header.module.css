@@ -183,6 +183,12 @@
 #mobileHeaderSearch {
     margin-right: 0px;
 }
+#temporaryAlarm {
+    display:none;
+}
+#temporaryMobileAlarm {
+    display:none;
+}
 
 .signinButton {
     cursor: pointer;
@@ -341,3 +347,4 @@
     width: 18px;
     margin-left: 2px;
 }
+
