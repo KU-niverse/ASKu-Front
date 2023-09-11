@@ -40,7 +40,7 @@ function Header() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -64,7 +64,7 @@ function Header() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("https://asku.wiki/api/user/mypage/info", {
+                const response = await axios.get("http://localhost:8080/user/mypage/info", {
                     withCredentials: true
                 });
 
@@ -86,7 +86,7 @@ function Header() {
 
     const signOut = async () => {
         try {
-            const result = await axios.get(`https://asku.wiki/api/user/auth/signout`, {
+            const result = await axios.get(`http://localhost:8080/user/auth/signout`, {
                 withCredentials: true
             });
             if (result.status === 200) {
@@ -119,7 +119,7 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileHeaderOpen(true);
-            setMobileHeaderHeight('320px');
+            setMobileHeaderHeight('280px');
         }
     };
 
@@ -202,8 +202,9 @@ function Header() {
                                 <img
                                     src={alarm}
                                     alt='alarm'
-                                    className={styles.signinButton}
-                                    onClick={handleAlarm} />
+                                    id={styles.temporaryAlarm}
+                                    className={styles.signinButton} />
+                                    
                                 <button
                                     className={styles.headerButton}
                                     onClick={signOut}
@@ -258,7 +259,7 @@ function Header() {
                                                 <p className={styles.mobileMenuText}>즐겨찾기</p>
                                             </div>
                                         </Link>
-                                        <Link className={styles.mobileMenuBtn} onClick={handleMobileAlarmModal}>
+                                        <Link id={styles.temporaryMobileAlarm} className={styles.mobileMenuBtn} onClick={handleMobileAlarmModal}>
                                             <div className={styles.mobileHamburgerMenu}>
                                                 <img src={mobilealarm} alt=""  className={styles.mobileIcon} />
                                                 <p className={styles.mobileMenuText}>알림</p>
