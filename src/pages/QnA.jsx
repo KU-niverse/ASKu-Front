@@ -16,10 +16,12 @@ import { useNavigate } from "react-router-dom";
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [answerData, setAnswerData] = useState([]);
+  const [questionData, setQuestionData]= useState([]);
   const location = useLocation();
   const stateData = location.state;
-  const question_id = stateData.question_id;
+  // const question_id = stateData.question_id;
   const {title} = useParams();
+  const {question_id}=useParams();
   const nav = useNavigate();
   const linktoWiki = ()=>{
     nav(`/wiki/${title}`)
@@ -29,7 +31,7 @@ const QnA = () => {
   useEffect(() => {
     const takeAnswer = async () =>{
       try{
-        const res = await axios.get( `https://asku.wiki/api/question/answer/${question_id}`, {withCredentials: true});
+        const res = await axios.get( `http://localhost:8080/question/answer/${question_id}`, {withCredentials: true});
         if(res.status === 200){
           setAnswerData(res.data);
         }
@@ -40,6 +42,22 @@ const QnA = () => {
       }
     }
     takeAnswer();
+  }, [question_id]);
+
+  useEffect(() => {
+    const takeQuestion = async () =>{
+      try{
+        const res = await axios.get( `http://localhost:8080/question/lookup/${question_id}`, {withCredentials: true});
+        if(res.status === 200){
+          setQuestionData(res.data);
+        }
+        if(res.status === 500){
+        }
+      }catch (error){
+        console.error(error);
+      }
+    }
+    takeQuestion();
   }, [question_id]);
 
   return(
@@ -63,21 +81,26 @@ const QnA = () => {
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
           </div> */}
         </div>
+        {questionData&& questionData.data &&
           <QuestionQnA
-            question_id={stateData.question_id}
-            user_id={stateData.user_id}
-            nick={stateData.nick}
-            content={stateData.content}
-            like_count={stateData.like_count}
-            created_at={stateData.created_at}
-            index_title={stateData.index_title}
-            answer_count={stateData.answer_count}
-            title={stateData.title}
+            question_id={question_id}
+            user_id={questionData.data[0].user_id}
+            nick={questionData.data[0].nickname}
+            content={questionData.data[0].content}
+            like_count={questionData.data[0].like_count}
+            created_at={questionData.data[0].created_at}
+            index_title={questionData.data[0].index_title}
+            answer_count={questionData.data[0].answer_count}
+            title={title}
           />
+        }
         <div className={styles.c_header}>
           <img src={comment_icon} alt="comment"/>
-          <span className={styles.c_headline}>답변</span>
-          <span className={styles.c_num}>{stateData.answer_count}</span>
+          <span className={styles.c_headline}>답변</span> 
+          {questionData && questionData.data && (
+          <span className={styles.c_num}>
+            {questionData.data[0].answer_count}
+          </span>)}
             {answerData && answerData.data && answerData.data.length === 0 ? (
               <p className={styles.no_answer}>아직 작성된 답변이 없습니다.</p>
             ) : (
