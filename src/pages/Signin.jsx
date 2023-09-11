@@ -24,7 +24,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
     //로그인 체크 후 우회
     const checkLoginStatus = async () => {
         try {
-          const res = await axios.get("http://localhost:8080/user/auth/issignedin", { withCredentials: true });
+          const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", { withCredentials: true });
           if (res.status === 201 && res.data.success === true) {
             setLoggedIn(true);
             nav('/')
@@ -106,7 +106,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       }
         
         try{
-            const response = await axios.post('http://localhost:8080/user/auth/signin', {
+            const response = await axios.post('https://asku.wiki/api/user/auth/signin', {
                 login_id: id,
                 password: password,
             }, {
