@@ -18,6 +18,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     const [isPwValid, setisPwValid] = useState(true);
     const [isPwSame, setisPwSame] = useState(true);
     const [isChecked, setIsChecked] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
 
     //로그인 체크 후 우회
@@ -194,6 +195,8 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             return alert('개인정보 수집에 동의해주십시오');
         }
 
+        setClicked(true);
+
         try{
             const response = await axios.post('http://localhost:8080/user/auth/signup', {
                 login_id: form.id,
@@ -331,6 +334,8 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
                 <span onClick={handleExternalLink} className={`${styles.moreLink}`}>[더보기]</span>
             </div>
             <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />
+            {/* <div className={clicked ? `${styles.signup_btn}` : `${styles.hidden}`}> 회원가입 완료</div>
+            <div  className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}>5-10초 뒤 전송 완료 창이 뜨면 메일을 확인해주세요. </div> */}
         </form>
         
     </div>
