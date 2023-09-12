@@ -65,7 +65,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     useEffect(() => {
         if (isOpen) {
             // Axios를 사용하여 데이터 가져오기
-            axios.get('https://asku.wiki/api/notification/user') // API 엔드포인트를 적절히 수정하세요
+            axios.get('http://localhost:8080/notification/user') // API 엔드포인트를 적절히 수정하세요
                 .then((response) => {
                     setNotifications(response.data.data);
                 })
