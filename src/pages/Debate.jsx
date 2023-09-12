@@ -49,7 +49,7 @@ const handleDebateSubmit = async (submitData) => {
     const res = await axios.post(`https://asku.wiki/api/debate/${title}/new/${debateId}`, submitData, {withCredentials: true});
     if(res.status === 200){
       setData(res.data);
-      alert(res.data.message)
+      // alert(res.data.message)
     }
   }catch (error){
     console.error(error);
