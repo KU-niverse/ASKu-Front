@@ -13,7 +13,7 @@ import UnlikeModal from './UnlikeModal';
 import axios from 'axios';
 
 const ChatAnswer = (props) => {
-    const { content, reference, blockIconZip } = props;
+    const { content, reference, qnaId, blockIconZip } = props;
     const [likeHovered, setLikeHovered] = useState(false);
     const [unlikeHovered, setUnlikeHovered] = useState(false);
     const [referenceOpen, setReferenceOpen] = useState(false);
@@ -69,7 +69,7 @@ const ChatAnswer = (props) => {
 
     const sendLikeFeedback = () => {
         axios.post('https://asku.wiki/ai/chatbot/feedback/', {
-            qna_id: 501,
+            qna_id: qnaId,
             feedback: true,
     }).
     then(response => {
@@ -82,7 +82,7 @@ const ChatAnswer = (props) => {
 
     const sendUnlikeFeedback = () => {
         axios.post('https://asku.wiki/ai/chatbot/feedback/', {
-            qna_id: 501,
+            qna_id: qnaId,
             feedback: false,
     }).
     then(response => {

@@ -19,6 +19,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const blockIconZip = true;
     const [ClearModalOpen, setClearModalOpen] = useState(false);
+    const [qnaId, setQnaId] = useState('');
     const closeLoginModal = () => {
         setLoginModalVisible(false);
     };
@@ -43,7 +44,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     
     const getUserInfo = async () => {
         try {
-            const res = await axios.get("https://asku.wiki/api/user/mypage/info", {
+            const res = await axios.get("http://localhost:8080/user/mypage/info", {
                 withCredentials: true
             });
             if (res.status === 201 && res.data.success === true) {
@@ -84,11 +85,12 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     
                 setShowSuggest(false);
                 inputRef.current.blur();
-    
+
+                console.log(response.data);
                 const newChatResponse = [
                     ...chatResponse,
                     { content: inputValue }, // 사용자의 질문 추가
-                    { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
+                    { content: response.data.a_content, reference: response.data.reference, qnaId: response.data.id, } // 서버 응답 추가
                 ];
     
                 setChatResponse(newChatResponse);
@@ -181,7 +183,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
                     const previousHistory = response.data;
                     setPreviousChatHistory(previousHistory);
-
                 } catch (error) {
                     console.error(error);
                 }
@@ -221,7 +222,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                         {previousChatHistory.map((item, index) => (
                             <Fragment key={item.id}>
                                 <ChatQuestion content={item.q_content} />
-                                <ChatAnswer content={item.a_content} reference={item.reference} />
+                                <ChatAnswer content={item.a_content} qnaId={item.id} reference={item.reference} />
                             </Fragment>
                         ))}
                     </>
@@ -230,7 +231,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} blockIconZip={!blockIconZip}/>;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} qnaId={item.Id} blockIconZip={!blockIconZip}/>;
                     }
                 })}
                 <div
