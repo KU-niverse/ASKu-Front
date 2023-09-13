@@ -32,7 +32,7 @@ function LikeModal({ isOpen, onClose }) {
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            axios.post('https://asku.wiki/ai/feedback/comment', {
+            axios.post('https://asku.wiki/ai/chatbot/feedback/comment', {
                 feedback_id: 1,
                 content: inputValue,
         })

@@ -204,7 +204,6 @@ function Header() {
                                     alt='alarm'
                                     id={styles.temporaryAlarm}
                                     className={styles.signinButton} />
-                                    
                                 <button
                                     className={styles.headerButton}
                                     onClick={signOut}
@@ -220,7 +219,6 @@ function Header() {
                                 </Link>
                                 )}
                             </>
-                           
                         ) : (
                             <>
                                 <Link to='/signup'>
