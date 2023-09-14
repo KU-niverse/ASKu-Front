@@ -17,6 +17,17 @@ const WikiToHtml = (wikiText) => {
   
   // 취소선 처리 (del)
   html = html.replace(/--([^']+)--/g, '<del>$1</del>');
+  // 인용 처리
+  html = html.replace(/>(.*?)\n?/g, '<blockquote>$1</blockquote>');
+
+  // 순서 있는 목록 처리
+  html = html.replace(/^(# .+)$/gm, '<ol>\n$1\n</ol>');
+
+  // 순서 없는 목록 처리
+  html = html.replace(/^(\* .+)$/gm, '<ul>\n$1\n</ul>');
+
+  // 언더바 처리
+  html = html.replace(/__(.*?)__/g, '<u>$1</u>');
 
   // &amp;를 &로 변환
   html = html.replace(/&amp;/g, '&');

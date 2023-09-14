@@ -19,6 +19,36 @@ const HtmlToWiki = (html) => {
 
 // 취소선 처리
   wikiText = wikiText.replace(/<del>(.*?)<\/del>/g, "--$1--");
+
+
+// <ol>을 #로 변환
+wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/g, function(match, content) {
+  var items = content.split('</li>');
+  items.pop(); // Remove empty item after the last </li>
+  items = items.map(function(item) {
+    return '# ' + item.replace(/<li>/g, '').trim();
+  });
+  return items.join('\n');
+});
+
+// <ul>을 *로 변환
+wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/g, function(match, content) {
+  var items = content.split('</li>');
+  items.pop(); // Remove empty item after the last </li>
+  items = items.map(function(item) {
+    return '* ' + item.replace(/<li>/g, '').trim();
+  });
+  return items.join('\n');
+});
+
+// <u>를 __로 변환
+wikiText = wikiText.replace(/<u>(.*?)<\/u>/g, '__$1__');
+
+// <blockquote>를 >로 변환
+html = html.replace(/<blockquote>(.*?)<\/blockquote>/g, '>$1\n'); // 여기서 \n을 추가합니다.
+
+
+
   // 단락 처리
   wikiText = wikiText.replace(/<br>/g, '');
   wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1\n');
