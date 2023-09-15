@@ -56,6 +56,26 @@ const dummyData = [
 
 const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     const [notifications, setNotifications] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                    withCredentials: true
+                });
+                if (res.status === 201 && res.data.success === true) {
+                    setIsLoggedIn(true);
+                } else if (res.status === 401) {
+                    setIsLoggedIn(false);
+                }
+            } catch (error) {
+                console.error(error);
+                setIsLoggedIn(false);
+            }
+        };
+        checkLoginStatus();
+    }, []);
 
     useEffect(() => {
         // 화면 크기 변화 이벤트 리스너를 추가
@@ -197,6 +217,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
                                         opacity: '0.7',
                                         backgroundColor: '#D5D5D5',
                                         width: '100%',
+                                        marginLeft: '10px',
                                     }}
                                 />
                             )}

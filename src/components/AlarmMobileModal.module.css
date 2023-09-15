@@ -111,9 +111,10 @@
 
 #alarmTitle {
     color: #9F132E;
-    font-weight: 400;
-    font-size: 18px;
-    margin-left: 10px;
+    font-weight: 800;
+    font-size: 20px;
+    margin-right: 195px;
+    margin-bottom: 10px;
 }
 
 .alarmContent {
@@ -123,6 +124,10 @@
     width: 100%;
     justify-content: flex-start;
     margin-left: 40px;
+}
+
+.alarmTextWrap {
+    height: 40px;
 }
 .alarmLink {
     text-decoration: none;
@@ -138,4 +143,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: bold;
   }

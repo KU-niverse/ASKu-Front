@@ -184,10 +184,10 @@
     margin-right: 0px;
 }
 #temporaryAlarm {
-    display:none;
+    /* display:none; */
 }
 #temporaryMobileAlarm {
-    display:none;
+    /* display:none; */
 }
 
 .signinButton {

@@ -181,6 +181,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                             <img src={closeBtn} alt='close' className={styles.close_btn} onClick={handleMobileAlarmModal} />
                         </div>
                         <div className={styles.modal_content}>
+                        <span id={styles.alarmTitle}>내 알림</span>
                         {notifications.length > 0 ? (
                             notifications.map((notification, index) => (
                                 <div key={index}>

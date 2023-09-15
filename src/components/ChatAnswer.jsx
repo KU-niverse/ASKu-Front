@@ -19,6 +19,7 @@ const ChatAnswer = (props) => {
     const [referenceOpen, setReferenceOpen] = useState(false);
     const [likeModalOpen, setLikeModalOpen] = useState(false);
     const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
+    const [feedbackId, setFeedbackId] = useState(0);
 
     const handleLikeMouseOver = () => {
         setLikeHovered(true);
@@ -51,19 +52,15 @@ const ChatAnswer = (props) => {
     const handleLikeClick = () => {
         if (likeModalOpen) {
             setLikeModalOpen(false);
-            console.log("like closed");
         } else {
         setLikeModalOpen(true);
-        console.log("like opened");
     };
     }
     const handleUnlikeClick = () => {
         if (unlikeModalOpen) {
             setUnlikeModalOpen(false);
-            console.log("Unlike clicked");
         } else {
         setUnlikeModalOpen(true);
-        console.log("Unlike clicked");
     }
 }
 
@@ -74,6 +71,8 @@ const ChatAnswer = (props) => {
     }).
     then(response => {
         console.log(response);
+        setFeedbackId(response.data.qna_id);
+        console.log(feedbackId);
     }).
     catch(error => {
         console.error(error);
@@ -139,7 +138,7 @@ const ChatAnswer = (props) => {
                 <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
                 <div className={styles.reference}>
                     <div className={styles.header}>
-                        <p className={styles.title}>출처</p>
+                        <p clasName={styles.title}>출처</p>
                         <img className={styles.closeBtn} src={closeBtn} alt="close button" onClick={handleReferenceClose}/> 
                     </div>
                     <div className={styles.reference_text}>

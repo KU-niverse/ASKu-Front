@@ -73,7 +73,10 @@ function LikeModal({ isOpen, onClose }) {
                                 value={inputValue}
                                 onChange={inputChange}
                                 onKeyDown={handleKeyDown}/>
-                            <button className={styles.feedback_btn}>작성하기</button>
+                            <button 
+                                className={styles.feedback_btn}
+                                onClick={sendMessage}
+                                >작성하기</button>
                         </div>
                     </div>
                 </div>

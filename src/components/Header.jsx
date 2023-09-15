@@ -119,7 +119,7 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileHeaderOpen(true);
-            setMobileHeaderHeight('280px');
+            setMobileHeaderHeight('320px');
         }
     };
 
@@ -183,7 +183,7 @@ function Header() {
                                     setInputValue('');
                                 }
                             }} />
-                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} />
+                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
                     </div>
                     <div
                         className={styles.navContainer_right}
@@ -203,7 +203,9 @@ function Header() {
                                     src={alarm}
                                     alt='alarm'
                                     id={styles.temporaryAlarm}
-                                    className={styles.signinButton} />
+                                    className={styles.signinButton}
+                                    onClick={handleAlarm} 
+                                    />
                                 <button
                                     className={styles.headerButton}
                                     onClick={signOut}
