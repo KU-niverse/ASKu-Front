@@ -26,6 +26,7 @@ const WikiEdit = () => {
         //console.log(desc);
         const wikiMarkup = HtmlToWiki(desc);
         //console.log(wikiMarkup);
+        //console.log(WikiToHtml(wikiMarkup));
         // You can perform other actions with the updated 'desc' value here
       }, [desc]);
     
@@ -63,7 +64,7 @@ const WikiEdit = () => {
                     nav('/signin');
                     
                 }else{
-                    alert('잘못된 접근입니다.');
+                    alert('잘못된 접근입니다. \n (이미지 최대 용량은 5MB입니다)');
                 }
             }
         };

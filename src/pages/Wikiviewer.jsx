@@ -4,7 +4,7 @@ import React, {useRef, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom/dist';
 import axios from 'axios';
 import styles from './Wikiviewer.module.css';
-import falseBk from '../img/bookmark.png';
+import falseBk from '../img/bookmarkfalse.png';
 import trueBk from '../img/bookmarkFill.png';
 import debate from '../img/debate.png'
 import his from '../img/his.png'

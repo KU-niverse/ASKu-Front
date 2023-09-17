@@ -1,5 +1,5 @@
 import React from 'react'
-import falseBk from '../img/bookmark.png'
+import falseBk from '../img/bookmarkfalse.png'
 import trueBk from '../img/bookmarkFill.png'
 import styles from './BookmarkBox.module.css'
 import { useState, useRef, useEffect } from 'react'
@@ -94,13 +94,13 @@ const BookmarkBox = (props) => {
     return (
       <div className={styles.bkbox}>
         <div className={styles.contents}>
-          <div className={styles.title} onClick={() => nav(`/wiki/${title}`)}>{title}</div>
+          <div className={styles.title} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>{title}</div>
           <div>
             <img src={imageSource} alt="Image" onClick={handleClick} className={isResult ? `${styles.hidden}` : ''}/>
           </div>
           
         </div>
-        <div className={styles.content} onClick={() => nav(`/wiki/${title}`)}>
+        <div className={styles.content} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>
             {content}
           </div>
         
