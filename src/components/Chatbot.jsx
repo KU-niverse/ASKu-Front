@@ -86,7 +86,6 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                 setShowSuggest(false);
                 inputRef.current.blur();
 
-                console.log(response.data);
                 const newChatResponse = [
                     ...chatResponse,
                     { content: inputValue }, // 사용자의 질문 추가
@@ -95,6 +94,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
     
                 setChatResponse(newChatResponse);
                 setInputValue('');
+                console.log(response.data);
 
                 // axios 요청 완료 후 로딩 스피너를 비활성화
                 setLoading(false); // 로딩 스피너 숨기기
@@ -183,6 +183,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
                     const previousHistory = response.data;
                     setPreviousChatHistory(previousHistory);
+                    console.log(previousChatHistory);
                 } catch (error) {
                     console.error(error);
                 }
@@ -231,7 +232,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} qnaId={item.Id} blockIconZip={!blockIconZip}/>;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} qnaId={item.qnaId} blockIconZip={!blockIconZip}/>;
                     }
                 })}
                 <div
