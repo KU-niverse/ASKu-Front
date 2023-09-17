@@ -34,7 +34,7 @@ function LikeModal({ isOpen, onClose, feedbackId }) {
         if (inputValue.trim() !== '') {
             axios.post('https://asku.wiki/ai/chatbot/feedback/comment', {
                 feedback_id: feedbackId,
-                content: inputValue,
+                content: inputValue
             }, {
                 withCredentials: true,
                 headers: {

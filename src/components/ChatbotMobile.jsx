@@ -64,7 +64,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
                 const newChatResponse = [
                     ...chatResponse,
                     { content: inputValue }, // 사용자의 질문 추가
-                    { content: response.data.a_content, reference: response.data.reference } // 서버 응답 추가
+                    { content: response.data.a_content, reference: response.data.reference, qnaId: response.data.id, } // 서버 응답 추가
                 ];
     
                 setChatResponse(newChatResponse);
@@ -72,6 +72,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
 
                 // axios 요청 완료 후 로딩 스피너를 비활성화
                 setLoading(false); // 로딩 스피너 숨기기
+                scrollToBottom();
             } catch (error) {
                 console.error(error);
 
@@ -123,7 +124,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
                 setChatResponse(updatedChatResponse);
                 setInputValue('');
                 setShowSuggest(true);
-            }, 5000); // 5초 후에 실행
+            }, 3000); // 3초 후에 실행
         };
         
         const chatBottomRef = useRef(null);
@@ -153,7 +154,6 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
                     const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
                     const previousHistory = response.data;
                     setPreviousChatHistory(previousHistory);
-                    console.log(response.data)
                 } catch (error) {
                     console.error(error);
                 }
@@ -199,7 +199,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
                             {previousChatHistory.map((item, index) => (
                                 <Fragment key={item.id}>
                                     <ChatQuestion content={item.q_content} />
-                                    <ChatAnswer content={item.a_content} reference={item.reference} />
+                                    <ChatAnswer content={item.a_content} qnaId={item.id} reference={item.reference} />
                                 </Fragment>
                             ))}
                         </>
@@ -208,7 +208,7 @@ function ChatbotMobile({isLoggedIn, setIsLoggedIn, userId}) {
                         if (index % 2 === 0) {
                         return <ChatQuestion key={index} content={item.content} />;
                         } else {
-                        return <ChatAnswer key={index} content={item.content} reference={item.reference} />;
+                        return <ChatAnswer key={index} content={item.content} qnaId={item.qnaId} reference={item.reference} />;
                         }
                     })}
                     <div
