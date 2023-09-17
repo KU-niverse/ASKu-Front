@@ -51,7 +51,7 @@ const WikiCreate = () => {
             });
             if(result.data.success === true){
                 alert("문서를 생성해주셔서 감사합니다.");
-                nav(`/wiki/${title}`);
+                nav(`/wiki/${encodeURIComponent(title)}`);
             }
         } catch(error){
             console.error(error);
