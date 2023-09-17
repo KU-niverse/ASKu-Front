@@ -28,7 +28,7 @@ const subject=stateData.subject;
 useEffect(() => {
   const takeDebateContent = async () =>{
     try{
-      const res = await axios.get( `http://localhost:8080/debate/view/${title}/${debateId}`, {withCredentials: true});
+      const res = await axios.get( `https://asku.wiki/api/debate/view/${title}/${debateId}`, {withCredentials: true});
       if(res.status === 200){
         setDebateContentData(res.data);
       }
@@ -46,7 +46,7 @@ useEffect(() => {
 
 const handleDebateSubmit = async (submitData) => {
   try {
-    const res = await axios.post(`http://localhost:8080/debate/${title}/new/${debateId}`, submitData, {withCredentials: true});
+    const res = await axios.post(`https://asku.wiki/api/debate/${title}/new/${debateId}`, submitData, {withCredentials: true});
     if(res.status === 200){
       setData(res.data);
       // alert(res.data.message)
