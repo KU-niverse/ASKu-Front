@@ -21,8 +21,6 @@ const HistoryBox = (props) => {
     const doctitle = props.doctitle;
     const target=props.target;
     const type = props.type;
-    console.log(type);
-    const isFirst = props.isFirst;
 
 
     const handleView = () => {
@@ -46,6 +44,7 @@ const HistoryBox = (props) => {
                 alert('something went wrong');
             }
         } catch (error) {
+            console.error(error);
             if(error.response.status === 401){
                 alert('로그인이 필요합니다');
                 nav('/signin');
