@@ -21,31 +21,31 @@ const HtmlToWiki = (html) => {
   wikiText = wikiText.replace(/<del>(.*?)<\/del>/g, "--$1--");
 
 
-// <ol>을 #로 변환
-wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/g, function(match, content) {
-  var items = content.split('</li>');
-  items.pop(); // Remove empty item after the last </li>
-  items = items.map(function(item) {
-    return '# ' + item.replace(/<li>/g, '').trim();
-  });
-  return items.join('\n') + '\n'; // Add a newline character at the end
-});
+// // <ol>을 #로 변환
+// wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/g, function(match, content) {
+//   var items = content.split('</li>');
+//   items.pop(); // Remove empty item after the last </li>
+//   items = items.map(function(item) {
+//     return '# ' + item.replace(/<li>/g, '').trim();
+//   });
+//   return items.join('\n') + '\n'; // Add a newline character at the end
+// });
 
-// <ul>을 *로 변환
-wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/g, function(match, content) {
-  var items = content.split('</li>');
-  items.pop(); // Remove empty item after the last </li>
-  items = items.map(function(item) {
-    return '* ' + item.replace(/<li>/g, '').trim();
-  });
-  return items.join('\n') + '\n'; // Add a newline character at the end
-});
+// // <ul>을 *로 변환
+// wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/g, function(match, content) {
+//   var items = content.split('</li>');
+//   items.pop(); // Remove empty item after the last </li>
+//   items = items.map(function(item) {
+//     return '* ' + item.replace(/<li>/g, '').trim();
+//   });
+//   return items.join('\n') + '\n'; // Add a newline character at the end
+// });
 
 // <u>를 __로 변환
 wikiText = wikiText.replace(/<u>(.*?)<\/u>/g, '__$1__');
 
-// <blockquote>를 >로 변환
-wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/g, '@$1\n');
+// // <blockquote>를 >로 변환
+// wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/g, '@$1\n');
 
 
 

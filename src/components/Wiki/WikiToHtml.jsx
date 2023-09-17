@@ -1,8 +1,8 @@
 const WikiToHtml = (wikiText) => {
   let html = wikiText;
   //console.log("여기가 1번 : ", html);
-  //html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
-  //html = html.replace(/<p><\/p>/g, '<br>');
+  html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
+  html = html.replace(/<p><\/p>/g, '<br>');
   //console.log("여기가 2번 : ", html);
   
   // 단락 처리 (p)
@@ -26,8 +26,8 @@ const WikiToHtml = (wikiText) => {
  // 순서 없는 목록 처리
  //html = html.replace(/^(\* .+)$/gm, '<ul>\n$1\n</ul>');
 
- // 언더바 처리
- //html = html.replace(/__(.*?)__/g, '<u>$1</u>');
+ //언더바 처리
+ html = html.replace(/__(.*?)__/g, '<u>$1</u>');
 
   // &amp;를 &로 변환
   html = html.replace(/&amp;/g, '&');
