@@ -178,6 +178,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     const createUserApi = async (e) => {
         e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
+        
 
         if(isNickValid === false){
             return alert('닉네임 형식이 올바르지 않습니다');
@@ -333,9 +334,9 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
                 <span><input type='checkbox' checked={isChecked} onChange={handleCheckboxChange}/>개인정보 수집에 동의합니다.</span>
                 <span onClick={handleExternalLink} className={`${styles.moreLink}`}>[더보기]</span>
             </div>
-            <input type="submit" value="회원가입" className={`${styles.signup_btn}`}  />
-            {/* <div className={clicked ? `${styles.signup_btn}` : `${styles.hidden}`}> 회원가입 완료</div>
-            <div  className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}>5-10초 뒤 전송 완료 창이 뜨면 메일을 확인해주세요. </div> */}
+            <input type="submit" value="회원가입" className={clicked ? `${styles.hidden}`: `${styles.signup_btn}`}  />
+            <div className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}> 회원가입</div>
+            <div  className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}>처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)</div>
         </form>
         
     </div>

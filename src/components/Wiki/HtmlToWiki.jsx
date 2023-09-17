@@ -28,7 +28,7 @@ wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/g, function(match, content) {
   items = items.map(function(item) {
     return '# ' + item.replace(/<li>/g, '').trim();
   });
-  return items.join('\n');
+  return items.join('\n') + '\n'; // Add a newline character at the end
 });
 
 // <ul>을 *로 변환
@@ -38,14 +38,15 @@ wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/g, function(match, content) {
   items = items.map(function(item) {
     return '* ' + item.replace(/<li>/g, '').trim();
   });
-  return items.join('\n');
+  return items.join('\n') + '\n'; // Add a newline character at the end
 });
 
 // <u>를 __로 변환
 wikiText = wikiText.replace(/<u>(.*?)<\/u>/g, '__$1__');
 
 // <blockquote>를 >로 변환
-html = html.replace(/<blockquote>(.*?)<\/blockquote>/g, '>$1\n'); // 여기서 \n을 추가합니다.
+wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/g, '@$1\n');
+
 
 
 

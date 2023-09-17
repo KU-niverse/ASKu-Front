@@ -41,12 +41,12 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/result/:title" element={<SearchResult />} />
+                <Route path="/result/:title(*)" element={<SearchResult />} />
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/wiki/:title" element={<WikiViewer />} />
-                <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
-                <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
-                <Route path="/question/edit/:main" element={<QuestionEdit />} />
+                <Route path="/wiki/:title(*)" element={<WikiViewer />} />
+                <Route path="/wikiedit/:title(*)/all" element={<WikiAllEdit />} />
+                <Route path="/wikiedit/:main(*)/:section" element={<WikiEdit />} />
+                <Route path="/question/edit/:main(*)" element={<QuestionEdit />} />
                 <Route
                   path="/wikiedit/:id"
                   element={
@@ -55,34 +55,34 @@ function App() {
                 />
                 <Route path="/newwiki" element={<WikiCreate />} />
                 <Route path="/allhistory" element={<AllHistory/>} />
-                <Route path='/wiki/preview/:title/:ver' element={<WikiRawPrev/>} />
-                <Route path="/history/:title" element={<History />} />
-                <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
+                <Route path='/wiki/preview/:title(*)/:ver' element={<WikiRawPrev/>} />
+                <Route path="/history/:title(*)" element={<History />} />
+                <Route path="/history/:title(*)/diff/:ver" element={<HistoryDiff />} />
 
 
                 <Route path="/signin" element={<Signin loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup" element={<Signup loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-                <Route path="/signup/complete/:auth" element={<SignupComplete />} />
+                <Route path="/signup/complete/:auth(*)" element={<SignupComplete />} />
                 <Route path="/findid" element={<FindId />} />
                 <Route path="/findoutid" element={<FindoutId />} />
                 <Route path="/findpw" element={<FindPassword />} />
                 <Route path="/changeinfo" element={<ChangeInfo />} />
                 <Route path="/changepw" element={<ChangePw />} />
-                <Route path="/resetpw/:auth" element={<ResetPw />} />
+                <Route path="/resetpw/:auth(*)" element={<ResetPw />} />
                 <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
                 <Route path="/mybookmark" element={<MyBookmark />} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
-                <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>
+                <Route path="/wiki/morequestion/:title(*)" element={<MoreQuestion/>}/>
                 <Route path="/wiki/qna" element={<QnA/>}/>
                 <Route path="/Test" element={<Test/>}/>
                 <Route path="/mypage/mycomment" element={<MyComment/>}/>
-                <Route path="/debate/:title/:subject/" element={<Debate/>}/>
-                <Route path="/debate/:title" element={<MoreDebate/>}/>
+                <Route path="/debate/:title(*)/:subject/" element={<Debate/>}/>
+                <Route path="/debate/:title(*)" element={<MoreDebate/>}/>
                 <Route path="/latestdebate" element={<LatestDebate/>}/>
-                <Route path="/wiki/morequestion/:title/:question_id" element={<QnA/>}/>
+                <Route path="/wiki/morequestion/:title(*)/:question_id" element={<QnA/>}/>
 
             </Routes>
         </Router>
