@@ -16,7 +16,6 @@
     }
 }
 
-
 .characterContainer {
     position: relative;
     top: 20px;
@@ -127,7 +126,8 @@
     height: 15px;
 }
 
-.title {
+
+.reference_title {
     color: #9F132E;
     font-weight: 800;
     margin: 0;

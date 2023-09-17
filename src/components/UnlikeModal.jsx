@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import unlike from '../img/unlike.png';
 import axios from 'axios';
 
-function UnlikeModal({ isOpen, onClose }) {
+function UnlikeModal({ isOpen, onClose, feedbackId }) {
     const modalRef = useRef(null);
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
@@ -32,8 +32,8 @@ function UnlikeModal({ isOpen, onClose }) {
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            axios.post('https://asku.wiki/ai/feedback/comment', {
-                feedback_id: 1,
+            axios.post('https://asku.wiki/ai/chatbot/feedback/comment', {
+                feedback_id: feedbackId,
                 content: inputValue,
         })
         .then(response => {

@@ -232,7 +232,7 @@ function Chatbot ({isLoggedIn, setIsLoggedIn}) {
                     if (index % 2 === 0) {
                     return <ChatQuestion key={index} content={item.content} />;
                     } else {
-                    return <ChatAnswer key={index} content={item.content} reference={item.reference} qnaId={item.Id} blockIconZip={!blockIconZip}/>;
+                    return <ChatAnswer key={index} content={item.content} reference={item.reference} qnaId={item.qnaId} blockIconZip={!blockIconZip}/>;
                     }
                 })}
                 <div

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import like from '../img/like.png';
 
-function LikeModal({ isOpen, onClose }) {
+function LikeModal({ isOpen, onClose, feedbackId }) {
     const modalRef = useRef(null);
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
@@ -33,18 +33,24 @@ function LikeModal({ isOpen, onClose }) {
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
             axios.post('https://asku.wiki/ai/chatbot/feedback/comment', {
-                feedback_id: 1,
+                feedback_id: feedbackId,
                 content: inputValue,
-        })
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+            }, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+        onClose();
     }
-    onClose();
-}
+    
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
             sendMessage();
@@ -73,10 +79,7 @@ function LikeModal({ isOpen, onClose }) {
                                 value={inputValue}
                                 onChange={inputChange}
                                 onKeyDown={handleKeyDown}/>
-                            <button 
-                                className={styles.feedback_btn}
-                                onClick={sendMessage}
-                                >작성하기</button>
+                            <button className={styles.feedback_btn} onClick={sendMessage}>작성하기</button>
                         </div>
                     </div>
                 </div>
