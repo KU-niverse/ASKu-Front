@@ -25,8 +25,8 @@ const WikiEdit = () => {
     useEffect(() => {
         //console.log(desc);
         const wikiMarkup = HtmlToWiki(desc);
-        console.log(wikiMarkup);
-        console.log(WikiToHtml(wikiMarkup));
+        //console.log(wikiMarkup);
+        //console.log(WikiToHtml(wikiMarkup));
         // You can perform other actions with the updated 'desc' value here
       }, [desc]);
     

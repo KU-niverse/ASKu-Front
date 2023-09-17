@@ -122,10 +122,10 @@ function Quill(props) {
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
-          console.log(newValue);
+          //console.log(newValue);
           const editor = quillRef.current.getEditor();
           // console.log(quillRef.current);
-           console.log(editor.root); // 에디터 안의 내용 HTML 태그
+           //console.log(editor.root); // 에디터 안의 내용 HTML 태그
               
           // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
           // console.log("안의 내용물 전부", quillRef.current.getEditorContents());
