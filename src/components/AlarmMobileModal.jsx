@@ -65,15 +65,17 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     useEffect(() => {
         if (isOpen) {
             // Axios를 사용하여 데이터 가져오기
-            axios.get('https://asku.wiki/api/notification/user') // API 엔드포인트를 적절히 수정하세요
-                .then((response) => {
-                    setNotifications(response.data.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching notifications:', error);
-                    // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
-                    setNotifications([]);
-                });
+            axios.get('http://localhost:8080/notification/user', {
+                withCredentials: true
+            })
+            .then((response) => {
+                setNotifications(response.data.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching notifications:', error);
+                // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
+                setNotifications([]);
+            });
         }
     }, [isOpen]);
 
@@ -137,11 +139,11 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
         const link = (() => {
             switch (type_id) {
                 case 1:
-                    return `/wiki/morequestions/${info.result}`;
+                    return `/wiki/morequestion/${info.result}`;
                 case 2:
-                    return `/wiki/morequestions/${info.title}/${info.id}`;
+                    return `/wiki/morequestion/${info.title}/${info.id}`;
                 case 3:
-                    return `/wiki/morequestions/${info.title}/${info.id}`;
+                    return `/wiki/morequestion/${info.title}/${info.id}`;
                 case 4:
                     return '/mypage/mybadge';
                 default:

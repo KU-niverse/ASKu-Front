@@ -22,7 +22,7 @@ function ReportModal({type, target, isOpen, onClose}) {
             return;
         }
         try {
-            const response = await axios.post(`https://asku.wiki/api/report/${type}`, requestBody,{withCredentials: true});
+            const response = await axios.post(`http://localhost:8080/report/${type}`, requestBody,{withCredentials: true});
             if(response.status===200){
               alert("신고가 완료되었습니다.");
             }
