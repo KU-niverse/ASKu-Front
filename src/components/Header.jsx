@@ -241,8 +241,8 @@ function Header() {
                                     <button className={styles.loginbtn}>로그인</button>
                                 </Link>
                             )}
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
                             <img src={searchIconGray} alt='search_icon_gray' id={styles.mobileHeaderSearch} className={styles.mobileButton} onClick={handleMobileSearch} />
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
                         </div>
                         {mobileHeaderOpen && (
                             <div className={styles.mobileMenuWrap}>

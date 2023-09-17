@@ -8,11 +8,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 200;
+    z-index: 9999;
 }
 
 .modal_wrapper {
-    z-index: 300;
+    z-index: 100;
     width: 700px;
     height: 300px;
     background-color: white;
@@ -49,7 +49,7 @@
 .modal_content {
     width: 80%;
     height: 80%;
-    z-index: 500;
+    z-index: 200;
     display: flex;
     flex-direction: column;
     align-items: center;

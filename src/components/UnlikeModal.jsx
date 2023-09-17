@@ -13,8 +13,8 @@ function UnlikeModal({ isOpen, onClose }) {
         setInputValue(e.target.value);
     }
 
-    const handleOutsideClick = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
+    const handleOutsideClick = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
             onClose();
         }
     };

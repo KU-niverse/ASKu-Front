@@ -180,10 +180,10 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                 <div ref={modalRef} className={styles.modal_wrapper}>
                     <div className={styles.modal_inside}>
                         <div className={styles.modal_close}>
+                            <span id={styles.alarmTitle}>내 알림</span>
                             <img src={closeBtn} alt='close' className={styles.close_btn} onClick={handleMobileAlarmModal} />
                         </div>
                         <div className={styles.modal_content}>
-                        <span id={styles.alarmTitle}>내 알림</span>
                         {notifications.length > 0 ? (
                             notifications.map((notification, index) => (
                                 <div key={index}>
