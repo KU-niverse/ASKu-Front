@@ -183,6 +183,12 @@
     align-items: center;
     margin-top: 5px;
 }
+@media only screen and (max-width: 767px) {
+    .signup_alert{
+        font-size: 10px;
+    }
+    
+}
 .signup_check{
     cursor: pointer;
     font-size: 12px;
