@@ -20,7 +20,7 @@ const HistoryBox = (props) => {
     const timestamp = props.timestamp;
     const doctitle = props.doctitle;
     const target=props.target;
-    const type = props.type;ㄴ
+    const type = props.type;
 
 
     const handleView = () => {
