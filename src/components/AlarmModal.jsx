@@ -62,7 +62,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get("https://asku.wiki/api/user/auth/issignedin", {
+                const res = await axios.get("http://localhost:8080/user/auth/issignedin", {
                     withCredentials: true
                 });
                 if (res.status === 201 && res.data.success === true) {
@@ -107,7 +107,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     useEffect(() => {
         if (isAlarmVisible) {
             // Axios를 사용하여 데이터 가져오기
-            axios.get('https://asku.wiki/api/notification/user', {
+            axios.get('http://localhost:8080/notification/user', {
                 withCredentials: true
             })
             .then((response) => {

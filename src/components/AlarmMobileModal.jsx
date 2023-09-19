@@ -65,7 +65,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     useEffect(() => {
         if (isOpen) {
             // Axios를 사용하여 데이터 가져오기
-            axios.get('https://asku.wiki/api/notification/user', {
+            axios.get('http://localhost:8080/notification/user', {
                 withCredentials: true
             })
             .then((response) => {
