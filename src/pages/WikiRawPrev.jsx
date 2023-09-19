@@ -34,8 +34,11 @@ function WikiViewer() {
 
     const getWiki = async () => {
         try{
-            const result = await axios.get(`https://asku.wiki/api/wiki/historys/${title}/version/${ver}`);
+            const result = await axios.get(`http://localhost:8080/wiki/historys/${title}/version/${ver}`);
             setAllText(WikiToHtml(result.data.jsonData.text));
+            setAllText(allText.replace(/<img/g, '<img style="max-width: 100%; height: auto;"'));
+
+
             setAllContent(result.data.contents);
         } catch (error) {
             console.error(error);
