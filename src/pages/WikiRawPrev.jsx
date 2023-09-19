@@ -35,8 +35,7 @@ function WikiViewer() {
     const getWiki = async () => {
         try{
             const result = await axios.get(`http://localhost:8080/wiki/historys/${title}/version/${ver}`);
-            setAllText(WikiToHtml(result.data.jsonData.text));
-            setAllText(allText.replace(/<img/g, '<img style="max-width: 100%; height: auto;"'));
+            setAllText(WikiToHtml(result.data.jsonData.text).replace(/<img/g, '<img style="max-width: 100%; height: auto;"'));
 
 
             setAllContent(result.data.contents);
