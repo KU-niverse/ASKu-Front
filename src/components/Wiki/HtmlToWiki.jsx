@@ -20,32 +20,34 @@ const HtmlToWiki = (html) => {
 // 취소선 처리
   wikiText = wikiText.replace(/<del>(.*?)<\/del>/g, "--$1--");
 
-
-// // <ol>을 #로 변환
-// wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/g, function(match, content) {
-//   var items = content.split('</li>');
-//   items.pop(); // Remove empty item after the last </li>
-//   items = items.map(function(item) {
-//     return '# ' + item.replace(/<li>/g, '').trim();
-//   });
-//   return items.join('\n') + '\n'; // Add a newline character at the end
-// });
-
-// // <ul>을 *로 변환
-// wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/g, function(match, content) {
-//   var items = content.split('</li>');
-//   items.pop(); // Remove empty item after the last </li>
-//   items = items.map(function(item) {
-//     return '* ' + item.replace(/<li>/g, '').trim();
-//   });
-//   return items.join('\n') + '\n'; // Add a newline character at the end
-// });
+  // <s> 태그를 취소선 문법으로 변환
+  wikiText = wikiText.replace(/<s>(.*?)<\/s>/g, '--$1--');
 
 // <u>를 __로 변환
 wikiText = wikiText.replace(/<u>(.*?)<\/u>/g, '__$1__');
 
-// // <blockquote>를 >로 변환
-// wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/g, '@$1\n');
+// <ol>을 순서 있는 리스트로 변환
+wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/gs, function (match, group) {
+  var listItems = group.split('<li>').slice(1);
+  var wikiList = listItems.map(function (item) {
+    return '#' + item.replace('</li>', '').trim();
+  });
+  return wikiList.join(' ');
+});
+
+// <ul>을 순서 없는 리스트로 변환
+wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/gs, function (match, group) {
+  var listItems = group.split('<li>').slice(1);
+  var wikiList = listItems.map(function (item) {
+    return '*' + item.replace('</li>', '').trim();
+  });
+  return wikiList.join(' ');
+});
+
+// <blockquote>을 인용구로 변환
+wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/gs, function (match, group) {
+  return '@' + group.trim() + '@';
+});
 
 
 
