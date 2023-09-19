@@ -1,8 +1,23 @@
 const WikiToHtml = (wikiText) => {
+  
   let html = wikiText;
   //console.log("여기가 1번 : ", html);
   html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
   html = html.replace(/<p><\/p>/g, '<br>');
+  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match, marker, content) {
+    
+    var listItem = '<li>' + content.trim() + '</li>';
+  
+  
+    return listItem;
+  });
+
+  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match, content) {
+    var listType = '<ul>';
+    return listType + '<li>' + content.trim() + '</li>' + listType.replace('<', '</');
+  });
+
+  
   //console.log("여기가 2번 : ", html);
   
   // 단락 처리 (p)
@@ -17,14 +32,16 @@ const WikiToHtml = (wikiText) => {
   
   // 취소선 처리 (del)
   html = html.replace(/--([^']+)--/g, '<del>$1</del>');
- // 인용 처리
- //html = html.replace(/@([^]*?)\n/g, '<blockquote>$1</blockquote>');
 
- // 순서 있는 목록 처리
- //html = html.replace(/^(# .+)$/gm, '<ol>\n$1\n</ol>');
+  // 취소선 문법을 <s> 태그로 변환
+  html = html.replace(/--(.*?)--/g, '<s>$1</s>');
+ 
+  
 
- // 순서 없는 목록 처리
- //html = html.replace(/^(\* .+)$/gm, '<ul>\n$1\n</ul>');
+
+  // 인용구를 <blockquote>으로 변환
+  html = html.replace(/@(.*?)@/g, '<blockquote>$1</blockquote>');
+  
 
  //언더바 처리
  html = html.replace(/__(.*?)__/g, '<u>$1</u>');

@@ -1,12 +1,12 @@
 import "react-quill/dist/quill.snow.css";
-import "./QuillStyle2.css";
+import "./QuillStyle.css";
 // Quill 에디터 가져오기
 import ReactQuill from "react-quill";
 // axios
 import axios from "axios";
 import { useMemo, useRef, useState, useEffect } from "react";
 
-function Quill2(props) {
+function Quill(props) {
   const [value, setValue] = useState(props.value);
   const quillRef = useRef();
 
@@ -46,21 +46,20 @@ function Quill2(props) {
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
 
         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-         const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-         // 1. 에디터 root의 innerHTML을 수정해주기
-         // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
-         // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
-         // editor.root.innerHTML =
-         //    editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
- 
-         // 2. 현재 에디터 커서 위치값을 가져온다
-         const range = editor.getSelection();
-         // 가져온 위치에 이미지를 삽입한다
-         editor.clipboard.dangerouslyPasteHTML(range.index, `<img src="${IMG_URL}" />`);
-       } catch (error) {
-         console.error(error);
-         alert('이미지 업로드중 오류가 발생하였습니다. \n (최대 용량은 5MB입니다)');
+        const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+        // 1. 에디터 root의 innerHTML을 수정해주기
+        // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
+        // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
+        // editor.root.innerHTML =
+        //    editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
+
+        // 2. 현재 에디터 커서 위치값을 가져온다
+        const range = editor.getSelection();
+        // 가져온 위치에 이미지를 삽입한다
+        editor.clipboard.dangerouslyPasteHTML(range.index, `<img src="${IMG_URL}" />`);
+      } catch (error) {
+        console.error(error);
+        alert('이미지 업로드중 오류가 발생하였습니다. \n (최대 용량은 5MB입니다)');
       }
     });
   };
@@ -75,7 +74,7 @@ function Quill2(props) {
         container: [
           [{ header: [1, 2, 3, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ list: "ordered" }, { list: "bullet" }],
+          [{ list: "bullet" }],
           ["image"],
         ],
         handlers: {
@@ -97,7 +96,6 @@ function Quill2(props) {
     "list",
     "bullet",
     "indent",
-    "link",
     "align",
     "color",
     "background",
@@ -106,30 +104,39 @@ function Quill2(props) {
   // 이벤트 핸들러
   const onClickContents = () => {
     const editor = quillRef.current.getEditor();
-    // console.log(quillRef.current);
+    console.log(quillRef.current);
     //console.log(editor.root); // 에디터 안의 내용 HTML 태그
 
     // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
     //console.log("안의 내용물 전부", quillRef.current.getEditorContents());
   };
 
+  
+
   return (
     <div>
       <ReactQuill
         ref={quillRef}
         theme="snow"
-        placeholder="플레이스 홀더"
+        placeholder="내용을 작성해주세요(내용을 작성해야 제출이 완료됩니다.)"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
+          //console.log(newValue);
+          const editor = quillRef.current.getEditor();
+          // console.log(quillRef.current);
+           //console.log(editor.root); // 에디터 안의 내용 HTML 태그
+              
+          // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
+          // console.log("안의 내용물 전부", quillRef.current.getEditorContents());
           props.onChange(newValue); // 내부 상태 변경 후, 부모 컴포넌트로 업데이트된 값을 전달
         }}
         modules={modules}
         formats={formats}
-        style={{ height: "450px" }}
+        
       />
     </div>
   );
 }
 
-export default Quill2;
+export default Quill;
