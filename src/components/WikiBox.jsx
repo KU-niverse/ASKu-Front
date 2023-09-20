@@ -15,6 +15,7 @@ const WikiBox = (props) => {
     const nav = useNavigate();
     const [isOpen, setView] = useState(true);  // 메뉴의 초기값을 false로 설정
     const contentWithResponsiveImages = content.replace(/<img/g, '<img style="max-width: 100%; height: auto;"');
+  
 
     
 
@@ -35,7 +36,7 @@ const WikiBox = (props) => {
   
     return (
       <div className={styles.wikiContents} >
-        <li onClick={toggleView}>
+        <li onClick={toggleView} className={styles.wikiContentlist}>
             <div className={styles.wikiContentTitle}>
                 <span className={isOpen ? {} : `${styles.hidden}`} ><FaChevronDown size="16" color="rgba(222, 58, 88, 1)"/></span>
                 <span className={isOpen ? `${styles.hidden}` : {}} ><FaChevronRight size="16" color="rgba(222, 58, 88, 1)"/></span>

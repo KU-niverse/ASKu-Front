@@ -119,7 +119,7 @@ function Header() {
             setMobileHeaderHeight('60px');
         } else {
             setMobileHeaderOpen(true);
-            setMobileHeaderHeight('280px');
+            setMobileHeaderHeight('320px');
         }
     };
 
@@ -183,7 +183,7 @@ function Header() {
                                     setInputValue('');
                                 }
                             }} />
-                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} />
+                        <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
                     </div>
                     <div
                         className={styles.navContainer_right}
@@ -203,8 +203,9 @@ function Header() {
                                     src={alarm}
                                     alt='alarm'
                                     id={styles.temporaryAlarm}
-                                    className={styles.signinButton} />
-                                    
+                                    className={styles.signinButton}
+                                    onClick={handleAlarm} 
+                                    />
                                 <button
                                     className={styles.headerButton}
                                     onClick={signOut}
@@ -220,7 +221,6 @@ function Header() {
                                 </Link>
                                 )}
                             </>
-                           
                         ) : (
                             <>
                                 <Link to='/signup'>
@@ -241,8 +241,8 @@ function Header() {
                                     <button className={styles.loginbtn}>로그인</button>
                                 </Link>
                             )}
-                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
                             <img src={searchIconGray} alt='search_icon_gray' id={styles.mobileHeaderSearch} className={styles.mobileButton} onClick={handleMobileSearch} />
+                            <img src={hamburger} alt='hamburger' className={styles.mobileButton} onClick={handleMobileMenu} />
                         </div>
                         {mobileHeaderOpen && (
                             <div className={styles.mobileMenuWrap}>

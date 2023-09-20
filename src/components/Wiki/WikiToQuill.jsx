@@ -3,6 +3,19 @@ const WikiToHtml = (wikiText) => {
   //console.log("여기가 1번 : ", html);
   html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
   html = html.replace(/<p><\/p>/g, '<br>');
+
+  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match, marker, content) {
+    
+    var listItem = '<li>' + content.trim() + '</li>';
+  
+  
+    return listItem;
+  });
+
+  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match, content) {
+    var listType = '<ul>';
+    return listType + '<li>' + content.trim() + '</li>' + listType.replace('<', '</');
+  });
   //console.log("여기가 2번 : ", html);
 
   // 단락 처리 (p)

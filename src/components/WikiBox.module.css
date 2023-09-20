@@ -5,6 +5,11 @@
     display: flex;
     align-items: center;
 }
+@media only screen and (max-width: 767px) {
+    .wikiContentTitle{
+        width: 200px;
+    }
+}
 .wikiContentTitle span{
     font-size: 18px;
     font-weight: 700;
@@ -19,6 +24,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+@media only screen and (max-width: 767px) {
+    .wikiContentBtns{
+        width: 102px;
+        
+    }
+    .wikiContentBtns button{
+        width: 47px;
+        font-size: 11px;
+        height: 25px;
+    }
 }
 .wikiContentBtn{
     width: 52px;
@@ -41,7 +57,7 @@
     width: 100%;
     margin-bottom: 20px;
 }
-.wikiContents li{
+.wikiContentlist{
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -53,4 +69,9 @@
 }
 .wikiText{
     font-size: 14px;
+
+}
+
+.wikiText li{
+    list-style-type: disc;
 }

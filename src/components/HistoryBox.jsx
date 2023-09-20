@@ -21,8 +21,6 @@ const HistoryBox = (props) => {
     const doctitle = props.doctitle;
     const target=props.target;
     const type = props.type;
-    console.log(type);
-    const isFirst = props.isFirst;
 
 
     const handleView = () => {

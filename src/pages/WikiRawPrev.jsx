@@ -35,7 +35,9 @@ function WikiViewer() {
     const getWiki = async () => {
         try{
             const result = await axios.get(`https://asku.wiki/api/wiki/historys/${title}/version/${ver}`);
-            setAllText(WikiToHtml(result.data.jsonData.text));
+            setAllText(WikiToHtml(result.data.jsonData.text).replace(/<img/g, '<img style="max-width: 100%; height: auto;"'));
+
+
             setAllContent(result.data.contents);
         } catch (error) {
             console.error(error);
@@ -79,7 +81,7 @@ function WikiViewer() {
                 </div> */}
                </div>
                <div  className={styles.wikicontent}>
-                    <div dangerouslySetInnerHTML={{ __html: allText }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: allText }} />
                </div>
             </div>
         </div>

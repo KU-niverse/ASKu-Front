@@ -181,13 +181,13 @@
 }
 
 #mobileHeaderSearch {
-    margin-right: 0px;
+    margin-right: 20px;
 }
 #temporaryAlarm {
-    display:none;
+    /* display:none; */
 }
 #temporaryMobileAlarm {
-    display:none;
+    /* display:none; */
 }
 
 .signinButton {

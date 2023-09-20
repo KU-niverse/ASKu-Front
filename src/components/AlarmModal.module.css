@@ -6,7 +6,7 @@
     position: relative;
     top: 20px;
     left: 150%;
-    width: 220px;
+    width: 250px;
     height: 280px;
     z-index: 900;
     background: white;
@@ -29,7 +29,8 @@
     cursor: pointer;
     width: 20px;
     height: 20px;
-    margin-left: 90px;
+    margin-left: 120px;
+    margin-top: 10px;
 }
 
 .alarmTitleWrap {
@@ -43,8 +44,9 @@
 
 #alarmTitle {
     color: #9F132E;
-    font-weight: 400;
-    font-size: 18px;
+    font-weight: 800;
+    font-size: 16px;
+    margin-top: 10px;
     margin-left: 10px;
 }
 
@@ -65,9 +67,12 @@
     text-decoration: none;
     color: black;
     line-height: 25px;
-    height: 30px;
-    width: 170px;
+    height: 20px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 12px;
+    margin-left: 8px;
+    font-weight: 800;
   }
