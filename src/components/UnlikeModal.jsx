@@ -32,7 +32,7 @@ function UnlikeModal({ isOpen, onClose, feedbackId }) {
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            axios.post('https://asku.wiki/ai/chatbot/feedback/comment', {
+            axios.post(process.env.REACT_APP_AI+'/chatbot/feedback/comment', {
                 feedback_id: feedbackId,
                 content: inputValue
         })

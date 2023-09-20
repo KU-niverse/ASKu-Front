@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import ReactDiffViewer from 'react-diff-viewer';
-import his2 from '../img/his2.png';
-import styles from './HistoryDiff.module.css';
-import Header from '../components/Header';
-import { useState} from 'react';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useMediaQuery } from '@material-ui/core';
-import axios from 'axios';
- 
+import React, { PureComponent } from "react";
+import ReactDiffViewer from "react-diff-viewer";
+import his2 from "../img/his2.png";
+import styles from "./HistoryDiff.module.css";
+import Header from "../components/Header";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useMediaQuery } from "@material-ui/core";
+import axios from "axios";
+
 // const oldText = `
 // == 잉 ==
 // 잉잉잉잉잉잉
@@ -31,61 +31,73 @@ import axios from 'axios';
 
 // `;
 
-
 const HistoryDiff = () => {
   const [isSplit, setIsSplit] = useState(true);
-  const {title, ver} = useParams();
-  const [newText, setNewText] = useState('');
-  const [oldText, setOldText] = useState('');
+  const { title, ver } = useParams();
+  const [newText, setNewText] = useState("");
+  const [oldText, setOldText] = useState("");
 
-  
   const mediaQuery = useMediaQuery("(max-width: 767px)");
 
   useEffect(() => {
     setIsSplit(!mediaQuery);
   }, [mediaQuery]);
 
-
   const compareHistory = async () => {
-    try{
-        const result = await axios.get(`https://asku.wiki/api/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`, {
-            withCredentials: true
-        });
-        if(result.status === 200){
-            setOldText(result.data.jsonData.oldrev_text);
-            setNewText(result.data.jsonData.rev_text);
+    try {
+      const result = await axios.get(
+        process.env.REACT_APP_HOST+`/wiki/comparison/${title}/rev/${ver}/oldrev/${
+          Number(ver) - 1
+        }`,
+        {
+          withCredentials: true,
         }
-        
+      );
+      if (result.status === 200) {
+        setOldText(result.data.jsonData.oldrev_text);
+        setNewText(result.data.jsonData.rev_text);
+      }
     } catch (error) {
-        console.error(error);
-        return alert(error.response.data.message);
+      console.error(error);
+      return alert(error.response.data.message);
     }
-};
+  };
 
-useEffect(() => {
-
+  useEffect(() => {
     compareHistory();
-
-},  [title, ver]);
+  }, [title, ver]);
 
   return (
     <div className={styles.container}>
-        <Header/>
-        <div className={styles.header}>
-            <span><img src={his2}/>히스토리</span>
-        </div >
-        <div className={styles.historyCompare}>
-          <div className={styles.historyTitle}><p className={styles.listTitle}>입실렌티</p><p className={styles.listTitle2}>문서의 변경 내용</p></div>
-          <div className={styles.historyDiff}>
-            <div className={styles.verCompare}>VERSION&nbsp;{ver-1}&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</div>
-            <div >
-              <ReactDiffViewer oldValue={oldText} newValue={newText} splitView={isSplit} className={styles.diffBox} showDiffOnly={true}/>
-            </div>
-          </div>
-          
-        </div>
-        
+      <Header />
+      <div className={styles.header}>
+        <span>
+          <img src={his2} />
+          히스토리
+        </span>
       </div>
+      <div className={styles.historyCompare}>
+        <div className={styles.historyTitle}>
+          <p className={styles.listTitle}>입실렌티</p>
+          <p className={styles.listTitle2}>문서의 변경 내용</p>
+        </div>
+        <div className={styles.historyDiff}>
+          <div className={styles.verCompare}>
+            VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>
+            &nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}
+          </div>
+          <div>
+            <ReactDiffViewer
+              oldValue={oldText}
+              newValue={newText}
+              splitView={isSplit}
+              className={styles.diffBox}
+              showDiffOnly={true}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

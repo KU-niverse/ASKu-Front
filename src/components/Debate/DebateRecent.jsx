@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import styles from './DebateRecent.module.css';
-import FormatTimeAgo from '../FormatTimeAgo';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import styles from "./DebateRecent.module.css";
+import FormatTimeAgo from "../FormatTimeAgo";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const DebateRecent = ({ title }) => {
   const [recentListData, setRecentListData] = useState(null);
-
 
   useEffect(() => {
     const takeRecentList = async () => {
       try {
-        const res = await axios.get(`https://asku.wiki/api/debate/all/recent`, { withCredentials: true });
+        const res = await axios.get(
+          process.env.REACT_APP_HOST+`/debate/all/recent`,
+          { withCredentials: true }
+        );
         if (res.status === 200) {
           setRecentListData(res.data);
         } else {
@@ -23,7 +25,6 @@ const DebateRecent = ({ title }) => {
 
     takeRecentList();
   }, [title]);
-
 
   return (
     <div>
@@ -37,13 +38,20 @@ const DebateRecent = ({ title }) => {
           recentListData.data.slice(0, 4).map((item) => {
             const timestamp = FormatTimeAgo(item.recent_edited_at);
             return (
-            <Link to={`/debate/${item.title}/${item.subject}`} state={{ title: item.title, subject: item.subject, id: item.id }} className={styles.linkTo}>
-
-              <ul key={item.title}>
-                <span className={styles.listTitle}>{item.subject}</span>
-                <span className={styles.listTimestamp}>{timestamp}</span>
-              </ul>
-            </Link>
+              <Link
+                to={`/debate/${item.title}/${item.subject}`}
+                state={{
+                  title: item.title,
+                  subject: item.subject,
+                  id: item.id,
+                }}
+                className={styles.linkTo}
+              >
+                <ul key={item.title}>
+                  <span className={styles.listTitle}>{item.subject}</span>
+                  <span className={styles.listTimestamp}>{timestamp}</span>
+                </ul>
+              </Link>
             );
           })
         )}

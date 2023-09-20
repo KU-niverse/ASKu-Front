@@ -1,157 +1,173 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import Editor from '../components/Quill'
-import styles from './WikiEdit.module.css';
-import Header from '../components/Header';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import WikiToHtml from '../components/Wiki/WikiToHtml';
-import HtmlToWiki from '../components/Wiki/HtmlToWiki';
-import WikiToQuill from '../components/Wiki/WikiToQuill';
-
+import React from "react";
+import { useState, useEffect } from "react";
+import Editor from "../components/Quill";
+import styles from "./WikiEdit.module.css";
+import Header from "../components/Header";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import WikiToHtml from "../components/Wiki/WikiToHtml";
+import HtmlToWiki from "../components/Wiki/HtmlToWiki";
+import WikiToQuill from "../components/Wiki/WikiToQuill";
 
 const WikiEdit = () => {
-    const {main, section} = useParams();
-    const location = useLocation();
-    const index_title = location.state;
-    const nav = useNavigate();
-    const [desc, setDesc] = useState('');
-    const [wiki, setWiki] = useState('');
-    const [summary, setSummary] = useState('');
-    const [version, setVersion] = useState('');
-    const [copy, setCopy] = useState(false);
+  const { main, section } = useParams();
+  const location = useLocation();
+  const index_title = location.state;
+  const nav = useNavigate();
+  const [desc, setDesc] = useState("");
+  const [wiki, setWiki] = useState("");
+  const [summary, setSummary] = useState("");
+  const [version, setVersion] = useState("");
+  const [copy, setCopy] = useState(false);
 
-    useEffect(() => {
-        //console.log(desc);
-        const wikiMarkup = HtmlToWiki(desc);
-        //console.log(wikiMarkup);
-        //console.log(WikiToHtml(wikiMarkup));
-        // You can perform other actions with the updated 'desc' value here
-      }, [desc]);
-    
-      const onEditorChange = (value) => {
-        setDesc(value);
-        //console.log(value);
-        // No need to log 'desc' here
+  useEffect(() => {
+    //console.log(desc);
+    const wikiMarkup = HtmlToWiki(desc);
+    //console.log(wikiMarkup);
+    //console.log(WikiToHtml(wikiMarkup));
+    // You can perform other actions with the updated 'desc' value here
+  }, [desc]);
+
+  const onEditorChange = (value) => {
+    setDesc(value);
+    //console.log(value);
+    // No need to log 'desc' here
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked((prevIsChecked) => !prevIsChecked);
+  };
+
+  useEffect(() => {
+    const getWiki = async () => {
+      try {
+        const result = await axios.get(
+          process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${section}`,
+          {
+            withCredentials: true,
+          }
+        ); //전체 텍스트를 가져옴.
+        if (result.status === 200) {
+          setDesc(WikiToQuill(result.data.title + "\n" + result.data.content));
+          setVersion(result.data.version);
+        }
+      } catch (error) {
+        console.error(error);
+        if (error.response.status === 401) {
+          alert(error.response.data.message);
+          nav("/signin");
+        } else {
+          alert("잘못된 접근입니다. \n (이미지 최대 용량은 5MB입니다)");
+        }
       }
+    };
 
-    const [isChecked, setIsChecked] = useState(false);
+    getWiki();
+    setCopy(false);
+  }, []);
 
-    const handleCheckboxChange = () => {
-        setIsChecked(prevIsChecked => !prevIsChecked);
+  const addWikiEdit = async (e) => {
+    e.preventDefault();
+
+    if (desc.trim() === "") {
+      return alert("내용을 작성해주세요");
     }
 
+    const wikiMarkup = HtmlToWiki(desc);
 
-    useEffect(() => {
+    if (isChecked === false) {
+      return alert("정책에 맞게 작성하였음을 확인해주세요");
+    }
+    if (summary === "") {
+      return alert("히스토리 요약을 작성해주세요");
+    }
 
-
-        const getWiki = async () => {
-            try{
-
-                const result = await axios.get(`https://asku.wiki/api/wiki/contents/${main}/section/${section}`,{
-                    withCredentials: true,
-                }); //전체 텍스트를 가져옴.
-                if (result.status === 200){
-                    setDesc(WikiToQuill(result.data.title + "\n" + result.data.content));
-                    setVersion(result.data.version);
-                }
-    
-            } catch (error) {
-                console.error(error);
-                if(error.response.status === 401){
-                    alert(error.response.data.message);
-                    nav('/signin');
-                    
-                }else{
-                    alert('잘못된 접근입니다. \n (이미지 최대 용량은 5MB입니다)');
-                }
-            }
-        };
-        
-        getWiki();
-        setCopy(false);
-        
-    }, []);
-
-
-    const addWikiEdit = async (e) => {
-
-        e.preventDefault();
-
-        if(desc.trim() === ''){
-            return alert('내용을 작성해주세요')
+    try {
+      const result = await axios.post(
+        process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${section}`,
+        {
+          version: version,
+          new_content: wikiMarkup,
+          summary: summary,
+          is_q_based: 0,
+          qid: 0,
+          index_title: index_title,
+        },
+        {
+          withCredentials: true,
         }
+      );
+      if (result.status === 200) {
+        alert("수정이 완료되었습니다.");
+        nav(`/wiki/${main}`);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("로그인이 필요합니다.");
+        nav("/signin");
+      } else if (error.response.status === 500) {
+        alert("제출해 실패했습니다. 다시 시도해주세요.");
+        // setWiki(error.response.data.newContent);
+      } else if (error.response.status === 426) {
+        alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
+        setCopy(true);
+      }
+    }
+  };
 
-        const wikiMarkup = HtmlToWiki(desc);
-
-        if(isChecked === false){
-            return alert('정책에 맞게 작성하였음을 확인해주세요')
-        }
-        if(summary === ''){
-            return alert('히스토리 요약을 작성해주세요');
-        }
-
-        try {
-            const result = await axios.post(`https://asku.wiki/api/wiki/contents/${main}/section/${section}`, {
-                version: version,
-                new_content: wikiMarkup,
-                summary: summary,
-                is_q_based: 0,
-                qid: 0,
-                index_title: index_title,
-            },{
-                withCredentials: true,
-            });
-            if (result.status === 200){
-                alert("수정이 완료되었습니다.");
-                nav(`/wiki/${main}`);
-            }
-        } catch(error){
-            if(error.response.status === 401){
-                alert("로그인이 필요합니다.");
-                nav('/signin');
-            } else if(error.response.status === 500){
-                alert("제출해 실패했습니다. 다시 시도해주세요.");
-                // setWiki(error.response.data.newContent);
-            }else if(error.response.status === 426){
-                alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
-                setCopy(true);
-            }
-        };
-        
-    };
-    
-    return (
-        <div className={`${styles.container}`}>
-            <Header />
-            <div className={`${styles.edit}`}>
-                <form onSubmit={addWikiEdit}>
-                    <div>
-                        <div className={`${styles.wikichar_title}`}>
-                            <h4>문서 제목</h4>
-                            <input type='text' disabled='true' value={main} className={`${styles.title}`}/>
-                        </div>
-                    </div>
-                    <div>
-                        <h4>문서 내용</h4>
-                        <div className={`${styles.editorbox}`}>
-                            <Editor value={desc} onChange={onEditorChange} />
-                        </div>
-                        <h4>히스토리 요약</h4>
-                        <textarea value={summary} onChange={e => setSummary(e.target.value)} className={`${styles.summary}`} maxLength='60' placeholder='60자 이내로 작성해주세요'></textarea>
-                    </div>
-                    <div className={`${styles.submitbox}`}>
-                    <span className={`${styles.chkdiv}`}><input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className={`${styles.chkbox}`}/><span>정책에 맞게 작성하였음을 확인합니다.</span></span>
-                        <input type='submit' value="생성하기" className={`${styles.submitWiki}`} />
-                    </div>
-                </form>
+  return (
+    <div className={`${styles.container}`}>
+      <Header />
+      <div className={`${styles.edit}`}>
+        <form onSubmit={addWikiEdit}>
+          <div>
+            <div className={`${styles.wikichar_title}`}>
+              <h4>문서 제목</h4>
+              <input
+                type="text"
+                disabled="true"
+                value={main}
+                className={`${styles.title}`}
+              />
             </div>
-        </div>
-        
-    )
-
-}
+          </div>
+          <div>
+            <h4>문서 내용</h4>
+            <div className={`${styles.editorbox}`}>
+              <Editor value={desc} onChange={onEditorChange} />
+            </div>
+            <h4>히스토리 요약</h4>
+            <textarea
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              className={`${styles.summary}`}
+              maxLength="60"
+              placeholder="60자 이내로 작성해주세요"
+            ></textarea>
+          </div>
+          <div className={`${styles.submitbox}`}>
+            <span className={`${styles.chkdiv}`}>
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                className={`${styles.chkbox}`}
+              />
+              <span>정책에 맞게 작성하였음을 확인합니다.</span>
+            </span>
+            <input
+              type="submit"
+              value="생성하기"
+              className={`${styles.submitWiki}`}
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default WikiEdit;
-
