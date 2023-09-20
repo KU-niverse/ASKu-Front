@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./MyQuestion.module.css"
+import styles from "./MyQuestion.module.css";
 import Header from "../components/Header";
 import MyQuestionList from "../components/MyQuestionList";
 import Footer from "../components/Footer";
@@ -20,7 +20,10 @@ function MyQuestion() {
   useEffect(() => {
     const takeMyQuestion = async () => {
       try {
-        const res = await axios.get(`https://asku.wiki/api/user/mypage/questionhistory/${arrange}`, { withCredentials: true });
+        const res = await axios.get(
+          process.env.REACT_APP_HOST+`/user/mypage/questionhistory/${arrange}`,
+          { withCredentials: true }
+        );
         if (res.status === 201) {
           setMyQuestion(res.data);
           setLoadingMyQuestion(false);
@@ -36,7 +39,10 @@ function MyQuestion() {
   useEffect(() => {
     const takeMypage = async () => {
       try {
-        const res = await axios.get(`https://asku.wiki/api/user/mypage/info`, { withCredentials: true });
+        const res = await axios.get(
+          process.env.REACT_APP_HOST+`/user/mypage/info`,
+          { withCredentials: true }
+        );
         if (res.status === 201) {
           setMypageData(res.data);
           setLoadingMypage(false);
@@ -49,53 +55,60 @@ function MyQuestion() {
     takeMypage();
   }, []);
 
-
-    
-  return(
+  return (
     <div className={styles.container}>
       <div>
-        <Header/>
+        <Header />
       </div>
       {loadingMyQuestion || loadingMypage ? (
-      <div><SpinnerMypage/></div>
-    ) : (
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <p className={styles.question}>내가 쓴 질문</p>
-          <div className={styles.switch}>
-          <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
-          </div>        
+        <div>
+          <SpinnerMypage />
         </div>
-        {mypageData.data&&myQuestion && myQuestion.success && myQuestion.data.length === 0 ? (
-          <p>아직 작성한 질문이 없습니다.</p>
-        ) : (
-          mypageData && myQuestion && myQuestion.success && myQuestion.data.map((question) => (
-            <MyQuestionList
-              key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-              id={question.id}
-              doc_id={question.doc_id}
-              user_id={question.user_id}
-              index_title={question.index_title}
-              content={question.content}
-              created_at={question.created_at}
-              answer_or_not={question.answer_or_not}
-              is_bad={question.is_bad}
-              docsname={question.doc_title}
-              nick={mypageData.data[0].nickname}
-              like_count={question.like_count}
-              answer_count={question.answer_count}
-            />
-          ))
-        )}
-      </div>
-    )}
+      ) : (
+        <div className={styles.content}>
+          <div className={styles.header}>
+            <p className={styles.question}>내가 쓴 질문</p>
+            <div className={styles.switch}>
+              <Switch
+                isToggled={isToggled}
+                onToggle={() => setIsToggled(!isToggled)}
+              />
+            </div>
+          </div>
+          {mypageData.data &&
+          myQuestion &&
+          myQuestion.success &&
+          myQuestion.data.length === 0 ? (
+            <p>아직 작성한 질문이 없습니다.</p>
+          ) : (
+            mypageData &&
+            myQuestion &&
+            myQuestion.success &&
+            myQuestion.data.map((question) => (
+              <MyQuestionList
+                key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                id={question.id}
+                doc_id={question.doc_id}
+                user_id={question.user_id}
+                index_title={question.index_title}
+                content={question.content}
+                created_at={question.created_at}
+                answer_or_not={question.answer_or_not}
+                is_bad={question.is_bad}
+                docsname={question.doc_title}
+                nick={mypageData.data[0].nickname}
+                like_count={question.like_count}
+                answer_count={question.answer_count}
+              />
+            ))
+          )}
+        </div>
+      )}
       <div>
         <Footer />
       </div>
     </div>
-
   );
-};
-
+}
 
 export default MyQuestion;

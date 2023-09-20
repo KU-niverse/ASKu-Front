@@ -16,7 +16,6 @@ function Quill(props) {
 
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
-
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement("input");
     // 속성 써주기
@@ -27,7 +26,6 @@ function Quill(props) {
 
     // input에 변화가 생긴다면 = 이미지를 선택
     input.addEventListener("change", async () => {
-      
       const file = input.files[0];
       // multer에 맞는 형식으로 데이터 만들어준다.
       const formData = new FormData();
@@ -35,7 +33,7 @@ function Quill(props) {
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
         const result = await axios.post(
-          "https://asku.wiki/api/wiki/image",
+          process.env.REACT_APP_HOST+"/wiki/image",
           formData,
           { withCredentials: true }
         );
@@ -56,10 +54,15 @@ function Quill(props) {
         // 2. 현재 에디터 커서 위치값을 가져온다
         const range = editor.getSelection();
         // 가져온 위치에 이미지를 삽입한다
-        editor.clipboard.dangerouslyPasteHTML(range.index, `<img src="${IMG_URL}" />`);
+        editor.clipboard.dangerouslyPasteHTML(
+          range.index,
+          `<img src="${IMG_URL}" />`
+        );
       } catch (error) {
         console.error(error);
-        alert('이미지 업로드중 오류가 발생하였습니다. \n (최대 용량은 5MB입니다)');
+        alert(
+          "이미지 업로드중 오류가 발생하였습니다. \n (최대 용량은 5MB입니다)"
+        );
       }
     });
   };
@@ -111,8 +114,6 @@ function Quill(props) {
     //console.log("안의 내용물 전부", quillRef.current.getEditorContents());
   };
 
-  
-
   return (
     <div>
       <ReactQuill
@@ -125,15 +126,14 @@ function Quill(props) {
           //console.log(newValue);
           const editor = quillRef.current.getEditor();
           // console.log(quillRef.current);
-           //console.log(editor.root); // 에디터 안의 내용 HTML 태그
-              
+          //console.log(editor.root); // 에디터 안의 내용 HTML 태그
+
           // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
           // console.log("안의 내용물 전부", quillRef.current.getEditorContents());
           props.onChange(newValue); // 내부 상태 변경 후, 부모 컴포넌트로 업데이트된 값을 전달
         }}
         modules={modules}
         formats={formats}
-        
       />
     </div>
   );
