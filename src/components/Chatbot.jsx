@@ -80,7 +80,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       setLoading(true);
 
       try {
-        const response = await axios.post(`https://asku.wiki/ai/chatbot/`, {
+        const response = await axios.post(process.env.REACT_APP_AI+`/chatbot/`, {
           q_content: inputValue,
           user_id: userId.data[0].id,
         });
