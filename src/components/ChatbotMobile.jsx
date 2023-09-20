@@ -53,7 +53,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
             setLoading(true);
 
             try {
-                const response = await axios.post(`https://asku.wiki/ai/chatbot/`, {
+                const response = await axios.post(process.env.REACT_APP_AI+`/chatbot/`, {
                     q_content: inputValue,
                     user_id: userId.data[0].id
                 });
@@ -151,7 +151,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
         const getMessage = async () => {
             inputRef.current.focus();
             try {
-                const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`);
+                const response = await axios.get(process.env.REACT_APP_AI+`/chatbot/${userId.data[0].id}`);
                 const previousHistory = response.data;
                 setPreviousChatHistory(previousHistory);
             } catch (error) {

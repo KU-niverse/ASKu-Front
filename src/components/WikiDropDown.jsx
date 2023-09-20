@@ -1,61 +1,56 @@
-import React from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
-import styles from './WikiDropDown.module.css'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import axios from 'axios';
-import SpinnerMypage from './SpinnerMypage';
+import React from "react";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import styles from "./WikiDropDown.module.css";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import SpinnerMypage from "./SpinnerMypage";
 
-
-function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }) {
+function DropDown({
+  defaultOpt,
+  onSelectedOption,
+  onSelectedTitle,
+  title,
+  isOptionDisabled,
+}) {
   const [wikiData, setWikiData] = useState([]);
 
   useEffect(() => {
-      const takeWikiData = async () => {
-        try {
-          const res = await axios.get(`https://asku.wiki/api/wiki/contents/${title}`, { withCredentials: true });
-          if (res.status === 200) {
-            setWikiData(res.data);
-          }
-          if (res.status === 404) {
-          }
-        } catch (error) {
-          console.error(error);
+    const takeWikiData = async () => {
+      try {
+        const res = await axios.get(
+          process.env.REACT_APP_HOST+`/wiki/contents/${title}`,
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          setWikiData(res.data);
         }
-      };
-      takeWikiData();
+        if (res.status === 404) {
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    takeWikiData();
   }, []);
   //위키 정보 가져오기
 
-
-
-
-
-
-
- let options=[]
- if ( wikiData.contents){
+  let options = [];
+  if (wikiData.contents) {
     options = wikiData.contents.map((content) => ({
-    value: `${content.section}`, 
-    label: `${content.index} ${content.title}`,
-    className: 'myOptionClassName'
-  }))
+      value: `${content.section}`,
+      label: `${content.index} ${content.title}`,
+      className: "myOptionClassName",
+    }));
 
     // "전체 편집" 옵션 추가
-  options.push({
-    value: 'all', 
-    label: '전체 편집',
-    className: 'myOptionClassName'
-  });
-
-
-
-} 
-
-  
-
-  
+    options.push({
+      value: "all",
+      label: "전체 편집",
+      className: "myOptionClassName",
+    });
+  }
 
   // [
   //   { value: 'one', label: 'One' },
@@ -74,15 +69,14 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
   //   }
   // ];
 
-
   let defaultOption;
-  if(isOptionDisabled===true){
+  if (isOptionDisabled === true) {
     defaultOption = {
-      value: 'all', 
-      label: '전체 편집',
-      className: 'myOptionClassName'
-     }
-  }else{
+      value: "all",
+      label: "전체 편집",
+      className: "myOptionClassName",
+    };
+  } else {
     defaultOption = defaultOpt;
   }
 
@@ -92,18 +86,13 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
     // 처리할 로직을 여기에 추가
   };
 
-
-
-
-
   return (
     <div className={styles.dropdown_container}>
-      <Dropdown 
+      <Dropdown
         className={styles.dropdown}
         controlClassName={styles.dropdowncontrol}
         menuClassName={styles.dropdownmenu}
         placeholderClassName={styles.dropdownph}
-
         options={options}
         onChange={onSelect}
         value={defaultOption}
