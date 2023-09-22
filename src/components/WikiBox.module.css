@@ -69,9 +69,14 @@
 }
 .wikiText{
     font-size: 14px;
+    width: 100%;
 
 }
-
+.wikiText a{
+    width: 100%;
+    word-wrap: break-word; /* 단어 단위로 줄 바꿈 */
+    display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+}
 .wikiText li{
     list-style-type: disc;
 }
