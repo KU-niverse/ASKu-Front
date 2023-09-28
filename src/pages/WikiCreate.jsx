@@ -45,7 +45,7 @@ const WikiCreate = () => {
         process.env.REACT_APP_HOST+`/wiki/contents/new/${title}`,
         {
           text: wikiMarkup,
-          type: selectedOption,
+          type: 'doc',
         },
         {
           withCredentials: true,
