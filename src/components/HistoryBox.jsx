@@ -25,28 +25,40 @@ const HistoryBox = (props) => {
   };
 
   const handleRollback = async (e) => {
-    try {
-      const result = await axios.post(
-        process.env.REACT_APP_HOST+`/wiki/historys/${title}/version/${version}`,
-        {},
-        {
-          withCredentials: true,
+
+    let returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)');
+
+    if(returnValue === false){
+      return;
+    } else{
+
+      try {
+        const result = await axios.post(
+          process.env.REACT_APP_HOST+`/wiki/historys/${title}/version/${version}`,
+          {},
+          {
+            withCredentials: true,
+          }
+        ); //전체 텍스트를 가져옴.
+        if (result.status === 200) {
+          alert(result.data.message);
+          nav(`/wiki/${title}`);
+        } else {
+          alert("something went wrong");
         }
-      ); //전체 텍스트를 가져옴.
-      if (result.status === 200) {
-        alert(result.data.message);
-        nav(`/wiki/${title}`);
-      } else {
-        alert("something went wrong");
+      } catch (error) {
+        if (error.response.status === 401) {
+          alert("로그인이 필요합니다");
+          nav("/signin");
+        } else if (error.response.status === 432) {
+          alert(error.response.data.message);
+        }
       }
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert("로그인이 필요합니다");
-        nav("/signin");
-      } else if (error.response.status === 432) {
-        alert(error.response.data.message);
-      }
+
     }
+
+
+
   };
 
   const handleCompare = () => {
