@@ -8,6 +8,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import TypeDrop from "../components/TypeDrop";
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+
 
 const WikiCreate = () => {
   const nav = useNavigate();
@@ -91,8 +93,10 @@ const WikiCreate = () => {
               />
             </div>
             <div className={`${styles.wikichar_char}`}>
-              <h4>문서 성격</h4>
-              <TypeDrop onSelectedOption={handleSelectedOption} />
+              {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
+              <TypeDrop onSelectedOption={handleSelectedOption} /> */}
+              <h4>위키 작성 방법</h4>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 작성방법 문서 바로가기</p>
             </div>
           </div>
           <div>
@@ -109,7 +113,7 @@ const WikiCreate = () => {
                 onChange={handleCheckboxChange}
                 className={`${styles.chkbox}`}
               />
-              <span>정책에 맞게 작성하였음을 확인합니다.</span>
+              <span>정책에 맞게 작성하였음을 확인합니다. <FaArrowUpRightFromSquare/></span>
             </span>
             <input
               type="submit"
