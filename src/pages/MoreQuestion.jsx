@@ -15,6 +15,7 @@ import SpinnerMypage from "../components/SpinnerMypage";
 
 const MoreQuestion = () => {
   const { title } = useParams();
+  const [currentUserId, setCurrentUserId]=useState([]);
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
@@ -24,10 +25,37 @@ const MoreQuestion = () => {
   const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
   const [loading, setLoading] = useState(true);
 
+
+  const getUserInfo = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/mypage/info",
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        // 사용자 정보에서 id를 가져옴
+        setCurrentUserId(res.data);
+      } else {
+        setCurrentUserId(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setCurrentUserId(null)
+    }
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  //접속한 사용자 id 가져오기
+
+
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/wiki/titles");
+        const res = await axios.get(process.env.REACT_APP_HOST+"/wiki/titles");
         if (res.data.success) {
           setTitles(res.data.titles);
         }
@@ -42,7 +70,7 @@ const MoreQuestion = () => {
       try {
         const flag = isToggled ? 1 : 0;
         const res = await axios.get(
-          `http://localhost:8080/question/view/${flag}/${title}`,
+          process.env.REACT_APP_HOST+`/question/view/${flag}/${title}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -62,7 +90,7 @@ const MoreQuestion = () => {
   const handleQuestionSubmit = async (submitData) => {
     try {
       const res = await axios.post(
-        `http://localhost:8080/question/new/${title}`,
+        process.env.REACT_APP_HOST+`/question/new/${title}`,
         submitData,
         { withCredentials: true }
       );
@@ -125,6 +153,7 @@ const MoreQuestion = () => {
                 questionData.data &&
                 questionData.data.map((data) => (
                   <Question
+                    current_user_id={currentUserId.data[0].id}
                     key={data.id}
                     id={data.id}
                     doc_id={data.doc_id}

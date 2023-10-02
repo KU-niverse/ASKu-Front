@@ -4,11 +4,12 @@ import edit from "../img/edit.png"
 import styles from "../components/QuestionQnA.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
+import ThreedotsReport from "./ThreedotsReport"
 import LikeorNot from "./LikeorNot"
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 
-function QuestionQnA({answer_count, title, question_id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function QuestionQnA({current_user_id, answer_count, title, question_id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   const type=2;
@@ -34,7 +35,11 @@ function QuestionQnA({answer_count, title, question_id, doc_id, user_id, index_t
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <ThreedotsMenu  questionId={question_id} type={type}/>
+                  {user_id === current_user_id ? (
+                <ThreedotsMenu questionId={question_id} type={type} />
+              ) : (
+                <ThreedotsReport questionId={question_id} type={type}/>
+              )}            
             </div>
           </div>
           <div className={styles.q_middle}>
