@@ -32,6 +32,17 @@ h4{
     width: 25%;
 
  }
+ .wikiManual{
+    height: 45px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #747474;
+ }
+ .wikiManual:hover{
+    text-decoration: underline;
+
+ }
 .title{
     width: 90%;
     height: 45px;
