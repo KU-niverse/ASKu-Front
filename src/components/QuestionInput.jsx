@@ -40,12 +40,6 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const handleChange = (e) => {
     const value = e.target.value;
 
-    // Enter 키를 눌렀을 때의 처리
-    if (e.nativeEvent.data === null && questionContent.length < 200) {
-      setQuestionContent(value);
-      return;
-    }
-
     if (value.length <= 200) {
       setQuestionContent(value);
     }
@@ -74,14 +68,21 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     if (questionContent.trim() === "") {
       alert("질문을 입력해주세요.");
       return;
-    } else {
-      window.location.reload();
-    }
+    } 
+    
+    //개행 문자 인식 코드
+    const encodedContent = encodeURIComponent(questionContent);
+
     const submitData = {
       index_title: selectedOption,
-      content: questionContent,
+      content: encodedContent,
     };
+    //
+
+
     onQuestionSubmit(submitData);
+    window.location.reload();
+
   };
 
   const countCharacters = () => {
