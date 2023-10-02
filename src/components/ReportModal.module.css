@@ -14,7 +14,7 @@
 .modal_wrapper {
     z-index: 100;
     width: 400px;
-    height: 599px;
+    height: auto;
     background-color: white;
     border-radius: 12px;
     max-width: 90%;
@@ -125,5 +125,5 @@
     color: white;
     cursor: pointer;
     margin-top: 36px;
-    
+    margin-bottom: 30px;
   }
