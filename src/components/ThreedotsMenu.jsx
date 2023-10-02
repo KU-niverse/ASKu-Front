@@ -25,7 +25,7 @@ function ThreedotsMenu({ questionId, type }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        "http://localhost:8080/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -46,7 +46,7 @@ function ThreedotsMenu({ questionId, type }) {
   const onQuestionDelete = async () => {
     try {
       const response = await axios.delete(
-        process.env.REACT_APP_HOST+`/question/delete/${questionId}`,
+        `http://localhost:8080/question/delete/${questionId}`,
         { withCredentials: true }
       );
       if (response.status === 200) {

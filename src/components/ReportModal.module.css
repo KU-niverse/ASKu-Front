@@ -14,7 +14,7 @@
 .modal_wrapper {
     z-index: 100;
     width: 400px;
-    height: 400px;
+    height: 599px;
     background-color: white;
     border-radius: 12px;
     max-width: 90%;
@@ -57,23 +57,35 @@
 
 .modal_text {
     z-index: 200;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 800;
     color: #9F132E;
     align-self: center;
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 .modal_report{
-    margin-top: 7px;
-    margin-bottom: 10px;
+    margin: 12px 12px 12px 0;
     cursor: pointer;
     accent-color: #9F132E;
     justify-self: left;
 }
 .label_text{
-    margin-left: 3px;
     cursor: pointer;
+    font-size: 18px;
+
 }
+
+.report_textarea{
+    resize: none;
+    font-size: 16px;
+    border: 1px solid rgba(213, 213, 213, 1);
+    width: 280px;
+    height: auto;
+    padding: 5px;
+    border-radius: 12px;
+    margin-left: 20px;
+  
+  }
 
 .haho_login {
     width: 150px;
@@ -112,6 +124,6 @@
     border: none;
     color: white;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 36px;
     
   }

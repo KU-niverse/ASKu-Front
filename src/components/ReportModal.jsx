@@ -21,7 +21,7 @@ function ReportModal({ type, target, isOpen, onClose }) {
     }
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST+`/report/${type}`,
+        `http://localhost:8080/report/${type}`,
         requestBody,
         { withCredentials: true }
       );
@@ -154,6 +154,14 @@ function ReportModal({ type, target, isOpen, onClose }) {
                   />
                   <span className={styles.label_text}>기타</span>
                 </label>
+                  <textarea
+                    rows="4"
+                    className={styles.report_textarea}
+                    placeholder="신고 사유를 입력해주세요."
+                    // value={questionContent}
+                    maxLength={70}
+                    // onChange={handleChange}
+                  />
               </div>
               <button className={styles.q_csubmit} onClick={handleSubmit}>
                 신고하기

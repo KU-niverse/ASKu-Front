@@ -19,7 +19,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        "http://localhost:8080/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -102,7 +102,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
 
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST+"/user/auth/signin",
+        "http://localhost:8080/user/auth/signin",
         {
           login_id: id,
           password: password,
