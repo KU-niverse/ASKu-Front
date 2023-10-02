@@ -24,7 +24,7 @@ function ReportModal({ type, target, isOpen, onClose }) {
     }
     try {
       const response = await axios.post(
-        `http://localhost:8080/report/${type}`,
+        process.env.REACT_APP_HOST+`/report/${type}`,
         requestBody,
         { withCredentials: true }
       );
