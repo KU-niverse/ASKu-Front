@@ -15,6 +15,7 @@ import link_icon from "../img/link_icon.png";
 import { useNavigate } from "react-router-dom";
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
+  const [currentUserId, setCurrentUserId] = useState([]);
   const [answerData, setAnswerData] = useState([]);
   const [questionData, setQuestionData] = useState([]);
   const location = useLocation();
@@ -26,6 +27,35 @@ const QnA = () => {
   const linktoWiki = () => {
     nav(`/wiki/${title}`);
   };
+
+  const getUserInfo = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/mypage/info",
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        // 사용자 정보에서 id를 가져옴
+        setCurrentUserId(res.data);
+      } else {
+        setCurrentUserId(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setCurrentUserId(null)
+    }
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  //접속한 사용자 id 가져오기
+
+
+
+
 
   useEffect(() => {
     const takeAnswer = async () => {
@@ -97,6 +127,7 @@ const QnA = () => {
             index_title={questionData.data[0].index_title}
             answer_count={questionData.data[0].answer_count}
             title={title}
+            current_user_id={currentUserId.data[0].id}
           />
         )}
         <div className={styles.c_header}>
