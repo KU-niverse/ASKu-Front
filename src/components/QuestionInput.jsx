@@ -15,7 +15,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        "http://localhost:8080/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -39,10 +39,18 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
+
+    // Enter 키를 눌렀을 때의 처리
+    if (e.nativeEvent.data === null && questionContent.length < 200) {
+      setQuestionContent(value);
+      return;
+    }
+
     if (value.length <= 200) {
       setQuestionContent(value);
     }
-  };
+};
+
 
   const submitData = {
     index_title: selectedOption,

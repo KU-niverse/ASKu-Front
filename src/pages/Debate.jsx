@@ -28,7 +28,7 @@ function Debate() {
     const takeDebateContent = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/view/${title}/${debateId}`,
+          `http://localhost:8080/debate/view/${title}/${debateId}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -45,7 +45,7 @@ function Debate() {
   const handleDebateSubmit = async (submitData) => {
     try {
       const res = await axios.post(
-        process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
+        `http://localhost:8080/debate/${title}/new/${debateId}`,
         submitData,
         { withCredentials: true }
       );
