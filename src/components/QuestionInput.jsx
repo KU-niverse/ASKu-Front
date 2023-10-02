@@ -39,10 +39,18 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
+
+    // Enter 키를 눌렀을 때의 처리
+    if (e.nativeEvent.data === null && questionContent.length < 200) {
+      setQuestionContent(value);
+      return;
+    }
+
     if (value.length <= 200) {
       setQuestionContent(value);
     }
-  };
+};
+
 
   const submitData = {
     index_title: selectedOption,

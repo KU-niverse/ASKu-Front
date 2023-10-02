@@ -33,12 +33,19 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     checkLoginStatus();
   }, []);
 
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   if (value.length <= 200) {
+  //     setDebateContent(value);
+  //   }
+  // };
   const handleChange = (e) => {
     const value = e.target.value;
-    if (value.length <= 200) {
+    const newlineCount = (value.match(/\n/g) || []).length;
+    if (value.length + newlineCount <= 200) {
       setDebateContent(value);
     }
-  };
+};
 
   const submitData = {
     content: debateContent,
