@@ -46,18 +46,14 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
 
 
     const sendMessage = async () => {
-        if (!isLoggedIn) {
-            setLoginModalVisible(true);
-            return;
-        }
-
+        const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
         if (inputValue.trim() !== '') {
             setLoading(true);
 
             try {
                 const response = await axios.post(process.env.REACT_APP_AI+`/chatbot/`, {
                     q_content: inputValue,
-                    user_id: userId.data[0].id
+                    user_id: userIdToSend
                 });
 
                 setShowSuggest(false);
