@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, Fragment } from "react";
 import Spinner from "./Spinner";
 import LoginModal from "./LoginModal";
 import ClearModal from "./ClearModal";
+import RefreshModal from "./RefreshModal";
 import { Link } from "react-router-dom";
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
@@ -20,6 +21,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const blockIconZip = true;
   const [ClearModalOpen, setClearModalOpen] = useState(false);
   const [qnaId, setQnaId] = useState("");
+  const [RefreshModalOpen, setRefreshModalOpen] = useState(false);
   const closeLoginModal = () => {
     setLoginModalVisible(false);
   };
@@ -71,20 +73,17 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   };
 
   const sendMessage = async () => {
-    if (!isLoggedIn) {
-      setLoginModalVisible(true);
-      return;
-    }
-
+    const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
+  
     if (inputValue.trim() !== "") {
       setLoading(true);
-
+  
       try {
-        const response = await axios.post(process.env.REACT_APP_AI+`/chatbot/`, {
+        const response = await axios.post(process.env.REACT_APP_AI + `/chatbot/`, {
           q_content: inputValue,
-          user_id: userId.data[0].id,
+          user_id: userIdToSend,
         });
-
+  
         setShowSuggest(false);
         inputRef.current.blur();
 
@@ -97,28 +96,39 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             qnaId: response.data.id,
           }, // 서버 응답 추가
         ];
-
+  
         setChatResponse(newChatResponse);
         setInputValue("");
-
+  
         // axios 요청 완료 후 로딩 스피너를 비활성화
         setLoading(false); // 로딩 스피너 숨기기
         scrollToBottom();
       } catch (error) {
         console.error(error);
+        // 만약 에러 상태가 403인 경우 (권한 없음)
+        if (error.response && error.response.status === 403) {
+          // 로그인 모달을 띄우도록 처리
+          setLoginModalVisible(true);
+        }
 
+        if (error.response && error.response.status === 406) {
+          // 새로고침 모달을 띄우도록 처리
+          setRefreshModalOpen(true);
+        }
+  
         // axios 요청 실패 시에도 로딩 스피너를 비활성화
         setLoading(false);
+  
       }
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && event.target === inputRef.current) {
-      if (!isLoggedIn) {
-        setLoginModalVisible(true);
-        return;
-      }
+      // if (!isLoggedIn) {
+      //   setLoginModalVisible(true);
+      //   return;
+      // }
       sendMessage();
     }
   };
@@ -174,13 +184,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     scrollToBottom();
   }, [previousChatHistory]);
 
-  //   useEffect(() => {
-  //     chatBottomRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
-  // }, [previousChatHistory]);
-
   useEffect(() => {
     if (!isLoggedIn) {
-      setPreviousChatHistory([]); // isLoggedIn이 false일 때 previousChatHistory 초기화
+      setPreviousChatHistory([]); 
     }
   }, [isLoggedIn]);
 
@@ -296,13 +302,19 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             이중전공은 어떻게 해?
           </span>
         </div>
-        <div ref={chatBottomRef}></div> {/* 스크롤 최하단 이동을 위한 빈 div */}
+        <div ref={chatBottomRef}></div> 
         {loading && <Spinner />}
       </div>
       {isLoginModalVisible && (
         <LoginModal
           isOpen={isLoginModalVisible}
           onClose={() => setLoginModalVisible(false)}
+        />
+      )}
+      {RefreshModalOpen && (
+        <RefreshModal
+          isOpen={RefreshModalOpen}
+          onClose={() => setRefreshModalOpen(false)}
         />
       )}
       {ClearModalOpen && (
