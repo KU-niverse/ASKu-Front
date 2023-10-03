@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import styles from "./MyQuestionList.module.css"
 
 
-function MyQuestionList({answer_count, docsname, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function MyQuestionList({badge_image, answer_count, docsname, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
@@ -34,6 +34,9 @@ function MyQuestionList({answer_count, docsname, id, doc_id, user_id, index_titl
         <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
+              <div className={styles.q_box}>
+                <img className={styles.q_badge} src={badge_image} alt="badge"/>
+              </div>
               <span className={styles.q_mynick}>{nick}</span>
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
