@@ -59,7 +59,6 @@ function App() {
                 <Route path="/history/:title" element={<History />} />
                 <Route path="/history/:title/diff/:ver" element={<HistoryDiff />} />
 
-
                 <Route path="/signin" element={<Signin loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup" element={<Signup loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/signup/complete/:auth" element={<SignupComplete />} />

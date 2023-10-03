@@ -13,6 +13,9 @@ function CommentQna({index_title, id, wiki_history_id, created_at, user_id, nick
         <div className={styles.q_list}>
           <div className={`${styles.q_header}`}>
             <div className={styles.q_fronthead}>
+              <div className={styles.q_box}>
+                <img className={styles.q_badge} src={badge_image} alt="badge"/>
+              </div>
               <span className={styles.q_mynick}>{nickname}</span>
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
