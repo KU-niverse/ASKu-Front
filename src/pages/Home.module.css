@@ -1,6 +1,10 @@
+.pageWrap {
+    height: 100%;
+}
+
 .homeWrap {
     position: relative;
-    width: 100vw;
+    width: 100%;
     min-height: 400px;
     height: auto;
     display: flex;
