@@ -62,7 +62,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     const checkLoginStatus = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+"/user/auth/issignedin",
+          "http://localhost:8080/user/auth/issignedin",
           {
             withCredentials: true,
           }
