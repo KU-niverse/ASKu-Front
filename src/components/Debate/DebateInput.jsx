@@ -41,8 +41,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   // };
   const handleChange = (e) => {
     const value = e.target.value;
-    const newlineCount = (value.match(/\n/g) || []).length;
-    if (value.length + newlineCount <= 200) {
+    if (value.length <= 200) {
       setDebateContent(value);
     }
 };
@@ -63,6 +62,15 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       alert("글을 입력해주세요.");
       return;
     }
+
+    //개행 문자 인식 코드
+    const encodedContent = encodeURIComponent(debateContent);
+
+    const submitData = {
+        content: encodedContent,
+    };
+    
+    //
     onDebateSubmit(submitData);
     window.location.reload();
   };

@@ -99,6 +99,7 @@ function MyQuestion() {
                 nick={mypageData.data[0].nickname}
                 like_count={question.like_count}
                 answer_count={question.answer_count}
+                badge_image={question.badge_image}
               />
             ))
           )}

@@ -167,6 +167,7 @@ const MoreQuestion = () => {
                     like_count={data.like_count}
                     title={title}
                     answer_count={data.answer_count}
+                    badge_image={data.badge_image}
                   />
                 ))
               )}
