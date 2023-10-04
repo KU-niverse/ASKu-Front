@@ -8,7 +8,7 @@ import LikeorNot from "./LikeorNot"
 import { useNavigate } from "react-router-dom"
 
 
-function Question({current_user_id, answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({badge_image, current_user_id, answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
@@ -43,6 +43,9 @@ function Question({current_user_id, answer_count, title, id, doc_id, user_id, in
         <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
+              <div className={styles.q_box}>
+                <img className={styles.q_badge} src={badge_image} alt="badge"/>
+              </div>
               <span className={styles.q_mynick}>{nick}</span>
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
