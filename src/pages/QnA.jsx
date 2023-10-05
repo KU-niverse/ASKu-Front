@@ -116,7 +116,7 @@ const QnA = () => {
           <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/>
           </div> */}
         </div>
-        {currentUserId.data&&questionData && questionData.data && (
+        {questionData && questionData.data && (
           <QuestionQnA
             question_id={question_id}
             user_id={questionData.data[0].user_id}
@@ -128,7 +128,7 @@ const QnA = () => {
             answer_count={questionData.data[0].answer_count}
             title={title}
             badge_image={questionData.data[0].badge_image}
-            current_user_id={currentUserId.data[0].id}
+            current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}          
           />
         )}
         <div className={styles.c_header}>
