@@ -123,7 +123,7 @@ function EditModal({ isOpen, onClose }) {
                     <input
                       required
                       type="text"
-                      placeholder="2-8자 한글로 입력하세요"
+                      placeholder="2-8자 한글이나 영어로 입력"
                       name="nick"
                       value={nick}
                       maxLength="8"
