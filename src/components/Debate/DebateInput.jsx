@@ -64,11 +64,11 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     }
 
     //개행 문자 인식 코드
-    const encodedContent = encodeURIComponent(debateContent);
+    // const encodedContent = encodeURIComponent(debateContent);
 
-    const submitData = {
-        content: encodedContent,
-    };
+    // const submitData = {
+    //     content: encodedContent,
+    // };
     
     //
     onDebateSubmit(submitData);
