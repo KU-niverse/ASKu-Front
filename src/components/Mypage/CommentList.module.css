@@ -10,9 +10,10 @@
   padding-top: 5px;
 }
 .comment_png{
-  object-fit: none;
+  object-fit: contain;
   position : relative;
   vertical-align: top;
+  width: 18px;
 }
 
 .comment_content{
