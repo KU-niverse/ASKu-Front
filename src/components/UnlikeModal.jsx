@@ -1,7 +1,7 @@
 import styles from './UnlikeModal.module.css';
 import closeBtn from '../img/close_btn.png';
 import { useState, useEffect, useRef } from 'react';
-import unlike from '../img/unlike.png';
+import unlike from '../img/chatbot_unlike.svg';
 import axios from 'axios';
 
 function UnlikeModal({ isOpen, onClose, feedbackId }) {
