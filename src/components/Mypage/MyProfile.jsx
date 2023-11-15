@@ -3,12 +3,17 @@ import haho from "../../img/haho.png"
 import { useState } from "react";
 import BadgeModal from "../BadgeModal";
 import NickEditModal from "./NickEditModal"
+import { useNavigate } from "react-router-dom";
 
 function MyProfile({ nick, point, badge, percent, badgeimg}){
   // const [isBadgeModalVisible, setBadgeModalVisible] = useState(false);
   // const closeBadgeModal = () => {
   //     setBadgeModalVisible(false);
   // };
+  const nav = useNavigate();
+  const linktoBadge = ()=>{
+    nav(`/mypage/mybadge`)
+  } 
 
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const closeEditModal = () => {
@@ -28,7 +33,7 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
   return(
     <div>
       <div className={styles.profileimg}>
-        <img className={styles.profileimg_content} src={badgeimg} alt='haho'/>
+        <img className={styles.profileimg_content} onClick={linktoBadge} src={badgeimg} alt='haho'/>
       </div>
       <div className={styles.profilerow}>
         <div className={styles.rownick}>
@@ -41,8 +46,8 @@ function MyProfile({ nick, point, badge, percent, badgeimg}){
         </div>
         <div className={styles.rowbadge}>
           <span className={styles.rowtitle}>대표 뱃지</span>
-          <span className={styles.text}>{badge}
-          <p className={`${styles.badgeedit}`}>뱃지 수정은 PC에서만 가능합니다.</p>
+          <span className={styles.text} onClick={linktoBadge}>{badge}
+          {/* <p className={`${styles.badgeedit}`}>뱃지 수정은 PC에서만 가능합니다.</p> */}
 
           </span>
           {/* <span className={styles.edit} onClick={setBadgeModalVisible(true)}>수정</span> */}
