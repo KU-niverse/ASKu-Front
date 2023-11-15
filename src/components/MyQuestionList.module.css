@@ -109,6 +109,7 @@
 .q_comment img{
   object-fit: contain;
   cursor: pointer;
+  width: 18px;
 }
 
 
