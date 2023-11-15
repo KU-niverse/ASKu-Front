@@ -1,0 +1,36 @@
+.container{
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  margin: 15px 30px 35px 30px;
+  padding: 0 0 0 40px;
+
+}
+.title{
+  padding-top: 13px;
+  font-size: 12px;
+  margin-bottom: 11px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.headline{
+  font-weight: 700;
+}
+
+.content{
+  padding-bottom: 13px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 767px) {
+  .container{
+    margin: 16px 0;
+    padding-left: 20px;
+  }
+
+
+  
+}

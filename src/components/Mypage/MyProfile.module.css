@@ -1,0 +1,102 @@
+.profileimg{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.profileimg_content{
+  border-radius: 100%;
+  height: 100px;
+  width: 100px;
+  border : 1px solid rgba(116, 116, 116, 1)
+}
+
+.profilerow{
+  display: grid;
+}
+
+.badgeedit{
+  display: none;
+}
+
+.rownick, .rowbadge, .rowpoint{
+  display: table;
+  width: 75%;
+  position: relative;
+  table-layout: fixed;
+  justify-self: center;
+}
+
+.rowtitle{
+  display: table-cell;
+  text-align: left;
+  width: 35%;
+  font-size: 18px;
+  color : rgba(159, 19, 46, 1);
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.text{
+  display: table-cell;
+  width: 65%;
+  font-size: 18px;
+  color : rgba(116, 116, 116, 1);
+}
+
+.rank{
+  font-size: 14px;
+  color:rgba(159, 19, 46, 1);
+  text-align: left;
+}
+.editbtn{
+  width: 44px;
+  /* height: 20px; */
+  border-radius: 12px;
+  background-color: rgba(254, 242, 244, 1);
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(222, 58, 88, 1);
+  /* right: 20px; */
+  margin-left: 15px;
+  cursor: pointer;
+  align-self: center;
+  padding: 3px 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .rownick, .rowbadge, .rowpoint{
+    width: 100%;
+  }
+  
+  .rowtitle, .text, .rank{
+    font-size: 14px;
+  }
+
+  .rowtitle{
+    width: 30%;
+    text-align: left;  
+    font-weight: bold;
+    padding: 10px 0;
+  }
+
+  .text{
+    width: 70%;
+    font-weight: bold;
+  }
+  
+  .rank{
+    font-weight: normal;
+    font-size: 12px;
+  }
+
+  .badgeedit{
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: #747474;
+    
+  }
+}

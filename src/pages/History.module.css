@@ -1,0 +1,69 @@
+.hidden{
+  display: none;
+}
+.header {
+    display: flex;
+    justify-content: center;
+    align-items :center;
+    background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    height: 80px;
+    width : 100%;
+  }
+  .historyBtn{
+    width: 74%;
+    margin-left: 13%;
+    height: auto;
+    display: flex;
+  }
+  .historyBtn p{
+    margin: 0px 10px 0px 10px;
+    cursor: pointer;
+  }
+  .header span{
+    font-size: 30px;
+    font-weight:bolder;
+    color: white; 
+  }
+  .header img{
+    margin-right: 10px;
+  }
+  .historyTitle{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .historyTypes{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    color: gray;
+  }
+  .historyTypes p{
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  .clickType{
+    color: rgba(159, 19, 46, 1);
+  }
+  .listTitle{
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 10px;
+  }
+  .listTitle2{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .historyList{
+    width: 74%;
+    margin-left: 13%;
+    height: auto;
+  }
+  @media only screen and (max-width: 767px) {
+    .historyList{
+      width: 90%;
+      margin-left: 5%;
+      height: auto;
+}
+  }

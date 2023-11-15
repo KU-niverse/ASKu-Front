@@ -1,0 +1,63 @@
+ /* 스타일을 초기화하고 싶은 경우 */
+ .linkTo {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 기본 텍스트 색상 유지 */
+  }
+  
+  /* 클릭 시 스타일 변경하고 싶은 경우 */
+  .linkTo:hover {
+    text-decoration: underline;
+    text-decoration: none; /* 클릭 시 밑줄 표시 */
+  }
+
+.hidden{
+    display: none;
+}
+.searchTitle{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 19, 46, 1);
+
+
+}
+.inputcontainer {
+    display: flex;
+    width: 25%;
+}
+.headerInput {
+    border: 2px solid #D5D5D5;
+    border-radius: 35px;
+    width: 20%;
+    height: 40px;
+    padding-left: 20px;
+    position: absolute;
+    box-sizing: border-box;
+}
+.searchIcon {
+    width: 21px;
+    height: 18px;
+    position: relative;
+    cursor: pointer;
+    left: 85%;
+    top: 10px;
+    z-index: 20;
+}
+.resultContainer{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+.resultList{
+    width: 90%;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    color: black;
+    font-size: 14px;
+    font-weight: 700;;
+    cursor: pointer;
+    padding-left: 10px;
+}

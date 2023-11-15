@@ -1,0 +1,141 @@
+.modal_overlay {
+    position: fixed; /* 화면 스크롤에 영향을 받지 않도록 고정 위치 설정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 투명도 조정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal_wrapper {
+    z-index: 100;
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border-radius: 12px;
+    max-width: 90%;
+    box-shadow: 0px 0px 50px 0px #00000040;
+    overflow-y: scroll;
+}
+
+.modal_inside {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_close {
+    width: 100%;
+    z-index: 200;
+    height: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close_btn {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.modal_content {
+    margin-top: 20px;
+    width: 300px;
+    height: auto;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.modal_text {
+    z-index: 200;
+    font-size: 15px;
+    font-weight: 800;
+    color: #9F132E;
+}
+
+.alarmContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 20px;
+    left: 150%;
+    width: 220px;
+    height: 280px;
+    z-index: 900;
+    background: white;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow:  0px 5px 30px 2px #00000033;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 1100px) {
+    .alarmContainer {
+        top: 50px;
+        left: 120%;
+    }
+}
+
+
+.alarmTitleWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    position: absolute;
+    top: 2px;
+}
+
+#alarmTitle {
+    color: #9F132E;
+    font-weight: 800;
+    font-size: 20px;
+    margin-right: 195px;
+    margin-top: 20px;
+}
+
+.alarmContent {
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 40px;
+}
+
+.alarmTextWrap {
+    height: 40px;
+}
+.alarmLink {
+    text-decoration: none;
+}
+
+.alarmText {
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: black;
+    line-height: 25px;
+    height: 30px;
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+  }

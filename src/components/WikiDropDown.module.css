@@ -1,0 +1,47 @@
+.dropdown_container{
+  cursor: pointer;
+}
+.dropdown{
+  width: 100%;
+  margin-left: 0px;
+  border-bottom: 1px solid rgba(116, 116, 116, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdowncontrol{
+  border: none;
+  cursor: pointer;
+}
+
+
+.dropdownmenu{
+font-size: 16px;
+color: rgba(116, 116, 116, 1);
+cursor: pointer;
+/* overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis; */
+}
+
+.dropdownph{
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(116, 116, 116, 1);
+  cursor: pointer;
+  overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+
+@media only screen and (max-width: 767px) {
+.dropdown{
+  width: 100%;
+}
+
+.dropdownmenu, .dropdownph{
+  font-size: 14px;
+}
+
+}
