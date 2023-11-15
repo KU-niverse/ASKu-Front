@@ -131,6 +131,11 @@
   justify-content: center;
 }
 
+.q_backfooter img{
+  width: 18px;
+  object-fit: contain;
+}
+
 .q_backfooter span{
   display: flex;
   align-items: center;
