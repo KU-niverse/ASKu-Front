@@ -191,7 +191,9 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
                     <p id={styles.title}>AI 하호</p>
-                    <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
+                    <Link>
+                        <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
+                    </Link>
                     <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
                         <button className={styles.button}>도움말</button>
                     </Link>
