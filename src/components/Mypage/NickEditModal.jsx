@@ -29,7 +29,7 @@ function EditModal({ isOpen, onClose }) {
   }, [isOpen]);
 
   function onChangeNick(e) {
-    const nickRegex = /^[가-힣]{2,8}$/;
+    const nickRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nickCurrent = e.target.value;
     setNick(nickCurrent);
 
@@ -78,7 +78,7 @@ function EditModal({ isOpen, onClose }) {
 
     try {
       const response = await axios.put(
-        `process.env.REACT_APP_HOST+/user/mypage/editnick`,
+        process.env.REACT_APP_HOST+"/user/mypage/editnick",
         {
           nickname: nick,
         },
