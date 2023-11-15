@@ -70,14 +70,14 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
       return;
     } 
     
-    //개행 문자 인식 코드
-    const encodedContent = encodeURIComponent(questionContent);
+    // //개행 문자 인식 코드
+    // const encodedContent = encodeURIComponent(questionContent);
 
-    const submitData = {
-      index_title: selectedOption,
-      content: encodedContent,
-    };
-    //
+    // const submitData = {
+    //   index_title: selectedOption,
+    //   content: encodedContent,
+    // };
+    // //
 
 
     onQuestionSubmit(submitData);
