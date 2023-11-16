@@ -25,14 +25,10 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
         nav("/");
-      } else if (res.status === 401) {
-        setLoggedIn(false);
-        nav("/signin");
-      }
+      } 
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      nav("/signin");
     }
   };
   useEffect(() => {
