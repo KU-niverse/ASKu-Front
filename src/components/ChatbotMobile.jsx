@@ -10,6 +10,7 @@ import ChatAnswer from './ChatAnswer';
 import ChatQuestion from './ChatQuestion';
 import { Link } from 'react-router-dom';
 import ClearModal from './ClearModal';
+import RefreshModal from './RefreshModal';
 
 function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
     const [inputValue, setInputValue] = useState("");
@@ -20,6 +21,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
     const [isLoginModalVisible, setLoginModalVisible] = useState(false);
     const [previousChatHistory, setPreviousChatHistory] = useState([]);
     const [clearModalOpen, setClearModalOpen] = useState(false);
+    const [RefreshModalOpen, setRefreshModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const inputChange = (e) => {
@@ -44,18 +46,14 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
 
 
     const sendMessage = async () => {
-        if (!isLoggedIn) {
-            setLoginModalVisible(true);
-            return;
-        }
-
+        const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
         if (inputValue.trim() !== '') {
             setLoading(true);
 
             try {
                 const response = await axios.post(process.env.REACT_APP_AI+`/chatbot/`, {
                     q_content: inputValue,
-                    user_id: userId.data[0].id
+                    user_id: userIdToSend
                 });
 
                 setShowSuggest(false);
@@ -76,6 +74,17 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
             } catch (error) {
                 console.error(error);
 
+                if (error.response && error.response.status === 403) {
+                    // 로그인 모달을 띄우도록 처리
+                    setLoginModalVisible(true);
+                }
+
+                if (error.response && error.response.status === 406) {
+                    // 새로고침 모달을 띄우도록 처리
+                    setRefreshModalOpen(true);
+                }
+            
+
                 // axios 요청 실패 시에도 로딩 스피너를 비활성화
                 setLoading(false);
             }
@@ -83,10 +92,6 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
     };
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && event.target === inputRef.current) {
-            if (!isLoggedIn) {
-                setLoginModalVisible(true);
-                return;
-            }
             sendMessage();
         }
     };
@@ -186,7 +191,9 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
             <div className={styles.mobileChatbotWrap}>
                 <div className={styles.topBar}>
                     <p id={styles.title}>AI 하호</p>
-                    <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
+                    <Link>
+                        <button className={styles.button} onClick={handleClearModal}>채팅 비우기</button>
+                    </Link>
                     <Link to='https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4' target="_blank" >
                         <button className={styles.button}>도움말</button>
                     </Link>
@@ -237,6 +244,12 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
                             <Spinner />
                         )}
                     </div>
+                    {RefreshModalOpen && (
+                        <RefreshModal
+                        isOpen={RefreshModalOpen}
+                        onClose={() => setRefreshModalOpen(false)}
+                        />
+                    )}
                     {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
                     {clearModalOpen && <ClearModal isOpen={clearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />}
                     <div className={styles.promptWrap}>

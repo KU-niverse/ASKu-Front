@@ -93,6 +93,7 @@ function Debate() {
                 created_at={debate.created_at}
                 is_bad={debate.is_bad}
                 nick={debate.nickname}
+                badge_image={debate.badge_image}
               />
             ))
           )}

@@ -3,11 +3,12 @@ import edit from "../img/edit.png"
 import styles from "../components/Question.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
+import ThreedotsReport from "./ThreedotsReport"
 import LikeorNot from "./LikeorNot"
 import { useNavigate } from "react-router-dom"
 
 
-function Question({answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
+function Question({badge_image, current_user_id, answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
   const type=2;
   const nav = useNavigate();
@@ -42,11 +43,19 @@ function Question({answer_count, title, id, doc_id, user_id, index_title, conten
         <div className={styles.q_list}>
           <div className={styles.q_header}>
             <div className={styles.q_fronthead}>
+              <div className={styles.q_box}>
+                <img className={styles.q_badge} src={badge_image} alt="badge"/>
+              </div>
               <span className={styles.q_mynick}>{nick}</span>
               <span className={styles.q_date}>{formattedDate}</span>
             </div>
             <div className={styles.q_backhead}>
-              <ThreedotsMenu  questionId={id} type={type}/>
+            {user_id === current_user_id ? (
+                <ThreedotsMenu questionId={id} type={type} />
+              ) : (
+                <ThreedotsReport questionId={id} type={type}/>
+              )}               
+              
             </div>
           </div>
           <div className={styles.q_middle}>

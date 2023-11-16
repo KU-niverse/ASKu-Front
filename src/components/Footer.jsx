@@ -25,7 +25,7 @@ function Footer() {
                             </Link>
                         </div>
                         <div className={`${styles.linkGroup}`}>
-                            <button className={`${styles.footerTitle}`}>K-Universe</button>
+                            <button className={`${styles.footerTitle}`}>KUniverse</button>
                             <Link to='https://harmonious-authority-301.notion.site/ASKu-9d6da8cb08e640db8f746524c231937e' target='_blank'>
                                 <button className={`${styles.footerButton}`}>팀 소개</button>
                             </Link>

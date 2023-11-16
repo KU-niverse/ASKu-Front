@@ -13,6 +13,27 @@
   padding: 0px 30px 8px 30px;
 }
 
+
+.q_fronthead{
+  display: flex;
+  align-items: center;
+}
+
+.q_box{
+  width: 26px;
+  height:26px;
+  align-self: center;
+  margin-right: 10px;
+}
+
+.q_box img {
+  padding-left: 0;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
+
+
 .q_mynick{
   font-size: 16px;
 }

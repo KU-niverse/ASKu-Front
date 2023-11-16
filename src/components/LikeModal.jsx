@@ -2,7 +2,7 @@ import styles from './LikeModal.module.css';
 import closeBtn from '../img/close_btn.png';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import like from '../img/like.png';
+import like from '../img/chatbot_like.svg';
 
 function LikeModal({ isOpen, onClose, feedbackId }) {
     const modalRef = useRef(null);

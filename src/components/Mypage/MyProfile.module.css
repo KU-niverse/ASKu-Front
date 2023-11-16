@@ -3,6 +3,7 @@
   width: 100%;
   justify-content: center;
   padding-bottom: 15px;
+  cursor: pointer;
 }
 
 .profileimg_content{
@@ -43,6 +44,7 @@
   width: 65%;
   font-size: 18px;
   color : rgba(116, 116, 116, 1);
+  cursor: pointer;
 }
 
 .rank{

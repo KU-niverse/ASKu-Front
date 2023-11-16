@@ -33,12 +33,18 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     checkLoginStatus();
   }, []);
 
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   if (value.length <= 200) {
+  //     setDebateContent(value);
+  //   }
+  // };
   const handleChange = (e) => {
     const value = e.target.value;
     if (value.length <= 200) {
       setDebateContent(value);
     }
-  };
+};
 
   const submitData = {
     content: debateContent,
@@ -56,6 +62,15 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       alert("글을 입력해주세요.");
       return;
     }
+
+    //개행 문자 인식 코드
+    // const encodedContent = encodeURIComponent(debateContent);
+
+    // const submitData = {
+    //     content: encodedContent,
+    // };
+    
+    //
     onDebateSubmit(submitData);
     window.location.reload();
   };

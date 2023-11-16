@@ -15,6 +15,7 @@ import SpinnerMypage from "../components/SpinnerMypage";
 
 const MoreQuestion = () => {
   const { title } = useParams();
+  const [currentUserId, setCurrentUserId]=useState([]);
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
@@ -23,6 +24,33 @@ const MoreQuestion = () => {
   const defaultOpt = location.state;
   const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
   const [loading, setLoading] = useState(true);
+
+
+  const getUserInfo = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/mypage/info",
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        // 사용자 정보에서 id를 가져옴
+        setCurrentUserId(res.data);
+      } else {
+        setCurrentUserId(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setCurrentUserId(null)
+    }
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  //접속한 사용자 id 가져오기
+
 
   useEffect(() => {
     const fetchTitles = async () => {
@@ -125,7 +153,7 @@ const MoreQuestion = () => {
                 questionData.data &&
                 questionData.data.map((data) => (
                   <Question
-                    key={data.id}
+                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}                    key={data.id}
                     id={data.id}
                     doc_id={data.doc_id}
                     user_id={data.user_id}
@@ -138,6 +166,7 @@ const MoreQuestion = () => {
                     like_count={data.like_count}
                     title={title}
                     answer_count={data.answer_count}
+                    badge_image={data.badge_image}
                   />
                 ))
               )}

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 
 function CommentList({id, subject, content, time, doc_title}){
-  const maxLength = 80;
+  const maxLength = 70;
 
   // 글자 수가 maxLength를 넘으면 뒤에 "..."을 붙이고 아니면 그대로 반환
   const truncateContent = (text) => {

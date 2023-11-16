@@ -39,10 +39,12 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
+
     if (value.length <= 200) {
       setQuestionContent(value);
     }
-  };
+};
+
 
   const submitData = {
     index_title: selectedOption,
@@ -66,14 +68,21 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     if (questionContent.trim() === "") {
       alert("질문을 입력해주세요.");
       return;
-    } else {
-      window.location.reload();
-    }
-    const submitData = {
-      index_title: selectedOption,
-      content: questionContent,
-    };
+    } 
+    
+    // //개행 문자 인식 코드
+    // const encodedContent = encodeURIComponent(questionContent);
+
+    // const submitData = {
+    //   index_title: selectedOption,
+    //   content: encodedContent,
+    // };
+    // //
+
+
     onQuestionSubmit(submitData);
+    window.location.reload();
+
   };
 
   const countCharacters = () => {

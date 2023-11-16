@@ -8,10 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 function ReportModal({ type, target, isOpen, onClose }) {
   const modalRef = useRef(null);
+  const [reportContent, setReportContent] =useState("");
+
   const [selectedReason, setSelectedReason] = useState(null);
   const requestBody = {
     target: target,
     reason_id: selectedReason,
+    comment : reportContent
   };
 
   const handleSubmit = async (selectedReason) => {
@@ -27,7 +30,8 @@ function ReportModal({ type, target, isOpen, onClose }) {
       );
       if (response.status === 200) {
         alert("신고가 완료되었습니다.");
-      }
+      }   window.location.reload();
+
     } catch (error) {
       console.error(error);
       alert("알 수 없는 오류가 발생했습니다.");
@@ -53,6 +57,17 @@ function ReportModal({ type, target, isOpen, onClose }) {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isOpen]);
+
+  //report 기타 사유
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 70) {
+      setReportContent(value);
+    }
+  };
+
+
 
   return (
     <>
@@ -154,6 +169,16 @@ function ReportModal({ type, target, isOpen, onClose }) {
                   />
                   <span className={styles.label_text}>기타</span>
                 </label>
+                {selectedReason === 8 && (
+                  <textarea
+                    rows="4"
+                    className={styles.report_textarea}
+                    placeholder="신고 사유를 입력해주세요."
+                    value={reportContent}
+                    maxLength={70}
+                    onChange={handleChange}
+                  />
+                )}
               </div>
               <button className={styles.q_csubmit} onClick={handleSubmit}>
                 신고하기

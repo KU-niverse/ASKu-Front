@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './ChatAnswer.module.css';
-import like from '../img/chatbot_like.png';
-import like_hover from '../img/chatbot_like_filled.png';
-import unlike from '../img/chatbot_unlike.png';
-import unlike_hover from '../img/chatbot_unlike_filled.png';
-import referenceIcon from '../img/reference.png';
+import like from '../img/chatbot_like.svg';
+import like_hover from '../img/chatbot_like_filled.svg';
+import unlike from '../img/chatbot_unlike.svg';
+import unlike_hover from '../img/chatbot_unlike_filled.svg';
+import referenceIcon from '../img/reference.svg';
 import dots from '../img/dots.png';
 import haho from '../img/3d_haho.png';
 import closeBtn from '../img/close_btn.png';
