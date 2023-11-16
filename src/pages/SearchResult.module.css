@@ -144,9 +144,17 @@
     margin: 15px 0px 15px 0px;
     font-size: 14px;
     cursor: pointer;
+    white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
+    
   }
   .listTitle{
+   
     font-weight: 700;
+    
+  }
+  .listTimestamp{
+    margin-left: 5px;
+    
   }
   
   /* 스타일을 초기화하고 싶은 경우 */
@@ -154,6 +162,9 @@
   text-decoration: none; /* 밑줄 제거 */
   color: black; /* 기본 텍스트 색상 유지 */
   margin: 0;
+  white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
+  overflow: hidden; /* 넘치는 부분을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ...을 표시 */
 }
 
 /* 클릭 시 스타일 변경하고 싶은 경우 */

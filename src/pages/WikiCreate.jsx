@@ -29,6 +29,7 @@ const WikiCreate = () => {
 
   const handleCreateBtn = async (e) => {
     e.preventDefault();
+    const trimedTitle = title.trim();
     if (desc.trim() === "") {
       return alert("내용을 작성해주세요");
     }
@@ -42,7 +43,7 @@ const WikiCreate = () => {
 
     try {
       const result = await axios.post(
-        process.env.REACT_APP_HOST+`/wiki/contents/new/${title}`,
+        process.env.REACT_APP_HOST+`/wiki/contents/new/${trimedTitle}`,
         {
           text: wikiMarkup,
           type: 'doc',

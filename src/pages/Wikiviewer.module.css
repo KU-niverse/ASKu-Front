@@ -283,12 +283,26 @@ li{
 
     }
     .wikititle h1{
-        font-size: 23px;
+        font-size: 20px;
     }
     .wikititleBtn{
-        width: 155px;
+        width: 105px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 6px;
+        
 
 
+
+    }
+    .wikititleBtnOne{
+        display: block;
+        margin-bottom: 4px;
+    }
+    .wikititleBtnTwo{
+        display: block;
+        margin-top: 4px;
     }
     .wikititleBtn img{
         width: 16px;

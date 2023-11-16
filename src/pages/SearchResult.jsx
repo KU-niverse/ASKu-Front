@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import search from "../img/search_icon.png";
+import search from "../img/SearchResult.svg";
 import styles from "./SearchResult.module.css";
 import ResultBox from "../components/ResultBox";
 import { useState, useEffect } from "react";

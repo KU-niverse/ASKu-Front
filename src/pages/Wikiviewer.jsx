@@ -4,11 +4,11 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom/dist";
 import axios from "axios";
 import styles from "./Wikiviewer.module.css";
-import falseBk from "../img/bookmarkfalse.png";
-import trueBk from "../img/bookmarkFill.png";
-import debate from "../img/debate.png";
-import his from "../img/his.png";
-import minilike from "../img/minilike.png";
+import falseBk from "../img/bookmarkfalse.svg";
+import trueBk from "../img/bookmarkFill.svg";
+import debate from "../img/debate.svg";
+import his from "../img/his.svg";
+import minilike from "../img/minilike.svg";
 import WikiBox from "../components/WikiBox";
 import Switch from "../components/Switch";
 import { useParams } from "react-router-dom/dist";
@@ -326,12 +326,12 @@ function WikiViewer() {
             />
           </h1>
           <div className={styles.wikititleBtn}>
-            <button onClick={linkToDebate}>
+            <button onClick={linkToDebate} className={styles.wikititleBtnOne}>
               <img src={debate} />
               &nbsp;토론하기
             </button>
 
-            <button onClick={linkToHistory}>
+            <button onClick={linkToHistory} className={styles.wikititleBtnTwo}>
               <img src={his} />
               &nbsp;히스토리
             </button>
