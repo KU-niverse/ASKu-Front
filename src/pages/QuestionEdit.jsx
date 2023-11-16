@@ -12,7 +12,7 @@ import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 import SpinnerMypage from "../components/SpinnerMypage";
 
-const QuestionEdit = () => {
+const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
@@ -28,6 +28,41 @@ const QuestionEdit = () => {
   const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
   const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
   const [isChecked, setIsChecked] = useState(false);
+
+  const from = stateData.from || '/';
+
+// //로그인 체크 후 우회
+// const checkLoginStatus = async () => {
+//   try {
+//     const res = await axios.get(
+//       process.env.REACT_APP_HOST+"/user/auth/issignedin",
+//       { withCredentials: true }
+//     );
+//     if (res.status === 201 && res.data.success === true) {
+//       setLoggedIn(true);
+//     } else if (res.status === 401) {
+//       setLoggedIn(false);
+//       alert("로그인이 필요한 서비스 입니다.");
+//       return nav(from);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     setLoggedIn(false);
+//     if (error.response.status === 401) {
+//       setLoggedIn(false);
+//       //alert("로그인이 필요한 서비스 입니다.");
+//       return nav(from);
+//     }else{
+//       alert("에러가 발생하였습니다");
+//       return nav(from);
+//     }
+//   }
+// };
+// useEffect(() => {
+//   checkLoginStatus();
+// }, []);
+
+
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
@@ -104,13 +139,13 @@ const QuestionEdit = () => {
       setLoading(false);
       if (error.response.status === 401) {
         setLoading(false);
-        alert("login이 필요합니다.");
-        nav("/signin");
+        alert("로그인이 필요합니다.");
+        return nav(from);
       } else {
         setLoading(false);
         alert(error.response.data.message);
         console.log(error);
-        nav("/");
+        //nav("/");
       }
     }
   };

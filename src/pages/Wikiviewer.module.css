@@ -45,6 +45,7 @@
 
 }
 .wikititle h1{
+    font-size: 25px;
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -283,7 +284,7 @@ li{
 
     }
     .wikititle h1{
-        font-size: 20px;
+        font-size: 18px;
     }
     .wikititleBtn{
         width: 105px;

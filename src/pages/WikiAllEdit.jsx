@@ -4,20 +4,59 @@ import Editor from "../components/Quill.js";
 import styles from "./WikiEdit.module.css";
 import Header from "../components/Header";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToHtml from "../components/Wiki/WikiToHtml";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 
-const WikiEdit = () => {
+const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { title, section } = useParams();
   const nav = useNavigate();
+  const location = useLocation();
   const [desc, setDesc] = useState("");
   const [wiki, setWiki] = useState("");
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
   const [copy, setCopy] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+
+
+  const from = location.state?.from || '/';
+  console.log(from)
+
+  //로그인 체크 후 우회
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        { withCredentials: true }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return nav(from);
+      }
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+
+
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Editor from "../components/Quill";
 import styles from "./WikiEdit.module.css";
 import Header from "../components/Header";
@@ -11,12 +11,43 @@ import TypeDrop from "../components/TypeDrop";
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
 
-const WikiCreate = () => {
+const WikiCreate = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
   const [desc, setDesc] = useState("");
   const [title, setTitle] = useState("");
   const [selectedOption, setSelectedOption] = useState(null); //드롭다운 옵션
   const [isChecked, setIsChecked] = useState(false);
+
+//로그인 체크 후 우회
+const checkLoginStatus = async () => {
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_HOST+"/user/auth/issignedin",
+      { withCredentials: true }
+    );
+    if (res.status === 201 && res.data.success === true) {
+      setLoggedIn(true);
+      nav("/");
+    } else if (res.status === 401) {
+      setLoggedIn(false);
+      nav("/signin");
+    }
+  } catch (error) {
+    console.error(error);
+    setLoggedIn(false);
+    nav("/signin");
+  }
+};
+useEffect(() => {
+  checkLoginStatus();
+}, []);
+
+
+
+
+
+
+
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);

@@ -10,16 +10,56 @@ import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 
-const WikiEdit = () => {
+const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { main, section } = useParams();
   const location = useLocation();
-  const index_title = location.state;
+ 
   const nav = useNavigate();
   const [desc, setDesc] = useState("");
   const [wiki, setWiki] = useState("");
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
   const [copy, setCopy] = useState(false);
+
+
+  const from = location.state?.from || '/';
+  const index_title = location.state?.index_title || '';
+   //로그인 체크 후 우회
+   const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        { withCredentials: true }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        //alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return nav(from);
+      }
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+
+
+
+
+
 
   useEffect(() => {
     //console.log(desc);
@@ -106,8 +146,7 @@ const WikiEdit = () => {
       }
     } catch (error) {
       if (error.response.status === 401) {
-        alert("로그인이 필요합니다.");
-        nav("/signin");
+        
       } else if (error.response.status === 500) {
         alert("제출에 실패했습니다. 다시 시도해주세요.");
         // setWiki(error.response.data.newContent);

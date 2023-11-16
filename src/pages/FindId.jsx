@@ -36,6 +36,9 @@ const FindId = () => {
   };
 
   function handleOnClick() {
+    if(email.trim() === ''){
+      return alert("이메일을 입력해주세요");
+    }
     findUserId();
     nav("/findoutid");
   }
@@ -51,7 +54,6 @@ const FindId = () => {
           </div>
           <span>
             <input
-              required
               type="text"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
