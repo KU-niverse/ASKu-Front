@@ -189,14 +189,12 @@ const handleRandomDocClick = async () => {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault();
+                  // 엔터키를 누를 때
+                  e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
                   if (inputValue.trim() !== "") {
-                    Nav(
-                      `/result/${encodeURIComponent(inputValue).replace(
-                        /\./g,
-                        "%2E"
-                      )}`
-                    );
+                    window.location.href = `/result/${encodeURIComponent(
+                      inputValue
+                    )}`; // 페이지 이동
                     setInputValue("");
                   }
                 }
