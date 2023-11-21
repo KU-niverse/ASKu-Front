@@ -4,13 +4,18 @@ import { useState } from "react";
 import { useEffect } from "react";
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function DebateInput({ onDebateSubmit, title, debateId }) {
   const [debateContent, setDebateContent] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  console.log(from)
+
+ //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
@@ -19,19 +24,28 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       );
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
       }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      if (error.status === 401) {
+      if (error.response.status === 401) {
         setLoggedIn(false);
-        alert(error.data.message);
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return Navigate(from);
       }
     }
   };
   useEffect(() => {
     checkLoginStatus();
   }, []);
+  //
 
   // const handleChange = (e) => {
   //   const value = e.target.value;
