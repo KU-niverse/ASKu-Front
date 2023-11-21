@@ -8,6 +8,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToHtml from "../components/Wiki/WikiToHtml";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
 const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { title, section } = useParams();
@@ -148,7 +149,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
       <Header />
       <div className={`${styles.edit}`}>
         <form onSubmit={addWikiEdit}>
-          <div>
+          <div className={`${styles.wikichar}`}>
             <div className={`${styles.wikichar_title}`}>
               <h4>문서 제목</h4>
               <input
@@ -157,6 +158,12 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
                 value={title}
                 className={`${styles.title}`}
               />
+            </div>
+            <div className={`${styles.wikichar_char}`}>
+              {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
+              <TypeDrop onSelectedOption={handleSelectedOption} /> */}
+              <h4>위키 작성 방법</h4>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
             </div>
           </div>
           <div>

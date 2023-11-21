@@ -53,7 +53,7 @@ function App() {
                     <WikiEdit/>
                   }
                 />
-                <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/newwiki" element={<WikiCreate loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path='/wiki/preview/:title/:ver' element={<WikiRawPrev/>} />
                 <Route path="/history/:title" element={<History />} />

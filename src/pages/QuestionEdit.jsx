@@ -11,6 +11,7 @@ import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 import SpinnerMypage from "../components/SpinnerMypage";
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
 const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -317,7 +318,11 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
             </div>
           </div>
           <div>
-            <h4>문서 내용</h4>
+            <div className={`${styles.QuesWikiManu}`}>
+              <h4>문서 내용</h4>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
+            </div>
+            
             <div className={`${styles.editorbox2}`}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>
