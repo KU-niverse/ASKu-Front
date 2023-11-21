@@ -1,74 +1,26 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom/dist";
 import React, { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom/dist";
+import { useNavigate, useLocation } from "react-router-dom/dist";
 import axios from "axios";
 import styles from "./Wikiviewer.module.css";
-import falseBk from "../img/bookmarkfalse.png";
-import trueBk from "../img/bookmarkFill.png";
-import debate from "../img/debate.png";
-import his from "../img/his.png";
-import minilike from "../img/minilike.png";
+import falseBk from "../img/bookmarkfalse.svg";
+import trueBk from "../img/bookmarkFill.svg";
+import debate from "../img/debate.svg";
+import his from "../img/his.svg";
+import minilike from "../img/minilike.svg";
 import WikiBox from "../components/WikiBox";
 import Switch from "../components/Switch";
 import { useParams } from "react-router-dom/dist";
 import WikiGraph from "../components/Wiki/WikiGraph";
 import SpinnerMypage from "../components/SpinnerMypage";
 
-// const Ques = [
-//     {
-//         'index' : '1.',
-//         'number': '1',
-//         'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
-//     },
-//      {
-//         'index' : '2.',
-//         'number': '2',
-//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
 
-//      },
-//      {
-//          'index' : '3.',
-//          'number': '3',
-//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-//      },
-//      {
-//          'index': '4.',
-//          'number': '4',
-//          'title': '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-//      },
-//  ]
-
-//  const data = [
-//     {
-//         'index' : '1.',
-//         'section': '1',
-//         'title': '일번항목',
-//         'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'
-//     },
-//      {
-//         'index' : '2.',
-//         'section': '2',
-//          'title': '이번항목',
-//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'
-//      },
-//      {
-//          'index' : '3.',
-//          'section': '3',
-//          'title': '삼번항목',
-//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'
-//      },
-//      {
-//          'index': '4.',
-//          'section': '4',
-//          'title': '사번항목',
-//          'content': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!'
-//      },
-//  ]
 
 function WikiViewer() {
   const myDivRef = useRef([]);
   const nav = useNavigate();
+  const location = useLocation();
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isBookmark, setIsBookmark] = useState(false);
@@ -203,7 +155,7 @@ function WikiViewer() {
   };
 
   const linkToAllEdit = () => {
-    nav(`/wikiedit/${title}/all`);
+    nav(`/wikiedit/${title}/all`,{ state: { from: location.pathname } });
   };
 
   const linkToDebate = () => {
@@ -326,12 +278,12 @@ function WikiViewer() {
             />
           </h1>
           <div className={styles.wikititleBtn}>
-            <button onClick={linkToDebate}>
+            <button onClick={linkToDebate} className={styles.wikititleBtnOne}>
               <img src={debate} />
               &nbsp;토론하기
             </button>
 
-            <button onClick={linkToHistory}>
+            <button onClick={linkToHistory} className={styles.wikititleBtnTwo}>
               <img src={his} />
               &nbsp;히스토리
             </button>

@@ -11,8 +11,9 @@ import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 import SpinnerMypage from "../components/SpinnerMypage";
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
-const QuestionEdit = () => {
+const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
@@ -28,6 +29,41 @@ const QuestionEdit = () => {
   const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
   const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
   const [isChecked, setIsChecked] = useState(false);
+
+  const from = stateData.from || '/';
+
+// //로그인 체크 후 우회
+// const checkLoginStatus = async () => {
+//   try {
+//     const res = await axios.get(
+//       process.env.REACT_APP_HOST+"/user/auth/issignedin",
+//       { withCredentials: true }
+//     );
+//     if (res.status === 201 && res.data.success === true) {
+//       setLoggedIn(true);
+//     } else if (res.status === 401) {
+//       setLoggedIn(false);
+//       alert("로그인이 필요한 서비스 입니다.");
+//       return nav(from);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     setLoggedIn(false);
+//     if (error.response.status === 401) {
+//       setLoggedIn(false);
+//       //alert("로그인이 필요한 서비스 입니다.");
+//       return nav(from);
+//     }else{
+//       alert("에러가 발생하였습니다");
+//       return nav(from);
+//     }
+//   }
+// };
+// useEffect(() => {
+//   checkLoginStatus();
+// }, []);
+
+
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
@@ -104,13 +140,13 @@ const QuestionEdit = () => {
       setLoading(false);
       if (error.response.status === 401) {
         setLoading(false);
-        alert("login이 필요합니다.");
-        nav("/signin");
+        alert("로그인이 필요합니다.");
+        return nav(from);
       } else {
         setLoading(false);
         alert(error.response.data.message);
         console.log(error);
-        nav("/");
+        //nav("/");
       }
     }
   };
@@ -282,7 +318,11 @@ const QuestionEdit = () => {
             </div>
           </div>
           <div>
-            <h4>문서 내용</h4>
+            <div className={`${styles.QuesWikiManu}`}>
+              <h4>문서 내용</h4>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
+            </div>
+            
             <div className={`${styles.editorbox2}`}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>

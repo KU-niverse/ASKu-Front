@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import logo from "../img/logo.png";
-import searchIcon from "../img/search_icon.png";
+import searchIcon from "../img/Search_icon.png";
 import searchIconGray from "../img/search_icon_gray.png";
 import hamburger from "../img/hamburger.png";
 import alarm from "../img/bell.png";

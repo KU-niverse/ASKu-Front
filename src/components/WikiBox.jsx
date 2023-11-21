@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react';
 import WikiToHtml from './Wiki/WikiToHtml';
 import styles from './WikiBox.module.css'
@@ -13,6 +13,7 @@ const WikiBox = (props) => {
     const section = props.section;
     const isZero = props.isZero
     const nav = useNavigate();
+    const location = useLocation();
     const [isOpen, setView] = useState(true);  // 메뉴의 초기값을 false로 설정
     const contentWithResponsiveImages = content.replace(/<img/g, '<img style="max-width: 100%; height: auto;"');
   
@@ -20,9 +21,13 @@ const WikiBox = (props) => {
     
 
 
-
     const linkToWikiEdit = () => {
-        nav(`/wikiedit/${main}/${section}`, {state:`${index} ${title}`});
+        nav(`/wikiedit/${main}/${section}`, {
+          state: {
+            from: location.pathname,
+            index_title: `${index} ${title}`
+          }
+        });
     
     }
     const linkToWikiQue = () => {

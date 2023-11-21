@@ -43,6 +43,19 @@ h4{
     text-decoration: underline;
 
  }
+ 
+ .QuesWikiManu{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 10px;
+    margin-top: 5px;
+ }
+ .QuesWikiManu p{
+    height: 30px;
+    margin: 0px;
+ }
 .title{
     width: 90%;
     height: 45px;

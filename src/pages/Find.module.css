@@ -34,7 +34,8 @@
     flex-direction: column;
     color: rgba(125, 125, 125, 1);
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 17px;
+
 }
 .findInputs input{
     margin-top: 5px;
@@ -115,6 +116,6 @@
     .logo{
         width: 40%;
         height: 30%;
-        margin-top: 70px;
+        margin-top: 37px;
     }
 }
