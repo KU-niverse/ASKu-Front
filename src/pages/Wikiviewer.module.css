@@ -49,10 +49,12 @@
     margin-left: 20px;
     display: flex;
     align-items: center;
+    word-break: break-word;
 
 }
 .bookmarkImg{
     margin-left: 10px;
+    margin-right: 10px;
     cursor: pointer;
     width: 20px;
 }

@@ -18,6 +18,7 @@
     padding: 30px;
     flex-direction: column;
     width: 74%;
+    min-height: 80vh;
     height: auto;
     margin-left: 13%;
 }

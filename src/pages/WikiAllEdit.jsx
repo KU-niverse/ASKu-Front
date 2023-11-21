@@ -23,7 +23,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
 
   const from = location.state?.from || '/';
-  console.log(from)
+  //console.log(from)
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {

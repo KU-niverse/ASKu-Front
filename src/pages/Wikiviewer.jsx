@@ -14,6 +14,7 @@ import Switch from "../components/Switch";
 import { useParams } from "react-router-dom/dist";
 import WikiGraph from "../components/Wiki/WikiGraph";
 import SpinnerMypage from "../components/SpinnerMypage";
+import Footer from "../components/Footer";
 
 
 
@@ -426,6 +427,7 @@ function WikiViewer() {
           )}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
