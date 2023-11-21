@@ -15,6 +15,12 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
   const LS_KEY_SAVE_ID_FLAG = "LS_KEY_SAVE_ID_FLAG"; //아이디 저장하기 체크여부
   const [saveIDFlag, setSaveIDFlag] = useState(false);
 
+  window.onpopstate = function (event) {
+    // 뒤로 가기 버튼 클릭 시 새로고침하고자 하는 동작 수행
+    window.location.reload();
+    console.log("새로고침?");
+  }
+
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
