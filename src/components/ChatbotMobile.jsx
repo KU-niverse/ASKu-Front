@@ -222,19 +222,19 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
                             className={styles.suggest}
                             style={{ display: showSuggest ? 'block' : 'none' }}>
                             <p className={styles.ref}>추천 질문</p>
-                            <span id='ref_res_1' className={styles.textBox}
+                            <span className={styles.textBox}
                                 onClick={() => handleSuggestClick('너는 누구야?')}>
                                 너는 누구야?
                             </span>
-                            <span id='ref_res_2' className={styles.textBox}
+                            <span className={styles.textBox}
                                 onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}>
                                 휴학은 최대 몇 년까지 가능해?
                             </span>
-                            <span id='ref_res_3' className={styles.textBox}
+                            <span className={styles.textBox}
                                 onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}>
                                 강의 최소 출석 일수에 대해 알려줘.
                             </span>
-                            <span id='ref_res_4' className={styles.textBox}
+                            <span className={styles.textBox}
                                 onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}>
                                 이중전공은 어떻게 해?
                             </span>
