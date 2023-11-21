@@ -41,10 +41,14 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   // };
   const handleChange = (e) => {
     const value = e.target.value;
+    // 줄바꿈을 포함하여 길이를 계산
     if (value.length <= 200) {
       setDebateContent(value);
+    } else {
+      // 200자를 초과하는 경우, 최대 200자까지의 문자열로 잘라서 상태를 업데이트
+      setDebateContent(value.slice(0, 200));
     }
-};
+  };
 
   const submitData = {
     content: debateContent,
@@ -92,7 +96,6 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   const handleKeyDown = (event) => {
     // Shift + Enter가 동시에 눌렸을 때
     if (event.key === "Enter" && event.shiftKey) {
-      console.log()
     }
     // Enter만 눌렸을 때 메시지 전송(여기서는 handleSubmit 함수 호출)
     if (event.key === "Enter" && !event.shiftKey) { // Shift가 눌리지 않고 Enter만 눌렸을 때
