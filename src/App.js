@@ -39,23 +39,14 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-      const handlePageShow = (event) => {
-          if (event.persisted) {
-              // bfcache로 페이지가 복원되었을 때 실행해야하는 로직
-              // event.persisted가 true인 경우에 새로고침하는 로직
-              window.location.reload();
-              console.log("새로고침");
-          } else {
-              // persisted가 true가 아닌 경우는 정상적으로 페이지가 로드된 경우
-          }
+      // 뒤로 가기 버튼 클릭 시 새로고침하는 이벤트 핸들러 설정
+      window.onpopstate = function(event) {
+          window.location.reload();
       };
-
-      // pageshow 이벤트 핸들러 등록
-      window.addEventListener('pageshow', handlePageShow);
 
       return () => {
           // 컴포넌트 언마운트 시 이벤트 핸들러 제거 (cleanup)
-          window.removeEventListener('pageshow', handlePageShow);
+          window.onpopstate = null;
       };
   }, []); // 빈 배열을 전달하여 최초 한 번만 실행되도록 설정
 
