@@ -45,6 +45,7 @@
   font-size: 14px;
 }
 
+
 .b_listhead span{
   font-weight: bold;
   align-self: center;
@@ -52,7 +53,7 @@
 }
 
 .myBadgeStyle .b_listhead img{
-  object-fit: none;
+
   cursor: pointer;
 }
 .myBadgeStyle .b_listmid{
@@ -61,6 +62,8 @@
   font-size: 16px;
   font-weight: 400;
 }
+
+
 .myBadgeStyle .b_listfoot{
   display: flex;
   flex-direction: row;

@@ -19,6 +19,7 @@
 .comment_content{
   padding-left: 10px;
   cursor: pointer;
+  word-break: break-word;
 }
 
 
