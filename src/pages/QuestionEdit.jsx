@@ -113,7 +113,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       console.error(error);
       if (error.response.status === 401) {
         alert(error.response.data.message);
-        nav("/signin");
+        return nav('/');
       } else {
         alert("잘못된 접근입니다.");
       }
