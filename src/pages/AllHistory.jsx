@@ -56,6 +56,7 @@ const AllHistory = () => {
         process.env.REACT_APP_HOST+`/wiki/historys?type=${type}`
       );
       setHistorys(result.data.message);
+      //console.log("개수" + result.data.message.length);
       setTypeCount(result.data.message.length);
     } catch (error) {
       console.error(error);
