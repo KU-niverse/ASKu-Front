@@ -49,6 +49,7 @@
     margin-left: 20px;
     display: flex;
     align-items: center;
+    word-break: break-word;
 
 }
 .bookmarkImg{
