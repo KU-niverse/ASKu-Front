@@ -71,7 +71,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/mybookmark" element={<MyBookmark />} />
+                <Route path="/mybookmark" element={<MyBookmark loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>
