@@ -34,7 +34,7 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
       } else if (res.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav(from);
+        return nav('/');
       }
     } catch (error) {
       console.error(error);
@@ -42,10 +42,10 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
       if (error.response.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav(from);
+        return nav('/');
       }else{
         alert("에러가 발생하였습니다");
-        return nav(from);
+        return nav('/');
       }
     }
   };
