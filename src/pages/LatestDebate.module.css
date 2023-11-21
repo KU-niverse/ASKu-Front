@@ -24,6 +24,7 @@
 }
 
 .debatecontent{
+  min-height: 80vh;
   height: auto;
   width: auto;
   display: flex;
@@ -93,8 +94,10 @@
 
   .debatecontent{
     width: 86%;
+    min-height: 80vh;
     margin: 0 7%;
     flex-wrap: wrap;
+
 
 
   }

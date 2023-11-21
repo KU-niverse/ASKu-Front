@@ -83,8 +83,8 @@ const HistoryDiff = () => {
         </div>
         <div className={styles.historyDiff}>
           <div className={styles.verCompare}>
-            VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;<span>&nbsp;vs&nbsp;</span>
-            &nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}
+            <span className={styles.verCompareNum}>VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;</span><span className={styles.verCompareVs}>&nbsp;vs&nbsp;</span>
+            <span className={styles.verCompareNum}>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</span>
           </div>
           <div>
             <ReactDiffViewer

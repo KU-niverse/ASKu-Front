@@ -70,6 +70,7 @@
 .wikiText{
     font-size: 14px;
     width: 100%;
+    word-break: break-word;
 
 }
 .wikiText a{

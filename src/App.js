@@ -43,17 +43,17 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/wiki/:title" element={<WikiViewer />} />
-                <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
-                <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
-                <Route path="/question/edit/:main" element={<QuestionEdit />} />
+                <Route path="/wiki/:title" element={<WikiViewer loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/wikiedit/:title/all" element={<WikiAllEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/wikiedit/:main/:section" element={<WikiEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/question/edit/:main" element={<QuestionEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route
                   path="/wikiedit/:id"
                   element={
                     <WikiEdit/>
                   }
                 />
-                <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/newwiki" element={<WikiCreate loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path='/wiki/preview/:title/:ver' element={<WikiRawPrev/>} />
                 <Route path="/history/:title" element={<History />} />
@@ -71,7 +71,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/mybookmark" element={<MyBookmark />} />
+                <Route path="/mybookmark" element={<MyBookmark loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>
