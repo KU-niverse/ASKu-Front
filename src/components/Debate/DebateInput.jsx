@@ -41,16 +41,39 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   // };
   const handleChange = (e) => {
     const value = e.target.value;
+    // 줄바꿈을 포함하여 길이를 계산
     if (value.length <= 200) {
       setDebateContent(value);
+    } else {
+      // 200자를 초과하는 경우, 최대 200자까지의 문자열로 잘라서 상태를 업데이트
+      setDebateContent(value.slice(0, 200));
     }
-};
+  };
 
   const submitData = {
     content: debateContent,
   };
 
+  // const handleSubmit = async (event) => {
+  //   if (!loggedIn) {
+  //     alert(
+  //       "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
+  //     );
+  //     Navigate("/signin");
+  //     return;
+  //   }
+  //   if (debateContent.trim() === "") {
+  //     alert("글을 입력해주세요.");
+  //     return;
+  //   }
+
+  //   onDebateSubmit(submitData);
+  //   window.location.reload();
+  // };
+
+
   const handleSubmit = async (event) => {
+    // event.preventDefault();
     if (!loggedIn) {
       alert(
         "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
@@ -63,16 +86,22 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       return;
     }
 
-    //개행 문자 인식 코드
-    // const encodedContent = encodeURIComponent(debateContent);
+    // 상위 컴포넌트의 handleDebateSubmit 함수를 호출하여 데이터 전송
+    await onDebateSubmit(submitData);
 
-    // const submitData = {
-    //     content: encodedContent,
-    // };
-    
-    //
-    onDebateSubmit(submitData);
-    window.location.reload();
+    // 폼 제출에 성공하면 입력 필드를 초기화합니다.
+    setDebateContent('');
+  };
+
+  const handleKeyDown = (event) => {
+    // Shift + Enter가 동시에 눌렸을 때
+    if (event.key === "Enter" && event.shiftKey) {
+    }
+    // Enter만 눌렸을 때 메시지 전송(여기서는 handleSubmit 함수 호출)
+    if (event.key === "Enter" && !event.shiftKey) { // Shift가 눌리지 않고 Enter만 눌렸을 때
+      event.preventDefault(); // 기본 Enter 행동(새 줄 추가)을 방지
+      handleSubmit(); // 폼 제출 처리
+    }
   };
 
   return (
@@ -88,6 +117,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
           placeholder="해당 토론에 대한 의견을 입력하세요."
           value={debateContent}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
     </div>

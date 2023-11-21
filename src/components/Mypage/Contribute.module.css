@@ -14,6 +14,9 @@
   color: black;
   font-weight: bold;
 }
+.cb_index{
+  word-break: break-word;
+}
 .cb_back{
   width: 45%;
   justify-content: flex-end;
