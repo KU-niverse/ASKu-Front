@@ -4,6 +4,11 @@
   cursor: pointer;
 }
 
+.menubtn img{
+  width: 23.4px;
+  object-fit: contain;
+}
+
 .menuitem{
   width: auto;
 }

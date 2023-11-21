@@ -1,7 +1,7 @@
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import threedots from "../img/dots.png";
+import threedots from "../img/threedots.png";
 import styles from "./ThreedotsReport.module.css";
 import { useState } from "react";
 import axios from "axios";
