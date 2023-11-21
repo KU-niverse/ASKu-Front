@@ -1,6 +1,10 @@
 .hidden{
   display: none;
 }
+.history{
+  min-height: 80vh;
+
+}
 .header {
     display: flex;
     justify-content: center;

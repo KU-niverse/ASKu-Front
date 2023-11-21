@@ -5,6 +5,7 @@ import styles from "./MyBookmark.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 
 
 
@@ -14,7 +15,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  console.log(from)
+  //yconsole.log(from)
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -94,6 +95,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }) => {
           })}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

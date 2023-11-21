@@ -10,6 +10,7 @@ import axios from "axios";
 import ResultQues from "../components/ResultQues";
 import FormatTimeAgo from "../components/FormatTimeAgo";
 import BookmarkBox from "../components/BookmarkBox";
+import Footer from "../components/Footer";
 
 const data = [
   {
@@ -225,6 +226,7 @@ const SearchResearch = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
