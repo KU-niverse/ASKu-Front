@@ -51,6 +51,7 @@
   overflow: hidden; /* 컨테이너 밖으로 텍스트가 넘치는 것을 방지 */
   text-overflow: ellipsis; /* 텍스트가 넘칠 경우 말줄임표를 표시 */
   word-wrap: break-word; /* 구형 브라우저를 위해 */
+  word-break: break-word;
   overflow-wrap: break-word; /* 표준 속성 */
 }
 

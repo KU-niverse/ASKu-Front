@@ -113,7 +113,6 @@
     display: flex;
     flex-direction: column;
     text-align: right;
-    margin-right: 48px;
     width: 100%;
 }
 
@@ -144,11 +143,26 @@
     margin-bottom: 10px;
     transition: background-color 0.3s ease;
 }
+@media (max-width: 380px) {
+    .textBox {
+        right: 200px;
+    }
+}
 .textBox:hover {
     background-color: #9F132E;
     color: #FFF;
 }
 
+.promptWrapContainer {
+    height: 150px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
 
 .promptWrap {
     position: relative;

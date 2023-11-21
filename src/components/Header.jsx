@@ -17,6 +17,7 @@ import AlarmModal from "./AlarmModal";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
+import randomDocs from "../img/random.svg";
 
 function Header() {
   const [inputValue, setInputValue] = useState("");
@@ -31,7 +32,7 @@ function Header() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [loadingMypage, setLoadingMypage] = useState(true);
   const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false);
-
+  const [randomDoc, setRandomDoc] = useState([]);
   const Nav = useNavigate();
 
   const logOut = () => {
@@ -128,7 +129,7 @@ function Header() {
       setMobileHeaderHeight("60px");
     } else {
       setMobileHeaderOpen(true);
-      setMobileHeaderHeight("320px");
+      setMobileHeaderHeight("350px");
     }
   };
 
@@ -149,6 +150,19 @@ function Header() {
     setMobileAlarmModalOpen(!mobileAlarmModalOpen);
     console.log(mobileAlarmModalOpen);
   };
+
+const handleRandomDocClick = async () => {
+  try {
+    const response = await axios.get(process.env.REACT_APP_HOST+'/wiki/random', {
+      withCredentials: true,
+    });
+    if (response.status === 200) {
+      window.location.href = `/wiki/${response.data.title}`; // 페이지를 새 URL로 이동 및 새로고침
+    }
+  } catch (error) {
+    console.error('Error fetching random document:', error);
+  }
+};
 
   return (
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
@@ -175,14 +189,12 @@ function Header() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault();
+                  // 엔터키를 누를 때
+                  e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
                   if (inputValue.trim() !== "") {
-                    Nav(
-                      `/result/${encodeURIComponent(inputValue).replace(
-                        /\./g,
-                        "%2E"
-                      )}`
-                    );
+                    window.location.href = `/result/${encodeURIComponent(
+                      inputValue
+                    )}`; // 페이지 이동
                     setInputValue("");
                   }
                 }
@@ -220,6 +232,12 @@ function Header() {
             {isLoggedIn ? (
               <>
                 <img
+                  src={randomDocs}
+                  alt="randomDocs"
+                  className={styles.signinButton}
+                  onClick={handleRandomDocClick}
+                />
+                <img
                   src={bookmark}
                   alt="bookmark_gray"
                   className={styles.signinButton}
@@ -248,12 +266,23 @@ function Header() {
                         alt="mypage"
                         className={styles.mypageBtn}
                       />
+                      <img
+                        src={nicknameText.data[0].rep_badge_image}
+                        alt="rep_badge"
+                        className={styles.repBadge}
+                      />
                     </div>
                   </Link>
                 )}
               </>
             ) : (
               <>
+                <img
+                  src={randomDocs}
+                  alt="randomDocs"
+                  className={styles.randomDocs}
+                  onClick={handleRandomDocClick}
+                />
                 <Link to="/signup">
                   <button className={styles.headerButton}>회원가입</button>
                 </Link>
@@ -342,6 +371,16 @@ function Header() {
                         className={styles.mobileIcon}
                       />
                       <p className={styles.mobileMenuText}>토론</p>
+                    </div>
+                  </Link>
+                  <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                    <div className={styles.mobileHamburgerMenu}>
+                      <img
+                        src={randomDocs}
+                        alt=""
+                        className={styles.mobileIcon}
+                      />
+                      <p className={styles.mobileMenuText}>랜덤 문서</p>
                     </div>
                   </Link>
                   {isLoggedIn ? (

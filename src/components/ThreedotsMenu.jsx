@@ -1,7 +1,7 @@
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import threedots from "../img/dots.png";
+import threedots from "../img/threedots.png";
 import styles from "./ThreedotsMenu.module.css";
 import { useState } from "react";
 import axios from "axios";
@@ -25,7 +25,7 @@ function ThreedotsMenu({ questionId, type }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8080/user/auth/issignedin",
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
