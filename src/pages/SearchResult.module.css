@@ -27,13 +27,12 @@
     align-items: center;
     font-size: 24px;
     font-weight: 700;
-    margin: 20px 0px 10px 0px;
+    margin: 20px 0px 20px 0px;
 }
 .header h4{
   margin: 0px;
   font-size: 25px;
   font-weight: 700;
-  margin-bottom: 15px;
 }
 .header img{
   width: 36px;
@@ -48,7 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     
   }
   .type{
