@@ -189,14 +189,12 @@ const handleRandomDocClick = async () => {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault();
+                  // 엔터키를 누를 때
+                  e.preventDefault(); // 기본 동작 방지 (폼 제출 등)
                   if (inputValue.trim() !== "") {
-                    Nav(
-                      `/result/${encodeURIComponent(inputValue).replace(
-                        /\./g,
-                        "%2E"
-                      )}`
-                    );
+                    window.location.href = `/result/${encodeURIComponent(
+                      inputValue
+                    )}`; // 페이지 이동
                     setInputValue("");
                   }
                 }
@@ -267,6 +265,11 @@ const handleRandomDocClick = async () => {
                         src={mypage}
                         alt="mypage"
                         className={styles.mypageBtn}
+                      />
+                      <img
+                        src={nicknameText.data[0].rep_badge_image}
+                        alt="rep_badge"
+                        className={styles.repBadge}
                       />
                     </div>
                   </Link>
