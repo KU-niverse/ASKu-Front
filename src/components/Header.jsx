@@ -266,6 +266,11 @@ const handleRandomDocClick = async () => {
                         alt="mypage"
                         className={styles.mypageBtn}
                       />
+                      <img
+                        src={nicknameText.data[0].rep_badge_image}
+                        alt="rep_badge"
+                        className={styles.repBadge}
+                      />
                     </div>
                   </Link>
                 )}

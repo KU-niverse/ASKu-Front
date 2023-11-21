@@ -207,6 +207,22 @@
     left: 0;
 }
 
+.repBadge {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    bottom: -12px;
+    right: 12px;
+    border-radius: 50%;
+    background-color: #FF6F6F;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
 .nicknameText {
     font-size: 12px;
     margin: 0;
