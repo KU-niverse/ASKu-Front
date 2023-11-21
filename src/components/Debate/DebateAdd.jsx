@@ -54,7 +54,14 @@ const DebateAdd = ({ title }) => {
       }
     } catch (error) {
       console.error(error);
-      return alert(error.response.data.message);
+      if (error.response.status === 401) {
+        return alert("로그인이 필요한 서비스 입니다.");
+        
+      }else if (error.response.status === 400){
+        return alert("잘못된 입력입니다. ");
+      } else{
+        return alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요");
+      }
     }
   };
 
