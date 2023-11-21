@@ -10,6 +10,7 @@ import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+import Footer from "../components/Footer";
 
 const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { main, section } = useParams();
@@ -211,7 +212,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
             />
           </div>
         </form>
-      </div>
+      </div>      
     </div>
   );
 };

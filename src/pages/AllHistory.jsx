@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Paging from "../components/Paging";
 import FormatTimeAgo from "../components/FormatTimeAgo";
+import Footer from "../components/Footer";
 
 // const data = [
 //     {
@@ -255,6 +256,7 @@ const AllHistory = () => {
           />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

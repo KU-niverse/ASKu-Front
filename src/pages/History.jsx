@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Paging from "../components/Paging";
+import Footer from "../components/Footer";
 
 const data = [
   {
@@ -123,6 +124,7 @@ const History = (props) => {
           />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

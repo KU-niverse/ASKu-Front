@@ -5,6 +5,7 @@ import styles from "./MyBookmark.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 
 
 
@@ -94,6 +95,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }) => {
           })}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
