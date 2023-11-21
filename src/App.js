@@ -33,10 +33,32 @@ import ResetPw from './pages/ResetPw';
 import AllHistory from './pages/AllHistory';
 import WikiRawPrev from './pages/WikiRawPrev';
 import MobileChatBotPage from './pages/MobileChatbotPage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+      const handlePageShow = (event) => {
+          if (event.persisted) {
+              // bfcache로 페이지가 복원되었을 때 실행해야하는 로직
+              // event.persisted가 true인 경우에 새로고침하는 로직
+              window.location.reload();
+              console.log("새로고침");
+          } else {
+              // persisted가 true가 아닌 경우는 정상적으로 페이지가 로드된 경우
+          }
+      };
+
+      // pageshow 이벤트 핸들러 등록
+      window.addEventListener('pageshow', handlePageShow);
+
+      return () => {
+          // 컴포넌트 언마운트 시 이벤트 핸들러 제거 (cleanup)
+          window.removeEventListener('pageshow', handlePageShow);
+      };
+  }, []); // 빈 배열을 전달하여 최초 한 번만 실행되도록 설정
+
     return ( 
         <Router>
             <Routes>
