@@ -85,7 +85,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
   const handleIdDoubleCheck = async (e) => {
     e.preventDefault();
     if(form.id.trim() === ''){
-      return alert("닉네임을 입력해주세요.")
+      return alert("아이디를 입력해주세요.");
     }else if (isIdValid === false) {
       return alert("아이디 형식이 올바르지 않습니다.");
     }
