@@ -22,7 +22,7 @@ const type=4
         </div>
       </div>
       <div className={styles.content}>
-        <span>{content}</span>
+        <span className={styles.debate_content}>{content}</span>
       </div>
     </div>
   )

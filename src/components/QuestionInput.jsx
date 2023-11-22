@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styles from "./QuestionInput.module.css";
 import DropDown from "./DropDown";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -12,6 +12,11 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  console.log(from)
+
+ //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
@@ -22,15 +27,26 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
         setLoggedIn(true);
       } else if (res.status === 401) {
         setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
       }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return Navigate(from);
+      }
     }
   };
   useEffect(() => {
     checkLoginStatus();
   }, []);
+  //
 
   //dropdown에서 선택한 index 반영
   const handleSelectedOption = (optionValue) => {

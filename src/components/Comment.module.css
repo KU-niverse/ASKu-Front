@@ -33,6 +33,10 @@
   cursor: pointer;
 }
 
+.q_content{
+  word-break: break-word;
+}
+
 
 
 .q_footer{
