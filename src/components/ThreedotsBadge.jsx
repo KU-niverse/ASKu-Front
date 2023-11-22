@@ -30,7 +30,7 @@ function ThreedotsBadge({ badge_id }) {
     <Menu
       menuButton={
         <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt="Menu" style={{ width: '23.4px' }}/>
+          <img src={threedots} alt="Menu"/>
         </MenuButton>
       }
       onItemClick={(e) => console.log(`${e.value} clicked`)}
