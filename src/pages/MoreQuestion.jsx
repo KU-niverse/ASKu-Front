@@ -153,7 +153,8 @@ const MoreQuestion = () => {
                 questionData.data &&
                 questionData.data.map((data) => (
                   <Question
-                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}                    key={data.id}
+                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}                    
+                    key={data.id}
                     id={data.id}
                     doc_id={data.doc_id}
                     user_id={data.user_id}

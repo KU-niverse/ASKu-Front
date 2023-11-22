@@ -15,7 +15,6 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   const from = location.state?.from || '/';
   console.log(from)
 
- //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
@@ -26,33 +25,21 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
         setLoggedIn(true);
       } else if (res.status === 401) {
         setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return Navigate(from);
       }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
       if (error.response.status === 401) {
         setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return Navigate(from);
       }else{
         alert("에러가 발생하였습니다");
-        return Navigate(from);
       }
     }
   };
   useEffect(() => {
     checkLoginStatus();
   }, []);
-  //
 
-  // const handleChange = (e) => {
-  //   const value = e.target.value;
-  //   if (value.length <= 200) {
-  //     setDebateContent(value);
-  //   }
-  // };
   const handleChange = (e) => {
     const value = e.target.value;
     // 줄바꿈을 포함하여 길이를 계산
@@ -68,26 +55,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     content: debateContent,
   };
 
-  // const handleSubmit = async (event) => {
-  //   if (!loggedIn) {
-  //     alert(
-  //       "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
-  //     );
-  //     Navigate("/signin");
-  //     return;
-  //   }
-  //   if (debateContent.trim() === "") {
-  //     alert("글을 입력해주세요.");
-  //     return;
-  //   }
-
-  //   onDebateSubmit(submitData);
-  //   window.location.reload();
-  // };
-
-
-  const handleSubmit = async (event) => {
-    // event.preventDefault();
+  const handleSubmit = async () => {
     if (!loggedIn) {
       alert(
         "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
@@ -99,11 +67,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       alert("글을 입력해주세요.");
       return;
     }
-
-    // 상위 컴포넌트의 handleDebateSubmit 함수를 호출하여 데이터 전송
     await onDebateSubmit(submitData);
-
-    // 폼 제출에 성공하면 입력 필드를 초기화합니다.
     setDebateContent('');
   };
 
