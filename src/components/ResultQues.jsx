@@ -1,5 +1,5 @@
-import comment_icon from "../img/comment_icon.png"
-import edit from "../img/edit.png"
+import comment_icon from "../img/resultcomment.svg"
+import edit from "../img/resultedit.svg"
 import styles from "../components/ResultQues.module.css"
 import FormatDate from "./FormatDate"
 import ThreedotsMenu from "./ThreedotsMenu"
