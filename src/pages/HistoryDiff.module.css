@@ -67,6 +67,12 @@
     font-size: 24px;
   }
   @media only screen and (max-width: 767px) {
+    .historyCompare{
+      width: 90%;
+      margin-left: 5%;
+      height: auto;
+      margin-bottom: 40px;
+    }
     .verCompareNum{
       font-size: 17px;
     }
