@@ -21,7 +21,7 @@ function ThreedotsReport({ type, target }) {
   const Navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  console.log(from)
+  
 
  //로그인 체크 후 우회
   // const checkLoginStatus = async () => {
@@ -89,9 +89,6 @@ function ThreedotsReport({ type, target }) {
           <img src={threedots} alt="Menu" />
         </MenuButton>
       }
-      onItemClick={(e) => {
-        console.log(`${e.value} clicked`);
-      }}
     >
       <MenuItem
         className={styles.menuitem}

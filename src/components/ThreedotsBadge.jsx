@@ -33,7 +33,6 @@ function ThreedotsBadge({ badge_id }) {
           <img src={threedots} alt="Menu"/>
         </MenuButton>
       }
-      onItemClick={(e) => console.log(`${e.value} clicked`)}
     >
       <MenuItem
         className={styles.menuitem}

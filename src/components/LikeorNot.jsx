@@ -15,7 +15,6 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
   const Navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  console.log(from)
 
  //로그인 체크 후 우회
   const checkLoginStatus = async () => {

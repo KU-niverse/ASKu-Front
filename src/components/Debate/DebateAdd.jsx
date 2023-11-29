@@ -21,7 +21,6 @@ const DebateAdd = ({ title }) => {
           setDebateListData(res.data);
           setNumb(res.data.data.length);
         } else {
-          //console.log(res.data.message);
         }
       } catch (error) {
         console.error(error);

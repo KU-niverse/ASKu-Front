@@ -43,7 +43,6 @@ function EditModal({ isOpen, onClose, questionId }) {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        console.log(response.data);
         alert(response.data.message);
         window.location.reload();
       }

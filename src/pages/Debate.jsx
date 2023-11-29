@@ -84,7 +84,7 @@ function Debate() {
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 500) {
-        console.log(error.response.data.message);
+        //console.log(error.response.data.message);
         alert(error.response.data.message);
       }
     }

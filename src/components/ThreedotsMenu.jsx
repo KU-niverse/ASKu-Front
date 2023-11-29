@@ -25,7 +25,7 @@ function ThreedotsMenu({ questionId, type }) {
   const Navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
-  console.log(from)
+
 
  //로그인 체크 후 우회
   // const checkLoginStatus = async () => {
@@ -112,7 +112,6 @@ useEffect(() => {
           <img src={threedots} alt="Menu" />
         </MenuButton>
       }
-      onItemClick={(e) => console.log(`${e.value} clicked`)}
     >
       <MenuItem
         className={styles.menuitem}

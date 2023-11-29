@@ -13,7 +13,6 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
 
   const location = useLocation();
   const from = location.state?.from || '/';
-  console.log(from)
 
   const checkLoginStatus = async () => {
     try {

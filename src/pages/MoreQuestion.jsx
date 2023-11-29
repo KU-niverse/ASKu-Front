@@ -101,7 +101,7 @@ const MoreQuestion = () => {
     } catch (error) {
       console.error(error);
       if (error.status === 500) {
-        console.log(error.data.message);
+        //console.log(error.data.message);
         alert(error.data.message);
       }
     }

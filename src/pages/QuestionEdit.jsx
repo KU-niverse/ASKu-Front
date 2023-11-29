@@ -145,7 +145,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       } else {
         setLoading(false);
         alert(error.response.data.message);
-        console.log(error);
+        //console.log(error);
         //nav("/");
       }
     }
