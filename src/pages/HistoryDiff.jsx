@@ -78,7 +78,7 @@ const HistoryDiff = () => {
       </div>
       <div className={styles.historyCompare}>
         <div className={styles.historyTitle}>
-          <p className={styles.listTitle}>입실렌티</p>
+          <p className={styles.listTitle}>{title}</p>
           <p className={styles.listTitle2}>문서의 변경 내용</p>
         </div>
         <div className={styles.historyDiff}>
@@ -86,7 +86,7 @@ const HistoryDiff = () => {
             <span className={styles.verCompareNum}>VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;</span><span className={styles.verCompareVs}>&nbsp;vs&nbsp;</span>
             <span className={styles.verCompareNum}>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</span>
           </div>
-          <div>
+          <div className={styles.diffBox}>
             <ReactDiffViewer
               oldValue={oldText}
               newValue={newText}

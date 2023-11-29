@@ -6,7 +6,10 @@
     height: 80px;
     width : 100%;
   }
-  
+  .diffBox{
+    width: 100%;
+    overflow-x: auto;
+  }
   .header span{
     font-size: 30px;
     font-weight:bolder;
@@ -64,6 +67,12 @@
     font-size: 24px;
   }
   @media only screen and (max-width: 767px) {
+    .historyCompare{
+      width: 90%;
+      margin-left: 5%;
+      height: auto;
+      margin-bottom: 40px;
+    }
     .verCompareNum{
       font-size: 17px;
     }
