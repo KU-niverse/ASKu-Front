@@ -6,7 +6,10 @@
     height: 80px;
     width : 100%;
   }
-  
+  .diffBox{
+    width: 100%;
+    overflow-x: auto;
+  }
   .header span{
     font-size: 30px;
     font-weight:bolder;
