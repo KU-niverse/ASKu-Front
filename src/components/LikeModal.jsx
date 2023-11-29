@@ -41,9 +41,6 @@ function LikeModal({ isOpen, onClose, feedbackId }) {
                     'Content-Type': 'application/json',
                 }
             })
-            .then(response => {
-                console.log(response);
-            })
             .catch(error => {
                 console.error(error);
             });

@@ -20,7 +20,6 @@ const DebateAdd = ({ title }) => {
         if (res.status === 200) {
           setDebateListData(res.data);
           setNumb(res.data.data.length);
-        } else {
         }
       } catch (error) {
         console.error(error);

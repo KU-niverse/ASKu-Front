@@ -36,9 +36,6 @@ function UnlikeModal({ isOpen, onClose, feedbackId }) {
                 feedback_id: feedbackId,
                 content: inputValue
         })
-        .then(response => {
-            console.log(response);
-        })
         .catch(error => {
             console.error(error);
         });

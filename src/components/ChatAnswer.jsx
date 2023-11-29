@@ -70,7 +70,6 @@ const ChatAnswer = (props) => {
             feedback: true,
     }).
     then(response => {
-        console.log(response);
         const updatedFeedbackId = response.data.id;
         setFeedbackId(updatedFeedbackId);
     }).
@@ -85,7 +84,6 @@ const ChatAnswer = (props) => {
             feedback: false,
     }).
     then(response => {
-        console.log(response);
         const updatedFeedbackId = response.data.id;
         setFeedbackId(updatedFeedbackId);
     }).
