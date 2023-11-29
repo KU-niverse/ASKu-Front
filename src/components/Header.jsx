@@ -148,7 +148,6 @@ function Header() {
 
   const handleMobileAlarmModal = () => {
     setMobileAlarmModalOpen(!mobileAlarmModalOpen);
-    console.log(mobileAlarmModalOpen);
   };
 
 const handleRandomDocClick = async () => {
