@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./DebateSearch.module.css";
-import searchIcon from "../../img/Search_icon.png";
+import searchIcon from "../../img/search_icon.svg";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
