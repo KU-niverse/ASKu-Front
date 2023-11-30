@@ -8,7 +8,6 @@
   }
   .diffBox{
     width: 100%;
-    overflow-x: auto;
   }
   .header span{
     font-size: 30px;
@@ -79,4 +78,11 @@
     .verCompareVs{
       font-size: 15px;
     }
+    .diffBox{
+      width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    
 }
