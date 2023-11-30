@@ -165,9 +165,8 @@
 }
 
 .promptWrap {
-    position: relative;
-    display: flex;
     position: fixed;
+    display: flex;
     bottom: 5vh;
     height: 100px;
     left: 10vw;
