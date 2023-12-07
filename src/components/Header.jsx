@@ -19,7 +19,8 @@ import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
 
-function Header() {
+function Header({ userInfo, setUserInfo }) {
+
   const [inputValue, setInputValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navContainerRightWidth, setNavContainerRightWidth] = useState("150px");
@@ -77,6 +78,10 @@ function Header() {
         );
 
         if (response.status === 201) {
+          // await setUserInfo(response.data);
+          if (userInfo != null) {
+            setUserInfo(response.data.data);
+          }
           setNicknameText(response.data);
           setLoadingMypage(false);
         }

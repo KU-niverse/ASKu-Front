@@ -15,22 +15,23 @@ import Footer from "../components/Footer";
 const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { main, section } = useParams();
   const location = useLocation();
- 
+
   const nav = useNavigate();
   const [desc, setDesc] = useState("");
   const [wiki, setWiki] = useState("");
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
   const [copy, setCopy] = useState(false);
-
+  const [userInfo, setUserInfo] = useState({});
+  const [wikiDocs, setWikiDocs] = useState({});
 
   const from = location.state?.from || '/';
   const index_title = location.state?.index_title || '';
-   //로그인 체크 후 우회
-   const checkLoginStatus = async () => {
+  //로그인 체크 후 우회
+  const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -47,18 +48,28 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
         setLoggedIn(false);
         //alert("로그인이 필요한 서비스 입니다.");
         return nav('/');
-      }else{
+      } else {
         alert("에러가 발생하였습니다");
         return nav('/');
       }
     }
   };
+
+
+  useEffect(() => {
+    if (userInfo[0] !== undefined) {
+      if (wikiDocs.is_managed === 1) {
+        if (userInfo[0].is_authorized === 0) {
+          alert("인증받은 유저만 수정이 가능합니다.");
+          nav(-1);
+        }
+      }
+    }
+  }, [userInfo, wikiDocs]);
+
   useEffect(() => {
     checkLoginStatus();
   }, []);
-
-
-
 
 
 
@@ -87,7 +98,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
     const getWiki = async () => {
       try {
         const result = await axios.get(
-          process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${section}`,
+          process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${section}`,
           {
             withCredentials: true,
           }
@@ -95,6 +106,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
         if (result.status === 200) {
           setDesc(WikiToQuill(result.data.title + "\n" + result.data.content));
           setVersion(result.data.version);
+          setWikiDocs(result.data);
         }
       } catch (error) {
         console.error(error);
@@ -129,7 +141,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
     try {
       const result = await axios.post(
-        process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${section}`,
+        process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${section}`,
         {
           version: version,
           new_content: wikiMarkup,
@@ -148,7 +160,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
       }
     } catch (error) {
       if (error.response.status === 401) {
-        
+
       } else if (error.response.status === 500) {
         alert("제출에 실패했습니다. 다시 시도해주세요.");
         // setWiki(error.response.data.newContent);
@@ -161,7 +173,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <div className={`${styles.container}`}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={`${styles.edit}`}>
         <form onSubmit={addWikiEdit}>
           <div className={`${styles.wikichar}`}>
@@ -178,7 +190,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
               {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
               <TypeDrop onSelectedOption={handleSelectedOption} /> */}
               <h4>위키 작성 방법</h4>
-              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare /></p>
             </div>
           </div>
           <div>
@@ -212,7 +224,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
             />
           </div>
         </form>
-      </div>      
+      </div>
     </div>
   );
 };
