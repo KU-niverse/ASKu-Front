@@ -168,7 +168,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
           </span>
         </div>
         <button className={`${styles.login_btn}`} type="submit">
-          로그인
+          고파스 아이디로 로그인
         </button>
       </form>
       <div className={`${styles.login_signup}`}>
@@ -176,8 +176,10 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
         <a href="https://www.koreapas.com/m/member_join_new.php">고파스 회원가입</a>
       </div>
       <div className={`${styles.login_find}`}>
-        <Link to="/findid">아이디를 잊으셨나요?</Link>
-        <Link to="/findpw">비밀번호를 잊으셨나요?</Link>
+        {/* <Link to="/findid">아이디를 잊으셨나요?</Link> */}
+        {/* <Link to="/findpw">비밀번호를 잊으셨나요?</Link> */}
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">아이디를 잊으셨나요?</a>
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">비밀번호를 잊으셨나요?</a>
       </div>
     </div>
   );
