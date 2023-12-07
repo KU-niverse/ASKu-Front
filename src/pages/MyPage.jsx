@@ -41,7 +41,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -58,7 +58,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
         return Navigate(from);
-      }else{
+      } else {
         alert("에러가 발생하였습니다");
         return Navigate(from);
       }
@@ -87,18 +87,18 @@ function MyPage({ loggedIn, setLoggedIn }) {
       }
     };
 
-    getData(process.env.REACT_APP_HOST+"/user/mypage/info", setMypageData);
+    getData(process.env.REACT_APP_HOST + "/user/mypage/info", setMypageData);
     getData(
-      process.env.REACT_APP_HOST+`/user/mypage/questionhistory/latest`,
+      process.env.REACT_APP_HOST + `/user/mypage/questionhistory/latest`,
       setMyQuestion
     );
     getData(
-      process.env.REACT_APP_HOST+"/user/mypage/debatehistory",
+      process.env.REACT_APP_HOST + "/user/mypage/debatehistory",
       setMyDebate
     );
-    getData(process.env.REACT_APP_HOST+"/user/mypage/badgehistory", setMyBadge);
-    getData(process.env.REACT_APP_HOST+"/user/mypage/wikihistory", setMyWiki);
-    getData(process.env.REACT_APP_HOST+"/wiki/contributions", setMyContribute);
+    getData(process.env.REACT_APP_HOST + "/user/mypage/badgehistory", setMyBadge);
+    getData(process.env.REACT_APP_HOST + "/user/mypage/wikihistory", setMyWiki);
+    getData(process.env.REACT_APP_HOST + "/wiki/contributions", setMyContribute);
   }, []);
 
   //
@@ -203,7 +203,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
               )}
               <div className={styles.infoedit}>
                 <Link to="/changepw">
-                  <button className={styles.edit2}>비밀번호 변경</button>
+                  <button className={styles.edit2} disabled style={{ visibility: 'hidden' }}>비밀번호 변경</button>
                 </Link>
                 {/* <Link to='/changeinfo' >
                   <button className={styles.edit3}>개인정보 변경</button>
@@ -214,8 +214,8 @@ function MyPage({ loggedIn, setLoggedIn }) {
               <p className={styles.title2}>기여 목록</p>
               <div className={styles.graph}>
                 {myContribute &&
-                myContribute.message &&
-                myContribute.message.docs.length === 0 ? (
+                  myContribute.message &&
+                  myContribute.message.docs.length === 0 ? (
                   <p></p>
                 ) : (
                   myContribute &&
@@ -265,8 +265,8 @@ function MyPage({ loggedIn, setLoggedIn }) {
               </Link>
             </div>
             {myQuestion &&
-            myQuestion.message &&
-            myQuestion.data.length === 0 ? (
+              myQuestion.message &&
+              myQuestion.data.length === 0 ? (
               <p>아직 작성한 질문이 없습니다.</p>
             ) : (
               myQuestion &&
