@@ -33,27 +33,40 @@ import ResetPw from './pages/ResetPw';
 import AllHistory from './pages/AllHistory';
 import WikiRawPrev from './pages/WikiRawPrev';
 import MobileChatBotPage from './pages/MobileChatbotPage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+      // 뒤로 가기 버튼 클릭 시 새로고침하는 이벤트 핸들러 설정
+      window.onpopstate = function(event) {
+          window.location.reload();
+      };
+
+      return () => {
+          // 컴포넌트 언마운트 시 이벤트 핸들러 제거 (cleanup)
+          window.onpopstate = null;
+      };
+  }, []); // 빈 배열을 전달하여 최초 한 번만 실행되도록 설정
+
     return ( 
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/result/:title" element={<SearchResult />} />
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/wiki/:title" element={<WikiViewer />} />
-                <Route path="/wikiedit/:title/all" element={<WikiAllEdit />} />
-                <Route path="/wikiedit/:main/:section" element={<WikiEdit />} />
-                <Route path="/question/edit/:main" element={<QuestionEdit />} />
+                <Route path="/wiki/:title" element={<WikiViewer loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/wikiedit/:title/all" element={<WikiAllEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/wikiedit/:main/:section" element={<WikiEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+                <Route path="/question/edit/:main" element={<QuestionEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route
                   path="/wikiedit/:id"
                   element={
                     <WikiEdit/>
                   }
                 />
-                <Route path="/newwiki" element={<WikiCreate />} />
+                <Route path="/newwiki" element={<WikiCreate loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/allhistory" element={<AllHistory/>} />
                 <Route path='/wiki/preview/:title/:ver' element={<WikiRawPrev/>} />
                 <Route path="/history/:title" element={<History />} />
@@ -71,7 +84,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
 
                 <Route path="/chatbot" element={<MobileChatBotPage />} />
-                <Route path="/mybookmark" element={<MyBookmark />} />
+                <Route path="/mybookmark" element={<MyBookmark loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
                 <Route path="/mypage/myquestion" element={<MyQuestion/>} />
                 <Route path="/mypage/mybadge" element={<MyBadge/>}/>
                 <Route path="/wiki/morequestion/:title" element={<MoreQuestion/>}/>

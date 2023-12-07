@@ -105,6 +105,7 @@
 .q_comment img{
   object-fit: contain;
   cursor: pointer;
+  width: 18px;
 }
 
 
@@ -124,6 +125,10 @@
   align-items: center;
   flex-direction: row;
   justify-content: center;
+}
+.q_backfooter img{
+  width: 18px;
+  object-fit: contain;
 }
 
 .q_backfooter span{

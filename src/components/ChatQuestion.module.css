@@ -35,6 +35,17 @@
     top: -20px;
     font-size: 12px;
     line-height: 150%;
+    word-break: break-word;
+}
+
+.chatText {
+    max-width: 400px;
+    height: auto;
+}
+@media screen and (max-width: 500px) {
+    .chatText{
+        max-width: 220px;
+    }
 }
 
 .dots {
@@ -71,3 +82,4 @@
         max-width: 220px;
     }
 }
+

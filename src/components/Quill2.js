@@ -107,7 +107,7 @@ function Quill(props) {
   // 이벤트 핸들러
   const onClickContents = () => {
     const editor = quillRef.current.getEditor();
-    console.log(quillRef.current);
+    //console.log(quillRef.current);
     //console.log(editor.root); // 에디터 안의 내용 HTML 태그
 
     // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자

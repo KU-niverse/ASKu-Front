@@ -4,33 +4,49 @@ import Header from "../components/Header";
 import styles from "./MyBookmark.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 
-const data = [
-  {
-    title: "v1",
-    content: "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-    bookmark: "true",
-  },
-  {
-    title: "v2",
-    content: "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-    bookmark: "true",
-  },
-  {
-    title: "v3",
-    content: "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-    bookmark: "true",
-  },
-  {
-    title: "v4",
-    content: "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-    bookmark: "true",
-  },
-];
 
-const MyBookmark = () => {
+
+const MyBookmark = ({ loggedIn, setLoggedIn }) => {
   const [lists, setLists] = useState([]);
   const [bookCount, setBookCount] = useState(0);
+  const nav = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  //yconsole.log(from)
+
+  //로그인 체크 후 우회
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        { withCredentials: true }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        //alert("로그인이 필요한 서비스 입니다.");
+        return nav(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return nav(from);
+      }
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
 
   const getBookmarks = async () => {
     try {
@@ -79,6 +95,7 @@ const MyBookmark = () => {
           })}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

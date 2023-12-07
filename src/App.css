@@ -2,3 +2,13 @@
 * {
     font-family: 'Pretendard';
 }
+
+.css-1ks9aww-gutter{
+    min-width: 20px !important;
+}
+td{
+    white-space: pre-wrap; /* CSS3*/
+}
+.css-o1u8iu-content-text{
+    word-break: break-all;
+}

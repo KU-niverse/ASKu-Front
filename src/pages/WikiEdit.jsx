@@ -9,17 +9,59 @@ import { useLocation } from "react-router-dom";
 import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+import Footer from "../components/Footer";
 
-const WikiEdit = () => {
+const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { main, section } = useParams();
   const location = useLocation();
-  const index_title = location.state;
+ 
   const nav = useNavigate();
   const [desc, setDesc] = useState("");
   const [wiki, setWiki] = useState("");
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
   const [copy, setCopy] = useState(false);
+
+
+  const from = location.state?.from || '/';
+  const index_title = location.state?.index_title || '';
+   //로그인 체크 후 우회
+   const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        { withCredentials: true }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav('/');
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        //alert("로그인이 필요한 서비스 입니다.");
+        return nav('/');
+      }else{
+        alert("에러가 발생하였습니다");
+        return nav('/');
+      }
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+
+
+
+
+
 
   useEffect(() => {
     //console.log(desc);
@@ -58,7 +100,7 @@ const WikiEdit = () => {
         console.error(error);
         if (error.response.status === 401) {
           alert(error.response.data.message);
-          nav("/signin");
+          //nav("/signin");
         } else {
           alert("잘못된 접근입니다. \n (이미지 최대 용량은 5MB입니다)");
         }
@@ -106,8 +148,7 @@ const WikiEdit = () => {
       }
     } catch (error) {
       if (error.response.status === 401) {
-        alert("로그인이 필요합니다.");
-        nav("/signin");
+        
       } else if (error.response.status === 500) {
         alert("제출에 실패했습니다. 다시 시도해주세요.");
         // setWiki(error.response.data.newContent);
@@ -123,7 +164,7 @@ const WikiEdit = () => {
       <Header />
       <div className={`${styles.edit}`}>
         <form onSubmit={addWikiEdit}>
-          <div>
+          <div className={`${styles.wikichar}`}>
             <div className={`${styles.wikichar_title}`}>
               <h4>문서 제목</h4>
               <input
@@ -132,6 +173,12 @@ const WikiEdit = () => {
                 value={main}
                 className={`${styles.title}`}
               />
+            </div>
+            <div className={`${styles.wikichar_char}`}>
+              {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
+              <TypeDrop onSelectedOption={handleSelectedOption} /> */}
+              <h4>위키 작성 방법</h4>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
             </div>
           </div>
           <div>
@@ -165,7 +212,7 @@ const WikiEdit = () => {
             />
           </div>
         </form>
-      </div>
+      </div>      
     </div>
   );
 };

@@ -18,6 +18,7 @@
     padding: 30px;
     flex-direction: column;
     width: 74%;
+    min-height: 80vh;
     height: auto;
     margin-left: 13%;
 }
@@ -27,11 +28,11 @@
     align-items: center;
     font-size: 24px;
     font-weight: 700;
-    margin: 20px 0px 10px 0px;
+    margin: 20px 0px 20px 0px;
 }
 .header h4{
   margin: 0px;
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 700;
 }
 .header img{
@@ -47,15 +48,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 24px;
-    font-weight: 700;
+    margin-bottom: 15px;
+    
   }
   .type{
     width: 70%;
     display: flex;
     flex-direction: row;
     margin: 0px;
+    font-size: 20px;
+    font-weight: 700;
   }
   .type button{
     display: flex;
@@ -63,7 +65,7 @@
     border: none;
     background-color: white;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
   }
   .btnRed{
@@ -77,8 +79,8 @@
     align-items: center;
     justify-content: center;
     background: rgba(159, 19, 46, 1);
-    width: 37px;
-    height: 22px;
+    width: 34px;
+    height: 19px;
     border-radius: 11px;
     color: white;
     font-size: 14px;
@@ -89,8 +91,8 @@
     align-items: center;
     justify-content: center;
     background: rgba(116, 116, 116, 1);
-    width: 37px;
-    height: 22px;
+    width: 34px;
+    height: 19px;
     border-radius: 11px;
     color: white;
     font-size: 14px;
@@ -144,9 +146,17 @@
     margin: 15px 0px 15px 0px;
     font-size: 14px;
     cursor: pointer;
+    white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
+    
   }
   .listTitle{
+   
     font-weight: 700;
+    
+  }
+  .listTimestamp{
+    margin-left: 5px;
+    
   }
   
   /* 스타일을 초기화하고 싶은 경우 */
@@ -154,6 +164,9 @@
   text-decoration: none; /* 밑줄 제거 */
   color: black; /* 기본 텍스트 색상 유지 */
   margin: 0;
+  white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
+  overflow: hidden; /* 넘치는 부분을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분에 ...을 표시 */
 }
 
 /* 클릭 시 스타일 변경하고 싶은 경우 */

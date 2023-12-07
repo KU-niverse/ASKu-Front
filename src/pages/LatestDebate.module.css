@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -18,11 +24,12 @@
 }
 
 .debatecontent{
+  min-height: 80vh;
   height: auto;
   width: auto;
   display: flex;
   flex-direction: row;
-
+  flex:1
 }
 
 
@@ -87,8 +94,10 @@
 
   .debatecontent{
     width: 86%;
+    min-height: 80vh;
     margin: 0 7%;
     flex-wrap: wrap;
+
 
 
   }

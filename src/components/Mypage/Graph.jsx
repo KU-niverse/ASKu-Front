@@ -51,6 +51,14 @@ function Graph({ total_point, docs }) {
     color: getColor(3),
   });
 
+    // 이름을 10자로 제한하고 넘어가면 "..."으로 처리하는 함수
+    const truncateString = (str, num) => {
+      if (str.length > num) {
+        return str.slice(0, num) + "...";
+      } else {
+        return str;
+      }
+    };
  
   return (
     <div className={styles.g_container}>
@@ -87,7 +95,9 @@ function Graph({ total_point, docs }) {
               style={{ background: item.color }}
             ></div>
             <div className={styles.legendLabel}>
-              <span className={styles.legendname}>{item.name}</span>
+              {/* <span className={styles.legendname}>{item.name}</span> */}
+              {/* item.name을 8자로 제한하여 표시 */}
+              <span className={styles.legendname}>{truncateString(item.name, 8)}</span>
               <span className={styles.legendper}> {item.description}</span>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import threedots from "../img/dots.png";
+import threedots from "../img/threedots.png";
 import styles from "./ThreedotsBadge.module.css";
 import { useState } from "react";
 import axios from "axios";
@@ -30,10 +30,9 @@ function ThreedotsBadge({ badge_id }) {
     <Menu
       menuButton={
         <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt="Menu" />
+          <img src={threedots} alt="Menu"/>
         </MenuButton>
       }
-      onItemClick={(e) => console.log(`${e.value} clicked`)}
     >
       <MenuItem
         className={styles.menuitem}

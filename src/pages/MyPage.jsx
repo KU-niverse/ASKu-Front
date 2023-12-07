@@ -14,7 +14,7 @@ import MyInfo from "../components/Mypage/MyInfo";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SpinnerMypage from "../components/SpinnerMypage";
 import Paging from "../components/Paging";
 
@@ -34,6 +34,10 @@ function MyPage({ loggedIn, setLoggedIn }) {
 
   //login status 체크하기
   const Navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+
+  //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
@@ -44,12 +48,20 @@ function MyPage({ loggedIn, setLoggedIn }) {
         setLoggedIn(true);
       } else if (res.status === 401) {
         setLoggedIn(false);
-        Navigate("/signin");
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
       }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      Navigate("/signin");
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return Navigate(from);
+      }else{
+        alert("에러가 발생하였습니다");
+        return Navigate(from);
+      }
     }
   };
   useEffect(() => {

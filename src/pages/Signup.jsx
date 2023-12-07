@@ -58,9 +58,12 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleNickDoubleCheck = async (e) => {
     e.preventDefault();
-    if (isNickValid === false) {
+    if(form.nick.trim() === ''){
+      return alert("닉네임을 입력해주세요.")
+    }else if (isNickValid === false) {
       return alert("닉네임 형식이 올바르지 않습니다.");
     }
+
     try {
       const result = await axios.get(
         process.env.REACT_APP_HOST+`/user/auth/nickdupcheck/${form.nick}`
@@ -81,7 +84,9 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleIdDoubleCheck = async (e) => {
     e.preventDefault();
-    if (isIdValid === false) {
+    if(form.id.trim() === ''){
+      return alert("아이디를 입력해주세요.");
+    }else if (isIdValid === false) {
       return alert("아이디 형식이 올바르지 않습니다.");
     }
     try {

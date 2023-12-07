@@ -15,6 +15,11 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
   const LS_KEY_SAVE_ID_FLAG = "LS_KEY_SAVE_ID_FLAG"; //아이디 저장하기 체크여부
   const [saveIDFlag, setSaveIDFlag] = useState(false);
 
+  window.onpopstate = function (event) {
+    // 뒤로 가기 버튼 클릭 시 새로고침하고자 하는 동작 수행
+    window.location.reload();
+  }
+
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
@@ -25,14 +30,10 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
         nav("/");
-      } else if (res.status === 401) {
-        setLoggedIn(false);
-        nav("/signin");
-      }
+      } 
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      nav("/signin");
     }
   };
   useEffect(() => {
@@ -94,11 +95,6 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       localStorage.removeItem(LS_KEY_ID);
     }
 
-    if (id.trim() === "") {
-      return alert("아이디를 입력해주세요");
-    } else if (password.trim() === "") {
-      return alert("비밀번호를 입력해주세요");
-    }
 
     try {
       const response = await axios.post(
@@ -128,10 +124,9 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
     e.preventDefault();
 
     if (id === "") {
-      alert("아이디를 입력해주세요.");
-    }
-    if (password === "") {
-      alert("비밀번호를 입력해주세요.");
+      return alert("아이디를 입력해주세요.");
+    }else if (password === "") {
+      return alert("비밀번호를 입력해주세요.");
     }
     userLogin();
   };

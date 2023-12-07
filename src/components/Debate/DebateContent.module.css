@@ -45,6 +45,11 @@
 
 .content{
   font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.debate_content{
+  word-break: break-word;
 }
 
 @media only screen and (max-width: 767px) {

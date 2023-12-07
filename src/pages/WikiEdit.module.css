@@ -11,6 +11,7 @@
     margin-left: 5%;
     margin-top: 50px;
 }
+
 h4{
     margin: 0px;
     margin-bottom: 15px;
@@ -42,6 +43,19 @@ h4{
  .wikiManual:hover{
     text-decoration: underline;
 
+ }
+ 
+ .QuesWikiManu{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 10px;
+    margin-top: 5px;
+ }
+ .QuesWikiManu p{
+    height: 30px;
+    margin: 0px;
  }
 .title{
     width: 90%;
@@ -164,6 +178,10 @@ h4{
     .wikichar_char{
         width: 40%;
     
+     }
+
+     .wikiManual{
+        font-size: 14px;
      }
     .submitbox{
         display: flex;

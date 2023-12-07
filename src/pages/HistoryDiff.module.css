@@ -6,7 +6,9 @@
     height: 80px;
     width : 100%;
   }
-  
+  .diffBox{
+    width: 100%;
+  }
   .header span{
     font-size: 30px;
     font-weight:bolder;
@@ -59,8 +61,28 @@
     font-weight: 600;
     border-bottom: 2px solid rgba(213, 213, 213, 1);
   }
-  .verCompare span{
+  .verCompareVs{
     color: rgba(116, 116, 116, 1);
     font-size: 24px;
   }
-  
+  @media only screen and (max-width: 767px) {
+    .historyCompare{
+      width: 90%;
+      margin-left: 5%;
+      height: auto;
+      margin-bottom: 40px;
+    }
+    .verCompareNum{
+      font-size: 17px;
+    }
+    .verCompareVs{
+      font-size: 15px;
+    }
+    .diffBox{
+      width: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    
+}

@@ -33,6 +33,10 @@
   cursor: pointer;
 }
 
+.q_content{
+  word-break: break-word;
+}
+
 
 
 .q_footer{
@@ -63,7 +67,8 @@
 }
 
 .q_like img{
-  object-fit: none;
+  object-fit: contain;
+  width: 18px;
   cursor: pointer;
 }
 
@@ -88,6 +93,11 @@
 .q_backfooter span{
   display: flex;
   align-items: center;
+}
+
+.q_backfooter img{
+  object-fit: contain;
+  width: 18px;
 }
 
 @media only screen and (max-width: 767px) {

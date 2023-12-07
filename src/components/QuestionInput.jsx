@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styles from "./QuestionInput.module.css";
 import DropDown from "./DropDown";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -12,10 +12,46 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from || '/';
+
+ //로그인 체크 후 우회
+  // const checkLoginStatus = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
+  //       { withCredentials: true }
+  //     );
+  //     if (res.status === 201 && res.data.success === true) {
+  //       setLoggedIn(true);
+  //     } else if (res.status === 401) {
+  //       setLoggedIn(false);
+  //       alert("로그인이 필요한 서비스 입니다.");
+  //       return Navigate(from);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoggedIn(false);
+  //     if (error.response.status === 401) {
+  //       setLoggedIn(false);
+  //       alert("로그인이 필요한 서비스 입니다.");
+  //       return Navigate(from);
+  //     }else{
+  //       alert("에러가 발생하였습니다");
+  //       return Navigate(from);
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkLoginStatus();
+  // }, []);
+  //
+
+  //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8080/user/auth/issignedin",
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -26,6 +62,11 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+      }else{
+        alert("에러가 발생하였습니다");
+      }
     }
   };
   useEffect(() => {
@@ -39,7 +80,6 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
-
     if (value.length <= 200) {
       setQuestionContent(value);
     }
@@ -51,8 +91,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     content: questionContent,
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // 이벤트의 기본 동작을 막음
+  const handleSubmit = async () => {
     if (!loggedIn) {
       alert(
         "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
@@ -69,20 +108,8 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
       alert("질문을 입력해주세요.");
       return;
     } 
-    
-    //개행 문자 인식 코드
-    const encodedContent = encodeURIComponent(questionContent);
-
-    const submitData = {
-      index_title: selectedOption,
-      content: encodedContent,
-    };
-    //
-
-
     onQuestionSubmit(submitData);
     window.location.reload();
-
   };
 
   const countCharacters = () => {

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Paging from "../components/Paging";
 import FormatTimeAgo from "../components/FormatTimeAgo";
+import Footer from "../components/Footer";
 
 // const data = [
 //     {
@@ -56,6 +57,7 @@ const AllHistory = () => {
         process.env.REACT_APP_HOST+`/wiki/historys?type=${type}`
       );
       setHistorys(result.data.message);
+      //console.log("개수" + result.data.message.length);
       setTypeCount(result.data.message.length);
     } catch (error) {
       console.error(error);
@@ -254,6 +256,7 @@ const AllHistory = () => {
           />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

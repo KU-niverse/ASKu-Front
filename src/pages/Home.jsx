@@ -4,7 +4,7 @@ import Chatbot from "../components/Chatbot";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/logo_big.png";
 import styles from "./Home.module.css";
-import searchIcon from "../img/search_icon.png";
+import searchIcon from "../img/search_icon.svg";
 import chatBotBtn from "../img/chatBotBtn.png";
 import axios from "axios";
 import { useState, useEffect } from "react";

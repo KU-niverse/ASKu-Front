@@ -42,25 +42,53 @@ function Debate() {
     takeDebateContent();
   }, [title, debateId]); //토론방 메시지 가져오기
 
+  // const handleDebateSubmit = async (submitData) => {
+  //   try {
+  //     const res = await axios.post(
+  //       process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
+  //       submitData,
+  //       { withCredentials: true }
+  //     );
+  //     if (res.status === 200) {
+  //       setData(res.data);
+  //       // alert(res.data.message)
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     if (error.response.status === 500) {
+  //       console.log(error.response.data.message);
+  //       alert(error.response.data.message);
+  //     }
+  //   }
+  // }; //토론 메세지 생성하기
   const handleDebateSubmit = async (submitData) => {
     try {
-      const res = await axios.post(
+      const postResponse = await axios.post(
         process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
         submitData,
         { withCredentials: true }
       );
-      if (res.status === 200) {
-        setData(res.data);
-        // alert(res.data.message)
+  
+      if (postResponse.status === 200) {
+        // POST 요청이 성공한 후 전체 메시지 목록을 다시 가져옵니다.
+        const getResponse = await axios.get(
+          process.env.REACT_APP_HOST+`/debate/view/${title}/${debateId}`,
+          { withCredentials: true }
+        );
+  
+        if (getResponse.status === 200) {
+          // 전체 메시지 목록으로 상태를 업데이트합니다.
+          setDebateContentData(getResponse.data);
+        }
       }
     } catch (error) {
       console.error(error);
-      if (error.status === 500) {
-        console.log(error.data.message);
-        alert(error.data.message);
+      if (error.response && error.response.status === 500) {
+        //console.log(error.response.data.message);
+        alert(error.response.data.message);
       }
     }
-  }; //토론 메세지 생성하기
+  };
 
   return (
     <div className={styles.container}>

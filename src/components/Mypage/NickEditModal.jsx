@@ -29,7 +29,7 @@ function EditModal({ isOpen, onClose }) {
   }, [isOpen]);
 
   function onChangeNick(e) {
-    const nickRegex = /^[가-힣]{2,8}$/;
+    const nickRegex = /^[가-힣a-zA-Z]{2,10}$/;
     const nickCurrent = e.target.value;
     setNick(nickCurrent);
 
@@ -78,7 +78,7 @@ function EditModal({ isOpen, onClose }) {
 
     try {
       const response = await axios.put(
-        `process.env.REACT_APP_HOST+/user/mypage/editnick`,
+        process.env.REACT_APP_HOST+"/user/mypage/editnick",
         {
           nickname: nick,
         },
@@ -123,7 +123,7 @@ function EditModal({ isOpen, onClose }) {
                     <input
                       required
                       type="text"
-                      placeholder="2-8자 한글로 입력하세요"
+                      placeholder="2-8자 한글이나 영어로 입력"
                       name="nick"
                       value={nick}
                       maxLength="8"

@@ -13,7 +13,7 @@
 .legend {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 50% 50%;
   align-items: center;
   width: 100%;
   grid-row-gap: 5px;
@@ -28,13 +28,31 @@
 .legendColor {
   width: 12px;
   height: 12px;
-  margin-right: 10px;
   border-radius: 100%;
+
+}
+
+.legendLabel{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+
 }
 
 .legendname {
+  display: flex;
   font-size: 14px;
   margin-right: 5px; 
+  margin-left: 10px;
+
+  flex-wrap: wrap;
+  white-space: normal; /* 텍스트를 자동으로 줄바꿈하도록 설정 */
+  overflow: hidden; /* 컨테이너 밖으로 텍스트가 넘치는 것을 방지 */
+  text-overflow: ellipsis; /* 텍스트가 넘칠 경우 말줄임표를 표시 */
+  word-wrap: break-word; /* 구형 브라우저를 위해 */
+  word-break: break-word;
+  overflow-wrap: break-word; /* 표준 속성 */
 }
 
 .legendper{

@@ -7,15 +7,17 @@ import ThreedotsMenu from "./ThreedotsMenu"
 import ThreedotsReport from "./ThreedotsReport"
 import LikeorNot from "./LikeorNot"
 import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 function QuestionQnA({badge_image, current_user_id, answer_count, title, question_id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count}){
   const formattedDate = FormatDate(created_at);
 
   const type=2;
   const nav = useNavigate();
+  const location = useLocation();
   const linktoQuestionEdit = () => {
     nav(`/question/edit/${title}`, {state : {
+      from: location.pathname,
       qid: question_id,
       user_id: user_id,
       content: content,

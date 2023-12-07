@@ -40,6 +40,7 @@
     top: -20px;
     font-size: 12px;
     line-height: 150%;
+    word-break: break-word;
 }
 
 .dots {

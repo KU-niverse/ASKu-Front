@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import search from "../img/search_icon.png";
+import search from "../img/SearchResult.svg";
 import styles from "./SearchResult.module.css";
 import ResultBox from "../components/ResultBox";
 import { useState, useEffect } from "react";
@@ -10,6 +10,7 @@ import axios from "axios";
 import ResultQues from "../components/ResultQues";
 import FormatTimeAgo from "../components/FormatTimeAgo";
 import BookmarkBox from "../components/BookmarkBox";
+import Footer from "../components/Footer";
 
 const data = [
   {
@@ -225,6 +226,7 @@ const SearchResearch = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

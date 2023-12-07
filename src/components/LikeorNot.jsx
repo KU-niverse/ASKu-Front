@@ -3,7 +3,7 @@ import axios from "axios";
 import like from "../img/like.png";
 import likeFill from "../img/likeFill.png";
 import styles from "./LikeorNot.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LikeorNot = ({ questionId, like_count, user_id }) => {
   const [isLiked, setIsLiked] = useState(
@@ -13,27 +13,35 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const Navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
+ //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8080/user/auth/issignedin",
+        process.env.REACT_APP_HOST+"/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
       } else if (res.status === 401) {
         setLoggedIn(false);
-        alert("로그인이 필요합니다.");
-        Navigate("/signin");
       }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      alert("로그인이 필요합니다.");
-      Navigate("/signin");
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+      }else{
+        alert("에러가 발생하였습니다");
+      }
     }
   };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+  
 
   const handleLikeClick = async () => {
     if (!loggedIn) {
@@ -60,6 +68,9 @@ const LikeorNot = ({ questionId, like_count, user_id }) => {
 
       if (error.response && error.response.status === 400) {
         alert("이미 좋아요를 눌렀습니다.");
+      } else if (error.response && error.response.status === 401) {
+        //setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
       } else if (error.response && error.response.status === 403) {
         alert("본인의 질문에는 좋아요를 누를 수 없습니다.");
       } else {
