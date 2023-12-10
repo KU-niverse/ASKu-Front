@@ -29,39 +29,41 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const [defaultOpt, setDefaultOpt] = useState(stateData.index_title);
   const [loading, setLoading] = useState(true); //일단 false로(dropdown불러오기 전에 풀려서 오류)
   const [isChecked, setIsChecked] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+  const [wikiDocs, setWikiDocs] = useState({});
 
   const from = stateData.from || '/';
 
-// //로그인 체크 후 우회
-// const checkLoginStatus = async () => {
-//   try {
-//     const res = await axios.get(
-//       process.env.REACT_APP_HOST+"/user/auth/issignedin",
-//       { withCredentials: true }
-//     );
-//     if (res.status === 201 && res.data.success === true) {
-//       setLoggedIn(true);
-//     } else if (res.status === 401) {
-//       setLoggedIn(false);
-//       alert("로그인이 필요한 서비스 입니다.");
-//       return nav(from);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     setLoggedIn(false);
-//     if (error.response.status === 401) {
-//       setLoggedIn(false);
-//       //alert("로그인이 필요한 서비스 입니다.");
-//       return nav(from);
-//     }else{
-//       alert("에러가 발생하였습니다");
-//       return nav(from);
-//     }
-//   }
-// };
-// useEffect(() => {
-//   checkLoginStatus();
-// }, []);
+  // //로그인 체크 후 우회
+  // const checkLoginStatus = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
+  //       { withCredentials: true }
+  //     );
+  //     if (res.status === 201 && res.data.success === true) {
+  //       setLoggedIn(true);
+  //     } else if (res.status === 401) {
+  //       setLoggedIn(false);
+  //       alert("로그인이 필요한 서비스 입니다.");
+  //       return nav(from);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoggedIn(false);
+  //     if (error.response.status === 401) {
+  //       setLoggedIn(false);
+  //       //alert("로그인이 필요한 서비스 입니다.");
+  //       return nav(from);
+  //     }else{
+  //       alert("에러가 발생하였습니다");
+  //       return nav(from);
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkLoginStatus();
+  // }, []);
 
 
 
@@ -76,7 +78,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const getAllWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/contents/${main}`,
+        process.env.REACT_APP_HOST + `/wiki/contents/${main}`,
         {
           withCredentials: true,
         }
@@ -84,6 +86,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       if (result.status === 200) {
         setDesc(WikiToQuill(result.data.text));
         setVersion(result.data.version);
+        setWikiDocs(result.data);
       }
     } catch (error) {
       console.error(error);
@@ -100,7 +103,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${selectedOption}`,
+        process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
         {
           withCredentials: true,
         }
@@ -108,6 +111,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       if (result.status === 200) {
         setDesc(WikiToQuill(result.data.title + "\n" + result.data.content));
         setVersion(result.data.version);
+        setWikiDocs(result.data);
       }
     } catch (error) {
       console.error(error);
@@ -123,7 +127,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const checkSameIndex = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/contents/question/${qid}`,
+        process.env.REACT_APP_HOST + `/wiki/contents/question/${qid}`,
         {
           withCredentials: true,
         }
@@ -160,6 +164,18 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
 
     setCopy(false);
   }, []);
+
+
+  useEffect(() => {
+    if (userInfo[0] !== undefined) {
+      if (wikiDocs.is_managed === 1) {
+        if (userInfo[0].is_authorized === 0) {
+          alert("인증받은 유저만 수정이 가능합니다.");
+          nav(-1);
+        }
+      }
+    }
+  }, [userInfo, wikiDocs]);
 
   //첫 설정이 문제..
 
@@ -198,7 +214,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     if (selectedOption === "all") {
       try {
         const result = await axios.post(
-          process.env.REACT_APP_HOST+`/wiki/contents/${main}`,
+          process.env.REACT_APP_HOST + `/wiki/contents/${main}`,
           {
             version: version,
             new_content: wikiMarkup,
@@ -232,7 +248,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     } else {
       try {
         const result = await axios.post(
-          process.env.REACT_APP_HOST+`/wiki/contents/${main}/section/${selectedOption}`,
+          process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
           {
             version: version,
             new_content: wikiMarkup,
@@ -282,7 +298,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <div className={`${styles.container}`}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={`${styles.edit}`}>
         <div>
           <QuestionFor
@@ -320,9 +336,9 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
           <div>
             <div className={`${styles.QuesWikiManu}`}>
               <h4>문서 내용</h4>
-              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare/></p>
+              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare /></p>
             </div>
-            
+
             <div className={`${styles.editorbox2}`}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>

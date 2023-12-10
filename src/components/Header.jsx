@@ -19,7 +19,8 @@ import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
 
-function Header() {
+function Header({ userInfo, setUserInfo }) {
+
   const [inputValue, setInputValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navContainerRightWidth, setNavContainerRightWidth] = useState("150px");
@@ -43,7 +44,7 @@ function Header() {
     const checkLoginStatus = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+"/user/auth/issignedin",
+          process.env.REACT_APP_HOST + "/user/auth/issignedin",
           {
             withCredentials: true,
           }
@@ -70,13 +71,17 @@ function Header() {
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_HOST+"/user/mypage/info",
+          process.env.REACT_APP_HOST + "/user/mypage/info",
           {
             withCredentials: true,
           }
         );
 
         if (response.status === 201) {
+          // await setUserInfo(response.data);
+          if (userInfo != null) {
+            setUserInfo(response.data.data);
+          }
           setNicknameText(response.data);
           setLoadingMypage(false);
         }
@@ -94,7 +99,7 @@ function Header() {
   const signOut = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/user/auth/signout`,
+        process.env.REACT_APP_HOST + `/user/auth/signout`,
         {
           withCredentials: true,
         }
@@ -150,18 +155,18 @@ function Header() {
     setMobileAlarmModalOpen(!mobileAlarmModalOpen);
   };
 
-const handleRandomDocClick = async () => {
-  try {
-    const response = await axios.get(process.env.REACT_APP_HOST+'/wiki/random', {
-      withCredentials: true,
-    });
-    if (response.status === 200) {
-      window.location.href = `/wiki/${response.data.title}`; // 페이지를 새 URL로 이동 및 새로고침
+  const handleRandomDocClick = async () => {
+    try {
+      const response = await axios.get(process.env.REACT_APP_HOST + '/wiki/random', {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        window.location.href = `/wiki/${response.data.title}`; // 페이지를 새 URL로 이동 및 새로고침
+      }
+    } catch (error) {
+      console.error('Error fetching random document:', error);
     }
-  } catch (error) {
-    console.error('Error fetching random document:', error);
-  }
-};
+  };
 
   return (
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
@@ -282,9 +287,12 @@ const handleRandomDocClick = async () => {
                   className={styles.randomDocs}
                   onClick={handleRandomDocClick}
                 />
-                <Link to="/signup">
+                {/* <Link to="/signup">
                   <button className={styles.headerButton}>회원가입</button>
-                </Link>
+                </Link> */}
+                <a href="https://www.koreapas.com/m/member_join_new.php">
+                  <button className={styles.headerButton}>회원가입</button>
+                </a>
                 <Link to="/signin">
                   <button className={styles.headerButton}>로그인</button>
                 </Link>

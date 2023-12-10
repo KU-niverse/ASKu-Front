@@ -24,13 +24,13 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
         nav("/");
-      } 
+      }
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
@@ -98,7 +98,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
 
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST+"/user/auth/signin",
+        process.env.REACT_APP_HOST + "/user/auth/signin",
         {
           login_id: id,
           password: password,
@@ -125,7 +125,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
 
     if (id === "") {
       return alert("아이디를 입력해주세요.");
-    }else if (password === "") {
+    } else if (password === "") {
       return alert("비밀번호를 입력해주세요.");
     }
     userLogin();
@@ -168,15 +168,18 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
           </span>
         </div>
         <button className={`${styles.login_btn}`} type="submit">
-          로그인
+          고파스 아이디로 로그인
         </button>
       </form>
       <div className={`${styles.login_signup}`}>
-        <Link to="/signup">회원가입</Link>
+        {/* <Link to="/signup">회원가입</Link> */}
+        <a href="https://www.koreapas.com/m/member_join_new.php">고파스 회원가입</a>
       </div>
       <div className={`${styles.login_find}`}>
-        <Link to="/findid">아이디를 잊으셨나요?</Link>
-        <Link to="/findpw">비밀번호를 잊으셨나요?</Link>
+        {/* <Link to="/findid">아이디를 잊으셨나요?</Link> */}
+        {/* <Link to="/findpw">비밀번호를 잊으셨나요?</Link> */}
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">아이디를 잊으셨나요?</a>
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">비밀번호를 잊으셨나요?</a>
       </div>
     </div>
   );
