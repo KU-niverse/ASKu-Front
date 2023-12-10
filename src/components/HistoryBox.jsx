@@ -28,13 +28,13 @@ const HistoryBox = (props) => {
 
     let returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)');
 
-    if(returnValue === false){
+    if (returnValue === false) {
       return;
-    } else{
+    } else {
 
       try {
         const result = await axios.post(
-          process.env.REACT_APP_HOST+`/wiki/historys/${title}/version/${version}`,
+          process.env.REACT_APP_HOST + `/wiki/historys/${title}/version/${version}`,
           {},
           {
             withCredentials: true,
@@ -51,6 +51,8 @@ const HistoryBox = (props) => {
           alert("로그인이 필요합니다");
           nav("/signin");
         } else if (error.response.status === 432) {
+          alert(error.response.data.message);
+        } else if (error.response.status === 403) {
           alert(error.response.data.message);
         }
       }
