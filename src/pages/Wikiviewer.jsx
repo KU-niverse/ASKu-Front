@@ -18,7 +18,7 @@ import Footer from "../components/Footer";
 
 
 
-function WikiViewer() {
+function WikiViewer({ loggedIn, setLoggedIn }) {
   const myDivRef = useRef([]);
   const nav = useNavigate();
   const location = useLocation();
@@ -141,6 +141,36 @@ function WikiViewer() {
       // Handle error appropriately
     }
   }
+  // 로그인중인지 체크
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
+        { withCredentials: true }
+      );
+      if (res.status === 201 && res.data.success === true) {
+        setLoggedIn(true);
+      } else if (res.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav('/signin');
+      }
+    } catch (error) {
+      console.error(error);
+      setLoggedIn(false);
+      if (error.response.status === 401) {
+        setLoggedIn(false);
+        alert("로그인이 필요한 서비스 입니다.");
+        return nav('/signin');
+      } else {
+        alert("에러가 발생하였습니다");
+        return nav('/');
+      }
+    }
+  };
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
 
   useEffect(() => {
     if (favorite === true) {
