@@ -7,8 +7,9 @@ import logo from "../img/logo.png";
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 import axios from "axios";
+import {KoreapasAgreeComponent} from '../components/KoreapasAgreeComponent'
 
-const Signup = ({ loggedIn, setLoggedIn }) => {
+const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
   const nav = useNavigate();
   const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
   const [idDoubleCheck, setIdDoubleCheck] = useState(false);
@@ -178,49 +179,57 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
   const createUserApi = async (e) => {
     e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
-    if (isNickValid === false) {
-      return alert("닉네임 형식이 올바르지 않습니다");
-    } else if (isIdValid === false) {
-      return alert("아이디 형식이 올바르지 않습니다");
-    } else if (isPwValid === false) {
-      return alert("비밀번호 형식이 올바르지 않습니다");
-    } else if (isPwSame === false) {
-      return alert("비밀번호가 일치하지 않습니다");
-    } else if (idDoubleCheck === false) {
-      return alert("아이디 중복을 확인해주세요");
-    } else if (nickDoubleCheck === false) {
-      return alert("닉네임 중복을 확인해주세요");
-    } else if (isChecked === false) {
-      return alert("개인정보 수집에 동의해주십시오");
-    } else if (form.studentId.length != 10) {
-      return alert("학번을 정학히 입력해주세요"); //힉번 10자리 유효성 검사.
-    }
+    // if (isNickValid === false) {
+    //   return alert("닉네임 형식이 올바르지 않습니다");
+    // } else if (isIdValid === false) {
+    //   return alert("아이디 형식이 올바르지 않습니다");
+    // } else if (isPwValid === false) {
+    //   return alert("비밀번호 형식이 올바르지 않습니다");
+    // } else if (isPwSame === false) {
+    //   return alert("비밀번호가 일치하지 않습니다");
+    // } else if (idDoubleCheck === false) {
+    //   return alert("아이디 중복을 확인해주세요");
+    // } else if (nickDoubleCheck === false) {
+    //   return alert("닉네임 중복을 확인해주세요");
+    // } else if (isChecked === false) {
+    //   return alert("개인정보 수집에 동의해주십시오");
+    // } else if (form.studentId.length != 10) {
+    //   return alert("학번을 정학히 입력해주세요"); //힉번 10자리 유효성 검사.
+    // }
 
     setClicked(true);
+    nav("/");
+    // try {
+      
+    //   const response = await axios.post(
+    //     process.env.REACT_APP_HOST+"/user/auth/signup",
+    //     {
+    //       uuid: koreapasData.uuid,
+    //       nickname: koreapasData.nickname,
+    //       // login_id: form.id,
+    //       // name: form.name,
+    //       // stu_id: form.studentId,
+    //       // email: `${form.emailId}@korea.ac.kr`,
+    //       // password: form.password,
+    //       // nickname: form.nick,
+    //     },
+    //     {
+    //       withCredentials: true,
+    //     }
+    //   );
+    //   if (response.data.success === true) {
+    //     alert(response.data.message);
+    //     nav("/");
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   return alert(error.response.data.message);
+    // }
+  };
 
-    try {
-      const response = await axios.post(
-        process.env.REACT_APP_HOST+"/user/auth/signup",
-        {
-          login_id: form.id,
-          name: form.name,
-          stu_id: form.studentId,
-          email: `${form.emailId}@korea.ac.kr`,
-          password: form.password,
-          nickname: form.nick,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data.success === true) {
-        alert(response.data.message);
-        nav("/");
-      }
-    } catch (error) {
-      console.error(error);
-      return alert(error.response.data.message);
-    }
+
+  const handleCancel = () => {
+    nav("/");
   };
 
   const handleExternalLink = () => {
@@ -238,7 +247,8 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
       />
       <h1>회원가입</h1>
       <form onSubmit={createUserApi}>
-        <div className={`${styles.signup_input}`}>
+        <KoreapasAgreeComponent />
+        {/* <div className={`${styles.signup_input}`}>
           <span>이름</span>
           <input
             required
@@ -410,12 +420,21 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
           <span onClick={handleExternalLink} className={`${styles.moreLink}`}>
             [더보기]
           </span>
-        </div>
+        </div> */}
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+        <input
+          type="button"
+          value="취소"
+          className={`${styles.signup_btn_two}`}
+          onClick={handleCancel}
+          />
         <input
           type="submit"
-          value="회원가입"
+          value="동의하기"
           className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
-        />
+          style={{marginLeft: '30px'}}
+          />
+        </div>
         <div
           className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}
         >
