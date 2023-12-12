@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from "./Signup.module.css";
 import logo from "../img/logo.png";
@@ -9,7 +9,7 @@ import { BsCheck2All } from "react-icons/bs";
 import axios from "axios";
 import {KoreapasAgreeComponent} from '../components/KoreapasAgreeComponent'
 
-const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
+const Signup = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
   const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
   const [idDoubleCheck, setIdDoubleCheck] = useState(false);
@@ -20,6 +20,8 @@ const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
   const [isPwSame, setisPwSame] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const location = useLocation();
+  const koreapasData = location.state;
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -46,7 +48,12 @@ const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
   };
-
+  //비정상적인 접근 차단
+  useEffect(() => {
+    if (!koreapasData?.uuid) {
+      nav("/");
+    }
+  })
   const [form, setForm] = useState({
     name: "",
     nick: "",
@@ -198,33 +205,35 @@ const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
     // }
 
     setClicked(true);
-    nav("/");
-    // try {
+
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_HOST+"/user/auth/signup/koreapas",
+        {
+          uuid: koreapasData.uuid,
+          nickname: koreapasData.nickname,
+          // login_id: form.id,
+          // name: form.name,
+          // stu_id: form.studentId,
+          // email: `${form.emailId}@korea.ac.kr`,
+          // password: form.password,
+          // nickname: form.nick,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success === true) {
+        alert(response.data.message);
+        setLoggedIn(true);
+        nav("/");
+      }
+    } catch (error) {
+      console.error(error);
+      nav("/");
+      return alert(error.response.data.message);
       
-    //   const response = await axios.post(
-    //     process.env.REACT_APP_HOST+"/user/auth/signup",
-    //     {
-    //       uuid: koreapasData.uuid,
-    //       nickname: koreapasData.nickname,
-    //       // login_id: form.id,
-    //       // name: form.name,
-    //       // stu_id: form.studentId,
-    //       // email: `${form.emailId}@korea.ac.kr`,
-    //       // password: form.password,
-    //       // nickname: form.nick,
-    //     },
-    //     {
-    //       withCredentials: true,
-    //     }
-    //   );
-    //   if (response.data.success === true) {
-    //     alert(response.data.message);
-    //     nav("/");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   return alert(error.response.data.message);
-    // }
+    }
   };
 
 
@@ -421,11 +430,12 @@ const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
             [더보기]
           </span>
         </div> */}
+        {}
         <div style={{display: 'flex', flexDirection: 'row'}}>
         <input
           type="button"
           value="취소"
-          className={`${styles.signup_btn_two}`}
+          className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
           onClick={handleCancel}
           />
         <input
@@ -435,17 +445,19 @@ const Signup = ({ loggedIn, setLoggedIn, koreapasData }) => {
           style={{marginLeft: '30px'}}
           />
         </div>
+
         <div
           className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}
-        >
+          >
           {" "}
-          회원가입
+          처리중
         </div>
         <div
           className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}
-        >
+          >
           처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)
         </div>
+
       </form>
     </div>
   );

@@ -111,10 +111,16 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
         //로그인 성공시
         if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id);
         nav("/");
-      } else {
+      } 
+      else {
         return null;
       }
     } catch (error) {
+      if (error.response.status === 402){
+        
+        //signup페이지에 resopnase.data를 같이 넘겨줌
+        nav("/signup", {state: {uuid: error.response.data.koreapas_uuid, nickname: error.response.data.koreapas_nickname}});
+      }
       console.error(error);
       return alert(error.response.data.message);
     }
