@@ -147,6 +147,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       />
       <img className={`${styles.haho}`} src={haho_login} alt="haho" />
       <h1 className={styles.login_headers}>LOGIN</h1>
+      <p className={styles.login_instruction}>고파스 계정으로 바로 로그인하세요!</p>
       <form onSubmit={handleOnSubmit}>
         <div className={`${styles.login_input}`}>
           <input
