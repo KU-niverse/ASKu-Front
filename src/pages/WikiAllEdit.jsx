@@ -202,7 +202,9 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
                 onChange={handleCheckboxChange}
                 className={`${styles.chkbox}`}
               />
-              <span>정책에 맞게 작성하였음을 확인합니다.</span>
+              <a href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d" target="_blank" rel="noopener noreferrer">
+                  정책에 맞게 작성하였음을 확인합니다.
+                </a>
             </span>
             <button className={`${styles.submitWiki}`}>생성하기</button>
           </div>
