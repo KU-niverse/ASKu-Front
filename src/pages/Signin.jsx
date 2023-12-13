@@ -175,7 +175,7 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
           </span>
         </div>
         <button className={`${styles.login_btn}`} type="submit">
-          고파스 아이디로 로그인
+          로그인
         </button>
       </form>
       <div className={`${styles.login_signup}`}>
