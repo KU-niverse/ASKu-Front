@@ -7,7 +7,7 @@ import logo from "../img/logo.png";
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 import axios from "axios";
-import {KoreapasAgreeComponent} from '../components/KoreapasAgreeComponent'
+import { KoreapasAgreeComponent } from '../components/KoreapasAgreeComponent'
 
 const Signup = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -27,7 +27,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -66,15 +66,15 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleNickDoubleCheck = async (e) => {
     e.preventDefault();
-    if(form.nick.trim() === ''){
+    if (form.nick.trim() === '') {
       return alert("닉네임을 입력해주세요.")
-    }else if (isNickValid === false) {
+    } else if (isNickValid === false) {
       return alert("닉네임 형식이 올바르지 않습니다.");
     }
 
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/user/auth/nickdupcheck/${form.nick}`
+        process.env.REACT_APP_HOST + `/user/auth/nickdupcheck/${form.nick}`
       );
 
       if (result.data.success === true) {
@@ -92,14 +92,14 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleIdDoubleCheck = async (e) => {
     e.preventDefault();
-    if(form.id.trim() === ''){
+    if (form.id.trim() === '') {
       return alert("아이디를 입력해주세요.");
-    }else if (isIdValid === false) {
+    } else if (isIdValid === false) {
       return alert("아이디 형식이 올바르지 않습니다.");
     }
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/user/auth/iddupcheck/${form.id}`
+        process.env.REACT_APP_HOST + `/user/auth/iddupcheck/${form.id}`
       );
 
       if (result.data.success === true) {
@@ -119,7 +119,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     e.preventDefault();
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
+        process.env.REACT_APP_HOST + `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
       );
 
       if (result.data.success === true) {
@@ -208,7 +208,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST+"/user/auth/signup/koreapas",
+        process.env.REACT_APP_HOST + "/user/auth/signup/koreapas",
         {
           uuid: koreapasData.uuid,
           nickname: koreapasData.nickname,
@@ -232,7 +232,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
       console.error(error);
       nav("/");
       return alert(error.response.data.message);
-      
+
     }
   };
 
@@ -256,7 +256,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
       />
       <h1>회원가입</h1>
       <form onSubmit={createUserApi}>
-        <KoreapasAgreeComponent />
+        <KoreapasAgreeComponent nickname={koreapasData.nickname} />
         {/* <div className={`${styles.signup_input}`}>
           <span>이름</span>
           <input
@@ -430,31 +430,31 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             [더보기]
           </span>
         </div> */}
-        {}
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-        <input
-          type="button"
-          value="취소"
-          className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
-          onClick={handleCancel}
+        { }
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <input
+            type="button"
+            value="취소"
+            className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
+            onClick={handleCancel}
           />
-        <input
-          type="submit"
-          value="동의하기"
-          className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
-          style={{marginLeft: '30px'}}
+          <input
+            type="submit"
+            value="동의하기"
+            className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
+            style={{ marginLeft: '30px' }}
           />
         </div>
 
         <div
           className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}
-          >
+        >
           {" "}
           처리중
         </div>
         <div
           className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}
-          >
+        >
           처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)
         </div>
 
