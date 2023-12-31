@@ -18,7 +18,7 @@ function Home({ loggedIn, setLoggedIn }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -39,7 +39,7 @@ function Home({ loggedIn, setLoggedIn }) {
     const fetchPopularKeywords = async () => {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_HOST+"/search/popular"
+          process.env.REACT_APP_HOST + "/search/popular"
         );
         if (response.data.success) {
           setPopularKeywords(response.data.data);
@@ -55,7 +55,7 @@ function Home({ loggedIn, setLoggedIn }) {
     const fetchPopularQuestions = async () => {
       try {
         const response = await axios.get(
-          process.env.REACT_APP_HOST+"/question/popular"
+          process.env.REACT_APP_HOST + "/question/popular"
         );
         if (response.data.success) {
           setPopularQuestions(response.data.data);
@@ -114,6 +114,7 @@ function Home({ loggedIn, setLoggedIn }) {
             <div className={styles.keyWord}>
               <p className={styles.realTimeTitle}>실시간 인기 검색어</p>
               {popularKeywords.slice(0, 5).map((keyword, index) => (
+                //TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
                 <Link
                   to={`/result/${encodeURIComponent(keyword.keyword).replace(
                     /\./g,
@@ -130,8 +131,9 @@ function Home({ loggedIn, setLoggedIn }) {
             <div className={styles.question}>
               <p className={styles.realTimeTitle}>실시간 인기 질문</p>
               {popularQuestions.map((question, index) => (
+                //TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
                 <Link
-                  to={`wiki/morequestion/${question.title}/${question.id}`}
+                  to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
                   state={{
                     question_id: question.id,
                     user_id: question.user_id,

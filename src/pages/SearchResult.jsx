@@ -67,13 +67,14 @@ const SearchResearch = () => {
   };
 
   const handleDocsClick = (title) => {
-    nav(`/wiki/${title}`);
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/wiki/${encodedTitle}`);
   };
 
   const getDocs = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/query/${title}`,
+        process.env.REACT_APP_HOST + `/wiki/query/${title}`,
         {
           withCredentials: true,
         }
@@ -91,7 +92,7 @@ const SearchResearch = () => {
   const getQues = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/question/query/${title}`,
+        process.env.REACT_APP_HOST + `/question/query/${title}`,
         {
           withCredentials: true,
         }
@@ -110,7 +111,7 @@ const SearchResearch = () => {
   const getHistory = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/historys?type=${type}`
+        process.env.REACT_APP_HOST + `/wiki/historys?type=${type}`
       );
       setHistorys(result.data.message);
     } catch (error) {
@@ -226,7 +227,7 @@ const SearchResearch = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

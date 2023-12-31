@@ -3,23 +3,26 @@ import FormatDate from "../FormatDate";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function DebateList({title, id, doc_id, user_id, subject, created_at, recent_edited_at, done_or_not, done_at, is_bad}){
-const formattedDate=FormatDate(recent_edited_at)
-const nav = useNavigate();
-const linktoDebateRoom = ()=>{
-  nav(`/debate/${title}/${subject}`, {state : {
-    title: title,
-    subject: subject,
-    id: id}
-  });
+function DebateList({ title, id, doc_id, user_id, subject, created_at, recent_edited_at, done_or_not, done_at, is_bad }) {
+  const formattedDate = FormatDate(recent_edited_at)
+  const nav = useNavigate();
+  const linktoDebateRoom = () => {
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/debate/${encodedTitle}/${subject}`, {
+      state: {
+        title: title,
+        subject: subject,
+        id: id
+      }
+    });
 
 
-}
+  }
 
 
-  return(
+  return (
     <div className={styles.container}>
- 
+
       <span onClick={linktoDebateRoom} className={styles.title}>
         {subject}
       </span>

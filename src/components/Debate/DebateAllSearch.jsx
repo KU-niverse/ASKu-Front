@@ -17,7 +17,7 @@ const DebateAllSearch = () => {
   const searchDebate = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/debate/searchall/${word}`,
+        process.env.REACT_APP_HOST + `/debate/searchall/${word}`,
         {
           withCredentials: true,
         }
@@ -69,7 +69,7 @@ const DebateAllSearch = () => {
           results.map((item) => {
             return (
               <Link
-                to={`/debate/${item.title}/${item.subject}`}
+                to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}
                 state={{
                   title: item.title,
                   subject: item.subject,

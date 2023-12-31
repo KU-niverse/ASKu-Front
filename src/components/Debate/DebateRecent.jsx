@@ -11,7 +11,7 @@ const DebateRecent = ({ title }) => {
     const takeRecentList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/all/recent`,
+          process.env.REACT_APP_HOST + `/debate/all/recent`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -39,7 +39,7 @@ const DebateRecent = ({ title }) => {
             const timestamp = FormatTimeAgo(item.recent_edited_at);
             return (
               <Link
-                to={`/debate/${item.title}/${item.subject}`}
+                to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}
                 state={{
                   title: item.title,
                   subject: item.subject,
