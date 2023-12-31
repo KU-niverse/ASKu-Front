@@ -3,7 +3,7 @@ import comment_icon from "../../img/comment_icon.png"
 import { useNavigate, useParams } from "react-router-dom";
 
 
-function CommentList({id, subject, content, time, doc_title}){
+function CommentList({ id, subject, content, time, doc_title }) {
   const maxLength = 70;
 
   // 글자 수가 maxLength를 넘으면 뒤에 "..."을 붙이고 아니면 그대로 반환
@@ -12,21 +12,24 @@ function CommentList({id, subject, content, time, doc_title}){
   };
 
   const debateId = id;
-  const title=doc_title;
+  const title = doc_title;
   const nav = useNavigate();
-  const linktoComment = ()=>{
-  nav(`/debate/${title}/${subject}`,
-  {state : {
-    title: title,
-    subject: subject,
-    id: debateId}
-  })
-}
+  const linktoComment = () => {
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/debate/${encodedTitle}/${subject}`,
+      {
+        state: {
+          title: title,
+          subject: subject,
+          id: debateId
+        }
+      })
+  }
 
-  return(
+  return (
     <div className={styles.comment_list}>
       <div className={styles.comment_icon}>
-        <img className={styles.comment_png} src={comment_icon} alt='comment_icon'/>
+        <img className={styles.comment_png} src={comment_icon} alt='comment_icon' />
       </div>
       <span onClick={linktoComment} className={styles.comment_content}>{truncateContent(content)}</span>
     </div>

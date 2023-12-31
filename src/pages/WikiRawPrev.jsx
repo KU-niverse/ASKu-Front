@@ -30,7 +30,7 @@ function WikiViewer() {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/historys/${title}/version/${ver}`
+        process.env.REACT_APP_HOST + `/wiki/historys/${title}/version/${ver}`
       );
       setAllText(
         WikiToHtml(result.data.jsonData.text).replace(
@@ -58,7 +58,10 @@ function WikiViewer() {
           <h1>{title}</h1>
           <div className={styles.wikititleBtn}>
             <div></div>
-            <button onClick={() => nav(`/history/${title}`)}>
+            <button onClick={() => {
+              const encodedTitle = encodeURIComponent(title);
+              nav(`/history/${encodedTitle}`)
+            }}>
               <img src={his} alt="" />
               &nbsp;히스토리
             </button>

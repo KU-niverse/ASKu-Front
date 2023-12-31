@@ -25,13 +25,16 @@ const QnA = () => {
   const { question_id } = useParams();
   const nav = useNavigate();
   const linktoWiki = () => {
-    nav(`/wiki/${title}`);
+    const encodedTitle = encodeURI(title);
+    console.log("🚀 ~ file: QnA.jsx:29 ~ linktoWiki ~ title:", title)
+    console.log("🚀 ~ file: QnA.jsx:29 ~ linktoWiki ~ encodedTitle:", encodedTitle)
+    nav(`/wiki/${encodedTitle}`);
   };
 
   const getUserInfo = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/mypage/info",
+        process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
         }
@@ -61,7 +64,7 @@ const QnA = () => {
     const takeAnswer = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/question/answer/${question_id}`,
+          process.env.REACT_APP_HOST + `/question/answer/${question_id}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -80,7 +83,7 @@ const QnA = () => {
     const takeQuestion = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/question/lookup/${question_id}`,
+          process.env.REACT_APP_HOST + `/question/lookup/${question_id}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -128,7 +131,7 @@ const QnA = () => {
             answer_count={questionData.data[0].answer_count}
             title={title}
             badge_image={questionData.data[0].badge_image}
-            current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}          
+            current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}
           />
         )}
         <div className={styles.c_header}>

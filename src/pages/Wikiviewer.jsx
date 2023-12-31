@@ -66,7 +66,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const addBookmark = async () => {
     try {
       const result = await axios.post(
-        process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
+        process.env.REACT_APP_HOST + `/wiki/favorite/${title}`,
         {},
         {
           withCredentials: true,
@@ -93,7 +93,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const deleteBookmark = async () => {
     try {
       const result = await axios.delete(
-        process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
+        process.env.REACT_APP_HOST + `/wiki/favorite/${title}`,
         {
           withCredentials: true,
         }
@@ -182,15 +182,18 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
 
   //버튼 링크 연결 함수들
   const linkToHistory = () => {
-    nav(`/history/${title}`);
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/history/${encodedTitle}`);
   };
 
   const linkToAllEdit = () => {
-    nav(`/wikiedit/${title}/all`,{ state: { from: location.pathname } });
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/wikiedit/${encodedTitle}/all`, { state: { from: location.pathname } });
   };
 
   const linkToDebate = () => {
-    nav(`/debate/${title}`);
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/debate/${encodedTitle}`);
   };
 
   //contents가 비었으면 글이라도 띄우도록.
@@ -198,7 +201,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/contents/${title}`
+        process.env.REACT_APP_HOST + `/wiki/contents/${title}`
       );
       setAllContent(result.data.contents);
 
@@ -220,7 +223,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getQues = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/question/view/${flag}/${title}`
+        process.env.REACT_APP_HOST + `/question/view/${flag}/${title}`
       );
       setQues(result.data.data);
 
@@ -238,7 +241,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getContribute = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST+`/wiki/contributions/${title}`
+        process.env.REACT_APP_HOST + `/wiki/contributions/${title}`
       );
       //console.log('기여도');
       setContribute(result.data.message);
@@ -367,8 +370,9 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                       <hr className={styles.customHr}></hr>
                       <ul
                         key={item.id}
-                        onClick={() =>
-                          nav(`/wiki/morequestion/${title}/${item.id}`, {
+                        onClick={() => {
+                          const encodedTitle = encodeURIComponent(title);
+                          nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
                             state: {
                               question_id: item.id,
                               user_id: item.user_id,
@@ -381,7 +385,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                               title: title,
                             },
                           })
-                        }
+                        }}
                         className={styles.quesul}
                       >
                         <span className={styles.quesTitle}>
@@ -457,7 +461,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

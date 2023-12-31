@@ -14,7 +14,7 @@ const DebateAdd = ({ title }) => {
     const takeDebateList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/list/${title}`,
+          process.env.REACT_APP_HOST + `/debate/list/${title}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -36,7 +36,7 @@ const DebateAdd = ({ title }) => {
   const debateAdd = async () => {
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST+`/debate/new/${title}`,
+        process.env.REACT_APP_HOST + `/debate/new/${title}`,
         {
           subject: word,
         },
@@ -54,10 +54,10 @@ const DebateAdd = ({ title }) => {
       console.error(error);
       if (error.response.status === 401) {
         return alert("로그인이 필요한 서비스 입니다.");
-        
-      }else if (error.response.status === 400){
+
+      } else if (error.response.status === 400) {
         return alert("잘못된 입력입니다. ");
-      } else{
+      } else {
         return alert("에러가 발생하였습니다. 잠시후 다시 시도해주세요");
       }
     }
@@ -104,7 +104,7 @@ const DebateAdd = ({ title }) => {
         ) : (
           debateListData.data.map((item) => (
             <Link
-              to={`/debate/${item.title}/${item.subject}`}
+              to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}
               state={{ title: item.title, subject: item.subject, id: item.id }}
               className={styles.linkTo}
             >

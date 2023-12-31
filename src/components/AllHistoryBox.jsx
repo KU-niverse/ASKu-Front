@@ -21,13 +21,14 @@ const HistoryBox = (props) => {
   const type = props.type;
 
   const handleView = () => {
-    nav(`/wiki/preview/${title}/${version}`);
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/wiki/preview/${encodedTitle}/${version}`);
   };
 
   const handleRollback = async (e) => {
     try {
       const result = await axios.post(
-        process.env.REACT_APP_HOST+`/wiki/historys/${title}/version/${version}`,
+        process.env.REACT_APP_HOST + `/wiki/historys/${title}/version/${version}`,
         {},
         {
           withCredentials: true,
@@ -35,7 +36,8 @@ const HistoryBox = (props) => {
       ); //전체 텍스트를 가져옴.
       if (result.status === 200) {
         alert(result.data.message);
-        nav(`/wiki/${title}`);
+        const encodedTitle = encodeURIComponent(title);
+        nav(`/wiki/${encodedTitle}`);
       } else {
         alert("something went wrong");
       }
@@ -57,8 +59,8 @@ const HistoryBox = (props) => {
     if (version === 1) {
       return alert("첫번째 히스토리는 지원하지 않는 기능입니다");
     }
-
-    nav(`/history/${title}/diff/${version}`);
+    const encodedTitle = encodeURIComponent(title);
+    nav(`/history/${encodedTitle}/diff/${version}`);
   };
 
   return (
@@ -81,7 +83,10 @@ const HistoryBox = (props) => {
           <div className={styles.docTitle}>
             <span
               className={styles.docTitle}
-              onClick={() => nav(`/wiki/${title}`)}
+              onClick={() => {
+                const encodedTitle = encodeURIComponent(title);
+                nav(`/wiki/${encodedTitle}`)
+              }}
             >
               {title}
             </span>

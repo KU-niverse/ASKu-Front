@@ -62,7 +62,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     const checkLoginStatus = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+"/user/auth/issignedin",
+          process.env.REACT_APP_HOST + "/user/auth/issignedin",
           {
             withCredentials: true,
           }
@@ -110,7 +110,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     if (isAlarmVisible) {
       // Axios를 사용하여 데이터 가져오기
       axios
-        .get(process.env.REACT_APP_HOST+"/notification/user", {
+        .get(process.env.REACT_APP_HOST + "/notification/user", {
           withCredentials: true,
         })
         .then((response) => {
@@ -181,15 +181,15 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     );
 
     const { info } = extractInfoAndRefineMessage(type_id, message);
-
+    //TODO: 이부분 링크 잘 동작하는지 확인
     const link = (() => {
       switch (type_id) {
         case 1:
           return `/wiki/morequestion/${info.result}`;
         case 2:
-          return `/wiki/morequestion/${info.title}/${info.id}`;
+          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 3:
-          return `/wiki/morequestion/${info.title}/${info.id}`;
+          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 4:
           return "/mypage/mybadge";
         default:
@@ -216,26 +216,26 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
           <div className={styles.alarmContent}>
             {notifications.length > 0
               ? notifications.map((notification, index) => (
-                  <div key={index}>
-                    <Link
-                      to={generateLink(notification)}
-                      className={styles.alarmLink}
-                    >
-                      <p className={styles.alarmText}>{notification.message}</p>
-                    </Link>
-                    {index < notifications.length - 1 && (
-                      <hr
-                        style={{
-                          height: "0.3px",
-                          opacity: "0.7",
-                          backgroundColor: "#D5D5D5",
-                          width: "100%",
-                          marginLeft: "10px",
-                        }}
-                      />
-                    )}
-                  </div>
-                ))
+                <div key={index}>
+                  <Link
+                    to={generateLink(notification)}
+                    className={styles.alarmLink}
+                  >
+                    <p className={styles.alarmText}>{notification.message}</p>
+                  </Link>
+                  {index < notifications.length - 1 && (
+                    <hr
+                      style={{
+                        height: "0.3px",
+                        opacity: "0.7",
+                        backgroundColor: "#D5D5D5",
+                        width: "100%",
+                        marginLeft: "10px",
+                      }}
+                    />
+                  )}
+                </div>
+              ))
               : null}
           </div>
         </div>
