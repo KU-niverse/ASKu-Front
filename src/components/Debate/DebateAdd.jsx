@@ -36,7 +36,7 @@ const DebateAdd = ({ title }) => {
   const debateAdd = async () => {
     try {
       const response = await axios.post(
-        process.env.REACT_APP_HOST + `/debate/new/${title}`,
+        process.env.REACT_APP_HOST + `/debate/new/${encodeURIComponent(title)}`,
         {
           subject: word,
         },

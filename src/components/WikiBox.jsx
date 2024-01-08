@@ -22,8 +22,8 @@ const WikiBox = (props) => {
 
 
   const linkToWikiEdit = () => {
-    const encodedTitle = encodeURI(title);
-    nav(`/wikiedit/${encodedTitle}/${section}`, {
+    const encodedMain = encodeURIComponent(main);
+    nav(`/wikiedit/${encodedMain}/${section}`, {
       state: {
         from: location.pathname,
         index_title: `${index} ${title}`

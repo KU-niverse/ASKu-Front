@@ -17,7 +17,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -30,7 +30,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       setLoggedIn(false);
       if (error.response.status === 401) {
         setLoggedIn(false);
-      }else{
+      } else {
         alert("에러가 발생하였습니다");
       }
     }
