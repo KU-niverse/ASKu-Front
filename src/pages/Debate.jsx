@@ -28,7 +28,7 @@ function Debate() {
     const takeDebateContent = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/view/${title}/${debateId}`,
+          process.env.REACT_APP_HOST + `/debate/view/${encodeURIComponent(title)}/${debateId}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -64,18 +64,18 @@ function Debate() {
   const handleDebateSubmit = async (submitData) => {
     try {
       const postResponse = await axios.post(
-        process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
+        process.env.REACT_APP_HOST + `/debate/${encodeURIComponent(title)}/new/${debateId}`,
         submitData,
         { withCredentials: true }
       );
-  
+
       if (postResponse.status === 200) {
         // POST 요청이 성공한 후 전체 메시지 목록을 다시 가져옵니다.
         const getResponse = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/view/${title}/${debateId}`,
+          process.env.REACT_APP_HOST + `/debate/view/${encodeURIComponent(title)}/${debateId}`,
           { withCredentials: true }
         );
-  
+
         if (getResponse.status === 200) {
           // 전체 메시지 목록으로 상태를 업데이트합니다.
           setDebateContentData(getResponse.data);
@@ -105,8 +105,8 @@ function Debate() {
           <DebateTitle title={title} subject={subject} />
 
           {debateContentData &&
-          debateContentData.message &&
-          debateContentData.message.data === 0 ? (
+            debateContentData.message &&
+            debateContentData.message.data === 0 ? (
             <p>아직 작성된 토론 메세지가 없습니다.</p>
           ) : (
             debateContentData &&

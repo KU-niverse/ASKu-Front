@@ -223,7 +223,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getQues = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/question/view/${flag}/${title}`
+        process.env.REACT_APP_HOST + `/question/view/${flag}/${encodeURIComponent(title)}`
       );
       setQues(result.data.data);
 

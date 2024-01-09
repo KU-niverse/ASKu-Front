@@ -214,7 +214,7 @@ const SearchResearch = () => {
                 return (
                   <ul key={item.title}>
                     <Link
-                      to={`/wiki/${item.doc_title}`}
+                      to={`/wiki/${encodeURIComponent(item.doc_title)}`}
                       className={styles.linkTo}
                     >
                       <span className={styles.listTitle}>{item.doc_title}</span>

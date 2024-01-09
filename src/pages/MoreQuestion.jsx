@@ -15,7 +15,7 @@ import SpinnerMypage from "../components/SpinnerMypage";
 
 const MoreQuestion = () => {
   const { title } = useParams();
-  const [currentUserId, setCurrentUserId]=useState([]);
+  const [currentUserId, setCurrentUserId] = useState([]);
   const [data, setData] = useState(null);
   const [questionData, setQuestionData] = useState([]);
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
@@ -29,7 +29,7 @@ const MoreQuestion = () => {
   const getUserInfo = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/mypage/info",
+        process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
         }
@@ -55,7 +55,7 @@ const MoreQuestion = () => {
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const res = await axios.get(process.env.REACT_APP_HOST+"/wiki/titles");
+        const res = await axios.get(process.env.REACT_APP_HOST + "/wiki/titles");
         if (res.data.success) {
           setTitles(res.data.titles);
         }
@@ -70,7 +70,7 @@ const MoreQuestion = () => {
       try {
         const flag = isToggled ? 1 : 0;
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/question/view/${flag}/${title}`,
+          process.env.REACT_APP_HOST + `/question/view/${flag}/${encodeURIComponent(title)}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -89,8 +89,9 @@ const MoreQuestion = () => {
 
   const handleQuestionSubmit = async (submitData) => {
     try {
+
       const res = await axios.post(
-        process.env.REACT_APP_HOST+`/question/new/${title}`,
+        process.env.REACT_APP_HOST + `/question/new/${encodeURIComponent(title)}`,
         submitData,
         { withCredentials: true }
       );
@@ -145,15 +146,15 @@ const MoreQuestion = () => {
             </div>
             <div>
               {questionData &&
-              questionData.data &&
-              questionData.data.length === 0 ? (
+                questionData.data &&
+                questionData.data.length === 0 ? (
                 <p>아직 작성한 질문이 없습니다.</p>
               ) : (
                 questionData &&
                 questionData.data &&
                 questionData.data.map((data) => (
                   <Question
-                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}                    
+                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}
                     key={data.id}
                     id={data.id}
                     doc_id={data.doc_id}
