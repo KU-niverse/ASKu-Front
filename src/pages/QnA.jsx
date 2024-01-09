@@ -25,9 +25,8 @@ const QnA = () => {
   const { question_id } = useParams();
   const nav = useNavigate();
   const linktoWiki = () => {
-    const encodedTitle = encodeURI(title);
-    console.log("🚀 ~ file: QnA.jsx:29 ~ linktoWiki ~ title:", title)
-    console.log("🚀 ~ file: QnA.jsx:29 ~ linktoWiki ~ encodedTitle:", encodedTitle)
+    const encodedTitle = encodeURIComponent(title);
+
     nav(`/wiki/${encodedTitle}`);
   };
 
@@ -86,6 +85,7 @@ const QnA = () => {
           process.env.REACT_APP_HOST + `/question/lookup/${question_id}`,
           { withCredentials: true }
         );
+        console.log("🚀 ~ file: QnA.jsx:89 ~ takeQuestion ~ res:", res)
         if (res.status === 200) {
           setQuestionData(res.data);
         }
