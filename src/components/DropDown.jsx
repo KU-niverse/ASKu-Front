@@ -14,7 +14,7 @@ function DropDown({ onSelectedOption, title, defaultOpt }) {
     const takeWikiData = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/wiki/contents/${title}`,
+          process.env.REACT_APP_HOST + `/wiki/contents/${title}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -65,7 +65,7 @@ function DropDown({ onSelectedOption, title, defaultOpt }) {
   if (defaultOpt) {
     defaultOption = defaultOpt;
   } else {
-    defaultOption = "목차 선택";
+    defaultOption = "전체";
   }
 
   const onSelect = (selectedOption) => {

@@ -8,14 +8,14 @@ import { useEffect } from "react";
 
 function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const [questionContent, setQuestionContent] = useState("");
-  const [selectedOption, setSelectedOption] = useState(null); // 선택한 option을 상태로 관리
+  const [selectedOption, setSelectedOption] = useState("전체"); // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate();
 
   const location = useLocation();
   const from = location.state?.from || '/';
 
- //로그인 체크 후 우회
+  //로그인 체크 후 우회
   // const checkLoginStatus = async () => {
   //   try {
   //     const res = await axios.get(
@@ -51,7 +51,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/auth/issignedin",
+        process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -64,7 +64,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
       setLoggedIn(false);
       if (error.response.status === 401) {
         setLoggedIn(false);
-      }else{
+      } else {
         alert("에러가 발생하였습니다");
       }
     }
@@ -83,7 +83,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     if (value.length <= 200) {
       setQuestionContent(value);
     }
-};
+  };
 
 
   const submitData = {
@@ -107,7 +107,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     if (questionContent.trim() === "") {
       alert("질문을 입력해주세요.");
       return;
-    } 
+    }
     onQuestionSubmit(submitData);
     window.location.reload();
   };

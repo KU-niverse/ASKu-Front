@@ -161,7 +161,7 @@ function Header({ userInfo, setUserInfo }) {
         withCredentials: true,
       });
       if (response.status === 200) {
-        window.location.href = `/wiki/${response.data.title}`; // 페이지를 새 URL로 이동 및 새로고침
+        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}`; // 페이지를 새 URL로 이동 및 새로고침
       }
     } catch (error) {
       console.error('Error fetching random document:', error);
