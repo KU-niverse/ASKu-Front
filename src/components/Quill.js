@@ -96,7 +96,7 @@ function Quill(props) {
     "strike",
     "blockquote",
     "image",
-    "list",
+    // "list",
     "bullet",
     "indent",
     "align",
