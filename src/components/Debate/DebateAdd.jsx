@@ -14,7 +14,7 @@ const DebateAdd = ({ title }) => {
     const takeDebateList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST + `/debate/list/${title}`,
+          process.env.REACT_APP_HOST + `/debate/list/${encodeURIComponent(title)}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
