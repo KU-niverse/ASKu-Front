@@ -20,7 +20,7 @@ function MoreDebate() {
     const takeDebateList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/list/${title}`,
+          process.env.REACT_APP_HOST + `/debate/list/${encodeURIComponent(title)}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -55,8 +55,8 @@ function MoreDebate() {
             </div>
 
             {debateListData &&
-            debateListData.data &&
-            debateListData.data.length === 0 ? (
+              debateListData.data &&
+              debateListData.data.length === 0 ? (
               <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
               debateListData &&
