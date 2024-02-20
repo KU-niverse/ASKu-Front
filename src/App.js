@@ -35,6 +35,7 @@ import WikiRawPrev from "./pages/WikiRawPrev";
 import MobileChatBotPage from "./pages/MobileChatbotPage";
 import { useState, useEffect } from "react";
 import Oauth from "./pages/Oauth";
+import RouteChangeTracker from "./RouteChangeTracker";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <Router>
+      <RouteChangeTracker /> {/* RouteChangeTracker 호출 */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/result/:title" element={<SearchResult />} />
