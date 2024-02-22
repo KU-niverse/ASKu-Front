@@ -46,7 +46,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const getUserInfo = async () => {
     try {
       const res = await axios.get(
-        process.env.REACT_APP_HOST+"/user/mypage/info",
+        process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
         }
@@ -74,16 +74,19 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const sendMessage = async () => {
     const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
-  
+
     if (inputValue.trim() !== "") {
       setLoading(true);
-  
+
       try {
-        const response = await axios.post(process.env.REACT_APP_AI + `/chatbot/`, {
-          q_content: inputValue,
-          user_id: userIdToSend,
-        });
-  
+        const response = await axios.post(
+          process.env.REACT_APP_AI + `/chatbot/`,
+          {
+            q_content: inputValue,
+            user_id: userIdToSend,
+          }
+        );
+
         setShowSuggest(false);
         inputRef.current.blur();
 
@@ -96,10 +99,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             qnaId: response.data.id,
           }, // 서버 응답 추가
         ];
-  
+
         setChatResponse(newChatResponse);
         setInputValue("");
-  
+
         // axios 요청 완료 후 로딩 스피너를 비활성화
         setLoading(false); // 로딩 스피너 숨기기
         scrollToBottom();
@@ -115,10 +118,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           // 새로고침 모달을 띄우도록 처리
           setRefreshModalOpen(true);
         }
-  
+
         // axios 요청 실패 시에도 로딩 스피너를 비활성화
         setLoading(false);
-  
       }
     }
   };
@@ -186,7 +188,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      setPreviousChatHistory([]); 
+      setPreviousChatHistory([]);
     }
   }, [isLoggedIn]);
 
@@ -234,7 +236,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       </div>
       <div className={styles.chat}>
         <ChatAnswer
-          content="안녕하세요! 무엇이든 제게 질문해주세요!"
+          // content="안녕하세요! 무엇이든 제게 질문해주세요!"
+          content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
           blockIconZip={blockIconZip}
         />
         {previousChatHistory.length !== 0 && (
@@ -302,7 +305,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             이중전공은 어떻게 해?
           </span>
         </div>
-        <div ref={chatBottomRef}></div> 
+        <div ref={chatBottomRef}></div>
         {loading && <Spinner />}
       </div>
       {isLoginModalVisible && (
