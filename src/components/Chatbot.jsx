@@ -236,8 +236,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       </div>
       <div className={styles.chat}>
         <ChatAnswer
-          // content="안녕하세요! 무엇이든 제게 질문해주세요!"
-          content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
+          content="안녕하세요! 무엇이든 제게 질문해주세요!"
+          // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
           blockIconZip={blockIconZip}
         />
         {previousChatHistory.length !== 0 && (
