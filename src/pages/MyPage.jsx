@@ -190,26 +190,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           </div>
 
           <div className={styles.rightcontent}>
-            <div className={`${styles.info}`}>
-              <div className={styles.infoheader}>
-                <p className={styles.title2}>내 정보</p>
-              </div>
-              {mypageData && mypageData.data && (
-                <MyInfo
-                  name={mypageData.data[0].name}
-                  email={mypageData.data[0].email}
-                  stu_id={mypageData.data[0].stu_id}
-                />
-              )}
-              <div className={styles.infoedit}>
-                <Link to="/changepw">
-                  <button className={styles.edit2} disabled style={{ visibility: 'hidden' }}>비밀번호 변경</button>
-                </Link>
-                {/* <Link to='/changeinfo' >
-                  <button className={styles.edit3}>개인정보 변경</button>
-                  </Link> */}
-              </div>
-            </div>
+            
             <div className={`${styles.cb}`}>
               <p className={styles.title2}>기여 목록</p>
               <div className={styles.graph}>
@@ -254,71 +235,68 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   ))
               )}
             </div>
-          </div>
-        </div>
-        <div className={`${styles.middlecontent}`}>
-          <div className={`${styles.ask}`}>
-            <div className={styles.askheader}>
-              <p className={styles.title}>내가 쓴 질문</p>
-              <Link to="/mypage/myquestion" className={styles.q_link}>
-                <button className={styles.edit}>더보기</button>
-              </Link>
-            </div>
-            {myQuestion &&
-              myQuestion.message &&
-              myQuestion.data.length === 0 ? (
-              <p>아직 작성한 질문이 없습니다.</p>
-            ) : (
-              myQuestion &&
-              myQuestion.message &&
-              myQuestion.data &&
-              myQuestion.data.slice(0, 5).map((question) => (
-                <QuestionList
-                  key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-                  id={question.id}
-                  doc_id={question.doc_id}
-                  user_id={question.user_id}
-                  index_title={question.index_title}
-                  content={question.content}
-                  time={question.created_at}
-                  is_bad={question.is_bad}
-                  nickname={question.nickname}
-                  rep_badge={question.rep_badge}
-                  badge_image={question.badge_image}
-                  like_count={question.like_count}
-                  doc_title={question.doc_title}
-                  answer_count={question.answer_count}
-                />
-              ))
-            )}
-          </div>
-        </div>
-        <div className={`${styles.downcontent}`}>
-          <div className={styles.comment}>
-            <div className={styles.commentheader}>
-              <p className={styles.title}>내가 쓴 토론</p>
-              <Link to="/mypage/mycomment" className={styles.c_link}>
-                <button className={styles.edit}>더보기</button>
-              </Link>
-            </div>
-            {myDebate && myDebate.message && myDebate.message.length === 0 ? (
-              <p>아직 작성한 토론이 없습니다.</p>
-            ) : (
-              myDebate &&
-              myDebate.message &&
-              myDebate.message
-                .slice(0, 5)
-                .map((debate) => (
-                  <CommentList
-                    key={debate.id}
-                    id={debate.debate_id}
-                    subject={debate.debate_subject}
-                    content={debate.debate_content}
-                    time={debate.debate_content_time}
-                    doc_title={debate.doc_title}
+          
+            <div className={`${styles.ask}`}>
+              <div className={styles.askheader}>
+                <p className={styles.title}>내가 쓴 질문</p>
+                <Link to="/mypage/myquestion" className={styles.q_link}>
+                  <button className={styles.edit}>더보기</button>
+                </Link>
+              </div>
+              {myQuestion &&
+                myQuestion.message &&
+                myQuestion.data.length === 0 ? (
+                <p>아직 작성한 질문이 없습니다.</p>
+              ) : (
+                myQuestion &&
+                myQuestion.message &&
+                myQuestion.data &&
+                myQuestion.data.slice(0, 5).map((question) => (
+                  <QuestionList
+                    key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                    id={question.id}
+                    doc_id={question.doc_id}
+                    user_id={question.user_id}
+                    index_title={question.index_title}
+                    content={question.content}
+                    time={question.created_at}
+                    is_bad={question.is_bad}
+                    nickname={question.nickname}
+                    rep_badge={question.rep_badge}
+                    badge_image={question.badge_image}
+                    like_count={question.like_count}
+                    doc_title={question.doc_title}
+                    answer_count={question.answer_count}
                   />
                 ))
-            )}
+              )}
+            </div>
+            <div className={styles.comment}>
+              <div className={styles.commentheader}>
+                <p className={styles.title}>내가 쓴 토론</p>
+                <Link to="/mypage/mycomment" className={styles.c_link}>
+                  <button className={styles.edit}>더보기</button>
+                </Link>
+              </div>
+              {myDebate && myDebate.message && myDebate.message.length === 0 ? (
+                <p>아직 작성한 토론이 없습니다.</p>
+              ) : (
+                myDebate &&
+                myDebate.message &&
+                myDebate.message
+                  .slice(0, 5)
+                  .map((debate) => (
+                    <CommentList
+                      key={debate.id}
+                      id={debate.debate_id}
+                      subject={debate.debate_subject}
+                      content={debate.debate_content}
+                      time={debate.debate_content_time}
+                      doc_title={debate.doc_title}
+                    />
+                  ))
+              )}
+            </div>
           </div>
         </div>
       </div>
