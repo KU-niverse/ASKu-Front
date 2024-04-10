@@ -192,7 +192,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           <div className={styles.rightcontent}>
             
             <div className={`${styles.cb}`}>
-              <p className={styles.title2}>기여 목록 <span style={{ color: "#9F132E" }}>({myContribute && myContribute.message && myContribute.message.docs ? myContribute.message.docs.length : 0})</span></p>
+              <p className={styles.title2}>기여 목록 <span style={{ color: "#9F132E" }}>({myWiki && myWiki.data ? myWiki.data.length : 0})</span></p>
               <div className={styles.graph}>
                 {myContribute &&
                   myContribute.message &&
