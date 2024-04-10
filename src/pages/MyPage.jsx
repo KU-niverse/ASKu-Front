@@ -148,7 +148,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
             </div>
             <div className={styles.badge}>
               <div className={styles.badgeheader}>
-                <p className={styles.title}>뱃지</p>
+                <p className={styles.title}>뱃지 <span style={{ color: "#9F132E" }}>({myBadge && myBadge.data ? myBadge.data.length : 0})</span></p>
                 <Link to="/mypage/mybadge" className={styles.b_link}>
                   <button className={styles.edit}> 더보기</button>
                 </Link>
@@ -192,7 +192,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           <div className={styles.rightcontent}>
             
             <div className={`${styles.cb}`}>
-              <p className={styles.title2}>기여 목록</p>
+              <p className={styles.title2}>기여 목록 <span style={{ color: "#9F132E" }}>({myContribute && myContribute.message && myContribute.message.docs ? myContribute.message.docs.length : 0})</span></p>
               <div className={styles.graph}>
                 {myContribute &&
                   myContribute.message &&
@@ -238,7 +238,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
           
             <div className={`${styles.ask}`}>
               <div className={styles.askheader}>
-                <p className={styles.title}>내가 쓴 질문</p>
+                <p className={styles.title}>내가 쓴 질문 <span style={{ color: "#9F132E" }}>({myQuestion && myQuestion.data ? myQuestion.data.length : 0})</span></p>
                 <Link to="/mypage/myquestion" className={styles.q_link}>
                   <button className={styles.edit}>더보기</button>
                 </Link>
@@ -273,7 +273,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
             </div>
             <div className={styles.comment}>
               <div className={styles.commentheader}>
-                <p className={styles.title}>내가 쓴 토론</p>
+                <p className={styles.title}>내가 쓴 토론 <span style={{ color: "#9F132E" }}>({myDebate && myDebate.message ? myDebate.message.length : 0})</span></p>
                 <Link to="/mypage/mycomment" className={styles.c_link}>
                   <button className={styles.edit}>더보기</button>
                 </Link>
