@@ -4,16 +4,24 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ReactGA from "react-ga4";
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 
 // 구글 애널리틱스 초기화
 if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
   ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS);
 }
 
+const queryClient = new QueryClient();  // QueryClient 인스턴스 생성
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
