@@ -20,7 +20,6 @@ import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
 
 function Header({ userInfo, setUserInfo }) {
-
   const [inputValue, setInputValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navContainerRightWidth, setNavContainerRightWidth] = useState("150px");
@@ -157,14 +156,19 @@ function Header({ userInfo, setUserInfo }) {
 
   const handleRandomDocClick = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_HOST + '/wiki/random', {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        process.env.REACT_APP_HOST + "/wiki/random",
+        {
+          withCredentials: true,
+        }
+      );
       if (response.status === 200) {
-        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}`; // 페이지를 새 URL로 이동 및 새로고침
+        window.location.href = `/wiki/${encodeURIComponent(
+          response.data.title
+        )}`; // 페이지를 새 URL로 이동 및 새로고침
       }
     } catch (error) {
-      console.error('Error fetching random document:', error);
+      console.error("Error fetching random document:", error);
     }
   };
 
@@ -380,7 +384,10 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>토론</p>
                     </div>
                   </Link>
-                  <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                  <Link
+                    className={styles.mobileMenuBtn}
+                    onClick={handleRandomDocClick}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={randomDocs}

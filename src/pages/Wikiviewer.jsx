@@ -15,8 +15,7 @@ import { useParams } from "react-router-dom/dist";
 import WikiGraph from "../components/Wiki/WikiGraph";
 import SpinnerMypage from "../components/SpinnerMypage";
 import Footer from "../components/Footer";
-
-
+import { track } from "@amplitude/analytics-browser";
 
 function WikiViewer({ loggedIn, setLoggedIn }) {
   const myDivRef = useRef([]);
@@ -153,7 +152,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       } else if (res.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav('/signin');
+        return nav("/signin");
       }
     } catch (error) {
       console.error(error);
@@ -161,10 +160,10 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       if (error.response.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav('/signin');
+        return nav("/signin");
       } else {
         alert("에러가 발생하였습니다");
-        return nav('/');
+        return nav("/");
       }
     }
   };
@@ -188,7 +187,9 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
 
   const linkToAllEdit = () => {
     const encodedTitle = encodeURIComponent(title);
-    nav(`/wikiedit/${encodedTitle}/all`, { state: { from: location.pathname } });
+    nav(`/wikiedit/${encodedTitle}/all`, {
+      state: { from: location.pathname },
+    });
   };
 
   const linkToDebate = () => {
@@ -223,7 +224,8 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getQues = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/question/view/${flag}/${encodeURIComponent(title)}`
+        process.env.REACT_APP_HOST +
+          `/question/view/${flag}/${encodeURIComponent(title)}`
       );
       setQues(result.data.data);
 
@@ -278,6 +280,47 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       getQues();
     };
     fetchData();
+
+    track("view_wiki", {
+      title: title,
+    });
+
+    // 스크롤 깊이 추적
+    const scrollDepths = [25, 50, 75, 100];
+    const scrollDepthsReached = {};
+
+    let debounceTimer;
+
+    const handleScroll = () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+
+      debounceTimer = setTimeout(() => {
+        const scrollPosition = window.scrollY;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const scrollPercentage = Math.floor(
+          (scrollPosition / (documentHeight - windowHeight)) * 100
+        );
+
+        scrollDepths.forEach((depth) => {
+          if (scrollPercentage >= depth && !scrollDepthsReached[depth]) {
+            scrollDepthsReached[depth] = true;
+            track("scroll_depth_wiki", {
+              scroll_depth: depth,
+              page: title,
+            });
+          }
+        });
+      }, 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -384,7 +427,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                               answer_count: item.answer_count,
                               title: title,
                             },
-                          })
+                          });
                         }}
                         className={styles.quesul}
                       >
