@@ -1,10 +1,10 @@
-const WikiToHtml = (wikiText) => {
+const WikiToHtml = (wikiText: any) => {
   let html = wikiText;
   //console.log("여기가 1번 : ", html);
-  html = html.split('\n').map(para => `<p>${para}</p>`).join('\n');
+  html = html.split('\n').map((para: any) => `<p>${para}</p>`).join('\n');
   html = html.replace(/<p><\/p>/g, '<br>');
 
-  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match, marker, content) {
+  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match: any, marker: any, content: any) {
     
     var listItem = '<li>' + content.trim() + '</li>';
   
@@ -12,7 +12,7 @@ const WikiToHtml = (wikiText) => {
     return listItem;
   });
 
-  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match, content) {
+  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match: any, content: any) {
     var listType = '<ul>';
     return listType + '<li>' + content.trim() + '</li>' + listType.replace('<', '</');
   });

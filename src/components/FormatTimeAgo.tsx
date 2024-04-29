@@ -1,7 +1,7 @@
 
 
-function FormatTimeAgo (time) {
-    function formatDiff(timeDifference) {
+function FormatTimeAgo (time: any) {
+    function formatDiff(timeDifference: any) {
     
         const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     
@@ -20,6 +20,7 @@ function FormatTimeAgo (time) {
 
     const inputDate = new Date(time);
     const currentDate = new Date();
+    // @ts-expect-error TS(2362): The left-hand side of an arithmetic operation must... Remove this comment to see the full error message
     const timeDifference = Math.abs(currentDate - inputDate);
     const timestamp = formatDiff(timeDifference);
 

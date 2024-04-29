@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2307): Cannot find module './AlarmMobileModal.module.css'... Remove this comment to see the full error message
 import styles from "./AlarmMobileModal.module.css";
+// @ts-expect-error TS(2307): Cannot find module '../img/close_btn.png' or its c... Remove this comment to see the full error message
 import closeBtn from "../img/close_btn.png";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -53,7 +55,10 @@ const dummyData = [
     is_admin: 0,
   },
 ];
-function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
+function AlarmMobileModal({
+  isOpen,
+  handleMobileAlarmModal
+}: any) {
   // useEffect(() => {
   //     if (isOpen) {
   //         // API 호출 대신 더미 데이터 사용
@@ -65,6 +70,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     if (isOpen) {
       // Axios를 사용하여 데이터 가져오기
       axios
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         .get(process.env.REACT_APP_HOST + "/notification/user", {
           withCredentials: true,
         })
@@ -79,11 +85,12 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     }
   }, [isOpen]);
 
-  const removeIdFromMessage = (message) => {
+  const removeIdFromMessage = (message: any) => {
     return message.replace(/\(\d+\)/g, "");
   };
 
-  const extractInfo = (type_id, message) => {
+  const extractInfo = (type_id: any, message: any) => {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const pattern = patterns[type_id];
     if (!pattern) {
       return null;
@@ -116,7 +123,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     return info;
   };
 
-  const extractInfoAndRefineMessage = (type_id, message) => {
+  const extractInfoAndRefineMessage = (type_id: any, message: any) => {
     const info = extractInfo(type_id, message);
     if (!info) {
       return { info: null, refinedMessage: message };
@@ -126,10 +133,12 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     return { info, refinedMessage };
   };
 
-  const generateLink = (notification) => {
+  const generateLink = (notification: any) => {
     const { message } = notification;
     const type_id = parseInt(
+      // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
       Object.keys(patterns).find((key) => {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const pattern = patterns[key];
         return message.match(pattern) !== null;
       })
@@ -140,10 +149,13 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
     const link = (() => {
       switch (type_id) {
         case 1:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${info.result}`;
         case 2:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 3:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 4:
           return "/mypage/mybadge";
@@ -157,7 +169,8 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
 
   const modalRef = useRef(null);
   const [notifications, setNotifications] = useState([]);
-  const handleOutsideClick = (event) => {
+  const handleOutsideClick = (event: any) => {
+    // @ts-expect-error TS(2339): Property 'contains' does not exist on type 'never'... Remove this comment to see the full error message
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       handleMobileAlarmModal();
     }
@@ -175,13 +188,20 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
   }, [isOpen]);
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
       {isOpen && (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div className={styles.modal_overlay}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div ref={modalRef} className={styles.modal_wrapper}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={styles.modal_inside}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <div className={styles.modal_close}>
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 <span id={styles.alarmTitle}>내 알림</span>
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 <img
                   src={closeBtn}
                   alt="close"
@@ -189,19 +209,25 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }) {
                   onClick={handleMobileAlarmModal}
                 />
               </div>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <div className={styles.modal_content}>
                 {notifications.length > 0
                   ? notifications.map((notification, index) => (
+                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <div key={index}>
+                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                       <Link
                         to={generateLink(notification)}
                         className={styles.alarmLink}
                       >
+                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                         <p className={styles.alarmText}>
+                          // @ts-expect-error TS(2339): Property 'message' does not exist on type 'never'.
                           {notification.message}
                         </p>
                       </Link>
                       {index < notifications.length - 1 && (
+                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                         <hr
                           style={{
                             height: "0.3px",

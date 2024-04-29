@@ -6,7 +6,7 @@ import ReactQuill from "react-quill";
 import axios from "axios";
 import { useMemo, useRef, useState, useEffect } from "react";
 
-function Quill(props) {
+function Quill(props: any) {
   const [value, setValue] = useState(props.value);
   const quillRef = useRef();
 
@@ -26,6 +26,7 @@ function Quill(props) {
 
     // input에 변화가 생긴다면 = 이미지를 선택
     input.addEventListener("change", async () => {
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       const file = input.files[0];
       // multer에 맞는 형식으로 데이터 만들어준다.
       const formData = new FormData();
@@ -33,6 +34,7 @@ function Quill(props) {
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
         const result = await axios.post(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_HOST+"/wiki/image",
           formData,
           { withCredentials: true }
@@ -44,6 +46,7 @@ function Quill(props) {
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
 
         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
+        // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
         // 1. 에디터 root의 innerHTML을 수정해주기
         // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
@@ -106,6 +109,7 @@ function Quill(props) {
 
   // 이벤트 핸들러
   const onClickContents = () => {
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     const editor = quillRef.current.getEditor();
     //console.log(quillRef.current);
     //console.log(editor.root); // 에디터 안의 내용 HTML 태그
@@ -115,8 +119,11 @@ function Quill(props) {
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <ReactQuill
+        // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
         ref={quillRef}
         theme="snow"
         placeholder="내용을 작성해주세요(내용을 작성해야 제출이 완료됩니다.)"
@@ -124,6 +131,7 @@ function Quill(props) {
         onChange={(newValue) => {
           setValue(newValue);
           //console.log(newValue);
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           const editor = quillRef.current.getEditor();
           // console.log(quillRef.current);
           //console.log(editor.root); // 에디터 안의 내용 HTML 태그

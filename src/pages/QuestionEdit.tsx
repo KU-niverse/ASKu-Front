@@ -1,19 +1,31 @@
 import React from "react";
 import { useState, useEffect } from "react";
+// @ts-expect-error TS(6142): Module '../components/Quill2.js' was resolved to '... Remove this comment to see the full error message
 import Editor from "../components/Quill2.js";
+// @ts-expect-error TS(2307): Cannot find module './WikiEdit.module.css' or its ... Remove this comment to see the full error message
 import styles from "./WikiEdit.module.css";
+// @ts-expect-error TS(6142): Module '../components/Header' was resolved to 'C:/... Remove this comment to see the full error message
 import Header from "../components/Header";
+// @ts-expect-error TS(6142): Module '../components/QuestionFor' was resolved to... Remove this comment to see the full error message
 import QuestionFor from "../components/QuestionFor";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+// @ts-expect-error TS(6142): Module '../components/WikiDropDown.jsx' was resolv... Remove this comment to see the full error message
 import WikiDropDown from "../components/WikiDropDown.jsx";
 import axios from "axios";
+// @ts-expect-error TS(6142): Module '../components/Wiki/WikiToHtml' was resolve... Remove this comment to see the full error message
 import WikiToHtml from "../components/Wiki/WikiToHtml";
+// @ts-expect-error TS(6142): Module '../components/Wiki/HtmlToWiki' was resolve... Remove this comment to see the full error message
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
+// @ts-expect-error TS(6142): Module '../components/Wiki/WikiToQuill' was resolv... Remove this comment to see the full error message
 import WikiToQuill from "../components/Wiki/WikiToQuill";
+// @ts-expect-error TS(6142): Module '../components/SpinnerMypage' was resolved ... Remove this comment to see the full error message
 import SpinnerMypage from "../components/SpinnerMypage";
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 
-const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
+const QuestionEdit = ({
+  loggedIn,
+  setLoggedIn
+}: any) => {
   const nav = useNavigate();
   const [summary, setSummary] = useState("");
   const [version, setVersion] = useState("");
@@ -71,13 +83,14 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
   };
 
-  function onEditorChange(value) {
+  function onEditorChange(value: any) {
     setDesc(value);
   }
   //일치하는 목차가 없을 경우 전체 문서를 불러옴
   const getAllWiki = async () => {
     try {
       const result = await axios.get(
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         process.env.REACT_APP_HOST + `/wiki/contents/${main}`,
         {
           withCredentials: true,
@@ -90,7 +103,9 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       }
     } catch (error) {
       console.error(error);
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (error.response.status === 401) {
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         alert(error.response.data.message);
         //nav("/signin");
       } else {
@@ -103,6 +118,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const getWiki = async () => {
     try {
       const result = await axios.get(
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
         {
           withCredentials: true,
@@ -115,7 +131,9 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       }
     } catch (error) {
       console.error(error);
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (error.response.status === 401) {
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         alert(error.response.data.message);
         return nav('/');
       } else {
@@ -127,6 +145,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const checkSameIndex = async () => {
     try {
       const result = await axios.get(
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         process.env.REACT_APP_HOST + `/wiki/contents/question/${qid}`,
         {
           withCredentials: true,
@@ -142,12 +161,14 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       }
     } catch (error) {
       setLoading(false);
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (error.response.status === 401) {
         setLoading(false);
         alert("로그인이 필요합니다.");
         return nav(from);
       } else {
         setLoading(false);
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         alert(error.response.data.message);
         //console.log(error);
         //nav("/");
@@ -167,8 +188,11 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
 
 
   useEffect(() => {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (userInfo[0] !== undefined) {
+      // @ts-expect-error TS(2339): Property 'is_managed' does not exist on type '{}'.
       if (wikiDocs.is_managed === 1) {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (userInfo[0].is_authorized === 0) {
           alert("인증받은 유저만 수정이 가능합니다.");
           nav(-1);
@@ -194,7 +218,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     setCopy(false);
   }, [selectedOption]);
 
-  const addWikiEdit = async (e) => {
+  const addWikiEdit = async (e: any) => {
     e.preventDefault();
 
     //본문 내용 입력 필수
@@ -214,6 +238,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     if (selectedOption === "all") {
       try {
         const result = await axios.post(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_HOST + `/wiki/contents/${main}`,
           {
             version: version,
@@ -233,13 +258,16 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
           nav(`/wiki/${main}`);
         }
       } catch (error) {
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         if (error.response.status === 401) {
           setLoading(false);
           alert("login이 필요합니다.");
           nav("/signin");
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         } else if (error.response.status === 500) {
           alert("제출에 실패했습니다. 다시 시도해주세요.");
           // setWiki(error.response.data.newContent);
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         } else if (error.response.status === 426) {
           alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
           setCopy(true);
@@ -248,6 +276,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     } else {
       try {
         const result = await axios.post(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
           {
             version: version,
@@ -266,12 +295,15 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
           nav(`/wiki/${main}`);
         }
       } catch (error) {
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         if (error.response.status === 401) {
           alert("login이 필요합니다.");
           nav("/signin");
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         } else if (error.response.status === 500) {
           alert("제출에 실패했습니다. 다시 시도해주세요.");
           // setWiki(error.response.data.newContent);
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         } else if (error.response.status === 426) {
           alert("기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.");
           setCopy(true);
@@ -280,27 +312,34 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     }
   };
   //dropdown에서 선택한 index 섹션으로 반영
-  const handleSelectedOption = (optionValue) => {
+  const handleSelectedOption = (optionValue: any) => {
     setSelectedOption(optionValue);
   };
   //dropdown에서 선택한 index title 반영
-  const handleSelectedTitle = (optionValue) => {
+  const handleSelectedTitle = (optionValue: any) => {
     setSelectedTitle(optionValue);
   };
 
   if (loading) {
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <SpinnerMypage />
       </div>
     );
   }
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={`${styles.container}`}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className={`${styles.edit}`}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <QuestionFor
             nick={stateData.nick}
             content={stateData.content}
@@ -308,21 +347,31 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
             created_at={stateData.created_at}
           />
         </div>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <form onSubmit={addWikiEdit}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={`${styles.wikiQues_header}`}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={`${styles.wikichar_title}`}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <h4>문서 제목</h4>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <input
                 type="text"
                 required
+                // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'boolean |... Remove this comment to see the full error message
                 disabled="true"
                 value={main}
                 className={`${styles.title}`}
               />
             </div>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={`${styles.wikiQues_lists}`}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <h4>목차</h4>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <div className={styles.q_dropdown}>
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 <WikiDropDown
                   defaultOpt={defaultOpt}
                   onSelectedOption={handleSelectedOption}
@@ -333,36 +382,50 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           </div>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={`${styles.QuesWikiManu}`}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <h4>문서 내용</h4>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare /></p>
             </div>
 
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={`${styles.editorbox2}`}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <Editor value={desc} onChange={onEditorChange} />
             </div>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <h4>히스토리 요약</h4>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               className={`${styles.summary}`}
+              // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
               maxLength="60"
               placeholder="60자 이내로 작성해주세요"
             ></textarea>
           </div>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={`${styles.submitbox}`}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <span className={`${styles.chkdiv}`}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <input
                 type="checkbox"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
                 className={`${styles.chkbox}`}
               />
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <a href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d" target="_blank" rel="noopener noreferrer">
                   정책에 맞게 작성하였음을 확인합니다.
                 </a>
             </span>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <button className={`${styles.submitWiki}`}>생성하기</button>
           </div>
         </form>

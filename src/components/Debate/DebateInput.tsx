@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2307): Cannot find module './DebateInput.module.css' or i... Remove this comment to see the full error message
 import styles from "./DebateInput.module.css";
+// @ts-expect-error TS(2307): Cannot find module '../../img/submit.png' or its c... Remove this comment to see the full error message
 import submit from "../../img/submit.png";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -6,7 +8,11 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function DebateInput({ onDebateSubmit, title, debateId }) {
+function DebateInput({
+  onDebateSubmit,
+  title,
+  debateId
+}: any) {
   const [debateContent, setDebateContent] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const Navigate = useNavigate();
@@ -17,6 +23,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
@@ -28,6 +35,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (error.response.status === 401) {
         setLoggedIn(false);
       } else {
@@ -39,7 +47,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     checkLoginStatus();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const value = e.target.value;
     // 줄바꿈을 포함하여 길이를 계산
     if (value.length <= 200) {
@@ -70,7 +78,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     setDebateContent('');
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: any) => {
     // Shift + Enter가 동시에 눌렸을 때
     if (event.key === "Enter" && event.shiftKey) {
     }
@@ -82,13 +90,20 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={styles.container}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className={styles.title}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <span>의견 달기</span>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <img src={submit} alt="submit" onClick={handleSubmit} />
       </div>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className={styles.textbox}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <textarea
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
           rows="4"
           className={styles.textarea}
           placeholder="해당 토론에 대한 의견을 입력하세요."

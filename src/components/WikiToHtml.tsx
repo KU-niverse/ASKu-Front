@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WikiToHtml = (wikiText) => {
+const WikiToHtml = (wikiText: any) => {
         let html = wikiText;
         
         //html = html.replace(/===([^=].*?)===/g, '<h3>$1</h3>');

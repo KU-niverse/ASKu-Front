@@ -13,7 +13,9 @@ const RouteChangeTracker = () => {
 
   // 구글 애널리틱스 운영서버만 적용
   useEffect(() => {
+    // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
     if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
+      // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
       ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS);
       setInitialized(true);
     }

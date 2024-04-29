@@ -1,11 +1,16 @@
 import React from "react";
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import HSBar from "react-horizontal-stacked-bar-chart";
+// @ts-expect-error TS(2307): Cannot find module './WikiGraph.module.css' or its... Remove this comment to see the full error message
 import styles from "./WikiGraph.module.css"
 
 
-function WikiGraph({ total_point, users }) {
+function WikiGraph({
+  total_point,
+  users
+}: any) {
 
-  const getColor = (index) => {
+  const getColor = (index: any) => {
     const colors = [
       "rgba(251, 108, 108, 1)",
       "rgba(255, 214, 0, 1)",
@@ -20,28 +25,29 @@ function WikiGraph({ total_point, users }) {
   };
 
   // Calculate contributions and sort them
-  const contributions = users.map((user) => ({
+  const contributions = users.map((user: any) => ({
     name: user.nickname,
     value: (user.point / total_point) * 100,
-    description: `${((user.point / total_point) * 100).toFixed(2)}%`,
+
     // color: getColor(doc.doc_title),
+    description: `${((user.point / total_point) * 100).toFixed(2)}%`
   }));
 
   // Sort contributions by value in descending order
-  contributions.sort((a, b) => b.value - a.value);
+  contributions.sort((a: any, b: any) => b.value - a.value);
 
   // Select top 3 contributions, and calculate the "Other" contribution
   const topContributions = contributions.slice(0, 3);
 
   // Apply colors to top contributions based on their position
-  topContributions.forEach((contribution, index) => {
+  topContributions.forEach((contribution: any, index: any) => {
     contribution.color = getColor(index); // Assuming getColor function returns appropriate colors
   });
 
 
 
   let otherContributionValue = 0;
-  contributions.slice(3).forEach((contribution) => {
+  contributions.slice(3).forEach((contribution: any) => {
     otherContributionValue += contribution.value;
   });
   topContributions.push({
@@ -53,8 +59,11 @@ function WikiGraph({ total_point, users }) {
 
  
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={styles.g_container}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <p className={styles.g_name}>문서별 기여도</p>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div style={{
         borderRadius: "100px",
         height: "22px",
@@ -62,6 +71,7 @@ function WikiGraph({ total_point, users }) {
         width: "100%",
         position: "relative"
       }}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div style={{
         width: "calc(100% + 2px)",
         height: "100%",
@@ -70,6 +80,7 @@ function WikiGraph({ total_point, users }) {
         top: "50%",  // 중앙으로 위치시킵니다
         transform: "translateY(-50%)"  // 높이의 50%만큼 위로 이동시킵니다
       }}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <HSBar
         height={22}
         data={topContributions}
@@ -79,15 +90,21 @@ function WikiGraph({ total_point, users }) {
       </div>
       </div>
       
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className={styles.legend}>
-        {topContributions.map((item, index) => (
+        {topContributions.map((item: any, index: any) => (
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={styles.legendItem} key={index}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div
               className={styles.legendColor}
               style={{ background: item.color }}
             ></div>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={styles.legendLabel}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span className={styles.legendname}>{item.name}</span>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span className={styles.legendper}> {item.description}</span>
             </div>
           </div>

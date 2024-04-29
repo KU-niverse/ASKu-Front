@@ -1,6 +1,8 @@
+// @ts-expect-error TS(2307): Cannot find module './AlarmModal.module.css' or it... Remove this comment to see the full error message
 import styles from "./AlarmModal.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+// @ts-expect-error TS(2307): Cannot find module '../img/close_btn.png' or its c... Remove this comment to see the full error message
 import closeBtn from "../img/close_btn.png";
 import { Link } from "react-router-dom";
 
@@ -54,7 +56,10 @@ const dummyData = [
   },
 ];
 
-const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
+const AlarmModal = ({
+  isAlarmVisible,
+  handleAlarm
+}: any) => {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -62,6 +67,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     const checkLoginStatus = async () => {
       try {
         const res = await axios.get(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_HOST + "/user/auth/issignedin",
           {
             withCredentials: true,
@@ -110,6 +116,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     if (isAlarmVisible) {
       // Axios를 사용하여 데이터 가져오기
       axios
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         .get(process.env.REACT_APP_HOST + "/notification/user", {
           withCredentials: true,
         })
@@ -124,11 +131,12 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     }
   }, [isAlarmVisible]);
 
-  const removeIdFromMessage = (message) => {
+  const removeIdFromMessage = (message: any) => {
     return message.replace(/\(\d+\)/g, "");
   };
 
-  const extractInfo = (type_id, message) => {
+  const extractInfo = (type_id: any, message: any) => {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const pattern = patterns[type_id];
     if (!pattern) {
       return null;
@@ -161,7 +169,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     return info;
   };
 
-  const extractInfoAndRefineMessage = (type_id, message) => {
+  const extractInfoAndRefineMessage = (type_id: any, message: any) => {
     const info = extractInfo(type_id, message);
     if (!info) {
       return { info: null, refinedMessage: message };
@@ -171,10 +179,12 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     return { info, refinedMessage };
   };
 
-  const generateLink = (notification) => {
+  const generateLink = (notification: any) => {
     const { message } = notification;
     const type_id = parseInt(
+      // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
       Object.keys(patterns).find((key) => {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const pattern = patterns[key];
         return message.match(pattern) !== null;
       })
@@ -185,10 +195,13 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
     const link = (() => {
       switch (type_id) {
         case 1:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${info.result}`;
         case 2:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 3:
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
         case 4:
           return "/mypage/mybadge";
@@ -201,11 +214,16 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
       {isAlarmVisible && (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div className={styles.alarmContainer}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={styles.alarmTitleWrap}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <span id={styles.alarmTitle}>내 알림</span>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <img
               src={closeBtn}
               alt="close"
@@ -213,17 +231,22 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }) => {
               onClick={handleAlarm}
             />
           </div>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={styles.alarmContent}>
             {notifications.length > 0
               ? notifications.map((notification, index) => (
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 <div key={index}>
+                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                   <Link
                     to={generateLink(notification)}
                     className={styles.alarmLink}
                   >
+                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <p className={styles.alarmText}>{notification.message}</p>
                   </Link>
                   {index < notifications.length - 1 && (
+                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <hr
                       style={{
                         height: "0.3px",

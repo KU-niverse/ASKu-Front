@@ -1,18 +1,31 @@
 import { useNavigate } from "react-router-dom";
+// @ts-expect-error TS(6142): Module '../components/Header' was resolved to 'C:/... Remove this comment to see the full error message
 import Header from "../components/Header";
+// @ts-expect-error TS(2307): Cannot find module './ChatbotMobile.module.css' or... Remove this comment to see the full error message
 import styles from "./ChatbotMobile.module.css";
+// @ts-expect-error TS(2307): Cannot find module '../img/arrow.png' or its corre... Remove this comment to see the full error message
 import arrow from "../img/arrow.png";
 import axios from "axios";
+// @ts-expect-error TS(6142): Module './Spinner' was resolved to 'C:/Users/User/... Remove this comment to see the full error message
 import Spinner from "./Spinner";
+// @ts-expect-error TS(6142): Module './LoginModal' was resolved to 'C:/Users/Us... Remove this comment to see the full error message
 import LoginModal from "./LoginModal";
 import { useState, useEffect, useRef, Fragment } from "react";
+// @ts-expect-error TS(6142): Module './ChatAnswer' was resolved to 'C:/Users/Us... Remove this comment to see the full error message
 import ChatAnswer from "./ChatAnswer";
+// @ts-expect-error TS(6142): Module './ChatQuestion' was resolved to 'C:/Users/... Remove this comment to see the full error message
 import ChatQuestion from "./ChatQuestion";
 import { Link } from "react-router-dom";
+// @ts-expect-error TS(6142): Module './ClearModal' was resolved to 'C:/Users/Us... Remove this comment to see the full error message
 import ClearModal from "./ClearModal";
+// @ts-expect-error TS(6142): Module './RefreshModal' was resolved to 'C:/Users/... Remove this comment to see the full error message
 import RefreshModal from "./RefreshModal";
 
-function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
+function ChatbotMobile({
+  isLoggedIn,
+  setIsLoggedIn,
+  userId
+}: any) {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [showSuggest, setShowSuggest] = useState(true);
@@ -24,7 +37,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const inputChange = (e) => {
+  const inputChange = (e: any) => {
     setInputValue(e.target.value);
   };
 
@@ -51,6 +64,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
 
       try {
         const response = await axios.post(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_AI + `/chatbot/`,
           {
             q_content: inputValue,
@@ -59,6 +73,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
         );
 
         setShowSuggest(false);
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         inputRef.current.blur();
 
         const newChatResponse = [
@@ -71,6 +86,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
           }, // 서버 응답 추가
         ];
 
+        // @ts-expect-error TS(2345): Argument of type '({ content: string; reference?: ... Remove this comment to see the full error message
         setChatResponse(newChatResponse);
         setInputValue("");
 
@@ -80,11 +96,13 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
       } catch (error) {
         console.error(error);
 
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         if (error.response && error.response.status === 403) {
           // 로그인 모달을 띄우도록 처리
           setLoginModalVisible(true);
         }
 
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         if (error.response && error.response.status === 406) {
           // 새로고침 모달을 띄우도록 처리
           setRefreshModalOpen(true);
@@ -95,19 +113,20 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
       }
     }
   };
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: any) => {
     if (event.key === "Enter" && event.target === inputRef.current) {
       sendMessage();
     }
   };
 
-  const handleSuggestClick = (content) => {
+  const handleSuggestClick = (content: any) => {
     setShowSuggest(false);
 
     const newChatResponse = [
       ...chatResponse,
       { content, isQuestion: true }, // 사용자의 질문 추가
     ];
+    // @ts-expect-error TS(2345): Argument of type '{ content: any; isQuestion: bool... Remove this comment to see the full error message
     setChatResponse(newChatResponse);
 
     setLoading(true); // 로딩 시작
@@ -128,6 +147,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
         // 다른 추천 검색어에 대한 답변도 추가합니다.
       };
 
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       const answer = dummyAnswers[content] || "미리 저장된 답변이 없습니다.";
 
       // 답변 컴포넌트를 생성하고 더미 데이터의 답변을 추가합니다.
@@ -135,6 +155,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
         ...newChatResponse,
         { content: answer }, // 더미 데이터에서 가져온 답변 추가
       ];
+      // @ts-expect-error TS(2345): Argument of type '({ content: any; isQuestion: boo... Remove this comment to see the full error message
       setChatResponse(updatedChatResponse);
       setInputValue("");
       setShowSuggest(true);
@@ -143,6 +164,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
 
   const chatBottomRef = useRef(null);
   const scrollToBottom = () => {
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     chatBottomRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -163,9 +185,11 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
 
   useEffect(() => {
     const getMessage = async () => {
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       inputRef.current.focus();
       try {
         const response = await axios.get(
+          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
           process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`
         );
         const previousHistory = response.data;
@@ -197,40 +221,59 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
   };
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={styles.mobileChatbotContainer}>
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=0"
       />
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <div className={styles.mobileChatbotWrap}>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div className={styles.topBar}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <p id={styles.title}>AI 하호</p>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <Link>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <button className={styles.button} onClick={handleClearModal}>
               채팅 비우기
             </button>
           </Link>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <Link
             to="https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4"
             target="_blank"
           >
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <button className={styles.button}>도움말</button>
           </Link>
         </div>
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <div>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={styles.chat}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <ChatAnswer
               content="안녕하세요! 무엇이든 제게 질문해주세요!"
               // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
             />
             {previousChatHistory.length !== 0 && (
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <>
                 {previousChatHistory.map((item, index) => (
+                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                   <Fragment key={item.id}>
+                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <ChatQuestion content={item.q_content} />
+                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <ChatAnswer
+                      // @ts-expect-error TS(2339): Property 'a_content' does not exist on type 'never... Remove this comment to see the full error message
                       content={item.a_content}
+                      // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
                       qnaId={item.id}
+                      // @ts-expect-error TS(2339): Property 'reference' does not exist on type 'never... Remove this comment to see the full error message
                       reference={item.reference}
                     />
                   </Fragment>
@@ -239,29 +282,38 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
             )}
             {chatResponse.map((item, index) => {
               if (index % 2 === 0) {
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 return <ChatQuestion key={index} content={item.content} />;
               } else {
                 return (
+                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                   <ChatAnswer
                     key={index}
+                    // @ts-expect-error TS(2339): Property 'content' does not exist on type 'never'.
                     content={item.content}
+                    // @ts-expect-error TS(2339): Property 'qnaId' does not exist on type 'never'.
                     qnaId={item.qnaId}
+                    // @ts-expect-error TS(2339): Property 'reference' does not exist on type 'never... Remove this comment to see the full error message
                     reference={item.reference}
                   />
                 );
               }
             })}
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div
               className={styles.suggest}
               style={{ display: showSuggest ? "block" : "none" }}
             >
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <p className={styles.ref}>추천 질문</p>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span
                 className={styles.textBox}
                 onClick={() => handleSuggestClick("너는 누구야?")}
               >
                 너는 누구야?
               </span>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span
                 className={styles.textBox}
                 onClick={() =>
@@ -270,6 +322,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
               >
                 휴학은 최대 몇 년까지 가능해?
               </span>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span
                 className={styles.textBox}
                 onClick={() =>
@@ -278,6 +331,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
               >
                 강의 최소 출석 일수에 대해 알려줘.
               </span>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <span
                 className={styles.textBox}
                 onClick={() => handleSuggestClick("이중전공은 어떻게 해?")}
@@ -285,30 +339,37 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
                 이중전공은 어떻게 해?
               </span>
             </div>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div ref={chatBottomRef}></div>{" "}
             {/* 스크롤 최하단 이동을 위한 빈 div */}
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             {loading && <Spinner />}
           </div>
           {RefreshModalOpen && (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <RefreshModal
               isOpen={RefreshModalOpen}
               onClose={() => setRefreshModalOpen(false)}
             />
           )}
           {isLoginModalVisible && (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <LoginModal
               isOpen={isLoginModalVisible}
               onClose={() => setLoginModalVisible(false)}
             />
           )}
           {clearModalOpen && (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <ClearModal
               isOpen={clearModalOpen}
               onClose={() => setClearModalOpen(false)}
               userId={userId}
             />
           )}
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <div className={styles.promptWrap}>
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <textarea
               className={styles.prompt}
               placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
@@ -318,7 +379,9 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
               ref={inputRef}
               disabled={loading}
             />
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <div className={styles.sendBtn} onClick={sendMessage}>
+              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
               <img src={arrow} className={styles.sendBtnArrow} />
             </div>
           </div>

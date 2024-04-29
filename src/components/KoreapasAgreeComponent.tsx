@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const KoreapasAgreeComponent = ({ nickname }) => {
+export const KoreapasAgreeComponent = ({
+  nickname
+}: any) => {
 
   const htmlContent = `<!DOCTYPE html>
   <html lang="en">
@@ -153,6 +155,7 @@ export const KoreapasAgreeComponent = ({ nickname }) => {
   const htmlSrc = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <iframe
       src={htmlSrc}
       style={{ width: '100%', height: '557px', border: 'none', marginBottom: '20px' }}

@@ -1,4 +1,4 @@
-const HtmlToWiki = (html) => {
+const HtmlToWiki = (html: any) => {
   let wikiText = html;
   
   // wikiText = wikiText.replace(/===([^=].*?)===/g, '<h3>$1</h3>');
@@ -27,25 +27,25 @@ const HtmlToWiki = (html) => {
 wikiText = wikiText.replace(/<u>(.*?)<\/u>/g, '__$1__');
 
 // <ol>을 순서 있는 리스트로 변환
-wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/gs, function (match, group) {
+wikiText = wikiText.replace(/<ol>(.*?)<\/ol>/gs, function (match: any, group: any) {
   var listItems = group.split('<li>').slice(1);
-  var wikiList = listItems.map(function (item) {
+  var wikiList = listItems.map(function (item: any) {
     return '#' + item.replace('</li>', '').trim();
   });
   return wikiList.join(' ');
 });
 
 // <ul>을 순서 없는 리스트로 변환
-wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/gs, function (match, group) {
+wikiText = wikiText.replace(/<ul>(.*?)<\/ul>/gs, function (match: any, group: any) {
   var listItems = group.split('<li>').slice(1);
-  var wikiList = listItems.map(function (item) {
+  var wikiList = listItems.map(function (item: any) {
     return '*' + item.replace('</li>', '').trim();
   });
   return wikiList.join(' ');
 });
 
 // <blockquote>을 인용구로 변환
-wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/gs, function (match, group) {
+wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/gs, function (match: any, group: any) {
   return '@' + group.trim() + '@';
 });
 
@@ -59,7 +59,7 @@ wikiText = wikiText.replace(/<blockquote>(.*?)<\/blockquote>/gs, function (match
 
   
   // Convert <img> tags to [[File:...]]
-  wikiText = wikiText.replace(/<img[^>]*src="([^"]+)"[^>]*>/g, (_, src) => `[[File:${src}]]`);
+  wikiText = wikiText.replace(/<img[^>]*src="([^"]+)"[^>]*>/g, (_: any, src: any) => `[[File:${src}]]`);
   wikiText = wikiText.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '[[ $2 ]]'); //[[ $2 | $1 ]]
   wikiText = wikiText.replace(/<a href="(.*?)">(.*?)<\/a>/g, '[[ $1 | $2 ]]');
   // wikiText = wikiText.replace(/<p>(.*?)<\/p>/g, '$1');

@@ -1,15 +1,21 @@
 import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
+// @ts-expect-error TS(2307): Cannot find module '../img/threedots.png' or its c... Remove this comment to see the full error message
 import threedots from "../img/threedots.png";
+// @ts-expect-error TS(2307): Cannot find module './ThreedotsReport.module.css' ... Remove this comment to see the full error message
 import styles from "./ThreedotsReport.module.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+// @ts-expect-error TS(6142): Module './ReportModal' was resolved to 'C:/Users/U... Remove this comment to see the full error message
 import ReportModal from "./ReportModal";
 import { useEffect } from "react";
 
-function ThreedotsReport({ type, target }) {
+function ThreedotsReport({
+  type,
+  target
+}: any) {
   const nav = useNavigate();
 
   const [isReportModalVisible, setReportModalVisible] = useState(false);
@@ -59,6 +65,7 @@ function ThreedotsReport({ type, target }) {
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
         process.env.REACT_APP_HOST+"/user/auth/issignedin",
         { withCredentials: true }
       );
@@ -70,6 +77,7 @@ function ThreedotsReport({ type, target }) {
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (error.response.status === 401) {
         setLoggedIn(false);
       }else{
@@ -83,13 +91,17 @@ function ThreedotsReport({ type, target }) {
 
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <Menu
       menuButton={
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <MenuButton className={styles.menubtn}>
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <img src={threedots} alt="Menu" />
         </MenuButton>
       }
     >
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <MenuItem
         className={styles.menuitem}
         value="신고하기"
@@ -97,6 +109,7 @@ function ThreedotsReport({ type, target }) {
           checkLoginStatus();
           e.stopPropagation = true;
           e.keepOpen = true;
+          // @ts-expect-error TS(2339): Property 'preventDefault' does not exist on type '... Remove this comment to see the full error message
           e.preventDefault = true;
           setReportModalVisible(true);
         }}
@@ -104,6 +117,7 @@ function ThreedotsReport({ type, target }) {
         신고하기
       </MenuItem>
       {isReportModalVisible && (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <ReportModal
           type={type}
           target={target}
