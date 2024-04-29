@@ -1,193 +1,184 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import styles from "./Signup.module.css";
-import logo from "../img/logo.png";
-import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
-import { BsCheck2All } from "react-icons/bs";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+
+import { FiAlertTriangle, FiAlertCircle } from 'react-icons/fi'
+import { BsCheck2All } from 'react-icons/bs'
+import axios from 'axios'
+import logo from '../img/logo.png'
+import styles from './Signup.module.css'
 import { KoreapasAgreeComponent } from '../components/KoreapasAgreeComponent'
 
-const Signup = ({
-  loggedIn,
-  setLoggedIn
-}: any) => {
-  const nav = useNavigate();
-  const [nickDoubleCheck, setNickDoubleCheck] = useState(false);
-  const [idDoubleCheck, setIdDoubleCheck] = useState(false);
-  const [emailDoubleCheck, setEmailDoubleCheck] = useState(false);
-  const [isNickValid, setisNickValid] = useState(true);
-  const [isIdValid, setisIdValid] = useState(true);
-  const [isPwValid, setisPwValid] = useState(true);
-  const [isPwSame, setisPwSame] = useState(true);
-  const [isChecked, setIsChecked] = useState(false);
-  const [clicked, setClicked] = useState(false);
-  const location = useLocation();
-  const koreapasData = location.state;
+const Signup = ({ loggedIn, setLoggedIn }: any) => {
+  const nav = useNavigate()
+  const [nickDoubleCheck, setNickDoubleCheck] = useState(false)
+  const [idDoubleCheck, setIdDoubleCheck] = useState(false)
+  const [emailDoubleCheck, setEmailDoubleCheck] = useState(false)
+  const [isNickValid, setisNickValid] = useState(true)
+  const [isIdValid, setisIdValid] = useState(true)
+  const [isPwValid, setisPwValid] = useState(true)
+  const [isPwSame, setisPwSame] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
+  const [clicked, setClicked] = useState(false)
+  const location = useLocation()
+  const koreapasData = location.state
 
-  //로그인 체크 후 우회
+  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(
-                process.env.REACT_APP_HOST + "/user/auth/issignedin",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true);
-        nav("/");
+        setLoggedIn(true)
+        nav('/')
       } else if (res.status === 401) {
-        setLoggedIn(false);
+        setLoggedIn(false)
       }
     } catch (error) {
-      console.error(error);
-      setLoggedIn(false);
+      console.error(error)
+      setLoggedIn(false)
     }
-  };
+  }
   useEffect(() => {
-    checkLoginStatus();
-  }, []);
+    checkLoginStatus()
+  }, [])
 
   const handleCheckboxChange = () => {
-    setIsChecked((prevIsChecked) => !prevIsChecked);
-  };
-  //비정상적인 접근 차단
+    setIsChecked((prevIsChecked) => !prevIsChecked)
+  }
+  // 비정상적인 접근 차단
   useEffect(() => {
     if (!koreapasData?.uuid) {
-      nav("/");
+      nav('/')
     }
   })
   const [form, setForm] = useState({
-    name: "",
-    nick: "",
-    id: "",
-    password: "",
-    checkPw: "",
-    studentId: "",
-    emailId: "",
-  });
+    name: '',
+    nick: '',
+    id: '',
+    password: '',
+    checkPw: '',
+    studentId: '',
+    emailId: '',
+  })
 
   const handleNickDoubleCheck = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
     if (form.nick.trim() === '') {
-      return alert("닉네임을 입력해주세요.")
-    } else if (isNickValid === false) {
-      return alert("닉네임 형식이 올바르지 않습니다.");
+      return alert('닉네임을 입력해주세요.')
+    }
+    if (isNickValid === false) {
+      return alert('닉네임 형식이 올바르지 않습니다.')
     }
 
     try {
-      const result = await axios.get(
-                process.env.REACT_APP_HOST + `/user/auth/nickdupcheck/${form.nick}`
-      );
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/nickdupcheck/${form.nick}`)
 
       if (result.data.success === true) {
-        alert(result.data.message);
-        setNickDoubleCheck(true);
+        alert(result.data.message)
+        setNickDoubleCheck(true)
       } else {
-        alert(result.data.message);
-        setNickDoubleCheck(false);
+        alert(result.data.message)
+        setNickDoubleCheck(false)
       }
     } catch (error) {
-      console.error(error);
-            alert(error.response.data.message);
+      console.error(error)
+      alert(error.response.data.message)
     }
-  };
+  }
 
   const handleIdDoubleCheck = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
     if (form.id.trim() === '') {
-      return alert("아이디를 입력해주세요.");
-    } else if (isIdValid === false) {
-      return alert("아이디 형식이 올바르지 않습니다.");
+      return alert('아이디를 입력해주세요.')
+    }
+    if (isIdValid === false) {
+      return alert('아이디 형식이 올바르지 않습니다.')
     }
     try {
-      const result = await axios.get(
-                process.env.REACT_APP_HOST + `/user/auth/iddupcheck/${form.id}`
-      );
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/iddupcheck/${form.id}`)
 
       if (result.data.success === true) {
-        alert(result.data.message);
-        setIdDoubleCheck(true);
+        alert(result.data.message)
+        setIdDoubleCheck(true)
       } else {
-        alert(result.data.message);
-        setIdDoubleCheck(false);
+        alert(result.data.message)
+        setIdDoubleCheck(false)
       }
     } catch (error) {
-      console.error(error);
-            alert(error.response.data.message);
+      console.error(error)
+      alert(error.response.data.message)
     }
-  };
+  }
 
   const handleEmailDoubleCheck = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const result = await axios.get(
-                process.env.REACT_APP_HOST + `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
-      );
+        `${process.env.REACT_APP_HOST}/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`,
+      )
 
       if (result.data.success === true) {
-        alert(result.data.message);
-        setEmailDoubleCheck(true);
+        alert(result.data.message)
+        setEmailDoubleCheck(true)
       } else {
-        alert(result.data.message);
-        setEmailDoubleCheck(false);
+        alert(result.data.message)
+        setEmailDoubleCheck(false)
       }
     } catch (error) {
-      console.error(error);
-            alert(error.response.data.message);
+      console.error(error)
+      alert(error.response.data.message)
     }
-  };
+  }
 
   function onChangeNick(e: any) {
-    const nickRegex = /^[가-힣a-zA-Z]{2,8}$/;
-    const nickCurrent = e.target.value;
-    setForm({ ...form, nick: nickCurrent });
+    const nickRegex = /^[가-힣a-zA-Z]{2,8}$/
+    const nickCurrent = e.target.value
+    setForm({ ...form, nick: nickCurrent })
 
     if (!nickRegex.test(nickCurrent)) {
-      setisNickValid(false);
+      setisNickValid(false)
     } else {
-      setisNickValid(true);
+      setisNickValid(true)
     }
   }
 
   function onChangeId(e: any) {
-    const idRegex = /^[a-zA-Z0-9]{6,15}$/;
-    const idCurrent = e.target.value;
-    setForm({ ...form, id: idCurrent });
+    const idRegex = /^[a-zA-Z0-9]{6,15}$/
+    const idCurrent = e.target.value
+    setForm({ ...form, id: idCurrent })
 
     if (!idRegex.test(idCurrent)) {
-      setisIdValid(false);
+      setisIdValid(false)
     } else {
-      setisIdValid(true);
+      setisIdValid(true)
     }
   }
 
   function onChangePW(e: any) {
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    const passwordCurrent = e.target.value;
-    setForm({ ...form, password: passwordCurrent });
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    const passwordCurrent = e.target.value
+    setForm({ ...form, password: passwordCurrent })
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setisPwValid(false);
+      setisPwValid(false)
     } else {
-      setisPwValid(true);
+      setisPwValid(true)
     }
   }
 
   function onChangeCheckPW(e: any) {
-    const checkPWCurrent = e.target.value;
-    setForm({ ...form, checkPw: checkPWCurrent });
+    const checkPWCurrent = e.target.value
+    setForm({ ...form, checkPw: checkPWCurrent })
 
     if (checkPWCurrent !== form.password) {
-      setisPwSame(false);
+      setisPwSame(false)
     } else {
-      setisPwSame(true);
+      setisPwSame(true)
     }
   }
 
   const createUserApi = async (e: any) => {
-    e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
+    e.preventDefault() // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
 
     // if (isNickValid === false) {
     //   return alert("닉네임 형식이 올바르지 않습니다");
@@ -207,11 +198,11 @@ const Signup = ({
     //   return alert("학번을 정학히 입력해주세요"); //힉번 10자리 유효성 검사.
     // }
 
-    setClicked(true);
+    setClicked(true)
 
     try {
       const response = await axios.post(
-                process.env.REACT_APP_HOST + "/user/auth/signup/koreapas",
+        `${process.env.REACT_APP_HOST}/user/auth/signup/koreapas`,
         {
           uuid: koreapasData.uuid,
           nickname: koreapasData.nickname,
@@ -224,42 +215,34 @@ const Signup = ({
         },
         {
           withCredentials: true,
-        }
-      );
+        },
+      )
       if (response.data.success === true) {
-        alert(response.data.message);
-        setLoggedIn(true);
-        nav("/");
+        alert(response.data.message)
+        setLoggedIn(true)
+        nav('/')
       }
     } catch (error) {
-      console.error(error);
-      nav("/");
-            return alert(error.response.data.message);
-
+      console.error(error)
+      nav('/')
+      return alert(error.response.data.message)
     }
-  };
-
+  }
 
   const handleCancel = () => {
-    nav("/");
-  };
+    nav('/')
+  }
 
   const handleExternalLink = () => {
-    window.location.href =
-      "https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052"; // 외부 링크 URL로 이동
-  };
+    window.location.href = 'https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052' // 외부 링크 URL로 이동
+  }
 
   return (
-        <div className={`${styles.container}`}>
-            <img
-        className={`${styles.logo}`}
-        src={logo}
-        alt=""
-        onClick={() => nav("/")}
-      />
-            <h1>회원가입</h1>
-            <form onSubmit={createUserApi}>
-                <KoreapasAgreeComponent nickname={koreapasData.nickname} />
+    <div className={`${styles.container}`}>
+      <img className={`${styles.logo}`} src={logo} alt={''} onClick={() => nav('/')} />
+      <h1>{'회원가입'}</h1>
+      <form onSubmit={createUserApi}>
+        <KoreapasAgreeComponent nickname={koreapasData.nickname} />
         {/* <div className={`${styles.signup_input}`}>
           <span>이름</span>
           <input
@@ -433,37 +416,29 @@ const Signup = ({
             [더보기]
           </span>
         </div> */}
-        { }
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <input
-            type="button"
-            value="취소"
+        {}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <input
+            type={'button'}
+            value={'취소'}
             className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
             onClick={handleCancel}
           />
-                    <input
-            type="submit"
-            value="동의하기"
+          <input
+            type={'submit'}
+            value={'동의하기'}
             className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
             style={{ marginLeft: '30px' }}
           />
         </div>
 
-                <div
-          className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}
-        >
-          {" "}
-          처리중
+        <div className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}>{' 처리중'}</div>
+        <div className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}>
+          {'처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)\r'}
         </div>
-                <div
-          className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}
-        >
-          처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)
-        </div>
-
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

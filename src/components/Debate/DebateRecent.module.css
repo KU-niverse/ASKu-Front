@@ -1,50 +1,49 @@
- /* 스타일을 초기화하고 싶은 경우 */
- .linkTo {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 기본 텍스트 색상 유지 */
-  }
-  
-  /* 클릭 시 스타일 변경하고 싶은 경우 */
-  .linkTo:hover {
-    text-decoration: underline;
-    text-decoration: none; /* 클릭 시 밑줄 표시 */
-  }
-.recentTitle{
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 22px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: rgba(159, 19, 46, 1);
+/* 스타일을 초기화하고 싶은 경우 */
+.linkTo {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 기본 텍스트 색상 유지 */
 }
-.recentLists{
-    display: flex;
-    flex-direction: column;
-}
-.recentLists ul{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 0;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-    color: black;
-    font-size: 14px;
-}
-.listTitle{
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
 
+/* 클릭 시 스타일 변경하고 싶은 경우 */
+.linkTo:hover {
+  text-decoration: underline;
+  text-decoration: none; /* 클릭 시 밑줄 표시 */
 }
-.listTimestamp{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: right;
-    color: rgba(116, 116, 116, 1);
+.recentTitle {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(159, 19, 46, 1);
+}
+.recentLists {
+  display: flex;
+  flex-direction: column;
+}
+.recentLists ul {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: black;
+  font-size: 14px;
+}
+.listTitle {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.listTimestamp {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: right;
+  color: rgba(116, 116, 116, 1);
 }

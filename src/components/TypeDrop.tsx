@@ -1,40 +1,30 @@
-import React from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import React, { useEffect, useState } from 'react'
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
+import axios from 'axios'
 import styles from './TypeDrop.module.css'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import axios from 'axios';
-import SpinnerMypage from './SpinnerMypage';
 
+import SpinnerMypage from './SpinnerMypage'
 
-function DropDown({
-  onSelectedOption
-}: any) {
- 
-
-
-
-
- let options=[{
-  value: 'list', 
-  label: '목차형',
-  className: 'myOptionClassName'
- },{
-  value: 'doc', 
-  label: '문서형',
-  className: 'myOptionClassName'
- }];
-//  if (wikiData.contents && wikiData.contents[0]){
-//     options = wikiData.contents[0].map((content) => ({
-//     value: `${content.index} ${content.title}`, 
-//     label: `${content.index} ${content.title}`,
-//     className: 'myOptionClassName'
-//   }))};
-
-  
-
-  
+function DropDown({ onSelectedOption }: any) {
+  const options = [
+    {
+      value: 'list',
+      label: '목차형',
+      className: 'myOptionClassName',
+    },
+    {
+      value: 'doc',
+      label: '문서형',
+      className: 'myOptionClassName',
+    },
+  ]
+  //  if (wikiData.contents && wikiData.contents[0]){
+  //     options = wikiData.contents[0].map((content) => ({
+  //     value: `${content.index} ${content.title}`,
+  //     label: `${content.index} ${content.title}`,
+  //     className: 'myOptionClassName'
+  //   }))};
 
   // [
   //   { value: 'one', label: 'One' },
@@ -53,33 +43,27 @@ function DropDown({
   //   }
   // ];
 
-
-  const defaultOption = "문서 성격";
+  const defaultOption = '문서 성격'
 
   const onSelect = (selectedOption: any) => {
-    onSelectedOption(selectedOption.value);
+    onSelectedOption(selectedOption.value)
     // 처리할 로직을 여기에 추가
-  };
-
-
-
-
+  }
 
   return (
-        <div className={styles.dropdown_container}>
-            <Dropdown 
-       className={styles.dropdown}
-       controlClassName={styles.dropdowncontrol}
-       menuClassName={styles.dropdownmenu}
-       placeholderClassName={styles.dropdownph}
-
+    <div className={styles.dropdown_container}>
+      <Dropdown
+        className={styles.dropdown}
+        controlClassName={styles.dropdowncontrol}
+        menuClassName={styles.dropdownmenu}
+        placeholderClassName={styles.dropdownph}
         options={options}
         onChange={onSelect}
         value={defaultOption}
-        placeholder="Select an option"
+        placeholder={'Select an option'}
       />
     </div>
-  );
+  )
 }
 
-export default DropDown;
+export default DropDown

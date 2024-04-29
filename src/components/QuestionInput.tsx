@@ -1,26 +1,20 @@
-import React from "react";
-import { useState } from "react";
-import styles from "./QuestionInput.module.css";
-import DropDown from "./DropDown";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
-function QuestionInput({
-  onQuestionSubmit,
-  title,
-  wikiData,
-  defaultOpt
-}: any) {
-  const [questionContent, setQuestionContent] = useState("");
-  const [selectedOption, setSelectedOption] = useState("전체"); // 선택한 option을 상태로 관리
-  const [loggedIn, setLoggedIn] = useState(false);
-  const Navigate = useNavigate();
+import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import styles from './QuestionInput.module.css'
+import DropDown from './DropDown'
 
-  const location = useLocation();
-  const from = location.state?.from || '/';
+function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: any) {
+  const [questionContent, setQuestionContent] = useState('')
+  const [selectedOption, setSelectedOption] = useState('전체') // 선택한 option을 상태로 관리
+  const [loggedIn, setLoggedIn] = useState(false)
+  const Navigate = useNavigate()
 
-  //로그인 체크 후 우회
+  const location = useLocation()
+  const from = location.state?.from || '/'
+
+  // 로그인 체크 후 우회
   // const checkLoginStatus = async () => {
   //   try {
   //     const res = await axios.get(
@@ -52,82 +46,76 @@ function QuestionInput({
   // }, []);
   //
 
-  //로그인 체크 후 우회
+  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(
-                process.env.REACT_APP_HOST + "/user/auth/issignedin",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true);
+        setLoggedIn(true)
       } else if (res.status === 401) {
-        setLoggedIn(false);
+        setLoggedIn(false)
       }
     } catch (error) {
-      console.error(error);
-      setLoggedIn(false);
-            if (error.response.status === 401) {
-        setLoggedIn(false);
+      console.error(error)
+      setLoggedIn(false)
+      if (error.response.status === 401) {
+        setLoggedIn(false)
       } else {
-        alert("에러가 발생하였습니다");
+        alert('에러가 발생하였습니다')
       }
     }
-  };
+  }
   useEffect(() => {
-    checkLoginStatus();
-  }, []);
+    checkLoginStatus()
+  }, [])
 
-  //dropdown에서 선택한 index 반영
+  // dropdown에서 선택한 index 반영
   const handleSelectedOption = (optionValue: any) => {
-    setSelectedOption(optionValue);
-  };
+    setSelectedOption(optionValue)
+  }
 
   const handleChange = (e: any) => {
-    const value = e.target.value;
+    const { value } = e.target
     if (value.length <= 200) {
-      setQuestionContent(value);
+      setQuestionContent(value)
     }
-  };
-
+  }
 
   const submitData = {
     index_title: selectedOption,
     content: questionContent,
-  };
+  }
 
   const handleSubmit = async () => {
     if (!loggedIn) {
-      alert(
-        "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."
-      );
-      Navigate("/signin");
-      return;
+      alert('로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다.')
+      Navigate('/signin')
+      return
     }
     // 로그인 안한 유저 로그인창으로 전송
     if (!selectedOption) {
-      alert("목차를 선택해 주세요.");
-      return;
+      alert('목차를 선택해 주세요.')
+      return
     }
-    if (questionContent.trim() === "") {
-      alert("질문을 입력해주세요.");
-      return;
+    if (questionContent.trim() === '') {
+      alert('질문을 입력해주세요.')
+      return
     }
-    onQuestionSubmit(submitData);
-    window.location.reload();
-  };
+    onQuestionSubmit(submitData)
+    window.location.reload()
+  }
 
   const countCharacters = () => {
-    return `${questionContent.length}/200`;
-  };
+    return `${questionContent.length}/200`
+  }
 
   return (
-        <form className={styles.q_c}>
-            <div className={styles.q_cheader}>
-                <div className={styles.q_cfrontheader}>
-                    <p className={styles.q_cheadline}>질문 생성하기</p>
-                    <div className={styles.q_dropdown}>
-                        <DropDown
+    <form className={styles.q_c}>
+      <div className={styles.q_cheader}>
+        <div className={styles.q_cfrontheader}>
+          <p className={styles.q_cheadline}>{'질문 생성하기'}</p>
+          <div className={styles.q_dropdown}>
+            <DropDown
               onSelectedOption={handleSelectedOption}
               title={title}
               wikiData={wikiData}
@@ -137,24 +125,24 @@ function QuestionInput({
         </div>
       </div>
 
-            <div className={styles.q_cbox}>
-                <textarea
-                    rows="4"
+      <div className={styles.q_cbox}>
+        <textarea
+          rows={'4'}
           className={styles.q_ctextarea}
-          placeholder="질문을 입력해주세요."
+          placeholder={'질문을 입력해주세요.'}
           value={questionContent}
           maxLength={200}
           onChange={handleChange}
         />
-                <div className={styles.q_clastheader}>
-                    <span className={styles.textnum}>{countCharacters()}</span>
-                    <button className={styles.q_csubmit} onClick={handleSubmit}>
-            생성하기
+        <div className={styles.q_clastheader}>
+          <span className={styles.textnum}>{countCharacters()}</span>
+          <button className={styles.q_csubmit} onClick={handleSubmit}>
+            {'생성하기\r'}
           </button>
         </div>
       </div>
     </form>
-  );
+  )
 }
 
-export default QuestionInput;
+export default QuestionInput

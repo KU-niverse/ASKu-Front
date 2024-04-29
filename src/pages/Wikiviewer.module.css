@@ -1,322 +1,307 @@
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
-.quesul{
-    cursor: pointer;
+.quesul {
+  cursor: pointer;
 }
-.noneComment{
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(116, 116, 116, 1);
+.noneComment {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(116, 116, 116, 1);
 }
-.newComment{
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(116, 116, 116, 1);
-    cursor: pointer;
-    text-decoration: underline;
+.newComment {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(116, 116, 116, 1);
+  cursor: pointer;
+  text-decoration: underline;
 }
-.newComment:hover{
-    color: rgba(116, 116, 116, 0.8);
-    
+.newComment:hover {
+  color: rgba(116, 116, 116, 0.8);
 }
-.wikiviewer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    width: 74%;
-    margin-left: 13%;
-    margin-bottom: 30px;
-}
-
-.wikititle{
-    width: 100%;
-    height: 80px;
-    border: 1px solid rgba(213, 213, 213, 1);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-
-}
-.wikititle h1{
-    font-size: 25px;
-    margin-left: 20px;
-    display: flex;
-    align-items: center;
-    word-break: break-word;
-
-}
-.bookmarkImg{
-    margin-left: 10px;
-    margin-right: 10px;
-    cursor: pointer;
-    width: 20px;
-}
-.wikititleBtn{
-    display: flex;
-    justify-content: space-between;
-    width: 210px;
-    margin-right: 20px;
-}
-.wikititleBtn button{
-    width: 97px;
-    height: 36px;
-    border-radius: 30px;
-    border: 2px solid rgba(159, 19, 46, 1);
-    background-color: white;
-    color: rgba(159, 19, 46, 1);
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: 13px;
-    box-sizing: border-box;
-}
-.wikiBoxLists{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.wikilist{
-    width: 28%;
-    min-height: 303px;
-    height: auto;
-    border: 1px solid rgba(213, 213, 213, 1);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    padding: 18px;
-    padding-top: 23px;
-    box-sizing: border-box;
-}
-.wikilist li{
-    cursor: pointer;
-    margin-bottom: 7px;
-    font-size: 14px;
-}
-.wikiIndex{
-    color: rgba(222, 58, 88, 1);
-}
-.wikilistTitle{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.wikiviewer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  width: 74%;
+  margin-left: 13%;
+  margin-bottom: 30px;
 }
 
-h2{
-    margin: 0px;
-    font-size: 18px;
-    font-weight: 700;
+.wikititle {
+  width: 100%;
+  height: 80px;
+  border: 1px solid rgba(213, 213, 213, 1);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.wikititle h1 {
+  font-size: 25px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+.bookmarkImg {
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  width: 20px;
+}
+.wikititleBtn {
+  display: flex;
+  justify-content: space-between;
+  width: 210px;
+  margin-right: 20px;
+}
+.wikititleBtn button {
+  width: 97px;
+  height: 36px;
+  border-radius: 30px;
+  border: 2px solid rgba(159, 19, 46, 1);
+  background-color: white;
+  color: rgba(159, 19, 46, 1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 13px;
+  box-sizing: border-box;
+}
+.wikiBoxLists {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.wikilist {
+  width: 28%;
+  min-height: 303px;
+  height: auto;
+  border: 1px solid rgba(213, 213, 213, 1);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  padding-top: 23px;
+  box-sizing: border-box;
+}
+.wikilist li {
+  cursor: pointer;
+  margin-bottom: 7px;
+  font-size: 14px;
+}
+.wikiIndex {
+  color: rgba(222, 58, 88, 1);
+}
+.wikilistTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.wikilistTitle button{
-    width: 70px;
-    height: 27px;
-    border-radius: 30px;
-    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-    font-size: 11px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-.wikiask{
-    width: 28%;
-    height: 303px;
-    border: 1px solid rgba(213, 213, 213, 1);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    padding: 18px;
-    padding-top: 23px;
-    box-sizing: border-box;
-    position: relative;
-}
-.wikiaskTitle{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+h2 {
+  margin: 0px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.wikiaskTitle h2{
-    margin: 0px;
+.wikilistTitle button {
+  width: 70px;
+  height: 27px;
+  border-radius: 30px;
+  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  font-size: 11px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
-.wikiaskFoot{
-    width: 90%;
-    position: absolute;
-    bottom: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    
-
+.wikiask {
+  width: 28%;
+  height: 303px;
+  border: 1px solid rgba(213, 213, 213, 1);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  padding-top: 23px;
+  box-sizing: border-box;
+  position: relative;
 }
-.addQues{
-    font-size: 12px;
-    font-weight: 700;
-    color: rgba(159, 19, 46, 1);
-    background-color: white;
-    border: none;
-    cursor: pointer;
-}
-.moreQues{
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(116, 116, 116, 1);
-    background-color: white;
-    border: none;
-    cursor: pointer;
-}
-.customHr{
-    margin: 0;
-    padding: 0;
-    border-color: rgba(237, 237, 237, 0.5);
-}
-.quesWrap p{
-    margin: 0;
-    padding: 0;
-}
-.quesWrap ul{ 
-    padding: 3px 0px 3px 0px;
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 0px 5px 0px;
-    font-size: 14px;
-    align-items: center;
-    
-   
-}
-.quesTitle{
-    width: 60%;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-    color: black;
-    font-size: 14px;
-    font-weight: 700;;
-}
-.quesNum{
-    font-size: 14px;
-    font-weight: 700;
-    color: rgba(116, 116, 116, 1);
-    display: flex;
-    align-items: center;
-
-}
-.quesNum img{
-    margin-left: 10px;
-    cursor: pointer;
-    width: 18px;
-    height: 17px;
-    object-fit: contain;
+.wikiaskTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
+.wikiaskTitle h2 {
+  margin: 0px;
+}
+.wikiaskFoot {
+  width: 90%;
+  position: absolute;
+  bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.addQues {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(159, 19, 46, 1);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+.moreQues {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(116, 116, 116, 1);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+.customHr {
+  margin: 0;
+  padding: 0;
+  border-color: rgba(237, 237, 237, 0.5);
+}
+.quesWrap p {
+  margin: 0;
+  padding: 0;
+}
+.quesWrap ul {
+  padding: 3px 0px 3px 0px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0px 5px 0px;
+  font-size: 14px;
+  align-items: center;
+}
+.quesTitle {
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+}
+.quesNum {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(116, 116, 116, 1);
+  display: flex;
+  align-items: center;
+}
+.quesNum img {
+  margin-left: 10px;
+  cursor: pointer;
+  width: 18px;
+  height: 17px;
+  object-fit: contain;
+}
 
-.wikigraph{
-    width: 38%;
-    height: 303px;
-    border: 1px solid rgba(213, 213, 213, 1);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    padding: 18px;
-    padding-top: 23px;
-    box-sizing: border-box;
+.wikigraph {
+  width: 38%;
+  height: 303px;
+  border: 1px solid rgba(213, 213, 213, 1);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  padding-top: 23px;
+  box-sizing: border-box;
 }
-.wikicontent{
-    width: 100%;
-    height: auto;
-    min-height: 500px;
-    border: 1px solid rgba(213, 213, 213, 1);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    padding: 18px;
-    padding-top: 23px;
-    box-sizing: border-box;
+.wikicontent {
+  width: 100%;
+  height: auto;
+  min-height: 500px;
+  border: 1px solid rgba(213, 213, 213, 1);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  padding-top: 23px;
+  box-sizing: border-box;
 }
-li{
-    list-style-type: none;
+li {
+  list-style-type: none;
 }
 @media (min-width: 768px) and (max-width: 1023px) {
-    .wikiBoxLists{
-        display: block;
-    }
-    .wikilist{
-        width: 229px;
-    }
-    .wikiask{
-        display: block;
-        width: 350px;
-    }
-    .wikigraph{
-        display: block;
-        width: 350px;
-    }
+  .wikiBoxLists {
+    display: block;
+  }
+  .wikilist {
+    width: 229px;
+  }
+  .wikiask {
+    display: block;
+    width: 350px;
+  }
+  .wikigraph {
+    display: block;
+    width: 350px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
-    .wikiviewer{
-        width: 90%;
-        margin: 5%;
-    }
-    .wikiBoxLists{
-        display: block;
-    }
-    .wikilist{
-        width: 80%;
-    }
-    .wikiask{
-        display: block;
-        width: 100%;
-    }
-    .wikigraph{
-        display: block;
-        width: 100%;
-
-    }
-    .wikititle h1{
-        font-size: 18px;
-    }
-    .wikititleBtn{
-        width: 105px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 6px;
-        
-
-
-
-    }
-    .wikititleBtnOne{
-        display: block;
-        margin-bottom: 4px;
-    }
-    .wikititleBtnTwo{
-        display: block;
-        margin-top: 4px;
-    }
-    .wikititleBtn img{
-        width: 16px;
-        height: 10px;
-        object-fit: contain;
-    }
-    .wikititleBtn button{
-        width: 69px;
-        height: 25px;
-        font-size: 9px;
-        padding: 6px;
-    }
-
+  .wikiviewer {
+    width: 90%;
+    margin: 5%;
+  }
+  .wikiBoxLists {
+    display: block;
+  }
+  .wikilist {
+    width: 80%;
+  }
+  .wikiask {
+    display: block;
+    width: 100%;
+  }
+  .wikigraph {
+    display: block;
+    width: 100%;
+  }
+  .wikititle h1 {
+    font-size: 18px;
+  }
+  .wikititleBtn {
+    width: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 6px;
+  }
+  .wikititleBtnOne {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .wikititleBtnTwo {
+    display: block;
+    margin-top: 4px;
+  }
+  .wikititleBtn img {
+    width: 16px;
+    height: 10px;
+    object-fit: contain;
+  }
+  .wikititleBtn button {
+    width: 69px;
+    height: 25px;
+    font-size: 9px;
+    padding: 6px;
+  }
 }

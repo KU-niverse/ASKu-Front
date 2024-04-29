@@ -1,8 +1,8 @@
-import styles from "./AlarmModal.module.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import closeBtn from "../img/close_btn.png";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import closeBtn from '../img/close_btn.png'
+import styles from './AlarmModal.module.css'
 
 const patterns = {
   1: /\[즐겨찾기\] (.+?) 문서에 질문이 있습니다\./,
@@ -13,7 +13,7 @@ const patterns = {
   // 6: /\[관리자\] 새로운 문서 생성: (.+?)$/,
   // 7: /\[관리자\] 새로운 신고 발생: (.+?)$/,
   // 8: /\[관리자\] 비정상\/반복적 글 수정 발생: (.+?) 문서의 (.+?)$/
-};
+}
 
 const dummyData = [
   {
@@ -21,8 +21,8 @@ const dummyData = [
     user_id: 1,
     type_id: 1,
     read_or_not: 0,
-    message: "[즐겨찾기] 멀틱스 문서에 질문이 있습니다.",
-    created_at: "2023-08-25T00:00:00.000Z",
+    message: '[즐겨찾기] 멀틱스 문서에 질문이 있습니다.',
+    created_at: '2023-08-25T00:00:00.000Z',
     is_admin: 0,
   },
   {
@@ -30,8 +30,8 @@ const dummyData = [
     user_id: 1,
     type_id: 2,
     read_or_not: 0,
-    message: "[좋아요] 멀틱스 문서의 예시질문 질문(1)에 답변이 있습니다.",
-    created_at: "2023-08-25T01:00:00.000Z",
+    message: '[좋아요] 멀틱스 문서의 예시질문 질문(1)에 답변이 있습니다.',
+    created_at: '2023-08-25T01:00:00.000Z',
     is_admin: 0,
   },
   {
@@ -39,8 +39,8 @@ const dummyData = [
     user_id: 1,
     type_id: 3,
     read_or_not: 0,
-    message: "[질문] 멀틱스 문서의 예시질문 질문(2)에 답변이 있습니다.",
-    created_at: "2023-08-25T01:00:00.000Z",
+    message: '[질문] 멀틱스 문서의 예시질문 질문(2)에 답변이 있습니다.',
+    created_at: '2023-08-25T01:00:00.000Z',
     is_admin: 0,
   },
   {
@@ -48,59 +48,52 @@ const dummyData = [
     user_id: 1,
     type_id: 4,
     read_or_not: 0,
-    message: "[뱃지] 건국신화 뱃지를 획득했습니다.",
-    created_at: "2023-08-25T01:00:00.000Z",
+    message: '[뱃지] 건국신화 뱃지를 획득했습니다.',
+    created_at: '2023-08-25T01:00:00.000Z',
     is_admin: 0,
   },
-];
+]
 
-const AlarmModal = ({
-  isAlarmVisible,
-  handleAlarm
-}: any) => {
-  const [notifications, setNotifications] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
+  const [notifications, setNotifications] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const res = await axios.get(
-          process.env.REACT_APP_HOST + "/user/auth/issignedin",
-          {
-            withCredentials: true,
-          }
-        );
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+          withCredentials: true,
+        })
         if (res.status === 201 && res.data.success === true) {
-          setIsLoggedIn(true);
+          setIsLoggedIn(true)
         } else if (res.status === 401) {
-          setIsLoggedIn(false);
+          setIsLoggedIn(false)
         }
       } catch (error) {
-        console.error(error);
-        setIsLoggedIn(false);
+        console.error(error)
+        setIsLoggedIn(false)
       }
-    };
-    checkLoginStatus();
-  }, []);
+    }
+    checkLoginStatus()
+  }, [])
 
   useEffect(() => {
     // 화면 크기 변화 이벤트 리스너를 추가
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener('resize', handleWindowResize)
 
     // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
 
   // 창 크기 변화 이벤트 핸들러
   const handleWindowResize = () => {
     if (isAlarmVisible) {
-      handleAlarm();
+      handleAlarm()
     } else {
-      return;
     }
-  };
+  }
 
   // useEffect(() => {
   //     if (isAlarmVisible) {
@@ -113,138 +106,130 @@ const AlarmModal = ({
     if (isAlarmVisible) {
       // Axios를 사용하여 데이터 가져오기
       axios
-        .get(process.env.REACT_APP_HOST + "/notification/user", {
+        .get(`${process.env.REACT_APP_HOST}/notification/user`, {
           withCredentials: true,
         })
         .then((response) => {
-          setNotifications(response.data.data);
+          setNotifications(response.data.data)
         })
         .catch((error) => {
-          console.error("Error fetching notifications:", error);
+          console.error('Error fetching notifications:', error)
           // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
-          setNotifications([]);
-        });
+          setNotifications([])
+        })
     }
-  }, [isAlarmVisible]);
+  }, [isAlarmVisible])
 
   const removeIdFromMessage = (message: any) => {
-    return message.replace(/\(\d+\)/g, "");
-  };
+    return message.replace(/\(\d+\)/g, '')
+  }
 
   const extractInfo = (type_id: any, message: any) => {
-    const pattern = patterns[type_id];
+    const pattern = patterns[type_id]
     if (!pattern) {
-      return null;
+      return null
     }
 
-    const match = message.match(pattern);
+    const match = message.match(pattern)
     if (!match) {
-      return null;
+      return null
     }
 
-    let info = {};
+    let info = {}
 
     switch (type_id) {
       case 1:
-        info = { result: match[1] };
-        break;
+        info = { result: match[1] }
+        break
       case 2:
-        info = { title: match[1], result: match[2], id: match[3] };
-        break;
+        info = { title: match[1], result: match[2], id: match[3] }
+        break
       case 3:
-        info = { title: match[1], result: match[2], id: match[3] };
-        break;
+        info = { title: match[1], result: match[2], id: match[3] }
+        break
       case 4:
-        info = { result: match[1] };
-        break;
+        info = { result: match[1] }
+        break
       default:
-        return null;
+        return null
     }
 
-    return info;
-  };
+    return info
+  }
 
   const extractInfoAndRefineMessage = (type_id: any, message: any) => {
-    const info = extractInfo(type_id, message);
+    const info = extractInfo(type_id, message)
     if (!info) {
-      return { info: null, refinedMessage: message };
+      return { info: null, refinedMessage: message }
     }
 
-    let refinedMessage = removeIdFromMessage(message);
-    return { info, refinedMessage };
-  };
+    const refinedMessage = removeIdFromMessage(message)
+    return { info, refinedMessage }
+  }
 
   const generateLink = (notification: any) => {
-    const { message } = notification;
+    const { message } = notification
     const type_id = parseInt(
       Object.keys(patterns).find((key) => {
-        const pattern = patterns[key];
-        return message.match(pattern) !== null;
-      })
-    );
+        const pattern = patterns[key]
+        return message.match(pattern) !== null
+      }),
+    )
 
-    const { info } = extractInfoAndRefineMessage(type_id, message);
-    //TODO: 이부분 링크 잘 동작하는지 확인
+    const { info } = extractInfoAndRefineMessage(type_id, message)
+    // TODO: 이부분 링크 잘 동작하는지 확인
     const link = (() => {
       switch (type_id) {
         case 1:
-                    return `/wiki/morequestion/${info.result}`;
+          return `/wiki/morequestion/${info.result}`
         case 2:
-                    return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
+          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
         case 3:
-                    return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`;
+          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
         case 4:
-          return "/mypage/mybadge";
+          return '/mypage/mybadge'
         default:
-          return "/";
+          return '/'
       }
-    })();
+    })()
 
-    return link;
-  };
+    return link
+  }
 
   return (
     <>
       {isAlarmVisible && (
         <div className={styles.alarmContainer}>
           <div className={styles.alarmTitleWrap}>
-            <span id={styles.alarmTitle}>내 알림</span>
-            <img
-              src={closeBtn}
-              alt="close"
-              className={styles.close_btn}
-              onClick={handleAlarm}
-            />
+            <span id={styles.alarmTitle}>{'내 알림'}</span>
+            <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={handleAlarm} />
           </div>
           <div className={styles.alarmContent}>
             {notifications.length > 0
               ? notifications.map((notification, index) => (
-                <div key={index}>
-                  <Link
-                    to={generateLink(notification)}
-                    className={styles.alarmLink}
-                  >
-                    <p className={styles.alarmText}>{notification.message}</p>
-                  </Link>
-                  {index < notifications.length - 1 && (
-                    <hr
-                      style={{
-                        height: "0.3px",
-                        opacity: "0.7",
-                        backgroundColor: "#D5D5D5",
-                        width: "100%",
-                        marginLeft: "10px",
-                      }}
-                    />
-                  )}
-                </div>
-              ))
+                  <div key={index}>
+                    <Link to={generateLink(notification)} className={styles.alarmLink}>
+                      <p className={styles.alarmText}>{notification.message}</p>
+                    </Link>
+                    {index < notifications.length - 1 && (
+                      <hr
+                        style={{
+                          height: '0.3px',
+                          opacity: '0.7',
+                          backgroundColor: '#D5D5D5',
+                          width: '100%',
+                          marginLeft: '10px',
+                        }}
+                      />
+                    )}
+                  </div>
+                ))
               : null}
           </div>
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AlarmModal;
+export default AlarmModal

@@ -1,14 +1,14 @@
-.menubtn{
-  border:none;
+.menubtn {
+  border: none;
   background: none;
   cursor: pointer;
 }
 
-.menubtn img{
+.menubtn img {
   width: 23.4px;
   object-fit: contain;
 }
 
-.menuitem{
+.menuitem {
   width: auto;
 }

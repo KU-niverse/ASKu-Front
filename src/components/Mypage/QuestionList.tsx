@@ -1,7 +1,7 @@
-import styles from "./QuestionList.module.css"
-import { useNavigate, useParams } from "react-router-dom";
-import comment_icon from "../../img/comment_icon.png"
-import nocomment_icon from "../../img/nocomment_icon.png"
+import { useNavigate, useParams } from 'react-router-dom'
+import styles from './QuestionList.module.css'
+import comment_icon from '../../img/comment_icon.png'
+import nocomment_icon from '../../img/nocomment_icon.png'
 
 function QuestionList({
   id,
@@ -14,64 +14,63 @@ function QuestionList({
   nickname,
   like_count,
   doc_title,
-  answer_count
+  answer_count,
 }: any) {
-  const maxLength = 80;
-  const title = doc_title;
+  const maxLength = 80
+  const title = doc_title
   const truncateContent = (text: any) => {
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-  };
-  const nav = useNavigate();
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
+  }
+  const nav = useNavigate()
   const linktoQuestion = () => {
-    const encodedTitle = encodeURIComponent(title);
+    const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/morequestion/${encodedTitle}`)
   }
   const linktoAnswer = () => {
-    const encodedTitle = encodeURIComponent(title);
+    const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
       state: {
         question_id: id,
-        user_id: user_id,
-        content: content,
+        user_id,
+        content,
         created_at: time,
-        like_count: like_count,
+        like_count,
         nick: nickname,
-        index_title: index_title,
-        answer_count: answer_count,
-        title: doc_title
-      }
+        index_title,
+        answer_count,
+        title: doc_title,
+      },
     })
   }
 
   return (
-        <div className={styles.ask_list}>
-            <div className={styles.ask_front}>
-                <span className={styles.ask_icon}>Q.</span>
-                <span onClick={linktoAnswer} className={styles.ask_content}>{truncateContent(content)}</span>
+    <div className={styles.ask_list}>
+      <div className={styles.ask_front}>
+        <span className={styles.ask_icon}>{'Q.'}</span>
+        <span onClick={linktoAnswer} className={styles.ask_content}>
+          {truncateContent(content)}
+        </span>
       </div>
-            <div onClick={linktoAnswer} className={styles.comment_icon}>
+      <div onClick={linktoAnswer} className={styles.comment_icon}>
         {answer_count === 0 ? ( // answer_count가 0일 때
-                    <>
-                        <img
+          <>
+            <img
               className={styles.comment_png}
               src={nocomment_icon} // nocomment_icon을 보여줌
-              alt="nocomment_icon"
+              alt={'nocomment_icon'}
             />
-                        <span className={styles.comment_num}>{answer_count}</span>
+            <span className={styles.comment_num}>{answer_count}</span>
           </>
         ) : (
           // answer_count가 0이 아닐 때
-                    <>
-                        <img
-              className={styles.comment_png}
-              src={comment_icon}
-              alt="comment_icon"
-            />
-                        <span className={styles.comment_num}>{answer_count}</span>
+          <>
+            <img className={styles.comment_png} src={comment_icon} alt={'comment_icon'} />
+            <span className={styles.comment_num}>{answer_count}</span>
           </>
-        )}      </div>
+        )}{' '}
+      </div>
     </div>
-  );
+  )
 }
 
-export default QuestionList;
+export default QuestionList

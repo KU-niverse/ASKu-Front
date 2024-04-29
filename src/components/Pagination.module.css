@@ -1,4 +1,4 @@
-.Nav{
+.Nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   margin: 16px;
 }
 
-.Button{
+.Button {
   border: none;
   border-radius: 8px;
   padding: 8px;
@@ -16,7 +16,7 @@
   font-size: 16px;
 
   &:hover {
-    background : white;
+    background: white;
     cursor: pointer;
     color: rgba(159, 19, 46, 1);
     transform: translateY(-2px);

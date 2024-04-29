@@ -1,22 +1,22 @@
-.container{
+.container {
   margin: 0 30px;
   border-bottom: 1px solid rgba(213, 213, 213, 1);
   padding: 20px;
 }
-.header{
+.header {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
 
-.frontheader{
+.frontheader {
   display: flex;
   align-items: center;
 }
 
-.q_box{
+.q_box {
   width: 26px;
-  height:26px;
+  height: 26px;
   align-self: center;
 }
 
@@ -27,36 +27,34 @@
   margin: 0;
 }
 
-.num, .user{
+.num,
+.user {
   font-size: 14px;
   font-weight: 700;
 }
-.num{
+.num {
   margin-right: 7px;
 }
 
-
-.date{
+.date {
   font-size: 12px;
   font-weight: 400;
   color: rgba(116, 116, 116, 1);
   margin-left: 14px;
 }
 
-.content{
+.content {
   font-size: 14px;
   white-space: pre-wrap;
 }
 
-.debate_content{
+.debate_content {
   word-break: break-word;
 }
 
 @media only screen and (max-width: 767px) {
-  .container{
+  .container {
     margin: 0;
-    padding: 14px ;
+    padding: 14px;
   }
-
-
 }

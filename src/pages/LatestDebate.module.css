@@ -7,33 +7,32 @@
 .header {
   display: flex;
   justify-content: center;
-  align-items :center;
+  align-items: center;
   background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   height: 80px;
-  width : 100%;
+  width: 100%;
 }
 
-.nodebate{
+.nodebate {
   margin-left: 20px;
 }
 
-.debate{
+.debate {
   font-size: 30px;
-  font-weight:bolder;
-  color: white; 
+  font-weight: bolder;
+  color: white;
 }
 
-.debatecontent{
+.debatecontent {
   min-height: 80vh;
   height: auto;
   width: auto;
   display: flex;
   flex-direction: row;
-  flex:1
+  flex: 1;
 }
 
-
-.sidebar{
+.sidebar {
   width: 25%;
   height: auto;
   background-color: rgba(254, 242, 244, 1);
@@ -43,89 +42,83 @@
   padding: 30px;
   box-sizing: border-box;
 }
-.sidebar div{
+.sidebar div {
   width: 100%;
   margin-bottom: 30px;
 }
-.maincontent{
+.maincontent {
   background-color: white;
   width: 80%;
   height: auto;
-  
 }
 
-.maincontent_box{
+.maincontent_box {
   border-radius: 12px;
   box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
   margin: 37px 12px 21px 12px;
   padding-bottom: 35px;
 }
 
-.title{
+.title {
   font-size: 30px;
   font-weight: 800;
   text-align: center;
   margin-top: 0;
   padding-top: 30px;
 }
-.menu{
+.menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0px 20px;
   padding: 10px 0;
-  color:rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   font-size: 18px;
   font-weight: 700;
   border-bottom: 1px solid rgba(213, 213, 213, 1);
 }
-.menu1{
+.menu1 {
   margin-left: 14px;
 }
-.menu2{
+.menu2 {
   margin-right: 14px;
 }
 
-
 @media only screen and (max-width: 767px) {
-  .debate{
+  .debate {
     font-size: 20px;
   }
 
-  .debatecontent{
+  .debatecontent {
     width: 86%;
     min-height: 80vh;
     margin: 0 7%;
     flex-wrap: wrap;
-
-
-
   }
 
-  .maincontent{
+  .maincontent {
     width: 100%;
-    height: auto
+    height: auto;
   }
-  .sidebar{
+  .sidebar {
     display: block;
     background-color: white;
     width: 100%;
     padding: 0;
   }
 
-  .debateSearch{
+  .debateSearch {
     display: none;
   }
-  .debateAdd{
+  .debateAdd {
     width: 100%;
     border-radius: 12px;
     background-color: rgba(254, 242, 244, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     padding: 15px;
     box-sizing: border-box;
-
   }
-  .debateRecent{
+  .debateRecent {
     width: 100%;
     border-radius: 12px;
     background-color: rgba(254, 242, 244, 1);
@@ -134,20 +127,22 @@
     box-sizing: border-box;
   }
 
-  .maincontent_box{
+  .maincontent_box {
     box-shadow: none;
     margin: 0;
   }
 
-  .title{
+  .title {
     margin-bottom: 19px;
   }
 
-  .menu, .menu1, .menu2{
-    margin:0
+  .menu,
+  .menu1,
+  .menu2 {
+    margin: 0;
   }
 
-  .menu{
+  .menu {
     font-size: 14px;
   }
 }

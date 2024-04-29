@@ -1,9 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-export const KoreapasAgreeComponent = ({
-  nickname
-}: any) => {
-
+export const KoreapasAgreeComponent = ({ nickname }: any) => {
   const htmlContent = `<!DOCTYPE html>
   <html lang="en">
   
@@ -152,13 +149,13 @@ export const KoreapasAgreeComponent = ({
   </body>
   
   </html>`
-  const htmlSrc = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
+  const htmlSrc = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`
 
   return (
-        <iframe
+    <iframe
       src={htmlSrc}
       style={{ width: '100%', height: '557px', border: 'none', marginBottom: '20px' }}
-      title="External Content"
-    ></iframe>
-  );
-};
+      title={'External Content'}
+    />
+  )
+}

@@ -1,81 +1,80 @@
 .footer {
-    border-top: 0.5px #D5D5D5 solid;
-    border-bottom: 0.5px #D5D5D5 solid;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    position: relative;
-    height: 50px;
-    background-color: #ffffff;
+  border-top: 0.5px #d5d5d5 solid;
+  border-bottom: 0.5px #d5d5d5 solid;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  height: 50px;
+  background-color: #ffffff;
 }
 @media only screen and (max-width: 767px) {
-    .footer{
-        height: 100px;
-    }
+  .footer {
+    height: 100px;
+  }
 }
 
 .textWrap {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .footerButton {
-    background-color: #ffffff;
-    border: none;
-    cursor: pointer;
-    font-size: 10px;
-    color: black;
-    font-weight: 400;
-    margin-bottom: 7px;
-    height: 11px;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  color: black;
+  font-weight: 400;
+  margin-bottom: 7px;
+  height: 11px;
 }
 @media only screen and (max-width: 767px) {
-    .footerButton{
-        margin-bottom: 10.5px;
-    }
+  .footerButton {
+    margin-bottom: 10.5px;
+  }
 }
 
 .footerTitle {
-    margin-left: 20px;
-    font-weight: 700;
-    font-size: 12px;
-    background-color: #ffffff;
-    border: none;
-    color: black;
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  background-color: #ffffff;
+  border: none;
+  color: black;
 }
 
 .linkContainer {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 @media only screen and (max-width: 767px) {
-    .linkContainer{
-        flex-direction: column;
-    }
+  .linkContainer {
+    flex-direction: column;
+  }
 }
 
 .linkGroup {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: left;
-    padding-right: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  padding-right: auto;
 }
-
 
 .logoWrap {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 30px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 30px;
 }
 @media only screen and (max-width: 767px) {
-    .logoWrap{
-        bottom: 15px;
-    }
+  .logoWrap {
+    bottom: 15px;
+  }
 }
 
 .logoGray {
-    width: 50px;
-    height: auto;
+  width: 50px;
+  height: auto;
 }

@@ -1,109 +1,98 @@
-import styles from "./EditModal.module.css";
-import closeBtn from "../img/close_btn.png";
-import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import closeBtn from '../img/close_btn.png'
+import styles from './EditModal.module.css'
 
-function EditModal({
-  isOpen,
-  onClose,
-  questionId
-}: any) {
-  const modalRef = useRef(null);
-  const [questionContent, setQuestionContent] = useState("");
+function EditModal({ isOpen, onClose, questionId }: any) {
+  const modalRef = useRef(null)
+  const [questionContent, setQuestionContent] = useState('')
   const handleOutsideClick = (event: any) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onClose()
     }
-  };
+  }
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [isOpen]);
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [isOpen])
 
   const handleChange = (e: any) => {
-    const value = e.target.value;
+    const { value } = e.target
     if (value.length <= 200) {
-      setQuestionContent(value);
+      setQuestionContent(value)
     }
-  };
+  }
 
   const editData = {
     new_content: questionContent,
-  };
+  }
 
   const handleQuestionEdit = async () => {
     try {
-      const response = await axios.post(
-                process.env.REACT_APP_HOST+`/question/edit/${questionId}`,
-        editData,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${process.env.REACT_APP_HOST}/question/edit/${questionId}`, editData, {
+        withCredentials: true,
+      })
       if (response.status === 200) {
-        alert(response.data.message);
-        window.location.reload();
+        alert(response.data.message)
+        window.location.reload()
       }
     } catch (error) {
-      console.error(error);
-            if (error.response.status === 400) {
-        alert("이미 답변이 달렸거나, 다른 회원의 질문입니다.");
-        window.location.reload();
+      console.error(error)
+      if (error.response.status === 400) {
+        alert('이미 답변이 달렸거나, 다른 회원의 질문입니다.')
+        window.location.reload()
       } else {
-        alert("알 수 없는 오류가 발생했습니다.");
+        alert('알 수 없는 오류가 발생했습니다.')
       }
     }
-  }; //질문 수정하기
+  } // 질문 수정하기
 
   const handleSubmit = () => {
-    if (questionContent.trim() === "") {
-      alert("질문을 입력해주세요.");
-      return;
+    if (questionContent.trim() === '') {
+      alert('질문을 입력해주세요.')
+      return
     }
-        handleQuestionEdit(editData);
-  };
+    handleQuestionEdit(editData)
+  }
 
   const countCharacters = () => {
-    return `${questionContent.length}/200`;
-  };
+    return `${questionContent.length}/200`
+  }
 
   return (
-        <>
+    <>
       {isOpen && (
-                <div className={styles.modal_overlay}>
-                    <div ref={modalRef} className={styles.modal_wrapper}>
-                        <div className={styles.modal_inside}>
-                            <div className={styles.modal_close}>
-                                <img
-                  src={closeBtn}
-                  alt="close"
-                  className={styles.close_btn}
-                  onClick={onClose}
-                />
+        <div className={styles.modal_overlay}>
+          <div ref={modalRef} className={styles.modal_wrapper}>
+            <div className={styles.modal_inside}>
+              <div className={styles.modal_close}>
+                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
               </div>
-                            <div className={styles.modal_content}>
-                                <p className={styles.modal_text}>질문 수정하기</p>
-                                <div className={styles.q_cbox}>
-                                    <textarea
-                                        rows="7"
+              <div className={styles.modal_content}>
+                <p className={styles.modal_text}>{'질문 수정하기'}</p>
+                <div className={styles.q_cbox}>
+                  <textarea
+                    rows={'7'}
                     className={styles.q_ctextarea}
-                    placeholder="질문을 입력해주세요."
+                    placeholder={'질문을 입력해주세요.'}
                     value={questionContent}
                     maxLength={200}
                     onChange={handleChange}
                   />
-                                    <div className={styles.q_clastheader}>
-                                        <span className={styles.textnum}>{countCharacters()}</span>
+                  <div className={styles.q_clastheader}>
+                    <span className={styles.textnum}>{countCharacters()}</span>
                   </div>
                 </div>
-                                <button className={styles.q_csubmit} onClick={handleSubmit}>
-                  수정하기
+                <button className={styles.q_csubmit} onClick={handleSubmit}>
+                  {'수정하기\r'}
                 </button>
               </div>
             </div>
@@ -111,7 +100,7 @@ function EditModal({
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default EditModal;
+export default EditModal

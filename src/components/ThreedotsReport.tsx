@@ -1,32 +1,28 @@
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
-import threedots from "../img/threedots.png";
-import styles from "./ThreedotsReport.module.css";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import ReportModal from "./ReportModal";
-import { useEffect } from "react";
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/transitions/slide.css'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate, useLocation } from 'react-router-dom'
+import ReportModal from './ReportModal'
 
-function ThreedotsReport({
-  type,
-  target
-}: any) {
-  const nav = useNavigate();
+import styles from './ThreedotsReport.module.css'
+import threedots from '../img/threedots.png'
 
-  const [isReportModalVisible, setReportModalVisible] = useState(false);
+function ThreedotsReport({ type, target }: any) {
+  const nav = useNavigate()
+
+  const [isReportModalVisible, setReportModalVisible] = useState(false)
 
   const closeReportModal = () => {
-    setReportModalVisible(false);
-  };
-  const [loggedIn, setLoggedIn] = useState(false);
-  const Navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from || '/';
-  
+    setReportModalVisible(false)
+  }
+  const [loggedIn, setLoggedIn] = useState(false)
+  const Navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || '/'
 
- //로그인 체크 후 우회
+  // 로그인 체크 후 우회
   // const checkLoginStatus = async () => {
   //   try {
   //     const res = await axios.get(
@@ -58,56 +54,52 @@ function ThreedotsReport({
   // }, []);
   //
 
-  //로그인 체크 후 우회
+  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(
-                process.env.REACT_APP_HOST+"/user/auth/issignedin",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true);
+        setLoggedIn(true)
       } else if (res.status === 401) {
-        setLoggedIn(false);
+        setLoggedIn(false)
       }
     } catch (error) {
-      console.error(error);
-      setLoggedIn(false);
-            if (error.response.status === 401) {
-        setLoggedIn(false);
-      }else{
-        alert("에러가 발생하였습니다");
+      console.error(error)
+      setLoggedIn(false)
+      if (error.response.status === 401) {
+        setLoggedIn(false)
+      } else {
+        alert('에러가 발생하였습니다')
       }
     }
-  };
+  }
   useEffect(() => {
-    checkLoginStatus();
-  }, []);
-
+    checkLoginStatus()
+  }, [])
 
   return (
-        <Menu
+    <Menu
       menuButton={
-                <MenuButton className={styles.menubtn}>
-                    <img src={threedots} alt="Menu" />
+        <MenuButton className={styles.menubtn}>
+          <img src={threedots} alt={'Menu'} />
         </MenuButton>
       }
     >
-            <MenuItem
+      <MenuItem
         className={styles.menuitem}
-        value="신고하기"
+        value={'신고하기'}
         onClick={(e) => {
-          checkLoginStatus();
-          e.stopPropagation = true;
-          e.keepOpen = true;
-                    e.preventDefault = true;
-          setReportModalVisible(true);
+          checkLoginStatus()
+          e.stopPropagation = true
+          e.keepOpen = true
+          e.preventDefault = true
+          setReportModalVisible(true)
         }}
       >
-        신고하기
+        {'신고하기\r'}
       </MenuItem>
       {isReportModalVisible && (
-                <ReportModal
+        <ReportModal
           type={type}
           target={target}
           isOpen={isReportModalVisible}
@@ -115,7 +107,7 @@ function ThreedotsReport({
         />
       )}
     </Menu>
-  );
+  )
 }
 
-export default ThreedotsReport;
+export default ThreedotsReport

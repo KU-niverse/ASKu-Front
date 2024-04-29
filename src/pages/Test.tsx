@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import ThreedotsMenu from "../components/ThreedotsMenu";
+import React, { Component } from 'react'
+import ThreedotsMenu from '../components/ThreedotsMenu'
 
-function Test(){
-
-  
-  return(
-        <div><ThreedotsMenu/>
+function Test() {
+  return (
+    <div>
+      <ThreedotsMenu />
     </div>
   )
-};
+}
 
-export default Test;
+export default Test

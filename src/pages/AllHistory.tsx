@@ -1,13 +1,13 @@
-import React from "react";
-import styles from "./History.module.css";
-import Header from "../components/Header";
-import his2 from "../img/his2.png";
-import AllHistoryBox from "../components/AllHistoryBox";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import Paging from "../components/Paging";
-import FormatTimeAgo from "../components/FormatTimeAgo";
-import Footer from "../components/Footer";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import styles from './History.module.css'
+import Header from '../components/Header'
+import his2 from '../img/his2.png'
+import AllHistoryBox from '../components/AllHistoryBox'
+
+import Paging from '../components/Paging'
+import FormatTimeAgo from '../components/FormatTimeAgo'
+import Footer from '../components/Footer'
 
 // const data = [
 //     {
@@ -37,228 +37,170 @@ import Footer from "../components/Footer";
 // ]
 
 const AllHistory = () => {
-  const [historys, setHistorys] = useState([]);
-  const [type, setType] = useState("all");
-  const [typeCount, setTypeCount] = useState(0);
-  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
-  const perPage = 10; // 페이지당 보여줄 컴포넌트 갯수
+  const [historys, setHistorys] = useState([])
+  const [type, setType] = useState('all')
+  const [typeCount, setTypeCount] = useState(0)
+  const [page, setPage] = useState(1) // 현재 페이지 상태 추가
+  const perPage = 10 // 페이지당 보여줄 컴포넌트 갯수
   // 현재 페이지에 해당하는 데이터만 추출
-  const startIndex = (page - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const visibleHistorys = historys.slice(startIndex, endIndex);
+  const startIndex = (page - 1) * perPage
+  const endIndex = startIndex + perPage
+  const visibleHistorys = historys.slice(startIndex, endIndex)
 
   const handlePageChange = (pageNumber: any) => {
-    setPage(pageNumber); // 페이지 번호 업데이트
-  };
+    setPage(pageNumber) // 페이지 번호 업데이트
+  }
 
   const getHistory = async () => {
     try {
-      const result = await axios.get(
-                process.env.REACT_APP_HOST+`/wiki/historys?type=${type}`
-      );
-      setHistorys(result.data.message);
-      //console.log("개수" + result.data.message.length);
-      setTypeCount(result.data.message.length);
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
+      setHistorys(result.data.message)
+      // console.log("개수" + result.data.message.length);
+      setTypeCount(result.data.message.length)
     } catch (error) {
-      console.error(error);
-      //alert(result.data.message);
+      console.error(error)
+      // alert(result.data.message);
     }
-  };
+  }
 
   useEffect(() => {
-    getHistory();
-  }, [type]);
+    getHistory()
+  }, [type])
 
   const allBtn = () => {
-    setType("all");
-  };
+    setType('all')
+  }
   const createBtn = () => {
-    setType("create");
-  };
+    setType('create')
+  }
   const rollBtn = () => {
-    setType("rollback");
-  };
+    setType('rollback')
+  }
 
   return (
-        <div className={styles.container}>
-            <Header />
-            <div className={styles.header}>
-                <span>
-                    <img src={his2} />
-          최근 변경
+    <div className={styles.container}>
+      <Header />
+      <div className={styles.header}>
+        <span>
+          <img src={his2} />
+          {'최근 변경\r'}
         </span>
       </div>
-            <div className={styles.history}>
-                <div className={type === "all" ? styles.historyList : styles.hidden}>
-                    <div className={styles.historyTitle}>
-                        <p className={styles.listTitle2}>최근 변경된 모든 문서</p>
-                        <div className={styles.historyTypes}>
-                            <p
-                onClick={allBtn}
-                className={type === "all" ? styles.clickType : styles.default}
-              >
-                all
+      <div className={styles.history}>
+        <div className={type === 'all' ? styles.historyList : styles.hidden}>
+          <div className={styles.historyTitle}>
+            <p className={styles.listTitle2}>{'최근 변경된 모든 문서'}</p>
+            <div className={styles.historyTypes}>
+              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+                {'all\r'}
               </p>
-                            <p
-                onClick={createBtn}
-                className={
-                  type === "create" ? styles.clickType : styles.default
-                }
-              >
-                create
+              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+                {'create\r'}
               </p>
-                            <p
-                onClick={rollBtn}
-                className={
-                  type === "rollback" ? styles.clickType : styles.default
-                }
-              >
-                rollback
+              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+                {'rollback\r'}
               </p>
             </div>
           </div>
           {visibleHistorys.map((item) => {
-                        const timestamp = FormatTimeAgo(item.created_at);
-                        if (item.is_bad === 1) {
-              return null; // 패스 (무시)
+            const timestamp = FormatTimeAgo(item.created_at)
+            if (item.is_bad === 1) {
+              return null // 패스 (무시)
             }
             return (
-                            <div key={item.timestamp}>
-                                <AllHistoryBox
-                                    version={item.version}
-                                    summary={item.summary}
-                                    user={item.nick}
+              <div key={item.timestamp}>
+                <AllHistoryBox
+                  version={item.version}
+                  summary={item.summary}
+                  user={item.nick}
                   timestamp={timestamp}
-                                    title={item.doc_title}
-                                    target={item.id}
+                  title={item.doc_title}
+                  target={item.id}
                   type={type}
                 />
               </div>
-            );
+            )
           })}
-                    <Paging
-            total={typeCount}
-            perPage={perPage}
-            activePage={page}
-            onChange={handlePageChange}
-          />
+          <Paging total={typeCount} perPage={perPage} activePage={page} onChange={handlePageChange} />
         </div>
-                <div className={type === "create" ? styles.historyList : styles.hidden}>
-                    <div className={styles.historyTitle}>
-                        <p className={styles.listTitle2}>새로 생성된 모든 문서</p>
-                        <div className={styles.historyTypes}>
-                            <p
-                onClick={allBtn}
-                className={type === "all" ? styles.clickType : styles.default}
-              >
-                all
+        <div className={type === 'create' ? styles.historyList : styles.hidden}>
+          <div className={styles.historyTitle}>
+            <p className={styles.listTitle2}>{'새로 생성된 모든 문서'}</p>
+            <div className={styles.historyTypes}>
+              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+                {'all\r'}
               </p>
-                            <p
-                onClick={createBtn}
-                className={
-                  type === "create" ? styles.clickType : styles.default
-                }
-              >
-                create
+              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+                {'create\r'}
               </p>
-                            <p
-                onClick={rollBtn}
-                className={
-                  type === "rollback" ? styles.clickType : styles.default
-                }
-              >
-                rollback
+              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+                {'rollback\r'}
               </p>
             </div>
           </div>
           {visibleHistorys.map((item) => {
-                        const timestamp = FormatTimeAgo(item.created_at);
-                        if (item.is_bad === 1) {
-              return null; // 패스 (무시)
+            const timestamp = FormatTimeAgo(item.created_at)
+            if (item.is_bad === 1) {
+              return null // 패스 (무시)
             }
 
             return (
-                            <div key={item.timestamp}>
-                                <AllHistoryBox
-                                    version={item.version}
-                                    summary={item.summary}
-                                    user={item.nick}
+              <div key={item.timestamp}>
+                <AllHistoryBox
+                  version={item.version}
+                  summary={item.summary}
+                  user={item.nick}
                   timestamp={timestamp}
-                                    title={item.doc_title}
-                                    target={item.id}
+                  title={item.doc_title}
+                  target={item.id}
                   type={type}
                 />
               </div>
-            );
+            )
           })}
-                    <Paging
-            total={typeCount}
-            perPage={perPage}
-            activePage={page}
-            onChange={handlePageChange}
-          />
+          <Paging total={typeCount} perPage={perPage} activePage={page} onChange={handlePageChange} />
         </div>
-                <div
-          className={type === "rollback" ? styles.historyList : styles.hidden}
-        >
-                    <div className={styles.historyTitle}>
-                        <p className={styles.listTitle2}>최근 롤백된 모든 문서</p>
-                        <div className={styles.historyTypes}>
-                            <p
-                onClick={allBtn}
-                className={type === "all" ? styles.clickType : styles.default}
-              >
-                all
+        <div className={type === 'rollback' ? styles.historyList : styles.hidden}>
+          <div className={styles.historyTitle}>
+            <p className={styles.listTitle2}>{'최근 롤백된 모든 문서'}</p>
+            <div className={styles.historyTypes}>
+              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+                {'all\r'}
               </p>
-                            <p
-                onClick={createBtn}
-                className={
-                  type === "create" ? styles.clickType : styles.default
-                }
-              >
-                create
+              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+                {'create\r'}
               </p>
-                            <p
-                onClick={rollBtn}
-                className={
-                  type === "rollback" ? styles.clickType : styles.default
-                }
-              >
-                rollback
+              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+                {'rollback\r'}
               </p>
             </div>
           </div>
           {visibleHistorys.map((item) => {
-                        const timestamp = FormatTimeAgo(item.created_at);
-                        if (item.is_bad === 1) {
-              return null; // 패스 (무시)
+            const timestamp = FormatTimeAgo(item.created_at)
+            if (item.is_bad === 1) {
+              return null // 패스 (무시)
             }
 
             return (
-                            <div key={item.timestamp}>
-                                <AllHistoryBox
-                                    version={item.version}
-                                    summary={item.summary}
-                                    user={item.nick}
+              <div key={item.timestamp}>
+                <AllHistoryBox
+                  version={item.version}
+                  summary={item.summary}
+                  user={item.nick}
                   timestamp={timestamp}
-                                    title={item.doc_title}
-                                    target={item.id}
+                  title={item.doc_title}
+                  target={item.id}
                   type={type}
                 />
               </div>
-            );
+            )
           })}
-                    <Paging
-            total={typeCount}
-            perPage={perPage}
-            activePage={page}
-            onChange={handlePageChange}
-          />
+          <Paging total={typeCount} perPage={perPage} activePage={page} onChange={handlePageChange} />
         </div>
       </div>
-            <Footer/>
+      <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default AllHistory;
+export default AllHistory

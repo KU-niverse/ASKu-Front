@@ -1,54 +1,52 @@
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
-import threedots from "../img/threedots.png";
-import styles from "./ThreedotsBadge.module.css";
-import { useState } from "react";
-import axios from "axios";
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/transitions/slide.css'
+import { useState } from 'react'
+import axios from 'axios'
+import threedots from '../img/threedots.png'
+import styles from './ThreedotsBadge.module.css'
 
-function ThreedotsBadge({
-  badge_id
-}: any) {
+function ThreedotsBadge({ badge_id }: any) {
   const onRepBadge = async () => {
     try {
       const response = await axios.put(
-                process.env.REACT_APP_HOST+`/user/mypage/setrepbadge`,
+        `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
         { rep_badge_id: badge_id },
-        { withCredentials: true }
-      );
+        { withCredentials: true },
+      )
       if (response.status === 201) {
-        alert("대표 뱃지가 변경되었습니다.");
+        alert('대표 뱃지가 변경되었습니다.')
       } else if (response.status === 400) {
-        alert(response.data.message);
+        alert(response.data.message)
       } else {
-        alert("알 수 없는 오류가 발생했습니다.");
+        alert('알 수 없는 오류가 발생했습니다.')
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  }; //대표 뱃지 변경
+  } // 대표 뱃지 변경
 
   return (
-        <Menu
+    <Menu
       menuButton={
-                <MenuButton className={styles.menubtn}>
-                    <img src={threedots} alt="Menu"/>
+        <MenuButton className={styles.menubtn}>
+          <img src={threedots} alt={'Menu'} />
         </MenuButton>
       }
     >
-            <MenuItem
+      <MenuItem
         className={styles.menuitem}
-        value="대표 뱃지로 설정"
+        value={'대표 뱃지로 설정'}
         onClick={(e) => {
-          e.stopPropagation = true;
-                    e.preventDefault = true;
-                    onRepBadge(badge_id);
+          e.stopPropagation = true
+          e.preventDefault = true
+          onRepBadge(badge_id)
         }}
       >
-        대표 뱃지로 설정
+        {'대표 뱃지로 설정\r'}
       </MenuItem>
     </Menu>
-  );
+  )
 }
 
-export default ThreedotsBadge;
+export default ThreedotsBadge

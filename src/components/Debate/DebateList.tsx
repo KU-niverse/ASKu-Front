@@ -1,7 +1,6 @@
-import styles from "./DebateList.module.css"
-import FormatDate from "../FormatDate";
-import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from 'react-router-dom'
+import styles from './DebateList.module.css'
+import FormatDate from '../FormatDate'
 
 function DebateList({
   title,
@@ -13,36 +12,30 @@ function DebateList({
   recent_edited_at,
   done_or_not,
   done_at,
-  is_bad
+  is_bad,
 }: any) {
   const formattedDate = FormatDate(recent_edited_at)
-  const nav = useNavigate();
+  const nav = useNavigate()
   const linktoDebateRoom = () => {
-    const encodedTitle = encodeURIComponent(title);
+    const encodedTitle = encodeURIComponent(title)
     nav(`/debate/${encodedTitle}/${subject}`, {
       state: {
-        title: title,
-        subject: subject,
-        id: id
-      }
-    });
-
-
+        title,
+        subject,
+        id,
+      },
+    })
   }
 
-
   return (
-        <div className={styles.container}>
-
-            <span onClick={linktoDebateRoom} className={styles.title}>
+    <div className={styles.container}>
+      <span onClick={linktoDebateRoom} className={styles.title}>
         {subject}
       </span>
 
-            <span className={styles.date}>
-        {formattedDate}
-      </span>
+      <span className={styles.date}>{formattedDate}</span>
     </div>
   )
 }
 
-export default DebateList;
+export default DebateList
