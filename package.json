@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.47.0"
+    "eslint": "^8.47.0",
+    "ts-migrate": "^0.1.35"
   }
 }
