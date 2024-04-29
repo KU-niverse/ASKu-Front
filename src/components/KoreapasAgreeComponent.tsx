@@ -155,8 +155,7 @@ export const KoreapasAgreeComponent = ({
   const htmlSrc = `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`;
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <iframe
+        <iframe
       src={htmlSrc}
       style={{ width: '100%', height: '557px', border: 'none', marginBottom: '20px' }}
       title="External Content"

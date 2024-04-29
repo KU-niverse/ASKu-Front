@@ -1,4 +1,3 @@
-// @ts-expect-error TS(2307): Cannot find module './MyInfo.module.css' or its co... Remove this comment to see the full error message
 import styles from "./MyInfo.module.css"
 
 function MyInfo({
@@ -7,28 +6,18 @@ function MyInfo({
   stu_id
 }: any){
   return(
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.inforow}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.rowname}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.rowtitle}>이름</span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.text}>{name}</span>
+        <div className={styles.inforow}>
+            <div className={styles.rowname}>
+                    <span className={styles.rowtitle}>이름</span>
+                    <span className={styles.text}>{name}</span>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.rowemail}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.rowtitle}>이메일</span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.text}>{email}</span>
+            <div className={styles.rowemail}>
+                    <span className={styles.rowtitle}>이메일</span>
+                    <span className={styles.text}>{email}</span>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.rowid}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.rowtitle}>학번</span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.text}>{stu_id}</span>
+            <div className={styles.rowid}>
+                    <span className={styles.rowtitle}>학번</span>
+                    <span className={styles.text}>{stu_id}</span>
       </div>
     </div>
   )

@@ -1,7 +1,5 @@
 import React from "react";
-// @ts-expect-error TS(2307): Cannot find module './DebateSearch.module.css' or ... Remove this comment to see the full error message
 import styles from "./DebateSearch.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../../img/search_icon.svg' or ... Remove this comment to see the full error message
 import searchIcon from "../../img/search_icon.svg";
 import axios from "axios";
 import { useState } from "react";
@@ -21,8 +19,7 @@ const DebateSearch = ({
   const searchDebate = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/debate/search/${title}/${word}`,
+                process.env.REACT_APP_HOST + `/debate/search/${title}/${word}`,
         {
           withCredentials: true,
         }
@@ -33,8 +30,7 @@ const DebateSearch = ({
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.message);
+            return alert(error.response.message);
     }
   };
 
@@ -50,14 +46,10 @@ const DebateSearch = ({
   }
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <p className={styles.searchTitle}>토론 검색</p>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.inputContainer}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <input
+        <div>
+            <p className={styles.searchTitle}>토론 검색</p>
+            <div className={styles.inputContainer}>
+                <input
           className={styles.headerInput}
           type="text"
           value={word}
@@ -65,8 +57,7 @@ const DebateSearch = ({
           placeholder="검색어를 입력하세요."
           onKeyDown={handleKeyDown} // Use onKeyDown instead
         />
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <img
+                <img
           src={searchIcon}
           alt="icon"
           className={styles.searchIcon}
@@ -74,26 +65,19 @@ const DebateSearch = ({
         />
       </div>
 
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={onClick ? styles.resultContainer : styles.hidden}>
+            <div className={onClick ? styles.resultContainer : styles.hidden}>
         {resultCount === 0 ? (
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p>"검색결과가 없습니다."</p>
+                    <p>"검색결과가 없습니다."</p>
         ) : (
           results.map((item) => {
             return (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <Link
-                // @ts-expect-error TS(2339): Property 'subject' does not exist on type 'never'.
-                to={`/debate/${encodeURIComponent(title)}/${item.subject}`}
-                // @ts-expect-error TS(2339): Property 'subject' does not exist on type 'never'.
-                state={{ title: title, subject: item.subject, id: item.id }}
+                            <Link
+                                to={`/debate/${encodeURIComponent(title)}/${item.subject}`}
+                                state={{ title: title, subject: item.subject, id: item.id }}
                 className={styles.linkTo}
               >
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <ul key={item.id} className={styles.resultList}>
-                  // @ts-expect-error TS(2339): Property 'subject' does not exist on type 'never'.
-                  {item.subject}
+                                <ul key={item.id} className={styles.resultList}>
+                                    {item.subject}
                 </ul>
               </Link>
             );

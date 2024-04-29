@@ -1,6 +1,4 @@
-// @ts-expect-error TS(2307): Cannot find module './DebateInput.module.css' or i... Remove this comment to see the full error message
 import styles from "./DebateInput.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../../img/submit.png' or its c... Remove this comment to see the full error message
 import submit from "../../img/submit.png";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -23,8 +21,7 @@ function DebateInput({
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
+                process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -35,8 +32,7 @@ function DebateInput({
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      if (error.response.status === 401) {
+            if (error.response.status === 401) {
         setLoggedIn(false);
       } else {
         alert("에러가 발생하였습니다");
@@ -90,21 +86,14 @@ function DebateInput({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.container}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.title}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <span>의견 달기</span>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <img src={submit} alt="submit" onClick={handleSubmit} />
+        <div className={styles.container}>
+            <div className={styles.title}>
+                <span>의견 달기</span>
+                <img src={submit} alt="submit" onClick={handleSubmit} />
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.textbox}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <textarea
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-          rows="4"
+            <div className={styles.textbox}>
+                <textarea
+                    rows="4"
           className={styles.textarea}
           placeholder="해당 토론에 대한 의견을 입력하세요."
           value={debateContent}

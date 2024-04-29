@@ -2,9 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-// @ts-expect-error TS(2307): Cannot find module './Signup.module.css' or its co... Remove this comment to see the full error message
 import styles from './Signup.module.css'
-// @ts-expect-error TS(2307): Cannot find module '../img/logo.png' or its corres... Remove this comment to see the full error message
 import logo from '../img/logo.png'
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
@@ -61,20 +59,13 @@ const ChangeInfo = () => {
 
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={`${styles.container}`}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <img className={`${styles.logo}`} src={logo} alt=''/>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <h1>내 정보 변경</h1>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <form>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.signup_input}`}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <span>이름</span>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <input
+        <div className={`${styles.container}`}>
+                <img className={`${styles.logo}`} src={logo} alt=''/>
+                <h1>내 정보 변경</h1>
+                <form>
+                        <div className={`${styles.signup_input}`}>
+                                <span>이름</span>
+                                <input
                  disabled type='text'
                  placeholder='이름을 입력하세요'
                  name='name'
@@ -82,43 +73,32 @@ const ChangeInfo = () => {
                  onChange={e => setForm({ ...form, name: e.target.value})}
                  />
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.signup_input}`}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <div className={`${styles.signup_head}`}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <span>닉네임</span>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
+                        <div className={`${styles.signup_input}`}>
+                                <div className={`${styles.signup_head}`}>
+                                        <span>닉네임</span>
+                                        <span className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`} onClick={handleDoubleCheck}><BsCheck2All size='12'/>&nbsp;중복확인은 여기를 눌러주세요</span>
                 </div>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <input 
+                                <input 
                  required type='text'
                  placeholder='닉네임을 입력하세요'
                  name='nick'
                  value={form.nick}
-                 // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-                 maxLength='30'
+                                  maxLength='30'
                  onChange={e => setForm({ ...form, nick: e.target.value})}
                  />
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.signup_input}`}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <span>학번</span>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <input
+                        <div className={`${styles.signup_input}`}>
+                                <span>학번</span>
+                                <input
                  required type='text'
                  placeholder='학번을 입력하세요'
                  name='studentId'
                  value={form.studentId}
-                 // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-                 maxLength='10'
+                                  maxLength='10'
                  onChange={e => setForm({ ...form, studentId: e.target.value})}
                  />
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>내 정보 변경</button>
+                        <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>내 정보 변경</button>
         </form>
         
     </div>

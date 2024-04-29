@@ -1,24 +1,15 @@
 import React from "react";
-// @ts-expect-error TS(6142): Module '../components/Header' was resolved to 'C:/... Remove this comment to see the full error message
 import Header from "../components/Header";
-// @ts-expect-error TS(2307): Cannot find module '../img/SearchResult.svg' or it... Remove this comment to see the full error message
 import search from "../img/SearchResult.svg";
-// @ts-expect-error TS(2307): Cannot find module './SearchResult.module.css' or ... Remove this comment to see the full error message
 import styles from "./SearchResult.module.css";
-// @ts-expect-error TS(6142): Module '../components/ResultBox' was resolved to '... Remove this comment to see the full error message
 import ResultBox from "../components/ResultBox";
 import { useState, useEffect } from "react";
-// @ts-expect-error TS(6142): Module '../components/Question' was resolved to 'C... Remove this comment to see the full error message
 import Question from "../components/Question";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-// @ts-expect-error TS(6142): Module '../components/ResultQues' was resolved to ... Remove this comment to see the full error message
 import ResultQues from "../components/ResultQues";
-// @ts-expect-error TS(6142): Module '../components/FormatTimeAgo' was resolved ... Remove this comment to see the full error message
 import FormatTimeAgo from "../components/FormatTimeAgo";
-// @ts-expect-error TS(6142): Module '../components/BookmarkBox' was resolved to... Remove this comment to see the full error message
 import BookmarkBox from "../components/BookmarkBox";
-// @ts-expect-error TS(6142): Module '../components/Footer' was resolved to 'C:/... Remove this comment to see the full error message
 import Footer from "../components/Footer";
 
 const data = [
@@ -83,8 +74,7 @@ const SearchResearch = () => {
   const getDocs = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/wiki/query/${title}`,
+                process.env.REACT_APP_HOST + `/wiki/query/${title}`,
         {
           withCredentials: true,
         }
@@ -102,8 +92,7 @@ const SearchResearch = () => {
   const getQues = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/question/query/${title}`,
+                process.env.REACT_APP_HOST + `/question/query/${title}`,
         {
           withCredentials: true,
         }
@@ -122,8 +111,7 @@ const SearchResearch = () => {
   const getHistory = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/wiki/historys?type=${type}`
+                process.env.REACT_APP_HOST + `/wiki/historys?type=${type}`
       );
       setHistorys(result.data.message);
     } catch (error) {
@@ -142,144 +130,96 @@ const SearchResearch = () => {
   }, [type]);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Header />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.results}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.header}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <img src={search} />
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <h4>"{title}" 검색결과</h4>
+        <div>
+            <Header />
+            <div className={styles.results}>
+                <div className={styles.header}>
+                    <img src={search} />
+                    <h4>"{title}" 검색결과</h4>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.typeWrap}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p className={styles.type}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <button
+                <div className={styles.typeWrap}>
+                    <p className={styles.type}>
+                        <button
               onClick={handleButtonClick}
               className={isClicked ? styles.btnRed : styles.btnGray}
             >
               문서
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={isClicked ? styles.numberRed : styles.numberGray}>
+                            <div className={isClicked ? styles.numberRed : styles.numberGray}>
                 {docs.length}
               </div>
             </button>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <button
+                        <button
               onClick={handleButtonClick}
               className={isClicked ? styles.btnGray : styles.btnRed}
             >
               질문
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={isClicked ? styles.numberGray : styles.numberRed}>
+                            <div className={isClicked ? styles.numberGray : styles.numberRed}>
                 {ques.length}
               </div>
             </button>
           </p>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p className={styles.title}>최근 변경</p>
+                    <p className={styles.title}>최근 변경</p>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.contents}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.boxes}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={isClicked ? "" : styles.hidden}>
+                <div className={styles.contents}>
+                    <div className={styles.boxes}>
+                        <div className={isClicked ? "" : styles.hidden}>
               {docs.map((item) => {
                 return (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <div
-                    // @ts-expect-error TS(2339): Property 'title' does not exist on type 'never'.
-                    key={item.title}
-                    // @ts-expect-error TS(2339): Property 'title' does not exist on type 'never'.
-                    onClick={() => handleDocsClick(item.title)}
+                                    <div
+                                        key={item.title}
+                                        onClick={() => handleDocsClick(item.title)}
                   >
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <BookmarkBox
-                      // @ts-expect-error TS(2339): Property 'title' does not exist on type 'never'.
-                      title={item.title}
-                      // @ts-expect-error TS(2339): Property 'recent_filtered_content' does not exist ... Remove this comment to see the full error message
-                      content={item.recent_filtered_content}
-                      // @ts-expect-error TS(2339): Property 'is_favorite' does not exist on type 'nev... Remove this comment to see the full error message
-                      is_favorite={item.is_favorite}
+                                        <BookmarkBox
+                                            title={item.title}
+                                            content={item.recent_filtered_content}
+                                            is_favorite={item.is_favorite}
                       result={true}
                     />
                   </div>
                 );
               })}
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={styles.linkToNew}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <Link to="/newwiki" className={styles.link}>
+                            <div className={styles.linkToNew}>
+                                <Link to="/newwiki" className={styles.link}>
                   원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요
                 </Link>
               </div>
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={isClicked ? styles.hidden : ""}>
+                        <div className={isClicked ? styles.hidden : ""}>
               {ques.map((item) => {
                 return (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <div className={styles.queboxes}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <ResultQues
-                      // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
-                      key={item.id}
-                      // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
-                      id={item.id}
-                      // @ts-expect-error TS(2339): Property 'doc_id' does not exist on type 'never'.
-                      doc_id={item.doc_id}
-                      // @ts-expect-error TS(2339): Property 'user_id' does not exist on type 'never'.
-                      user_id={item.user_id}
-                      // @ts-expect-error TS(2339): Property 'index_title' does not exist on type 'nev... Remove this comment to see the full error message
-                      index_title={item.index_title}
-                      // @ts-expect-error TS(2339): Property 'content' does not exist on type 'never'.
-                      content={item.content}
-                      // @ts-expect-error TS(2339): Property 'created_at' does not exist on type 'neve... Remove this comment to see the full error message
-                      created_at={item.created_at}
-                      // @ts-expect-error TS(2339): Property 'answer_count' does not exist on type 'ne... Remove this comment to see the full error message
-                      answer_count={item.answer_count}
-                      // @ts-expect-error TS(2339): Property 'is_bad' does not exist on type 'never'.
-                      is_bad={item.is_bad}
-                      // @ts-expect-error TS(2339): Property 'nickname' does not exist on type 'never'... Remove this comment to see the full error message
-                      nick={item.nickname}
-                      // @ts-expect-error TS(2339): Property 'like_count' does not exist on type 'neve... Remove this comment to see the full error message
-                      like_count={item.like_count}
-                      // @ts-expect-error TS(2339): Property 'title' does not exist on type 'never'.
-                      title={item.title}
+                                    <div className={styles.queboxes}>
+                                        <ResultQues
+                                            key={item.id}
+                                            id={item.id}
+                                            doc_id={item.doc_id}
+                                            user_id={item.user_id}
+                                            index_title={item.index_title}
+                                            content={item.content}
+                                            created_at={item.created_at}
+                                            answer_count={item.answer_count}
+                                            is_bad={item.is_bad}
+                                            nick={item.nickname}
+                                            like_count={item.like_count}
+                                            title={item.title}
                     />
                   </div>
                 );
               })}
             </div>
           </div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.recents}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={styles.recentWrap}>
+                    <div className={styles.recents}>
+                        <div className={styles.recentWrap}>
               {historys.slice(0, 8).map((item) => {
-                // @ts-expect-error TS(2339): Property 'created_at' does not exist on type 'neve... Remove this comment to see the full error message
-                const timestamp = FormatTimeAgo(item.created_at);
+                                const timestamp = FormatTimeAgo(item.created_at);
                 return (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <ul key={item.title}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <Link
-                      // @ts-expect-error TS(2339): Property 'doc_title' does not exist on type 'never... Remove this comment to see the full error message
-                      to={`/wiki/${encodeURIComponent(item.doc_title)}`}
+                                    <ul key={item.title}>
+                                        <Link
+                                            to={`/wiki/${encodeURIComponent(item.doc_title)}`}
                       className={styles.linkTo}
                     >
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <span className={styles.listTitle}>{item.doc_title}</span>
+                                            <span className={styles.listTitle}>{item.doc_title}</span>
                     </Link>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <span className={styles.listTimestamp}>{timestamp}</span>
+                                        <span className={styles.listTimestamp}>{timestamp}</span>
                   </ul>
                 );
               })}
@@ -287,8 +227,7 @@ const SearchResearch = () => {
           </div>
         </div>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Footer />
+            <Footer />
     </div>
   );
 };

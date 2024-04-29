@@ -1,8 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-// @ts-expect-error TS(2307): Cannot find module './Find.module.css' or its corr... Remove this comment to see the full error message
 import styles from "./Find.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../img/logo.png' or its corres... Remove this comment to see the full error message
 import logo from "../img/logo.png";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -72,8 +70,7 @@ const ChangePw = () => {
 
     try {
       const response = await axios.put(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+"/user/auth/changepw",
+                process.env.REACT_APP_HOST+"/user/auth/changepw",
         {
           password: password,
           new_password: newPassword,
@@ -90,87 +87,63 @@ const ChangePw = () => {
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={`${styles.container}`}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <img className={`${styles.logo}`} src={logo} alt="" />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <h2 className={styles.findTitle}>비밀번호 재설정</h2>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <form onSubmit={changeUserPw}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={`${styles.findInputs}`}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={`${styles.inputLabel}`}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.inputHead}`}>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span>현재 비밀번호</span>
+        <div className={`${styles.container}`}>
+            <img className={`${styles.logo}`} src={logo} alt="" />
+            <h2 className={styles.findTitle}>비밀번호 재설정</h2>
+            <form onSubmit={changeUserPw}>
+                <div className={`${styles.findInputs}`}>
+                    <div className={`${styles.inputLabel}`}>
+                        <div className={`${styles.inputHead}`}>
+                            <span>현재 비밀번호</span>
               {/* <span className={isPwValid === false? `${styles.pwChangeAlert}`: `${styles.pwChangeDone}`}><FiAlertCircle size='12'/>&nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span> */}
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <input
+                        <input
               required
               type="password"
               placeholder="8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요"
               name="password"
               value={password}
               onChange={onChangePW}
-              // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-              maxLength="20"
+                            maxLength="20"
             />
           </div>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={`${styles.findInputs}`}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={`${styles.inputLabel}`}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.inputHead}`}>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span>새 비밀번호</span>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span
+                <div className={`${styles.findInputs}`}>
+                    <div className={`${styles.inputLabel}`}>
+                        <div className={`${styles.inputHead}`}>
+                            <span>새 비밀번호</span>
+                            <span
                 className={
                   isPwValid === false
                     ? `${styles.pwChangeAlert}`
                     : `${styles.pwChangeDone}`
                 }
               >
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <FiAlertCircle size="12" />
+                                <FiAlertCircle size="12" />
                 &nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요
               </span>
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <input
+                        <input
               required
               type="password"
               placeholder="8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요"
               name="newpassword"
               value={newPassword}
               onChange={onChangeNewPW}
-              // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-              maxLength="20"
+                            maxLength="20"
             />
           </div>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={`${styles.findInputs}`}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={`${styles.inputLabel}`}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={`${styles.inputHead}`}>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span>새 비밀번호 재확인</span>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span
+                <div className={`${styles.findInputs}`}>
+                    <div className={`${styles.inputLabel}`}>
+                        <div className={`${styles.inputHead}`}>
+                            <span>새 비밀번호 재확인</span>
+                            <span
                 className={
                   isPwSame === false
                     ? `${styles.pwChangeAlert}`
@@ -178,26 +151,22 @@ const ChangePw = () => {
                 }
                 onChange={onChangeCheckPW}
               >
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <FiAlertTriangle size="12" />
+                                <FiAlertTriangle size="12" />
                 &nbsp;비밀번호가 일치하지 않습니다
               </span>
             </div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <input
+                        <input
               required
               type="password"
               placeholder="비밀번호를 재입력하세요"
               name="checkPw"
               value={checkPw}
               onChange={onChangeCheckPW}
-              // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-              maxLength="20"
+                            maxLength="20"
             />
           </div>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <input
+                <input
           type="submit"
           className={`${styles.findBtn}`}
           value="비밀번호 변경"

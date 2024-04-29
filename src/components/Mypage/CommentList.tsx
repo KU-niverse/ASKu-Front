@@ -1,6 +1,4 @@
-// @ts-expect-error TS(2307): Cannot find module './CommentList.module.css' or i... Remove this comment to see the full error message
 import styles from "./CommentList.module.css"
-// @ts-expect-error TS(2307): Cannot find module '../../img/comment_icon.png' or... Remove this comment to see the full error message
 import comment_icon from "../../img/comment_icon.png"
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -35,15 +33,11 @@ function CommentList({
   }
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.comment_list}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.comment_icon}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <img className={styles.comment_png} src={comment_icon} alt='comment_icon' />
+        <div className={styles.comment_list}>
+            <div className={styles.comment_icon}>
+                <img className={styles.comment_png} src={comment_icon} alt='comment_icon' />
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <span onClick={linktoComment} className={styles.comment_content}>{truncateContent(content)}</span>
+            <span onClick={linktoComment} className={styles.comment_content}>{truncateContent(content)}</span>
     </div>
   );
 }

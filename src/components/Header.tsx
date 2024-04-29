@@ -1,39 +1,22 @@
 import React, { useState, useEffect } from "react";
-// @ts-expect-error TS(2307): Cannot find module './Header.module.css' or its co... Remove this comment to see the full error message
 import styles from "./Header.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../img/logo.png' or its corres... Remove this comment to see the full error message
 import logo from "../img/logo.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/search_icon.svg' or its... Remove this comment to see the full error message
 import searchIcon from "../img/search_icon.svg";
-// @ts-expect-error TS(2307): Cannot find module '../img/search_icon_gray.png' o... Remove this comment to see the full error message
 import searchIconGray from "../img/search_icon_gray.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/hamburger.png' or its c... Remove this comment to see the full error message
 import hamburger from "../img/hamburger.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/bell.png' or its corres... Remove this comment to see the full error message
 import alarm from "../img/bell.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/bookmark_grey.png' or i... Remove this comment to see the full error message
 import bookmark from "../img/bookmark_grey.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mypage_btn.png' or its ... Remove this comment to see the full error message
 import mypage from "../img/mypage_btn.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_mypage.png' or i... Remove this comment to see the full error message
 import mobilemypage from "../img/mobile_mypage.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_alarm.png' or it... Remove this comment to see the full error message
 import mobilealarm from "../img/mobile_alarm.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_logout.png' or i... Remove this comment to see the full error message
 import mobilelogout from "../img/mobile_logout.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_debate.png' or i... Remove this comment to see the full error message
 import mobiledebate from "../img/mobile_debate.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_bookmark.png' or... Remove this comment to see the full error message
 import mobilebookmark from "../img/mobile_bookmark.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/mobile_history.png' or ... Remove this comment to see the full error message
 import mobilehistory from "../img/mobile_history.png";
-// @ts-expect-error TS(6142): Module './AlarmModal' was resolved to 'C:/Users/Us... Remove this comment to see the full error message
 import AlarmModal from "./AlarmModal";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-// @ts-expect-error TS(6142): Module './AlarmMobileModal' was resolved to 'C:/Us... Remove this comment to see the full error message
 import AlarmMobileModal from "./AlarmMobileModal";
-// @ts-expect-error TS(2307): Cannot find module '../img/random.svg' or its corr... Remove this comment to see the full error message
 import randomDocs from "../img/random.svg";
 
 function Header({
@@ -64,8 +47,7 @@ function Header({
     const checkLoginStatus = async () => {
       try {
         const res = await axios.get(
-          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-          process.env.REACT_APP_HOST + "/user/auth/issignedin",
+                    process.env.REACT_APP_HOST + "/user/auth/issignedin",
           {
             withCredentials: true,
           }
@@ -92,8 +74,7 @@ function Header({
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get(
-          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-          process.env.REACT_APP_HOST + "/user/mypage/info",
+                    process.env.REACT_APP_HOST + "/user/mypage/info",
           {
             withCredentials: true,
           }
@@ -121,8 +102,7 @@ function Header({
   const signOut = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/user/auth/signout`,
+                process.env.REACT_APP_HOST + `/user/auth/signout`,
         {
           withCredentials: true,
         }
@@ -135,8 +115,7 @@ function Header({
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
@@ -181,8 +160,7 @@ function Header({
 
   const handleRandomDocClick = async () => {
     try {
-      // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-      const response = await axios.get(process.env.REACT_APP_HOST + '/wiki/random', {
+            const response = await axios.get(process.env.REACT_APP_HOST + '/wiki/random', {
         withCredentials: true,
       });
       if (response.status === 200) {
@@ -194,37 +172,24 @@ function Header({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.container} style={{ height: mobileHeaderHeight }}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.headerContainer}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.logoContainer}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <Link to="/">
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <img src={logo} alt="logo" className={styles.logo} />
+        <div className={styles.container} style={{ height: mobileHeaderHeight }}>
+            <div className={styles.headerContainer}>
+                <div className={styles.logoContainer}>
+                    <Link to="/">
+                        <img src={logo} alt="logo" className={styles.logo} />
           </Link>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.flexContainer}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.navContainer_left}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <Link to="/allhistory">
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <button className={styles.headerButton}>최근 변경</button>
+                <div className={styles.flexContainer}>
+                    <div className={styles.navContainer_left}>
+                        <Link to="/allhistory">
+                            <button className={styles.headerButton}>최근 변경</button>
             </Link>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <Link to="/latestdebate">
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <button className={styles.headerButton}>토론</button>
+                        <Link to="/latestdebate">
+                            <button className={styles.headerButton}>토론</button>
             </Link>
           </div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.inputContainer}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <input
+                    <div className={styles.inputContainer}>
+                        <input
               className={styles.headerInput}
               placeholder="검색어를 입력하세요."
               value={inputValue}
@@ -242,8 +207,7 @@ function Header({
                 }
               }}
             />
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <img
+                        <img
               src={searchIcon}
               alt="icon"
               className={styles.searchIcon}
@@ -259,15 +223,13 @@ function Header({
                 }
               }}
             />
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <AlarmModal
+                        <AlarmModal
               isAlarmVisible={isAlarmVisible}
               handleAlarm={handleAlarm}
               isLoggedIn={isLoggedIn}
             />
           </div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div
+                    <div
             className={styles.navContainer_right}
             style={{
               width: navContainerRightWidth,
@@ -275,57 +237,44 @@ function Header({
             }}
           >
             {isLoggedIn ? (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <img
+                            <>
+                                <img
                   src={randomDocs}
                   alt="randomDocs"
                   className={styles.signinButton}
                   onClick={handleRandomDocClick}
                 />
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <img
+                                <img
                   src={bookmark}
                   alt="bookmark_gray"
                   className={styles.signinButton}
                   onClick={() => Nav("/mybookmark")}
                 />
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <img
+                                <img
                   src={alarm}
                   alt="alarm"
                   id={styles.temporaryAlarm}
                   className={styles.signinButton}
                   onClick={handleAlarm}
                 />
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <button className={styles.headerButton} onClick={signOut}>
+                                <button className={styles.headerButton} onClick={signOut}>
                   로그아웃
                 </button>
                 {loadingMypage ? (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <div></div>
+                                    <div></div>
                 ) : (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link to="/mypage">
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mypageWrap}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.nicknameText}>
-                        // @ts-expect-error TS(2339): Property 'data' does not exist on type 'string'.
-                        {nicknameText.data[0].nickname} 님
+                                    <Link to="/mypage">
+                                        <div className={styles.mypageWrap}>
+                                            <p className={styles.nicknameText}>
+                                                {nicknameText.data[0].nickname} 님
                       </p>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                            <img
                         src={mypage}
                         alt="mypage"
                         className={styles.mypageBtn}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
-                        // @ts-expect-error TS(2339): Property 'data' does not exist on type 'string'.
-                        src={nicknameText.data[0].rep_badge_image}
+                                            <img
+                                                src={nicknameText.data[0].rep_badge_image}
                         alt="rep_badge"
                         className={styles.repBadge}
                       />
@@ -334,10 +283,8 @@ function Header({
                 )}
               </>
             ) : (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <img
+                            <>
+                                <img
                   src={randomDocs}
                   alt="randomDocs"
                   className={styles.randomDocs}
@@ -346,43 +293,32 @@ function Header({
                 {/* <Link to="/signup">
                   <button className={styles.headerButton}>회원가입</button>
                 </Link> */}
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <a href="https://www.koreapas.com/m/member_join_new.php">
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <button className={styles.headerButton}>회원가입</button>
+                                <a href="https://www.koreapas.com/m/member_join_new.php">
+                                    <button className={styles.headerButton}>회원가입</button>
                 </a>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <Link to="/signin">
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <button className={styles.headerButton}>로그인</button>
+                                <Link to="/signin">
+                                    <button className={styles.headerButton}>로그인</button>
                 </Link>
               </>
             )}
           </div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.mobileHeader}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={styles.buttonWrap}>
+                    <div className={styles.mobileHeader}>
+                        <div className={styles.buttonWrap}>
               {isLoggedIn ? (
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <></>
+                                <></>
               ) : (
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <Link className={styles.loginbtn} to="/signin">
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <button className={styles.loginbtn}>로그인</button>
+                                <Link className={styles.loginbtn} to="/signin">
+                                    <button className={styles.loginbtn}>로그인</button>
                 </Link>
               )}
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <img
+                            <img
                 src={searchIconGray}
                 alt="search_icon_gray"
                 id={styles.mobileHeaderSearch}
                 className={styles.mobileButton}
                 onClick={handleMobileSearch}
               />
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <img
+                            <img
                 src={hamburger}
                 alt="hamburger"
                 className={styles.mobileButton}
@@ -390,127 +326,93 @@ function Header({
               />
             </div>
             {mobileHeaderOpen && (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={styles.mobileMenuWrap}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <div className={styles.mobileHamburger}>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link to="/mypage" className={styles.mobileMenuBtn}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                            <div className={styles.mobileMenuWrap}>
+                                <div className={styles.mobileHamburger}>
+                                    <Link to="/mypage" className={styles.mobileMenuBtn}>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={mobilemypage}
                         alt=""
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>마이페이지</p>
+                                            <p className={styles.mobileMenuText}>마이페이지</p>
                     </div>
                   </Link>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link to="/mybookmark" className={styles.mobileMenuBtn}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                    <Link to="/mybookmark" className={styles.mobileMenuBtn}>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={mobilebookmark}
                         alt=""
                         id={styles.mobileBookmark}
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>즐겨찾기</p>
+                                            <p className={styles.mobileMenuText}>즐겨찾기</p>
                     </div>
                   </Link>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link
+                                    <Link
                     id={styles.temporaryMobileAlarm}
                     className={styles.mobileMenuBtn}
                     onClick={handleMobileAlarmModal}
                   >
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={mobilealarm}
                         alt=""
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>알림</p>
+                                            <p className={styles.mobileMenuText}>알림</p>
                     </div>
                   </Link>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link to="/allhistory" className={styles.mobileMenuBtn}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                    <Link to="/allhistory" className={styles.mobileMenuBtn}>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={mobilehistory}
                         alt=""
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>최근변경</p>
+                                            <p className={styles.mobileMenuText}>최근변경</p>
                     </div>
                   </Link>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link to="/latestdebate" className={styles.mobileMenuBtn}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                    <Link to="/latestdebate" className={styles.mobileMenuBtn}>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={mobiledebate}
                         alt=""
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>토론</p>
+                                            <p className={styles.mobileMenuText}>토론</p>
                     </div>
                   </Link>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <div className={styles.mobileHamburgerMenu}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <img
+                                    <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                                        <div className={styles.mobileHamburgerMenu}>
+                                            <img
                         src={randomDocs}
                         alt=""
                         className={styles.mobileIcon}
                       />
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <p className={styles.mobileMenuText}>랜덤 문서</p>
+                                            <p className={styles.mobileMenuText}>랜덤 문서</p>
                     </div>
                   </Link>
                   {isLoggedIn ? (
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <Link className={styles.mobileMenuBtn} onClick={signOut}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <div className={styles.mobileHamburgerMenu}>
-                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                        <img
+                                        <Link className={styles.mobileMenuBtn} onClick={signOut}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img
                           src={mobilelogout}
                           alt=""
                           className={styles.mobileIcon}
                         />
-                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                        <p className={styles.mobileMenuText}>로그아웃</p>
+                                                <p className={styles.mobileMenuText}>로그아웃</p>
                       </div>
                     </Link>
                   ) : (
-                    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                    <Link to="/signin" className={styles.mobileMenuBtn}>
-                      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                      <div className={styles.mobileHamburgerMenu}>
-                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                        <img
+                                        <Link to="/signin" className={styles.mobileMenuBtn}>
+                                            <div className={styles.mobileHamburgerMenu}>
+                                                <img
                           src={mobilelogout}
                           alt=""
                           className={styles.mobileIcon}
                         />
-                        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                        <p className={styles.mobileMenuText}>로그인</p>
+                                                <p className={styles.mobileMenuText}>로그인</p>
                       </div>
                     </Link>
                   )}
@@ -518,12 +420,9 @@ function Header({
               </div>
             )}
             {mobileSearchOpen && (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={styles.mobileSearchWrap}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <div className={styles.mobileInputContainer}>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                            <div className={styles.mobileSearchWrap}>
+                                <div className={styles.mobileInputContainer}>
+                                    <input
                     className={styles.mobileHeaderInput}
                     placeholder="검색어를 입력하세요."
                     value={inputValue}
@@ -543,8 +442,7 @@ function Header({
                       }
                     }}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <img
+                                    <img
                     src={searchIcon}
                     alt="icon"
                     className={styles.mobileSearchIcon}
@@ -564,8 +462,7 @@ function Header({
               </div>
             )}
             {mobileAlarmModalOpen && (
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <AlarmMobileModal
+                            <AlarmMobileModal
                 isOpen={mobileAlarmModalOpen}
                 handleMobileAlarmModal={handleMobileAlarmModal}
               />

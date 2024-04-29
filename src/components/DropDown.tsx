@@ -5,7 +5,6 @@ import "./DropDown.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-// @ts-expect-error TS(6142): Module './SpinnerMypage' was resolved to 'C:/Users... Remove this comment to see the full error message
 import SpinnerMypage from "./SpinnerMypage";
 
 function DropDown({
@@ -19,8 +18,7 @@ function DropDown({
     const takeWikiData = async () => {
       try {
         const res = await axios.get(
-          // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-          process.env.REACT_APP_HOST + `/wiki/contents/${title}`,
+                    process.env.REACT_APP_HOST + `/wiki/contents/${title}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -36,10 +34,8 @@ function DropDown({
   }, [title]); //위키 정보 가져오기
 
   let options = [];
-  // @ts-expect-error TS(2339): Property 'contents' does not exist on type 'never[... Remove this comment to see the full error message
-  if (wikiData && wikiData.contents) {
-    // @ts-expect-error TS(2339): Property 'contents' does not exist on type 'never[... Remove this comment to see the full error message
-    options = wikiData.contents.map((content: any) => ({
+    if (wikiData && wikiData.contents) {
+        options = wikiData.contents.map((content: any) => ({
       value: `${content.index} ${content.title}`,
       label: `${content.index} ${content.title}`,
       className: "myOptionClassName"
@@ -82,10 +78,8 @@ function DropDown({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className="dropdown-container">
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Dropdown
+        <div className="dropdown-container">
+            <Dropdown
         className="dropdown"
         controlClassName="dropdowncontrol"
         menuClassName="dropdownmenu"

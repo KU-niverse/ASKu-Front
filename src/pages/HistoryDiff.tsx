@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
 import ReactDiffViewer from "react-diff-viewer";
-// @ts-expect-error TS(2307): Cannot find module '../img/his2.png' or its corres... Remove this comment to see the full error message
 import his2 from "../img/his2.png";
-// @ts-expect-error TS(2307): Cannot find module './HistoryDiff.module.css' or i... Remove this comment to see the full error message
 import styles from "./HistoryDiff.module.css";
-// @ts-expect-error TS(6142): Module '../components/Header' was resolved to 'C:/... Remove this comment to see the full error message
 import Header from "../components/Header";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -49,8 +46,7 @@ const HistoryDiff = () => {
   const compareHistory = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+`/wiki/comparison/${title}/rev/${ver}/oldrev/${
+                process.env.REACT_APP_HOST+`/wiki/comparison/${title}/rev/${ver}/oldrev/${
           Number(ver) - 1
         }`,
         {
@@ -63,8 +59,7 @@ const HistoryDiff = () => {
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
@@ -73,46 +68,30 @@ const HistoryDiff = () => {
   }, [title, ver]);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.container}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Header />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.header}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <img src={his2} />
+        <div className={styles.container}>
+            <Header />
+            <div className={styles.header}>
+                <span>
+                    <img src={his2} />
           히스토리
         </span>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.historyCompare}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.historyTitle}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p className={styles.listTitle}>{title}</p>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p className={styles.listTitle2}>문서의 변경 내용</p>
+            <div className={styles.historyCompare}>
+                <div className={styles.historyTitle}>
+                    <p className={styles.listTitle}>{title}</p>
+                    <p className={styles.listTitle2}>문서의 변경 내용</p>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.historyDiff}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.verCompare}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <span className={styles.verCompareNum}>VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;</span><span className={styles.verCompareVs}>&nbsp;vs&nbsp;</span>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <span className={styles.verCompareNum}>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</span>
+                <div className={styles.historyDiff}>
+                    <div className={styles.verCompare}>
+                        <span className={styles.verCompareNum}>VERSION&nbsp;{ver - 1}&nbsp;&nbsp;&nbsp;</span><span className={styles.verCompareVs}>&nbsp;vs&nbsp;</span>
+                        <span className={styles.verCompareNum}>&nbsp;&nbsp;&nbsp;VERSION&nbsp;{ver}</span>
           </div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.diffBox}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <ReactDiffViewer
+                    <div className={styles.diffBox}>
+                        <ReactDiffViewer
               oldValue={oldText}
               newValue={newText}
               splitView={isSplit}
-              // @ts-expect-error TS(2322): Type '{ oldValue: string; newValue: string; splitV... Remove this comment to see the full error message
-              className={styles.diffBox}
+                            className={styles.diffBox}
               showDiffOnly={true}
             />
           </div>

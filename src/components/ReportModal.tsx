@@ -1,9 +1,6 @@
-// @ts-expect-error TS(2307): Cannot find module './ReportModal.module.css' or i... Remove this comment to see the full error message
 import styles from "./ReportModal.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../img/close_btn.png' or its c... Remove this comment to see the full error message
 import closeBtn from "../img/close_btn.png";
 import { useState, useEffect, useRef } from "react";
-// @ts-expect-error TS(2307): Cannot find module '../img/haho_login.png' or its ... Remove this comment to see the full error message
 import haho_login from "../img/haho_login.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -32,8 +29,7 @@ function ReportModal({
     }
     try {
       const response = await axios.post(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+`/report/${type}`,
+                process.env.REACT_APP_HOST+`/report/${type}`,
         requestBody,
         { withCredentials: true }
       );
@@ -48,14 +44,12 @@ function ReportModal({
   };
 
   const handleOutsideClick = (event: any) => {
-    // @ts-expect-error TS(2339): Property 'contains' does not exist on type 'never'... Remove this comment to see the full error message
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose();
     }
   };
 
-  // @ts-expect-error TS(2345): Argument of type '() => (() => void) | null' is no... Remove this comment to see the full error message
-  useEffect(() => {
+    useEffect(() => {
     if (!isOpen) {
       return null; // 모달이 열려있지 않으면 아무것도 렌더링하지 않음
     }
@@ -81,150 +75,108 @@ function ReportModal({
 
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <>
+        <>
       {isOpen && (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.modal_overlay}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div ref={modalRef} className={styles.modal_wrapper}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={styles.modal_inside}>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={styles.modal_close}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <img
+                <div className={styles.modal_overlay}>
+                    <div ref={modalRef} className={styles.modal_wrapper}>
+                        <div className={styles.modal_inside}>
+                            <div className={styles.modal_close}>
+                                <img
                   src={closeBtn}
                   alt="close"
                   className={styles.close_btn}
                   onClick={onClose}
                 />
               </div>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <div className={styles.modal_content}>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <p className={styles.modal_text}>신고 사유 선택</p>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                            <div className={styles.modal_content}>
+                                <p className={styles.modal_text}>신고 사유 선택</p>
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="1"
-                    // @ts-expect-error TS(2345): Argument of type '1' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(1)}
+                                        onChange={() => setSelectedReason(1)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>상업적 광고 및 판매</span>
+                                    <span className={styles.label_text}>상업적 광고 및 판매</span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="2"
-                    // @ts-expect-error TS(2345): Argument of type '2' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(2)}
+                                        onChange={() => setSelectedReason(2)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>
+                                    <span className={styles.label_text}>
                     정치인 비하 및 선거운동
                   </span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="3"
-                    // @ts-expect-error TS(2345): Argument of type '3' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(3)}
+                                        onChange={() => setSelectedReason(3)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>
+                                    <span className={styles.label_text}>
                     게시판 성격에 부적절함
                   </span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="4"
-                    // @ts-expect-error TS(2345): Argument of type '4' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(4)}
+                                        onChange={() => setSelectedReason(4)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>음란물</span>
+                                    <span className={styles.label_text}>음란물</span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="5"
-                    // @ts-expect-error TS(2345): Argument of type '5' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(5)}
+                                        onChange={() => setSelectedReason(5)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>낚시/놀람/도배</span>
+                                    <span className={styles.label_text}>낚시/놀람/도배</span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="6"
-                    // @ts-expect-error TS(2345): Argument of type '6' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(6)}
+                                        onChange={() => setSelectedReason(6)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>사칭사기</span>
+                                    <span className={styles.label_text}>사칭사기</span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="7"
-                    // @ts-expect-error TS(2345): Argument of type '7' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(7)}
+                                        onChange={() => setSelectedReason(7)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>욕설비하</span>
+                                    <span className={styles.label_text}>욕설비하</span>
                 </label>
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <label>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <input
+                                <label>
+                                    <input
                     className={styles.modal_report}
                     type="radio"
                     name="reason"
                     value="8"
-                    // @ts-expect-error TS(2345): Argument of type '8' is not assignable to paramete... Remove this comment to see the full error message
-                    onChange={() => setSelectedReason(8)}
+                                        onChange={() => setSelectedReason(8)}
                   />
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <span className={styles.label_text}>기타</span>
+                                    <span className={styles.label_text}>기타</span>
                 </label>
                 {selectedReason === 8 && (
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <textarea
-                    // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-                    rows="4"
+                                    <textarea
+                                        rows="4"
                     className={styles.report_textarea}
                     placeholder="신고 사유를 입력해주세요."
                     value={reportContent}
@@ -233,8 +185,7 @@ function ReportModal({
                   />
                 )}
               </div>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <button className={styles.q_csubmit} onClick={handleSubmit}>
+                            <button className={styles.q_csubmit} onClick={handleSubmit}>
                 신고하기
               </button>
             </div>

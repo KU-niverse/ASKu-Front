@@ -1,9 +1,6 @@
 import React from "react";
-// @ts-expect-error TS(2307): Cannot find module '../img/bookmarkfalse.png' or i... Remove this comment to see the full error message
 import falseBk from "../img/bookmarkfalse.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/bookmarkFill.png' or it... Remove this comment to see the full error message
 import trueBk from "../img/bookmarkFill.png";
-// @ts-expect-error TS(2307): Cannot find module './BookmarkBox.module.css' or i... Remove this comment to see the full error message
 import styles from "./BookmarkBox.module.css";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +17,7 @@ const BookmarkBox = (props: any) => {
   const addBookmark = async () => {
     try {
       const result = await axios.post(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
+                process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
         {},
         {
           withCredentials: true,
@@ -33,16 +29,14 @@ const BookmarkBox = (props: any) => {
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
   const deleteBookmark = async () => {
     try {
       const result = await axios.delete(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
+                process.env.REACT_APP_HOST+`/wiki/favorite/${title}`,
         {
           withCredentials: true,
         }
@@ -55,8 +49,7 @@ const BookmarkBox = (props: any) => {
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
@@ -86,21 +79,16 @@ const BookmarkBox = (props: any) => {
   }, [favorite]);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.bkbox}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.contents}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div
+        <div className={styles.bkbox}>
+            <div className={styles.contents}>
+                <div
           className={styles.title}
           onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}
         >
           {title}
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <img
+                <div>
+                    <img
             src={imageSource}
             alt="Image"
             onClick={handleClick}
@@ -108,8 +96,7 @@ const BookmarkBox = (props: any) => {
           />
         </div>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div
+            <div
         className={styles.content}
         onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}
       >

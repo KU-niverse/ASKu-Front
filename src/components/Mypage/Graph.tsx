@@ -1,7 +1,5 @@
 import React from "react";
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import HSBar from "react-horizontal-stacked-bar-chart";
-// @ts-expect-error TS(2307): Cannot find module './Graph.module.css' or its cor... Remove this comment to see the full error message
 import styles from "./Graph.module.css"
 
 
@@ -67,20 +65,16 @@ function Graph({
     };
  
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.g_container}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <p className={styles.g_name}>문서별 기여도</p>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div style={{
+        <div className={styles.g_container}>
+            <p className={styles.g_name}>문서별 기여도</p>
+            <div style={{
         borderRadius: "100px",
         height: "22px",
         overflow: "hidden",
         width: "100%",
         position: "relative"
       }}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div style={{
+            <div style={{
         width: "calc(100% + 2px)",
         height: "100%",
         position: "absolute",
@@ -88,8 +82,7 @@ function Graph({
         top: "50%",  // 중앙으로 위치시킵니다
         transform: "translateY(-50%)"  // 높이의 50%만큼 위로 이동시킵니다
       }}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <HSBar
+                <HSBar
           id="cb_bar"
           height={22}
           data={topContributions}
@@ -98,24 +91,18 @@ function Graph({
         />
       </div>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.legend}>
+            <div className={styles.legend}>
         {topContributions.map((item: any, index: any) => (
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.legendItem} key={index}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div
+                    <div className={styles.legendItem} key={index}>
+                        <div
               className={styles.legendColor}
               style={{ background: item.color }}
             ></div>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div className={styles.legendLabel}>
+                        <div className={styles.legendLabel}>
               {/* <span className={styles.legendname}>{item.name}</span> */}
               {/* item.name을 8자로 제한하여 표시 */}
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span className={styles.legendname}>{truncateString(item.name, 8)}</span>
-              // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-              <span className={styles.legendper}> {item.description}</span>
+                            <span className={styles.legendname}>{truncateString(item.name, 8)}</span>
+                            <span className={styles.legendper}> {item.description}</span>
             </div>
           </div>
         ))}

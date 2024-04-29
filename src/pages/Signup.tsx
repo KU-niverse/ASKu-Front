@@ -2,14 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// @ts-expect-error TS(2307): Cannot find module './Signup.module.css' or its co... Remove this comment to see the full error message
 import styles from "./Signup.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../img/logo.png' or its corres... Remove this comment to see the full error message
 import logo from "../img/logo.png";
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 import axios from "axios";
-// @ts-expect-error TS(6142): Module '../components/KoreapasAgreeComponent' was ... Remove this comment to see the full error message
 import { KoreapasAgreeComponent } from '../components/KoreapasAgreeComponent'
 
 const Signup = ({
@@ -33,8 +30,7 @@ const Signup = ({
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
+                process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -81,8 +77,7 @@ const Signup = ({
 
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/user/auth/nickdupcheck/${form.nick}`
+                process.env.REACT_APP_HOST + `/user/auth/nickdupcheck/${form.nick}`
       );
 
       if (result.data.success === true) {
@@ -94,8 +89,7 @@ const Signup = ({
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      alert(error.response.data.message);
+            alert(error.response.data.message);
     }
   };
 
@@ -108,8 +102,7 @@ const Signup = ({
     }
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/user/auth/iddupcheck/${form.id}`
+                process.env.REACT_APP_HOST + `/user/auth/iddupcheck/${form.id}`
       );
 
       if (result.data.success === true) {
@@ -121,8 +114,7 @@ const Signup = ({
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      alert(error.response.data.message);
+            alert(error.response.data.message);
     }
   };
 
@@ -130,8 +122,7 @@ const Signup = ({
     e.preventDefault();
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
+                process.env.REACT_APP_HOST + `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
       );
 
       if (result.data.success === true) {
@@ -143,8 +134,7 @@ const Signup = ({
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      alert(error.response.data.message);
+            alert(error.response.data.message);
     }
   };
 
@@ -221,8 +211,7 @@ const Signup = ({
 
     try {
       const response = await axios.post(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/signup/koreapas",
+                process.env.REACT_APP_HOST + "/user/auth/signup/koreapas",
         {
           uuid: koreapasData.uuid,
           nickname: koreapasData.nickname,
@@ -245,8 +234,7 @@ const Signup = ({
     } catch (error) {
       console.error(error);
       nav("/");
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
 
     }
   };
@@ -262,21 +250,16 @@ const Signup = ({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={`${styles.container}`}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <img
+        <div className={`${styles.container}`}>
+            <img
         className={`${styles.logo}`}
         src={logo}
         alt=""
         onClick={() => nav("/")}
       />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <h1>회원가입</h1>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <form onSubmit={createUserApi}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <KoreapasAgreeComponent nickname={koreapasData.nickname} />
+            <h1>회원가입</h1>
+            <form onSubmit={createUserApi}>
+                <KoreapasAgreeComponent nickname={koreapasData.nickname} />
         {/* <div className={`${styles.signup_input}`}>
           <span>이름</span>
           <input
@@ -451,17 +434,14 @@ const Signup = ({
           </span>
         </div> */}
         { }
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <input
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <input
             type="button"
             value="취소"
             className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
             onClick={handleCancel}
           />
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <input
+                    <input
             type="submit"
             value="동의하기"
             className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
@@ -469,15 +449,13 @@ const Signup = ({
           />
         </div>
 
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div
+                <div
           className={clicked ? `${styles.signup_btn_two}` : `${styles.hidden}`}
         >
           {" "}
           처리중
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div
+                <div
           className={clicked ? `${styles.findAlertTwo}` : `${styles.hidden}`}
         >
           처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)

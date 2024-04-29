@@ -1,18 +1,12 @@
 import React from "react";
-// @ts-expect-error TS(2307): Cannot find module './History.module.css' or its c... Remove this comment to see the full error message
 import styles from "./History.module.css";
-// @ts-expect-error TS(6142): Module '../components/Header' was resolved to 'C:/... Remove this comment to see the full error message
 import Header from "../components/Header";
-// @ts-expect-error TS(2307): Cannot find module '../img/his2.png' or its corres... Remove this comment to see the full error message
 import his2 from "../img/his2.png";
-// @ts-expect-error TS(6142): Module '../components/HistoryBox' was resolved to ... Remove this comment to see the full error message
 import HistoryBox from "../components/HistoryBox";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-// @ts-expect-error TS(6142): Module '../components/Paging' was resolved to 'C:/... Remove this comment to see the full error message
 import Paging from "../components/Paging";
-// @ts-expect-error TS(6142): Module '../components/Footer' was resolved to 'C:/... Remove this comment to see the full error message
 import Footer from "../components/Footer";
 
 const data = [
@@ -61,8 +55,7 @@ const History = (props: any) => {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST+`/wiki/historys/${title}`,
+                process.env.REACT_APP_HOST+`/wiki/historys/${title}`,
         {
           withCredentials: true,
         }
@@ -76,8 +69,7 @@ const History = (props: any) => {
       }
     } catch (error) {
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
@@ -86,65 +78,45 @@ const History = (props: any) => {
   }, []);
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={styles.container}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Header />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.header}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <img src={his2} />
+        <div className={styles.container}>
+            <Header />
+            <div className={styles.header}>
+                <span>
+                    <img src={his2} />
           히스토리
         </span>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.history}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.historyList}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.historyTitle}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <p className={styles.listTitle}>{title}</p>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <p className={styles.listTitle2}>문서의 변경 내용</p>
+            <div className={styles.history}>
+                <div className={styles.historyList}>
+                    <div className={styles.historyTitle}>
+                        <p className={styles.listTitle}>{title}</p>
+                        <p className={styles.listTitle2}>문서의 변경 내용</p>
           </div>
           {blank ? (
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <div>아직 히스토리가 없습니다</div>
+                        <div>아직 히스토리가 없습니다</div>
           ) : (
             visibleHistorys.map((item) => {
               let isFirst = false;
-              // @ts-expect-error TS(2339): Property 'is_bad' does not exist on type 'never'.
-              if (item.is_bad === 1) {
+                            if (item.is_bad === 1) {
                 return null; // 패스 (무시)
               }
 
               return (
-                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                <div key={item.version}>
-                  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-                  <HistoryBox
-                    // @ts-expect-error TS(2339): Property 'version' does not exist on type 'never'.
-                    version={item.version}
-                    // @ts-expect-error TS(2339): Property 'summary' does not exist on type 'never'.
-                    summary={item.summary}
-                    // @ts-expect-error TS(2339): Property 'nick' does not exist on type 'never'.
-                    user={item.nick}
-                    // @ts-expect-error TS(2339): Property 'timestamp' does not exist on type 'never... Remove this comment to see the full error message
-                    timestamp={item.timestamp}
+                                <div key={item.version}>
+                                    <HistoryBox
+                                        version={item.version}
+                                        summary={item.summary}
+                                        user={item.nick}
+                                        timestamp={item.timestamp}
                     title={title}
-                    // @ts-expect-error TS(2339): Property 'id' does not exist on type 'never'.
-                    target={item.id}
+                                        target={item.id}
                   />
                 </div>
               );
             })
           )}
 
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <Paging
+                    <Paging
             total={typeCount}
             perPage={perPage}
             activePage={page}
@@ -152,8 +124,7 @@ const History = (props: any) => {
           />
         </div>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <Footer/>
+            <Footer/>
     </div>
   );
 };

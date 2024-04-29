@@ -20,8 +20,7 @@ function FormatTimeAgo (time: any) {
 
     const inputDate = new Date(time);
     const currentDate = new Date();
-    // @ts-expect-error TS(2362): The left-hand side of an arithmetic operation must... Remove this comment to see the full error message
-    const timeDifference = Math.abs(currentDate - inputDate);
+        const timeDifference = Math.abs(currentDate - inputDate);
     const timestamp = formatDiff(timeDifference);
 
     return timestamp;

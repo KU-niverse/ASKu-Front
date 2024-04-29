@@ -1,10 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// @ts-expect-error TS(2307): Cannot find module './Signin.module.css' or its co... Remove this comment to see the full error message
 import styles from "./Signin.module.css";
-// @ts-expect-error TS(2307): Cannot find module '../img/logo.png' or its corres... Remove this comment to see the full error message
 import logo from "../img/logo.png";
-// @ts-expect-error TS(2307): Cannot find module '../img/login.png' or its corre... Remove this comment to see the full error message
 import haho_login from "../img/login.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,8 +27,7 @@ const Signin = ({
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
+                process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -80,8 +76,7 @@ const Signin = ({
 
   // 자동으로 체크박스 설정 및 아이디 불러오기
   useEffect(() => {
-    // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
-    const idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
+        const idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
     if (idFlag !== null) {
       setSaveIDFlag(idFlag);
 
@@ -106,8 +101,7 @@ const Signin = ({
 
     try {
       const response = await axios.post(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/signin",
+                process.env.REACT_APP_HOST + "/user/auth/signin",
         {
           login_id: id,
           password: password,
@@ -125,16 +119,13 @@ const Signin = ({
         return null;
       }
     } catch (error) {
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      if (error.response.status === 402){
+            if (error.response.status === 402){
         
         //signup페이지에 resopnase.data를 같이 넘겨줌
-        // @ts-expect-error TS(2571): Object is of type 'unknown'.
-        nav("/signup", {state: {uuid: error.response.data.koreapas_uuid, nickname: error.response.data.koreapas_nickname}});
+                nav("/signup", {state: {uuid: error.response.data.koreapas_uuid, nickname: error.response.data.koreapas_nickname}});
       }
       console.error(error);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      return alert(error.response.data.message);
+            return alert(error.response.data.message);
     }
   };
 
@@ -150,74 +141,55 @@ const Signin = ({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <div className={`${styles.container}`}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <img
+        <div className={`${styles.container}`}>
+            <img
         className={`${styles.logo}`}
         src={logo}
         alt="logo"
         onClick={() => nav("/")}
       />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <img className={`${styles.haho}`} src={haho_login} alt="haho" />
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <h1 className={styles.login_headers}>LOGIN</h1>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <p className={styles.login_instruction}>고파스 계정으로 바로 로그인하세요!</p>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <form onSubmit={handleOnSubmit}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={`${styles.login_input}`}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <input
+            <img className={`${styles.haho}`} src={haho_login} alt="haho" />
+            <h1 className={styles.login_headers}>LOGIN</h1>
+            <p className={styles.login_instruction}>고파스 계정으로 바로 로그인하세요!</p>
+            <form onSubmit={handleOnSubmit}>
+                <div className={`${styles.login_input}`}>
+                    <input
             type="text"
             value={id}
             onChange={(e) => setId(e.target.value)}
             placeholder="아이디를 입력하세요"
           />
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <input
+                    <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호를 입력하세요"
           />
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={`${styles.login_remem}`}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={`${styles.id_rem}`}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <input
+                <div className={`${styles.login_remem}`}>
+                    <span className={`${styles.id_rem}`}>
+                        <input
               type="checkbox"
               id="chkbox"
               checked={saveIDFlag}
               onChange={handleSaveIDFlag}
             />
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <span>아이디 기억하기</span>
+                        <span>아이디 기억하기</span>
           </span>
         </div>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <button className={`${styles.login_btn}`} type="submit">
+                <button className={`${styles.login_btn}`} type="submit">
           로그인
         </button>
       </form>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={`${styles.login_signup}`}>
+            <div className={`${styles.login_signup}`}>
         {/* <Link to="/signup">회원가입</Link> */}
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <a href="https://www.koreapas.com/m/member_join_new.php">고파스 회원가입</a>
+                <a href="https://www.koreapas.com/m/member_join_new.php">고파스 회원가입</a>
       </div>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={`${styles.login_find}`}>
+            <div className={`${styles.login_find}`}>
         {/* <Link to="/findid">아이디를 잊으셨나요?</Link> */}
         {/* <Link to="/findpw">비밀번호를 잊으셨나요?</Link> */}
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <a href="https://www.koreapas.com/bbs/lostid_new.php">아이디를 잊으셨나요?</a>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <a href="https://www.koreapas.com/bbs/lostid_new.php">비밀번호를 잊으셨나요?</a>
+                <a href="https://www.koreapas.com/bbs/lostid_new.php">아이디를 잊으셨나요?</a>
+                <a href="https://www.koreapas.com/bbs/lostid_new.php">비밀번호를 잊으셨나요?</a>
       </div>
     </div>
   );

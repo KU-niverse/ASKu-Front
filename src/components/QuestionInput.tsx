@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
-// @ts-expect-error TS(2307): Cannot find module './QuestionInput.module.css' or... Remove this comment to see the full error message
 import styles from "./QuestionInput.module.css";
-// @ts-expect-error TS(6142): Module './DropDown' was resolved to 'C:/Users/User... Remove this comment to see the full error message
 import DropDown from "./DropDown";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -58,8 +56,7 @@ function QuestionInput({
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(
-        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
+                process.env.REACT_APP_HOST + "/user/auth/issignedin",
         { withCredentials: true }
       );
       if (res.status === 201 && res.data.success === true) {
@@ -70,8 +67,7 @@ function QuestionInput({
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
-      if (error.response.status === 401) {
+            if (error.response.status === 401) {
         setLoggedIn(false);
       } else {
         alert("에러가 발생하였습니다");
@@ -126,18 +122,12 @@ function QuestionInput({
   };
 
   return (
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    <form className={styles.q_c}>
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.q_cheader}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.q_cfrontheader}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <p className={styles.q_cheadline}>질문 생성하기</p>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <div className={styles.q_dropdown}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-            <DropDown
+        <form className={styles.q_c}>
+            <div className={styles.q_cheader}>
+                <div className={styles.q_cfrontheader}>
+                    <p className={styles.q_cheadline}>질문 생성하기</p>
+                    <div className={styles.q_dropdown}>
+                        <DropDown
               onSelectedOption={handleSelectedOption}
               title={title}
               wikiData={wikiData}
@@ -147,24 +137,18 @@ function QuestionInput({
         </div>
       </div>
 
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <div className={styles.q_cbox}>
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <textarea
-          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'number'.
-          rows="4"
+            <div className={styles.q_cbox}>
+                <textarea
+                    rows="4"
           className={styles.q_ctextarea}
           placeholder="질문을 입력해주세요."
           value={questionContent}
           maxLength={200}
           onChange={handleChange}
         />
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <div className={styles.q_clastheader}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <span className={styles.textnum}>{countCharacters()}</span>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-          <button className={styles.q_csubmit} onClick={handleSubmit}>
+                <div className={styles.q_clastheader}>
+                    <span className={styles.textnum}>{countCharacters()}</span>
+                    <button className={styles.q_csubmit} onClick={handleSubmit}>
             생성하기
           </button>
         </div>
