@@ -38,7 +38,8 @@
     "linebreak-style": 0,
     "import/extensions": 0,
     "no-use-before-define": 0,
-    "camelcase": "off"
+    "camelcase": "off",
+    "@typescript-eslint/no-explicit-any": 0
   },
   "settings": {
     "import/resolver": {
