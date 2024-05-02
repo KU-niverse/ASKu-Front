@@ -73,8 +73,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   };
 
   const sendMessage = async () => {
-    const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
-
+    if (!isLoggedIn) {
+      setLoginModalVisible(true); //로그인하지 않은 사용자는 LoginModal 표시
+      return;
+    }
+  
     if (inputValue.trim() !== "") {
       setLoading(true);
 
@@ -83,7 +86,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           process.env.REACT_APP_AI + `/chatbot/`,
           {
             q_content: inputValue,
-            user_id: userIdToSend,
+            user_id: userId.data[0].id
           }
         );
 

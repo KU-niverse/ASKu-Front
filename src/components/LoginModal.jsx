@@ -40,9 +40,9 @@ function LoginModal({ isOpen, onClose }) {
                             <Link to='/signin'>
                                 <button className={styles.signin}>로그인</button>
                             </Link>
-                            <Link to='/signup'>
+                            <a href="https://www.koreapas.com/m/member_join_new.php">
                                 <button className={styles.signup}>회원가입</button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>
