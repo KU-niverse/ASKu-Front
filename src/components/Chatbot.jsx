@@ -9,7 +9,8 @@ import LoginModal from "./LoginModal";
 import ClearModal from "./ClearModal";
 import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
-
+import { Link } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -76,10 +77,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const sendMessage = async () => {
     if (!isLoggedIn) {
       setLoginModalVisible(true); //로그인하지 않은 사용자는 LoginModal 표시!
-      
+
       return;
     }
-  
+
     if (inputValue.trim() !== "") {
       setLoading(true);
 
@@ -88,7 +89,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           process.env.REACT_APP_AI + `/chatbot/`,
           {
             q_content: inputValue,
-            user_id: userId.data[0].id 
+            user_id: userId.data[0].id,
           }
         );
 
@@ -132,7 +133,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && event.target === inputRef.current) {
-      
       // if (!isLoggedIn) {
       //   setLoginModalVisible(true);
       //   return;
@@ -144,6 +144,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const handleSuggestClick = (content) => {
     setShowSuggest(false);
+    // Amplitude
+    track("click_recommend_in_home_haho", {
+      type: content,
+    });
 
     const newChatResponse = [
       ...chatResponse,

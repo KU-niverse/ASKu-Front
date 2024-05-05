@@ -6,6 +6,7 @@ import haho_login from "../img/login.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { track } from "@amplitude/analytics-browser";
 
 const Signin = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -20,6 +21,11 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
     window.location.reload();
   };
 
+  // Amplitude
+  useEffect(() => {
+    track("view_login");
+  }, []);
+
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
@@ -30,6 +36,8 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
         nav("/");
+        // Amplitude
+        track("complete_login ");
       }
     } catch (error) {
       console.error(error);

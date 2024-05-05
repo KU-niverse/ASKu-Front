@@ -8,6 +8,7 @@ import searchIcon from "../img/search_icon.svg";
 import chatBotBtn from "../img/chatBotBtn.png";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { track } from "@amplitude/analytics-browser";
 
 function Home({ loggedIn, setLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -67,6 +68,10 @@ function Home({ loggedIn, setLoggedIn }) {
 
     fetchPopularQuestions();
   }, []);
+  // Amplitude
+  useEffect(() => {
+    track("view_home");
+  }, []);
 
   return (
     <div className="pageWrap">
@@ -85,7 +90,7 @@ function Home({ loggedIn, setLoggedIn }) {
                 if (inputValue.trim() !== "") {
                   window.location.href = `/result/${encodeURIComponent(
                     inputValue
-                  )}`; // 페이지 이동
+                  )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                   setInputValue("");
                 }
               }
@@ -99,7 +104,7 @@ function Home({ loggedIn, setLoggedIn }) {
               if (inputValue.trim() !== "") {
                 window.location.href = `/result/${encodeURIComponent(
                   inputValue
-                )}`; // 페이지 이동
+                )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                 setInputValue("");
               }
             }}
@@ -119,7 +124,7 @@ function Home({ loggedIn, setLoggedIn }) {
                   to={`/result/${encodeURIComponent(keyword.keyword).replace(
                     /\./g,
                     "%2E"
-                  )}`}
+                  )}/${encodeURIComponent(`popularsearch`)}`}
                   className={styles.rankWrap}
                   key={index}
                 >
@@ -133,7 +138,9 @@ function Home({ loggedIn, setLoggedIn }) {
               {popularQuestions.map((question, index) => (
                 //TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
                 <Link
-                  to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
+                  to={`wiki/morequestion/${encodeURIComponent(
+                    question.title
+                  )}/${question.id}`}
                   state={{
                     question_id: question.id,
                     user_id: question.user_id,

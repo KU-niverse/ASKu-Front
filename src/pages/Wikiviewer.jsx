@@ -280,7 +280,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       getQues();
     };
     fetchData();
-
+    // Amplitude
     track("view_wiki", {
       title: title,
     });
@@ -303,7 +303,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
         const scrollPercentage = Math.floor(
           (scrollPosition / (documentHeight - windowHeight)) * 100
         );
-
+        // Amplitude
         scrollDepths.forEach((depth) => {
           if (scrollPercentage >= depth && !scrollDepthsReached[depth]) {
             scrollDepthsReached[depth] = true;

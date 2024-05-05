@@ -202,7 +202,7 @@ function Header({ userInfo, setUserInfo }) {
                   if (inputValue.trim() !== "") {
                     window.location.href = `/result/${encodeURIComponent(
                       inputValue
-                    )}`; // 페이지 이동
+                    )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                     setInputValue("");
                   }
                 }
@@ -218,7 +218,7 @@ function Header({ userInfo, setUserInfo }) {
                     `/result/${encodeURIComponent(inputValue).replace(
                       /\./g,
                       "%2E"
-                    )}`
+                    )}/${encodeURIComponent(`search`)}`
                   );
                   setInputValue("");
                 }
@@ -439,7 +439,7 @@ function Header({ userInfo, setUserInfo }) {
                             `/result/${encodeURIComponent(inputValue).replace(
                               /\./g,
                               "%2E"
-                            )}`
+                            )}/${encodeURIComponent(`search`)}`
                           );
                           setInputValue("");
                         }
@@ -456,7 +456,7 @@ function Header({ userInfo, setUserInfo }) {
                           `/result/${encodeURIComponent(inputValue).replace(
                             /\./g,
                             "%2E"
-                          )}`
+                          )}/${encodeURIComponent(`search`)}`
                         );
                         setInputValue("");
                       }

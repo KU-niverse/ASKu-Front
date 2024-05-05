@@ -11,6 +11,7 @@ import ResultQues from "../components/ResultQues";
 import FormatTimeAgo from "../components/FormatTimeAgo";
 import BookmarkBox from "../components/BookmarkBox";
 import Footer from "../components/Footer";
+import { track } from "@amplitude/analytics-browser";
 
 const data = [
   {
@@ -54,12 +55,12 @@ const SearchResearch = () => {
   const nav = useNavigate();
   const [isClicked, setIsClicked] = useState(true); //true: 문서 false: 질문
 
-  const { title } = useParams();
+  const { title, howto } = useParams();
   const [docs, setDocs] = useState([]);
   const [historys, setHistorys] = useState([]);
   const [type, setType] = useState("all");
-  const [docsCount, setDocsCount] = useState(0);
-  const [quesCount, setQuesCount] = useState(0);
+  const [docsCount, setDocsCount] = useState(-1);
+  const [quesCount, setQuesCount] = useState(-1);
   const [ques, setQues] = useState([]);
 
   const handleButtonClick = () => {
@@ -124,6 +125,18 @@ const SearchResearch = () => {
     getDocs();
     getQues();
   }, [title]);
+
+  // Amplitude
+  useEffect(() => {
+    if (docsCount !== -1 && quesCount !== -1) {
+      track("view_search_result", {
+        type: howto,
+        keyword: title,
+        wiki_count: docsCount,
+        question_count: quesCount,
+      });
+    }
+  }, [docsCount, quesCount]);
 
   useEffect(() => {
     getHistory();

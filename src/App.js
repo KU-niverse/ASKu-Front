@@ -57,7 +57,7 @@ function App() {
       <RouteChangeTracker /> {/* RouteChangeTracker 호출 */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/result/:title" element={<SearchResult />} />
+        <Route path="/result/:title/:howto" element={<SearchResult />} />
         <Route path="/chatbot" element={<MobileChatBotPage />} />
         <Route
           path="/wiki/:title"
