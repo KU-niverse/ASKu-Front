@@ -58,9 +58,8 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
   // Amplitude
   useEffect(() => {
-    track("view_edit_wiki", {
+    track("click_edit_part_in_wiki", {
       title: main,
-      type: "section",
     });
   }, []);
 

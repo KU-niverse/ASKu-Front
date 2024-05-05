@@ -11,6 +11,7 @@ import ChatQuestion from "./ChatQuestion";
 import { Link } from "react-router-dom";
 import ClearModal from "./ClearModal";
 import RefreshModal from "./RefreshModal";
+import { track } from "@amplitude/analytics-browser";
 
 function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
   const [inputValue, setInputValue] = useState("");
@@ -48,7 +49,10 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }) {
     const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
     if (inputValue.trim() !== "") {
       setLoading(true);
-
+      // Amplitude
+      track("click_button_in_home_haho", {
+        qusetion_content: inputValue,
+      });
       try {
         const response = await axios.post(
           process.env.REACT_APP_AI + `/chatbot/`,

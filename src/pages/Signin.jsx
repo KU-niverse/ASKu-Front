@@ -117,6 +117,8 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (response.data.success) {
         //로그인 성공시
         if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id);
+        // Amplitude
+        track("complete_login");
         nav("/");
       } else {
         return null;

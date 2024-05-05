@@ -67,7 +67,12 @@ const SearchResearch = () => {
     setIsClicked(!isClicked);
   };
 
-  const handleDocsClick = (title) => {
+  const handleDocsClick = (title, index) => {
+    // Amplitude
+    track("click_wiki_in_search_result", {
+      title: title,
+      index: index,
+    });
     const encodedTitle = encodeURIComponent(title);
     nav(`/wiki/${encodedTitle}`);
   };
@@ -176,11 +181,11 @@ const SearchResearch = () => {
         <div className={styles.contents}>
           <div className={styles.boxes}>
             <div className={isClicked ? "" : styles.hidden}>
-              {docs.map((item) => {
+              {docs.map((item, index) => {
                 return (
                   <div
                     key={item.title}
-                    onClick={() => handleDocsClick(item.title)}
+                    onClick={() => handleDocsClick(item.title, index)}
                   >
                     <BookmarkBox
                       title={item.title}
@@ -198,10 +203,11 @@ const SearchResearch = () => {
               </div>
             </div>
             <div className={isClicked ? styles.hidden : ""}>
-              {ques.map((item) => {
+              {ques.map((item, index) => {
                 return (
                   <div className={styles.queboxes}>
                     <ResultQues
+                      index={index}
                       key={item.id}
                       id={item.id}
                       doc_id={item.doc_id}

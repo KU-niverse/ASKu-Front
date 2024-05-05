@@ -44,6 +44,13 @@ function Debate() {
     takeDebateContent();
   }, [title, debateId]); //토론방 메시지 가져오기
 
+  // Amplitude
+  useEffect(() => {
+    track("view_debate_wiki", {
+      type: title,
+    });
+  }, []);
+
   // const handleDebateSubmit = async (submitData) => {
   //   try {
   //     const res = await axios.post(

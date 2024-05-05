@@ -83,7 +83,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
     if (inputValue.trim() !== "") {
       setLoading(true);
-
+      // Amplitude
+      track("click_button_in_home_haho", {
+        qusetion_content: inputValue,
+      });
       try {
         const response = await axios.post(
           process.env.REACT_APP_AI + `/chatbot/`,

@@ -230,7 +230,21 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
         setLoggedIn(true);
         // TODO: Amplitude미완성
         // Amplitude
-        track("complete_signup");
+        //
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        //요일
+        const week = new Array("일", "월", "화", "수", "목", "금", "토");
+        const weekDay = week[date.getDay()];
+
+        track("complete_signup", {
+          signup_date: date,
+          signup_year: year,
+          signup_month: month,
+          signup_day: weekDay,
+        });
         nav("/");
       }
     } catch (error) {

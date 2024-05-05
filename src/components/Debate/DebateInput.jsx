@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function DebateInput({ onDebateSubmit, title, debateId }) {
   const [debateContent, setDebateContent] = useState("");
@@ -12,7 +13,7 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
   const Navigate = useNavigate();
 
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from || "/";
 
   const checkLoginStatus = async () => {
     try {
@@ -67,7 +68,12 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
       return;
     }
     await onDebateSubmit(submitData);
-    setDebateContent('');
+    setDebateContent("");
+
+    // Amplitude
+    track("click_button_in_debate", {
+      title: title,
+    });
   };
 
   const handleKeyDown = (event) => {
@@ -75,7 +81,8 @@ function DebateInput({ onDebateSubmit, title, debateId }) {
     if (event.key === "Enter" && event.shiftKey) {
     }
     // Enter만 눌렸을 때 메시지 전송(여기서는 handleSubmit 함수 호출)
-    if (event.key === "Enter" && !event.shiftKey) { // Shift가 눌리지 않고 Enter만 눌렸을 때
+    if (event.key === "Enter" && !event.shiftKey) {
+      // Shift가 눌리지 않고 Enter만 눌렸을 때
       event.preventDefault(); // 기본 Enter 행동(새 줄 추가)을 방지
       handleSubmit(); // 폼 제출 처리
     }
