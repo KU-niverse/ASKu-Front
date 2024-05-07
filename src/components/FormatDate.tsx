@@ -1,4 +1,4 @@
-function FormatDate(targetTime: Date) {
+function FormatDate(targetTime: any) {
   const utcDate = new Date(targetTime)
 
   // UTC 시간에 9시간을 더한 후 시간을 표시
