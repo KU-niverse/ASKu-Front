@@ -35,7 +35,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
   //login status 체크하기
   const Navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from || "/";
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -96,9 +96,15 @@ function MyPage({ loggedIn, setLoggedIn }) {
       process.env.REACT_APP_HOST + "/user/mypage/debatehistory",
       setMyDebate
     );
-    getData(process.env.REACT_APP_HOST + "/user/mypage/badgehistory", setMyBadge);
+    getData(
+      process.env.REACT_APP_HOST + "/user/mypage/badgehistory",
+      setMyBadge
+    );
     getData(process.env.REACT_APP_HOST + "/user/mypage/wikihistory", setMyWiki);
-    getData(process.env.REACT_APP_HOST + "/wiki/contributions", setMyContribute);
+    getData(
+      process.env.REACT_APP_HOST + "/wiki/contributions",
+      setMyContribute
+    );
   }, []);
 
   //
@@ -148,7 +154,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
             </div>
             <div className={styles.badge}>
               <div className={styles.badgeheader}>
-                <p className={styles.title}>뱃지 <span style={{ color: "#9F132E" }}>({myBadge && myBadge.data ? myBadge.data.length : 0})</span></p>
+                <p className={styles.title}>
+                  뱃지{" "}
+                  <span style={{ color: "#9F132E" }}>
+                    ({myBadge && myBadge.data ? myBadge.data.length : 0})
+                  </span>
+                </p>
                 <Link to="/mypage/mybadge" className={styles.b_link}>
                   <button className={styles.edit}> 더보기</button>
                 </Link>
@@ -190,13 +201,17 @@ function MyPage({ loggedIn, setLoggedIn }) {
           </div>
 
           <div className={styles.rightcontent}>
-            
             <div className={`${styles.cb}`}>
-              <p className={styles.title2}>기여 목록 <span style={{ color: "#9F132E" }}>({myWiki && myWiki.data ? myWiki.data.length : 0})</span></p>
+              <p className={styles.title2}>
+                기여 목록{" "}
+                <span style={{ color: "#9F132E" }}>
+                  ({myWiki && myWiki.data ? myWiki.data.length : 0})
+                </span>
+              </p>
               <div className={styles.graph}>
                 {myContribute &&
-                  myContribute.message &&
-                  myContribute.message.docs.length === 0 ? (
+                myContribute.message &&
+                myContribute.message.docs.length === 0 ? (
                   <p></p>
                 ) : (
                   myContribute &&
@@ -235,17 +250,24 @@ function MyPage({ loggedIn, setLoggedIn }) {
                   ))
               )}
             </div>
-          
+
             <div className={`${styles.ask}`}>
               <div className={styles.askheader}>
-                <p className={styles.title}>내가 쓴 질문 <span style={{ color: "#9F132E" }}>({myQuestion && myQuestion.data ? myQuestion.data.length : 0})</span></p>
+                <p className={styles.title}>
+                  내가 쓴 질문{" "}
+                  <span style={{ color: "#9F132E" }}>
+                    (
+                    {myQuestion && myQuestion.data ? myQuestion.data.length : 0}
+                    )
+                  </span>
+                </p>
                 <Link to="/mypage/myquestion" className={styles.q_link}>
                   <button className={styles.edit}>더보기</button>
                 </Link>
               </div>
               {myQuestion &&
-                myQuestion.message &&
-                myQuestion.data.length === 0 ? (
+              myQuestion.message &&
+              myQuestion.data.length === 0 ? (
                 <p>아직 작성한 질문이 없습니다.</p>
               ) : (
                 myQuestion &&
@@ -273,7 +295,14 @@ function MyPage({ loggedIn, setLoggedIn }) {
             </div>
             <div className={styles.comment}>
               <div className={styles.commentheader}>
-                <p className={styles.title}>내가 쓴 토론 <span style={{ color: "#9F132E" }}>({myDebate && myDebate.message ? myDebate.message.length : 0})</span></p>
+                <p className={styles.title}>
+                  내가 쓴 토론{" "}
+                  <span style={{ color: "#9F132E" }}>
+                    (
+                    {myDebate && myDebate.message ? myDebate.message.length : 0}
+                    )
+                  </span>
+                </p>
                 <Link to="/mypage/mycomment" className={styles.c_link}>
                   <button className={styles.edit}>더보기</button>
                 </Link>

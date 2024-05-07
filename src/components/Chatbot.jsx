@@ -85,7 +85,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       setLoading(true);
       // Amplitude
       track("click_button_in_home_haho", {
-        qusetion_content: inputValue,
+        question_content: inputValue,
       });
       try {
         const response = await axios.post(
@@ -108,7 +108,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             qnaId: response.data.id,
           }, // 서버 응답 추가
         ];
-
+        track("view_haho_result", {
+          question_content: inputValue,
+        });
         setChatResponse(newChatResponse);
         setInputValue("");
 
@@ -145,11 +147,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     }
   };
 
-  const handleSuggestClick = (content) => {
+  const handleSuggestClick = (content, index) => {
     setShowSuggest(false);
     // Amplitude
     track("click_recommend_in_home_haho", {
-      type: content,
+      content: content,
+      type: index,
     });
 
     const newChatResponse = [
@@ -291,14 +294,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           <span
             id="ref_res_1"
             className={styles.textBox}
-            onClick={() => handleSuggestClick("너는 누구야?")}
+            onClick={() => handleSuggestClick("너는 누구야?", 0)}
           >
             너는 누구야?
           </span>
           <span
             id="ref_res_2"
             className={styles.textBox}
-            onClick={() => handleSuggestClick("휴학은 최대 몇 년까지 가능해?")}
+            onClick={() =>
+              handleSuggestClick("휴학은 최대 몇 년까지 가능해?", 1)
+            }
           >
             휴학은 최대 몇 년까지 가능해?
           </span>
@@ -306,7 +311,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             id="ref_res_3"
             className={styles.textBox}
             onClick={() =>
-              handleSuggestClick("강의 최소 출석 일수에 대해 알려줘.")
+              handleSuggestClick("강의 최소 출석 일수에 대해 알려줘.", 2)
             }
           >
             강의 최소 출석 일수에 대해 알려줘.
@@ -314,7 +319,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           <span
             id="ref_res_4"
             className={styles.textBox}
-            onClick={() => handleSuggestClick("이중전공은 어떻게 해?")}
+            onClick={() => handleSuggestClick("이중전공은 어떻게 해?", 3)}
           >
             이중전공은 어떻게 해?
           </span>

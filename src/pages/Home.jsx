@@ -127,6 +127,12 @@ function Home({ loggedIn, setLoggedIn }) {
                   )}/${encodeURIComponent(`popularsearch`)}`}
                   className={styles.rankWrap}
                   key={index}
+                  onClick={() => {
+                    track("click_trend_search_keyword", {
+                      search_rank: index + 1,
+                      search_keyword: keyword.keyword,
+                    });
+                  }}
                 >
                   <p className={styles.numberIcon}>{index + 1}.</p>
                   <p className={styles.rankContent}>{keyword.keyword}</p>
@@ -154,6 +160,12 @@ function Home({ loggedIn, setLoggedIn }) {
                   }}
                   className={styles.rankWrap}
                   key={index}
+                  onClick={() => {
+                    track("click_trend_search_question", {
+                      question_rank: index + 1,
+                      question_title: question.content,
+                    });
+                  }}
                 >
                   <p className={styles.numberIcon}>Q.</p>
                   <p className={styles.rankContent}>{question.content}</p>

@@ -197,7 +197,15 @@ const SearchResearch = () => {
                 );
               })}
               <div className={styles.linkToNew}>
-                <Link to="/newwiki" className={styles.link}>
+                <Link
+                  to="/newwiki"
+                  className={styles.link}
+                  onClick={() => {
+                    track("click_to_navigate_create_wiki", {
+                      from_page: title,
+                    });
+                  }}
+                >
                   원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요
                 </Link>
               </div>
@@ -228,13 +236,19 @@ const SearchResearch = () => {
           </div>
           <div className={styles.recents}>
             <div className={styles.recentWrap}>
-              {historys.slice(0, 8).map((item) => {
+              {historys.slice(0, 8).map((item, index) => {
                 const timestamp = FormatTimeAgo(item.created_at);
                 return (
                   <ul key={item.title}>
                     <Link
                       to={`/wiki/${encodeURIComponent(item.doc_title)}`}
                       className={styles.linkTo}
+                      onClick={() => {
+                        track("click_recent_edit_wiki_in_search_result", {
+                          title: item.title,
+                          index: index,
+                        });
+                      }}
                     >
                       <span className={styles.listTitle}>{item.doc_title}</span>
                     </Link>

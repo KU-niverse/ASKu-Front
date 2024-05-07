@@ -13,6 +13,7 @@ import { useParams, useLocation } from "react-router-dom";
 import QuestionQnA from "../components/QuestionQnA";
 import link_icon from "../img/link_icon.png";
 import { useNavigate } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [currentUserId, setCurrentUserId] = useState([]);
@@ -29,6 +30,10 @@ const QnA = () => {
 
     nav(`/wiki/${encodedTitle}`);
   };
+
+  useEffect(() => {
+    track("view_question_detail", { question_title: title });
+  });
 
   const getUserInfo = async () => {
     try {

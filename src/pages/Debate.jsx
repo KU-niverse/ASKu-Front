@@ -46,7 +46,7 @@ function Debate() {
 
   // Amplitude
   useEffect(() => {
-    track("view_debate_wiki", {
+    track("view_debate_detail", {
       type: title,
     });
   }, []);

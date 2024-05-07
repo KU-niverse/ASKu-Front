@@ -240,6 +240,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
         const weekDay = week[date.getDay()];
 
         track("complete_signup", {
+          account_type: "고파스",
           signup_date: date,
           signup_year: year,
           signup_month: month,

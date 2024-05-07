@@ -70,8 +70,9 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
   // Amplitude
   useEffect(() => {
-    track("click_edit_all_in_wiki", {
+    track("view_edit_wiki", {
       title: title,
+      type: "all",
     });
   }, []);
 

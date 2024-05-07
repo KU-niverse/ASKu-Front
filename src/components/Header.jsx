@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
+import { track } from "@amplitude/analytics-browser";
 
 function Header({ userInfo, setUserInfo }) {
   const [inputValue, setInputValue] = useState("");
@@ -155,6 +156,7 @@ function Header({ userInfo, setUserInfo }) {
   };
 
   const handleRandomDocClick = async () => {
+    track("click_header_navi", { type: "셔플" });
     try {
       const response = await axios.get(
         process.env.REACT_APP_HOST + "/wiki/random",
@@ -182,10 +184,20 @@ function Header({ userInfo, setUserInfo }) {
         </div>
         <div className={styles.flexContainer}>
           <div className={styles.navContainer_left}>
-            <Link to="/allhistory">
+            <Link
+              to="/allhistory"
+              onClick={() => {
+                track("click_header_navi", { type: "최근 변경" });
+              }}
+            >
               <button className={styles.headerButton}>최근 변경</button>
             </Link>
-            <Link to="/latestdebate">
+            <Link
+              to="/latestdebate"
+              onClick={() => {
+                track("click_header_navi", { type: "토론" });
+              }}
+            >
               <button className={styles.headerButton}>토론</button>
             </Link>
           </div>
@@ -249,7 +261,10 @@ function Header({ userInfo, setUserInfo }) {
                   src={bookmark}
                   alt="bookmark_gray"
                   className={styles.signinButton}
-                  onClick={() => Nav("/mybookmark")}
+                  onClick={() => {
+                    track("click_header_navi", { type: "즐겨찾는 문서" });
+                    Nav("/mybookmark");
+                  }}
                 />
                 <img
                   src={alarm}
@@ -339,7 +354,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>마이페이지</p>
                     </div>
                   </Link>
-                  <Link to="/mybookmark" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/mybookmark"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "즐겨찾는 문서" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobilebookmark}
@@ -364,7 +385,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>알림</p>
                     </div>
                   </Link>
-                  <Link to="/allhistory" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/allhistory"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "최근 변경" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobilehistory}
@@ -374,7 +401,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>최근변경</p>
                     </div>
                   </Link>
-                  <Link to="/latestdebate" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/latestdebate"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "토론" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobiledebate}

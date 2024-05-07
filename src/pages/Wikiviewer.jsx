@@ -187,12 +187,19 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
 
   const linkToAllEdit = () => {
     const encodedTitle = encodeURIComponent(title);
+    track("click_edit_all_in_wiki", {
+      title: title,
+      type: "all",
+    });
     nav(`/wikiedit/${encodedTitle}/all`, {
       state: { from: location.pathname },
     });
   };
 
   const linkToDebate = () => {
+    track("click_debate_in_wiki", {
+      title: title,
+    });
     const encodedTitle = encodeURIComponent(title);
     nav(`/debate/${encodedTitle}`);
   };
@@ -415,6 +422,9 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                         key={item.id}
                         onClick={() => {
                           const encodedTitle = encodeURIComponent(title);
+                          track("click_question_in_wiki", {
+                            index: index,
+                          });
                           nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
                             state: {
                               question_id: item.id,
@@ -448,7 +458,14 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
               <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                 <button className={styles.addQues}>나도 질문하기</button>
               </Link>
-              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
+              <Link
+                to={`/wiki/morequestion/${encodeURIComponent(title)}`}
+                onClick={() => {
+                  track("view_question_list", {
+                    title: title,
+                  });
+                }}
+              >
                 <button className={styles.moreQues}>더보기</button>
               </Link>
             </div>

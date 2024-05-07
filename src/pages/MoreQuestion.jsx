@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import SpinnerMypage from "../components/SpinnerMypage";
+import { track } from "@amplitude/analytics-browser";
 
 const MoreQuestion = () => {
   const { title } = useParams();
@@ -24,7 +25,6 @@ const MoreQuestion = () => {
   const defaultOpt = location.state;
   const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
   const [loading, setLoading] = useState(true);
-
 
   const getUserInfo = async () => {
     try {
@@ -42,20 +42,27 @@ const MoreQuestion = () => {
       }
     } catch (error) {
       console.error(error);
-      setCurrentUserId(null)
+      setCurrentUserId(null);
     }
   };
   useEffect(() => {
     getUserInfo();
   }, []);
 
-  //접속한 사용자 id 가져오기
+  useEffect(() => {
+    track("click_more_quesiton_in_wiki", {
+      title: title,
+    });
+  }, [title]);
 
+  //접속한 사용자 id 가져오기
 
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const res = await axios.get(process.env.REACT_APP_HOST + "/wiki/titles");
+        const res = await axios.get(
+          process.env.REACT_APP_HOST + "/wiki/titles"
+        );
         if (res.data.success) {
           setTitles(res.data.titles);
         }
@@ -70,7 +77,8 @@ const MoreQuestion = () => {
       try {
         const flag = isToggled ? 1 : 0;
         const res = await axios.get(
-          process.env.REACT_APP_HOST + `/question/view/${flag}/${encodeURIComponent(title)}`,
+          process.env.REACT_APP_HOST +
+            `/question/view/${flag}/${encodeURIComponent(title)}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -89,9 +97,9 @@ const MoreQuestion = () => {
 
   const handleQuestionSubmit = async (submitData) => {
     try {
-
       const res = await axios.post(
-        process.env.REACT_APP_HOST + `/question/new/${encodeURIComponent(title)}`,
+        process.env.REACT_APP_HOST +
+          `/question/new/${encodeURIComponent(title)}`,
         submitData,
         { withCredentials: true }
       );
@@ -146,16 +154,23 @@ const MoreQuestion = () => {
             </div>
             <div>
               {questionData &&
-                questionData.data &&
-                questionData.data.length === 0 ? (
+              questionData.data &&
+              questionData.data.length === 0 ? (
                 <p>아직 작성한 질문이 없습니다.</p>
               ) : (
                 questionData &&
                 questionData.data &&
-                questionData.data.map((data) => (
+                questionData.data.map((data, index) => (
                   <Question
-                    current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}
+                    current_user_id={
+                      currentUserId &&
+                      currentUserId.data &&
+                      currentUserId.data[0]
+                        ? currentUserId.data[0].id
+                        : null
+                    }
                     key={data.id}
+                    index={index}
                     id={data.id}
                     doc_id={data.doc_id}
                     user_id={data.user_id}
