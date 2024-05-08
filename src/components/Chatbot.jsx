@@ -7,8 +7,9 @@ import { useState, useEffect, useRef, Fragment } from "react";
 import Spinner from "./Spinner";
 import LoginModal from "./LoginModal";
 import ClearModal from "./ClearModal";
-import RefreshModal from "./RefreshModal";
 import { Link } from "react-router-dom";
+import RefreshModal from "./RefreshModal";
+
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -73,8 +74,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   };
 
   const sendMessage = async () => {
-    const userIdToSend = isLoggedIn ? userId.data[0].id : 0;
-
+    if (!isLoggedIn) {
+      setLoginModalVisible(true); //로그인하지 않은 사용자는 LoginModal 표시!
+      
+      return;
+    }
+  
     if (inputValue.trim() !== "") {
       setLoading(true);
 
@@ -83,7 +88,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           process.env.REACT_APP_AI + `/chatbot/`,
           {
             q_content: inputValue,
-            user_id: userIdToSend,
+            user_id: userId.data[0].id 
           }
         );
 
@@ -127,10 +132,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && event.target === inputRef.current) {
+      
       // if (!isLoggedIn) {
       //   setLoginModalVisible(true);
       //   return;
       // }
+
       sendMessage();
     }
   };
@@ -159,7 +166,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           "휴학은 최대 3년(6학기)까지 가능합니다. 휴학기간은 학기 또는 1년 단위로 정해지며, 휴학신청기간은 1학기 휴학은 2월 1일부터 2월 25일까지, 2학기 휴학은 8월 1일부터 8월 25일까지입니다. 다만, 일반휴학의 경우에는 본교 부속병원장 또는 다른 종합병원장이 발행한 4주 이상의 진단서 및 지도교수 또는 학과(부)장의 확인서가 필요하며, 최장 1년까지 연장이 가능합니다. 또한, 임신, 출산, 육아 휴학의 기간은 최장 2년으로 하며, 군입대 휴학은 의무복무기간에 한하며, 해당 학생의 의사에 의한 복무기간 연장은 군입대 휴학이 아닌 일반휴학에 해당합니다. 창업휴학의 기간은 최장 2년(4학기)으로 하며, 별도 요건을 갖춘 경우에 한하여 창업휴학 기간을 1년(2학기) 연장할 수 있습니다. 이에 관한 세부사항은 창업휴학 운영지침으로 따로 정해져 있습니다.",
         "이중전공은 어떻게 해?":
           "고려대학교에서 이중전공을 신청하려면 다음과 같은 절차를 따라야 합니다. 1. 이중전공을 원하는 학과(부)의 학칙을 참고하여 신청 자격과 절차를 확인하세요. 2. 학교에서 제공하는 이중전공 신청 관련 양식을 작성하여 제출해야 합니다. 이에는 이중전공 신청서, 이수계획서, 성적증명서 등이 포함될 수 있습니다. 3. 이중전공 신청서에는 제1지망과 제2지망으로 지원할 학과(부)를 기재해야 합니다. 4. 이중전공 신청서와 다른 서류들을 정해진 기간 내에 학과(부) 사무실에 제출하세요. 5. 이중전공 신청자들은 소정의 선발전형(학업성적 등에 기초한 선발 방식)을 거쳐 총장의 허가를 받아야 합니다. 6. 합격 여부는 학과(부)에서 통보해줄 것입니다. 학과(부)마다 선발 기준과 절차가 다를 수 있으므로 해당 학과(부)의 내규를 확인하세요. 7. 이중전공 학생으로서 교육과정표에서 정해진 최소학점 이상의 전공과목을 이수해야 합니다. 8. 이중전공을 포기하고 심화전공 또는 다른 제2전공으로 변경하려면 해당되는 기간 내에 소정의 절차를 따라 포기신청을 해야 합니다. 위의 내용은 고려대학교 학칙 제106조~제108조에서 언급된 내용을 요약한 것입니다. 학교의 학칙과 부서별 규정을 확인하여 상세한 내용을 파악하고 절차를 따르시기 바랍니다.",
-        // 다른 추천 검색어에 대한 답변도 추가합니다.
+        // 다른 추천 검색어에 대한 답변도 추가
       };
 
       const answer = dummyAnswers[content] || "미리 저장된 답변이 없습니다.";
