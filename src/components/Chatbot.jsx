@@ -9,7 +9,6 @@ import LoginModal from "./LoginModal";
 import ClearModal from "./ClearModal";
 import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
-import { Link } from "react-router-dom";
 import { track } from "@amplitude/analytics-browser";
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
