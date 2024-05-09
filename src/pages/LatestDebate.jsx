@@ -10,6 +10,7 @@ import DebateRecent from "../components/Debate/DebateRecent";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { track } from "@amplitude/analytics-browser";
 
 function LatestDebate() {
   const [debateListData, setDebateListData] = useState([]);
@@ -18,7 +19,7 @@ function LatestDebate() {
     const takeDebateList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST+`/debate/all/recent`,
+          process.env.REACT_APP_HOST + `/debate/all/recent`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -31,6 +32,11 @@ function LatestDebate() {
     };
     takeDebateList();
   }, []); //토론방 목록 가져오기
+
+  // Amplitude
+  useEffect(() => {
+    track("view_recent_debate");
+  }, []);
 
   return (
     <div className={styles.container}>

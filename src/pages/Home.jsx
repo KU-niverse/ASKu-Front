@@ -8,6 +8,7 @@ import searchIcon from "../img/search_icon.svg";
 import chatBotBtn from "../img/chatBotBtn.png";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { track } from "@amplitude/analytics-browser";
 
 function Home({ loggedIn, setLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -67,6 +68,10 @@ function Home({ loggedIn, setLoggedIn }) {
 
     fetchPopularQuestions();
   }, []);
+  // Amplitude
+  useEffect(() => {
+    track("view_home");
+  }, []);
 
   return (
     <div className="pageWrap">
@@ -85,7 +90,7 @@ function Home({ loggedIn, setLoggedIn }) {
                 if (inputValue.trim() !== "") {
                   window.location.href = `/result/${encodeURIComponent(
                     inputValue
-                  )}`; // 페이지 이동
+                  )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                   setInputValue("");
                 }
               }
@@ -99,7 +104,7 @@ function Home({ loggedIn, setLoggedIn }) {
               if (inputValue.trim() !== "") {
                 window.location.href = `/result/${encodeURIComponent(
                   inputValue
-                )}`; // 페이지 이동
+                )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                 setInputValue("");
               }
             }}
@@ -119,9 +124,15 @@ function Home({ loggedIn, setLoggedIn }) {
                   to={`/result/${encodeURIComponent(keyword.keyword).replace(
                     /\./g,
                     "%2E"
-                  )}`}
+                  )}/${encodeURIComponent(`popularsearch`)}`}
                   className={styles.rankWrap}
                   key={index}
+                  onClick={() => {
+                    track("click_trend_search_keyword", {
+                      search_rank: index + 1,
+                      search_keyword: keyword.keyword,
+                    });
+                  }}
                 >
                   <p className={styles.numberIcon}>{index + 1}.</p>
                   <p className={styles.rankContent}>{keyword.keyword}</p>
@@ -133,7 +144,9 @@ function Home({ loggedIn, setLoggedIn }) {
               {popularQuestions.map((question, index) => (
                 //TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
                 <Link
-                  to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
+                  to={`wiki/morequestion/${encodeURIComponent(
+                    question.title
+                  )}/${question.id}`}
                   state={{
                     question_id: question.id,
                     user_id: question.user_id,
@@ -147,6 +160,12 @@ function Home({ loggedIn, setLoggedIn }) {
                   }}
                   className={styles.rankWrap}
                   key={index}
+                  onClick={() => {
+                    track("click_trend_search_question", {
+                      question_rank: index + 1,
+                      question_title: question.content,
+                    });
+                  }}
                 >
                   <p className={styles.numberIcon}>Q.</p>
                   <p className={styles.rankContent}>{question.content}</p>

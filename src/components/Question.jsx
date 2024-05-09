@@ -1,14 +1,30 @@
-import comment_icon from "../img/comment_icon.png"
-import edit from "../img/edit.png"
-import styles from "../components/Question.module.css"
-import FormatDate from "./FormatDate"
-import ThreedotsMenu from "./ThreedotsMenu"
-import ThreedotsReport from "./ThreedotsReport"
-import LikeorNot from "./LikeorNot"
-import { useNavigate, useLocation } from "react-router-dom"
+import comment_icon from "../img/comment_icon.png";
+import edit from "../img/edit.png";
+import styles from "../components/Question.module.css";
+import FormatDate from "./FormatDate";
+import ThreedotsMenu from "./ThreedotsMenu";
+import ThreedotsReport from "./ThreedotsReport";
+import LikeorNot from "./LikeorNot";
+import { useNavigate, useLocation } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
-
-function Question({ badge_image, current_user_id, answer_count, title, id, doc_id, user_id, index_title, content, created_at, answer_or_not, is_bad, nick, like_count }) {
+function Question({
+  badge_image,
+  current_user_id,
+  index,
+  answer_count,
+  title,
+  id,
+  doc_id,
+  user_id,
+  index_title,
+  content,
+  created_at,
+  answer_or_not,
+  is_bad,
+  nick,
+  like_count,
+}) {
   const formattedDate = FormatDate(created_at);
   const type = 2;
   const nav = useNavigate();
@@ -25,11 +41,14 @@ function Question({ badge_image, current_user_id, answer_count, title, id, doc_i
         like_count: like_count,
         nick: nick,
         index_title: index_title,
-      }
+      },
     });
-  }
+  };
 
   const linktoAnswer = () => {
+    track("click_question_in_list", {
+      index: index,
+    });
     const encodedTitle = encodeURIComponent(title);
     nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
       state: {
@@ -41,11 +60,10 @@ function Question({ badge_image, current_user_id, answer_count, title, id, doc_i
         nick: nick,
         index_title: index_title,
         answer_count: answer_count,
-        title: title
-      }
-    })
-  }
-
+        title: title,
+      },
+    });
+  };
 
   return (
     <div className={styles.q_list}>
@@ -63,7 +81,6 @@ function Question({ badge_image, current_user_id, answer_count, title, id, doc_i
           ) : (
             <ThreedotsReport questionId={id} type={type} />
           )}
-
         </div>
       </div>
       <div className={styles.q_middle}>
@@ -76,7 +93,11 @@ function Question({ badge_image, current_user_id, answer_count, title, id, doc_i
       <div className={styles.q_footer}>
         <div className={styles.q_frontfooter}>
           <div className={styles.q_like}>
-            <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
+            <LikeorNot
+              questionId={id}
+              like_count={like_count}
+              user_id={user_id}
+            />
           </div>
           <div onClick={linktoAnswer} className={styles.q_comment}>
             <img src={comment_icon} alt="comment" />
@@ -92,6 +113,6 @@ function Question({ badge_image, current_user_id, answer_count, title, id, doc_i
       </div>
     </div>
   );
-};
+}
 
 export default Question;

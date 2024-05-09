@@ -11,6 +11,7 @@ import ResultQues from "../components/ResultQues";
 import FormatTimeAgo from "../components/FormatTimeAgo";
 import BookmarkBox from "../components/BookmarkBox";
 import Footer from "../components/Footer";
+import { track } from "@amplitude/analytics-browser";
 
 const data = [
   {
@@ -54,19 +55,24 @@ const SearchResearch = () => {
   const nav = useNavigate();
   const [isClicked, setIsClicked] = useState(true); //true: 문서 false: 질문
 
-  const { title } = useParams();
+  const { title, howto } = useParams();
   const [docs, setDocs] = useState([]);
   const [historys, setHistorys] = useState([]);
   const [type, setType] = useState("all");
-  const [docsCount, setDocsCount] = useState(0);
-  const [quesCount, setQuesCount] = useState(0);
+  const [docsCount, setDocsCount] = useState(-1);
+  const [quesCount, setQuesCount] = useState(-1);
   const [ques, setQues] = useState([]);
 
   const handleButtonClick = () => {
     setIsClicked(!isClicked);
   };
 
-  const handleDocsClick = (title) => {
+  const handleDocsClick = (title, index) => {
+    // Amplitude
+    track("click_wiki_in_search_result", {
+      title: title,
+      index: index,
+    });
     const encodedTitle = encodeURIComponent(title);
     nav(`/wiki/${encodedTitle}`);
   };
@@ -125,6 +131,18 @@ const SearchResearch = () => {
     getQues();
   }, [title]);
 
+  // Amplitude
+  useEffect(() => {
+    if (docsCount !== -1 && quesCount !== -1) {
+      track("view_search_result", {
+        type: howto,
+        keyword: title,
+        wiki_count: docsCount,
+        question_count: quesCount,
+      });
+    }
+  }, [docsCount, quesCount]);
+
   useEffect(() => {
     getHistory();
   }, [type]);
@@ -163,11 +181,11 @@ const SearchResearch = () => {
         <div className={styles.contents}>
           <div className={styles.boxes}>
             <div className={isClicked ? "" : styles.hidden}>
-              {docs.map((item) => {
+              {docs.map((item, index) => {
                 return (
                   <div
                     key={item.title}
-                    onClick={() => handleDocsClick(item.title)}
+                    onClick={() => handleDocsClick(item.title, index)}
                   >
                     <BookmarkBox
                       title={item.title}
@@ -179,16 +197,25 @@ const SearchResearch = () => {
                 );
               })}
               <div className={styles.linkToNew}>
-                <Link to="/newwiki" className={styles.link}>
+                <Link
+                  to="/newwiki"
+                  className={styles.link}
+                  onClick={() => {
+                    track("click_to_navigate_create_wiki", {
+                      from_page: title,
+                    });
+                  }}
+                >
                   원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요
                 </Link>
               </div>
             </div>
             <div className={isClicked ? styles.hidden : ""}>
-              {ques.map((item) => {
+              {ques.map((item, index) => {
                 return (
                   <div className={styles.queboxes}>
                     <ResultQues
+                      index={index}
                       key={item.id}
                       id={item.id}
                       doc_id={item.doc_id}
@@ -209,13 +236,19 @@ const SearchResearch = () => {
           </div>
           <div className={styles.recents}>
             <div className={styles.recentWrap}>
-              {historys.slice(0, 8).map((item) => {
+              {historys.slice(0, 8).map((item, index) => {
                 const timestamp = FormatTimeAgo(item.created_at);
                 return (
                   <ul key={item.title}>
                     <Link
                       to={`/wiki/${encodeURIComponent(item.doc_title)}`}
                       className={styles.linkTo}
+                      onClick={() => {
+                        track("click_recent_edit_wiki_in_search_result", {
+                          title: item.title,
+                          index: index,
+                        });
+                      }}
                     >
                       <span className={styles.listTitle}>{item.doc_title}</span>
                     </Link>

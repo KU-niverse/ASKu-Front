@@ -5,6 +5,7 @@ import DropDown from "./DropDown";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { track } from "@amplitude/analytics-browser";
 
 function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const [questionContent, setQuestionContent] = useState("");
@@ -13,7 +14,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
   const Navigate = useNavigate();
 
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from || "/";
 
   //로그인 체크 후 우회
   // const checkLoginStatus = async () => {
@@ -85,13 +86,16 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }) {
     }
   };
 
-
   const submitData = {
     index_title: selectedOption,
     content: questionContent,
   };
 
   const handleSubmit = async () => {
+    track("click_create_question_in_list", {
+      title: title,
+    });
+    console.log("🚀 ~ handleSubmit ~ title:", title);
     if (!loggedIn) {
       alert(
         "로그인 후에 질문을 작성할 수 있습니다. 로그인 페이지로 이동합니다."

@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function Debate() {
   const [data, setData] = useState(null);
@@ -28,7 +29,8 @@ function Debate() {
     const takeDebateContent = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST + `/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          process.env.REACT_APP_HOST +
+            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -41,6 +43,13 @@ function Debate() {
     };
     takeDebateContent();
   }, [title, debateId]); //토론방 메시지 가져오기
+
+  // Amplitude
+  useEffect(() => {
+    track("view_debate_detail", {
+      type: title,
+    });
+  }, []);
 
   // const handleDebateSubmit = async (submitData) => {
   //   try {
@@ -64,7 +73,8 @@ function Debate() {
   const handleDebateSubmit = async (submitData) => {
     try {
       const postResponse = await axios.post(
-        process.env.REACT_APP_HOST + `/debate/${encodeURIComponent(title)}/new/${debateId}`,
+        process.env.REACT_APP_HOST +
+          `/debate/${encodeURIComponent(title)}/new/${debateId}`,
         submitData,
         { withCredentials: true }
       );
@@ -72,7 +82,8 @@ function Debate() {
       if (postResponse.status === 200) {
         // POST 요청이 성공한 후 전체 메시지 목록을 다시 가져옵니다.
         const getResponse = await axios.get(
-          process.env.REACT_APP_HOST + `/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          process.env.REACT_APP_HOST +
+            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
           { withCredentials: true }
         );
 
@@ -90,6 +101,13 @@ function Debate() {
     }
   };
 
+  // Amplitude
+  useEffect(() => {
+    track("debate_wiki", {
+      type: title,
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
       <div>
@@ -105,8 +123,8 @@ function Debate() {
           <DebateTitle title={title} subject={subject} />
 
           {debateContentData &&
-            debateContentData.message &&
-            debateContentData.message.data === 0 ? (
+          debateContentData.message &&
+          debateContentData.message.data === 0 ? (
             <p>아직 작성된 토론 메세지가 없습니다.</p>
           ) : (
             debateContentData &&
