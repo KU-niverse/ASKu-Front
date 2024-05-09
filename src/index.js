@@ -12,7 +12,15 @@ if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
 }
 
 // Amplitude 초기화
-amplitude.init(process.env.REACT_APP_AMPLITUDE_API_KEY);
+amplitude.init(process.env.REACT_APP_AMPLITUDE_API_KEY, {
+  defaultTracking: {
+    attribution: true,
+    pageViews: true,
+    sessions: true,
+    formInteractions: true,
+    fileDownloads: false,
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
