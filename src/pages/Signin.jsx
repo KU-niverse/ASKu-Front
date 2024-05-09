@@ -6,6 +6,7 @@ import haho_login from "../img/login.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { track } from "@amplitude/analytics-browser";
 
 const Signin = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -18,7 +19,12 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
   window.onpopstate = function (event) {
     // 뒤로 가기 버튼 클릭 시 새로고침하고자 하는 동작 수행
     window.location.reload();
-  }
+  };
+
+  // Amplitude
+  useEffect(() => {
+    track("view_login");
+  }, []);
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -30,6 +36,8 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
         nav("/");
+        // Amplitude
+        track("complete_login ");
       }
     } catch (error) {
       console.error(error);
@@ -95,7 +103,6 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       localStorage.removeItem(LS_KEY_ID);
     }
 
-
     try {
       const response = await axios.post(
         process.env.REACT_APP_HOST + "/user/auth/signin",
@@ -110,16 +117,21 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       if (response.data.success) {
         //로그인 성공시
         if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id);
+        // Amplitude
+        track("complete_login");
         nav("/");
-      } 
-      else {
+      } else {
         return null;
       }
     } catch (error) {
-      if (error.response.status === 402){
-        
+      if (error.response.status === 402 || error.response.status === 406) {
         //signup페이지에 resopnase.data를 같이 넘겨줌
-        nav("/signup", {state: {uuid: error.response.data.koreapas_uuid, nickname: error.response.data.koreapas_nickname}});
+        nav("/signup", {
+          state: {
+            uuid: error.response.data.koreapas_uuid,
+            nickname: error.response.data.koreapas_nickname,
+          },
+        });
       }
       console.error(error);
       return alert(error.response.data.message);
@@ -147,7 +159,9 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       />
       <img className={`${styles.haho}`} src={haho_login} alt="haho" />
       <h1 className={styles.login_headers}>LOGIN</h1>
-      <p className={styles.login_instruction}>고파스 계정으로 바로 로그인하세요!</p>
+      <p className={styles.login_instruction}>
+        고파스 계정으로 바로 로그인하세요!
+      </p>
       <form onSubmit={handleOnSubmit}>
         <div className={`${styles.login_input}`}>
           <input
@@ -180,13 +194,19 @@ const Signin = ({ loggedIn, setLoggedIn }) => {
       </form>
       <div className={`${styles.login_signup}`}>
         {/* <Link to="/signup">회원가입</Link> */}
-        <a href="https://www.koreapas.com/m/member_join_new.php">고파스 회원가입</a>
+        <a href="https://www.koreapas.com/m/member_join_new.php">
+          고파스 회원가입
+        </a>
       </div>
       <div className={`${styles.login_find}`}>
         {/* <Link to="/findid">아이디를 잊으셨나요?</Link> */}
         {/* <Link to="/findpw">비밀번호를 잊으셨나요?</Link> */}
-        <a href="https://www.koreapas.com/bbs/lostid_new.php">아이디를 잊으셨나요?</a>
-        <a href="https://www.koreapas.com/bbs/lostid_new.php">비밀번호를 잊으셨나요?</a>
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">
+          아이디를 잊으셨나요?
+        </a>
+        <a href="https://www.koreapas.com/bbs/lostid_new.php">
+          비밀번호를 잊으셨나요?
+        </a>
       </div>
     </div>
   );

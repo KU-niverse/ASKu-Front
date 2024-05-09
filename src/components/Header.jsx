@@ -18,9 +18,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
+import { track } from "@amplitude/analytics-browser";
 
 function Header({ userInfo, setUserInfo }) {
-
   const [inputValue, setInputValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navContainerRightWidth, setNavContainerRightWidth] = useState("150px");
@@ -156,15 +156,21 @@ function Header({ userInfo, setUserInfo }) {
   };
 
   const handleRandomDocClick = async () => {
+    track("click_header_navi", { type: "셔플" });
     try {
-      const response = await axios.get(process.env.REACT_APP_HOST + '/wiki/random', {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        process.env.REACT_APP_HOST + "/wiki/random",
+        {
+          withCredentials: true,
+        }
+      );
       if (response.status === 200) {
-        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}`; // 페이지를 새 URL로 이동 및 새로고침
+        window.location.href = `/wiki/${encodeURIComponent(
+          response.data.title
+        )}`; // 페이지를 새 URL로 이동 및 새로고침
       }
     } catch (error) {
-      console.error('Error fetching random document:', error);
+      console.error("Error fetching random document:", error);
     }
   };
 
@@ -178,10 +184,20 @@ function Header({ userInfo, setUserInfo }) {
         </div>
         <div className={styles.flexContainer}>
           <div className={styles.navContainer_left}>
-            <Link to="/allhistory">
+            <Link
+              to="/allhistory"
+              onClick={() => {
+                track("click_header_navi", { type: "최근 변경" });
+              }}
+            >
               <button className={styles.headerButton}>최근 변경</button>
             </Link>
-            <Link to="/latestdebate">
+            <Link
+              to="/latestdebate"
+              onClick={() => {
+                track("click_header_navi", { type: "토론" });
+              }}
+            >
               <button className={styles.headerButton}>토론</button>
             </Link>
           </div>
@@ -198,7 +214,7 @@ function Header({ userInfo, setUserInfo }) {
                   if (inputValue.trim() !== "") {
                     window.location.href = `/result/${encodeURIComponent(
                       inputValue
-                    )}`; // 페이지 이동
+                    )}/${encodeURIComponent(`search`)}`; // 페이지 이동
                     setInputValue("");
                   }
                 }
@@ -214,7 +230,7 @@ function Header({ userInfo, setUserInfo }) {
                     `/result/${encodeURIComponent(inputValue).replace(
                       /\./g,
                       "%2E"
-                    )}`
+                    )}/${encodeURIComponent(`search`)}`
                   );
                   setInputValue("");
                 }
@@ -245,7 +261,10 @@ function Header({ userInfo, setUserInfo }) {
                   src={bookmark}
                   alt="bookmark_gray"
                   className={styles.signinButton}
-                  onClick={() => Nav("/mybookmark")}
+                  onClick={() => {
+                    track("click_header_navi", { type: "즐겨찾는 문서" });
+                    Nav("/mybookmark");
+                  }}
                 />
                 <img
                   src={alarm}
@@ -335,7 +354,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>마이페이지</p>
                     </div>
                   </Link>
-                  <Link to="/mybookmark" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/mybookmark"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "즐겨찾는 문서" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobilebookmark}
@@ -360,7 +385,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>알림</p>
                     </div>
                   </Link>
-                  <Link to="/allhistory" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/allhistory"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "최근 변경" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobilehistory}
@@ -370,7 +401,13 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>최근변경</p>
                     </div>
                   </Link>
-                  <Link to="/latestdebate" className={styles.mobileMenuBtn}>
+                  <Link
+                    to="/latestdebate"
+                    className={styles.mobileMenuBtn}
+                    onClick={() => {
+                      track("click_header_navi", { type: "토론" });
+                    }}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={mobiledebate}
@@ -380,7 +417,10 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>토론</p>
                     </div>
                   </Link>
-                  <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                  <Link
+                    className={styles.mobileMenuBtn}
+                    onClick={handleRandomDocClick}
+                  >
                     <div className={styles.mobileHamburgerMenu}>
                       <img
                         src={randomDocs}
@@ -432,7 +472,7 @@ function Header({ userInfo, setUserInfo }) {
                             `/result/${encodeURIComponent(inputValue).replace(
                               /\./g,
                               "%2E"
-                            )}`
+                            )}/${encodeURIComponent(`search`)}`
                           );
                           setInputValue("");
                         }
@@ -449,7 +489,7 @@ function Header({ userInfo, setUserInfo }) {
                           `/result/${encodeURIComponent(inputValue).replace(
                             /\./g,
                             "%2E"
-                          )}`
+                          )}/${encodeURIComponent(`search`)}`
                         );
                         setInputValue("");
                       }

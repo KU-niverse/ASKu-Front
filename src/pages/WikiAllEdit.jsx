@@ -8,7 +8,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToHtml from "../components/Wiki/WikiToHtml";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
-import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { track } from "@amplitude/analytics-browser";
 
 const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const { title, section } = useParams();
@@ -23,8 +24,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const [userInfo, setUserInfo] = useState({});
   const [wikiDocs, setWikiDocs] = useState({});
 
-
-  const from = location.state?.from || '/';
+  const from = location.state?.from || "/";
   //console.log(from)
 
   //로그인 체크 후 우회
@@ -39,7 +39,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
       } else if (res.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav('/');
+        return nav("/");
       }
     } catch (error) {
       console.error(error);
@@ -47,10 +47,10 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
       if (error.response.status === 401) {
         setLoggedIn(false);
         alert("로그인이 필요한 서비스 입니다.");
-        return nav('/');
+        return nav("/");
       } else {
         alert("에러가 발생하였습니다");
-        return nav('/');
+        return nav("/");
       }
     }
   };
@@ -68,8 +68,13 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
     }
   }, [userInfo, wikiDocs]);
 
-
-
+  // Amplitude
+  useEffect(() => {
+    track("view_edit_wiki", {
+      title: title,
+      type: "all",
+    });
+  }, []);
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
@@ -178,7 +183,15 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
               {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
               <TypeDrop onSelectedOption={handleSelectedOption} /> */}
               <h4>위키 작성 방법</h4>
-              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare /></p>
+              <p
+                onClick={() =>
+                  nav("/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95")
+                }
+                className={styles.wikiManual}
+              >
+                위키 문법 알아보기!&nbsp;
+                <FaArrowUpRightFromSquare />
+              </p>
             </div>
           </div>
           <div>
@@ -203,7 +216,11 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
                 onChange={handleCheckboxChange}
                 className={`${styles.chkbox}`}
               />
-              <a href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 정책에 맞게 작성하였음을 확인합니다.
               </a>
             </span>

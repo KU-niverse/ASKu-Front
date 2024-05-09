@@ -7,7 +7,8 @@ import logo from "../img/logo.png";
 import { FiAlertTriangle, FiAlertCircle } from "react-icons/fi";
 import { BsCheck2All } from "react-icons/bs";
 import axios from "axios";
-import { KoreapasAgreeComponent } from '../components/KoreapasAgreeComponent'
+import { KoreapasAgreeComponent } from "../components/KoreapasAgreeComponent";
+import { track } from "@amplitude/analytics-browser";
 
 const Signup = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -53,7 +54,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     if (!koreapasData?.uuid) {
       nav("/");
     }
-  })
+  });
   const [form, setForm] = useState({
     name: "",
     nick: "",
@@ -66,8 +67,8 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleNickDoubleCheck = async (e) => {
     e.preventDefault();
-    if (form.nick.trim() === '') {
-      return alert("닉네임을 입력해주세요.")
+    if (form.nick.trim() === "") {
+      return alert("닉네임을 입력해주세요.");
     } else if (isNickValid === false) {
       return alert("닉네임 형식이 올바르지 않습니다.");
     }
@@ -92,7 +93,7 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
 
   const handleIdDoubleCheck = async (e) => {
     e.preventDefault();
-    if (form.id.trim() === '') {
+    if (form.id.trim() === "") {
       return alert("아이디를 입력해주세요.");
     } else if (isIdValid === false) {
       return alert("아이디 형식이 올바르지 않습니다.");
@@ -119,7 +120,8 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     e.preventDefault();
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
+        process.env.REACT_APP_HOST +
+          `/user/auth/emaildupcheck/${form.emailId}@korea.ac.kr`
       );
 
       if (result.data.success === true) {
@@ -226,16 +228,32 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
       if (response.data.success === true) {
         alert(response.data.message);
         setLoggedIn(true);
+        // TODO: Amplitude미완성
+        // Amplitude
+        //
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        //요일
+        const week = new Array("일", "월", "화", "수", "목", "금", "토");
+        const weekDay = week[date.getDay()];
+
+        track("complete_signup", {
+          account_type: "고파스",
+          signup_date: date,
+          signup_year: year,
+          signup_month: month,
+          signup_day: weekDay,
+        });
         nav("/");
       }
     } catch (error) {
       console.error(error);
       nav("/");
       return alert(error.response.data.message);
-
     }
   };
-
 
   const handleCancel = () => {
     nav("/");
@@ -245,6 +263,11 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
     window.location.href =
       "https://034179.notion.site/9ccf1d40d79e47ce8bb78e83d780c052"; // 외부 링크 URL로 이동
   };
+
+  // Amplitude
+  useEffect(() => {
+    track("view_signup");
+  }, []);
 
   return (
     <div className={`${styles.container}`}>
@@ -430,19 +453,21 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
             [더보기]
           </span>
         </div> */}
-        { }
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {}
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <input
             type="button"
             value="취소"
-            className={clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`}
+            className={
+              clicked ? `${styles.hidden}` : `${styles.signup_btn_two}`
+            }
             onClick={handleCancel}
           />
           <input
             type="submit"
             value="동의하기"
             className={clicked ? `${styles.hidden}` : `${styles.signup_btn}`}
-            style={{ marginLeft: '30px' }}
+            style={{ marginLeft: "30px" }}
           />
         </div>
 
@@ -457,7 +482,6 @@ const Signup = ({ loggedIn, setLoggedIn }) => {
         >
           처리중입니다. 잠시만 기다려주세요. (5-10초정도 소요됩니다)
         </div>
-
       </form>
     </div>
   );

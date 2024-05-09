@@ -1,7 +1,7 @@
 import styles from './LoginModal.module.css';
 import closeBtn from '../img/close_btn.png';
-import { useEffect, useRef } from 'react';
 import haho_login from '../img/haho_login.png';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 function LoginModal({ isOpen, onClose }) {
@@ -40,9 +40,9 @@ function LoginModal({ isOpen, onClose }) {
                             <Link to='/signin'>
                                 <button className={styles.signin}>로그인</button>
                             </Link>
-                            <Link to='/signup'>
+                            <a href="https://www.koreapas.com/m/member_join_new.php">
                                 <button className={styles.signup}>회원가입</button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

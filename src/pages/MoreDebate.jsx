@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function MoreDebate() {
   const { title } = useParams();
@@ -20,7 +21,8 @@ function MoreDebate() {
     const takeDebateList = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST + `/debate/list/${encodeURIComponent(title)}`,
+          process.env.REACT_APP_HOST +
+            `/debate/list/${encodeURIComponent(title)}`,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -35,6 +37,9 @@ function MoreDebate() {
     takeDebateList();
   }, [title]); //토론방 목록 가져오기
 
+  useEffect(() => {
+    track("view_wiki_debate_list");
+  }, []);
   return (
     <div className={styles.container}>
       <div>
@@ -55,8 +60,8 @@ function MoreDebate() {
             </div>
 
             {debateListData &&
-              debateListData.data &&
-              debateListData.data.length === 0 ? (
+            debateListData.data &&
+            debateListData.data.length === 0 ? (
               <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
               debateListData &&

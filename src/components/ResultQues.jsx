@@ -1,13 +1,26 @@
-import comment_icon from "../img/resultcomment.svg"
-import edit from "../img/resultedit.svg"
-import styles from "../components/ResultQues.module.css"
-import FormatDate from "./FormatDate"
-import ThreedotsMenu from "./ThreedotsMenu"
-import LikeorNot from "./LikeorNot"
-import { useNavigate } from "react-router-dom"
+import comment_icon from "../img/resultcomment.svg";
+import edit from "../img/resultedit.svg";
+import styles from "../components/ResultQues.module.css";
+import FormatDate from "./FormatDate";
+import ThreedotsMenu from "./ThreedotsMenu";
+import LikeorNot from "./LikeorNot";
+import { useNavigate } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
-
-function Question({ title, id, doc_id, user_id, index_title, content, created_at, answer_count, is_bad, nick, like_count }) {
+function Question({
+  index,
+  title,
+  id,
+  doc_id,
+  user_id,
+  index_title,
+  content,
+  created_at,
+  answer_count,
+  is_bad,
+  nick,
+  like_count,
+}) {
   const formattedDate = FormatDate(created_at);
 
   const nav = useNavigate();
@@ -20,11 +33,10 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
         content: content,
         created_at: created_at,
         like_count: like_count,
-        nick: nick
-      }
+        nick: nick,
+      },
     });
-  }
-
+  };
 
   return (
     <div className={styles.q_list}>
@@ -36,9 +48,16 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
           <span className={styles.q_date}>{formattedDate}</span>
         </div>
       </div>
-      <div className={styles.q_middle}
+      <div
+        className={styles.q_middle}
         onClick={() => {
           const encodedTitle = encodeURIComponent(title);
+          // Amplitude
+          track("click_qusetion_in_search_result", {
+            title: title,
+            index: index,
+          });
+
           nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
             state: {
               question_id: id,
@@ -51,8 +70,9 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
               answer_count: answer_count,
               title: title,
             },
-          })
-        }}>
+          });
+        }}
+      >
         <span className={styles.q_icon}>Q. </span>
         <span className={styles.q_content}>{content}</span>
       </div>
@@ -75,6 +95,6 @@ function Question({ title, id, doc_id, user_id, index_title, content, created_at
       </div>
     </div>
   );
-};
+}
 
 export default Question;

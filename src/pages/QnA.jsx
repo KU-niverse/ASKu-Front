@@ -13,6 +13,7 @@ import { useParams, useLocation } from "react-router-dom";
 import QuestionQnA from "../components/QuestionQnA";
 import link_icon from "../img/link_icon.png";
 import { useNavigate } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
   const [currentUserId, setCurrentUserId] = useState([]);
@@ -30,6 +31,10 @@ const QnA = () => {
     nav(`/wiki/${encodedTitle}`);
   };
 
+  useEffect(() => {
+    track("view_question_detail", { question_title: title });
+  });
+
   const getUserInfo = async () => {
     try {
       const res = await axios.get(
@@ -46,7 +51,7 @@ const QnA = () => {
       }
     } catch (error) {
       console.error(error);
-      setCurrentUserId(null)
+      setCurrentUserId(null);
     }
   };
   useEffect(() => {
@@ -54,10 +59,6 @@ const QnA = () => {
   }, []);
 
   //접속한 사용자 id 가져오기
-
-
-
-
 
   useEffect(() => {
     const takeAnswer = async () => {
@@ -85,7 +86,6 @@ const QnA = () => {
           process.env.REACT_APP_HOST + `/question/lookup/${question_id}`,
           { withCredentials: true }
         );
-        console.log("🚀 ~ file: QnA.jsx:89 ~ takeQuestion ~ res:", res)
         if (res.status === 200) {
           setQuestionData(res.data);
         }
@@ -131,7 +131,11 @@ const QnA = () => {
             answer_count={questionData.data[0].answer_count}
             title={title}
             badge_image={questionData.data[0].badge_image}
-            current_user_id={currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null}
+            current_user_id={
+              currentUserId && currentUserId.data && currentUserId.data[0]
+                ? currentUserId.data[0].id
+                : null
+            }
           />
         )}
         <div className={styles.c_header}>

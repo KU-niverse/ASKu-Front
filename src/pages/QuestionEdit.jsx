@@ -11,7 +11,8 @@ import WikiToHtml from "../components/Wiki/WikiToHtml";
 import HtmlToWiki from "../components/Wiki/HtmlToWiki";
 import WikiToQuill from "../components/Wiki/WikiToQuill";
 import SpinnerMypage from "../components/SpinnerMypage";
-import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { track } from "@amplitude/analytics-browser";
 
 const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const nav = useNavigate();
@@ -32,7 +33,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const [userInfo, setUserInfo] = useState({});
   const [wikiDocs, setWikiDocs] = useState({});
 
-  const from = stateData.from || '/';
+  const from = stateData.from || "/";
 
   // //로그인 체크 후 우회
   // const checkLoginStatus = async () => {
@@ -64,8 +65,6 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   // useEffect(() => {
   //   checkLoginStatus();
   // }, []);
-
-
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked);
@@ -103,7 +102,8 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
+        process.env.REACT_APP_HOST +
+          `/wiki/contents/${main}/section/${selectedOption}`,
         {
           withCredentials: true,
         }
@@ -117,7 +117,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
       console.error(error);
       if (error.response.status === 401) {
         alert(error.response.data.message);
-        return nav('/');
+        return nav("/");
       } else {
         alert("잘못된 접근입니다.");
       }
@@ -165,6 +165,13 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     setCopy(false);
   }, []);
 
+  // Amplitude
+  useEffect(() => {
+    track("view_edit_wiki", {
+      title: main,
+      type: "question",
+    });
+  }, []);
 
   useEffect(() => {
     if (userInfo[0] !== undefined) {
@@ -248,7 +255,8 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
     } else {
       try {
         const result = await axios.post(
-          process.env.REACT_APP_HOST + `/wiki/contents/${main}/section/${selectedOption}`,
+          process.env.REACT_APP_HOST +
+            `/wiki/contents/${main}/section/${selectedOption}`,
           {
             version: version,
             new_content: wikiMarkup,
@@ -336,7 +344,15 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
           <div>
             <div className={`${styles.QuesWikiManu}`}>
               <h4>문서 내용</h4>
-              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>위키 문법 알아보기!&nbsp;<FaArrowUpRightFromSquare /></p>
+              <p
+                onClick={() =>
+                  nav("/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95")
+                }
+                className={styles.wikiManual}
+              >
+                위키 문법 알아보기!&nbsp;
+                <FaArrowUpRightFromSquare />
+              </p>
             </div>
 
             <div className={`${styles.editorbox2}`}>
@@ -359,9 +375,13 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
                 onChange={handleCheckboxChange}
                 className={`${styles.chkbox}`}
               />
-              <a href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d" target="_blank" rel="noopener noreferrer">
-                  정책에 맞게 작성하였음을 확인합니다.
-                </a>
+              <a
+                href="https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                정책에 맞게 작성하였음을 확인합니다.
+              </a>
             </span>
             <button className={`${styles.submitWiki}`}>생성하기</button>
           </div>
