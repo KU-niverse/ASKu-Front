@@ -1,12 +1,17 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import closeBtn from '../img/close_btn.png'
 import styles from './BadgeModal.module.css'
 
-function BadgeModal({ isOpen, onClose }: any) {
+interface BadgeModalProps { //미사용 함수
+  isOpen: boolean;
+  onClose: () => void; 
+}
+
+function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   const modalRef = useRef(null)
-  const handleOutsideClick = (event: any) => {
+  const handleOutsideClick = (event: any) => { //any 타입을 뭐로 지정해야 될지 모르겠으미ㅣ
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -23,7 +28,7 @@ function BadgeModal({ isOpen, onClose }: any) {
     }
   }, [isOpen])
 
-  const [myBadge, setMyBadge] = useState([])
+  const [myBadge, setMyBadge] = useState<any>([]) //any 타입을 뭐로 지정해야 될지 모르겠으미ㅣ
   useEffect(() => {
     const takeMyBadge = async () => {
       try {

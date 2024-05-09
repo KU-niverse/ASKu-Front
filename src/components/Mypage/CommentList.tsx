@@ -2,19 +2,27 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styles from './CommentList.module.css'
 import comment_icon from '../../img/comment_icon.png'
 
-function CommentList({ id, subject, content, time, doc_title }: any) {
+interface CommentListProps {
+  id: number;
+  subject: string;
+  content: string;
+  time: string; // 예를 들어 string 형태의 시간으로 가정합니다.
+  doc_title: string;
+}
+
+function CommentList({ id, subject, content, time, doc_title }: CommentListProps) {
   const maxLength = 70
 
   // 글자 수가 maxLength를 넘으면 뒤에 "..."을 붙이고 아니면 그대로 반환
-  const truncateContent = (text: any) => {
+  const truncateContent = (text: string) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
   }
 
-  const debateId = id
-  const title = doc_title
+  const debateId: number = id
+  const title: string = doc_title
   const nav = useNavigate()
   const linktoComment = () => {
-    const encodedTitle = encodeURIComponent(title)
+    const encodedTitle: string = encodeURIComponent(title)
     nav(`/debate/${encodedTitle}/${subject}`, {
       state: {
         title,

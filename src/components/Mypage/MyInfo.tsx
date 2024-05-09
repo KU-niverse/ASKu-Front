@@ -1,6 +1,12 @@
 import styles from './MyInfo.module.css'
 
-function MyInfo({ name, email, stu_id }: any) {
+interface MyInfoProps {
+  name: string;
+  email: string;
+  stu_id: string;
+}
+
+function MyInfo({ name, email, stu_id }: MyInfoProps) {
   return (
     <div className={styles.inforow}>
       <div className={styles.rowname}>
