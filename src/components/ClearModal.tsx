@@ -5,7 +5,20 @@ import styles from './ClearModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import haho_login from '../img/haho_login.png'
 
-function ClearModal({ isOpen, onClose, userId }: any) {
+interface User {
+  id: number
+}
+interface UserData {
+  data: User[]
+}
+
+interface ClearModalProps {
+  isOpen:boolean
+  onClose: () => void
+  userId: UserData
+}
+
+function ClearModal({ isOpen, onClose, userId }: ClearModalProps) {
   const handleClearChat = () => {
     axios
       .patch(
@@ -29,7 +42,7 @@ function ClearModal({ isOpen, onClose, userId }: any) {
 
   const modalRef = useRef(null)
 
-  const handleOutsideClick = (event: any) => {
+  const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }

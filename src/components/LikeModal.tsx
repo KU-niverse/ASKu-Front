@@ -4,16 +4,21 @@ import styles from './LikeModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import like from '../img/chatbot_like.svg'
 
-function LikeModal({ isOpen, onClose, feedbackId }: any) {
+interface LikeModalProps {
+  isOpen: boolean
+  onClose: () => void
+  feedbackId: number
+}
+function LikeModal({ isOpen, onClose, feedbackId }: LikeModalProps) {
   const modalRef = useRef(null)
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef(null)
 
-  const inputChange = (e: any) => {
+  const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
 
-  const handleOutsideClick = (event: any) => {
+  const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -53,7 +58,7 @@ function LikeModal({ isOpen, onClose, feedbackId }: any) {
     onClose()
   }
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
       sendMessage()
     }

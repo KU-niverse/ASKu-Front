@@ -9,7 +9,11 @@ import ReportModal from './ReportModal'
 import styles from './ThreedotsReport.module.css'
 import threedots from '../img/threedots.png'
 
-function ThreedotsReport({ type, target }: any) {
+interface ThreedotsReportProps {
+  type: string
+  target: string
+}
+function ThreedotsReport({ type, target }: ThreedotsReportProps) {
   const nav = useNavigate()
 
   const [isReportModalVisible, setReportModalVisible] = useState(false)
@@ -92,7 +96,7 @@ function ThreedotsReport({ type, target }: any) {
           checkLoginStatus()
           e.stopPropagation = true
           e.keepOpen = true
-          e.preventDefault = true
+          e.syntheticEvent.preventDefault()
           setReportModalVisible(true)
         }}
       >

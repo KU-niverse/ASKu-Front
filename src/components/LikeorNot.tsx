@@ -5,7 +5,13 @@ import like from '../img/like.png'
 import likeFill from '../img/likeFill.png'
 import styles from './LikeorNot.module.css'
 
-const LikeorNot = ({ questionId, like_count, user_id }: any) => {
+interface LikeorNotProps {
+  questionId: number
+  like_count: number
+  user_id?:number
+  nick?:string
+}
+const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
   const [isLiked, setIsLiked] = useState(localStorage.getItem(`likeStatus_${user_id}_${questionId}`) === 'true')
   const [currentLikeCount, setCurrentLikeCount] = useState(like_count)
   const [loggedIn, setLoggedIn] = useState(false)
@@ -44,7 +50,7 @@ const LikeorNot = ({ questionId, like_count, user_id }: any) => {
 
     const newIsLiked = !isLiked
     setCurrentLikeCount(currentLikeCount + (newIsLiked ? 1 : -1))
-    localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked)
+    localStorage.setItem(`likeStatus_${user_id}_${questionId}`, 'newIsLiked')
     setIsLiked(newIsLiked)
 
     try {

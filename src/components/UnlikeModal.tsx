@@ -4,16 +4,22 @@ import styles from './UnlikeModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import unlike from '../img/chatbot_unlike.svg'
 
-function UnlikeModal({ isOpen, onClose, feedbackId }: any) {
+interface unLikeModalProps {
+  isOpen: boolean
+  onClose: () => void
+  feedbackId: number
+}
+
+function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
   const modalRef = useRef(null)
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef(null)
 
-  const inputChange = (e: any) => {
+  const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
 
-  const handleOutsideClick = (e: any) => {
+  const handleOutsideClick = (e: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       onClose()
     }
@@ -42,7 +48,7 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: any) {
         })
     }
   }
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
       sendMessage()
     }

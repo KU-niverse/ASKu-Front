@@ -4,11 +4,15 @@ import styles from './LoginModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import haho_login from '../img/haho_login.png'
 
-function LoginModal({ isOpen, onClose }: any) {
-  const modalRef = useRef(null)
+interface LoginModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
 
-  const handleOutsideClick = (event: any) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       onClose()
     }
   }
@@ -39,9 +43,9 @@ function LoginModal({ isOpen, onClose }: any) {
                 <Link to={'/signin'}>
                   <button className={styles.signin}>{'로그인'}</button>
                 </Link>
-                <Link to={'/signup'}>
+                <a href ={'https://www.koreapas.com/m/member_join_new.php'}>
                   <button className={styles.signup}>{'회원가입'}</button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
