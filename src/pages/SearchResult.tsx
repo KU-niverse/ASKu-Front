@@ -5,7 +5,6 @@ import Header from '../components/Header'
 import search from '../img/SearchResult.svg'
 import styles from './SearchResult.module.css'
 import ResultBox from '../components/ResultBox'
-
 import Question from '../components/Question'
 import ResultQues from '../components/ResultQues'
 import FormatTimeAgo from '../components/FormatTimeAgo'
@@ -66,7 +65,7 @@ const SearchResearch = () => {
     setIsClicked(!isClicked)
   }
 
-  const handleDocsClick = (title: any) => {
+  const handleDocsClick = (title: string) => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/${encodedTitle}`)
   }
