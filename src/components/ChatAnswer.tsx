@@ -13,8 +13,15 @@ import closeBtn from '../img/close_btn.png'
 import LikeModal from './LikeModal'
 import UnlikeModal from './UnlikeModal'
 
-const ChatAnswer = (props: any) => {
-  const { content, reference, qnaId, blockIconZip } = props
+interface ChatAnswerProps {
+  content: string
+  reference?: string
+  qnaId?: number
+  blockIconZip?: boolean
+}
+
+const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps ) => {
+
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)
   const [referenceOpen, setReferenceOpen] = useState(false)
@@ -95,7 +102,7 @@ const ChatAnswer = (props: any) => {
       })
   }
 
-  const parseReference = (reference: any) => {
+  const parseReference = (reference: string) => {
     if (reference === null) {
       return ''
     }
@@ -108,7 +115,7 @@ const ChatAnswer = (props: any) => {
           <p>{parsedReference.Rule}</p>
           {Object.entries(parsedReference)
             .filter(([key, value]) => key !== 'Rule')
-            .map(([link, value], index: any) => (
+            .map(([link, value], index: number) => (
               <div key={index}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   {'참고문서:'}
@@ -170,7 +177,7 @@ const ChatAnswer = (props: any) => {
         <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
           <div className={styles.reference}>
             <div className={styles.header}>
-              <p clasName={styles.reference_title}>{'출처'}</p>
+              <p className={styles.reference_title}>{'출처'}</p>
               <img className={styles.closeBtn} src={closeBtn} alt={'close button'} onClick={handleReferenceClose} />
             </div>
             <div className={styles.reference_text}>

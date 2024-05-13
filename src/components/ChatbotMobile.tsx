@@ -8,11 +8,22 @@ import Spinner from './Spinner'
 import LoginModal from './LoginModal'
 import ChatAnswer from './ChatAnswer'
 import ChatQuestion from './ChatQuestion'
-
 import ClearModal from './ClearModal'
 import RefreshModal from './RefreshModal'
 
-function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: any) {
+interface User {
+  id: number
+}
+interface UserData {
+  data: User[]
+}
+interface ChatbotMobileProps {
+  isLoggedIn: boolean
+  setIsLoggedIn: (isLoggedIn: boolean) => void
+  userId: UserData
+}
+
+function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggest, setShowSuggest] = useState(true)
@@ -24,7 +35,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: any) {
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
   const navigate = useNavigate()
 
-  const inputChange = (e: any) => {
+  const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
 
@@ -92,13 +103,13 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: any) {
       }
     }
   }
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
       sendMessage()
     }
   }
 
-  const handleSuggestClick = (content: any) => {
+  const handleSuggestClick = (content: string) => {
     setShowSuggest(false)
 
     const newChatResponse = [
@@ -112,8 +123,12 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: any) {
     setTimeout(() => {
       setLoading(false) // 로딩 스피너 숨기기
 
+      type Answers = {
+        [key: string]:string
+      }
+
       // 더미 데이터에서 해당 추천 검색어에 대한 미리 저장한 답변을 가져와서 사용합니다.
-      const dummyAnswers = {
+      const dummyAnswers:Answers = {
         '너는 누구야?':
           'AI 하호입니다. 저는 고려대학교 학생들의 고려대학교 학칙에 대한 질문에 대답하는 AI Chatbot입니다. 질문이 있으신가요?',
         '휴학은 최대 몇 년까지 가능해?':
@@ -196,11 +211,11 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: any) {
       <div className={styles.mobileChatbotWrap}>
         <div className={styles.topBar}>
           <p id={styles.title}>{'AI 하호'}</p>
-          <Link>
+          
             <button className={styles.button} onClick={handleClearModal}>
               {'채팅 비우기\r'}
             </button>
-          </Link>
+          
           <Link to={'https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4'} target={'_blank'}>
             <button className={styles.button}>{'도움말'}</button>
           </Link>
