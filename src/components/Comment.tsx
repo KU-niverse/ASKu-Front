@@ -6,23 +6,13 @@ import styles from './Comment.module.css'
 import ThreedotsReport from './ThreedotsReport'
 import FormatDate from './FormatDate'
 
-interface CommentProps {
-  id: number;
-  subject: string;
-  content: string;
-  created_at: string;
-  is_bad: boolean;
-  docsname: string;
-  nick: string;
-}
-
-function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: CommentProps) {
+function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: any) {
   const formattedDate = FormatDate(created_at)
   const nav = useNavigate()
-  const debateId: number = id
-  const title: string = docsname
+  const debateId = id
+  const title = docsname
   const linktoComment = () => {
-    const encodedTitle: string = encodeURIComponent(title)
+    const encodedTitle = encodeURIComponent(title)
     nav(`/debate/${encodedTitle}/${subject}`, {
       state: {
         title,

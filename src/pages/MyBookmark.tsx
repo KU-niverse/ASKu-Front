@@ -7,12 +7,7 @@ import styles from './MyBookmark.module.css'
 
 import Footer from '../components/Footer'
 
-interface MyBookmarkProps {
-  loggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
-}
-
-const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
+const MyBookmark = ({ loggedIn, setLoggedIn }: any) => {
   const [lists, setLists] = useState([])
   const [bookCount, setBookCount] = useState(0)
   const nav = useNavigate()

@@ -5,15 +5,7 @@ import haho from '../../img/haho.png'
 import BadgeModal from '../BadgeModal'
 import NickEditModal from './NickEditModal'
 
-interface MyProfileProps {
-  nick: string;
-  point: number;
-  badge: string;
-  percent: string;
-  badgeimg: string;
-}
-
-function MyProfile({ nick, point, badge, percent, badgeimg }: MyProfileProps) {
+function MyProfile({ nick, point, badge, percent, badgeimg }: any) {
   // const [isBadgeModalVisible, setBadgeModalVisible] = useState(false);
   // const closeBadgeModal = () => {
   //     setBadgeModalVisible(false);

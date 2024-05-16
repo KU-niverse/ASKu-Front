@@ -16,31 +16,13 @@ import MyInfo from '../components/Mypage/MyInfo'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
 
-interface Badge {
-  id: number;
-  user_id: number;
-  badge_id: number;
-  created_at: string;
-  is_bad: number;
-  image: string;
-  name: string;
-  description: string;
-}
-
-interface BadgeDataProps {
-  success: boolean;
-  data: Badge[];
-  message: string;
-}
-
-
 function MyPage({ loggedIn, setLoggedIn }: any) {
   const [loading, setLoading] = useState(true)
-  const [myContribute, setMyContribute] = useState<any>([])
+  const [myContribute, setMyContribute] = useState([])
   const [mypageData, setMypageData] = useState([])
   const [myQuestion, setMyQuestion] = useState([])
   const [myDebate, setMyDebate] = useState([])
-  const [myBadge, setMyBadge] = useState<BadgeDataProps>({ success: false, data: [], message: '' });
+  const [myBadge, setMyBadge] = useState([])
   const [myWiki, setMyWiki] = useState([])
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
