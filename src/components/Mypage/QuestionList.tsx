@@ -3,6 +3,22 @@ import styles from './QuestionList.module.css'
 import comment_icon from '../../img/comment_icon.png'
 import nocomment_icon from '../../img/nocomment_icon.png'
 
+interface QuestionListProps {
+  id: number;
+  doc_id: number;
+  user_id: number;
+  index_title: string;
+  content: string;
+  time: string; // "2023-09-03T06:11:12.000Z"와 같은 형식의 문자열
+  is_bad: number; // 0 또는 1로 나타내는 숫자
+  nickname: string;
+  rep_badge: number; // 생략된 props에서 가져옴
+  badge_image: string;
+  like_count: number;
+  doc_title: string;
+  answer_count: number;
+}
+
 function QuestionList({
   id,
   doc_id,
@@ -15,10 +31,10 @@ function QuestionList({
   like_count,
   doc_title,
   answer_count,
-}: any) {
+}: QuestionListProps) {
   const maxLength = 80
   const title = doc_title
-  const truncateContent = (text: any) => {
+  const truncateContent = (text: string) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
   }
   const nav = useNavigate()

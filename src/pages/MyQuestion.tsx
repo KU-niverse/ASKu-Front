@@ -9,10 +9,57 @@ import Switch from '../components/Switch'
 
 import SpinnerMypage from '../components/SpinnerMypage'
 
+interface Question {
+  id: number;
+  doc_id: number;
+  user_id: number;
+  index_title: string;
+  content: string;
+  created_at: string;
+  answer_or_not: number;
+  is_bad: number;
+  nickname: string;
+  rep_badge: number;
+  badge_image: string;
+  like_count: number;
+  doc_title: string;
+  answer_count: number;
+}
+
+interface MyQuestionResponse {
+  success: boolean;
+  message: string;
+  data: Question[];
+}
+
+interface UserData {
+  id: number;
+  name: string;
+  login_id: string;
+  stu_id: string;
+  email: string;
+  rep_badge_id: number;
+  nickname: string;
+  created_at: string;
+  point: number;
+  is_admin: number;
+  is_authorized: number;
+  restrict_period: string | null;
+  restrict_count: number;
+  rep_badge_name: string;
+  rep_badge_image: string;
+}
+
+interface MypageDataResponse {
+  success: boolean;
+  message: string;
+  data: UserData[];
+}
+
 function MyQuestion() {
   const [isToggled, setIsToggled] = useState(false)
-  const [myQuestion, setMyQuestion] = useState([])
-  const [mypageData, setMypageData] = useState([])
+  const [myQuestion, setMyQuestion] = useState<MyQuestionResponse>()
+  const [mypageData, setMypageData] = useState<MypageDataResponse>()
   const [loadingMyQuestion, setLoadingMyQuestion] = useState(true)
   const [loadingMypage, setLoadingMypage] = useState(true)
   const arrange = isToggled ? 'popularity' : 'latest'
@@ -74,7 +121,7 @@ function MyQuestion() {
             mypageData &&
             myQuestion &&
             myQuestion.success &&
-            myQuestion.data.map((question: any) => (
+            myQuestion.data.map((question: Question) => (
               <MyQuestionList
                 key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                 id={question.id}

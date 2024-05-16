@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import styles from './MyPage.module.css'
@@ -16,6 +16,7 @@ import MyInfo from '../components/Mypage/MyInfo'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
 
+
 function MyPage({ loggedIn, setLoggedIn }: any) {
   const [loading, setLoading] = useState(true)
   const [myContribute, setMyContribute] = useState([])
@@ -24,9 +25,10 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
   const [myDebate, setMyDebate] = useState([])
   const [myBadge, setMyBadge] = useState([])
   const [myWiki, setMyWiki] = useState([])
+
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
-  const handlePageChange = (pageNumber: any) => {
+  const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
   }
 
@@ -65,7 +67,7 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
 
   // 데이터 불러오기
   useEffect(() => {
-    const getData = async (url: any, stateSetter: any) => {
+    const getData = async (url: string, stateSetter: any) => { //any 타입 추론불가
       try {
         const res = await axios.get(url, { withCredentials: true })
 
@@ -126,7 +128,7 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
                   point={mypageData.data[0].point}
                   badge={mypageData.data[0].rep_badge_name}
                   badgeimg={mypageData.data[0].rep_badge_image}
-                  percent={myContribute.message.ranking_percentage.toFixed(2)}
+                  percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
                 />
               )}
             </div>
@@ -154,7 +156,7 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
                       myBadge.data &&
                       myBadge.data
                         .slice((page - 1) * perPage, page * perPage)
-                        .map((badge: any) => (
+                        .map((badge: Badge) => (
                           <img
                             title={badge.name}
                             key={badge.id}
@@ -203,12 +205,12 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
                 myWiki.message &&
                 myWiki.data
                   .slice(0, 7)
-                  .map((wiki: any) => (
+                  .map((wiki: WikiHistoryEntry) => (
                     <Contribute
                       key={wiki.id}
                       user_id={wiki.user_id}
                       doc_id={wiki.doc_id}
-                      text_pointer={wiki.textpointer}
+                      text_pointer={wiki.text_pointer}
                       version={wiki.version}
                       summary={wiki.summary}
                       created_at={wiki.created_at}
@@ -243,7 +245,7 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
                 myQuestion &&
                 myQuestion.message &&
                 myQuestion.data &&
-                myQuestion.data.slice(0, 5).map((question: any) => (
+                myQuestion.data.slice(0, 5).map((question: QuestionEntry) => (
                   <QuestionList
                     key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                     id={question.id}
@@ -284,9 +286,9 @@ function MyPage({ loggedIn, setLoggedIn }: any) {
                 myDebate.message &&
                 myDebate.message
                   .slice(0, 5)
-                  .map((debate: any) => (
+                  .map((debate: Debate) => (
                     <CommentList
-                      key={debate.id}
+                      //key={debate.id} 미사용 변수
                       id={debate.debate_id}
                       subject={debate.debate_subject}
                       content={debate.debate_content}

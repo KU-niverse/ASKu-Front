@@ -5,6 +5,7 @@ import closeBtn from '../img/close_btn.png'
 import styles from './BadgeModal.module.css'
 
 function BadgeModal({ isOpen, onClose }: any) {
+
   const modalRef = useRef(null)
   const handleOutsideClick = (event: any) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -24,6 +25,7 @@ function BadgeModal({ isOpen, onClose }: any) {
   }, [isOpen])
 
   const [myBadge, setMyBadge] = useState([])
+
   useEffect(() => {
     const takeMyBadge = async () => {
       try {
@@ -47,7 +49,7 @@ function BadgeModal({ isOpen, onClose }: any) {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
-        { rep_badge_id: myBadge.data.badge_id },
+        { rep_badge_id: myBadge.data[0].badge_id }, //몇 번 째 데이터를 대표배지로 지정할 지 인풋 필요
         { withCredentials: true },
       )
       if (response.status === 200) {
