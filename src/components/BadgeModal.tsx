@@ -9,6 +9,23 @@ interface BadgeModalProps { //미사용 함수
   onClose: () => void; 
 }
 
+interface Badge {
+  id: number;
+  user_id: number;
+  badge_id: number;
+  created_at: string;
+  is_bad: number;
+  image: string;
+  name: string;
+  description: string;
+}
+
+interface MyBadgeResponse {
+  success: boolean;
+  message: string;
+  data: Badge[];
+}
+
 function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   const modalRef = useRef(null)
   const handleOutsideClick = (event: any) => { //any 타입을 뭐로 지정해야 될지 모르겠으미ㅣ
@@ -28,7 +45,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
     }
   }, [isOpen])
 
-  const [myBadge, setMyBadge] = useState<any>([]) //any 타입을 뭐로 지정해야 될지 모르겠으미ㅣ
+  const [myBadge, setMyBadge] = useState<MyBadgeResponse>()
   useEffect(() => {
     const takeMyBadge = async () => {
       try {
@@ -52,7 +69,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
-        { rep_badge_id: myBadge.data.badge_id },
+        { rep_badge_id: myBadge.data[0].badge_id }, //몇 번 째 데이터를 대표배지로 지정할 지 인풋 필요
         { withCredentials: true },
       )
       if (response.status === 200) {

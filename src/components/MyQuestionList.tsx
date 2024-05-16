@@ -6,6 +6,22 @@ import ThreedotsMenu from './ThreedotsMenu'
 import LikeorNot from './LikeorNot'
 import styles from './MyQuestionList.module.css'
 
+interface MyQuestionListProps {
+  badge_image: string;
+  answer_count: number;
+  docsname: string;
+  id: number;
+  doc_id: number;
+  user_id: number;
+  index_title: string;
+  content: string;
+  created_at: string;
+  answer_or_not: number;
+  is_bad: number;
+  nick: string;
+  like_count: number;
+}
+
 function MyQuestionList({
   badge_image,
   answer_count,
@@ -20,7 +36,7 @@ function MyQuestionList({
   is_bad,
   nick,
   like_count,
-}: any) {
+}: MyQuestionListProps) {
   const formattedDate = FormatDate(created_at)
   const type = 2
   const nav = useNavigate()

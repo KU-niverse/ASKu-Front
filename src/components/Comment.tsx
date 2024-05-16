@@ -19,10 +19,10 @@ interface CommentProps {
 function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: CommentProps) {
   const formattedDate = FormatDate(created_at)
   const nav = useNavigate()
-  const debateId: number = id
-  const title: string = docsname
+  const debateId = id
+  const title = docsname
   const linktoComment = () => {
-    const encodedTitle: string = encodeURIComponent(title)
+    const encodedTitle = encodeURIComponent(title)
     nav(`/debate/${encodedTitle}/${subject}`, {
       state: {
         title,
