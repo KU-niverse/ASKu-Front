@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom/dist'
-import React, { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 import axios from 'axios'
 import Header from '../components/Header'
@@ -16,7 +16,12 @@ import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
 
-function WikiViewer({ loggedIn, setLoggedIn }: any) {
+interface WikiViewerProps {
+  loggedIn: boolean
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const myDivRef = useRef([])
   const nav = useNavigate()
   const location = useLocation()
@@ -54,7 +59,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
     getQues()
   }, [flag])
 
-  function handleClick(index: any) {
+  function handleClick(index: number) {
     myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -96,12 +101,14 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
       if (result.data.success === true) {
         setFavorite(false)
         alert('즐겨찾기에서 삭제되었습니다')
-      } else {
-        alert('문제가 발생하였습니다')
+        return true
       }
+      alert('문제가 발생하였습니다')
+      return false
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
+      return false
     }
   }
 
@@ -137,26 +144,30 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
     }
   }
   // 로그인중인지 체크
-  const checkLoginStatus = async () => {
+  const checkLoginStatus = async (): Promise<void> => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
-      } else if (res.status === 401) {
+        return // 명시적으로 void 반환
+      }
+      if (res.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav('/signin')
+        nav('/signin')
       }
     } catch (error) {
       console.error(error)
       setLoggedIn(false)
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
+        // ?.을 사용하여 안전하게 오류 확인
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav('/signin')
+        nav('/signin')
+        return // 명시적으로 void 반환
       }
       alert('에러가 발생하였습니다')
-      return nav('/')
+      nav('/')
     }
   }
   useEffect(() => {
@@ -234,7 +245,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
 
       if (contribute.length !== 0) {
         // console.log(contribute);
-        const total = contribute.reduce((acc, item) => acc + parseInt(item.point), 0)
+        const total = contribute.reduce((acc, item) => acc + parseInt(item.point, 10), 0)
         setTotalPoint(total)
       } else {
         // console.log('기여도 없음');
@@ -286,16 +297,22 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
         <div className={styles.wikititle}>
           <h1>
             {title}
-            <img src={imageSource} alt={'Image'} onClick={handleClickBookmark} className={styles.bookmarkImg} />
+            <img
+              role={'presentation'}
+              src={imageSource}
+              alt={'Bookmark icon'}
+              onClick={handleClickBookmark}
+              className={styles.bookmarkImg}
+            />
           </h1>
           <div className={styles.wikititleBtn}>
-            <button onClick={linkToDebate} className={styles.wikititleBtnOne}>
-              <img src={debate} />
+            <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
+              <img alt={'토론 버튼'} src={debate} />
               &nbsp;{'토론하기\r'}
             </button>
 
-            <button onClick={linkToHistory} className={styles.wikititleBtnTwo}>
-              <img src={his} />
+            <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
+              <img alt={'히스토리 버튼'} src={his} />
               &nbsp;{'히스토리\r'}
             </button>
           </div>
@@ -304,7 +321,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
           <div className={styles.wikilist}>
             <div className={styles.wikilistTitle}>
               <h2>{'목차'}</h2>
-              <button onClick={linkToAllEdit}>{'전체 편집'}</button>
+              <button type={'button'} onClick={linkToAllEdit}>
+                {'전체 편집'}
+              </button>
             </div>
             <div>
               {allContent.map((item) => {
@@ -312,7 +331,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
                 const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount) // 탭은 유니코드 공백 문자 사용
 
                 return (
-                  <li onClick={() => handleClick(item.section)} key={item.section}>
+                  <li role={'presentation'} onClick={() => handleClick(item.section)} key={item.section}>
                     <span className={styles.wikiIndex}>
                       {tabs}
                       {item.index}
@@ -341,6 +360,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
                     <div className={styles.queslist}>
                       <hr className={styles.customHr} />
                       <ul
+                        role={'presentation'}
                         key={item.id}
                         onClick={() => {
                           const encodedTitle = encodeURIComponent(title)
@@ -366,7 +386,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
                         </span>
                         <span className={styles.quesNum}>
                           <span>{item.like_count}</span>
-                          <img src={minilike} />
+                          <img alt={'좋아요 이미지'} src={minilike} />
                         </span>
                       </ul>
                     </div>
@@ -376,10 +396,14 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
             </div>
             <div className={styles.wikiaskFoot}>
               <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
-                <button className={styles.addQues}>{'나도 질문하기'}</button>
+                <button type={'button'} className={styles.addQues}>
+                  {'나도 질문하기'}
+                </button>
               </Link>
               <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
-                <button className={styles.moreQues}>{'더보기'}</button>
+                <button type={'button'} className={styles.moreQues}>
+                  {'더보기'}
+                </button>
               </Link>
             </div>
           </div>
@@ -395,7 +419,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
           {allContent.length === 0 ? (
             <p>
               <span className={styles.noneComment}>{'"위키 문서가 없습니다. '}</span>
-              <span className={styles.newComment} onClick={() => nav('/newwiki')}>
+              <span role={'presentation'} className={styles.newComment} onClick={() => nav('/newwiki')}>
                 {'새 문서를 생성해주세요"\r'}
               </span>
             </p>
@@ -411,7 +435,12 @@ function WikiViewer({ loggedIn, setLoggedIn }: any) {
               }
 
               return (
-                <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
+                <div
+                  ref={(el) => {
+                    myDivRef.current[item.section] = el
+                  }}
+                  key={item.section}
+                >
                   <WikiBox
                     title={item.title}
                     content={item.content}

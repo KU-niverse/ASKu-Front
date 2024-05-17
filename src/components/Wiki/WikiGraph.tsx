@@ -1,9 +1,25 @@
-import React from 'react'
 import HSBar from 'react-horizontal-stacked-bar-chart'
 import styles from './WikiGraph.module.css'
 
-function WikiGraph({ total_point, users }: any) {
-  const getColor = (index: any) => {
+interface User {
+  nickname: string
+  point: number
+}
+
+interface Contribution {
+  name: string
+  value: number
+  description: string
+  color: string
+}
+
+interface WikiGraphProps {
+  total_point: number
+  users: User[]
+}
+
+function WikiGraph({ total_point, users }: WikiGraphProps) {
+  const getColor = (index: number): string => {
     const colors = [
       'rgba(251, 108, 108, 1)',
       'rgba(255, 214, 0, 1)',
@@ -18,27 +34,21 @@ function WikiGraph({ total_point, users }: any) {
   }
 
   // Calculate contributions and sort them
-  const contributions = users.map((user: any) => ({
+  const contributions: Contribution[] = users.map((user: User, index: number) => ({
     name: user.nickname,
     value: (user.point / total_point) * 100,
-
-    // color: getColor(doc.doc_title),
+    color: getColor(index % 4),
     description: `${((user.point / total_point) * 100).toFixed(2)}%`,
   }))
 
   // Sort contributions by value in descending order
-  contributions.sort((a: any, b: any) => b.value - a.value)
+  contributions.sort((a, b) => b.value - a.value)
 
   // Select top 3 contributions, and calculate the "Other" contribution
   const topContributions = contributions.slice(0, 3)
 
-  // Apply colors to top contributions based on their position
-  topContributions.forEach((contribution: any, index: any) => {
-    contribution.color = getColor(index) // Assuming getColor function returns appropriate colors
-  })
-
   let otherContributionValue = 0
-  contributions.slice(3).forEach((contribution: any) => {
+  contributions.slice(3).forEach((contribution: Contribution) => {
     otherContributionValue += contribution.value
   })
   topContributions.push({
@@ -75,8 +85,8 @@ function WikiGraph({ total_point, users }: any) {
       </div>
 
       <div className={styles.legend}>
-        {topContributions.map((item: any, index: any) => (
-          <div className={styles.legendItem} key={index}>
+        {topContributions.map((item: Contribution) => (
+          <div className={styles.legendItem} key={item.name}>
             <div className={styles.legendColor} style={{ background: item.color }} />
             <div className={styles.legendLabel}>
               <span className={styles.legendname}>{item.name}</span>
