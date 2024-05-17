@@ -1,17 +1,25 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef, useCallback, ChangeEvent } from 'react'
 import axios from 'axios'
 import closeBtn from '../img/close_btn.png'
 import styles from './EditModal.module.css'
 
-function EditModal({ isOpen, onClose, questionId }: any) {
+interface EditModalProps {
+  isOpen: boolean
+  onClose: () => void
+  questionId: string
+}
+
+function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
   const modalRef = useRef(null)
   const [questionContent, setQuestionContent] = useState('')
-  const handleOutsideClick = (event: any) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose()
-    }
-  }
+  const handleOutsideClick = useCallback(
+    (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose()
+      }
+    },
+    [onClose],
+  )
 
   useEffect(() => {
     if (isOpen) {
@@ -22,9 +30,9 @@ function EditModal({ isOpen, onClose, questionId }: any) {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick)
     }
-  }, [isOpen])
+  }, [handleOutsideClick, isOpen])
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target
     if (value.length <= 200) {
       setQuestionContent(value)
@@ -60,7 +68,7 @@ function EditModal({ isOpen, onClose, questionId }: any) {
       alert('질문을 입력해주세요.')
       return
     }
-    handleQuestionEdit(editData)
+    handleQuestionEdit()
   }
 
   const countCharacters = () => {
@@ -68,19 +76,21 @@ function EditModal({ isOpen, onClose, questionId }: any) {
   }
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <button type={'button'} className={styles.modal_close} onClick={onClose}>
+                  <img src={closeBtn} alt={'close'} className={styles.close_btn} />
+                </button>
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'질문 수정하기'}</p>
                 <div className={styles.q_cbox}>
                   <textarea
-                    rows={'7'}
+                    rows={7}
                     className={styles.q_ctextarea}
                     placeholder={'질문을 입력해주세요.'}
                     value={questionContent}
@@ -91,7 +101,7 @@ function EditModal({ isOpen, onClose, questionId }: any) {
                     <span className={styles.textnum}>{countCharacters()}</span>
                   </div>
                 </div>
-                <button className={styles.q_csubmit} onClick={handleSubmit}>
+                <button type={'button'} className={styles.q_csubmit} onClick={handleSubmit}>
                   {'수정하기\r'}
                 </button>
               </div>
@@ -99,7 +109,7 @@ function EditModal({ isOpen, onClose, questionId }: any) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

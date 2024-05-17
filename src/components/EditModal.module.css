@@ -30,6 +30,9 @@
 }
 
 .modal_close {
+  border: none;
+  background: none;
+  padding: 0;
   width: 100%;
   z-index: 200;
   height: 30px;
