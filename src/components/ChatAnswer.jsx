@@ -113,7 +113,7 @@ const ChatAnswer = (props) => {
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   참고문서:{link}
                 </Link>
-                <p>{value}</p>
+                {/* <p>{value}</p> */}
               </div>
             ))}
         </div>
@@ -185,7 +185,7 @@ const ChatAnswer = (props) => {
             </div>
             <div className={styles.reference_text}>
               <p>{parseReference(reference)}</p>
-              <p>{reference}</p>
+              {/* <p>{reference}</p> */}
             </div>
           </div>
         </div>
