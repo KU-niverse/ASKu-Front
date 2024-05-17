@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import comment_icon from '../img/comment_icon.png'
 import edit from '../img/edit.png'
@@ -7,6 +6,23 @@ import FormatDate from './FormatDate'
 import ThreedotsMenu from './ThreedotsMenu'
 import ThreedotsReport from './ThreedotsReport'
 import LikeorNot from './LikeorNot'
+
+interface QuestionQnAProps {
+  badge_image: string
+  current_user_id: string
+  answer_count: number
+  title: string
+  question_id: string
+  doc_id: string
+  user_id: string
+  index_title: string
+  content: string
+  created_at: string
+  answer_or_not: boolean
+  is_bad: boolean
+  nick: string
+  like_count: number
+}
 
 function QuestionQnA({
   badge_image,
@@ -23,7 +39,7 @@ function QuestionQnA({
   is_bad,
   nick,
   like_count,
-}: any) {
+}: QuestionQnAProps) {
   const formattedDate = FormatDate(created_at)
 
   const type = 2
@@ -90,7 +106,7 @@ function QuestionQnA({
           </div>
         </div>
         <div className={styles.q_backfooter}>
-          <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
+          <button type={'button'} onClick={linktoQuestionEdit} className={styles.q_editbtn}>
             <img src={edit} alt={'edit'} />
             <span>{'질문을 기반으로 문서 수정하기'}</span>
           </button>

@@ -7,6 +7,23 @@ import ThreedotsMenu from './ThreedotsMenu'
 import ThreedotsReport from './ThreedotsReport'
 import LikeorNot from './LikeorNot'
 
+interface QuestionProps {
+  badge_image: string
+  current_user_id: string
+  answer_count: number
+  title: string
+  id: string
+  doc_id: string
+  user_id: string
+  index_title: string
+  content: string
+  created_at: string
+  answer_or_not: boolean
+  is_bad: boolean
+  nick: string
+  like_count: number
+}
+
 function Question({
   badge_image,
   current_user_id,
@@ -22,7 +39,7 @@ function Question({
   is_bad,
   nick,
   like_count,
-}: any) {
+}: QuestionProps) {
   const formattedDate = FormatDate(created_at)
   const type = 2
   const nav = useNavigate()
@@ -80,7 +97,7 @@ function Question({
       </div>
       <div className={styles.q_middle}>
         <span className={styles.q_icon}>{'Q. '}</span>
-        <span onClick={linktoAnswer} className={styles.q_content}>
+        <span role={'presentation'} onClick={linktoAnswer} onKeyUp={linktoAnswer} className={styles.q_content}>
           <span className={styles.q_index}>
             {'['}
             {index_title}
@@ -94,13 +111,13 @@ function Question({
           <div className={styles.q_like}>
             <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
           </div>
-          <div onClick={linktoAnswer} className={styles.q_comment}>
+          <div role={'presentation'} onClick={linktoAnswer} className={styles.q_comment}>
             <img src={comment_icon} alt={'comment'} />
             <span className={styles.commentCount}>{answer_count}</span>
           </div>
         </div>
         <div className={styles.q_backfooter}>
-          <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
+          <button type={'button'} onClick={linktoQuestionEdit} className={styles.q_editbtn}>
             <img src={edit} alt={'edit'} />
             <span>{'질문을 기반으로 문서 수정하기'}</span>
           </button>
