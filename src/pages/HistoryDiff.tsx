@@ -29,6 +29,7 @@ import Header from '../components/Header'
 
 // `;
 
+
 const HistoryDiff = () => {
   const [isSplit, setIsSplit] = useState(true)
   const { title, ver } = useParams()
@@ -81,7 +82,7 @@ const HistoryDiff = () => {
           <div className={styles.verCompare}>
             <span className={styles.verCompareNum}>
               {'VERSION&nbsp;'}
-              {ver - 1}&nbsp;&nbsp;&nbsp;
+              {Number(ver) - 1}&nbsp;&nbsp;&nbsp;
             </span>
             <span className={styles.verCompareVs}>{'&nbsp;vs&nbsp;'}</span>
             <span className={styles.verCompareNum}>
@@ -94,7 +95,7 @@ const HistoryDiff = () => {
               oldValue={oldText}
               newValue={newText}
               splitView={isSplit}
-              className={styles.diffBox}
+              styles={{ diffContainer: styles.diffBox }}
               showDiffOnly
             />
           </div>

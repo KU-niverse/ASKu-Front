@@ -9,9 +9,26 @@ import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
 
+
+interface Debate {
+  id: number;
+  doc_id: number;
+  user_id: number;
+  subject: string;
+  created_at: string;
+  recent_edited_at: string;
+  done_or_not: boolean;
+  done_at: string | null;
+  is_bad: boolean;
+}
+
+interface DebateListData {
+  data: Debate[];
+}
+
 function MoreDebate() {
   const { title } = useParams()
-  const [debateListData, setDebateListData] = useState([])
+  const [debateListData, setDebateListData] = useState<DebateListData>({ data: [] })
 
   useEffect(() => {
     const takeDebateList = async () => {

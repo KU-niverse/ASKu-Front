@@ -13,7 +13,7 @@ import DebateRecent from '../components/Debate/DebateRecent'
 
 function Debate() {
   const [data, setData] = useState(null)
-  const [debateContentData, setDebateContentData] = useState([])
+  const [debateContentData, setDebateContentData] = useState<any>(null);
   const location = useLocation()
   const stateData = location.state
   const debateId = stateData.id
