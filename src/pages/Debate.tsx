@@ -11,14 +11,33 @@ import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
 
-function Debate() {
-  const [data, setData] = useState(null)
-  const [debateContentData, setDebateContentData] = useState<any>(null);
-  const location = useLocation()
-  const stateData = location.state
-  const debateId = stateData.id
-  const { title } = stateData
-  const { subject } = stateData
+
+interface DebateState {
+  id: string;
+  title: string;
+  subject: string;
+}
+
+interface DebateMessage {
+  id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  is_bad: boolean;
+  nickname: string;
+  badge_image: string;
+}
+
+interface DebateContentData {
+  message: {
+    data: number | DebateMessage[];
+  };
+}
+const Debate: React.FC = () => {
+  const [debateContentData, setDebateContentData] = useState<DebateContentData | null>(null);
+  const location = useLocation();
+  const stateData = location.state as DebateState;
+  const { id: debateId, title, subject } = stateData;
 
   useEffect(() => {
     const takeDebateContent = async () => {
@@ -57,7 +76,7 @@ function Debate() {
   //     }
   //   }
   // }; //토론 메세지 생성하기
-  const handleDebateSubmit = async (submitData: any) => {
+  const handleDebateSubmit = async (submitData: { content: string }) => {
     try {
       const postResponse = await axios.post(
         `${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`,
@@ -109,7 +128,7 @@ function Debate() {
           ) : (
             debateContentData &&
             debateContentData.message &&
-            debateContentData.data.map((debate: any, index: any) => (
+            (debateContentData.message.data as DebateMessage[]).map((debate, index) => (
               <DebateContent
                 key={debate.id}
                 r_id={debate.id}

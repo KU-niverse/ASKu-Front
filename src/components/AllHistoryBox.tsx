@@ -8,7 +8,18 @@ import watch from '../img/watch.png'
 import verComp from '../img/verComp.png'
 import ThreedotsReport from './ThreedotsReport'
 
-const HistoryBox = (props: any) => {
+interface HistoryBoxProps {
+  title: string;
+  version: number;
+  summary: string;
+  user: string;
+  timestamp: string;
+  doctitle?: string;
+  target: string;
+  type: string;
+}
+
+const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
   const { title } = props
@@ -25,7 +36,7 @@ const HistoryBox = (props: any) => {
     nav(`/wiki/preview/${encodedTitle}/${version}`)
   }
 
-  const handleRollback = async (e: any) => {
+  const handleRollback = async (e: React.MouseEvent<HTMLSpanElement>) => {
     try {
       const result = await axios.post(
         `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,

@@ -37,11 +37,11 @@ const data = [
 ]
 
 type HistoryItem = {
-  version: string;
+  version: number;
   summary: string;
   user: string;
   timestamp: string;
-  is_bad?: number; 
+  is_bad?: boolean; 
   nick?: string; 
   id?: string; 
 };
@@ -104,7 +104,7 @@ const History = () => {
           ) : (
             visibleHistorys.map((item) => {
               const isFirst = false
-              if (item.is_bad === 1) {
+              if (item.is_bad === true) {
                 return null // 패스 (무시)
               }
 

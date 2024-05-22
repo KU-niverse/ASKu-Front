@@ -11,9 +11,9 @@ import DebateRecent from '../components/Debate/DebateRecent'
 
 
 interface Debate {
-  id: number;
-  doc_id: number;
-  user_id: number;
+  id: string;
+  doc_id: string;
+  user_id: string;
   subject: string;
   created_at: string;
   recent_edited_at: string;
@@ -76,7 +76,7 @@ function MoreDebate() {
             ) : (
               debateListData &&
               debateListData.data &&
-              debateListData.data.map((data: any) => (
+              debateListData.data.map((data: Debate) => (
                 <DebateList
                   key={data.id}
                   id={data.id}

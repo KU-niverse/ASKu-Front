@@ -8,7 +8,18 @@ import watch from '../img/watch.png'
 import verComp from '../img/verComp.png'
 import ThreedotsReport from './ThreedotsReport'
 
-const HistoryBox = (props: any) => {
+
+interface HistoryBoxProps {
+  title: string;
+  version: number;
+  summary: string;
+  user: string;
+  timestamp: string;
+  doctitle?: string;
+  target: string;
+  type?: string;
+}
+const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
   const { title } = props

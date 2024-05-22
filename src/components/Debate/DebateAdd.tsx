@@ -4,7 +4,16 @@ import { Link } from 'react-router-dom'
 import plus from '../../img/Vector.png'
 import styles from './DebateAdd.module.css'
 
-const DebateAdd = ({ title }: any) => {
+
+interface DebateItem {
+  id: string;
+  title: string;
+  subject: string;
+}
+
+
+
+const DebateAdd = ({ title }: { title: string }) => {
   const [debateListData, setDebateListData] = useState(null)
   const [isAdd, setIsAdd] = useState(false)
   const [word, setWord] = useState('')
@@ -101,7 +110,7 @@ const DebateAdd = ({ title }: any) => {
         ) : debateListData.data.length === 0 ? (
           <p>{'"최근 변경된 토론이 없습니다."'}</p>
         ) : (
-          debateListData.data.map((item: any) => (
+          debateListData.data.map((item: DebateItem) => (
             <Link
               to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}
               state={{ title: item.title, subject: item.subject, id: item.id }}

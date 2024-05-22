@@ -5,7 +5,21 @@ import { Link, useNavigate } from 'react-router-dom'
 import FormatTimeAgo from '../FormatTimeAgo'
 import styles from './DebateRecent.module.css'
 
-const DebateRecent = ({ title }: any) => {
+
+interface DebateRecentProps {
+  title: string;
+}
+
+interface RecentItem {
+  title: string;
+  subject: string;
+  id: string;
+  recent_edited_at: string;
+}
+
+
+
+const DebateRecent = ({ title }: DebateRecentProps) => {
   const [recentListData, setRecentListData] = useState(null)
 
   useEffect(() => {
@@ -33,7 +47,7 @@ const DebateRecent = ({ title }: any) => {
         ) : recentListData.data.length === 0 ? (
           <p className={styles.none}>{'최근 변경된 토론이 없습니다.'}</p>
         ) : (
-          recentListData.data.slice(0, 4).map((item: any) => {
+          recentListData.data.slice(0, 4).map((item: RecentItem) => {
             const timestamp = FormatTimeAgo(item.recent_edited_at)
             return (
               <Link
