@@ -102,7 +102,7 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
       })
   }
 
-  const parseReference = (reference: string) => {
+  const parseReference = (reference: string | null) => {
     if (reference === null) {
       return ''
     }
