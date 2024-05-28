@@ -1,5 +1,5 @@
-function FormatTimeAgo(time: any) {
-  function formatDiff(timeDifference: any) {
+function FormatTimeAgo(time: string | number | Date) {
+  function formatDiff(timeDifference: number) {
     const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
 
     if (daysAgo >= 1) {
@@ -15,7 +15,7 @@ function FormatTimeAgo(time: any) {
 
   const inputDate = new Date(time)
   const currentDate = new Date()
-  const timeDifference = Math.abs(currentDate - inputDate)
+  const timeDifference = Math.abs(currentDate.getTime() - inputDate.getTime())
   const timestamp = formatDiff(timeDifference)
 
   return timestamp

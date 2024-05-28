@@ -10,7 +10,17 @@ import LoginModal from './LoginModal'
 import ClearModal from './ClearModal'
 import RefreshModal from './RefreshModal'
 
-function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
+interface User {
+  id: number
+}
+interface UserData {
+  data: User[]
+}
+interface ChatbotProps {
+  isLoggedIn: boolean
+  setIsLoggedIn: (isLoggedIn: boolean) => void
+}
+function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggest, setShowSuggest] = useState(true)
@@ -25,9 +35,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
   const closeLoginModal = () => {
     setLoginModalVisible(false)
   }
-  const [userId, setUserId] = useState('')
+  const [userId, setUserId] = useState<UserData | null>(null)
 
-  const inputChange = (e: any) => {
+  const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
 
@@ -70,7 +80,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
   }
 
   const sendMessage = async () => {
-    const userIdToSend = isLoggedIn ? userId.data[0].id : 0
+    if (!isLoggedIn) {
+      setLoginModalVisible(true) //로그인하지 않은 사용자는 LoginModal 표시
+      return
+    }
 
     if (inputValue.trim() !== '') {
       setLoading(true)
@@ -78,7 +91,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
       try {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: userIdToSend,
+          user_id: userId.data[0].id
         })
 
         setShowSuggest(false)
@@ -119,7 +132,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
     }
   }
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
       // if (!isLoggedIn) {
       //   setLoginModalVisible(true);
@@ -129,7 +142,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
     }
   }
 
-  const handleSuggestClick = (content: any) => {
+  const handleSuggestClick = (content: string) => {
     setShowSuggest(false)
 
     const newChatResponse = [
@@ -143,8 +156,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
     setTimeout(() => {
       setLoading(false) // 로딩 스피너 숨기기
 
+      type Answers = {
+        [key: string]:string
+      }
       // 더미 데이터에서 해당 추천 검색어에 대한 미리 저장한 답변을 가져와서 사용합니다.
-      const dummyAnswers = {
+      const dummyAnswers:Answers =  {
         '강의 최소 출석 일수에 대해 알려줘.':
           '제1조 (목적) 이 규정은 고려대학교 학칙 제45조제1항 및 제46조제1항에 근거하여 출석인 정에 관한 세부사항을 정함을 목적으로 한다. 제2조 (출석 및 성적 처리 기준) (1) 총 수업시간의 1/3 이상을 결석한 학생에 대해서는 성적을 부여하지 않습니다. 따라서, 고려대학교에서는 수업시간의 1/3 이상을 결석하면 성적을 받을 수 없습니다. 추가적인 출석 요건은 학칙에 명시되어 있지 않으므로, 이 학칙에 따라 출석 인정 기준이 정해져 있다고 볼 수 있습니다.',
         '너는 누구야?':
@@ -228,6 +244,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: any) {
           content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
           // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
           blockIconZip={blockIconZip}
+
+
         />
         {previousChatHistory.length !== 0 && (
           <>

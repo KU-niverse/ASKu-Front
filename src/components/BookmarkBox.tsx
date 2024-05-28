@@ -5,13 +5,17 @@ import falseBk from '../img/bookmarkfalse.png'
 import trueBk from '../img/bookmarkFill.png'
 import styles from './BookmarkBox.module.css'
 
-const BookmarkBox = (props: any) => {
-  const { title } = props
-  const { content } = props
-  const [favorite, setFavorite] = useState(Boolean(props.is_favorite))
+interface BookmarkBoxProps {
+  title: string
+  content: string
+  is_favorite: boolean
+  result: boolean
+}
+const BookmarkBox = ({title, content, is_favorite, result}: BookmarkBoxProps) => {
+  const [favorite, setFavorite] = useState(is_favorite)
   const [imageSource, setImageSource] = useState(trueBk)
   const nav = useNavigate()
-  const isResult = props.result
+  const isResult = result
 
   const addBookmark = async () => {
     try {

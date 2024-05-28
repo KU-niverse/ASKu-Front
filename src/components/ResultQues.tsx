@@ -6,21 +6,23 @@ import FormatDate from './FormatDate'
 import ThreedotsMenu from './ThreedotsMenu'
 import LikeorNot from './LikeorNot'
 
-function Question({
-  title,
-  id,
-  doc_id,
-  user_id,
-  index_title,
-  content,
-  created_at,
-  answer_count,
-  is_bad,
-  nick,
-  like_count,
-}: any) {
+interface QuestionProps {
+  title: string
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_count: number
+  is_bad: boolean
+  nick: string
+  like_count: number
+}
+function Question({title, id, doc_id, user_id, index_title, content, created_at, answer_count,
+  is_bad, nick, like_count}: QuestionProps) {
+  
   const formattedDate = FormatDate(created_at)
-
   const nav = useNavigate()
   const linktoQuestionEdit = () => {
     const encodedTitle = encodeURIComponent(title)

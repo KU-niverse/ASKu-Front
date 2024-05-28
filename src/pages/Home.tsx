@@ -9,7 +9,11 @@ import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
 
-function Home({ loggedIn, setLoggedIn }: any) {
+interface HomeProps{
+  loggedIn: boolean
+  setLoggedIn: (loggedIn: boolean) => void
+}
+function Home({ loggedIn, setLoggedIn }: HomeProps) {
   const [inputValue, setInputValue] = useState('')
   const [popularKeywords, setPopularKeywords] = useState([])
   const [popularQuestions, setPopularQuestions] = useState([])

@@ -3,10 +3,14 @@ import styles from './RefreshModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import haho_login from '../img/haho_login.png'
 
-function LoginModal({ isOpen, onClose }: any) {
+interface RefreshModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+function RefreshModal({ isOpen, onClose }: RefreshModalProps) {
   const modalRef = useRef(null)
 
-  const handleOutsideClick = (event: any) => {
+  const handleOutsideClick = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -52,4 +56,4 @@ function LoginModal({ isOpen, onClose }: any) {
   )
 }
 
-export default LoginModal
+export default RefreshModal

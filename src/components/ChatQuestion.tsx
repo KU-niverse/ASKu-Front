@@ -5,8 +5,11 @@ import unlike from '../img/unlike.png'
 import reference from '../img/reference.png'
 import dots from '../img/dots.png'
 
-const ChatQuestion = (props: any) => {
-  const { content } = props
+interface ChatQuestionProps {
+  content:string
+}
+const ChatQuestion = ({content}:ChatQuestionProps) => {
+  
   return (
     <div className={styles.questionBox}>
       <div className={styles.characterContainer}>
