@@ -41,6 +41,11 @@
   line-height: 150%;
   word-break: break-word;
 }
+@media screen and (max-width: 767px) {
+  .chatText {
+    padding-right: 15%;
+  }
+}
 
 .dots {
   position: relative;
@@ -60,7 +65,7 @@
 }
 @media screen and (max-width: 767px) {
   .iconZip {
-    left: 75%;
+    left: 70%;
   }
 }
 .icon {
