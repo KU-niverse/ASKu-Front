@@ -74,10 +74,10 @@ function Home({ loggedIn, setLoggedIn }) {
   }, []);
 
   return (
-    <div className="pageWrap">
+    <div className={styles.pageWrap}>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className={styles.homeWrap}>
-        <img src={logo} className={styles.logo} alt="logo" />
+        {/*<img src={logo} className={styles.logo} alt="logo" />*/}
         <div className={styles.inputContainer}>
           <input
             className={styles.searchInput}

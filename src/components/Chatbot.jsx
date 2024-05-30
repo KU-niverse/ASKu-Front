@@ -238,9 +238,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
-          <button id={styles.title}>AI 하호</button>
+          <button id={styles.title}>AI 챗봇</button>
           <button className={styles.button} onClick={handleClearModal}>
-            채팅 비우기
+            채팅 초기화
           </button>
           <Link
             to="https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4"
@@ -250,117 +250,128 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           </Link>
         </div>
       </div>
-      <div className={styles.chat}>
-        <ChatAnswer
-          content="안녕하세요! 무엇이든 제게 질문해주세요!"
-          // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
-          blockIconZip={blockIconZip}
-        />
-        {previousChatHistory.length !== 0 && (
-          <>
-            {previousChatHistory.map((item, index) => (
-              <Fragment key={item.id}>
-                <ChatQuestion content={item.q_content} />
+      <div className={styles.chatbox}>
+        <div className={styles.chat}>
+          <ChatAnswer
+            content="안녕하세요! 무엇이든 제게 질문해주세요!"
+            // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
+            blockIconZip={blockIconZip}
+          />
+          {previousChatHistory.length !== 0 && (
+            <>
+              {previousChatHistory.map((item, index) => (
+                <Fragment key={item.id}>
+                  <ChatQuestion content={item.q_content} />
+                  <ChatAnswer
+                    content={item.a_content}
+                    qnaId={item.id}
+                    reference={item.reference}
+                  />
+                </Fragment>
+              ))}
+            </>
+          )}
+          {chatResponse.map((item, index) => {
+            if (index % 2 === 0) {
+              return <ChatQuestion key={index} content={item.content} />;
+            } else {
+              return (
                 <ChatAnswer
-                  content={item.a_content}
-                  qnaId={item.id}
+                  key={index}
+                  content={item.content}
                   reference={item.reference}
+                  qnaId={item.qnaId}
+                  blockIconZip={!blockIconZip}
                 />
-              </Fragment>
-            ))}
-          </>
-        )}
-        {chatResponse.map((item, index) => {
-          if (index % 2 === 0) {
-            return <ChatQuestion key={index} content={item.content} />;
-          } else {
-            return (
-              <ChatAnswer
-                key={index}
-                content={item.content}
-                reference={item.reference}
-                qnaId={item.qnaId}
-                blockIconZip={!blockIconZip}
-              />
-            );
-          }
-        })}
-        <div
-          className={styles.suggest}
-          style={{ display: showSuggest ? "block" : "none" }}
-        >
-          <p id={styles.ref}>추천 질문</p>
-          <span
-            id="ref_res_1"
-            className={styles.textBox}
-            onClick={() => handleSuggestClick("너는 누구야?", 0)}
-          >
-            너는 누구야?
-          </span>
-          <span
-            id="ref_res_2"
-            className={styles.textBox}
-            onClick={() =>
-              handleSuggestClick("휴학은 최대 몇 년까지 가능해?", 1)
+              );
             }
-          >
-            휴학은 최대 몇 년까지 가능해?
-          </span>
-          <span
-            id="ref_res_3"
-            className={styles.textBox}
-            onClick={() =>
-              handleSuggestClick("강의 최소 출석 일수에 대해 알려줘.", 2)
-            }
-          >
-            강의 최소 출석 일수에 대해 알려줘.
-          </span>
-          <span
-            id="ref_res_4"
-            className={styles.textBox}
-            onClick={() => handleSuggestClick("이중전공은 어떻게 해?", 3)}
-          >
-            이중전공은 어떻게 해?
-          </span>
+          })}
+          
+          
+          <div ref={chatBottomRef}></div>
+          {loading && <Spinner />}
         </div>
-        <div ref={chatBottomRef}></div>
-        {loading && <Spinner />}
-      </div>
-      {isLoginModalVisible && (
-        <LoginModal
-          isOpen={isLoginModalVisible}
-          onClose={() => setLoginModalVisible(false)}
-        />
-      )}
-      {RefreshModalOpen && (
-        <RefreshModal
-          isOpen={RefreshModalOpen}
-          onClose={() => setRefreshModalOpen(false)}
-        />
-      )}
-      {ClearModalOpen && (
-        <ClearModal
-          isOpen={ClearModalOpen}
-          onClose={() => setClearModalOpen(false)}
-          userId={userId}
-        />
-      )}
-      <div className={styles.promptWrap}>
-        <textarea
-          className={styles.prompt}
-          placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
-          value={inputValue}
-          onChange={inputChange}
-          onKeyDown={handleKeyDown}
-          ref={inputRef}
-          disabled={loading}
-        />
-        <div
-          className={styles.sendBtn}
-          onClick={loading ? null : sendMessage}
-          style={{ cursor: loading ? "not-allowed" : "pointer" }}
-        >
-          <img src={arrow} />
+
+        
+        <div className={styles.suggestContainer}>        
+          <p id={styles.ref}>추천 검색어</p>    
+            <div className={styles.suggestions}>   
+              <div
+                className={styles.suggest}
+                style={showSuggest ? {} : { display: "none" }}
+              >
+                <span
+                  id="ref_res_1"
+                  className={styles.textBox}
+                  onClick={() => handleSuggestClick("너는 누구야?", 0)}
+                >
+                  너는 누구야?
+                </span>
+                <span
+                  id="ref_res_2"
+                  className={styles.textBox}
+                  onClick={() =>
+                    handleSuggestClick("휴학은 최대 몇 년까지 가능해?", 1)
+                  }
+                >
+                  휴학은 최대 몇 년까지 가능해?
+                </span>
+                <span
+                  id="ref_res_3"
+                  className={styles.textBox}
+                  onClick={() =>
+                    handleSuggestClick("강의 최소 출석 일수에 대해 알려줘.", 2)
+                  }
+                >
+                  강의 최소 출석 일수에 대해 알려줘.
+                </span>
+                <span
+                  id="ref_res_4"
+                  className={styles.textBox}
+                  onClick={() => handleSuggestClick("이중전공은 어떻게 해?", 3)}
+                >
+                  이중전공은 어떻게 해?
+                </span>
+              </div>
+          </div>
+        </div>
+
+        {isLoginModalVisible && (
+          <LoginModal
+            isOpen={isLoginModalVisible}
+            onClose={() => setLoginModalVisible(false)}
+          />
+        )}
+        {RefreshModalOpen && (
+          <RefreshModal
+            isOpen={RefreshModalOpen}
+            onClose={() => setRefreshModalOpen(false)}
+          />
+        )}
+        {ClearModalOpen && (
+          <ClearModal
+            isOpen={ClearModalOpen}
+            onClose={() => setClearModalOpen(false)}
+            userId={userId}
+          />
+        )}
+        <div className={styles.promptWrap}>
+          <textarea
+            className={styles.prompt}
+            placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
+            value={inputValue}
+            onChange={inputChange}
+            onKeyDown={handleKeyDown}
+            ref={inputRef}
+            disabled={loading}
+          />
+          <div
+            className={styles.sendBtn}
+            onClick={loading ? null : sendMessage}
+            style={{ cursor: loading ? "not-allowed" : "pointer" }}
+          >
+            <img src={arrow} />
+          </div>
         </div>
       </div>
     </div>

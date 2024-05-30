@@ -19,17 +19,21 @@ import axios from "axios";
 import AlarmMobileModal from "./AlarmMobileModal";
 import randomDocs from "../img/random.svg";
 import { track } from "@amplitude/analytics-browser";
+import all_document from "../img/all_document.svg"
+import recent_debate from "../img/recent_debate.svg"
+import random_document from "../img/random_document.svg"
 
 function Header({ userInfo, setUserInfo }) {
-  const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navContainerRightWidth, setNavContainerRightWidth] = useState("150px");
   const [navContainerRightMargin, setNavContainerRightMargin] =
     useState("100px");
   const [nicknameText, setNicknameText] = useState("");
-  const [isAlarmVisible, setIsAlarmVisible] = useState(false);
+  const [isAlarmVisible, setIsAlarmVisible] = useState();
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false);
-  const [mobileHeaderHeight, setMobileHeaderHeight] = useState("60px");
+  const default_height = '60px'
+  const [mobileHeaderHeight, setMobileHeaderHeight] = useState(default_height);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [loadingMypage, setLoadingMypage] = useState(true);
   const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false);
@@ -120,7 +124,7 @@ function Header({ userInfo, setUserInfo }) {
     setMobileHeaderOpen(false);
     if (mobileSearchOpen) {
       setMobileSearchOpen(false);
-      setMobileHeaderHeight("60px");
+      setMobileHeaderHeight(default_height);
     } else {
       setMobileSearchOpen(true);
       setMobileHeaderHeight("100px");
@@ -131,7 +135,7 @@ function Header({ userInfo, setUserInfo }) {
     setMobileSearchOpen(false);
     if (mobileHeaderOpen) {
       setMobileHeaderOpen(false);
-      setMobileHeaderHeight("60px");
+      setMobileHeaderHeight(default_height);
     } else {
       setMobileHeaderOpen(true);
       setMobileHeaderHeight("350px");
@@ -147,7 +151,7 @@ function Header({ userInfo, setUserInfo }) {
     if (window.innerWidth > 767) {
       setMobileHeaderOpen(false);
       setMobileSearchOpen(false);
-      setMobileHeaderHeight("60px");
+      setMobileHeaderHeight(default_height);
     }
   };
 
@@ -183,24 +187,46 @@ function Header({ userInfo, setUserInfo }) {
           </Link>
         </div>
         <div className={styles.flexContainer}>
+
           <div className={styles.navContainer_left}>
             <Link
               to="/allhistory"
               onClick={() => {
-                track("click_header_navi", { type: "최근 변경" });
+                track("click_header_navi", { type: "모든 문서" });
               }}
             >
-              <button className={styles.headerButton}>최근 변경</button>
+              <button className={styles.headerButton}>
+                <img src={all_document} alt="모든 문서" className={styles.icon} />
+                모든 문서
+              </button>
             </Link>
             <Link
               to="/latestdebate"
               onClick={() => {
-                track("click_header_navi", { type: "토론" });
+                track("click_header_navi", { type: "최근 토론" });
               }}
             >
-              <button className={styles.headerButton}>토론</button>
+              <button className={styles.headerButton}>
+                <img src={recent_debate} alt="최근 토론" className={styles.icon} />
+                최근 토론
+              </button>
+            </Link>
+            <Link
+              
+              onClick={() => {
+                track("click_header_navi", { type: "랜덤 문서" });
+                handleRandomDocClick();}}
+            >
+              <button className={styles.headerButton}>
+                <img src={random_document} alt="랜덤 문서" className={styles.icon} />
+                랜덤 문서
+              </button>
             </Link>
           </div>
+
+
+
+          {/*
           <div className={styles.inputContainer}>
             <input
               className={styles.headerInput}
@@ -220,6 +246,7 @@ function Header({ userInfo, setUserInfo }) {
                 }
               }}
             />
+            
             <img
               src={searchIcon}
               alt="icon"
@@ -242,6 +269,7 @@ function Header({ userInfo, setUserInfo }) {
               isLoggedIn={isLoggedIn}
             />
           </div>
+          */}
           <div
             className={styles.navContainer_right}
             style={{
@@ -251,12 +279,14 @@ function Header({ userInfo, setUserInfo }) {
           >
             {isLoggedIn ? (
               <>
+                {/*
                 <img
                   src={randomDocs}
                   alt="randomDocs"
                   className={styles.signinButton}
                   onClick={handleRandomDocClick}
                 />
+                */}
                 <img
                   src={bookmark}
                   alt="bookmark_gray"
@@ -300,24 +330,28 @@ function Header({ userInfo, setUserInfo }) {
               </>
             ) : (
               <>
+              {/*
                 <img
                   src={randomDocs}
                   alt="randomDocs"
                   className={styles.randomDocs}
                   onClick={handleRandomDocClick}
                 />
-                {/* <Link to="/signup">
+                 <Link to="/signup">
                   <button className={styles.headerButton}>회원가입</button>
                 </Link> */}
                 <a href="https://www.koreapas.com/m/member_join_new.php">
                   <button className={styles.headerButton}>회원가입</button>
                 </a>
                 <Link to="/signin">
-                  <button className={styles.headerButton}>로그인</button>
+                  <button className={styles.headerLoginButton}>로그인</button>
                 </Link>
               </>
             )}
           </div>
+
+          {/*여기부터 모바일?*/}
+          
           <div className={styles.mobileHeader}>
             <div className={styles.buttonWrap}>
               {isLoggedIn ? (
