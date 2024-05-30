@@ -9,9 +9,9 @@ interface ContributeProps {
   created_at: string;
   count: number;
   diff: number;
-  is_bad: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_rollback: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_q_based: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
+  is_bad: number; 
+  is_rollback: number; 
+  is_q_based: number; 
   title: string;
 }
 

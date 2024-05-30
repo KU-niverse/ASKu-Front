@@ -6,7 +6,7 @@ interface CommentListProps {
   id: number;
   subject: string;
   content: string;
-  time: string; // 예를 들어 string 형태의 시간으로 가정합니다.
+  time: string;
   doc_title: string;
 }
 

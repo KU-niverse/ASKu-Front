@@ -64,7 +64,7 @@ function Graph({ total_point, docs }: GraphProps) {
     name: '기타',
     value: otherContributionValue,
     description: `${otherContributionValue.toFixed(2)}%`,
-    color: getColor(3), // 모르겠음
+    color: getColor(3)
   })
 
   // 이름을 10자로 제한하고 넘어가면 "..."으로 처리하는 함수
