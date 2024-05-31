@@ -16,7 +16,7 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
   const [isNickValid, setisNickValid] = useState(true)
   const [nickDoubleCheck, setNickDoubleCheck] = useState(false)
 
-  const handleOutsideClick = (event: any) => { //event 타입 지정 모름
+  const handleOutsideClick = (event: any) => { //TODO: any 타입 지정(Mouse Event 오류 발생)
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -33,7 +33,7 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
     }
   }, [isOpen])
 
-  function onChangeNick(e: any) { //event 타입 지정 모름
+  function onChangeNick(e: any) { //TODO: any 타입 지정(Mouse Event 오류 발생)
     const nickRegex = /^[가-힣a-zA-Z]{2,10}$/
     const nickCurrent = e.target.value
     setNick(nickCurrent)

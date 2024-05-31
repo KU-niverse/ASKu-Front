@@ -28,7 +28,7 @@ interface MyBadgeResponse {
 
 function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   const modalRef = useRef(null)
-  const handleOutsideClick = (event: any) => { //any 타입을 뭐로 지정해야 될지 모르겠으미ㅣ
+  const handleOutsideClick = (event: any) => { //TODO: any 타입 지정(Mouse Event 오류 발생)
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
