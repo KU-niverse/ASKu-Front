@@ -2,6 +2,21 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import styles from './DebateList.module.css'
 import FormatDate from '../FormatDate'
 
+
+interface DebateListProps {
+  title: string;
+  id: string;
+  doc_id: string;
+  user_id: string;
+  subject: string;
+  created_at: string;
+  recent_edited_at: string;
+  done_or_not: boolean;
+  done_at: string;
+  is_bad: boolean;
+}
+
+
 function DebateList({
   title,
   id,
@@ -13,7 +28,7 @@ function DebateList({
   done_or_not,
   done_at,
   is_bad,
-}: any) {
+}: DebateListProps) {
   const formattedDate = FormatDate(recent_edited_at)
   const nav = useNavigate()
   const linktoDebateRoom = () => {

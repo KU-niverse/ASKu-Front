@@ -1,7 +1,14 @@
 import styles from './DebateTitle.module.css'
 import debate from '../../img/debate.png'
 
-function DebateTitle({ title, subject }: any) {
+
+interface DebateTitleProps {
+  title: string;
+  subject: string;
+}
+
+
+function DebateTitle({ title, subject }: DebateTitleProps) {
   return (
     <div className={styles.container}>
       <div className={styles.title}>

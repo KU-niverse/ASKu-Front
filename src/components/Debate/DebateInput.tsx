@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,ChangeEvent, KeyboardEvent } from 'react'
 
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import submit from '../../img/submit.png'
 import styles from './DebateInput.module.css'
 
-function DebateInput({ onDebateSubmit, title, debateId }: any) {
-  const [debateContent, setDebateContent] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
-  const Navigate = useNavigate()
+interface DebateInputProps {
+  onDebateSubmit: (submitData: { content: string }) => Promise<void>;
+  title: string;
+  debateId: string;
+}
+
+
+
+const DebateInput = ({ onDebateSubmit, title, debateId }: DebateInputProps) => {
+  const [debateContent, setDebateContent] = useState<string>('');
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const Navigate = useNavigate();
 
   const location = useLocation()
   const from = location.state?.from || '/'
@@ -35,7 +43,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: any) {
     checkLoginStatus()
   }, [])
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target
     // 줄바꿈을 포함하여 길이를 계산
     if (value.length <= 200) {
@@ -64,7 +72,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: any) {
     setDebateContent('')
   }
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     // Shift + Enter가 동시에 눌렸을 때
     if (event.key === 'Enter' && event.shiftKey) {
     }
@@ -84,7 +92,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: any) {
       </div>
       <div className={styles.textbox}>
         <textarea
-          rows={'4'}
+          rows={4}
           className={styles.textarea}
           placeholder={'해당 토론에 대한 의견을 입력하세요.'}
           value={debateContent}

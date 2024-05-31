@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState ,ChangeEvent, KeyboardEvent} from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './DebateSearch.module.css'
 import searchIcon from '../../img/search_icon.svg'
 
-const DebateSearch = ({ title }: any) => {
+
+interface DebateSearchProps {
+  title: string;
+}
+
+interface SearchResult {
+  id: string;
+  subject: string;
+}
+
+
+const DebateSearch = ({ title }: DebateSearchProps) => {
   const [word, setWord] = useState('')
   const [results, setResults] = useState([])
   const [resultCount, setResultCount] = useState(0)
@@ -32,7 +43,7 @@ const DebateSearch = ({ title }: any) => {
     setOnClick(true)
   }
 
-  function handleKeyDown(e: any) {
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       handleDebateSearch()
     }

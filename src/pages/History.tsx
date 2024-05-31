@@ -36,21 +36,31 @@ const data = [
   },
 ]
 
-const History = (props: any) => {
-  const { title } = useParams()
-  const [lists, setLists] = useState([])
-  const [typeCount, setTypeCount] = useState(0)
-  const [page, setPage] = useState(1) // 현재 페이지 상태 추가
-  const perPage = 6 // 페이지당 보여줄 컴포넌트 갯수
-  // 현재 페이지에 해당하는 데이터만 추출
-  const startIndex = (page - 1) * perPage
-  const endIndex = startIndex + perPage
-  const visibleHistorys = lists.slice(startIndex, endIndex)
-  const [blank, setBlank] = useState(false)
+type HistoryItem = {
+  version: number;
+  summary: string;
+  user: string;
+  timestamp: string;
+  is_bad?: boolean; 
+  nick?: string; 
+  id?: string; 
+};
 
-  const handlePageChange = (pageNumber: any) => {
-    setPage(pageNumber) // 페이지 번호 업데이트
-  }
+const History = () => {
+  const { title } = useParams<{ title: string }>();
+  const [lists, setLists] = useState<HistoryItem[]>([]);
+  const [typeCount, setTypeCount] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const perPage = 6;
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const visibleHistorys = lists.slice(startIndex, endIndex);
+  const [blank, setBlank] = useState<boolean>(false);
+
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber);
+  };
+
 
   const getWiki = async () => {
     try {
@@ -94,7 +104,7 @@ const History = (props: any) => {
           ) : (
             visibleHistorys.map((item) => {
               const isFirst = false
-              if (item.is_bad === 1) {
+              if (item.is_bad === true) {
                 return null // 패스 (무시)
               }
 

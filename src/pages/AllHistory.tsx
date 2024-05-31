@@ -47,7 +47,7 @@ const AllHistory = () => {
   const endIndex = startIndex + perPage
   const visibleHistorys = historys.slice(startIndex, endIndex)
 
-  const handlePageChange = (pageNumber: any) => {
+  const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
   }
 
