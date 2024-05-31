@@ -10,6 +10,9 @@ import ClearModal from "./ClearModal";
 import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
 import { track } from "@amplitude/analytics-browser";
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import { useResizeDetector } from 'react-resize-detector';
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -234,6 +237,19 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     scrollToBottomOnLoadingChange();
   }, [loading]);
 
+  const [maxWidth, setMaxWidth] = useState('auto');
+  const suggestContainerRef = useRef(null);
+  const { width: containerWidth } = useResizeDetector({
+    targetRef: suggestContainerRef,
+  });
+
+  useEffect(() => {
+    if (containerWidth) {
+      setMaxWidth(`${containerWidth}px`);
+    }
+  }, [containerWidth]);
+
+
   return (
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
@@ -293,13 +309,13 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         </div>
 
         
-        <div className={styles.suggestContainer}>        
-          <p id={styles.ref}>추천 검색어</p>    
-            <div className={styles.suggestions}>   
-              <div
-                className={styles.suggest}
-                style={showSuggest ? {} : { display: "none" }}
-              >
+        <div className={styles.suggestContainer}
+        style={showSuggest ? {} : { display: "none" }}
+        ref={suggestContainerRef}>        
+          <p id={styles.ref}>추천 검색어</p>
+          <div className={styles.scrollbarContainer}> 
+            <PerfectScrollbar className={styles.suggestScrollbar}>               
+              <div className={styles.suggest}>
                 <span
                   id="ref_res_1"
                   className={styles.textBox}
@@ -333,7 +349,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
                   이중전공은 어떻게 해?
                 </span>
               </div>
-          </div>
+            </PerfectScrollbar> 
+          </div>  
         </div>
 
         {isLoginModalVisible && (
