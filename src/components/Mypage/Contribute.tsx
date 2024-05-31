@@ -1,4 +1,19 @@
 import styles from './Contribute.module.css'
+interface ContributeProps {
+  key: number;
+  user_id: number;
+  doc_id: number;
+  text_pointer: string;
+  version: number;
+  summary: string;
+  created_at: string;
+  count: number;
+  diff: number;
+  is_bad: number; 
+  is_rollback: number; 
+  is_q_based: number; 
+  title: string;
+}
 
 function Contribute({
   title,
@@ -14,7 +29,8 @@ function Contribute({
   is_bad,
   is_rollback,
   is_q_based,
-}: any) {
+}: ContributeProps) {
+
   // 주어진 created_at 값을 그대로 사용하여 Date 객체 생성
   const utcDate = new Date(created_at)
 
@@ -25,7 +41,7 @@ function Contribute({
   const maxLength = 80
 
   // 글자 수가 maxLength를 넘으면 뒤에 "..."을 붙이고 아니면 그대로 반환
-  const truncateContent = (text: any) => {
+  const truncateContent = (text: string) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
   }
   const displayDiff = diff < 0 ? 0 : diff

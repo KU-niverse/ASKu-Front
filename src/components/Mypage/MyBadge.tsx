@@ -1,7 +1,15 @@
 import haho from '../../img/haho.png'
 import styles from './MyBadge.module.css'
 
-function MyBadge(key: any, id: any, user_id: any, badge_id: any, time: any) {
+interface MyBadgeProps {
+  key: number;
+  id: number;
+  user_id: number;
+  badge_id: number;
+  time: string;
+}
+
+function MyBadge({key, id, user_id,badge_id, time} : MyBadgeProps) {
   return (
     <div className={styles.badgegrid}>
       <img src={haho} alt={'haho'} />

@@ -1,7 +1,12 @@
 import React from 'react'
 import styles from './Switch.module.css'
 
-const Switch = ({ isToggled, onToggle }: any) => {
+interface SwitchProps {
+  isToggled: boolean;
+  onToggle: () => void;
+}
+
+const Switch = ({ isToggled, onToggle }: SwitchProps) => {
   return (
     <label className={styles.switch}>
       <input type={'checkbox'} checked={isToggled} onChange={onToggle} />

@@ -5,13 +5,18 @@ import { BsCheck2All } from 'react-icons/bs'
 import closeBtn from '../../img/close_btn.png'
 import styles from './NickEditModal.module.css'
 
-function EditModal({ isOpen, onClose }: any) {
+interface EditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function EditModal({ isOpen, onClose }: EditModalProps) {
   const modalRef = useRef(null)
   const [nick, setNick] = useState('')
   const [isNickValid, setisNickValid] = useState(true)
   const [nickDoubleCheck, setNickDoubleCheck] = useState(false)
 
-  const handleOutsideClick = (event: any) => {
+  const handleOutsideClick = (event: any) => { //TODO: any 타입 지정(Mouse Event 오류 발생)
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -28,7 +33,7 @@ function EditModal({ isOpen, onClose }: any) {
     }
   }, [isOpen])
 
-  function onChangeNick(e: any) {
+  function onChangeNick(e: any) { //TODO: any 타입 지정(Mouse Event 오류 발생)
     const nickRegex = /^[가-힣a-zA-Z]{2,10}$/
     const nickCurrent = e.target.value
     setNick(nickCurrent)
@@ -119,7 +124,7 @@ function EditModal({ isOpen, onClose }: any) {
                       placeholder={'2-8자 한글이나 영어로 입력'}
                       name={'nick'}
                       value={nick}
-                      maxLength={'8'}
+                      maxLength={8}
                       onChange={onChangeNick}
                       className={`${styles.nick_input}`}
                     />

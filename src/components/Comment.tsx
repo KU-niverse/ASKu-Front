@@ -6,7 +6,17 @@ import styles from './Comment.module.css'
 import ThreedotsReport from './ThreedotsReport'
 import FormatDate from './FormatDate'
 
-function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: any) {
+interface CommentProps {
+  id: number;
+  subject: string;
+  content: string;
+  created_at: string;
+  is_bad: boolean;
+  docsname: string;
+  nick: string;
+}
+
+function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: CommentProps) {
   const formattedDate = FormatDate(created_at)
   const nav = useNavigate()
   const debateId = id

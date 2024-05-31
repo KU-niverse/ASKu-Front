@@ -9,13 +9,28 @@ import Switch from '../components/Switch'
 
 import SpinnerMypage from '../components/SpinnerMypage'
 
+
+interface MyDebateProps {
+  success: boolean;
+  message: {
+    debate_id: number;
+    debate_subject: string;
+    debate_content: string;
+    debate_content_time: string;
+    is_bad: boolean;
+    doc_title: string;
+  }[];
+}
+
+
 function MyComment() {
   const [isToggled, setIsToggled] = useState(false) // import하려는 페이지에 구현
   const [loadingMyDebate, setLoadingMyDebate] = useState(true)
   const [loadingMypage, setLoadingMypage] = useState(true)
 
   // 토론 기록 불러오기
-  const [myDebate, setMyDebate] = useState([])
+  const [myDebate, setMyDebate] = useState<MyDebateProps>({ success: false, message: [] });
+
   useEffect(() => {
     const takeMyDebate = async () => {
       try {
@@ -36,8 +51,30 @@ function MyComment() {
     takeMyDebate()
   }, [])
 
+  interface MyInfoProps {
+    success: boolean;
+    message: string;
+    data: {
+      id: number;
+      name: string;
+      login_id: string;
+      stu_id: string;
+      email: string;
+      rep_badge_id: number;
+      nickname: string;
+      created_at: string;
+      point: number;
+      is_admin: number;
+      is_authorized: number;
+      restrict_period: string | null;
+      restrict_count: number;
+      rep_badge_name: string;
+      rep_badge_image: string;
+    }[];
+  }
+  
   // 내 정보 불러오기
-  const [mypageData, setMypageData] = useState([])
+  const [mypageData, setMypageData] = useState<MyInfoProps>({ success: false, message: "", data: [] });
   useEffect(() => {
     const takeMypage = async () => {
       try {
@@ -58,6 +95,14 @@ function MyComment() {
     takeMypage()
   }, []) // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
 
+  interface MyDebateMessage {
+    debate_id: number;
+    debate_subject: string;
+    debate_content: string;
+    debate_content_time: string;
+    is_bad: boolean;
+    doc_title: string;
+  }
   return (
     <div className={styles.container}>
       <div>
@@ -81,7 +126,7 @@ function MyComment() {
             mypageData &&
             myDebate &&
             myDebate.message &&
-            myDebate.message.map((debate: any) => (
+            myDebate.message.map((debate: MyDebateMessage) => (
               <Comment
                 key={debate.debate_id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                 id={debate.debate_id}

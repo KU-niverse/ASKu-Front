@@ -2,8 +2,27 @@ import React from 'react'
 import HSBar from 'react-horizontal-stacked-bar-chart'
 import styles from './Graph.module.css'
 
-function Graph({ total_point, docs }: any) {
-  const getColor = (index: any) => {
+interface Document {
+  doc_title: string; // 문서 제목
+  doc_id: number; // 문서 ID
+  doc_point: string; // 문서 포인트
+  percentage: string; // 백분율 (문자열)
+}
+
+interface GraphProps {
+  total_point: number; // 전체 포인트
+  docs: Document[]; // 문서 목록
+}
+
+interface Contribution {
+  name: string;
+  value: number;
+  description: string;
+  color?: string; // Optional
+}
+
+function Graph({ total_point, docs }: GraphProps) {
+  const getColor = (index: number) => {
     const colors = [
       'rgba(251, 108, 108, 1)',
       'rgba(255, 214, 0, 1)',
@@ -18,38 +37,38 @@ function Graph({ total_point, docs }: any) {
   }
 
   // Calculate contributions and sort them
-  const contributions = docs.map((doc: any) => ({
+  const contributions = docs.map((doc: Document) => ({
     name: doc.doc_title,
-    value: (doc.doc_point / total_point) * 100,
+    value: (parseFloat(doc.doc_point) / total_point) * 100,
 
     // color: getColor(doc.doc_title),
-    description: `${((doc.doc_point / total_point) * 100).toFixed(2)}%`,
+    description: `${((parseFloat(doc.doc_point) / total_point) * 100).toFixed(2)}%`,
   }))
 
   // Sort contributions by value in descending order
-  contributions.sort((a: any, b: any) => b.value - a.value)
+  contributions.sort((a: Contribution, b: Contribution) => b.value - a.value)
 
   // Select top 3 contributions, and calculate the "Other" contribution
   const topContributions = contributions.slice(0, 3)
 
   // Apply colors to top contributions based on their position
-  topContributions.forEach((contribution: any, index: any) => {
+  topContributions.forEach((contribution: Contribution, index: number) => {
     contribution.color = getColor(index) // Assuming getColor function returns appropriate colors
   })
 
   let otherContributionValue = 0
-  contributions.slice(3).forEach((contribution: any) => {
+  contributions.slice(3).forEach((contribution: Contribution) => {
     otherContributionValue += contribution.value
   })
   topContributions.push({
     name: '기타',
     value: otherContributionValue,
     description: `${otherContributionValue.toFixed(2)}%`,
-    color: getColor(3),
+    color: getColor(3)
   })
 
   // 이름을 10자로 제한하고 넘어가면 "..."으로 처리하는 함수
-  const truncateString = (str: any, num: any) => {
+  const truncateString = (str: string, num: number) => {
     if (str.length > num) {
       return `${str.slice(0, num)}...`
     }
@@ -82,7 +101,7 @@ function Graph({ total_point, docs }: any) {
         </div>
       </div>
       <div className={styles.legend}>
-        {topContributions.map((item: any, index: any) => (
+        {topContributions.map((item: Contribution, index: number) => (
           <div className={styles.legendItem} key={index}>
             <div className={styles.legendColor} style={{ background: item.color }} />
             <div className={styles.legendLabel}>
