@@ -1,24 +1,33 @@
 .answerBox {
-    position: relative;
+    display: flex;
+    flex-direction: row;
     background-color: #FEF2F4;
     margin-top: 25px;
-    width: 550px;
+    width: calc(100% - 100px);
     height: auto;
     border-radius: 12px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-left: 50px;
+    margin-right: 50px;
     word-break:keep-all;
     position: relative;
+    min-height: 92px;
+    align-items: center;
+    max-width: 800px;
 }
 @media screen and (max-width: 767px) {
     .answerBox {
         width: calc(100vw - 50px);
     }
 }
-
+.characterWrapper{
+    width: 92px;
+    min-height: 92px;
+    height: 100%;
+    position: static;
+}
 .characterContainer {
-    position: relative;
-    top: 20px;
+    position: absolute;
+    top: 25px;
     left: 25px;
     display: flex;
     align-items: center;
@@ -35,12 +44,14 @@
 }
 
 .chatText {
-    position: relative;
-    left: 90px;
-    top: -20px;
-    font-size: 12px;
+    width: calc(100% - 50px);
+    margin-left: 0px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
     line-height: 150%;
     word-break: break-word;
+    margin-top: 35px;
+    margin-bottom: 35px;
 }
 
 .dots {
@@ -53,11 +64,11 @@
 
 .iconZip {
     display: flex;
-    position: relative;
-    bottom: 10px;
-    left: 450px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
     flex-direction: row;
-    width: 12px;
+    width: auto;
 }
 @media screen and (max-width: 767px) {
     .iconZip {
@@ -73,8 +84,8 @@
 }
 
 .chatTextWrap {
-    max-width: 400px;
-    height: auto;
+    position: relative;
+    flex: 1;
 }
 
 @media screen and (max-width: 500px) {

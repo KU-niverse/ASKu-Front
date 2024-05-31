@@ -72,8 +72,15 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     getUserInfo();
   }, []);
 
+  
   const scrollToBottom = () => {
-    chatBottomRef.current.scrollIntoView({ behavior: "smooth" });
+    if (chatBottomRef.current) {
+      console.log("Scrolling to bottom:", chatBottomRef.current);
+      
+    setTimeout(() => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }), 100);
+    } else {
+      console.log("chatBottomRef is not set");
+    }
   };
 
   const sendMessage = async () => {
@@ -190,15 +197,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       ];
       setChatResponse(updatedChatResponse);
       setInputValue("");
-      setShowSuggest(true);
+      setShowSuggest(true);   
     }, 3000); // 3초 후에 실행
+    
   };
 
   const chatBottomRef = useRef(null);
 
   // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom()
   }, [chatResponse]);
 
   useEffect(() => {
@@ -302,8 +310,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
               );
             }
           })}
-          
-          
           <div ref={chatBottomRef}></div>
           {loading && <Spinner />}
         </div>
@@ -319,6 +325,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
                 <span
                   id="ref_res_1"
                   className={styles.textBox}
+                  style={{marginLeft: "0px"}}
                   onClick={() => handleSuggestClick("너는 누구야?", 0)}
                 >
                   너는 누구야?
@@ -372,7 +379,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             userId={userId}
           />
         )}
-        <div className={styles.promptWrap}>
+        <div className={styles.promptWrap}
+        style={showSuggest ? {} : { marginTop: "25px" }}>
           <textarea
             className={styles.prompt}
             placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
