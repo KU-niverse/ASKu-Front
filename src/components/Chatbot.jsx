@@ -257,6 +257,30 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     }
   }, [containerWidth]);
 
+  const scrollRef = useRef(null);
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  const handleMouseEnter = () => {
+    if (scrollRef.current) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        setTimeoutId(null);
+      }
+      scrollRef.current.style.overflowX = 'auto';
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (scrollRef.current) {
+      const id = setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.style.overflowX = 'hidden';
+        }
+      }, 1000); // 1초 후에 가로 스크롤바 숨김
+      setTimeoutId(id);
+    }
+  };
+
 
   return (
     <div className={styles.chatBot}>
@@ -320,7 +344,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         ref={suggestContainerRef}>        
           <p id={styles.ref}>추천 검색어</p>
           <div className={styles.scrollbarContainer}> 
-            <PerfectScrollbar className={styles.suggestScrollbar}>               
+            <div className={styles.suggestScrollbar}
+            ref={scrollRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}>               
               <div className={styles.suggest}>
                 <span
                   id="ref_res_1"
@@ -356,7 +383,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
                   이중전공은 어떻게 해?
                 </span>
               </div>
-            </PerfectScrollbar> 
+            </div> 
           </div>  
         </div>
 

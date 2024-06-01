@@ -79,9 +79,10 @@ function Home({ loggedIn, setLoggedIn }) {
       <div className={styles.homeWrap}>
         {/*<img src={logo} className={styles.logo} alt="logo" />*/}
         <div className={styles.inputContainer}>
+          <img src={logo} className={styles.logo} alt="logo" />
           <input
             className={styles.searchInput}
-            placeholder="검색어를 입력하세요."
+            placeholder="Wiki 검색어를 입력하세요."
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
