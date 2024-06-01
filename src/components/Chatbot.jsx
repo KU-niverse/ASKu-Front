@@ -13,6 +13,8 @@ import { track } from "@amplitude/analytics-browser";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { useResizeDetector } from 'react-resize-detector';
+import infoIcon from "../img/Info.svg";
+import refreshIcon from "../img/Refresh.svg";
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -287,14 +289,23 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
           <button id={styles.title}>AI 챗봇</button>
-          <button className={styles.button} onClick={handleClearModal}>
-            채팅 초기화
-          </button>
+          <div className={styles.buttonContainer}  onClick={handleClearModal}>
+            <img src={refreshIcon} className={styles.sidebarIcon} alt="refresh" />
+            <button className={styles.button}>
+              채팅 초기화
+            </button>
+          </div>
           <Link
             to="https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4"
             target="_blank"
-          >
-            <button className={styles.button}>도움말</button>
+            style={{ textDecoration: "none"}}
+          >            
+            <div className={styles.buttonContainer}>              
+              <img src={infoIcon} className={styles.sidebarIcon} alt="info" />
+              <button className={styles.button} >
+                도움말
+              </button>
+            </div>
           </Link>
         </div>
       </div>

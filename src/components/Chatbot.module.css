@@ -40,24 +40,28 @@
     font-size: 12px;
     color: #747474;
     margin-top: 20px;
-    margin-right: 25px;
 }
 
 #title {
     font-weight: 800;
-    font-size: 18px;
+    font-size: 20px;
     color: #9F132E;
     cursor: default;
-    text-align: start;
+    text-align: center;
     width: 85px;
     border: none;
     background-color: #FEF2F4;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
+.buttonContainer{
+    display: flex;    
+    cursor: pointer;
+    align-items: center;
+    justify-items: start;
+    margin-top: 15px;
+}
 .button {
-    margin-top: 10px;
     width: 85px;
     border: none;
     color: #747474;
@@ -65,6 +69,7 @@
     cursor: pointer;
     text-align: start;
 }
+
 
 .chatbox {
     display: flex;
@@ -137,6 +142,11 @@
     height: 15px;
     margin-right: 15px;
     cursor: pointer;
+}
+.sidebarIcon{
+    width: 15px;
+    height: 15px;    
+    margin-right: 5px;
 }
 
 .suggestContainer {

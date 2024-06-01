@@ -77,7 +77,6 @@ function Home({ loggedIn, setLoggedIn }) {
     <div className={styles.pageWrap}>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className={styles.homeWrap}>
-        {/*<img src={logo} className={styles.logo} alt="logo" />*/}
         <div className={styles.inputContainer}>
           <img src={logo} className={styles.logo} alt="logo" />
           <input

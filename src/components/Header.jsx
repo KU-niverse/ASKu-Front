@@ -4,8 +4,8 @@ import logo from "../img/logo.png";
 import searchIcon from "../img/search_icon.svg";
 import searchIconGray from "../img/search_icon_gray.png";
 import hamburger from "../img/hamburger.png";
-import alarm from "../img/bell.png";
-import bookmark from "../img/bookmark_grey.png";
+import alarm from "../img/bell.svg";
+import bookmark from "../img/bookmark_grey.svg";
 import mypage from "../img/mypage_btn.png";
 import mobilemypage from "../img/mobile_mypage.png";
 import mobilealarm from "../img/mobile_alarm.png";
@@ -181,13 +181,14 @@ function Header({ userInfo, setUserInfo }) {
   return (
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
       <div className={styles.headerContainer}>
+        {/*
         <div className={styles.logoContainer}>
           <Link to="/">
             <img src={logo} alt="logo" className={styles.logo} />
           </Link>
         </div>
+        */}
         <div className={styles.flexContainer}>
-
           <div className={styles.navContainer_left}>
             <Link
               to="/allhistory"
@@ -303,7 +304,9 @@ function Header({ userInfo, setUserInfo }) {
                   className={styles.signinButton}
                   onClick={handleAlarm}
                 />
-                <button className={styles.headerButton} onClick={signOut}>
+                <button className={styles.headerButton} 
+                  onClick={signOut}                
+                  style={{marginRight : "30px"}}>
                   로그아웃
                 </button>
                 {loadingMypage ? (
