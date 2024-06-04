@@ -6,13 +6,13 @@ import ReactQuill from 'react-quill'
 import axios from 'axios'
 import { useMemo, useRef, useState, useEffect } from 'react'
 
-function Quill(props: any) {
-  const [value, setValue] = useState(props.value)
-  const quillRef = useRef()
+function Quill({ value, onChange }: { value: string; onChange: (newValue: string) => void }) {
+  const [editorValue, setEditorValue] = useState(value)
+  const quillRef = useRef<ReactQuill>(null)
 
   useEffect(() => {
-    setValue(props.value)
-  }, [props.value])
+    setEditorValue(value)
+  }, [value])
 
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
@@ -40,7 +40,7 @@ function Quill(props: any) {
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
 
         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-        const editor = quillRef.current.getEditor() // 에디터 객체 가져오기
+        const editor = quillRef.current?.getEditor() // 에디터 객체 가져오기
         // 1. 에디터 root의 innerHTML을 수정해주기
         // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
         // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
@@ -97,7 +97,7 @@ function Quill(props: any) {
 
   // 이벤트 핸들러
   const onClickContents = () => {
-    const editor = quillRef.current.getEditor()
+    const editor = quillRef.current?.getEditor()
     // console.log(quillRef.current);
     // console.log(editor.root); // 에디터 안의 내용 HTML 태그
 
@@ -111,17 +111,17 @@ function Quill(props: any) {
         ref={quillRef}
         theme={'snow'}
         placeholder={'내용을 작성해주세요(내용을 작성해야 제출이 완료됩니다.)'}
-        value={value}
+        value={editorValue}
         onChange={(newValue) => {
-          setValue(newValue)
+          setEditorValue(newValue)
           // console.log(newValue);
-          const editor = quillRef.current.getEditor()
+          const editor = quillRef.current?.getEditor()
           // console.log(quillRef.current);
           // console.log(editor.root); // 에디터 안의 내용 HTML 태그
 
           // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
           // console.log("안의 내용물 전부", quillRef.current.getEditorContents());
-          props.onChange(newValue) // 내부 상태 변경 후, 부모 컴포넌트로 업데이트된 값을 전달
+          onChange(newValue) // 내부 상태 변경 후, 부모 컴포넌트로 업데이트된 값을 전달
         }}
         modules={modules}
         formats={formats}

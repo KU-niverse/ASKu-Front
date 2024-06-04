@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
-
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import styles from './QuestionInput.module.css'
 import DropDown from './DropDown'
 
-function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: any) {
+interface QuestionInputProps {
+  onQuestionSubmit: (submitData: { index_title: string; content: string }) => Promise<void> // 확인 필요
+  title: string
+  wikiData: { id: number; name: string }[] // 확인 필요
+  defaultOpt: string
+}
+
+function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: QuestionInputProps) {
   const [questionContent, setQuestionContent] = useState('')
   const [selectedOption, setSelectedOption] = useState('전체') // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false)
@@ -70,11 +76,11 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: any) {
   }, [])
 
   // dropdown에서 선택한 index 반영
-  const handleSelectedOption = (optionValue: any) => {
+  const handleSelectedOption = (optionValue: string) => {
     setSelectedOption(optionValue)
   }
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target
     if (value.length <= 200) {
       setQuestionContent(value)
@@ -127,7 +133,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: any) {
 
       <div className={styles.q_cbox}>
         <textarea
-          rows={'4'}
+          rows={4}
           className={styles.q_ctextarea}
           placeholder={'질문을 입력해주세요.'}
           value={questionContent}
@@ -136,7 +142,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: any) {
         />
         <div className={styles.q_clastheader}>
           <span className={styles.textnum}>{countCharacters()}</span>
-          <button className={styles.q_csubmit} onClick={handleSubmit}>
+          <button type={'button'} className={styles.q_csubmit} onClick={handleSubmit}>
             {'생성하기\r'}
           </button>
         </div>

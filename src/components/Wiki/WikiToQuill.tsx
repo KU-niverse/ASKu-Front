@@ -1,22 +1,26 @@
-const WikiToHtml = (wikiText: any) => {
+const WikiToHtml = (wikiText: string) => {
   let html = wikiText
   // console.log("여기가 1번 : ", html);
   html = html
     .split('\n')
-    .map((para: any) => `<p>${para}</p>`)
+    .map((para: string) => `<p>${para}</p>`)
     .join('\n')
   html = html.replace(/<p><\/p>/g, '<br>')
 
-  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match: any, marker: any, content: any) {
+  const formatListItem = (match: string, marker: string, content: string) => {
     const listItem = `<li>${content.trim()}</li>`
 
     return listItem
-  })
+  }
 
-  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match: any, content: any) {
+  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, formatListItem)
+
+  const wrapListItems = (match: string, content: string) => {
     const listType = '<ul>'
     return `${listType}<li>${content.trim()}</li>${listType.replace('<', '</')}`
-  })
+  }
+
+  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, wrapListItems)
   // console.log("여기가 2번 : ", html);
 
   // 단락 처리 (p)

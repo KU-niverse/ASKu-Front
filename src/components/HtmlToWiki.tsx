@@ -1,4 +1,4 @@
-const htmlToWiki = (html: any) => {
+const htmlToWiki = (html: string) => {
   let wikiText = html
 
   // wikiText = wikiText.replace(/===([^=].*?)===/g, '<h3>$1</h3>');

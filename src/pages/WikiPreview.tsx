@@ -75,7 +75,7 @@ function WikiViewer() {
     },
   ]
 
-  function handleClick(index: any) {
+  function handleClick(index: number) {
     myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -106,24 +106,27 @@ function WikiViewer() {
           <h1>
             {title}
             <img
+              role={'presentation'}
               src={bookmark}
               className={isBookmark ? `${styles.hidden}` : `${styles.bookmarkImg}`}
               onClick={handleClickBookmark}
               alt={''}
             />
             <img
+              alt={'북마크'}
+              role={'presentation'}
               src={bookmarkFill}
               className={isBookmark ? `${styles.bookmarkImg}` : `${styles.hidden}`}
               onClick={handleClickBookmark}
             />
           </h1>
           <div className={styles.wikititleBtn}>
-            <button>
-              <img src={debate} />
+            <button type={'button'}>
+              <img alt={'토론하기 버튼'} src={debate} />
               &nbsp;{'토론하기\r'}
             </button>
-            <button>
-              <img src={his} />
+            <button type={'button'}>
+              <img alt={'히스토리 버튼'} src={his} />
               &nbsp;{'히스토리\r'}
             </button>
           </div>
@@ -132,12 +135,12 @@ function WikiViewer() {
           <div className={styles.wikilist}>
             <div className={styles.wikilistTitle}>
               <h2>{'목차'}</h2>
-              <button>{'전체 편집'}</button>
+              <button type={'button'}>{'전체 편집'}</button>
             </div>
             <div>
               {allContent.map((item) => {
                 return (
-                  <li onClick={() => handleClick(item.section)} key={item.section}>
+                  <li role={'presentation'} onClick={() => handleClick(item.section)} key={item.section}>
                     <span className={styles.wikiIndex}>{item.index}</span> {item.title}
                   </li>
                 )
@@ -148,8 +151,20 @@ function WikiViewer() {
         <div className={styles.wikicontent}>
           {allContent.map((item) => {
             return (
-              <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
-                <WikiBox title={item.title} content={item.content} index={item.index} section={item.section} />
+              <div
+                ref={(el) => {
+                  myDivRef.current[item.section] = el
+                }}
+                key={item.section}
+              >
+                <WikiBox
+                  title={item.title}
+                  content={item.content}
+                  index={item.index}
+                  section={item.section}
+                  main={''}
+                  isZero={false}
+                />
               </div>
             )
           })}

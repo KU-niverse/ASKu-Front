@@ -1,15 +1,26 @@
-import threedots from '../img/threedots.png'
-import like from '../img/like.png'
-import edit from '../img/edit.png'
 import styles from './CommentQna.module.css'
-import link_icon from '../img/link_icon.png'
 import FormatDate from './FormatDate'
 import ThreedotsReport from './ThreedotsReport'
+
+interface CommentQnaProps {
+  index_title: string
+  id: string
+  wiki_history_id: string
+  question_id: string
+  created_at: string
+  user_id: string
+  nickname: string
+  rep_badge: string
+  badge_image: string
+  title: string
+  content: string
+}
 
 function CommentQna({
   index_title,
   id,
   wiki_history_id,
+  question_id,
   created_at,
   user_id,
   nickname,
@@ -17,7 +28,7 @@ function CommentQna({
   badge_image,
   title,
   content,
-}: any) {
+}: CommentQnaProps) {
   const formattedDate = FormatDate(created_at)
   const type = 1
   return (

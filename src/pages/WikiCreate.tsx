@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react'
-
+import { useState, useEffect, FormEvent, useCallback } from 'react'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
 import Editor from '../components/Quill'
 import styles from './WikiEdit.module.css'
 import Header from '../components/Header'
-import Footer from '../components/Footer'
 import HtmlToWiki from '../components/Wiki/HtmlToWiki'
-import TypeDrop from '../components/TypeDrop'
 
-const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
+interface WikiCreateProps {
+  loggedIn: boolean
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+interface OptionType {
+  label: string
+  value: string
+}
+
+const WikiCreate = ({ loggedIn, setLoggedIn }: WikiCreateProps) => {
   const nav = useNavigate()
   const location = useLocation()
   const [desc, setDesc] = useState('')
@@ -22,26 +29,29 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
   // console.log(from)
 
   // 로그인 체크 후 우회
-  const checkLoginStatus = async () => {
+  const checkLoginStatus = async (): Promise<void> => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
-      } else if (res.status === 401) {
+        return
+      }
+      if (res.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav('/')
+        nav('/')
       }
     } catch (error) {
       console.error(error)
       setLoggedIn(false)
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav('/')
+        nav('/')
+        return
       }
       alert('에러가 발생하였습니다')
-      return nav('/')
+      nav('/')
     }
   }
   useEffect(() => {
@@ -52,34 +62,35 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
     setIsChecked((prevIsChecked) => !prevIsChecked)
   }
 
-  function onEditorChange(value: any) {
+  function onEditorChange(value: string) {
     setDesc(value)
     // console.log(value);
   }
 
-  const handleCreateBtn = async (e: any) => {
+  const handleCreateBtn = async (e: FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault()
 
     if (title.length > 30) {
-      // 30자를 초과하는 경우 alert를 띄우고 이전 값으로 되돌림
-      return alert('제목은 30자 이내로 입력해주세요.')
-      // 함수 종료
+      alert('제목은 30자 이내로 입력해주세요.')
+      return false
     }
-    const trimedTitle = title.trim()
+
+    const trimmedTitle = title.trim()
     if (desc.trim() === '') {
-      return alert('내용을 작성해주세요')
+      alert('내용을 작성해주세요')
+      return false
     }
 
     const wikiMarkup = HtmlToWiki(desc)
-    // console.log(selectedOption);
 
-    if (isChecked === false) {
-      return alert('정책에 맞게 작성하였음을 확인해주세요')
+    if (!isChecked) {
+      alert('정책에 맞게 작성하였음을 확인해주세요')
+      return false
     }
 
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/contents/new/${trimedTitle}`,
+        `${process.env.REACT_APP_HOST}/wiki/contents/new/${encodeURIComponent(trimmedTitle)}`,
         {
           text: wikiMarkup,
           type: 'doc',
@@ -88,28 +99,37 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
           withCredentials: true,
         },
       )
+
       if (result.data.success === true) {
         alert('문서를 생성해주셔서 감사합니다.')
-        nav(`/wiki/${encodeURIComponent(title)}`)
+        nav(`/wiki/${encodeURIComponent(trimmedTitle)}`)
+        return true
       }
+      alert('문제가 발생하였습니다')
+      return false
     } catch (error) {
       console.error(error)
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         alert('로그인이 필요합니다.')
-        // nav("/signin");
-      } else if (error.response.status === 500) {
-        alert('제출해 실패했습니다. 다시 시도해주세요.')
-        // setWiki(error.response.data.newContent);
-      } else {
-        alert(error.response.data.message)
+        return false
       }
+      if (error.response?.status === 500) {
+        alert('제출에 실패했습니다. 다시 시도해주세요.')
+        return false
+      }
+      alert(error.response?.data.message)
+      return false
     }
   }
 
-  const handleSelectedOption = (optionValue: any) => {
+  const handleSelectedOption = (optionValue: OptionType) => {
     setSelectedOption(optionValue)
     // console.log(selectedOption);
   }
+
+  const handleWikiManualClick = useCallback(() => {
+    nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')
+  }, [nav])
 
   return (
     <div className={`${styles.container}`}>
@@ -133,7 +153,11 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
               {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
               <TypeDrop onSelectedOption={handleSelectedOption} /> */}
               <h4>{'위키 작성 방법'}</h4>
-              <p onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')} className={styles.wikiManual}>
+              <p
+                role={'presentation'}
+                onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
+                className={styles.wikiManual}
+              >
                 {'위키 문법 알아보기!'}&nbsp;{'\r'}
                 <FaArrowUpRightFromSquare />
               </p>
@@ -142,7 +166,7 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: any) => {
           <div>
             <h4>{'문서 내용'}</h4>
             <div className={`${styles.editorbox}`}>
-              <Editor value={desc} onChange={onEditorChange} />
+              <Editor value={desc} onChange={() => onEditorChange} />
             </div>
           </div>
           <div className={`${styles.submitbox}`}>
