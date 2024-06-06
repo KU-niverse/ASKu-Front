@@ -8,7 +8,7 @@
 .homeWrap {
     flex: 1;
     display: flex;
-    width: 100%;
+    width: 100vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;    
@@ -17,19 +17,19 @@
 }
 
 .logo {
-    margin-left: 250px;
+    margin-left: 300px;
     margin-right: 40px;
     width: auto;
     height: calc(100% - 10px);
 }
 @media only screen and (max-width: 1300px) {
     .logo {
-        margin-left: 150px;
+        margin-left: 200px;
     }
 }
 @media only screen and (max-width: 900px) {
     .logo {
-        margin-left: 50px;
+        margin-left: 100px;
     }
 }
 @media only screen and (max-width: 767px) {
@@ -43,7 +43,6 @@
     height: 60px;
     display: flex;
     width: 100%;
-    margin-left: 50px;
     position: relative;
     margin-top: 40px;
     margin-bottom: 15px;
@@ -71,11 +70,7 @@
     letter-spacing: 0.5px;
     min-width: 325px;
 }
-@media only screen and (min-width: 1500px) {
-    .searchInput {
-        max-width: 750px;
-    }
-}
+
 @media only screen and (max-width: 767px) {
     .searchInput{
         height: 40px;
@@ -88,9 +83,19 @@
 .searchIconContainer{
     position: relative;
     display: flex;
-    width: 300px;
+    width: 400px;
     height: 100%;
     align-items: center;
+}
+@media only screen and (max-width: 1300px) {
+    .searchIconContainer {
+        width: 200px;
+    }
+}
+@media only screen and (max-width: 900px) {
+    .searchIconContainer{
+        width: 100px;
+    }
 }
 .searchIcon {
     position: absolute;
@@ -140,7 +145,7 @@
     width: 320px;
     display: flex;
     flex-direction: column;
-    margin-right: 50px;
+    margin-right: 75px;
 }
 @media (max-width: 1300px) {
     .realTime {
@@ -160,7 +165,7 @@
     height: 270px;
     border-radius: 12px;
     box-shadow: 0px 5px 20px -5px #00000033;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .question {
@@ -170,7 +175,7 @@
     height: 270px;
     border-radius: 12px;
     box-shadow: 0px 5px 20px -5px #00000033;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .realTimeTitle {
