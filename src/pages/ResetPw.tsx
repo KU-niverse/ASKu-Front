@@ -42,14 +42,17 @@ const ResetPw = () => {
     e.preventDefault()
 
     if (password.trim() === '') {
-      return alert('비밀번호를 입력해주세요')
+      alert('비밀번호를 입력해주세요')
+      return
     }
 
     if (isPwValid === false) {
-      return alert('비밀번호 형식을 올바르게 작성해주세요')
+      alert('비밀번호 형식을 올바르게 작성해주세요')
+      return
     }
     if (isPwSame === false) {
-      return alert('비밀번호가 일치하지 않습니다')
+      alert('비밀번호가 일치하지 않습니다')
+      return
     }
 
     try {
@@ -67,11 +70,11 @@ const ResetPw = () => {
         alert(response.data.message)
         nav('/')
       } else {
-        return alert(response.data.message)
+        alert(response.data.message)
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -86,7 +89,7 @@ const ResetPw = () => {
               <span>{'새 비밀번호'}</span>
               <span className={isPwValid === false ? `${styles.pwChangeAlert}` : `${styles.pwChangeDone}`}>
                 <FiAlertCircle size={'12'} />
-                &nbsp;{'8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요\r'}
+                {'8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요\r'}
               </span>
             </div>
             <input
@@ -96,7 +99,7 @@ const ResetPw = () => {
               name={'password'}
               value={password}
               onChange={onChangePW}
-              maxLength={'20'}
+              maxLength={20}
             />
           </div>
         </div>
@@ -109,7 +112,7 @@ const ResetPw = () => {
                 onChange={onChangeCheckPW}
               >
                 <FiAlertTriangle size={'12'} />
-                &nbsp;{'비밀번호가 일치하지 않습니다\r'}
+                {'비밀번호가 일치하지 않습니다\r'}
               </span>
             </div>
             <input
@@ -119,7 +122,7 @@ const ResetPw = () => {
               name={'checkPw'}
               value={checkPw}
               onChange={onChangeCheckPW}
-              maxLength={'20'}
+              maxLength={20}
             />
           </div>
         </div>

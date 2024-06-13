@@ -65,8 +65,8 @@ const SearchResearch = () => {
     setIsClicked(!isClicked)
   }
 
-  const handleDocsClick = (title: string) => {
-    const encodedTitle = encodeURIComponent(title)
+  const handleDocsClick = (docTitle: string) => {
+    const encodedTitle = encodeURIComponent(docTitle)
     nav(`/wiki/${encodedTitle}`)
   }
 
@@ -125,7 +125,7 @@ const SearchResearch = () => {
       <Header />
       <div className={styles.results}>
         <div className={styles.header}>
-          <img src={search} />
+          <img alt={'검색 결과'} src={search} />
           <h4>
             {'"'}
             {title}
@@ -134,11 +134,11 @@ const SearchResearch = () => {
         </div>
         <div className={styles.typeWrap}>
           <p className={styles.type}>
-            <button onClick={handleButtonClick} className={isClicked ? styles.btnRed : styles.btnGray}>
+            <button type={'button'} onClick={handleButtonClick} className={isClicked ? styles.btnRed : styles.btnGray}>
               {'문서\r'}
               <div className={isClicked ? styles.numberRed : styles.numberGray}>{docs.length}</div>
             </button>
-            <button onClick={handleButtonClick} className={isClicked ? styles.btnGray : styles.btnRed}>
+            <button type={'button'} onClick={handleButtonClick} className={isClicked ? styles.btnGray : styles.btnRed}>
               {'질문\r'}
               <div className={isClicked ? styles.numberGray : styles.numberRed}>{ques.length}</div>
             </button>
@@ -150,7 +150,7 @@ const SearchResearch = () => {
             <div className={isClicked ? '' : styles.hidden}>
               {docs.map((item) => {
                 return (
-                  <div key={item.title} onClick={() => handleDocsClick(item.title)}>
+                  <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title)}>
                     <BookmarkBox
                       title={item.title}
                       content={item.recent_filtered_content}

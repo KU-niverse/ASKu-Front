@@ -56,14 +56,14 @@ function App() {
     <Router>
       <RouteChangeTracker /> {/* RouteChangeTracker 호출 */}
       <Routes>
-        <Route path={'/'} element={<Home />} />
+        <Route path={'/'} element={<Home loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/result/:title'} element={<SearchResult />} />
         <Route path={'/chatbot'} element={<MobileChatBotPage />} />
         <Route path={'/wiki/:title'} element={<WikiViewer loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/wikiedit/:title/all'} element={<WikiAllEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/wikiedit/:main/:section'} element={<WikiEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/question/edit/:main'} element={<QuestionEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-        <Route path={'/wikiedit/:id'} element={<WikiEdit />} />
+        <Route path={'/wikiedit/:id'} element={<WikiEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/newwiki'} element={<WikiCreate loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/allhistory'} element={<AllHistory />} />
         <Route path={'/wiki/preview/:title/:ver'} element={<WikiRawPrev />} />

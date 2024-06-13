@@ -4,11 +4,11 @@ import ThreedotsReport from './ThreedotsReport'
 
 interface CommentQnaProps {
   index_title: string
-  id: string
-  wiki_history_id: string
-  question_id: string
-  created_at: string
-  user_id: string
+  id: number
+  wiki_history_id: number
+  question_id: number
+  created_at: Date
+  user_id: number
   nickname: string
   rep_badge: string
   badge_image: string

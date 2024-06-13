@@ -1,27 +1,48 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styles from './MyComment.module.css'
 import Header from '../components/Header'
 import Comment from '../components/Comment'
 import Footer from '../components/Footer'
-
-import Switch from '../components/Switch'
-
 import SpinnerMypage from '../components/SpinnerMypage'
 
-
 interface MyDebateProps {
-  success: boolean;
-  message: {
-    debate_id: number;
-    debate_subject: string;
-    debate_content: string;
-    debate_content_time: string;
-    is_bad: boolean;
-    doc_title: string;
-  }[];
+  success: boolean
+  message: MyDebateMessage[]
 }
 
+interface MyDebateMessage {
+  debate_id: number
+  debate_subject: string
+  debate_content: string
+  debate_content_time: Date // Changed from Date to string
+  is_bad: boolean
+  doc_title: string
+}
+
+interface MyInfoProps {
+  success: boolean
+  message: string
+  data: MyInfoData[]
+}
+
+interface MyInfoData {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
 
 function MyComment() {
   const [isToggled, setIsToggled] = useState(false) // import하려는 페이지에 구현
@@ -29,7 +50,7 @@ function MyComment() {
   const [loadingMypage, setLoadingMypage] = useState(true)
 
   // 토론 기록 불러오기
-  const [myDebate, setMyDebate] = useState<MyDebateProps>({ success: false, message: [] });
+  const [myDebate, setMyDebate] = useState<MyDebateProps>({ success: false, message: [] })
 
   useEffect(() => {
     const takeMyDebate = async () => {
@@ -42,6 +63,7 @@ function MyComment() {
           setLoadingMyDebate(false) // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
         if (res.status === 500) {
+          /* empty */
         }
       } catch (error) {
         console.error(error)
@@ -51,30 +73,8 @@ function MyComment() {
     takeMyDebate()
   }, [])
 
-  interface MyInfoProps {
-    success: boolean;
-    message: string;
-    data: {
-      id: number;
-      name: string;
-      login_id: string;
-      stu_id: string;
-      email: string;
-      rep_badge_id: number;
-      nickname: string;
-      created_at: string;
-      point: number;
-      is_admin: number;
-      is_authorized: number;
-      restrict_period: string | null;
-      restrict_count: number;
-      rep_badge_name: string;
-      rep_badge_image: string;
-    }[];
-  }
-  
   // 내 정보 불러오기
-  const [mypageData, setMypageData] = useState<MyInfoProps>({ success: false, message: "", data: [] });
+  const [mypageData, setMypageData] = useState<MyInfoProps>({ success: false, message: '', data: [] })
   useEffect(() => {
     const takeMypage = async () => {
       try {
@@ -84,8 +84,10 @@ function MyComment() {
           setLoadingMypage(false) // 데이터 로딩 완료 시 로딩 상태 업데이트
         }
         if (res.status === 401) {
+          /* empty */
         }
         if (res.status === 500) {
+          /* empty */
         }
       } catch (error) {
         console.error(error)
@@ -95,14 +97,6 @@ function MyComment() {
     takeMypage()
   }, []) // 종속성 배열이 비어있으므로 이 useEffect는 한 번만 실행
 
-  interface MyDebateMessage {
-    debate_id: number;
-    debate_subject: string;
-    debate_content: string;
-    debate_content_time: string;
-    is_bad: boolean;
-    doc_title: string;
-  }
   return (
     <div className={styles.container}>
       <div>
@@ -132,7 +126,7 @@ function MyComment() {
                 id={debate.debate_id}
                 subject={debate.debate_subject}
                 content={debate.debate_content}
-                created_at={debate.debate_content_time}
+                created_at={new Date(debate.debate_content_time)} // Convert string to Date
                 is_bad={debate.is_bad}
                 docsname={debate.doc_title}
                 nick={mypageData.data[0].nickname}

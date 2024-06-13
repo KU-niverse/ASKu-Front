@@ -4,21 +4,30 @@ import FormatDate from '../FormatDate'
 import ThreedotsReport from '../ThreedotsReport'
 
 interface DebateContentProps {
-  badge_image: string;
-  key:string;
-  r_id: string;
-  id: number;
-  debate_id?: string;
-  user_id: string;
-  content: string;
-  created_at: string;
-  is_bad: boolean;
-  nick: string;
+  badge_image: string
+  key: number
+  r_id: number
+  id: number
+  debate_id: number
+  user_id: number
+  content: string
+  created_at: Date
+  is_bad: boolean
+  nick: string
 }
 
-
-
-function DebateContent({ badge_image, key, r_id, id, debate_id, user_id, content, created_at, is_bad, nick }: DebateContentProps) {
+function DebateContent({
+  badge_image,
+  key,
+  r_id,
+  id,
+  debate_id,
+  user_id,
+  content,
+  created_at,
+  is_bad,
+  nick,
+}: DebateContentProps) {
   const formattedDate = FormatDate(created_at)
   const type = 4
   return (

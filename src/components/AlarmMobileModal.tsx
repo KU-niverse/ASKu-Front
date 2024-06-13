@@ -4,7 +4,7 @@ import axios from 'axios'
 import closeBtn from '../img/close_btn.png'
 import styles from './AlarmMobileModal.module.css'
 
-const patterns = {
+const patterns: Record<number, RegExp> = {
   1: /\[즐겨찾기\] (.+?) 문서에 질문이 있습니다\./,
   2: /\[좋아요\] (.+?) 문서의 (.+?) 질문\((.+?)\)에 답변이 있습니다\./,
   3: /\[질문\] (.+?) 문서의 (.+?) 질문\((.+?)\)에 답변이 있습니다\./,
@@ -53,17 +53,26 @@ const dummyData = [
     is_admin: 0,
   },
 ]
-function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
-  // useEffect(() => {
-  //     if (isOpen) {
-  //         // API 호출 대신 더미 데이터 사용
-  //         setNotifications(dummyData);
-  //     }
-  // }, [isOpen]);
 
+interface Notification {
+  id: number
+  user_id: number
+  type_id: number
+  read_or_not: boolean
+  message: string
+  created_at: Date
+  is_admin: boolean
+}
+
+interface Info {
+  result?: string
+  title?: string
+  id?: number
+}
+
+function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
   useEffect(() => {
     if (isOpen) {
-      // Axios를 사용하여 데이터 가져오기
       axios
         .get(`${process.env.REACT_APP_HOST}/notification/user`, {
           withCredentials: true,
@@ -73,17 +82,16 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
         })
         .catch((error) => {
           console.error('Error fetching notifications:', error)
-          // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
           setNotifications([])
         })
     }
   }, [isOpen])
 
-  const removeIdFromMessage = (message: any) => {
+  const removeIdFromMessage = (message: string) => {
     return message.replace(/\(\d+\)/g, '')
   }
 
-  const extractInfo = (type_id: any, message: any) => {
+  const extractInfo = (type_id: number, message: string): Info | null => {
     const pattern = patterns[type_id]
     if (!pattern) {
       return null
@@ -94,20 +102,16 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
       return null
     }
 
-    let info = {}
+    let info: Info = {}
 
     switch (type_id) {
       case 1:
+      case 4:
         info = { result: match[1] }
         break
       case 2:
-        info = { title: match[1], result: match[2], id: match[3] }
-        break
       case 3:
-        info = { title: match[1], result: match[2], id: match[3] }
-        break
-      case 4:
-        info = { result: match[1] }
+        info = { title: match[1], result: match[2], id: parseInt(match[3], 10) }
         break
       default:
         return null
@@ -116,7 +120,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
     return info
   }
 
-  const extractInfoAndRefineMessage = (type_id: any, message: any) => {
+  const extractInfoAndRefineMessage = (type_id: number, message: string) => {
     const info = extractInfo(type_id, message)
     if (!info) {
       return { info: null, refinedMessage: message }
@@ -126,25 +130,25 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
     return { info, refinedMessage }
   }
 
-  const generateLink = (notification: any) => {
+  const generateLink = (notification: Notification) => {
     const { message } = notification
-    const type_id = parseInt(
-      Object.keys(patterns).find((key) => {
-        const pattern = patterns[key]
-        return message.match(pattern) !== null
-      }),
-    )
+    const type_id = Object.keys(patterns).find((key) => {
+      const pattern = patterns[parseInt(key, 10)]
+      return message.match(pattern) !== null
+    })
 
-    const { info } = extractInfoAndRefineMessage(type_id, message)
-    // TODO: 이 부분 링크 잘 동작하는지 확인
+    if (!type_id) return '/'
+
+    const { info } = extractInfoAndRefineMessage(parseInt(type_id, 10), message)
+    if (!info) return '/'
+
     const link = (() => {
-      switch (type_id) {
+      switch (parseInt(type_id, 10)) {
         case 1:
           return `/wiki/morequestion/${info.result}`
         case 2:
-          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
         case 3:
-          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
+          return `/wiki/morequestion/${encodeURIComponent(info.title!)}/${info.id}`
         case 4:
           return '/mypage/mybadge'
         default:
@@ -156,9 +160,9 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
   }
 
   const modalRef = useRef(null)
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState<Notification[]>([])
   const handleOutsideClick = (event: any) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (modalRef.current && !(modalRef.current as any).contains(event.target)) {
       handleMobileAlarmModal()
     }
   }
@@ -175,32 +179,36 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
   }, [isOpen])
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
                 <span id={styles.alarmTitle}>{'내 알림'}</span>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={handleMobileAlarmModal} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={handleMobileAlarmModal}
+                />
               </div>
               <div className={styles.modal_content}>
                 {notifications.length > 0
-                  ? notifications.map((notification, index) => (
-                      <div key={index}>
+                  ? notifications.map((notification) => (
+                      <div key={notification.id}>
                         <Link to={generateLink(notification)} className={styles.alarmLink}>
                           <p className={styles.alarmText}>{notification.message}</p>
                         </Link>
-                        {index < notifications.length - 1 && (
-                          <hr
-                            style={{
-                              height: '0.3px',
-                              opacity: '0.7',
-                              backgroundColor: '#D5D5D5',
-                              width: '100%',
-                            }}
-                          />
-                        )}
+                        <hr
+                          style={{
+                            height: '0.3px',
+                            opacity: '0.7',
+                            backgroundColor: '#D5D5D5',
+                            width: '100%',
+                          }}
+                        />
                       </div>
                     ))
                   : null}
@@ -209,7 +217,7 @@ function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -6,10 +6,9 @@ import reference from '../img/reference.png'
 import dots from '../img/dots.png'
 
 interface ChatQuestionProps {
-  content:string
+  content: string
 }
-const ChatQuestion = ({content}:ChatQuestionProps) => {
-  
+const ChatQuestion = ({ content }: ChatQuestionProps) => {
   return (
     <div className={styles.questionBox}>
       <div className={styles.characterContainer}>
@@ -18,7 +17,7 @@ const ChatQuestion = ({content}:ChatQuestionProps) => {
       <div className={styles.chatTextWrap}>
         <p className={styles.chatText}>{content}</p>
       </div>
-      <img src={dots} className={styles.dots} />
+      <img alt={'점 아이콘 버튼'} src={dots} className={styles.dots} />
       <div className={styles.iconZip}>
         <img className={styles.icon} src={like} alt={'like'} />
         <img className={styles.icon} src={unlike} alt={'unlike'} />

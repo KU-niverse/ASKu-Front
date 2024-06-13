@@ -6,19 +6,37 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import LatestDebateList from '../components/Debate/LatestDebateList'
 import DebateAllSearch from '../components/Debate/DebateAllSearch'
-import DebateAdd from '../components/Debate/DebateAdd'
-import DebateRecent from '../components/Debate/DebateRecent'
+
+interface DebateData {
+  id: number
+  doc_id: number
+  user_id: number
+  subject: string
+  created_at: Date
+  recent_edited_at: Date
+  done_or_not: boolean
+  done_at: Date | null
+  is_bad: boolean
+  title: string
+}
+
+interface DebateResponse {
+  data: DebateData[]
+}
 
 function LatestDebate() {
-  const [debateListData, setDebateListData] = useState([])
+  const [debateListData, setDebateListData] = useState<DebateData[]>([])
 
   useEffect(() => {
     const takeDebateList = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/debate/all/recent`, { withCredentials: true })
+        const res = await axios.get<DebateResponse>(`${process.env.REACT_APP_HOST}/debate/all/recent`, {
+          withCredentials: true,
+        })
         if (res.status === 200) {
-          setDebateListData(res.data)
+          setDebateListData(res.data.data)
         } else {
+          /* empty */
         }
       } catch (error) {
         console.error(error)
@@ -45,12 +63,10 @@ function LatestDebate() {
               <span className={styles.menu1}>{'항목'}</span>
               <span className={styles.menu2}>{'수정 시간'}</span>
             </div>
-            {debateListData && debateListData.data && debateListData.data.length === 0 ? (
+            {debateListData.length === 0 ? (
               <p className={styles.nodebate}>{'아직 생성된 토론방이 없습니다.'}</p>
             ) : (
-              debateListData &&
-              debateListData.data &&
-              debateListData.data.map((data: any) => (
+              debateListData.map((data) => (
                 <LatestDebateList
                   key={data.id}
                   id={data.id}

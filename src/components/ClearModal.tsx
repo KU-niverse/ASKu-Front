@@ -13,7 +13,7 @@ interface UserData {
 }
 
 interface ClearModalProps {
-  isOpen:boolean
+  isOpen: boolean
   onClose: () => void
   userId: UserData
 }
@@ -60,21 +60,27 @@ function ClearModal({ isOpen, onClose, userId }: ClearModalProps) {
   }, [isOpen])
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'지우신 채팅 내역은 복구가 어렵습니다!'}</p>
                 <img className={styles.haho_login} src={haho_login} alt={'character'} />
-                <button className={styles.signin} onClick={handleClearChat}>
+                <button type={'button'} className={styles.signin} onClick={handleClearChat}>
                   {'채팅 비우기\r'}
                 </button>
-                <button className={styles.signup} onClick={onClose}>
+                <button type={'button'} className={styles.signup} onClick={onClose}>
                   {'취소\r'}
                 </button>
               </div>
@@ -82,7 +88,7 @@ function ClearModal({ isOpen, onClose, userId }: ClearModalProps) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

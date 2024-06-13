@@ -5,13 +5,12 @@ import styles from './QuestionInput.module.css'
 import DropDown from './DropDown'
 
 interface QuestionInputProps {
-  onQuestionSubmit: (submitData: { index_title: string; content: string }) => Promise<void> // 확인 필요
+  onQuestionSubmit: (submitData: { index_title: string; content: string }) => Promise<void>
   title: string
-  wikiData: { id: number; name: string }[] // 확인 필요
   defaultOpt: string
 }
 
-function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: QuestionInputProps) {
+function QuestionInput({ onQuestionSubmit, title, defaultOpt }: QuestionInputProps) {
   const [questionContent, setQuestionContent] = useState('')
   const [selectedOption, setSelectedOption] = useState('전체') // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false)
@@ -19,38 +18,6 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
 
   const location = useLocation()
   const from = location.state?.from || '/'
-
-  // 로그인 체크 후 우회
-  // const checkLoginStatus = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 201 && res.data.success === true) {
-  //       setLoggedIn(true);
-  //     } else if (res.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoggedIn(false);
-  //     if (error.response.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }else{
-  //       alert("에러가 발생하였습니다");
-  //       return Navigate(from);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   checkLoginStatus();
-  // }, []);
-  //
 
   // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -71,6 +38,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
       }
     }
   }
+
   useEffect(() => {
     checkLoginStatus()
   }, [])
@@ -121,12 +89,7 @@ function QuestionInput({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
         <div className={styles.q_cfrontheader}>
           <p className={styles.q_cheadline}>{'질문 생성하기'}</p>
           <div className={styles.q_dropdown}>
-            <DropDown
-              onSelectedOption={handleSelectedOption}
-              title={title}
-              wikiData={wikiData}
-              defaultOpt={defaultOpt}
-            />
+            <DropDown onSelectedOption={handleSelectedOption} title={title} defaultOpt={defaultOpt} />
           </div>
         </div>
       </div>

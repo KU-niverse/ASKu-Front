@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
-class EditorComponent extends Component {
-  constructor(props: any) {
-    super(props)
-  }
+interface EditorComponentProps {
+  value: string
+  onChange: (content: string) => void
+}
 
+class EditorComponent extends Component<EditorComponentProps> {
   modules = {
     toolbar: [
-      // [{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [{ list: 'ordered' }, { list: 'bullet' }],
@@ -18,7 +18,6 @@ class EditorComponent extends Component {
   }
 
   formats = [
-    // 'font',
     'header',
     'bold',
     'italic',
@@ -51,4 +50,5 @@ class EditorComponent extends Component {
     )
   }
 }
+
 export default EditorComponent

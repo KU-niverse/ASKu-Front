@@ -8,10 +8,11 @@ import styles from './LikeorNot.module.css'
 interface LikeorNotProps {
   questionId: number
   like_count: number
-  user_id?:number
-  nick?:string
+  user_id: number
+  nick?: string
 }
-const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
+
+const LikeorNot = ({ questionId, like_count, user_id, nick }: LikeorNotProps) => {
   const [isLiked, setIsLiked] = useState(localStorage.getItem(`likeStatus_${user_id}_${questionId}`) === 'true')
   const [currentLikeCount, setCurrentLikeCount] = useState(like_count)
   const [loggedIn, setLoggedIn] = useState(false)
@@ -20,7 +21,6 @@ const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
   const location = useLocation()
   const from = location.state?.from || '/'
 
-  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
@@ -39,6 +39,7 @@ const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
       }
     }
   }
+
   useEffect(() => {
     checkLoginStatus()
   }, [])
@@ -50,7 +51,7 @@ const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
 
     const newIsLiked = !isLiked
     setCurrentLikeCount(currentLikeCount + (newIsLiked ? 1 : -1))
-    localStorage.setItem(`likeStatus_${user_id}_${questionId}`, 'newIsLiked')
+    localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked.toString())
     setIsLiked(newIsLiked)
 
     try {
@@ -60,6 +61,7 @@ const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
         { withCredentials: true },
       )
       if (res.status === 200) {
+        /* empty */
       }
     } catch (error) {
       console.error(error)
@@ -69,21 +71,31 @@ const LikeorNot = ({ questionId, like_count, user_id }: LikeorNotProps) => {
       if (error.response && error.response.status === 400) {
         alert('이미 좋아요를 눌렀습니다.')
       } else if (error.response && error.response.status === 401) {
-        // setLoggedIn(false);
         alert('로그인이 필요한 서비스 입니다.')
       } else if (error.response && error.response.status === 403) {
         alert('본인의 질문에는 좋아요를 누를 수 없습니다.')
       } else {
+        /* empty */
       }
     }
   }
 
   return (
     <div className={styles.like}>
-      <img className={styles.likeimg} src={isLiked ? likeFill : like} alt={'like'} onClick={handleLikeClick} />
+      <img
+        role={'presentation'}
+        className={styles.likeimg}
+        src={isLiked ? likeFill : like}
+        alt={'like'}
+        onClick={handleLikeClick}
+      />
       <span className={styles.likeCount}>{currentLikeCount}</span>
     </div>
   )
+}
+
+LikeorNot.defaultProps = {
+  nick: '',
 }
 
 export default LikeorNot

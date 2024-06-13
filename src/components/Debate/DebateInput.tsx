@@ -1,4 +1,4 @@
-import React, { useState, useEffect,ChangeEvent, KeyboardEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react'
 
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -6,17 +6,15 @@ import submit from '../../img/submit.png'
 import styles from './DebateInput.module.css'
 
 interface DebateInputProps {
-  onDebateSubmit: (submitData: { content: string }) => Promise<void>;
-  title: string;
-  debateId: string;
+  onDebateSubmit: (submitData: { content: string }) => Promise<void>
+  title: string
+  debateId: number
 }
 
-
-
 const DebateInput = ({ onDebateSubmit, title, debateId }: DebateInputProps) => {
-  const [debateContent, setDebateContent] = useState<string>('');
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const Navigate = useNavigate();
+  const [debateContent, setDebateContent] = useState<string>('')
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const Navigate = useNavigate()
 
   const location = useLocation()
   const from = location.state?.from || '/'
@@ -75,6 +73,7 @@ const DebateInput = ({ onDebateSubmit, title, debateId }: DebateInputProps) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     // Shift + Enter가 동시에 눌렸을 때
     if (event.key === 'Enter' && event.shiftKey) {
+      /* empty */
     }
     // Enter만 눌렸을 때 메시지 전송(여기서는 handleSubmit 함수 호출)
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -88,7 +87,7 @@ const DebateInput = ({ onDebateSubmit, title, debateId }: DebateInputProps) => {
     <div className={styles.container}>
       <div className={styles.title}>
         <span>{'의견 달기'}</span>
-        <img src={submit} alt={'submit'} onClick={handleSubmit} />
+        <img role={'presentation'} src={submit} alt={'submit'} onClick={handleSubmit} />
       </div>
       <div className={styles.textbox}>
         <textarea

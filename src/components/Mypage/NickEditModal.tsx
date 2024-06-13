@@ -6,8 +6,8 @@ import closeBtn from '../../img/close_btn.png'
 import styles from './NickEditModal.module.css'
 
 interface EditModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 
 function EditModal({ isOpen, onClose }: EditModalProps) {
@@ -16,7 +16,8 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
   const [isNickValid, setisNickValid] = useState(true)
   const [nickDoubleCheck, setNickDoubleCheck] = useState(false)
 
-  const handleOutsideClick = (event: any) => { //TODO: any 타입 지정(Mouse Event 오류 발생)
+  const handleOutsideClick = (event: any) => {
+    // TODO: any 타입 지정(Mouse Event 오류 발생)
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -33,7 +34,8 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
     }
   }, [isOpen])
 
-  function onChangeNick(e: any) { //TODO: any 타입 지정(Mouse Event 오류 발생)
+  function onChangeNick(e: any) {
+    // TODO: any 타입 지정(Mouse Event 오류 발생)
     const nickRegex = /^[가-힣a-zA-Z]{2,10}$/
     const nickCurrent = e.target.value
     setNick(nickCurrent)
@@ -47,7 +49,7 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
 
   const handleNickDoubleCheck = async () => {
     if (isNickValid === false) {
-      return alert('닉네임 형식이 올바르지 않습니다')
+      alert('닉네임 형식이 올바르지 않습니다')
     }
 
     try {
@@ -72,11 +74,11 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
 
   const PostNickEdit = async () => {
     if (isNickValid === false) {
-      return alert('닉네임 형식이 올바르지 않습니다')
+      alert('닉네임 형식이 올바르지 않습니다')
     }
 
     if (nickDoubleCheck === false) {
-      return alert('닉네임 중복확인이 필요합니다')
+      alert('닉네임 중복확인이 필요합니다')
     }
 
     try {
@@ -106,13 +108,19 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
   } // 질문 수정하기
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'닉네임 변경하기'}</p>
@@ -128,7 +136,7 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
                       onChange={onChangeNick}
                       className={`${styles.nick_input}`}
                     />
-                    <button className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>
+                    <button type={'button'} className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>
                       {'중복확인\r'}
                     </button>
                   </div>
@@ -137,10 +145,10 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
                               </div> */}
                 </div>
                 <div className={styles.div_btns}>
-                  <button className={`${styles.c_btn}`} onClick={onClose}>
+                  <button type={'button'} className={`${styles.c_btn}`} onClick={onClose}>
                     {'취소\r'}
                   </button>
-                  <button className={styles.submit_btn} onClick={PostNickEdit}>
+                  <button type={'button'} className={styles.submit_btn} onClick={PostNickEdit}>
                     {'변경하기\r'}
                   </button>
                 </div>
@@ -149,7 +157,7 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

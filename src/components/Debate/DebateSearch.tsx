@@ -1,19 +1,17 @@
-import React, { useState ,ChangeEvent, KeyboardEvent} from 'react'
+import React, { useState, ChangeEvent, KeyboardEvent } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './DebateSearch.module.css'
 import searchIcon from '../../img/search_icon.svg'
 
-
 interface DebateSearchProps {
-  title: string;
+  title: string
 }
 
 interface SearchResult {
-  id: string;
-  subject: string;
+  id: number
+  subject: string
 }
-
 
 const DebateSearch = ({ title }: DebateSearchProps) => {
   const [word, setWord] = useState('')
@@ -34,7 +32,7 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.message)
+      alert(error.response.message)
     }
   }
 
@@ -61,7 +59,13 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
           placeholder={'검색어를 입력하세요.'}
           onKeyDown={handleKeyDown} // Use onKeyDown instead
         />
-        <img src={searchIcon} alt={'icon'} className={styles.searchIcon} onClick={handleDebateSearch} />
+        <img
+          role={'presentation'}
+          src={searchIcon}
+          alt={'icon'}
+          className={styles.searchIcon}
+          onClick={handleDebateSearch}
+        />
       </div>
 
       <div className={onClick ? styles.resultContainer : styles.hidden}>

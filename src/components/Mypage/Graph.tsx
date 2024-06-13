@@ -3,22 +3,22 @@ import HSBar from 'react-horizontal-stacked-bar-chart'
 import styles from './Graph.module.css'
 
 interface Document {
-  doc_title: string; // 문서 제목
-  doc_id: number; // 문서 ID
-  doc_point: string; // 문서 포인트
-  percentage: string; // 백분율 (문자열)
+  doc_title: string // 문서 제목
+  doc_id: number // 문서 ID
+  doc_point: string // 문서 포인트
+  percentage: string // 백분율 (문자열)
 }
 
 interface GraphProps {
-  total_point: number; // 전체 포인트
-  docs: Document[]; // 문서 목록
+  total_point: number // 전체 포인트
+  docs: Document[] // 문서 목록
 }
 
 interface Contribution {
-  name: string;
-  value: number;
-  description: string;
-  color?: string; // Optional
+  name: string
+  value: number
+  description: string
+  color?: string // Optional
 }
 
 function Graph({ total_point, docs }: GraphProps) {
@@ -40,9 +40,8 @@ function Graph({ total_point, docs }: GraphProps) {
   const contributions = docs.map((doc: Document) => ({
     name: doc.doc_title,
     value: (parseFloat(doc.doc_point) / total_point) * 100,
-
-    // color: getColor(doc.doc_title),
     description: `${((parseFloat(doc.doc_point) / total_point) * 100).toFixed(2)}%`,
+    color: '', // Initialize color property
   }))
 
   // Sort contributions by value in descending order
@@ -52,19 +51,21 @@ function Graph({ total_point, docs }: GraphProps) {
   const topContributions = contributions.slice(0, 3)
 
   // Apply colors to top contributions based on their position
-  topContributions.forEach((contribution: Contribution, index: number) => {
-    contribution.color = getColor(index) // Assuming getColor function returns appropriate colors
-  })
+  const updatedTopContributions = topContributions.map((contribution: Contribution, index: number) => ({
+    ...contribution,
+    color: getColor(index),
+  }))
 
   let otherContributionValue = 0
   contributions.slice(3).forEach((contribution: Contribution) => {
     otherContributionValue += contribution.value
   })
-  topContributions.push({
+
+  updatedTopContributions.push({
     name: '기타',
     value: otherContributionValue,
     description: `${otherContributionValue.toFixed(2)}%`,
-    color: getColor(3)
+    color: getColor(3),
   })
 
   // 이름을 10자로 제한하고 넘어가면 "..."으로 처리하는 함수
@@ -97,16 +98,14 @@ function Graph({ total_point, docs }: GraphProps) {
             transform: 'translateY(-50%)', // 높이의 50%만큼 위로 이동시킵니다
           }}
         >
-          <HSBar id={'cb_bar'} height={22} data={topContributions} outlineWidth={0.2} outlineColor={'white'} />
+          <HSBar id={'cb_bar'} height={22} data={updatedTopContributions} outlineWidth={0.2} outlineColor={'white'} />
         </div>
       </div>
       <div className={styles.legend}>
-        {topContributions.map((item: Contribution, index: number) => (
-          <div className={styles.legendItem} key={index}>
+        {updatedTopContributions.map((item: Contribution) => (
+          <div className={styles.legendItem} key={item.name}>
             <div className={styles.legendColor} style={{ background: item.color }} />
             <div className={styles.legendLabel}>
-              {/* <span className={styles.legendname}>{item.name}</span> */}
-              {/* item.name을 8자로 제한하여 표시 */}
               <span className={styles.legendname}>{truncateString(item.name, 8)}</span>
               <span className={styles.legendper}> {item.description}</span>
             </div>

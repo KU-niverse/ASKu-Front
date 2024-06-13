@@ -6,8 +6,32 @@ import styles from './WikiDropDown.module.css'
 
 import SpinnerMypage from './SpinnerMypage'
 
-function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }: any) {
-  const [wikiData, setWikiData] = useState([])
+interface WikiContent {
+  section: string
+  index: string
+  title: string
+}
+
+interface WikiData {
+  contents: WikiContent[]
+}
+
+interface DropDownOption {
+  value: string
+  label: string
+  className: string
+}
+
+interface DropDownProps {
+  defaultOpt: DropDownOption
+  onSelectedOption: (value: string) => void
+  onSelectedTitle: (label: string) => void
+  title: string
+  isOptionDisabled: boolean
+}
+
+const DropDown = ({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }: DropDownProps) => {
+  const [wikiData, setWikiData] = useState<WikiData>({ contents: [] })
 
   useEffect(() => {
     const takeWikiData = async () => {
@@ -17,18 +41,18 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
           setWikiData(res.data)
         }
         if (res.status === 404) {
+          // Handle 404 error if needed
         }
       } catch (error) {
         console.error(error)
       }
     }
     takeWikiData()
-  }, [])
-  // 위키 정보 가져오기
+  }, [title])
 
-  let options = []
+  let options: DropDownOption[] = []
   if (wikiData.contents) {
-    options = wikiData.contents.map((content: any) => ({
+    options = wikiData.contents.map((content) => ({
       value: `${content.section}`,
       label: `${content.index} ${content.title}`,
       className: 'myOptionClassName',
@@ -42,24 +66,7 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
     })
   }
 
-  // [
-  //   { value: 'one', label: 'One' },
-  //   { value: 'two', label: 'Two', className: 'myOptionClassName' },
-  //   {
-  //    type: 'group', name: 'group1', items: [
-  //      { value: 'three', label: 'Three', className: 'myOptionClassName' },
-  //      { value: 'four', label: 'Four' }
-  //    ]
-  //   },
-  //   {
-  //    type: 'group', name: 'group2', items: [
-  //      { value: 'five', label: 'Five' },
-  //      { value: 'six', label: 'Six' }
-  //    ]
-  //   }
-  // ];
-
-  let defaultOption
+  let defaultOption: DropDownOption
   if (isOptionDisabled === true) {
     defaultOption = {
       value: 'all',
@@ -70,10 +77,10 @@ function DropDown({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
     defaultOption = defaultOpt
   }
 
-  const onSelect = (selectedOption: any) => {
+  const onSelect = (selectedOption: DropDownOption) => {
     onSelectedOption(selectedOption.value)
     onSelectedTitle(selectedOption.label)
-    // 처리할 로직을 여기에 추가
+    // Additional logic can be added here
   }
 
   return (

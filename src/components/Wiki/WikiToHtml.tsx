@@ -54,9 +54,9 @@ const WikiToHtml = (wikiText: any) => {
 
   const linkRegex = /\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g
 
-  html = html.replace(linkRegex, (match: any, url: any, displayText: any) => {
+  html = html.replace(linkRegex, (match: any, urlText: any, displayText: any) => {
     // 공백을 제거하고 URL을 검사합니다.
-    url = url.trim()
+    const url = urlText.trim()
 
     if (url.startsWith('http://') || url.startsWith('https://')) {
       // Case 2 and 4: Direct link with optional display text

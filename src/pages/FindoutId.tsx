@@ -25,7 +25,7 @@ const FindoutId = () => {
             <input type={'text'} value={id} disabled />
           </span>
         </div>
-        <button className={`${styles.findBtn}`} onClick={handleOnClick}>
+        <button type={'button'} className={`${styles.findBtn}`} onClick={handleOnClick}>
           {'로그인 페이지로 이동\r'}
         </button>
       </form>

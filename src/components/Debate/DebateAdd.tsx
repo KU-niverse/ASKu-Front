@@ -4,14 +4,11 @@ import { Link } from 'react-router-dom'
 import plus from '../../img/Vector.png'
 import styles from './DebateAdd.module.css'
 
-
 interface DebateItem {
-  id: string;
-  title: string;
-  subject: string;
+  id: number
+  title: string
+  subject: string
 }
-
-
 
 const DebateAdd = ({ title }: { title: string }) => {
   const [debateListData, setDebateListData] = useState(null)
@@ -56,17 +53,17 @@ const DebateAdd = ({ title }: { title: string }) => {
         alert(response.data.message)
         window.location.reload() // Refresh the page after successful creation
       } else {
-        return alert('Failed to add debate.')
+        alert('Failed to add debate.')
       }
     } catch (error) {
       console.error(error)
       if (error.response.status === 401) {
-        return alert('로그인이 필요한 서비스 입니다.')
+        alert('로그인이 필요한 서비스 입니다.')
       }
       if (error.response.status === 400) {
-        return alert('잘못된 입력입니다. ')
+        alert('잘못된 입력입니다. ')
       }
-      return alert('에러가 발생하였습니다. 잠시후 다시 시도해주세요')
+      alert('에러가 발생하였습니다. 잠시후 다시 시도해주세요')
     }
   }
 
@@ -87,8 +84,13 @@ const DebateAdd = ({ title }: { title: string }) => {
 
       <div>
         <div className={isAdd ? styles.hidden : styles.inputContainer}>
-          <button className={isAdd ? styles.hidden : styles.addBtn} onClick={handleAddBtn}>
-            <img src={plus} />
+          <button
+            type={'button'}
+            className={isAdd ? styles.hidden : styles.addBtn}
+            onClick={handleAddBtn}
+            aria-label={'토론방 추가 버튼'}
+          >
+            <img src={plus} alt={'토론방 추가 버튼'} />
           </button>
         </div>
         <div className={isAdd ? styles.inputContainer : styles.hidden}>
@@ -99,7 +101,7 @@ const DebateAdd = ({ title }: { title: string }) => {
             onChange={(e) => setWord(e.target.value)}
             placeholder={'생성할 토론방을 입력하세요.'}
           />
-          <button className={styles.createBtn} onClick={handleNewDebate}>
+          <button type={'button'} className={styles.createBtn} onClick={handleNewDebate}>
             {'생성\r'}
           </button>
         </div>

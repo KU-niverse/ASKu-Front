@@ -17,147 +17,146 @@ import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
 
 interface Badge {
-  id: number;
-  user_id: number;
-  badge_id: number;
-  created_at: string;
-  is_bad: number;
-  image: string;
-  name: string;
-  description: string;
+  id: number
+  user_id: number
+  badge_id: number
+  created_at: Date
+  is_bad: boolean
+  image: string
+  name: string
+  description: string
 }
 
 interface BadgeDataProps {
-  success: boolean;
-  data: Badge[];
-  message: string;
+  success: boolean
+  data: Badge[]
+  message: string
 }
 
 interface User {
-  id: number;
-  name: string;
-  login_id: string;
-  stu_id: string;
-  email: string;
-  rep_badge_id: number;
-  nickname: string;
-  created_at: string;
-  point: number;
-  is_admin: number;
-  is_authorized: number;
-  restrict_period: string | null;
-  restrict_count: number;
-  rep_badge_name: string;
-  rep_badge_image: string;
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
 }
 
 interface MyPageDataProps {
-  success: boolean;
-  message: string;
-  data: User[];
+  success: boolean
+  message: string
+  data: User[]
 }
 
 interface WikiHistoryEntry {
-  id: number;
-  user_id: number;
-  doc_id: number;
-  text_pointer: string;
-  version: number;
-  summary: string;
-  created_at: string;
-  count: number;
-  diff: number;
-  is_bad: number;
-  is_rollback: number;
-  is_q_based: number;
-  title: string;
+  id: number
+  user_id: number
+  doc_id: number
+  text_pointer: string
+  version: number
+  summary: string
+  created_at: Date
+  count: number
+  diff: number
+  is_bad: boolean
+  is_rollback: boolean
+  is_q_based: boolean
+  title: string
 }
 
 interface MyWikiProps {
-  success: boolean;
-  message: string;
-  data: WikiHistoryEntry[];
+  success: boolean
+  message: string
+  data: WikiHistoryEntry[]
 }
 
 interface QuestionEntry {
-  id: number;
-  doc_id: number;
-  user_id: number;
-  index_title: string;
-  content: string;
-  created_at: string;
-  answer_or_not: number;
-  is_bad: number;
-  nickname: string;
-  rep_badge: number;
-  badge_image: string;
-  like_count: number;
-  doc_title: string;
-  answer_count: number;
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_or_not: boolean
+  is_bad: boolean
+  nickname: string
+  rep_badge: number
+  badge_image: string
+  like_count: number
+  doc_title: string
+  answer_count: number
 }
 
 interface MyQuestionProps {
-  success: boolean;
-  message: string;
-  data: QuestionEntry[];
+  success: boolean
+  message: string
+  data: QuestionEntry[]
 }
 
 interface Debate {
-  debate_id: number;
-  debate_subject: string;
-  debate_content: string;
-  debate_content_time: string;
-  is_bad: boolean;
-  doc_title: string;
+  debate_id: number
+  debate_subject: string
+  debate_content: string
+  debate_content_time: Date
+  is_bad: boolean
+  doc_title: string
 }
 
 interface MyDebateProps {
-  success: boolean;
-  message: Debate[];
+  success: boolean
+  message: Debate[]
 }
 
 interface DocumentContribution {
-  doc_title: string;
-  doc_id: number;
-  doc_point: string;
-  percentage: string;
+  doc_title: string
+  doc_id: number
+  doc_point: string
+  percentage: string
 }
 
 interface MyContributionMessage {
-  count: number;
-  ranking: number;
-  ranking_percentage: string;
-  point: number;
-  docs: DocumentContribution[];
+  count: number
+  ranking: number
+  ranking_percentage: string
+  point: number
+  docs: DocumentContribution[]
 }
 
 interface MyContributionProps {
-  status: number;
-  success: boolean;
-  message: MyContributionMessage;
+  status: number
+  success: boolean
+  message: MyContributionMessage
 }
 
 interface MyPageProps {
-  loggedIn: boolean;
-  setLoggedIn: (loggedIn: boolean) => void;
+  loggedIn: boolean
+  setLoggedIn: (loggedIn: boolean) => void
 }
 
 interface ContributeProps {
-  key: number;
-  user_id: number;
-  doc_id: number;
-  text_pointer: string;
-  version: number;
-  summary: string;
-  created_at: string;
-  count: number;
-  diff: number;
-  is_bad: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_rollback: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_q_based: number; // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  title: string;
+  key: number
+  user_id: number
+  doc_id: number
+  text_pointer: string
+  version: number
+  summary: string
+  created_at: Date
+  count: number
+  diff: number
+  is_bad: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
+  is_rollback: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
+  is_q_based: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
+  title: string
 }
-
 
 function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
   const [loading, setLoading] = useState(true)
@@ -165,7 +164,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
   const [mypageData, setMypageData] = useState<MyPageDataProps>()
   const [myQuestion, setMyQuestion] = useState<MyQuestionProps>()
   const [myDebate, setMyDebate] = useState<MyDebateProps>()
-  const [myBadge, setMyBadge] = useState<BadgeDataProps>({ success: false, data: [], message: '' });
+  const [myBadge, setMyBadge] = useState<BadgeDataProps>({ success: false, data: [], message: '' })
   const [myWiki, setMyWiki] = useState<MyWikiProps>()
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
@@ -187,7 +186,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
       } else if (res.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return Navigate(from)
+        Navigate(from)
       }
     } catch (error) {
       console.error(error)
@@ -195,10 +194,10 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
       if (error.response.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return Navigate(from)
+        Navigate(from)
       }
       alert('에러가 발생하였습니다')
-      return Navigate(from)
+      Navigate(from)
     }
   }
   useEffect(() => {
@@ -208,7 +207,8 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
 
   // 데이터 불러오기
   useEffect(() => {
-    const getData = async (url: string, stateSetter: any) => { //any 타입 추론불가
+    const getData = async (url: string, stateSetter: any) => {
+      // any 타입 추론불가
       try {
         const res = await axios.get(url, { withCredentials: true })
 
@@ -216,6 +216,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
           // 상태 코드에 따라 데이터 처리
           stateSetter(res.data)
         } else if (res.status === 401) {
+          /* empty */
         }
         setLoading(false)
       } catch (error) {
@@ -284,7 +285,9 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                   </span>
                 </p>
                 <Link to={'/mypage/mybadge'} className={styles.b_link}>
-                  <button className={styles.edit}>{' 더보기'}</button>
+                  <button type={'button'} className={styles.edit}>
+                    {' 더보기'}
+                  </button>
                 </Link>
               </div>
 
@@ -292,7 +295,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                 {myBadge && myBadge.data && myBadge.data.length === 0 ? (
                   <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                 ) : (
-                  <>
+                  <div>
                     {myBadge &&
                       myBadge.data &&
                       myBadge.data
@@ -306,7 +309,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                             className={styles.badgeImage}
                           />
                         ))}
-                  </>
+                  </div>
                 )}
               </div>
 
@@ -377,7 +380,9 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                   </span>
                 </p>
                 <Link to={'/mypage/myquestion'} className={styles.q_link}>
-                  <button className={styles.edit}>{'더보기'}</button>
+                  <button type={'button'} className={styles.edit}>
+                    {'더보기'}
+                  </button>
                 </Link>
               </div>
               {myQuestion && myQuestion.message && myQuestion.data.length === 0 ? (
@@ -397,8 +402,6 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                     time={question.created_at}
                     is_bad={question.is_bad}
                     nickname={question.nickname}
-                    rep_badge={question.rep_badge}
-                    badge_image={question.badge_image}
                     like_count={question.like_count}
                     doc_title={question.doc_title}
                     answer_count={question.answer_count}
@@ -417,7 +420,9 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                   </span>
                 </p>
                 <Link to={'/mypage/mycomment'} className={styles.c_link}>
-                  <button className={styles.edit}>{'더보기'}</button>
+                  <button type={'button'} className={styles.edit}>
+                    {'더보기'}
+                  </button>
                 </Link>
               </div>
               {myDebate && myDebate.message && myDebate.message.length === 0 ? (
@@ -425,18 +430,16 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
               ) : (
                 myDebate &&
                 myDebate.message &&
-                myDebate.message
-                  .slice(0, 5)
-                  .map((debate: Debate) => (
-                    <CommentList
-                      //key={debate.id} 미사용 변수
-                      id={debate.debate_id}
-                      subject={debate.debate_subject}
-                      content={debate.debate_content}
-                      time={debate.debate_content_time}
-                      doc_title={debate.doc_title}
-                    />
-                  ))
+                myDebate.message.slice(0, 5).map((debate: Debate) => (
+                  <CommentList
+                    // key={debate.id} 미사용 변수
+                    id={debate.debate_id}
+                    subject={debate.debate_subject}
+                    content={debate.debate_content}
+                    time={debate.debate_content_time}
+                    doc_title={debate.doc_title}
+                  />
+                ))
               )}
             </div>
           </div>

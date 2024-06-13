@@ -9,14 +9,32 @@ import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
 
-interface HomeProps{
+interface HomeProps {
   loggedIn: boolean
   setLoggedIn: (loggedIn: boolean) => void
 }
+
+interface PopularKeyword {
+  keyword: string
+  id: number // assuming there's a unique id for each keyword
+}
+
+interface PopularQuestion {
+  id: number
+  user_id: number
+  content: string
+  created_at: Date
+  like_count: number
+  nickname: string
+  index_title: string
+  answer_count: number
+  title: string
+}
+
 function Home({ loggedIn, setLoggedIn }: HomeProps) {
   const [inputValue, setInputValue] = useState('')
-  const [popularKeywords, setPopularKeywords] = useState([])
-  const [popularQuestions, setPopularQuestions] = useState([])
+  const [popularKeywords, setPopularKeywords] = useState<PopularKeyword[]>([])
+  const [popularQuestions, setPopularQuestions] = useState<PopularQuestion[]>([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const checkLoginStatus = async () => {
@@ -32,6 +50,7 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
       setIsLoggedIn(false)
     }
   }
+
   useEffect(() => {
     checkLoginStatus()
   }, [])
@@ -50,6 +69,7 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
 
     fetchPopularKeywords()
   }, [])
+
   useEffect(() => {
     const fetchPopularQuestions = async () => {
       try {
@@ -87,6 +107,7 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
             }}
           />
           <img
+            role={'presentation'}
             src={searchIcon}
             alt={'icon'}
             className={styles.searchIcon}
@@ -106,15 +127,14 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
           <div className={styles.realTime}>
             <div className={styles.keyWord}>
               <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
-              {popularKeywords.slice(0, 5).map((keyword, index) => (
-                // TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
+              {popularKeywords.slice(0, 5).map((keyword) => (
                 <Link
                   to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}`}
                   className={styles.rankWrap}
-                  key={index}
+                  key={keyword.id}
                 >
                   <p className={styles.numberIcon}>
-                    {index + 1}
+                    {popularKeywords.indexOf(keyword) + 1}
                     {'.'}
                   </p>
                   <p className={styles.rankContent}>{keyword.keyword}</p>
@@ -123,8 +143,7 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
             </div>
             <div className={styles.question}>
               <p className={styles.realTimeTitle}>{'실시간 인기 질문'}</p>
-              {popularQuestions.map((question, index) => (
-                // TODO: 이부분 링크 인코딩 안 해도 제대로 가는지 확인
+              {popularQuestions.map((question) => (
                 <Link
                   to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
                   state={{
@@ -139,7 +158,7 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
                     title: question.title,
                   }}
                   className={styles.rankWrap}
-                  key={index}
+                  key={question.id}
                 >
                   <p className={styles.numberIcon}>{'Q.'}</p>
                   <p className={styles.rankContent}>{question.content}</p>

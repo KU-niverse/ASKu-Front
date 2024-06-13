@@ -106,7 +106,7 @@ const Signin = ({ loggedIn, setLoggedIn }: any) => {
         if (saveIDFlag) localStorage.setItem(LS_KEY_ID, id)
         nav('/')
       } else {
-        return null
+        /* empty */
       }
     } catch (error) {
       if (error.response.status === 402) {
@@ -116,7 +116,7 @@ const Signin = ({ loggedIn, setLoggedIn }: any) => {
         })
       }
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -124,17 +124,17 @@ const Signin = ({ loggedIn, setLoggedIn }: any) => {
     e.preventDefault()
 
     if (id === '') {
-      return alert('아이디를 입력해주세요.')
+      alert('아이디를 입력해주세요.')
     }
     if (password === '') {
-      return alert('비밀번호를 입력해주세요.')
+      alert('비밀번호를 입력해주세요.')
     }
     userLogin()
   }
 
   return (
     <div className={`${styles.container}`}>
-      <img className={`${styles.logo}`} src={logo} alt={'logo'} onClick={() => nav('/')} />
+      <img role={'presentation'} className={`${styles.logo}`} src={logo} alt={'logo'} onClick={() => nav('/')} />
       <img className={`${styles.haho}`} src={haho_login} alt={'haho'} />
       <h1 className={styles.login_headers}>{'LOGIN'}</h1>
       <p className={styles.login_instruction}>{'고파스 계정으로 바로 로그인하세요!'}</p>

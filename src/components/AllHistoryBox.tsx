@@ -9,14 +9,14 @@ import verComp from '../img/verComp.png'
 import ThreedotsReport from './ThreedotsReport'
 
 interface HistoryBoxProps {
-  title: string;
-  version: number;
-  summary: string;
-  user: string;
-  timestamp: string;
-  doctitle?: string;
-  target: string;
-  type: string;
+  title: string
+  version: number
+  summary: string
+  user: number
+  timestamp: string
+  doctitle: string
+  target: number
+  type: string
 }
 
 const HistoryBox = (props: HistoryBoxProps) => {
@@ -65,10 +65,10 @@ const HistoryBox = (props: HistoryBoxProps) => {
 
   const handleCompare = () => {
     if (type === 'create') {
-      return alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
+      alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
     }
     if (version === 1) {
-      return alert('첫번째 히스토리는 지원하지 않는 기능입니다')
+      alert('첫번째 히스토리는 지원하지 않는 기능입니다')
     }
     const encodedTitle = encodeURIComponent(title)
     nav(`/history/${encodedTitle}/diff/${version}`)
@@ -99,6 +99,7 @@ const HistoryBox = (props: HistoryBoxProps) => {
         <div className={styles.allversionBtns}>
           <div className={styles.docTitle}>
             <span
+              role={'presentation'}
               className={styles.docTitle}
               onClick={() => {
                 const encodedTitle = encodeURIComponent(title)
@@ -109,12 +110,12 @@ const HistoryBox = (props: HistoryBoxProps) => {
             </span>
           </div>
           <div className={styles.allVerBtn}>
-            <span onClick={handleView} className={`${styles.versionbtn}`}>
-              <img src={watch} />
+            <span role={'presentation'} onClick={handleView} className={`${styles.versionbtn}`}>
+              <img src={watch} alt={'RAW버전 미리보기 버튼'} />
               {'RAW버전 미리보기\r'}
             </span>
-            <span onClick={handleCompare} className={`${styles.versionbtn}`}>
-              <img src={verComp} />
+            <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
+              <img src={verComp} alt={'전 버전이랑 비교하기 버튼'} />
               {'전 버전이랑 비교하기\r'}
             </span>
           </div>

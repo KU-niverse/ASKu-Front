@@ -41,7 +41,13 @@ function LoginModal() {
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={closeModal} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={closeModal}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'신고가 완료되었습니다!'}</p>
@@ -51,7 +57,7 @@ function LoginModal() {
           </div>
         </div>
       )}
-      <button className={styles.openModalBtn} onClick={openModal}>
+      <button type={'button'} className={styles.openModalBtn} onClick={openModal}>
         {'모달 열기\r'}
       </button>
     </>

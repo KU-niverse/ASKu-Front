@@ -7,13 +7,13 @@ import ThreedotsReport from './ThreedotsReport'
 import FormatDate from './FormatDate'
 
 interface CommentProps {
-  id: number;
-  subject: string;
-  content: string;
-  created_at: string;
-  is_bad: boolean;
-  docsname: string;
-  nick: string;
+  id: number
+  subject: string
+  content: string
+  created_at: Date
+  is_bad: boolean
+  docsname: string
+  nick: string
 }
 
 function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: CommentProps) {
@@ -40,18 +40,18 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
           <span className={styles.q_date}>{formattedDate}</span>
         </div>
         <div className={styles.q_backhead}>
-          <ThreedotsReport id={id} />
+          <ThreedotsReport target={id} type={0} />
         </div>
       </div>
       <div className={styles.q_middle}>
-        <span onClick={linktoComment} className={styles.q_content}>
+        <span role={'presentation'} onClick={linktoComment} className={styles.q_content}>
           {content}
         </span>
       </div>
       <div className={styles.q_footer}>
         <div className={styles.q_frontfooter}>
           <div className={styles.q_like}>
-            <span onClick={linktoComment} className={styles.likeCount}>
+            <span role={'presentation'} onClick={linktoComment} className={styles.likeCount}>
               {subject} {'토론방\r'}
             </span>
           </div>

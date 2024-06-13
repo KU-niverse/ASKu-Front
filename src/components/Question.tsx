@@ -9,15 +9,15 @@ import LikeorNot from './LikeorNot'
 
 interface QuestionProps {
   badge_image: string
-  current_user_id: string
+  current_user_id: number
   answer_count: number
   title: string
-  id: string
-  doc_id: string
-  user_id: string
+  id: number
+  doc_id: number
+  user_id: number
   index_title: string
   content: string
-  created_at: string
+  created_at: Date
   answer_or_not: boolean
   is_bad: boolean
   nick: string
@@ -91,7 +91,7 @@ function Question({
           {user_id === current_user_id ? (
             <ThreedotsMenu questionId={id} type={type} />
           ) : (
-            <ThreedotsReport questionId={id} type={type} />
+            <ThreedotsReport target={id} type={type} />
           )}
         </div>
       </div>

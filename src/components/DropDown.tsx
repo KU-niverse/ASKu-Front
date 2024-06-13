@@ -2,12 +2,25 @@ import React, { useEffect, useState } from 'react'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import './DropDown.css'
-
 import axios from 'axios'
-import SpinnerMypage from './SpinnerMypage'
 
-function DropDown({ onSelectedOption, title, defaultOpt }: any) {
-  const [wikiData, setWikiData] = useState([])
+interface Content {
+  index: number
+  title: string
+}
+
+interface WikiData {
+  contents: Content[]
+}
+
+interface DropDownProps {
+  onSelectedOption: (value: string) => void
+  title: string
+  defaultOpt: string
+}
+
+function DropDown({ onSelectedOption, title, defaultOpt }: DropDownProps) {
+  const [wikiData, setWikiData] = useState<WikiData | null>(null)
 
   useEffect(() => {
     const takeWikiData = async () => {
@@ -15,19 +28,19 @@ function DropDown({ onSelectedOption, title, defaultOpt }: any) {
         const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, { withCredentials: true })
         if (res.status === 200) {
           setWikiData(res.data)
-        }
-        if (res.status === 404) {
+        } else if (res.status === 404) {
+          // Handle the 404 case if needed
         }
       } catch (error) {
         console.error(error)
       }
     }
     takeWikiData()
-  }, [title]) // 위키 정보 가져오기
+  }, [title])
 
-  let options = []
+  let options: { value: string; label: string; className: string }[] = []
   if (wikiData && wikiData.contents) {
-    options = wikiData.contents.map((content: any) => ({
+    options = wikiData.contents.map((content: Content) => ({
       value: `${content.index} ${content.title}`,
       label: `${content.index} ${content.title}`,
       className: 'myOptionClassName',
@@ -40,29 +53,7 @@ function DropDown({ onSelectedOption, title, defaultOpt }: any) {
     })
   }
 
-  // [
-  //   { value: 'one', label: 'One' },
-  //   { value: 'two', label: 'Two', className: 'myOptionClassName' },
-  //   {
-  //    type: 'group', name: 'group1', items: [
-  //      { value: 'three', label: 'Three', className: 'myOptionClassName' },
-  //      { value: 'four', label: 'Four' }
-  //    ]
-  //   },
-  //   {
-  //    type: 'group', name: 'group2', items: [
-  //      { value: 'five', label: 'Five' },
-  //      { value: 'six', label: 'Six' }
-  //    ]
-  //   }
-  // ];
-
-  let defaultOption
-  if (defaultOpt) {
-    defaultOption = defaultOpt
-  } else {
-    defaultOption = '전체'
-  }
+  const defaultOption = defaultOpt || '전체'
 
   const onSelect = (selectedOption: any) => {
     onSelectedOption(selectedOption.value)

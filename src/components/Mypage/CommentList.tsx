@@ -3,11 +3,11 @@ import styles from './CommentList.module.css'
 import comment_icon from '../../img/comment_icon.png'
 
 interface CommentListProps {
-  id: number;
-  subject: string;
-  content: string;
-  time: string;
-  doc_title: string;
+  id: number
+  subject: string
+  content: string
+  time: Date
+  doc_title: string
 }
 
 function CommentList({ id, subject, content, time, doc_title }: CommentListProps) {
@@ -37,7 +37,7 @@ function CommentList({ id, subject, content, time, doc_title }: CommentListProps
       <div className={styles.comment_icon}>
         <img className={styles.comment_png} src={comment_icon} alt={'comment_icon'} />
       </div>
-      <span onClick={linktoComment} className={styles.comment_content}>
+      <span role={'presentation'} onClick={linktoComment} className={styles.comment_content}>
         {truncateContent(content)}
       </span>
     </div>

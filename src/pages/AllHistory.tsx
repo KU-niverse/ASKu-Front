@@ -82,7 +82,7 @@ const AllHistory = () => {
       <Header />
       <div className={styles.header}>
         <span>
-          <img src={his2} />
+          <img alt={'최근 변경 내역'} src={his2} />
           {'최근 변경\r'}
         </span>
       </div>
@@ -91,13 +91,21 @@ const AllHistory = () => {
           <div className={styles.historyTitle}>
             <p className={styles.listTitle2}>{'최근 변경된 모든 문서'}</p>
             <div className={styles.historyTypes}>
-              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+              <p role={'presentation'} onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
                 {'all\r'}
               </p>
-              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={createBtn}
+                className={type === 'create' ? styles.clickType : styles.default}
+              >
                 {'create\r'}
               </p>
-              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={rollBtn}
+                className={type === 'rollback' ? styles.clickType : styles.default}
+              >
                 {'rollback\r'}
               </p>
             </div>
@@ -117,6 +125,7 @@ const AllHistory = () => {
                   title={item.doc_title}
                   target={item.id}
                   type={type}
+                  doctitle={''}
                 />
               </div>
             )
@@ -127,13 +136,21 @@ const AllHistory = () => {
           <div className={styles.historyTitle}>
             <p className={styles.listTitle2}>{'새로 생성된 모든 문서'}</p>
             <div className={styles.historyTypes}>
-              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+              <p role={'presentation'} onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
                 {'all\r'}
               </p>
-              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={createBtn}
+                className={type === 'create' ? styles.clickType : styles.default}
+              >
                 {'create\r'}
               </p>
-              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={rollBtn}
+                className={type === 'rollback' ? styles.clickType : styles.default}
+              >
                 {'rollback\r'}
               </p>
             </div>
@@ -154,6 +171,7 @@ const AllHistory = () => {
                   title={item.doc_title}
                   target={item.id}
                   type={type}
+                  doctitle={''}
                 />
               </div>
             )
@@ -164,13 +182,21 @@ const AllHistory = () => {
           <div className={styles.historyTitle}>
             <p className={styles.listTitle2}>{'최근 롤백된 모든 문서'}</p>
             <div className={styles.historyTypes}>
-              <p onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
+              <p role={'presentation'} onClick={allBtn} className={type === 'all' ? styles.clickType : styles.default}>
                 {'all\r'}
               </p>
-              <p onClick={createBtn} className={type === 'create' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={createBtn}
+                className={type === 'create' ? styles.clickType : styles.default}
+              >
                 {'create\r'}
               </p>
-              <p onClick={rollBtn} className={type === 'rollback' ? styles.clickType : styles.default}>
+              <p
+                role={'presentation'}
+                onClick={rollBtn}
+                className={type === 'rollback' ? styles.clickType : styles.default}
+              >
                 {'rollback\r'}
               </p>
             </div>
@@ -191,6 +217,7 @@ const AllHistory = () => {
                   title={item.doc_title}
                   target={item.id}
                   type={type}
+                  doctitle={''}
                 />
               </div>
             )

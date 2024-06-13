@@ -55,17 +55,23 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
   }
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <div className={styles.modal_title}>
-                  <img id={styles.feedback_icon} src={unlike} />
+                  <img alt={'싫어요 버튼'} id={styles.feedback_icon} src={unlike} />
                   <div className={styles.feedback_title}>
                     <h1 id={styles.red_title}>{'이번 답변은 어떠셨나요?'}</h1>
                     <p id={styles.gray_title}>{'피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.'}</p>
@@ -77,7 +83,7 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
                   onChange={inputChange}
                   onKeyDown={handleKeyDown}
                 />
-                <button className={styles.feedback_btn} onClick={sendMessage}>
+                <button type={'button'} className={styles.feedback_btn} onClick={sendMessage}>
                   {'작성하기\r'}
                 </button>
               </div>
@@ -85,7 +91,7 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

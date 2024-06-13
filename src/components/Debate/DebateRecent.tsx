@@ -5,19 +5,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import FormatTimeAgo from '../FormatTimeAgo'
 import styles from './DebateRecent.module.css'
 
-
 interface DebateRecentProps {
-  title: string;
+  title: string
 }
 
 interface RecentItem {
-  title: string;
-  subject: string;
-  id: string;
-  recent_edited_at: string;
+  title: string
+  subject: string
+  id: number
+  recent_edited_at: Date
 }
-
-
 
 const DebateRecent = ({ title }: DebateRecentProps) => {
   const [recentListData, setRecentListData] = useState(null)
@@ -29,6 +26,7 @@ const DebateRecent = ({ title }: DebateRecentProps) => {
         if (res.status === 200) {
           setRecentListData(res.data)
         } else {
+          /* empty */
         }
       } catch (error) {
         console.error(error)

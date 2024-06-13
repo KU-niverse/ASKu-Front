@@ -73,11 +73,12 @@ const ChangeInfo = () => {
           <div className={`${styles.signup_head}`}>
             <span>{'닉네임'}</span>
             <span
+              role={'presentation'}
               className={doubleCheck === false ? `${styles.signup_check}` : `${styles.signup_done}`}
               onClick={handleDoubleCheck}
             >
               <BsCheck2All size={'12'} />
-              &nbsp;{'중복확인은 여기를 눌러주세요\r'}
+              {'중복확인은 여기를 눌러주세요\r'}
             </span>
           </div>
           <input
@@ -86,7 +87,7 @@ const ChangeInfo = () => {
             placeholder={'닉네임을 입력하세요'}
             name={'nick'}
             value={form.nick}
-            maxLength={'30'}
+            maxLength={30}
             onChange={(e) => setForm({ ...form, nick: e.target.value })}
           />
         </div>
@@ -98,11 +99,11 @@ const ChangeInfo = () => {
             placeholder={'학번을 입력하세요'}
             name={'studentId'}
             value={form.studentId}
-            maxLength={'10'}
+            maxLength={10}
             onChange={(e) => setForm({ ...form, studentId: e.target.value })}
           />
         </div>
-        <button className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>
+        <button type={'button'} className={`${styles.signup_btn}`} onSubmit={handleOnSubmit}>
           {'내 정보 변경\r'}
         </button>
       </form>

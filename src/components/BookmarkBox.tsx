@@ -11,7 +11,7 @@ interface BookmarkBoxProps {
   is_favorite: boolean
   result: boolean
 }
-const BookmarkBox = ({title, content, is_favorite, result}: BookmarkBoxProps) => {
+const BookmarkBox = ({ title, content, is_favorite, result }: BookmarkBoxProps) => {
   const [favorite, setFavorite] = useState(is_favorite)
   const [imageSource, setImageSource] = useState(trueBk)
   const nav = useNavigate()
@@ -19,29 +19,29 @@ const BookmarkBox = ({title, content, is_favorite, result}: BookmarkBoxProps) =>
 
   const addBookmark = async () => {
     try {
-      const result = await axios.post(
+      const favaorite_result = await axios.post(
         `${process.env.REACT_APP_HOST}/wiki/favorite/${title}`,
         {},
         {
           withCredentials: true,
         },
       )
-      if (result.data.success === true) {
+      if (favaorite_result.data.success === true) {
         setFavorite(true)
         alert('즐겨찾기에 추가되었습니다')
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
   const deleteBookmark = async () => {
     try {
-      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+      const favorite_result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
         withCredentials: true,
       })
-      if (result.data.success === true) {
+      if (favorite_result.data.success === true) {
         setFavorite(false)
         alert('즐겨찾기에서 삭제되었습니다')
       } else {
@@ -49,7 +49,7 @@ const BookmarkBox = ({title, content, is_favorite, result}: BookmarkBoxProps) =>
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -81,14 +81,20 @@ const BookmarkBox = ({title, content, is_favorite, result}: BookmarkBoxProps) =>
   return (
     <div className={styles.bkbox}>
       <div className={styles.contents}>
-        <div className={styles.title} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>
+        <div role={'presentation'} className={styles.title} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>
           {title}
         </div>
         <div>
-          <img src={imageSource} alt={'Image'} onClick={handleClick} className={isResult ? `${styles.hidden}` : ''} />
+          <img
+            role={'presentation'}
+            src={imageSource}
+            alt={'북마크 버튼'}
+            onClick={handleClick}
+            className={isResult ? `${styles.hidden}` : ''}
+          />
         </div>
       </div>
-      <div className={styles.content} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>
+      <div role={'presentation'} className={styles.content} onClick={() => nav(`/wiki/${encodeURIComponent(title)}`)}>
         {content}
       </div>
     </div>

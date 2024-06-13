@@ -29,7 +29,6 @@ import Header from '../components/Header'
 
 // `;
 
-
 const HistoryDiff = () => {
   const [isSplit, setIsSplit] = useState(true)
   const { title, ver } = useParams()
@@ -56,7 +55,7 @@ const HistoryDiff = () => {
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -69,7 +68,7 @@ const HistoryDiff = () => {
       <Header />
       <div className={styles.header}>
         <span>
-          <img src={his2} />
+          <img alt={'히스토리'} src={his2} />
           {'히스토리\r'}
         </span>
       </div>
@@ -81,12 +80,14 @@ const HistoryDiff = () => {
         <div className={styles.historyDiff}>
           <div className={styles.verCompare}>
             <span className={styles.verCompareNum}>
-              {'VERSION&nbsp;'}
-              {Number(ver) - 1}&nbsp;&nbsp;&nbsp;
+              {'VERSION'}
+              {Number(ver) - 1}
             </span>
-            <span className={styles.verCompareVs}>{'&nbsp;vs&nbsp;'}</span>
+            &nbsp;
+            <span className={styles.verCompareVs} />
+            &nbsp;
             <span className={styles.verCompareNum}>
-              {'&nbsp;&nbsp;&nbsp;VERSION&nbsp;'}
+              {'VERSION'}
               {ver}
             </span>
           </div>

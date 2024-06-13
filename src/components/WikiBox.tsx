@@ -48,10 +48,7 @@ const WikiBox = ({ main, title, content: rawContent, index, section, isZero }: W
           <span className={isOpen ? styles.hidden : ''}>
             <FaChevronRight size={'16'} color={'rgba(222, 58, 88, 1)'} />
           </span>
-          <span className={styles.wikiIndex}>
-            &nbsp;{index}
-            {'.&nbsp;'}
-          </span>
+          <span className={styles.wikiIndex}>{index}&nbsp;</span>
           <span>{title}</span>
         </div>
         <div className={isZero ? `${styles.hidden}` : `${styles.wikiContentBtns}`}>

@@ -1,4 +1,4 @@
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import { Menu, MenuItem, MenuButton, ClickEvent } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import { useState, useEffect } from 'react'
@@ -9,7 +9,12 @@ import styles from './ThreedotsMenu.module.css'
 import EditModal from './EditModal'
 import ReportModal from './ReportModal'
 
-function ThreedotsMenu({ questionId, type }: any) {
+interface ThreedotsMenuProps {
+  questionId: number
+  type: number
+}
+
+function ThreedotsMenu({ questionId, type }: ThreedotsMenuProps) {
   const [isEditModalVisible, setEditModalVisible] = useState(false)
   const closeEditModal = () => {
     setEditModalVisible(false)
@@ -20,44 +25,10 @@ function ThreedotsMenu({ questionId, type }: any) {
   }
   const [loggedIn, setLoggedIn] = useState(false)
 
-  // login status 체크하기
   const Navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
 
-  // 로그인 체크 후 우회
-  // const checkLoginStatus = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 201 && res.data.success === true) {
-  //       setLoggedIn(true);
-  //     } else if (res.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoggedIn(false);
-  //     if (error.response.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }else{
-  //       alert("에러가 발생하였습니다");
-  //       return Navigate(from);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   checkLoginStatus();
-  // }, []);
-  //
-
-  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
@@ -97,7 +68,7 @@ function ThreedotsMenu({ questionId, type }: any) {
         alert('알 수 없는 오류가 발생했습니다.')
       }
     }
-  } // 질문 삭제하기
+  }
 
   return (
     <Menu
@@ -109,12 +80,10 @@ function ThreedotsMenu({ questionId, type }: any) {
     >
       <MenuItem
         className={styles.menuitem}
-        value={'신고하기'}
-        onClick={(e) => {
+        onClick={(e: ClickEvent) => {
           checkLoginStatus()
-          e.stopPropagation = true
-          e.keepOpen = true
-          e.preventDefault = true
+          e.syntheticEvent.stopPropagation()
+          e.syntheticEvent.preventDefault()
           setReportModalVisible(true)
         }}
       >
@@ -131,14 +100,10 @@ function ThreedotsMenu({ questionId, type }: any) {
 
       <MenuItem
         className={styles.menuitem}
-        value={'수정하기'}
-        onClick={(e) => {
+        onClick={(e: ClickEvent) => {
           checkLoginStatus()
-          // Stop the `onItemClick` of root menu component from firing
-          e.stopPropagation = true
-          // Keep the menu open after this menu item is clicked
-          e.keepOpen = true
-          e.preventDefault = true
+          e.syntheticEvent.stopPropagation()
+          e.syntheticEvent.preventDefault()
           setEditModalVisible(true)
         }}
       >
@@ -150,13 +115,11 @@ function ThreedotsMenu({ questionId, type }: any) {
 
       <MenuItem
         className={styles.menuitem}
-        value={'삭제하기'}
-        onClick={(e) => {
+        onClick={(e: ClickEvent) => {
           checkLoginStatus()
-          e.stopPropagation = true
-          e.keepOpen = true
-          e.preventDefault = true
-          onQuestionDelete(questionId)
+          e.syntheticEvent.stopPropagation()
+          e.syntheticEvent.preventDefault()
+          onQuestionDelete()
         }}
       >
         {'삭제하기\r'}

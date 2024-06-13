@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import closeBtn from '../img/close_btn.png'
 import styles from './AlarmModal.module.css'
 
-const patterns = {
+const patterns: Record<number, RegExp> = {
   1: /\[즐겨찾기\] (.+?) 문서에 질문이 있습니다\./,
   2: /\[좋아요\] (.+?) 문서의 (.+?) 질문\((.+?)\)에 답변이 있습니다\./,
   3: /\[질문\] (.+?) 문서의 (.+?) 질문\((.+?)\)에 답변이 있습니다\./,
@@ -54,8 +54,24 @@ const dummyData = [
   },
 ]
 
+interface Notification {
+  id: number
+  user_id: number
+  type_id: number
+  read_or_not: boolean
+  message: string
+  created_at: Date
+  is_admin: boolean
+}
+
+interface Info {
+  result?: string
+  title?: string
+  id?: number
+}
+
 const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState<Notification[]>([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -78,33 +94,21 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
   }, [])
 
   useEffect(() => {
-    // 화면 크기 변화 이벤트 리스너를 추가
     window.addEventListener('resize', handleWindowResize)
 
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
     return () => {
       window.removeEventListener('resize', handleWindowResize)
     }
   }, [])
 
-  // 창 크기 변화 이벤트 핸들러
   const handleWindowResize = () => {
     if (isAlarmVisible) {
       handleAlarm()
-    } else {
     }
   }
 
-  // useEffect(() => {
-  //     if (isAlarmVisible) {
-  //         // API 호출 대신 더미 데이터 사용
-  //         setNotifications(dummyData);
-  //     }
-  // }, [isAlarmVisible]);
-
   useEffect(() => {
     if (isAlarmVisible) {
-      // Axios를 사용하여 데이터 가져오기
       axios
         .get(`${process.env.REACT_APP_HOST}/notification/user`, {
           withCredentials: true,
@@ -114,17 +118,16 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
         })
         .catch((error) => {
           console.error('Error fetching notifications:', error)
-          // 데이터를 불러오는 동안 오류가 발생하면 알림 데이터를 빈 배열로 설정
           setNotifications([])
         })
     }
   }, [isAlarmVisible])
 
-  const removeIdFromMessage = (message: any) => {
+  const removeIdFromMessage = (message: string) => {
     return message.replace(/\(\d+\)/g, '')
   }
 
-  const extractInfo = (type_id: any, message: any) => {
+  const extractInfo = (type_id: number, message: string): Info | null => {
     const pattern = patterns[type_id]
     if (!pattern) {
       return null
@@ -135,20 +138,16 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
       return null
     }
 
-    let info = {}
+    let info: Info = {}
 
     switch (type_id) {
       case 1:
+      case 4:
         info = { result: match[1] }
         break
       case 2:
-        info = { title: match[1], result: match[2], id: match[3] }
-        break
       case 3:
-        info = { title: match[1], result: match[2], id: match[3] }
-        break
-      case 4:
-        info = { result: match[1] }
+        info = { title: match[1], result: match[2], id: parseInt(match[3], 10) }
         break
       default:
         return null
@@ -157,7 +156,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
     return info
   }
 
-  const extractInfoAndRefineMessage = (type_id: any, message: any) => {
+  const extractInfoAndRefineMessage = (type_id: number, message: string) => {
     const info = extractInfo(type_id, message)
     if (!info) {
       return { info: null, refinedMessage: message }
@@ -167,25 +166,26 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
     return { info, refinedMessage }
   }
 
-  const generateLink = (notification: any) => {
+  const generateLink = (notification: Notification) => {
     const { message } = notification
     const type_id = parseInt(
       Object.keys(patterns).find((key) => {
-        const pattern = patterns[key]
+        const pattern = patterns[parseInt(key, 10)]
         return message.match(pattern) !== null
-      }),
+      })!,
+      10,
     )
 
     const { info } = extractInfoAndRefineMessage(type_id, message)
-    // TODO: 이부분 링크 잘 동작하는지 확인
+    if (!info) return '/'
+
     const link = (() => {
       switch (type_id) {
         case 1:
           return `/wiki/morequestion/${info.result}`
         case 2:
-          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
         case 3:
-          return `/wiki/morequestion/${encodeURIComponent(info.title)}/${info.id}`
+          return `/wiki/morequestion/${encodeURIComponent(info.title!)}/${info.id}`
         case 4:
           return '/mypage/mybadge'
         default:
@@ -197,38 +197,42 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
   }
 
   return (
-    <>
+    <div>
       {isAlarmVisible && (
         <div className={styles.alarmContainer}>
           <div className={styles.alarmTitleWrap}>
             <span id={styles.alarmTitle}>{'내 알림'}</span>
-            <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={handleAlarm} />
+            <img
+              role={'presentation'}
+              src={closeBtn}
+              alt={'close'}
+              className={styles.close_btn}
+              onClick={handleAlarm}
+            />
           </div>
           <div className={styles.alarmContent}>
             {notifications.length > 0
-              ? notifications.map((notification, index) => (
-                  <div key={index}>
+              ? notifications.map((notification) => (
+                  <div key={notification.id}>
                     <Link to={generateLink(notification)} className={styles.alarmLink}>
                       <p className={styles.alarmText}>{notification.message}</p>
                     </Link>
-                    {index < notifications.length - 1 && (
-                      <hr
-                        style={{
-                          height: '0.3px',
-                          opacity: '0.7',
-                          backgroundColor: '#D5D5D5',
-                          width: '100%',
-                          marginLeft: '10px',
-                        }}
-                      />
-                    )}
+                    <hr
+                      style={{
+                        height: '0.3px',
+                        opacity: '0.7',
+                        backgroundColor: '#D5D5D5',
+                        width: '100%',
+                        marginLeft: '10px',
+                      }}
+                    />
                   </div>
                 ))
               : null}
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

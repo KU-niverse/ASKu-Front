@@ -64,10 +64,10 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
   const handleNickDoubleCheck = async (e: any) => {
     e.preventDefault()
     if (form.nick.trim() === '') {
-      return alert('닉네임을 입력해주세요.')
+      alert('닉네임을 입력해주세요.')
     }
     if (isNickValid === false) {
-      return alert('닉네임 형식이 올바르지 않습니다.')
+      alert('닉네임 형식이 올바르지 않습니다.')
     }
 
     try {
@@ -89,10 +89,10 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
   const handleIdDoubleCheck = async (e: any) => {
     e.preventDefault()
     if (form.id.trim() === '') {
-      return alert('아이디를 입력해주세요.')
+      alert('아이디를 입력해주세요.')
     }
     if (isIdValid === false) {
-      return alert('아이디 형식이 올바르지 않습니다.')
+      alert('아이디 형식이 올바르지 않습니다.')
     }
     try {
       const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/iddupcheck/${form.id}`)
@@ -225,7 +225,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
     } catch (error) {
       console.error(error)
       nav('/')
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -239,7 +239,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
 
   return (
     <div className={`${styles.container}`}>
-      <img className={`${styles.logo}`} src={logo} alt={''} onClick={() => nav('/')} />
+      <img role={'presentation'} className={`${styles.logo}`} src={logo} alt={''} onClick={() => nav('/')} />
       <h1>{'회원가입'}</h1>
       <form onSubmit={createUserApi}>
         <KoreapasAgreeComponent nickname={koreapasData.nickname} />
@@ -265,7 +265,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
               }
             >
               <FiAlertCircle size="12" />
-              &nbsp;2자이상-8자미만, 한글 또는 영문으로 입력해주세요
+              2자이상-8자미만, 한글 또는 영문으로 입력해주세요
             </span>
           </div>
           <div className={`${styles.checkInput}`}>
@@ -298,7 +298,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
               }
             >
               <FiAlertCircle size="12" />
-              &nbsp;6자이상-15자미만, 영문, 숫자로 입력해주세요
+              6자이상-15자미만, 영문, 숫자로 입력해주세요
             </span>
           </div>
           <div className={`${styles.checkInput}`}>
@@ -330,7 +330,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
               }
             >
               <FiAlertCircle size="12" />
-              &nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요
+              8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요
             </span>
           </div>
           <input
@@ -355,7 +355,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
               onChange={onChangeCheckPW}
             >
               <FiAlertTriangle size="12" />
-              &nbsp;비밀번호가 일치하지 않습니다
+              비밀번호가 일치하지 않습니다
             </span>
           </div>
           <input
@@ -390,7 +390,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
               type="text"
               onChange={(e) => setForm({ ...form, emailId: e.target.value })}
             />
-            &nbsp;@korea.ac.kr
+            @korea.ac.kr
             <button
               className={`${styles.dblcheck}`}
               onClick={handleEmailDoubleCheck}

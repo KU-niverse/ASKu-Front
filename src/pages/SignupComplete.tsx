@@ -74,10 +74,10 @@ const SignupComplete = () => {
         <img className={`${styles.complete}`} src={complete} alt={''} />
         <div className={styles.complete_text}>{'ASKu 회원가입이 완료되었습니다!'}</div>
         <div className={styles.complete_btn}>
-          <button className={styles.btn_login} onClick={goToLogin}>
+          <button type={'button'} className={styles.btn_login} onClick={goToLogin}>
             {'로그인\r'}
           </button>
-          <button className={styles.btn_home} onClick={goToHome}>
+          <button type={'button'} className={styles.btn_home} onClick={goToHome}>
             {'홈 화면으로 가기\r'}
           </button>
         </div>

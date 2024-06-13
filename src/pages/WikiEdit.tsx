@@ -201,7 +201,8 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
                 onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
                 className={styles.wikiManual}
               >
-                {'위키 문법 알아보기!'}&nbsp;{'\r'}
+                {'위키 문법 알아보기!'}
+                {'\r'}
                 <FaArrowUpRightFromSquare />
               </p>
             </div>

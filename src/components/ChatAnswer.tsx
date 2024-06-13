@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styles from './ChatAnswer.module.css'
@@ -15,13 +15,12 @@ import UnlikeModal from './UnlikeModal'
 
 interface ChatAnswerProps {
   content: string
-  reference?: string
-  qnaId?: number
-  blockIconZip?: boolean
+  reference: string
+  qnaId: number
+  blockIconZip: boolean
 }
 
-const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps ) => {
-
+const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps) => {
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)
   const [referenceOpen, setReferenceOpen] = useState(false)
@@ -46,11 +45,7 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
   }
 
   const handleReferenceOpen = () => {
-    if (referenceOpen) {
-      setReferenceOpen(false)
-    } else {
-      setReferenceOpen(true)
-    }
+    setReferenceOpen(!referenceOpen)
   }
 
   const handleReferenceClose = () => {
@@ -58,18 +53,11 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
   }
 
   const handleLikeClick = () => {
-    if (likeModalOpen) {
-      setLikeModalOpen(false)
-    } else {
-      setLikeModalOpen(true)
-    }
+    setLikeModalOpen(!likeModalOpen)
   }
+
   const handleUnlikeClick = () => {
-    if (unlikeModalOpen) {
-      setUnlikeModalOpen(false)
-    } else {
-      setUnlikeModalOpen(true)
-    }
+    setUnlikeModalOpen(!unlikeModalOpen)
   }
 
   const sendLikeFeedback = () => {
@@ -102,21 +90,21 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
       })
   }
 
-  const parseReference = (reference: string | null) => {
-    if (reference === null) {
+  const parseReference = (ref: string | null) => {
+    if (ref === null) {
       return ''
     }
 
     try {
-      const parsedReference = JSON.parse(reference)
+      const parsedReference = JSON.parse(ref)
       return (
         <div>
           <p>{'관련 학칙:'}</p>
           <p>{parsedReference.Rule}</p>
           {Object.entries(parsedReference)
             .filter(([key, value]) => key !== 'Rule')
-            .map(([link, value], index: number) => (
-              <div key={index}>
+            .map(([link, value]) => (
+              <div key={link}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   {'참고문서:'}
                   {link}
@@ -127,7 +115,7 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
         </div>
       )
     } catch {
-      return reference
+      return ref
     }
   }
 
@@ -140,9 +128,10 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
         <div className={styles.chatTextWrap}>
           <p className={styles.chatText}>{content}</p>
         </div>
-        <img src={dots} className={styles.dots} />
+        <img src={dots} className={styles.dots} alt="" />
         <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
           <img
+            role={'presentation'}
             id={styles.like}
             className={styles.icon}
             src={likeHovered ? like_hover : like}
@@ -153,8 +142,11 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
               handleLikeClick()
               sendLikeFeedback()
             }}
+            onFocus={handleLikeMouseOver}
+            onBlur={handleLikeMouseLeave}
           />
           <img
+            role={'presentation'}
             id={styles.unlike}
             className={styles.icon}
             src={unlikeHovered ? unlike_hover : unlike}
@@ -165,8 +157,11 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
               handleUnlikeClick()
               sendUnlikeFeedback()
             }}
+            onFocus={handleUnlikeMouseOver}
+            onBlur={handleUnlikeMouseLeave}
           />
           <img
+            role={'presentation'}
             id={styles.referenceIcon}
             className={styles.icon}
             src={referenceIcon}
@@ -178,10 +173,16 @@ const ChatAnswer = ({content, reference, qnaId, blockIconZip}: ChatAnswerProps )
           <div className={styles.reference}>
             <div className={styles.header}>
               <p className={styles.reference_title}>{'출처'}</p>
-              <img className={styles.closeBtn} src={closeBtn} alt={'close button'} onClick={handleReferenceClose} />
+              <img
+                role={'presentation'}
+                className={styles.closeBtn}
+                src={closeBtn}
+                alt={'close button'}
+                onClick={handleReferenceClose}
+              />
             </div>
             <div className={styles.reference_text}>
-              <p>{parseReference(reference)}</p>
+              {parseReference(reference)}
               <p>{reference}</p>
             </div>
           </div>

@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
-import styles from './History.module.css'
-import Header from '../components/Header'
-import his2 from '../img/his2.png'
-import AllHistoryBox from '../components/AllHistoryBox'
 
-import Paging from '../components/Paging'
-import FormatTimeAgo from '../components/FormatTimeAgo'
-import Footer from '../components/Footer'
-
-const Oauth = () => {
+const Oauth: React.FC = () => {
   const navigate = useNavigate()
-  const { uuid } = useParams() // URL의 파라미터를 가져옵니다.
+  const { uuid } = useParams<{ uuid: string }>() // URL의 파라미터를 가져옵니다.
   const [loggedIn, setLoggedIn] = useState(false) // Define the setLoggedIn function using the useState hook
 
   useEffect(() => {
-    async function fetchData() {
-      let response
+    const fetchData = async (): Promise<void> => {
       try {
         // uuid로 로그인
-        response = await axios.post(
+        const response = await axios.post(
           `${process.env.REACT_APP_HOST}/user/auth/koreapasoauth`,
           {
             uuid,
@@ -39,7 +30,7 @@ const Oauth = () => {
             })
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         // 이미 로그인되어있는 경우
         if (error.response.status === 400) {
           setLoggedIn(true)
@@ -63,7 +54,7 @@ const Oauth = () => {
       }
     }
     fetchData()
-  }, [])
+  }, [navigate, uuid])
 
   return null
 }

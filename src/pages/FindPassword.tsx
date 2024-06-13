@@ -27,11 +27,11 @@ const FindPassword = () => {
         alert(response.data.message)
         nav('/')
       } else {
-        return alert(response.data.message)
+        alert(response.data.message)
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 

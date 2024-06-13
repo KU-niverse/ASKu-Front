@@ -1,18 +1,19 @@
 import styles from './Contribute.module.css'
+
 interface ContributeProps {
-  key: number;
-  user_id: number;
-  doc_id: number;
-  text_pointer: string;
-  version: number;
-  summary: string;
-  created_at: string;
-  count: number;
-  diff: number;
-  is_bad: number; 
-  is_rollback: number; 
-  is_q_based: number; 
-  title: string;
+  key: number
+  user_id: number
+  doc_id: number
+  text_pointer: string
+  version: number
+  summary: string
+  created_at: Date
+  count: number
+  diff: number
+  is_bad: boolean
+  is_rollback: boolean
+  is_q_based: boolean
+  title: string
 }
 
 function Contribute({
@@ -30,7 +31,6 @@ function Contribute({
   is_rollback,
   is_q_based,
 }: ContributeProps) {
-
   // 주어진 created_at 값을 그대로 사용하여 Date 객체 생성
   const utcDate = new Date(created_at)
 

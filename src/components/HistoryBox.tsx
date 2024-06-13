@@ -8,16 +8,15 @@ import watch from '../img/watch.png'
 import verComp from '../img/verComp.png'
 import ThreedotsReport from './ThreedotsReport'
 
-
 interface HistoryBoxProps {
-  title: string;
-  version: number;
-  summary: string;
-  user: string;
-  timestamp: string;
-  doctitle?: string;
-  target: string;
-  type?: string;
+  title: string
+  version: number
+  summary: string
+  user: string
+  timestamp: string
+  doctitle: string
+  target: number
+  type: string
 }
 const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
@@ -40,6 +39,7 @@ const HistoryBox = (props: HistoryBoxProps) => {
     const returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)')
 
     if (returnValue === false) {
+      /* empty */
     } else {
       try {
         const result = await axios.post(
@@ -71,10 +71,10 @@ const HistoryBox = (props: HistoryBoxProps) => {
 
   const handleCompare = () => {
     if (type === 'create') {
-      return alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
+      alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
     }
     if (version === 1) {
-      return alert('첫번째 히스토리는 지원하지 않는 기능입니다')
+      alert('첫번째 히스토리는 지원하지 않는 기능입니다')
     }
     const encodedTitle = encodeURIComponent(title)
 
@@ -105,16 +105,16 @@ const HistoryBox = (props: HistoryBoxProps) => {
       <div className={styles.versionText}>
         <div />
         <div className={styles.versionBtns}>
-          <span onClick={handleView} className={`${styles.versionbtn}`}>
-            <img src={watch} />
+          <span role={'presentation'} onClick={handleView} className={`${styles.versionbtn}`}>
+            <img alt={'RAW버전 미리보기 버튼'} src={watch} />
             {'RAW버전 미리보기\r'}
           </span>
-          <span onClick={handleRollback} className={`${styles.versionbtn}`}>
-            <img src={rollback} />
+          <span role={'presentation'} onClick={handleRollback} className={`${styles.versionbtn}`}>
+            <img alt={'이 버전으로 되돌리기 버튼'} src={rollback} />
             {'이 버전으로 되돌리기\r'}
           </span>
-          <span onClick={handleCompare} className={`${styles.versionbtn}`}>
-            <img src={verComp} />
+          <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
+            <img alt={'전 버전이랑 비교하기 버튼'} src={verComp} />
             {'전 버전이랑 비교하기\r'}
           </span>
         </div>

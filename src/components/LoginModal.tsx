@@ -29,29 +29,39 @@ function LoginModal({ isOpen, onClose }: LoginModalProps) {
   }, [isOpen])
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'로그인 후 ASKU를 이용해주세요!'}</p>
                 <img className={styles.haho_login} src={haho_login} alt={'character'} />
                 <Link to={'/signin'}>
-                  <button className={styles.signin}>{'로그인'}</button>
+                  <button type={'button'} className={styles.signin}>
+                    {'로그인'}
+                  </button>
                 </Link>
-                <a href ={'https://www.koreapas.com/m/member_join_new.php'}>
-                  <button className={styles.signup}>{'회원가입'}</button>
+                <a href={'https://www.koreapas.com/m/member_join_new.php'}>
+                  <button type={'button'} className={styles.signup}>
+                    {'회원가입'}
+                  </button>
                 </a>
               </div>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

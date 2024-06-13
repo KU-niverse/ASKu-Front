@@ -2,20 +2,18 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import styles from './DebateList.module.css'
 import FormatDate from '../FormatDate'
 
-
 interface DebateListProps {
-  title: string;
-  id: string;
-  doc_id: string;
-  user_id: string;
-  subject: string;
-  created_at: string;
-  recent_edited_at: string;
-  done_or_not: boolean;
-  done_at: string;
-  is_bad: boolean;
+  title: string
+  id: number
+  doc_id: number
+  user_id: number
+  subject: string
+  created_at: Date
+  recent_edited_at: Date
+  done_or_not: boolean
+  done_at: Date
+  is_bad: boolean
 }
-
 
 function DebateList({
   title,
@@ -44,7 +42,7 @@ function DebateList({
 
   return (
     <div className={styles.container}>
-      <span onClick={linktoDebateRoom} className={styles.title}>
+      <span role={'presentation'} onClick={linktoDebateRoom} className={styles.title}>
         {subject}
       </span>
 

@@ -27,10 +27,10 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggest, setShowSuggest] = useState(true)
-  const inputRef = useRef(null)
-  const [chatResponse, setChatResponse] = useState([])
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+  const [chatResponse, setChatResponse] = useState<any[]>([])
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
-  const [previousChatHistory, setPreviousChatHistory] = useState([])
+  const [previousChatHistory, setPreviousChatHistory] = useState<any[]>([])
   const [clearModalOpen, setClearModalOpen] = useState(false)
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
   const navigate = useNavigate()
@@ -71,8 +71,9 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
         const newChatResponse = [
           ...chatResponse,
-          { content: inputValue }, // 사용자의 질문 추가
+          { id: Date.now(), content: inputValue }, // 사용자의 질문 추가
           {
+            id: response.data.id,
             content: response.data.a_content,
             reference: response.data.reference,
             qnaId: response.data.id,
@@ -103,6 +104,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       }
     }
   }
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
       sendMessage()
@@ -114,7 +116,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
     const newChatResponse = [
       ...chatResponse,
-      { content, isQuestion: true }, // 사용자의 질문 추가
+      { id: Date.now(), content, isQuestion: true }, // 사용자의 질문 추가
     ]
     setChatResponse(newChatResponse)
 
@@ -124,11 +126,11 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       setLoading(false) // 로딩 스피너 숨기기
 
       type Answers = {
-        [key: string]:string
+        [key: string]: string
       }
 
       // 더미 데이터에서 해당 추천 검색어에 대한 미리 저장한 답변을 가져와서 사용합니다.
-      const dummyAnswers:Answers = {
+      const dummyAnswers: Answers = {
         '너는 누구야?':
           'AI 하호입니다. 저는 고려대학교 학생들의 고려대학교 학칙에 대한 질문에 대답하는 AI Chatbot입니다. 질문이 있으신가요?',
         '휴학은 최대 몇 년까지 가능해?':
@@ -145,7 +147,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       // 답변 컴포넌트를 생성하고 더미 데이터의 답변을 추가합니다.
       const updatedChatResponse = [
         ...newChatResponse,
-        { content: answer }, // 더미 데이터에서 가져온 답변 추가
+        { id: Date.now(), content: answer }, // 더미 데이터에서 가져온 답변 추가
       ]
       setChatResponse(updatedChatResponse)
       setInputValue('')
@@ -153,9 +155,9 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
     }, 3000) // 3초 후에 실행
   }
 
-  const chatBottomRef = useRef(null)
+  const chatBottomRef = useRef<HTMLDivElement>(null)
   const scrollToBottom = () => {
-    chatBottomRef.current.scrollIntoView({ behavior: 'smooth' })
+    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
@@ -175,7 +177,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
   useEffect(() => {
     const getMessage = async () => {
-      inputRef.current.focus()
+      inputRef.current?.focus()
       try {
         const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId.data[0].id}`)
         const previousHistory = response.data
@@ -211,49 +213,78 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       <div className={styles.mobileChatbotWrap}>
         <div className={styles.topBar}>
           <p id={styles.title}>{'AI 하호'}</p>
-          
-            <button className={styles.button} onClick={handleClearModal}>
-              {'채팅 비우기\r'}
-            </button>
-          
+
+          <button type={'button'} className={styles.button} onClick={handleClearModal}>
+            {'채팅 비우기\r'}
+          </button>
+
           <Link to={'https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4'} target={'_blank'}>
-            <button className={styles.button}>{'도움말'}</button>
+            <button type={'button'} className={styles.button}>
+              {'도움말'}
+            </button>
           </Link>
         </div>
         <div>
           <div className={styles.chat}>
             <ChatAnswer
               content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
-              // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
+              reference={''}
+              qnaId={0}
+              blockIconZip={false} // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
             />
             {previousChatHistory.length !== 0 && (
               <>
-                {previousChatHistory.map((item, index) => (
+                {previousChatHistory.map((item) => (
                   <Fragment key={item.id}>
                     <ChatQuestion content={item.q_content} />
-                    <ChatAnswer content={item.a_content} qnaId={item.id} reference={item.reference} />
+                    <ChatAnswer
+                      content={item.a_content}
+                      qnaId={item.id}
+                      reference={item.reference}
+                      blockIconZip={false}
+                    />
                   </Fragment>
                 ))}
               </>
             )}
-            {chatResponse.map((item, index) => {
-              if (index % 2 === 0) {
-                return <ChatQuestion key={index} content={item.content} />
+            {chatResponse.map((item) => {
+              if (item.isQuestion) {
+                return <ChatQuestion key={item.id} content={item.content} />
               }
-              return <ChatAnswer key={index} content={item.content} qnaId={item.qnaId} reference={item.reference} />
+              return (
+                <ChatAnswer
+                  key={item.id}
+                  content={item.content}
+                  qnaId={item.qnaId}
+                  reference={item.reference}
+                  blockIconZip={false}
+                />
+              )
             })}
             <div className={styles.suggest} style={{ display: showSuggest ? 'block' : 'none' }}>
               <p className={styles.ref}>{'추천 질문'}</p>
-              <span className={styles.textBox} onClick={() => handleSuggestClick('너는 누구야?')}>
+              <span role={'presentation'} className={styles.textBox} onClick={() => handleSuggestClick('너는 누구야?')}>
                 {'너는 누구야?\r'}
               </span>
-              <span className={styles.textBox} onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}>
+              <span
+                role={'presentation'}
+                className={styles.textBox}
+                onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
+              >
                 {'휴학은 최대 몇 년까지 가능해?\r'}
               </span>
-              <span className={styles.textBox} onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}>
+              <span
+                role={'presentation'}
+                className={styles.textBox}
+                onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
+              >
                 {'강의 최소 출석 일수에 대해 알려줘.\r'}
               </span>
-              <span className={styles.textBox} onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}>
+              <span
+                role={'presentation'}
+                className={styles.textBox}
+                onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
+              >
                 {'이중전공은 어떻게 해?\r'}
               </span>
             </div>
@@ -277,8 +308,8 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
               ref={inputRef}
               disabled={loading}
             />
-            <div className={styles.sendBtn} onClick={sendMessage}>
-              <img src={arrow} className={styles.sendBtnArrow} />
+            <div role={'presentation'} className={styles.sendBtn} onClick={sendMessage}>
+              <img alt={'AI 질문 버튼'} src={arrow} className={styles.sendBtnArrow} />
             </div>
           </div>
         </div>

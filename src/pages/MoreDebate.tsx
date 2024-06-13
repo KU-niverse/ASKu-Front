@@ -9,21 +9,20 @@ import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
 
-
 interface Debate {
-  id: string;
-  doc_id: string;
-  user_id: string;
-  subject: string;
-  created_at: string;
-  recent_edited_at: string;
-  done_or_not: boolean;
-  done_at: string | null;
-  is_bad: boolean;
+  id: number
+  doc_id: number
+  user_id: number
+  subject: string
+  created_at: Date
+  recent_edited_at: Date
+  done_or_not: boolean
+  done_at: Date | null
+  is_bad: boolean
 }
 
 interface DebateListData {
-  data: Debate[];
+  data: Debate[]
 }
 
 function MoreDebate() {
@@ -39,6 +38,7 @@ function MoreDebate() {
         if (res.status === 200) {
           setDebateListData(res.data)
         } else {
+          /* empty */
         }
       } catch (error) {
         console.error(error)

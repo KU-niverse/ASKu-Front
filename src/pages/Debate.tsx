@@ -11,33 +11,33 @@ import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
 
-
 interface DebateState {
-  id: string;
-  title: string;
-  subject: string;
+  id: number
+  title: string
+  subject: string
 }
 
 interface DebateMessage {
-  id: string;
-  user_id: string;
-  content: string;
-  created_at: string;
-  is_bad: boolean;
-  nickname: string;
-  badge_image: string;
+  id: number
+  user_id: number
+  content: string
+  created_at: Date
+  is_bad: boolean
+  nickname: string
+  badge_image: string
 }
 
 interface DebateContentData {
   message: {
-    data: number | DebateMessage[];
-  };
+    data: number | DebateMessage[]
+  }
 }
+
 const Debate: React.FC = () => {
-  const [debateContentData, setDebateContentData] = useState<DebateContentData | null>(null);
-  const location = useLocation();
-  const stateData = location.state as DebateState;
-  const { id: debateId, title, subject } = stateData;
+  const [debateContentData, setDebateContentData] = useState<DebateContentData | null>(null)
+  const location = useLocation()
+  const stateData = location.state as DebateState
+  const { id: debateId, title, subject } = stateData
 
   useEffect(() => {
     const takeDebateContent = async () => {
@@ -49,6 +49,7 @@ const Debate: React.FC = () => {
         if (res.status === 200) {
           setDebateContentData(res.data)
         } else {
+          /* empty */
         }
       } catch (error) {
         console.error(error)
@@ -57,25 +58,6 @@ const Debate: React.FC = () => {
     takeDebateContent()
   }, [title, debateId]) // 토론방 메시지 가져오기
 
-  // const handleDebateSubmit = async (submitData) => {
-  //   try {
-  //     const res = await axios.post(
-  //       process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
-  //       submitData,
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 200) {
-  //       setData(res.data);
-  //       // alert(res.data.message)
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     if (error.response.status === 500) {
-  //       console.log(error.response.data.message);
-  //       alert(error.response.data.message);
-  //     }
-  //   }
-  // }; //토론 메세지 생성하기
   const handleDebateSubmit = async (submitData: { content: string }) => {
     try {
       const postResponse = await axios.post(
@@ -128,7 +110,8 @@ const Debate: React.FC = () => {
           ) : (
             debateContentData &&
             debateContentData.message &&
-            (debateContentData.message.data as DebateMessage[]).map((debate, index) => (
+            Array.isArray(debateContentData.message.data) &&
+            debateContentData.message.data.map((debate, index) => (
               <DebateContent
                 key={debate.id}
                 r_id={debate.id}
@@ -139,6 +122,7 @@ const Debate: React.FC = () => {
                 is_bad={debate.is_bad}
                 nick={debate.nickname}
                 badge_image={debate.badge_image}
+                debate_id={0}
               />
             ))
           )}

@@ -10,16 +10,16 @@ import QuestionQnA from '../components/QuestionQnA'
 import link_icon from '../img/link_icon.png'
 
 interface UserInfo {
-  id: string
-  [key: string]: string
+  id: number
+  [key: number]: number
 }
 
 interface AnswerData {
-  id: string
-  wiki_history_id: string
-  question_id: string
-  created_at: string
-  user_id: string
+  id: number
+  wiki_history_id: number
+  question_id: number
+  created_at: Date
+  user_id: number
   nickname: string
   rep_badge: string
   badge_image: string
@@ -29,11 +29,11 @@ interface AnswerData {
 }
 
 interface QuestionDataItem {
-  user_id: string
+  user_id: number
   nickname: string
   content: string
   like_count: number
-  created_at: string
+  created_at: Date
   index_title: string
   answer_count: number
   badge_image: string
@@ -51,15 +51,15 @@ interface UserInfoResponse {
 const QnA = () => {
   const [isToggled, setIsToggled] = useState(false) // import하려는 페이지에 구현
   const [currentUserId, setCurrentUserId] = useState<UserInfo | null>(null)
-  const [answerData, setAnswerData] = useState<AnswerData[]>([])
+  const [answerData, setAnswerData] = useState<AnswerData[]>([]) // 빈 배열로 초기화
   const [questionData, setQuestionData] = useState<QuestionData | null>(null)
   const location = useLocation()
   const { title } = useParams<{ title: string }>()
-  const { question_id } = useParams<{ question_id: string }>()
+  const { question_id } = useParams<{ question_id: string }>() // Ensure question_id is treated as a string
   const nav = useNavigate()
+
   const linktoWiki = () => {
     const encodedTitle = encodeURIComponent(title!)
-
     nav(`/wiki/${encodedTitle}`)
   }
 
@@ -79,6 +79,7 @@ const QnA = () => {
       setCurrentUserId(null)
     }
   }
+
   useEffect(() => {
     getUserInfo()
   }, [])
@@ -86,17 +87,17 @@ const QnA = () => {
   useEffect(() => {
     const takeAnswer = async () => {
       try {
-        const res = await axios.get<AnswerData[]>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
           withCredentials: true,
         })
         if (res.status === 200) {
           setAnswerData(res.data)
-        }
-        if (res.status === 500) {
-          /* empty */
+        } else {
+          setAnswerData([]) // API 호출이 실패한 경우 빈 배열로 설정
         }
       } catch (error) {
         console.error(error)
+        setAnswerData([]) // API 호출이 실패한 경우 빈 배열로 설정
       }
     }
     takeAnswer()
@@ -111,9 +112,6 @@ const QnA = () => {
         console.log('🚀 ~ file: QnA.tsx:89 ~ takeQuestion ~ res:', res)
         if (res.status === 200) {
           setQuestionData(res.data)
-        }
-        if (res.status === 500) {
-          /* empty */
         }
       } catch (error) {
         console.error(error)
@@ -136,13 +134,13 @@ const QnA = () => {
           <div className={styles.backheader}>
             <button type={'button'} onClick={linktoWiki} className={styles.q_editbtn}>
               <img src={link_icon} alt={'link_icon'} />
-              <span className={styles.q_linkbtn}>{'문서 바로가기'}</span>
+              <span className={styles.q_linkbtn}>&nbsp;{'문서 바로가기'}</span>
             </button>
           </div>
         </div>
         {questionData && questionData.data && (
           <QuestionQnA
-            question_id={question_id!}
+            question_id={parseInt(question_id!, 10)} // Convert question_id to number
             user_id={questionData.data[0].user_id}
             nick={questionData.data[0].nickname}
             content={questionData.data[0].content}
@@ -153,7 +151,7 @@ const QnA = () => {
             title={title!}
             badge_image={questionData.data[0].badge_image}
             current_user_id={currentUserId ? currentUserId.id : null}
-            doc_id={''}
+            doc_id={0}
             answer_or_not={false}
             is_bad={false}
           />
@@ -164,9 +162,10 @@ const QnA = () => {
           {questionData && questionData.data && (
             <span className={styles.c_num}>{questionData.data[0].answer_count}</span>
           )}
-          {answerData.length === 0 ? (
+          {Array.isArray(answerData) && answerData.length === 0 ? (
             <p className={styles.no_answer}>{'아직 작성된 답변이 없습니다.'}</p>
           ) : (
+            Array.isArray(answerData) &&
             answerData.map((data) => (
               <CommentQna
                 key={data.id}

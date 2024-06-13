@@ -10,50 +10,50 @@ import Switch from '../components/Switch'
 import SpinnerMypage from '../components/SpinnerMypage'
 
 interface Question {
-  id: number;
-  doc_id: number;
-  user_id: number;
-  index_title: string;
-  content: string;
-  created_at: string;
-  answer_or_not: number;
-  is_bad: number;
-  nickname: string;
-  rep_badge: number;
-  badge_image: string;
-  like_count: number;
-  doc_title: string;
-  answer_count: number;
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_or_not: number
+  is_bad: boolean
+  nickname: string
+  rep_badge: number
+  badge_image: string
+  like_count: number
+  doc_title: string
+  answer_count: number
 }
 
 interface MyQuestionResponse {
-  success: boolean;
-  message: string;
-  data: Question[];
+  success: boolean
+  message: string
+  data: Question[]
 }
 
 interface UserData {
-  id: number;
-  name: string;
-  login_id: string;
-  stu_id: string;
-  email: string;
-  rep_badge_id: number;
-  nickname: string;
-  created_at: string;
-  point: number;
-  is_admin: number;
-  is_authorized: number;
-  restrict_period: string | null;
-  restrict_count: number;
-  rep_badge_name: string;
-  rep_badge_image: string;
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
 }
 
 interface MypageDataResponse {
-  success: boolean;
-  message: string;
-  data: UserData[];
+  success: boolean
+  message: string
+  data: UserData[]
 }
 
 function MyQuestion() {

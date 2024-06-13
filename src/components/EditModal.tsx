@@ -6,7 +6,7 @@ import styles from './EditModal.module.css'
 interface EditModalProps {
   isOpen: boolean
   onClose: () => void
-  questionId: string
+  questionId: number
 }
 
 function EditModal({ isOpen, onClose, questionId }: EditModalProps) {

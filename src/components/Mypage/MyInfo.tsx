@@ -1,9 +1,9 @@
 import styles from './MyInfo.module.css'
 
 interface MyInfoProps {
-  name: string;
-  email: string;
-  stu_id: string;
+  name: string
+  email: string
+  stu_id: string
 }
 
 function MyInfo({ name, email, stu_id }: MyInfoProps) {

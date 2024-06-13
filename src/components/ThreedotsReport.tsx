@@ -10,8 +10,8 @@ import styles from './ThreedotsReport.module.css'
 import threedots from '../img/threedots.png'
 
 interface ThreedotsReportProps {
-  type: string
-  target: string
+  type: number
+  target: number
 }
 function ThreedotsReport({ type, target }: ThreedotsReportProps) {
   const nav = useNavigate()

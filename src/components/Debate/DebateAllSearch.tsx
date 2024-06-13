@@ -23,7 +23,7 @@ const DebateAllSearch = () => {
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.message)
+      alert(error.response.message)
     }
   }
 
@@ -50,7 +50,13 @@ const DebateAllSearch = () => {
           placeholder={'검색어를 입력하세요.'}
           onKeyDown={handleKeyDown} // Use onKeyDown instead
         />
-        <img src={searchIcon} alt={'icon'} className={styles.searchIcon} onClick={handleDebateSearch} />
+        <img
+          role={'presentation'}
+          src={searchIcon}
+          alt={'icon'}
+          className={styles.searchIcon}
+          onClick={handleDebateSearch}
+        />
       </div>
       <div className={onClick ? styles.resultContainer : styles.hidden}>
         {resultCount === 0 ? (

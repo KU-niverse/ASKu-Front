@@ -62,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.40.1",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "eslint": "^8.57.0",

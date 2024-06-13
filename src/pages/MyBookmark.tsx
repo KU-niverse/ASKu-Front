@@ -8,8 +8,8 @@ import styles from './MyBookmark.module.css'
 import Footer from '../components/Footer'
 
 interface MyBookmarkProps {
-  loggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
+  loggedIn: boolean
+  setLoggedIn: (value: boolean) => void
 }
 
 const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
@@ -29,7 +29,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
       } else if (res.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav(from)
+        nav(from)
       }
     } catch (error) {
       console.error(error)
@@ -37,10 +37,10 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
       if (error.response.status === 401) {
         setLoggedIn(false)
         // alert("로그인이 필요한 서비스 입니다.");
-        return nav(from)
+        nav(from)
       }
       alert('에러가 발생하였습니다')
-      return nav(from)
+      nav(from)
     }
   }
   useEffect(() => {
@@ -58,7 +58,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -81,7 +81,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
           {lists.map((item) => {
             return (
               <div key={item.title}>
-                <BookmarkBox title={item.title} content={item.recent_filtered_content} is_favorite />
+                <BookmarkBox title={item.title} content={item.recent_filtered_content} is_favorite result={false} />
               </div>
             )
           })}

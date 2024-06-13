@@ -4,31 +4,33 @@ import axios from 'axios'
 import closeBtn from '../img/close_btn.png'
 import styles from './BadgeModal.module.css'
 
-interface BadgeModalProps { //미사용 함수
-  isOpen: boolean;
-  onClose: () => void; 
+interface BadgeModalProps {
+  // 미사용 함수
+  isOpen: boolean
+  onClose: () => void
 }
 
 interface Badge {
-  id: number;
-  user_id: number;
-  badge_id: number;
-  created_at: string;
-  is_bad: number;
-  image: string;
-  name: string;
-  description: string;
+  id: number
+  user_id: number
+  badge_id: number
+  created_at: Date
+  is_bad: boolean
+  image: string
+  name: string
+  description: string
 }
 
 interface MyBadgeResponse {
-  success: boolean;
-  message: string;
-  data: Badge[];
+  success: boolean
+  message: string
+  data: Badge[]
 }
 
 function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   const modalRef = useRef(null)
-  const handleOutsideClick = (event: any) => { //TODO: any 타입 지정(Mouse Event 오류 발생)
+  const handleOutsideClick = (event: any) => {
+    // TODO: any 타입 지정(Mouse Event 오류 발생)
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose()
     }
@@ -69,7 +71,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
-        { rep_badge_id: myBadge.data[0].badge_id }, //몇 번 째 데이터를 대표배지로 지정할 지 인풋 필요
+        { rep_badge_id: myBadge.data[0].badge_id }, // 몇 번 째 데이터를 대표배지로 지정할 지 인풋 필요
         { withCredentials: true },
       )
       if (response.status === 200) {
@@ -88,13 +90,19 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   } // 대표뱃지 설정하기
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'대표 뱃지 설정하기'}</p>
@@ -109,7 +117,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
                       .map((badge: any) => <img key={badge.id} src={badge.image} alt={badge.name} />)
                   )}
                 </div>
-                <button className={styles.q_csubmit} onClick={handleRepBadge}>
+                <button type={'button'} className={styles.q_csubmit} onClick={handleRepBadge}>
                   {'수정하기\r'}
                 </button>
               </div>
@@ -117,7 +125,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

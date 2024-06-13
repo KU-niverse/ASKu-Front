@@ -1,12 +1,15 @@
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import { Menu, MenuItem, MenuButton, ClickEvent } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
-import { useState } from 'react'
 import axios from 'axios'
 import threedots from '../img/threedots.png'
 import styles from './ThreedotsBadge.module.css'
 
-function ThreedotsBadge({ badge_id }: any) {
+interface ThreedotsBadgeProps {
+  badge_id: number
+}
+
+function ThreedotsBadge({ badge_id }: ThreedotsBadgeProps) {
   const onRepBadge = async () => {
     try {
       const response = await axios.put(
@@ -36,11 +39,10 @@ function ThreedotsBadge({ badge_id }: any) {
     >
       <MenuItem
         className={styles.menuitem}
-        value={'대표 뱃지로 설정'}
-        onClick={(e) => {
-          e.stopPropagation = true
-          e.preventDefault = true
-          onRepBadge(badge_id)
+        onClick={(e: ClickEvent) => {
+          e.syntheticEvent.stopPropagation()
+          e.syntheticEvent.preventDefault()
+          onRepBadge()
         }}
       >
         {'대표 뱃지로 설정\r'}

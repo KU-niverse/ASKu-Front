@@ -33,18 +33,24 @@ function RefreshModal({ isOpen, onClose }: RefreshModalProps) {
   }
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={onClose} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={onClose}
+                />
               </div>
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'이미 처리중인 질문이 있습니다! '}</p>
                 <img className={styles.haho_login} src={haho_login} alt={'character'} />
-                <button onClick={refresh} className={styles.signin}>
+                <button type={'button'} onClick={refresh} className={styles.signin}>
                   {'새로고침\r'}
                 </button>
               </div>
@@ -52,7 +58,7 @@ function RefreshModal({ isOpen, onClose }: RefreshModalProps) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

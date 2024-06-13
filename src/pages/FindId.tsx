@@ -24,7 +24,7 @@ const FindId = () => {
         setId(response.data.login_id)
         nav('/findoutid', { state: response.data.login_id })
       } else {
-        return alert(response.data.message)
+        alert(response.data.message)
       }
     } catch (error) {
       console.error(error)
@@ -35,7 +35,7 @@ const FindId = () => {
 
   function handleOnClick() {
     if (email.trim() === '') {
-      return alert('이메일을 입력해주세요')
+      alert('이메일을 입력해주세요')
     }
     findUserId()
     nav('/findoutid')
@@ -54,7 +54,7 @@ const FindId = () => {
             <input type={'text'} onChange={(e) => setEmail(e.target.value)} value={email} />
           </span>
         </div>
-        <button className={`${styles.findBtn}`} onClick={handleOnClick}>
+        <button type={'button'} className={`${styles.findBtn}`} onClick={handleOnClick}>
           {'아이디 찾기\r'}
         </button>
       </form>

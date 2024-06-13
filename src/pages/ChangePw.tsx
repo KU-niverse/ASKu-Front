@@ -52,17 +52,17 @@ const ChangePw = () => {
     e.preventDefault()
 
     if (newPassword.trim() === '') {
-      return alert('새 비밀번호를 입력해주세요')
+      alert('새 비밀번호를 입력해주세요')
     }
     if (password.trim() === '') {
-      return alert('기존 비밀번호를 입력해주세요')
+      alert('기존 비밀번호를 입력해주세요')
     }
 
     if (isPwValid === false) {
-      return alert('비밀번호 형식이 올바르지 않습니다')
+      alert('비밀번호 형식이 올바르지 않습니다')
     }
     if (isPwSame === false) {
-      return alert('비밀번호가 일치하지 않습니다')
+      alert('비밀번호가 일치하지 않습니다')
     }
 
     try {
@@ -80,11 +80,11 @@ const ChangePw = () => {
         alert(response.data.message)
         nav('/mypage')
       } else {
-        return alert(response.data.message)
+        alert(response.data.message)
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -97,7 +97,7 @@ const ChangePw = () => {
           <div className={`${styles.inputLabel}`}>
             <div className={`${styles.inputHead}`}>
               <span>{'현재 비밀번호'}</span>
-              {/* <span className={isPwValid === false? `${styles.pwChangeAlert}`: `${styles.pwChangeDone}`}><FiAlertCircle size='12'/>&nbsp;8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span> */}
+              {/* <span className={isPwValid === false? `${styles.pwChangeAlert}`: `${styles.pwChangeDone}`}><FiAlertCircle size='12'/>8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요</span> */}
             </div>
             <input
               required
@@ -106,7 +106,7 @@ const ChangePw = () => {
               name={'password'}
               value={password}
               onChange={onChangePW}
-              maxLength={'20'}
+              maxLength={20}
             />
           </div>
         </div>
@@ -116,7 +116,7 @@ const ChangePw = () => {
               <span>{'새 비밀번호'}</span>
               <span className={isPwValid === false ? `${styles.pwChangeAlert}` : `${styles.pwChangeDone}`}>
                 <FiAlertCircle size={'12'} />
-                &nbsp;{'8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요\r'}
+                {'8자이상-20자미만, 영문, 숫자, 특수문자로 입력해주세요\r'}
               </span>
             </div>
             <input
@@ -126,7 +126,7 @@ const ChangePw = () => {
               name={'newpassword'}
               value={newPassword}
               onChange={onChangeNewPW}
-              maxLength={'20'}
+              maxLength={20}
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ const ChangePw = () => {
                 onChange={onChangeCheckPW}
               >
                 <FiAlertTriangle size={'12'} />
-                &nbsp;{'비밀번호가 일치하지 않습니다\r'}
+                {'비밀번호가 일치하지 않습니다\r'}
               </span>
             </div>
             <input
@@ -149,7 +149,7 @@ const ChangePw = () => {
               name={'checkPw'}
               value={checkPw}
               onChange={onChangeCheckPW}
-              maxLength={'20'}
+              maxLength={20}
             />
           </div>
         </div>

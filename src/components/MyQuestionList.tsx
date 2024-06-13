@@ -7,19 +7,19 @@ import LikeorNot from './LikeorNot'
 import styles from './MyQuestionList.module.css'
 
 interface MyQuestionListProps {
-  badge_image: string;
-  answer_count: number;
-  docsname: string;
-  id: number;
-  doc_id: number;
-  user_id: number;
-  index_title: string;
-  content: string;
-  created_at: string;
-  answer_or_not: number;
-  is_bad: number;
-  nick: string;
-  like_count: number;
+  badge_image: string
+  answer_count: number
+  docsname: string
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_or_not: number
+  is_bad: boolean
+  nick: string
+  like_count: number
 }
 
 function MyQuestionList({
@@ -75,7 +75,7 @@ function MyQuestionList({
       </div>
       <div className={styles.q_middle}>
         <span className={styles.q_icon}>{'Q. '}</span>
-        <span onClick={linktoQuestion} className={styles.q_content}>
+        <span role={'presentation'} onClick={linktoQuestion} className={styles.q_content}>
           <span className={styles.q_index}>
             {'['}
             {index_title}

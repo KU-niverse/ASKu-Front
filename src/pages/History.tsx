@@ -37,30 +37,29 @@ const data = [
 ]
 
 type HistoryItem = {
-  version: number;
-  summary: string;
-  user: string;
-  timestamp: string;
-  is_bad?: boolean; 
-  nick?: string; 
-  id?: string; 
-};
+  version: number
+  summary: string
+  user: string
+  timestamp: string
+  is_bad?: boolean
+  nick?: string
+  id?: number
+}
 
 const History = () => {
-  const { title } = useParams<{ title: string }>();
-  const [lists, setLists] = useState<HistoryItem[]>([]);
-  const [typeCount, setTypeCount] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
-  const perPage = 6;
-  const startIndex = (page - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const visibleHistorys = lists.slice(startIndex, endIndex);
-  const [blank, setBlank] = useState<boolean>(false);
+  const { title } = useParams<{ title: string }>()
+  const [lists, setLists] = useState<HistoryItem[]>([])
+  const [typeCount, setTypeCount] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
+  const perPage = 6
+  const startIndex = (page - 1) * perPage
+  const endIndex = startIndex + perPage
+  const visibleHistorys = lists.slice(startIndex, endIndex)
+  const [blank, setBlank] = useState<boolean>(false)
 
   const handlePageChange = (pageNumber: number) => {
-    setPage(pageNumber);
-  };
-
+    setPage(pageNumber)
+  }
 
   const getWiki = async () => {
     try {
@@ -76,7 +75,7 @@ const History = () => {
       }
     } catch (error) {
       console.error(error)
-      return alert(error.response.data.message)
+      alert(error.response.data.message)
     }
   }
 
@@ -89,7 +88,7 @@ const History = () => {
       <Header />
       <div className={styles.header}>
         <span>
-          <img src={his2} />
+          <img alt={'히스토리'} src={his2} />
           {'히스토리\r'}
         </span>
       </div>
@@ -117,6 +116,8 @@ const History = () => {
                     timestamp={item.timestamp}
                     title={title}
                     target={item.id}
+                    doctitle={''}
+                    type={''}
                   />
                 </div>
               )

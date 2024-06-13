@@ -38,14 +38,20 @@ function Modal() {
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <img src={closeBtn} alt={'close'} className={styles.close_btn} onClick={closeModal} />
+                <img
+                  role={'presentation'}
+                  src={closeBtn}
+                  alt={'close'}
+                  className={styles.close_btn}
+                  onClick={closeModal}
+                />
               </div>
               <div className={styles.modal_content}>{/* 모달 컨텐츠 내용 */}</div>
             </div>
           </div>
         </div>
       )}
-      <button className={styles.openModalBtn} onClick={openModal}>
+      <button type={'button'} className={styles.openModalBtn} onClick={openModal}>
         {'모달 열기\r'}
       </button>
     </>

@@ -1,4 +1,3 @@
-/* src/RouteChangeTracker.js */
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import ReactGA from 'react-ga4'
@@ -7,7 +6,7 @@ import ReactGA from 'react-ga4'
  * uri 변경 추적 컴포넌트
  * uri가 변경될 때마다 pageview 이벤트 전송
  */
-const RouteChangeTracker = () => {
+const RouteChangeTracker: React.FC = (): JSX.Element | null => {
   const location = useLocation()
   const [initialized, setInitialized] = useState(false)
 
@@ -26,6 +25,8 @@ const RouteChangeTracker = () => {
       ReactGA.send('pageview')
     }
   }, [initialized, location])
+
+  return null // Ensure the component returns null
 }
 
 export default RouteChangeTracker
