@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { useMutation, useQueryClient } from 'react-query'
 import styles from './QuestionInput.module.css'
 import DropDown from './DropDown'
 
@@ -10,7 +11,12 @@ interface QuestionInputProps {
   defaultOpt: string
 }
 
-function QuestionInput({ onQuestionSubmit, title, defaultOpt }: QuestionInputProps) {
+const checkLoginStatus = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  return res.data
+}
+
+const QuestionInput = ({ onQuestionSubmit, title, defaultOpt }: QuestionInputProps) => {
   const [questionContent, setQuestionContent] = useState('')
   const [selectedOption, setSelectedOption] = useState('전체') // 선택한 option을 상태로 관리
   const [loggedIn, setLoggedIn] = useState(false)
@@ -18,29 +24,28 @@ function QuestionInput({ onQuestionSubmit, title, defaultOpt }: QuestionInputPro
 
   const location = useLocation()
   const from = location.state?.from || '/'
-
-  // 로그인 체크 후 우회
-  const checkLoginStatus = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true)
-      } else if (res.status === 401) {
-        setLoggedIn(false)
-      }
-    } catch (error) {
-      console.error(error)
-      setLoggedIn(false)
-      if (error.response.status === 401) {
-        setLoggedIn(false)
-      } else {
-        alert('에러가 발생하였습니다')
-      }
-    }
-  }
+  const queryClient = useQueryClient()
 
   useEffect(() => {
-    checkLoginStatus()
+    const checkLogin = async () => {
+      try {
+        const res = await checkLoginStatus()
+        if (res.success === true) {
+          setLoggedIn(true)
+        } else {
+          setLoggedIn(false)
+        }
+      } catch (error) {
+        console.error(error)
+        setLoggedIn(false)
+        if (error.response?.status === 401) {
+          setLoggedIn(false)
+        } else {
+          alert('에러가 발생하였습니다')
+        }
+      }
+    }
+    checkLogin()
   }, [])
 
   // dropdown에서 선택한 index 반영
@@ -55,10 +60,24 @@ function QuestionInput({ onQuestionSubmit, title, defaultOpt }: QuestionInputPro
     }
   }
 
-  const submitData = {
-    index_title: selectedOption,
-    content: questionContent,
-  }
+  const mutation = useMutation(
+    async (newQuestion: { index_title: string; content: string }) => {
+      const res = await axios.post(`${process.env.REACT_APP_HOST}/question/submit`, newQuestion, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('questions')
+        window.location.reload()
+      },
+      onError: (error: any) => {
+        console.error('Error submitting question:', error)
+        alert('질문 제출 중 오류가 발생했습니다.')
+      },
+    },
+  )
 
   const handleSubmit = async () => {
     if (!loggedIn) {
@@ -75,8 +94,7 @@ function QuestionInput({ onQuestionSubmit, title, defaultOpt }: QuestionInputPro
       alert('질문을 입력해주세요.')
       return
     }
-    onQuestionSubmit(submitData)
-    window.location.reload()
+    mutation.mutate({ index_title: selectedOption, content: questionContent })
   }
 
   const countCharacters = () => {

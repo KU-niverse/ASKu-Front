@@ -1,18 +1,15 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 import styles from './MyPage.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import haho from '../img/haho.png'
 import CommentList from '../components/Mypage/CommentList'
 import QuestionList from '../components/Mypage/QuestionList'
 import Contribute from '../components/Mypage/Contribute'
 import Graph from '../components/Mypage/Graph'
-import MyBadge from '../components/Mypage/MyBadge'
 import MyProfile from '../components/Mypage/MyProfile'
-import MyInfo from '../components/Mypage/MyInfo'
-
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
 
@@ -142,30 +139,7 @@ interface MyPageProps {
   setLoggedIn: (loggedIn: boolean) => void
 }
 
-interface ContributeProps {
-  key: number
-  user_id: number
-  doc_id: number
-  text_pointer: string
-  version: number
-  summary: string
-  created_at: Date
-  count: number
-  diff: number
-  is_bad: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_rollback: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  is_q_based: boolean // 0 또는 1로 나타내는지 여부에 따라 부울 값으로 사용할 수 있습니다.
-  title: string
-}
-
-function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
-  const [loading, setLoading] = useState(true)
-  const [myContribute, setMyContribute] = useState<MyContributionProps>()
-  const [mypageData, setMypageData] = useState<MyPageDataProps>()
-  const [myQuestion, setMyQuestion] = useState<MyQuestionProps>()
-  const [myDebate, setMyDebate] = useState<MyDebateProps>()
-  const [myBadge, setMyBadge] = useState<BadgeDataProps>({ success: false, data: [], message: '' })
-  const [myWiki, setMyWiki] = useState<MyWikiProps>()
+const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
   const handlePageChange = (pageNumber: number) => {
@@ -200,50 +174,69 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
       Navigate(from)
     }
   }
+
   useEffect(() => {
     checkLoginStatus()
   }, [])
-  //
 
-  // 데이터 불러오기
-  useEffect(() => {
-    const getData = async (url: string, stateSetter: any) => {
-      // any 타입 추론불가
-      try {
-        const res = await axios.get(url, { withCredentials: true })
+  const fetchMyPageData = async (): Promise<MyPageDataProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
+    return res.data
+  }
 
-        if (res.status === 200 || res.status === 201) {
-          // 상태 코드에 따라 데이터 처리
-          stateSetter(res.data)
-        } else if (res.status === 401) {
-          /* empty */
-        }
-        setLoading(false)
-      } catch (error) {
-        console.error(error)
-        setLoading(false)
-      }
-    }
+  const fetchMyQuestion = async (): Promise<MyQuestionProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, {
+      withCredentials: true,
+    })
+    return res.data
+  }
 
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/info`, setMypageData)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, setMyQuestion)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, setMyDebate)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, setMyBadge)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, setMyWiki)
-    getData(`${process.env.REACT_APP_HOST}/wiki/contributions`, setMyContribute)
-  }, [])
+  const fetchMyDebate = async (): Promise<MyDebateProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, { withCredentials: true })
+    return res.data
+  }
 
-  //
+  const fetchMyBadge = async (): Promise<BadgeDataProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    return res.data
+  }
 
-  // 로딩 중일 때 표시할 컴포넌트
-  if (loading) {
+  const fetchMyWiki = async (): Promise<MyWikiProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, { withCredentials: true })
+    return res.data
+  }
+
+  const fetchMyContribute = async (): Promise<MyContributionProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions`, { withCredentials: true })
+    return res.data
+  }
+
+  const { data: mypageData, isLoading: loadingMypage, error: mypageError } = useQuery('mypageData', fetchMyPageData)
+  const {
+    data: myQuestion,
+    isLoading: loadingMyQuestion,
+    error: myQuestionError,
+  } = useQuery('myQuestion', fetchMyQuestion)
+  const { data: myDebate, isLoading: loadingMyDebate, error: myDebateError } = useQuery('myDebate', fetchMyDebate)
+  const { data: myBadge, isLoading: loadingMyBadge, error: myBadgeError } = useQuery('myBadge', fetchMyBadge)
+  const { data: myWiki, isLoading: loadingMyWiki, error: myWikiError } = useQuery('myWiki', fetchMyWiki)
+  const {
+    data: myContribute,
+    isLoading: loadingMyContribute,
+    error: myContributeError,
+  } = useQuery('myContribute', fetchMyContribute)
+
+  if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
       <div>
         <SpinnerMypage />
       </div>
     )
   }
-  //
+
+  if (mypageError || myQuestionError || myDebateError || myBadgeError || myWikiError || myContributeError) {
+    return <div>Error loading data</div>
+  }
 
   return (
     <div className={styles.container}>
@@ -264,7 +257,7 @@ function MyPage({ loggedIn, setLoggedIn }: MyPageProps) {
                 </Link> */}
               </div>
 
-              {mypageData && mypageData.data && myBadge.data && myContribute && myContribute.message && (
+              {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
                 <MyProfile
                   nick={mypageData.data[0].nickname}
                   point={mypageData.data[0].point}

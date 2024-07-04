@@ -1,12 +1,12 @@
 import { useState, useEffect, FormEvent } from 'react'
-import axios from 'axios'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
+import axios from 'axios'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import Editor from '../components/Quill'
 import styles from './WikiEdit.module.css'
 import Header from '../components/Header'
 import HtmlToWiki from '../components/Wiki/HtmlToWiki'
-import WikiToHtml from '../components/Wiki/WikiToHtml'
 import WikiToQuill from '../components/Wiki/WikiToQuill'
 
 interface WikiEditProps {
@@ -25,45 +25,56 @@ interface WikiDocs {
   version: string
 }
 
+const fetchUserInfo = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  return res.data
+}
+
+const fetchWiki = async (title: string) => {
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, { withCredentials: true })
+  return res.data
+}
+
 const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
   const { title, section } = useParams<{ title: string; section: string }>()
   const nav = useNavigate()
   const location = useLocation()
   const [desc, setDesc] = useState<string>('')
-  const [wiki, setWiki] = useState<string>('')
   const [summary, setSummary] = useState<string>('')
   const [version, setVersion] = useState<string>('')
-  const [copy, setCopy] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-  const [wikiDocs, setWikiDocs] = useState<WikiDocs | null>(null)
+  const queryClient = useQueryClient()
 
   const from = location.state?.from || '/'
 
-  // 로그인 체크 후 우회
-  const checkLoginStatus = async (): Promise<void> => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      if (res.status === 201 && res.data.success === true) {
+  const { data: userInfo } = useQuery('userInfo', fetchUserInfo, {
+    onSuccess: (data) => {
+      if (data.success) {
         setLoggedIn(true)
-      }
-      if (res.status === 401) {
+      } else {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
         nav('/')
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error(error)
       setLoggedIn(false)
-      if (error.response?.status === 401) {
-        setLoggedIn(false)
-        alert('로그인이 필요한 서비스 입니다.')
-        nav('/')
-      }
       alert('에러가 발생하였습니다')
       nav('/')
-    }
-  }
+    },
+  })
+
+  const { data: wikiDocs, isLoading: wikiLoading } = useQuery(['wikiDocs', title], () => fetchWiki(title!), {
+    onSuccess: (data) => {
+      setDesc(WikiToQuill(data.text))
+      setVersion(data.version)
+    },
+    onError: (error) => {
+      console.error(error)
+      alert('잘못된 접근입니다.')
+    },
+  })
 
   useEffect(() => {
     if (userInfo && wikiDocs) {
@@ -74,9 +85,34 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
     }
   }, [userInfo, wikiDocs, nav])
 
-  useEffect(() => {
-    checkLoginStatus()
-  }, [])
+  const mutation = useMutation(
+    async (newContent: { version: string; new_content: string; summary: string }) => {
+      const result = await axios.post(
+        `${process.env.REACT_APP_HOST}/wiki/contents/${title}`,
+        { ...newContent, is_q_based: 0, qid: 0, index_title: '전체' },
+        { withCredentials: true },
+      )
+      return result.data
+    },
+    {
+      onSuccess: () => {
+        alert('수정이 완료되었습니다.')
+        const encodedTitle = encodeURIComponent(title!)
+        nav(`/wiki/${encodedTitle}`)
+      },
+      onError: (error: any) => {
+        console.error(error)
+        if (error.response?.status === 401) {
+          alert('로그인이 필요합니다.')
+          nav('/signin')
+        } else if (error.response?.status === 500) {
+          alert('제출에 실패했습니다. 다시 시도해주세요.')
+        } else if (error.response?.status === 426) {
+          alert('기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.')
+        }
+      },
+    },
+  )
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked)
@@ -85,30 +121,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
   const onEditorChange = (value: string) => {
     setDesc(value)
   }
-
-  useEffect(() => {
-    const getWiki = async () => {
-      try {
-        const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
-          withCredentials: true,
-        })
-        if (result.status === 200) {
-          setDesc(WikiToQuill(result.data.text))
-          setVersion(result.data.version)
-          setWikiDocs(result.data)
-        }
-      } catch (error) {
-        console.error(error)
-        if (error.response?.status === 401) {
-          alert(error.response.data.message)
-        } else {
-          alert('잘못된 접근입니다.')
-        }
-      }
-    }
-
-    getWiki()
-  }, [title, section])
 
   const addWikiEdit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -129,44 +141,12 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
       return
     }
 
-    try {
-      const result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/contents/${title}`,
-        {
-          version,
-          new_content: wikiMarkup,
-          summary,
-          is_q_based: 0,
-          qid: 0,
-          index_title: '전체',
-        },
-        {
-          withCredentials: true,
-        },
-      )
-
-      if (result.status === 200) {
-        alert('수정이 완료되었습니다.')
-        const encodedTitle = encodeURIComponent(title)
-        nav(`/wiki/${encodedTitle}`)
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response?.status === 401) {
-        alert('로그인이 필요합니다.')
-        nav('/signin')
-      } else if (error.response?.status === 500) {
-        alert('제출에 실패했습니다. 다시 시도해주세요.')
-      } else if (error.response?.status === 426) {
-        alert('기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.')
-        setCopy(true)
-      }
-    }
+    mutation.mutate({ version, new_content: wikiMarkup, summary })
   }
 
   return (
     <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+      <Header userInfo={userInfo} setUserInfo={() => {}} />
 
       <div className={styles.edit}>
         <form onSubmit={addWikiEdit}>
@@ -176,8 +156,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
               <input type={'text'} disabled value={title} className={styles.title} />
             </div>
             <div className={styles.wikichar_char}>
-              {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
-              <TypeDrop onSelectedOption={handleSelectedOption} /> */}
               <h4>{'위키 작성 방법'}</h4>
               <p
                 role={'presentation'}
