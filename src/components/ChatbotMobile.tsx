@@ -1,6 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState, useEffect, useRef, Fragment } from 'react'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import Header from './Header'
 import styles from './ChatbotMobile.module.css'
 import arrow from '../img/arrow.png'
@@ -14,9 +15,11 @@ import RefreshModal from './RefreshModal'
 interface User {
   id: number
 }
+
 interface UserData {
   data: User[]
 }
+
 interface ChatbotMobileProps {
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
@@ -34,6 +37,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
   const [clearModalOpen, setClearModalOpen] = useState(false)
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
@@ -55,59 +59,66 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
     }
   }, [])
 
-  const sendMessage = async () => {
-    const userIdToSend = isLoggedIn ? userId.data[0].id : 0
-    if (inputValue.trim() !== '') {
-      setLoading(true)
-
-      try {
-        const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
-          q_content: inputValue,
-          user_id: userIdToSend,
-        })
-
+  const sendMessageMutation = useMutation(
+    async () => {
+      const userIdToSend = isLoggedIn ? userId.data[0].id : 0
+      const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
+        q_content: inputValue,
+        user_id: userIdToSend,
+      })
+      return response.data
+    },
+    {
+      onMutate: () => {
+        setLoading(true)
+      },
+      onSuccess: (data) => {
         setShowSuggest(false)
         inputRef.current.blur()
 
         const newChatResponse = [
           ...chatResponse,
-          { id: Date.now(), content: inputValue }, // 사용자의 질문 추가
+          { id: Date.now(), content: inputValue },
           {
-            id: response.data.id,
-            content: response.data.a_content,
-            reference: response.data.reference,
-            qnaId: response.data.id,
-          }, // 서버 응답 추가
+            id: data.id,
+            content: data.a_content,
+            reference: data.reference,
+            qnaId: data.id,
+          },
         ]
 
         setChatResponse(newChatResponse)
         setInputValue('')
-
-        // axios 요청 완료 후 로딩 스피너를 비활성화
-        setLoading(false) // 로딩 스피너 숨기기
+        setLoading(false)
         scrollToBottom()
-      } catch (error) {
+      },
+      onError: (error: any) => {
         console.error(error)
 
         if (error.response && error.response.status === 403) {
-          // 로그인 모달을 띄우도록 처리
           setLoginModalVisible(true)
         }
 
         if (error.response && error.response.status === 406) {
-          // 새로고침 모달을 띄우도록 처리
           setRefreshModalOpen(true)
         }
 
-        // axios 요청 실패 시에도 로딩 스피너를 비활성화
         setLoading(false)
-      }
+      },
     }
+  )
+
+  const handleSendClick = () => {
+    if (!isLoggedIn) {
+      setLoginModalVisible(true)
+      return
+    }
+    sendMessageMutation.mutate()
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
-      sendMessage()
+      handleSendClick()
     }
   }
 
@@ -116,20 +127,19 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
     const newChatResponse = [
       ...chatResponse,
-      { id: Date.now(), content, isQuestion: true }, // 사용자의 질문 추가
+      { id: Date.now(), content, isQuestion: true },
     ]
     setChatResponse(newChatResponse)
 
-    setLoading(true) // 로딩 시작
+    setLoading(true)
 
     setTimeout(() => {
-      setLoading(false) // 로딩 스피너 숨기기
+      setLoading(false)
 
       type Answers = {
         [key: string]: string
       }
 
-      // 더미 데이터에서 해당 추천 검색어에 대한 미리 저장한 답변을 가져와서 사용합니다.
       const dummyAnswers: Answers = {
         '너는 누구야?':
           'AI 하호입니다. 저는 고려대학교 학생들의 고려대학교 학칙에 대한 질문에 대답하는 AI Chatbot입니다. 질문이 있으신가요?',
@@ -139,20 +149,18 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
           '제1조 (목적) 이 규정은 고려대학교 학칙 제45조제1항 및 제46조제1항에 근거하여 출석인 정에 관한 세부사항을 정함을 목적으로 한다. 제2조 (출석 및 성적 처리 기준) (1) 총 수업시간의 1/3 이상을 결석한 학생에 대해서는 성적을 부여하지 않습니다. 따라서, 고려대학교에서는 수업시간의 1/3 이상을 결석하면 성적을 받을 수 없습니다. 추가적인 출석 요건은 학칙에 명시되어 있지 않으므로, 이 학칙에 따라 출석 인정 기준이 정해져 있다고 볼 수 있습니다.',
         '이중전공은 어떻게 해?':
           '고려대학교에서 이중전공을 신청하려면 다음과 같은 절차를 따라야 합니다. 1. 이중전공을 원하는 학과(부)의 학칙을 참고하여 신청 자격과 절차를 확인하세요. 2. 학교에서 제공하는 이중전공 신청 관련 양식을 작성하여 제출해야 합니다. 이에는 이중전공 신청서, 이수계획서, 성적증명서 등이 포함될 수 있습니다. 3. 이중전공 신청서에는 제1지망과 제2지망으로 지원할 학과(부)를 기재해야 합니다. 4. 이중전공 신청서와 다른 서류들을 정해진 기간 내에 학과(부) 사무실에 제출하세요. 5. 이중전공 신청자들은 소정의 선발전형(학업성적 등에 기초한 선발 방식)을 거쳐 총장의 허가를 받아야 합니다. 6. 합격 여부는 학과(부)에서 통보해줄 것입니다. 학과(부)마다 선발 기준과 절차가 다를 수 있으므로 해당 학과(부)의 내규를 확인하세요. 7. 이중전공 학생으로서 교육과정표에서 정해진 최소학점 이상의 전공과목을 이수해야 합니다. 8. 이중전공을 포기하고 심화전공 또는 다른 제2전공으로 변경하려면 해당되는 기간 내에 소정의 절차를 따라 포기신청을 해야 합니다. 위의 내용은 고려대학교 학칙 제106조~제108조에서 언급된 내용을 요약한 것입니다. 학교의 학칙과 부서별 규정을 확인하여 상세한 내용을 파악하고 절차를 따르시기 바랍니다.',
-        // 다른 추천 검색어에 대한 답변도 추가합니다.
       }
 
       const answer = dummyAnswers[content] || '미리 저장된 답변이 없습니다.'
 
-      // 답변 컴포넌트를 생성하고 더미 데이터의 답변을 추가합니다.
       const updatedChatResponse = [
         ...newChatResponse,
-        { id: Date.now(), content: answer }, // 더미 데이터에서 가져온 답변 추가
+        { id: Date.now(), content: answer },
       ]
       setChatResponse(updatedChatResponse)
       setInputValue('')
       setShowSuggest(true)
-    }, 3000) // 3초 후에 실행
+    }, 3000)
   }
 
   const chatBottomRef = useRef<HTMLDivElement>(null)
@@ -160,7 +168,6 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
     chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
   useEffect(() => {
     scrollToBottom()
   }, [chatResponse])
@@ -171,23 +178,25 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
   useEffect(() => {
     if (!isLoggedIn) {
-      setPreviousChatHistory([]) // isLoggedIn이 false일 때 previousChatHistory 초기화
+      setPreviousChatHistory([])
     }
   }, [isLoggedIn])
 
-  useEffect(() => {
-    const getMessage = async () => {
-      inputRef.current?.focus()
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId.data[0].id}`)
-        const previousHistory = response.data
-        setPreviousChatHistory(previousHistory)
-      } catch (error) {
-        console.error(error)
-      }
+  const fetchPreviousChatHistory = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId.data[0].id}`)
+    return response.data
+  }
+
+  const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
+    ['chatHistory', userId?.data[0].id],
+    fetchPreviousChatHistory,
+    {
+      enabled: !!userId,
+      onSuccess: (data) => {
+        setPreviousChatHistory(data)
+      },
     }
-    getMessage()
-  }, [userId])
+  )
 
   const scrollToBottomOnLoadingChange = () => {
     if (loading) {
@@ -230,7 +239,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
               content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
               reference={''}
               qnaId={0}
-              blockIconZip={false} // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
+              blockIconZip={false}
             />
             {previousChatHistory.length !== 0 && (
               <>
@@ -308,7 +317,12 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
               ref={inputRef}
               disabled={loading}
             />
-            <div role={'presentation'} className={styles.sendBtn} onClick={sendMessage}>
+            <div
+              role={'presentation'}
+              className={styles.sendBtn}
+              onClick={handleSendClick}
+              style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
+            >
               <img alt={'AI 질문 버튼'} src={arrow} className={styles.sendBtnArrow} />
             </div>
           </div>

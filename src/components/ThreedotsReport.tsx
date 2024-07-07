@@ -1,104 +1,75 @@
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
-import '@szhsin/react-menu/dist/index.css'
-import '@szhsin/react-menu/dist/transitions/slide.css'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useNavigate, useLocation } from 'react-router-dom'
-import ReportModal from './ReportModal'
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
+import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import ReportModal from './ReportModal';
+import { ClickEvent } from '@szhsin/react-menu';
 
-import styles from './ThreedotsReport.module.css'
-import threedots from '../img/threedots.png'
+import styles from './ThreedotsReport.module.css';
+import threedots from '../img/threedots.png';
 
 interface ThreedotsReportProps {
-  type: number
-  target: number
+  type: number;
+  target: number;
 }
-function ThreedotsReport({ type, target }: ThreedotsReportProps) {
-  const nav = useNavigate()
 
-  const [isReportModalVisible, setReportModalVisible] = useState(false)
-
-  const closeReportModal = () => {
-    setReportModalVisible(false)
-  }
-  const [loggedIn, setLoggedIn] = useState(false)
-  const Navigate = useNavigate()
-  const location = useLocation()
-  const from = location.state?.from || '/'
-
-  // 로그인 체크 후 우회
-  // const checkLoginStatus = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 201 && res.data.success === true) {
-  //       setLoggedIn(true);
-  //     } else if (res.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoggedIn(false);
-  //     if (error.response.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return Navigate(from);
-  //     }else{
-  //       alert("에러가 발생하였습니다");
-  //       return Navigate(from);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   checkLoginStatus();
-  // }, []);
-  //
-
-  // 로그인 체크 후 우회
-  const checkLoginStatus = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true)
-      } else if (res.status === 401) {
-        setLoggedIn(false)
-      }
-    } catch (error) {
-      console.error(error)
-      setLoggedIn(false)
-      if (error.response.status === 401) {
-        setLoggedIn(false)
-      } else {
-        alert('에러가 발생하였습니다')
-      }
+const fetchLoginStatus = async (): Promise<boolean> => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true });
+    return res.status === 201 && res.data.success === true;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return false;
     }
+    throw error;
   }
+};
+
+function ThreedotsReport({ type, target }: ThreedotsReportProps) {
+  const [isReportModalVisible, setReportModalVisible] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+
+  const { data: loggedInStatus, refetch: refetchLoginStatus } = useQuery('loginStatus', fetchLoginStatus, {
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   useEffect(() => {
-    checkLoginStatus()
-  }, [])
+    refetchLoginStatus();
+  }, [refetchLoginStatus]);
+
+  const handleReportClick = async (e: ClickEvent) => {
+
+    e.syntheticEvent.preventDefault();
+    
+    if (!loggedInStatus) {
+      await refetchLoginStatus();
+    }
+
+    if (loggedInStatus) {
+      setReportModalVisible(true);
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
+      navigate(from);
+    }
+  };
 
   return (
     <Menu
       menuButton={
         <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt={'Menu'} />
+          <img src={threedots} alt="Menu" />
         </MenuButton>
       }
     >
       <MenuItem
         className={styles.menuitem}
-        value={'신고하기'}
-        onClick={(e) => {
-          checkLoginStatus()
-          e.stopPropagation = true
-          e.keepOpen = true
-          e.syntheticEvent.preventDefault()
-          setReportModalVisible(true)
-        }}
+        onClick={handleReportClick}
       >
         {'신고하기\r'}
       </MenuItem>
@@ -111,7 +82,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
         />
       )}
     </Menu>
-  )
+  );
 }
 
-export default ThreedotsReport
+export default ThreedotsReport;
