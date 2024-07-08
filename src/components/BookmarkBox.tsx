@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useMutation, useQueryClient } from 'react-query'
 import falseBk from '../img/bookmarkfalse.png'
 import trueBk from '../img/bookmarkFill.png'
 import styles from './BookmarkBox.module.css'
@@ -11,69 +12,70 @@ interface BookmarkBoxProps {
   is_favorite: boolean
   result: boolean
 }
+
 const BookmarkBox = ({ title, content, is_favorite, result }: BookmarkBoxProps) => {
   const [favorite, setFavorite] = useState(is_favorite)
   const [imageSource, setImageSource] = useState(trueBk)
   const nav = useNavigate()
   const isResult = result
+  const queryClient = useQueryClient()
 
   const addBookmark = async () => {
-    try {
-      const favaorite_result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/favorite/${title}`,
-        {},
-        {
-          withCredentials: true,
-        },
-      )
-      if (favaorite_result.data.success === true) {
-        setFavorite(true)
-        alert('즐겨찾기에 추가되었습니다')
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error.response.data.message)
-    }
+    const response = await axios.post(
+      `${process.env.REACT_APP_HOST}/wiki/favorite/${title}`,
+      {},
+      {
+        withCredentials: true,
+      },
+    )
+    return response.data
   }
 
   const deleteBookmark = async () => {
-    try {
-      const favorite_result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
-        withCredentials: true,
-      })
-      if (favorite_result.data.success === true) {
-        setFavorite(false)
-        alert('즐겨찾기에서 삭제되었습니다')
-      } else {
-        alert('문제가 발생하였습니다')
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error.response.data.message)
-    }
+    const response = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+      withCredentials: true,
+    })
+    return response.data
   }
 
-  async function handleClick() {
-    try {
-      if (favorite === true) {
-        await deleteBookmark()
-        setFavorite(false) // Update the state first
-        setImageSource(falseBk)
-      } else if (favorite === false) {
-        await addBookmark()
-        setFavorite(true) // Update the state first
-        setImageSource(trueBk)
-      }
-    } catch (error) {
+  const addBookmarkMutation = useMutation(addBookmark, {
+    onSuccess: () => {
+      setFavorite(true)
+      setImageSource(trueBk)
+      alert('즐겨찾기에 추가되었습니다')
+      queryClient.invalidateQueries('bookmarks')
+    },
+    onError: (error: any) => {
       console.error(error)
-      // Handle error appropriately
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
+
+  const deleteBookmarkMutation = useMutation(deleteBookmark, {
+    onSuccess: () => {
+      setFavorite(false)
+      setImageSource(falseBk)
+      alert('즐겨찾기에서 삭제되었습니다')
+      queryClient.invalidateQueries('bookmarks')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
+
+  const handleClick = () => {
+    if (favorite) {
+      deleteBookmarkMutation.mutate()
+    } else {
+      addBookmarkMutation.mutate()
     }
   }
 
   useEffect(() => {
-    if (favorite === true) {
+    if (favorite) {
       setImageSource(trueBk)
-    } else if (favorite === false) {
+    } else {
       setImageSource(falseBk)
     }
   }, [favorite])

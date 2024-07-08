@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useMutation, useQueryClient } from 'react-query'
 import styles from './ChatAnswer.module.css'
 import like from '../img/chatbot_like.svg'
 import like_hover from '../img/chatbot_like_filled.svg'
@@ -28,6 +29,50 @@ const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false)
   const [feedbackId, setFeedbackId] = useState(0)
 
+  const queryClient = useQueryClient()
+
+  const sendLikeFeedback = async () => {
+    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
+      qna_id: qnaId,
+      feedback: true,
+    })
+    return response.data
+  }
+
+  const sendUnlikeFeedback = async () => {
+    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
+      qna_id: qnaId,
+      feedback: false,
+    })
+    return response.data
+  }
+
+  const likeMutation = useMutation(sendLikeFeedback, {
+    onSuccess: (data) => {
+      setFeedbackId(data.id)
+      queryClient.invalidateQueries('feedback')
+      setLikeModalOpen(true)
+      alert('피드백이 성공적으로 전송되었습니다.')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
+
+  const unlikeMutation = useMutation(sendUnlikeFeedback, {
+    onSuccess: (data) => {
+      setFeedbackId(data.id)
+      queryClient.invalidateQueries('feedback')
+      setUnlikeModalOpen(true)
+      alert('피드백이 성공적으로 전송되었습니다.')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
+
   const handleLikeMouseOver = () => {
     setLikeHovered(true)
   }
@@ -53,41 +98,11 @@ const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps
   }
 
   const handleLikeClick = () => {
-    setLikeModalOpen(!likeModalOpen)
+    likeMutation.mutate()
   }
 
   const handleUnlikeClick = () => {
-    setUnlikeModalOpen(!unlikeModalOpen)
-  }
-
-  const sendLikeFeedback = () => {
-    axios
-      .post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-        qna_id: qnaId,
-        feedback: true,
-      })
-      .then((response) => {
-        const updatedFeedbackId = response.data.id
-        setFeedbackId(updatedFeedbackId)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  const sendUnlikeFeedback = () => {
-    axios
-      .post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-        qna_id: qnaId,
-        feedback: false,
-      })
-      .then((response) => {
-        const updatedFeedbackId = response.data.id
-        setFeedbackId(updatedFeedbackId)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+    unlikeMutation.mutate()
   }
 
   const parseReference = (ref: string | null) => {
@@ -102,7 +117,7 @@ const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps
           <p>{'관련 학칙:'}</p>
           <p>{parsedReference.Rule}</p>
           {Object.entries(parsedReference)
-            .filter(([key, value]) => key !== 'Rule')
+            .filter(([key]) => key !== 'Rule')
             .map(([link, value]) => (
               <div key={link}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
@@ -138,10 +153,7 @@ const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps
             alt={'like'}
             onMouseOver={handleLikeMouseOver}
             onMouseLeave={handleLikeMouseLeave}
-            onClick={() => {
-              handleLikeClick()
-              sendLikeFeedback()
-            }}
+            onClick={handleLikeClick}
             onFocus={handleLikeMouseOver}
             onBlur={handleLikeMouseLeave}
           />
@@ -153,10 +165,7 @@ const ChatAnswer = ({ content, reference, qnaId, blockIconZip }: ChatAnswerProps
             alt={'unlike'}
             onMouseOver={handleUnlikeMouseOver}
             onMouseLeave={handleUnlikeMouseLeave}
-            onClick={() => {
-              handleUnlikeClick()
-              sendUnlikeFeedback()
-            }}
+            onClick={handleUnlikeClick}
             onFocus={handleUnlikeMouseOver}
             onBlur={handleUnlikeMouseLeave}
           />

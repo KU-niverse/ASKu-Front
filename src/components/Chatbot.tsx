@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import ChatAnswer from './ChatAnswer'
 import ChatQuestion from './ChatQuestion'
 import styles from './Chatbot.module.css'
@@ -38,7 +39,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const closeLoginModal = () => {
     setLoginModalVisible(false)
   }
-  const [userId, setUserId] = useState<UserData | null>(null)
+  const [user, setUser] = useState<UserData | null>(null)
+
+  const queryClient = useQueryClient()
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
@@ -53,65 +56,80 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const getUserInfo = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
-        withCredentials: true,
-      })
-      if (res.status === 201 && res.data.success === true) {
-        setUserId(res.data)
-      } else {
-        setIsLoggedIn(false)
-      }
-    } catch (error) {
-      console.error(error)
-      setIsLoggedIn(false)
-    }
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+      withCredentials: true,
+    })
+    return res.data
   }
+
+  const { data: userInfo, refetch: refetchUserInfo } = useQuery('userInfo', getUserInfo, {
+    onSuccess: (data) => {
+      setUser(data)
+    },
+    onError: () => {
+      setIsLoggedIn(false)
+    },
+    enabled: isLoggedIn, // Only fetch user info if logged in
+  })
+
+  const fetchPreviousChatHistory = async (userId: number) => {
+    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId}`)
+    return response.data
+  }
+
+  const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
+    ['chatHistory', user?.data[0].id],
+    () => fetchPreviousChatHistory(user?.data[0].id),
+    {
+      enabled: !!user, // Only fetch chat history if userId is available
+      onSuccess: (data) => {
+        setPreviousChatHistory(data)
+      },
+    },
+  )
 
   useEffect(() => {
-    getUserInfo()
-  }, [])
-
-  const scrollToBottom = () => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const sendMessage = async () => {
     if (!isLoggedIn) {
-      setLoginModalVisible(true)
-      return
+      setPreviousChatHistory([])
     }
+  }, [isLoggedIn])
 
-    if (inputValue.trim() !== '') {
-      setLoading(true)
+  const sendMessageMutation = useMutation(
+    async () => {
+      if (user) {
+        const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
+          q_content: inputValue,
+          user_id: user.data[0].id,
+        })
+        return response.data
+      }
+      return {}
+    },
+    {
+      onMutate: () => {
+        setLoading(true)
+      },
+      onSuccess: (data) => {
+        setShowSuggest(false)
+        inputRef.current?.blur()
 
-      try {
-        if (userId) {
-          const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
-            q_content: inputValue,
-            user_id: userId.data[0].id,
-          })
+        const newChatResponse = [
+          ...chatResponse,
+          { id: Date.now(), content: inputValue },
+          {
+            id: data.id,
+            content: data.a_content,
+            reference: data.reference,
+            qnaId: data.id,
+          },
+        ]
 
-          setShowSuggest(false)
-          inputRef.current?.blur()
-
-          const newChatResponse = [
-            ...chatResponse,
-            { id: Date.now(), content: inputValue },
-            {
-              id: response.data.id,
-              content: response.data.a_content,
-              reference: response.data.reference,
-              qnaId: response.data.id,
-            },
-          ]
-
-          setChatResponse(newChatResponse)
-          setInputValue('')
-          setLoading(false)
-          scrollToBottom()
-        }
-      } catch (error) {
+        setChatResponse(newChatResponse)
+        setInputValue('')
+        setLoading(false)
+        scrollToBottom()
+      },
+      onError: (error: any) => {
         console.error(error)
         if (error.response?.status === 403) {
           setLoginModalVisible(true)
@@ -120,13 +138,25 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           setRefreshModalOpen(true)
         }
         setLoading(false)
-      }
+      },
+    },
+  )
+
+  const scrollToBottom = () => {
+    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleSendClick = () => {
+    if (!isLoggedIn) {
+      setLoginModalVisible(true)
+      return
     }
+    sendMessageMutation.mutate()
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
-      sendMessage()
+      handleSendClick()
     }
   }
 
@@ -172,35 +202,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }, [previousChatHistory])
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      setPreviousChatHistory([])
-    }
-  }, [isLoggedIn])
-
-  useEffect(() => {
-    const getMessage = async () => {
-      inputRef.current?.focus()
-      try {
-        if (userId) {
-          const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId.data[0].id}`)
-          const previousHistory = response.data
-          setPreviousChatHistory(previousHistory)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getMessage()
-  }, [userId])
-
-  const scrollToBottomOnLoadingChange = () => {
-    if (loading) {
-      scrollToBottom()
-    }
-  }
-
-  useEffect(() => {
-    scrollToBottomOnLoadingChange()
+    scrollToBottom()
   }, [loading])
 
   return (
@@ -291,9 +293,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       </div>
       {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
       {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
-      {ClearModalOpen && (
-        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />
-      )}
+      {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user} />}
       <div className={styles.promptWrap}>
         <textarea
           className={styles.prompt}
@@ -307,7 +307,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         <div
           role={'presentation'}
           className={styles.sendBtn}
-          onClick={loading ? null : sendMessage}
+          onClick={loading ? null : handleSendClick}
           style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
         >
           <img src={arrow} alt={'AI에게 질문하기 버튼'} />

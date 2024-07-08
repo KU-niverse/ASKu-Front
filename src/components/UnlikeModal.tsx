@@ -1,26 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
+import { useMutation } from 'react-query'
 import styles from './UnlikeModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import unlike from '../img/chatbot_unlike.svg'
 
-interface unLikeModalProps {
+interface UnlikeModalProps {
   isOpen: boolean
   onClose: () => void
   feedbackId: number
 }
 
-function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
-  const modalRef = useRef(null)
+function UnlikeModal({ isOpen, onClose, feedbackId }: UnlikeModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState('')
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
 
   const handleOutsideClick = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose()
     }
   }
@@ -36,21 +37,31 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
     }
   }, [isOpen])
 
-  const sendMessage = () => {
+  const sendFeedback = async () => {
+    await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/comment`, {
+      feedback_id: feedbackId,
+      content: inputValue,
+    })
+  }
+
+  const mutation = useMutation(sendFeedback, {
+    onSuccess: () => {
+      onClose()
+    },
+    onError: (error) => {
+      console.error('피드백을 보내는 중에 오류가 발생했습니다.', error)
+    },
+  })
+
+  const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
-      axios
-        .post(`${process.env.REACT_APP_AI}/chatbot/feedback/comment`, {
-          feedback_id: feedbackId,
-          content: inputValue,
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      mutation.mutate()
     }
   }
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
-      sendMessage()
+      handleSendMessage()
     }
   }
 
@@ -82,8 +93,9 @@ function UnlikeModal({ isOpen, onClose, feedbackId }: unLikeModalProps) {
                   value={inputValue}
                   onChange={inputChange}
                   onKeyDown={handleKeyDown}
+                  ref={inputRef}
                 />
-                <button type={'button'} className={styles.feedback_btn} onClick={sendMessage}>
+                <button type={'button'} className={styles.feedback_btn} onClick={handleSendMessage}>
                   {'작성하기\r'}
                 </button>
               </div>

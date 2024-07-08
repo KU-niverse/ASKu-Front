@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef, MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import closeBtn from '../img/close_btn.png'
 import styles from './BadgeModal.module.css'
 
 interface BadgeModalProps {
-  // 미사용 함수
   isOpen: boolean
   onClose: () => void
 }
@@ -28,10 +27,11 @@ interface MyBadgeResponse {
 }
 
 function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
-  const modalRef = useRef(null)
-  const handleOutsideClick = (event: any) => {
-    // TODO: any 타입 지정(Mouse Event 오류 발생)
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+  const modalRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient()
+
+  const handleOutsideClick = (event: Event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       onClose()
     }
   }
@@ -47,47 +47,51 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
     }
   }, [isOpen])
 
-  const [myBadge, setMyBadge] = useState<MyBadgeResponse>()
-  useEffect(() => {
-    const takeMyBadge = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
-        if (res.status === 200) {
-          setMyBadge(res.data)
-        }
-      } catch (error) {
-        console.log(error)
-        if (error.response && error.response.status === 401) {
-          alert('로그인이 필요합니다.')
+  const fetchBadges = async (): Promise<MyBadgeResponse> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    return res.data
+  }
+
+  const { data: myBadge, isLoading, isError } = useQuery('myBadge', fetchBadges, {
+    enabled: isOpen,
+  })
+
+  const mutation = useMutation(
+    async (badgeId: number) => {
+      await axios.post(
+        `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
+        { rep_badge_id: badgeId },
+        { withCredentials: true },
+      )
+    },
+    {
+      onSuccess: () => {
+        alert('대표뱃지가 변경되었습니다.')
+        queryClient.invalidateQueries('myBadge')
+        onClose()
+      },
+      onError: (error: any) => {
+        console.error(error)
+        if (error.response.status === 400) {
+          alert('잘못된 접근입니다. 대표 배지 변경에 실패하였습니다.')
         } else {
           alert('알 수 없는 오류가 발생했습니다.')
         }
-      }
-    }
-    takeMyBadge()
-  }, [])
+      },
+    },
+  )
 
-  const handleRepBadge = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_HOST}/user/mypage/setrepbadge`,
-        { rep_badge_id: myBadge.data[0].badge_id }, // 몇 번 째 데이터를 대표배지로 지정할 지 인풋 필요
-        { withCredentials: true },
-      )
-      if (response.status === 200) {
-        alert('대표뱃지가 변경되었습니다.')
-        window.location.reload()
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 400) {
-        alert('잘못된 접근입니다. 대표 배지 변경에 실패하였습니다.')
-        window.location.reload()
-      } else {
-        alert('알 수 없는 오류가 발생했습니다.')
-      }
-    }
-  } // 대표뱃지 설정하기
+  const handleRepBadge = (badgeId: number) => {
+    mutation.mutate(badgeId)
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</div>
+  }
 
   return (
     <div>
@@ -110,16 +114,17 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
                   {myBadge && myBadge.data && myBadge.data.length === 0 ? (
                     <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                   ) : (
-                    myBadge &&
-                    myBadge.data &&
-                    myBadge.data
-                      .slice(0, 12)
-                      .map((badge: any) => <img key={badge.id} src={badge.image} alt={badge.name} />)
+                    myBadge.data.slice(0, 12).map((badge) => (
+                      <img
+                        key={badge.id}
+                        src={badge.image}
+                        alt={badge.name}
+                        onClick={() => handleRepBadge(badge.badge_id)}
+                        className={styles.badge}
+                      />
+                    ))
                   )}
                 </div>
-                <button type={'button'} className={styles.q_csubmit} onClick={handleRepBadge}>
-                  {'수정하기\r'}
-                </button>
               </div>
             </div>
           </div>
