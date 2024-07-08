@@ -235,7 +235,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   }
 
   if (mypageError || myQuestionError || myDebateError || myBadgeError || myWikiError || myContributeError) {
-    return <div>Error loading data</div>
+    return <div>{'Error loading data'}</div>
   }
 
   return (

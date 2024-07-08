@@ -54,11 +54,11 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
   const { data: lists = [], isLoading, error } = useQuery('bookmarks', fetchBookmarks)
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>{'Loading...'}</div>
   }
 
   if (error) {
-    return <div>Error loading bookmarks</div>
+    return <div>{'Error loading bookmarks'}</div>
   }
 
   return (

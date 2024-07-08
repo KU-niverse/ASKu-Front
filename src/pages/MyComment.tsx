@@ -72,7 +72,7 @@ const MyComment = () => {
   }
 
   if (debateError || mypageError) {
-    return <div>Error loading data</div>
+    return <div>{'Error loading data'}</div>
   }
 
   return (

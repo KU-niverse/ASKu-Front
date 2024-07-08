@@ -177,7 +177,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   if (wikiError || quesError || contributeError) {
-    return <div>Error loading data</div>
+    return <div>{'Error loading data'}</div>
   }
 
   async function handleClickBookmark() {

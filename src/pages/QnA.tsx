@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import styles from './QnA.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -107,8 +107,8 @@ const QnA = () => {
             <p className={styles.q_headline}>{'문서의 질문'}</p>
           </div>
           <div className={styles.backheader}>
-            <button type="button" onClick={linktoWiki} className={styles.q_editbtn}>
-              <img src={link_icon} alt="link_icon" />
+            <button type={'button'} onClick={linktoWiki} className={styles.q_editbtn}>
+              <img src={link_icon} alt={'link_icon'} />
               <span className={styles.q_linkbtn}>&nbsp;{'문서 바로가기'}</span>
             </button>
           </div>
@@ -132,7 +132,7 @@ const QnA = () => {
           />
         )}
         <div className={styles.c_header}>
-          <img src={comment_icon} alt="comment" />
+          <img src={comment_icon} alt={'comment'} />
           <span className={styles.c_headline}>{'답변'}</span>
           {questionData && questionData.data && (
             <span className={styles.c_num}>{questionData.data[0].answer_count}</span>

@@ -100,17 +100,17 @@ function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
-                <button type="button" className={styles.modal_close} onClick={onClose}>
-                  <img src={closeBtn} alt="close" className={styles.close_btn} />
+                <button type={'button'} className={styles.modal_close} onClick={onClose}>
+                  <img src={closeBtn} alt={'close'} className={styles.close_btn} />
                 </button>
               </div>
               <div className={styles.modal_content}>
-                <p className={styles.modal_text}>질문 수정하기</p>
+                <p className={styles.modal_text}>{'질문 수정하기'}</p>
                 <div className={styles.q_cbox}>
                   <textarea
                     rows={7}
                     className={styles.q_ctextarea}
-                    placeholder="질문을 입력해주세요."
+                    placeholder={'질문을 입력해주세요.'}
                     value={questionContent}
                     maxLength={200}
                     onChange={handleChange}
@@ -119,7 +119,7 @@ function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
                     <span className={styles.textnum}>{countCharacters()}</span>
                   </div>
                 </div>
-                <button type="button" className={styles.q_csubmit} onClick={handleSubmit}>
+                <button type={'button'} className={styles.q_csubmit} onClick={handleSubmit}>
                   {'수정하기\r'}
                 </button>
               </div>

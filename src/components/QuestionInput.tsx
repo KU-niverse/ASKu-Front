@@ -18,7 +18,7 @@ const checkLoginStatus = async () => {
 
 const QuestionInput = ({ onQuestionSubmit, title, defaultOpt }: QuestionInputProps) => {
   const [questionContent, setQuestionContent] = useState('')
-  const [selectedOption, setSelectedOption] = useState('전체') // 선택한 option을 상태로 관리
+  const [selectedOption, setSelectedOption] = useState('전체')
   const [loggedIn, setLoggedIn] = useState(false)
   const Navigate = useNavigate()
 
