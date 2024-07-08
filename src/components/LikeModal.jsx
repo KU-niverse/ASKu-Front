@@ -79,7 +79,7 @@ function LikeModal({ isOpen, onClose, feedbackId }) {
                   <div className={styles.feedback_title}>
                     <h1 id={styles.red_title}>이번 답변은 어떠셨나요?</h1>
                     <p id={styles.gray_title}>
-                      피드백을 작성해 주시면 서비스 발전에 큰 도움이 됩니다.
+                      피드백은 서비스 발전에 큰 도움이 됩니다.
                     </p>
                   </div>
                 </div>

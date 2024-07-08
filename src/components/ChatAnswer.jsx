@@ -10,6 +10,7 @@ import haho from "../img/3d_haho.png";
 import closeBtn from "../img/close_btn.png";
 import LikeModal from "./LikeModal";
 import UnlikeModal from "./UnlikeModal";
+import RuleModal from "./RuleModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -22,6 +23,8 @@ const ChatAnswer = (props) => {
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
   const [feedbackId, setFeedbackId] = useState(0);
   const [processedContent, setProcessedContent] = useState(null);
+  const [ruleModalOpen, setRuleModalOpen] = useState(false);
+  const [ruleContent, setRuleContent] = useState("");
 
   const handleLikeMouseOver = () => {
     setLikeHovered(true);
@@ -96,6 +99,16 @@ const ChatAnswer = (props) => {
       });
   };
 
+  const handleRuleModalOpen = (ruleContent) => {
+    setRuleContent(ruleContent);
+    setRuleModalOpen(true);
+  };
+
+  const handleRuleModalClose = () => {
+    setRuleModalOpen(false);
+    setRuleContent("");
+  };
+
   const parseReference = (reference) => {
     if (reference === null) {
       return "";
@@ -105,8 +118,12 @@ const ChatAnswer = (props) => {
       const parsedReference = JSON.parse(reference);
       return (
         <div>
-          <p>관련 학칙:</p>
-          <p>{parsedReference["Rule"]}</p>
+          <button
+            className={styles.ruleButton}
+            onClick={() => handleRuleModalOpen(parsedReference["Rule"])}
+          >
+            관련 학칙
+          </button>
           {Object.entries(parsedReference)
             .filter(([key, value]) => key !== "Rule")
             .map(([link, value], index) => (
@@ -114,7 +131,6 @@ const ChatAnswer = (props) => {
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   참고문서:{link}
                 </Link>
-                <p>{value}</p>
               </div>
             ))}
         </div>
@@ -203,7 +219,6 @@ const ChatAnswer = (props) => {
             </div>
             <div className={styles.reference_text}>
               <p>{parseReference(reference)}</p>
-              <p>{reference}</p>
             </div>
           </div>
         </div>
@@ -222,6 +237,11 @@ const ChatAnswer = (props) => {
           feedbackId={feedbackId}
         />
       )}
+      <RuleModal
+        isOpen={ruleModalOpen}
+        onClose={handleRuleModalClose}
+        ruleContent={ruleContent}
+      />
     </div>
   );
 };
