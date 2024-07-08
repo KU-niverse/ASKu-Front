@@ -111,7 +111,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
               <div className={styles.modal_content}>
                 <p className={styles.modal_text}>{'대표 뱃지 설정하기'}</p>
                 <div className={styles.badgegrid}>
-                  {myBadge && myBadge.data.length === 0 ? (
+                  {myBadge && myBadge.data && myBadge.data.length === 0 ? (
                     <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                   ) : (
                     myBadge.data.slice(0, 12).map((badge) => (

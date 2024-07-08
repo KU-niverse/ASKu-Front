@@ -39,7 +39,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const closeLoginModal = () => {
     setLoginModalVisible(false)
   }
-  const [userId, setUserId] = useState<UserData | null>(null)
+  const [user, setUser] = useState<UserData | null>(null)
 
   const queryClient = useQueryClient()
 
@@ -64,7 +64,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const { data: userInfo, refetch: refetchUserInfo } = useQuery('userInfo', getUserInfo, {
     onSuccess: (data) => {
-      setUserId(data)
+      setUser(data)
     },
     onError: () => {
       setIsLoggedIn(false)
@@ -73,19 +73,19 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   })
 
   const fetchPreviousChatHistory = async (userId: number) => {
-    const response = await axios.get(`https://asku.wiki/ai/chatbot/${userId}`)
+    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId}`)
     return response.data
   }
 
   const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
-    ['chatHistory', userId?.data[0].id],
-    () => fetchPreviousChatHistory(userId?.data[0].id),
+    ['chatHistory', user?.data[0].id],
+    () => fetchPreviousChatHistory(user?.data[0].id),
     {
-      enabled: !!userId, // Only fetch chat history if userId is available
+      enabled: !!user, // Only fetch chat history if userId is available
       onSuccess: (data) => {
         setPreviousChatHistory(data)
       },
-    }
+    },
   )
 
   useEffect(() => {
@@ -96,13 +96,14 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const sendMessageMutation = useMutation(
     async () => {
-      if (userId) {
+      if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: userId.data[0].id,
+          user_id: user.data[0].id,
         })
         return response.data
       }
+      return {}
     },
     {
       onMutate: () => {
@@ -138,7 +139,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         }
         setLoading(false)
       },
-    }
+    },
   )
 
   const scrollToBottom = () => {
@@ -292,9 +293,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       </div>
       {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
       {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
-      {ClearModalOpen && (
-        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={userId} />
-      )}
+      {ClearModalOpen && <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user} />}
       <div className={styles.promptWrap}>
         <textarea
           className={styles.prompt}

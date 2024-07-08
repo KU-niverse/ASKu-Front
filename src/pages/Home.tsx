@@ -52,7 +52,10 @@ function Home({ loggedIn, setLoggedIn }: HomeProps) {
   const navigate = useNavigate()
 
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
-  const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery('popularQuestions', fetchPopularQuestions)
+  const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
+    'popularQuestions',
+    fetchPopularQuestions,
+  )
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {

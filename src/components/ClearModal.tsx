@@ -30,7 +30,7 @@ function ClearModal({ isOpen, onClose, userId }: ClearModalProps) {
           'Content-Type': 'application/json',
         },
         withCredentials: true,
-      }
+      },
     )
     return response.data
   }

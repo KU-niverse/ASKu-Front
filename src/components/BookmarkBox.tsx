@@ -26,7 +26,7 @@ const BookmarkBox = ({ title, content, is_favorite, result }: BookmarkBoxProps) 
       {},
       {
         withCredentials: true,
-      }
+      },
     )
     return response.data
   }

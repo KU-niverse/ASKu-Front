@@ -105,7 +105,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
         setLoading(false)
       },
-    }
+    },
   )
 
   const handleSendClick = () => {
@@ -125,10 +125,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
   const handleSuggestClick = (content: string) => {
     setShowSuggest(false)
 
-    const newChatResponse = [
-      ...chatResponse,
-      { id: Date.now(), content, isQuestion: true },
-    ]
+    const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true }]
     setChatResponse(newChatResponse)
 
     setLoading(true)
@@ -153,10 +150,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
       const answer = dummyAnswers[content] || '미리 저장된 답변이 없습니다.'
 
-      const updatedChatResponse = [
-        ...newChatResponse,
-        { id: Date.now(), content: answer },
-      ]
+      const updatedChatResponse = [...newChatResponse, { id: Date.now(), content: answer }]
       setChatResponse(updatedChatResponse)
       setInputValue('')
       setShowSuggest(true)
@@ -195,7 +189,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       onSuccess: (data) => {
         setPreviousChatHistory(data)
       },
-    }
+    },
   )
 
   const scrollToBottomOnLoadingChange = () => {
