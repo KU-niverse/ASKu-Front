@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment, useRef } from "react";
 import styles from "./ChatAnswer.module.css";
 import like from "../img/chatbot_like.svg";
 import like_hover from "../img/chatbot_like_filled.svg";
@@ -22,6 +22,7 @@ const ChatAnswer = (props) => {
   const [likeModalOpen, setLikeModalOpen] = useState(false);
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
   const [feedbackId, setFeedbackId] = useState(0);
+  const [processedContent, setProcessedContent] = useState(null);
   const [ruleModalOpen, setRuleModalOpen] = useState(false);
   const [ruleContent, setRuleContent] = useState("");
 
@@ -139,6 +140,16 @@ const ChatAnswer = (props) => {
     }
   };
 
+  useEffect(() => {
+    const newContent = content.split('\n').map((line, index) => (
+      <Fragment key={index}>
+        {line}
+        <br />
+      </Fragment>
+    ));
+    setProcessedContent(newContent); // 상태 업데이트
+  }, [content]); // content 변경 시에만 실행
+
   return (
     <div>
       <div className={styles.answerBox}>
@@ -146,9 +157,16 @@ const ChatAnswer = (props) => {
           <img src={haho} alt="character" className={styles.character} />
         </div>
         <div className={styles.chatTextWrap}>
-          <p className={styles.chatText}>{content}</p>
+          {/* <p className={styles.chatText}>{content}</p>*/}
+          <p className={styles.chatText}>{processedContent}</p>
         </div>
         <img src={dots} className={styles.dots} />
+        {/* <img
+          src={dots}
+          className={styles.dots}
+          style={{ display: loading ? "block" : "none" }}
+        />
+      */}
         <div
           className={styles.iconZip}
           style={{ visibility: blockIconZip ? "hidden" : "inherit" }}

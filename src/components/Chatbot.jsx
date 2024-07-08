@@ -11,6 +11,11 @@ import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
 import { track } from "@amplitude/analytics-browser";
 
+//interface IResponseObject {
+//  q_content : String;
+//  answer: String;
+//}
+
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,7 +55,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
-        }
+        },
       );
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
@@ -75,61 +80,66 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const sendMessage = async () => {
     if (!isLoggedIn) {
-      setLoginModalVisible(true); //로그인하지 않은 사용자는 LoginModal 표시!
-
+      setLoginModalVisible(true);
       return;
     }
 
     if (inputValue.trim() !== "") {
+      setChatResponse((prevResponses) => [
+        ...prevResponses,
+        { content: inputValue, isQuestion: true, blockIconZip: true },
+        { content: "", isQuestion: false, blockIconZip: true }, // 빈 답변 추가
+      ]);
+
       setLoading(true);
-      // Amplitude
-      track("click_button_in_home_haho", {
-        question_content: inputValue,
-      });
+      setInputValue(""); // 입력창 비우기
+
       try {
         const response = await axios.post(
-          process.env.REACT_APP_AI + `/chatbot/`,
+          process.env.REACT_APP_AI + `/chatbot/stream/`,
           {
             q_content: inputValue,
             user_id: userId.data[0].id,
-          }
+          },
+          { withCredentials: true },
         );
 
         setShowSuggest(false);
         inputRef.current.blur();
 
-        const newChatResponse = [
-          ...chatResponse,
-          { content: inputValue }, // 사용자의 질문 추가
-          {
-            content: response.data.a_content,
-            reference: response.data.reference,
-            qnaId: response.data.id,
-          }, // 서버 응답 추가
-        ];
-        track("view_haho_result", {
-          question_content: inputValue,
-        });
-        setChatResponse(newChatResponse);
-        setInputValue("");
+        const answerRegex = /'answer': '(.*?)'/g;
+        let match;
+        let finalAnswer = "";
+        let tempAnswer = "";
 
-        // axios 요청 완료 후 로딩 스피너를 비활성화
-        setLoading(false); // 로딩 스피너 숨기기
-        scrollToBottom();
+        while ((match = answerRegex.exec(response.data)) !== null) {
+          const answer = match[1].replace(/\\n/g, '\n');
+          finalAnswer += answer;
+        }
+
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+          if (currentIndex < finalAnswer.length) {
+            tempAnswer += finalAnswer[currentIndex];
+
+            setChatResponse((prevResponses) => {
+              const updatedResponses = [...prevResponses];
+              updatedResponses[updatedResponses.length - 1].content = tempAnswer;
+              return updatedResponses;
+            });
+
+            currentIndex++;
+
+            // 첫 글자 출력 시 로딩 종료
+            if (currentIndex === 1) {
+              setLoading(false);
+            }
+          } else {
+            clearInterval(interval);
+          }
+        }, 50); // 한 글자씩 출력하는 간격
       } catch (error) {
-        console.error(error);
-        // 만약 에러 상태가 403인 경우 (권한 없음)
-        if (error.response && error.response.status === 403) {
-          // 로그인 모달을 띄우도록 처리
-          setLoginModalVisible(true);
-        }
-
-        if (error.response && error.response.status === 406) {
-          // 새로고침 모달을 띄우도록 처리
-          setRefreshModalOpen(true);
-        }
-
-        // axios 요청 실패 시에도 로딩 스피너를 비활성화
+        console.error("Error sending question: ", error);
         setLoading(false);
       }
     }
@@ -213,7 +223,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          `https://asku.wiki/ai/chatbot/${userId.data[0].id}`
+          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`,
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
@@ -270,21 +280,20 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             ))}
           </>
         )}
-        {chatResponse.map((item, index) => {
-          if (index % 2 === 0) {
-            return <ChatQuestion key={index} content={item.content} />;
-          } else {
-            return (
-              <ChatAnswer
-                key={index}
-                content={item.content}
-                reference={item.reference}
-                qnaId={item.qnaId}
-                blockIconZip={!blockIconZip}
-              />
-            );
-          }
-        })}
+        {chatResponse.map((item, index) =>
+          item.isQuestion ? (
+            <ChatQuestion key={index} content={item.content} />
+          ) : (
+            <ChatAnswer
+              key={index}
+              content={item.content}
+              reference={item.reference}
+              qnaId={item.qnaId}
+              blockIconZip={!blockIconZip}
+              loading={loading && index === chatResponse.length - 1} // 마지막 답변만 로딩 상태 표시
+            />
+          ),
+        )}
         <div
           className={styles.suggest}
           style={{ display: showSuggest ? "block" : "none" }}
