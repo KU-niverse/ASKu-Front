@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import styles from './Header.module.css'
 import logo from '../img/logo.png'
 import searchIcon from '../img/search_icon.svg'
@@ -19,6 +20,74 @@ import AlarmModal from './AlarmModal'
 import AlarmMobileModal from './AlarmMobileModal'
 import randomDocs from '../img/random.svg'
 
+interface UserData {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface MypageDataResponse {
+  success: boolean
+  message: string
+  data: UserData[]
+}
+
+// 유저 정보 useQuery
+function useUserInfo() {
+  return useQuery<MypageDataResponse, AxiosError>(
+    'userInfo',
+    async () => {
+      const response = await axios.get<MypageDataResponse>(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      retry: false,
+      onError: (error) => {
+        console.error('사용자 정보 가져오기 에러:', error)
+      },
+      // 유저 정보는 로그인 여부에 따라 가져와야 하므로 enabled 옵션 추가
+      enabled: !!sessionStorage.getItem('user'),
+    },
+  )
+}
+// 랜덤 문서 useQuery
+interface RandomDocResponse {
+  title: string
+}
+
+function useRandomDoc() {
+  return useQuery<RandomDocResponse, Error>(
+    'randomDoc',
+    async () => {
+      const response = await axios.get<RandomDocResponse>(`${process.env.REACT_APP_HOST}/wiki/random`, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      enabled: false, // 처음에는 실행되지 않도록 설정
+      retry: false,
+      onError: (error) => {
+        console.error('랜덤 문서 가져오기 에러:', error)
+      },
+    },
+  )
+}
+
 function Header({ userInfo, setUserInfo }: any) {
   const [inputValue, setInputValue] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -31,8 +100,11 @@ function Header({ userInfo, setUserInfo }: any) {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [loadingMypage, setLoadingMypage] = useState(true)
   const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false)
-  const [randomDoc, setRandomDoc] = useState<any[]>([]) // 빈 배열로 초기화
+
   const Nav = useNavigate()
+
+  const { data: userData, isFetching: isLoadingUser } = useUserInfo()
+  const { data: randomDoc, refetch: refetchRandomDoc } = useRandomDoc()
 
   const logOut = () => {
     setIsLoggedIn(false)
@@ -63,34 +135,18 @@ function Header({ userInfo, setUserInfo }: any) {
   }, [isLoggedIn])
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
-          withCredentials: true,
-        })
-
-        if (response.status === 201) {
-          const userData = response.data.data
-          if (typeof setUserInfo === 'function') {
-            setUserInfo(userData)
-          } else {
-            console.error('setUserInfo is not a function')
-          }
-          if (userData.length > 0 && userData[0].nickname) {
-            setNicknameText(userData[0].nickname)
-          }
-          setLoadingMypage(false)
-        }
-      } catch (error) {
-        console.error(error)
-        setLoadingMypage(false)
+    if (isLoggedIn && userData) {
+      const fetchedUserInfo = userData.data[0]
+      if (typeof setUserInfo === 'function') {
+        setUserInfo(fetchedUserInfo)
+      } else {
+        console.error('setUserInfo is not a function')
+      }
+      if (fetchedUserInfo.nickname) {
+        setNicknameText(fetchedUserInfo.nickname)
       }
     }
-
-    if (isLoggedIn) {
-      fetchUserInfo()
-    }
-  }, [isLoggedIn, setUserInfo])
+  }, [isLoggedIn, setUserInfo, userData])
 
   const signOut = async () => {
     try {
@@ -149,15 +205,9 @@ function Header({ userInfo, setUserInfo }: any) {
   }
 
   const handleRandomDocClick = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/random`, {
-        withCredentials: true,
-      })
-      if (response.status === 200) {
-        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}` // 페이지를 새 URL로 이동 및 새로고침
-      }
-    } catch (error) {
-      console.error('Error fetching random document:', error)
+    refetchRandomDoc()
+    if (randomDoc?.title) {
+      window.location.href = `/wiki/${encodeURIComponent(randomDoc.title)}`
     }
   }
 

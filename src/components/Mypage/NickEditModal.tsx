@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState, useEffect, useRef } from 'react'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { BsCheck2All } from 'react-icons/bs'
 import closeBtn from '../../img/close_btn.png'
 import styles from './NickEditModal.module.css'
@@ -10,15 +10,68 @@ interface EditModalProps {
   onClose: () => void
 }
 
-function EditModal({ isOpen, onClose }: EditModalProps) {
-  const modalRef = useRef(null)
-  const [nick, setNick] = useState('')
-  const [isNickValid, setisNickValid] = useState(true)
-  const [nickDoubleCheck, setNickDoubleCheck] = useState(false)
+interface NicknameCheckResponse {
+  success: boolean
+  message: string
+}
 
-  const handleOutsideClick = (event: any) => {
-    // TODO: any 타입 지정(Mouse Event 오류 발생)
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+function useNicknameCheck(nick: string) {
+  return useQuery<NicknameCheckResponse, Error>(
+    ['nicknameCheck', nick],
+    async () => {
+      const result = await axios.get<NicknameCheckResponse>(
+        `${process.env.REACT_APP_HOST}/user/auth/nickdupcheck/${nick}`,
+      )
+      return result.data
+    },
+    {
+      enabled: !!nick,
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('닉네임 중복 확인 에러:', error)
+        alert(error.response?.data || '닉네임 중복 확인 실패')
+      },
+    },
+  )
+}
+
+function useEditNickname() {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (nickname: string) => {
+      const response = await axios.put(
+        `${process.env.REACT_APP_HOST}/user/mypage/editnick`,
+        { nickname },
+        { withCredentials: true },
+      )
+      return response.data
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('loginStatus') // 사용자 정보 갱신
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
+        if (error.response?.status === 400) {
+          alert(error.response.data)
+          window.location.reload()
+        } else {
+          alert('알 수 없는 오류가 발생했습니다.')
+        }
+      },
+    },
+  )
+}
+
+function EditModal({ isOpen, onClose }: EditModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
+  const [nick, setNick] = useState('')
+  const [isNickValid, setIsNickValid] = useState(true)
+  const { mutate: editNickname } = useEditNickname()
+  const { isLoading: isCheckingDuplication, data: nickCheckResult, refetch } = useNicknameCheck(nick)
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       onClose()
     }
   }
@@ -34,78 +87,34 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
     }
   }, [isOpen])
 
-  function onChangeNick(e: any) {
-    // TODO: any 타입 지정(Mouse Event 오류 발생)
+  const onChangeNick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nickRegex = /^[가-힣a-zA-Z]{2,10}$/
     const nickCurrent = e.target.value
     setNick(nickCurrent)
-
-    if (!nickRegex.test(nickCurrent)) {
-      setisNickValid(false)
-    } else {
-      setisNickValid(true)
-    }
+    setIsNickValid(nickRegex.test(nickCurrent))
   }
 
   const handleNickDoubleCheck = async () => {
-    if (isNickValid === false) {
-      alert('닉네임 형식이 올바르지 않습니다')
+    if (!isNickValid) {
+      alert('닉네임 형식이 올바르지 않습니다.')
+      return
     }
 
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/nickdupcheck/${nick}`)
-
-      if (result.data.success === true) {
-        alert(result.data.message)
-        setNickDoubleCheck(true)
-      } else {
-        alert(result.data.message)
-        setNickDoubleCheck(false)
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error.response.data.message)
-    }
+    refetch() // 닉네임 중복 확인 쿼리 실행
   }
 
-  //  const editData = {
-  //  new_content:questionContent,
-  // };/
-
   const PostNickEdit = async () => {
-    if (isNickValid === false) {
-      alert('닉네임 형식이 올바르지 않습니다')
+    if (!isNickValid) {
+      alert('닉네임 형식이 올바르지 않습니다.')
+      return
+    }
+    if (!nickCheckResult?.success) {
+      alert('닉네임 중복확인이 필요합니다.')
+      return
     }
 
-    if (nickDoubleCheck === false) {
-      alert('닉네임 중복확인이 필요합니다')
-    }
-
-    try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_HOST}/user/mypage/editnick`,
-        {
-          nickname: nick,
-        },
-        {
-          withCredentials: true,
-        },
-      )
-      if (response.data.success === true) {
-        alert(response.data.message)
-        onClose() // 모달이 닫히고 내가 마이페이지에서 새로고침해야 변경된거 확인 가능
-        window.location.reload() // 새로고침
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 400) {
-        alert(error.response.data.message)
-        window.location.reload()
-      } else {
-        alert('알 수 없는 오류가 발생했습니다.')
-      }
-    }
-  } // 질문 수정하기
+    editNickname(nick)
+  }
 
   return (
     <div>
@@ -136,13 +145,21 @@ function EditModal({ isOpen, onClose }: EditModalProps) {
                       onChange={onChangeNick}
                       className={`${styles.nick_input}`}
                     />
-                    <button type={'button'} className={`${styles.dblcheck}`} onClick={handleNickDoubleCheck}>
-                      {'중복확인\r'}
+                    <button
+                      type={'button'}
+                      className={`${styles.dblcheck}`}
+                      onClick={handleNickDoubleCheck}
+                      disabled={isCheckingDuplication}
+                    >
+                      {isCheckingDuplication ? '확인 중...' : '중복확인'}
                     </button>
                   </div>
-                  {/* <div className={styles.q_clastheader}>
-                                <span className={styles.textnum}>{countCharacters()}</span>
-                              </div> */}
+                  {nickCheckResult?.success && (
+                    <div className={styles.success_box}>
+                      <BsCheck2All className={styles.success_check} />
+                      <span className={styles.success_text}>{nickCheckResult.message}</span>
+                    </div>
+                  )}
                 </div>
                 <div className={styles.div_btns}>
                   <button type={'button'} className={`${styles.c_btn}`} onClick={onClose}>
