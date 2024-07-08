@@ -96,14 +96,13 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
       try {
         const response = await axios.post(
-          `https://asku.wiki/ai/chatbot/stream/`,
+          process.env.REACT_APP_AI + `/chatbot/stream/`,
           {
             q_content: inputValue,
             user_id: userId.data[0].id,
           },
           { withCredentials: true },
         );
-        console.log("POST response: ", response);
 
         setShowSuggest(false);
         inputRef.current.blur();
@@ -224,7 +223,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          `https://asku.wiki/ai/chatbot/${userId.data[0].id}`,
+          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`,
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
