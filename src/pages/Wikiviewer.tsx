@@ -1,6 +1,7 @@
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom/dist'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useRef, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation } from 'react-query'
+import { AxiosError } from 'axios'
 import axios from 'axios'
 import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
@@ -14,6 +15,12 @@ import Switch from '../components/Switch'
 import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
+
+interface AxiosErrorResponse {
+  message: string
+}
+
+type CustomAxiosError = AxiosError<AxiosErrorResponse>
 
 interface WikiViewerProps {
   loggedIn: boolean
@@ -138,66 +145,38 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     }
   }, [contributeData])
 
-  const checkLoginStatus = async (): Promise<void> => {
-    try {
+  const { isLoading: checkLoginLoading, error: checkLoginError } = useQuery(
+    'checkLoginStatus',
+    async () => {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      if (res.status === 201 && res.data.success) {
-        setLoggedIn(true)
-        return
-      }
-      if (res.status === 401) {
+      return res.data
+    },
+    {
+      onSuccess: (data) => {
+        if (data.success) {
+          setLoggedIn(true)
+        } else {
+          setLoggedIn(false)
+          alert('로그인이 필요한 서비스 입니다.')
+          nav('/signin')
+        }
+      },
+      onError: (error: unknown) => {
         setLoggedIn(false)
-        alert('로그인이 필요한 서비스 입니다.')
-        nav('/signin')
-      }
-    } catch (error) {
-      console.error(error)
-      setLoggedIn(false)
-      if (error.response?.status === 401) {
-        setLoggedIn(false)
-        alert('로그인이 필요한 서비스 입니다.')
-        nav('/signin')
-        return
-      }
-      alert('에러가 발생하였습니다')
-      nav('/')
-    }
-  }
+        const axiosError = error as CustomAxiosError
+        if (axiosError.response?.status === 401) {
+          alert('로그인이 필요한 서비스 입니다.')
+          nav('/signin')
+        } else {
+          alert('에러가 발생하였습니다')
+          nav('/')
+        }
+      },
+    },
+  )
 
-  useEffect(() => {
-    checkLoginStatus()
-  }, [])
-
-  if (wikiLoading || quesLoading || contributeLoading || loading) {
-    return (
-      <div>
-        <SpinnerMypage />
-      </div>
-    )
-  }
-
-  if (wikiError || quesError || contributeError) {
-    return <div>{'Error loading data'}</div>
-  }
-
-  async function handleClickBookmark() {
-    try {
-      if (favorite) {
-        await deleteBookmark()
-        setFavorite(false)
-        setImageSource(falseBk)
-      } else {
-        await addBookmark()
-        setFavorite(true)
-        setImageSource(trueBk)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async function addBookmark() {
-    try {
+  const addBookmarkMutation = useMutation(
+    async () => {
       const result = await axios.post(
         `${process.env.REACT_APP_HOST}/wiki/favorite/${title}`,
         {},
@@ -205,37 +184,59 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
           withCredentials: true,
         },
       )
-      if (result.data.success) {
-        setFavorite(true)
-        alert('즐겨찾기에 추가되었습니다')
-      } else {
-        alert('문제가 발생하였습니다')
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response?.status === 401) {
-        alert(error.response.data.message)
-        nav('/signin')
-      } else {
-        alert(error.response.data.message)
-      }
-    }
-  }
+      return result.data
+    },
+    {
+      onSuccess: (data) => {
+        if (data.success) {
+          setFavorite(true)
+          setImageSource(trueBk)
+          alert('즐겨찾기에 추가되었습니다')
+        } else {
+          alert('문제가 발생하였습니다')
+        }
+      },
+      onError: (error: unknown) => {
+        const axiosError = error as CustomAxiosError
+        if (axiosError.response?.status === 401) {
+          alert(axiosError.response.data.message)
+          nav('/signin')
+        } else {
+          alert(axiosError.response.data.message)
+        }
+      },
+    },
+  )
 
-  async function deleteBookmark() {
-    try {
+  const deleteBookmarkMutation = useMutation(
+    async () => {
       const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
         withCredentials: true,
       })
-      if (result.data.success) {
-        setFavorite(false)
-        alert('즐겨찾기에서 삭제되었습니다')
-      } else {
-        alert('문제가 발생하였습니다')
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error.response.data.message)
+      return result.data
+    },
+    {
+      onSuccess: (data) => {
+        if (data.success) {
+          setFavorite(false)
+          setImageSource(falseBk)
+          alert('즐겨찾기에서 삭제되었습니다')
+        } else {
+          alert('문제가 발생하였습니다')
+        }
+      },
+      onError: (error: unknown) => {
+        const axiosError = error as CustomAxiosError
+        alert(axiosError.response?.data.message)
+      },
+    },
+  )
+
+  const handleClickBookmark = async () => {
+    if (favorite) {
+      deleteBookmarkMutation.mutate()
+    } else {
+      addBookmarkMutation.mutate()
     }
   }
 
@@ -256,6 +257,18 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const linkToDebate = () => {
     const encodedTitle = encodeURIComponent(title!)
     nav(`/debate/${encodedTitle}`)
+  }
+
+  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading) {
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
+  }
+
+  if (wikiError || quesError || contributeError || checkLoginError) {
+    return <div>{'Error loading data'}</div>
   }
 
   return (
