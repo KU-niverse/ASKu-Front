@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useQuery, useQueryClient } from 'react-query'
 import styles from './QnA.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -48,77 +49,51 @@ interface UserInfoResponse {
   data: UserInfo[]
 }
 
+const fetchUserInfo = async () => {
+  const res = await axios.get<UserInfoResponse>(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+    withCredentials: true,
+  })
+  return res.data
+}
+
+const fetchAnswers = async (question_id: string) => {
+  const res = await axios.get<AnswerData[]>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
+    withCredentials: true,
+  })
+  return res.data
+}
+
+const fetchQuestion = async (question_id: string) => {
+  const res = await axios.get<QuestionData>(`${process.env.REACT_APP_HOST}/question/lookup/${question_id}`, {
+    withCredentials: true,
+  })
+  return res.data
+}
+
 const QnA = () => {
-  const [isToggled, setIsToggled] = useState(false) // import하려는 페이지에 구현
-  const [currentUserId, setCurrentUserId] = useState<UserInfo | null>(null)
-  const [answerData, setAnswerData] = useState<AnswerData[]>([]) // 빈 배열로 초기화
-  const [questionData, setQuestionData] = useState<QuestionData | null>(null)
+  const [isToggled, setIsToggled] = useState(false)
   const location = useLocation()
   const { title } = useParams<{ title: string }>()
-  const { question_id } = useParams<{ question_id: string }>() // Ensure question_id is treated as a string
+  const { question_id } = useParams<{ question_id: string }>()
   const nav = useNavigate()
+  const queryClient = useQueryClient()
+
+  const { data: userInfoData } = useQuery('userInfo', fetchUserInfo)
+  const { data: answerData, error: answerError } = useQuery(['answers', question_id], () => fetchAnswers(question_id!))
+  const { data: questionData, error: questionError } = useQuery(['question', question_id], () =>
+    fetchQuestion(question_id!),
+  )
+
+  const currentUserId = userInfoData?.data[0]
 
   const linktoWiki = () => {
     const encodedTitle = encodeURIComponent(title!)
     nav(`/wiki/${encodedTitle}`)
   }
 
-  const getUserInfo = async () => {
-    try {
-      const res = await axios.get<UserInfoResponse>(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
-        withCredentials: true,
-      })
-      if (res.status === 201 && res.data.success) {
-        // 사용자 정보에서 id를 가져옴
-        setCurrentUserId(res.data.data[0])
-      } else {
-        setCurrentUserId(null)
-      }
-    } catch (error) {
-      console.error(error)
-      setCurrentUserId(null)
-    }
+  if (questionError || answerError) {
+    console.error('Error fetching data:', questionError || answerError)
   }
-
-  useEffect(() => {
-    getUserInfo()
-  }, [])
-
-  useEffect(() => {
-    const takeAnswer = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
-          withCredentials: true,
-        })
-        if (res.status === 200) {
-          setAnswerData(res.data)
-        } else {
-          setAnswerData([]) // API 호출이 실패한 경우 빈 배열로 설정
-        }
-      } catch (error) {
-        console.error(error)
-        setAnswerData([]) // API 호출이 실패한 경우 빈 배열로 설정
-      }
-    }
-    takeAnswer()
-  }, [question_id])
-
-  useEffect(() => {
-    const takeQuestion = async () => {
-      try {
-        const res = await axios.get<QuestionData>(`${process.env.REACT_APP_HOST}/question/lookup/${question_id}`, {
-          withCredentials: true,
-        })
-        console.log('🚀 ~ file: QnA.tsx:89 ~ takeQuestion ~ res:', res)
-        if (res.status === 200) {
-          setQuestionData(res.data)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    takeQuestion()
-  }, [question_id])
 
   return (
     <div className={styles.container}>
@@ -140,7 +115,7 @@ const QnA = () => {
         </div>
         {questionData && questionData.data && (
           <QuestionQnA
-            question_id={parseInt(question_id!, 10)} // Convert question_id to number
+            question_id={parseInt(question_id!, 10)}
             user_id={questionData.data[0].user_id}
             nick={questionData.data[0].nickname}
             content={questionData.data[0].content}

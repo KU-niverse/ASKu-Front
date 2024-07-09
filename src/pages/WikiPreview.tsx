@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom/dist'
-import React, { useRef, useEffect, useState } from 'react'
-
+import React, { useRef, useState } from 'react'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
@@ -12,14 +12,24 @@ import answ from '../img/answ.png'
 import WikiBox from '../components/WikiBox'
 import Switch from '../components/Switch'
 
+interface Content {
+  index: string
+  section: string
+  title: string
+  content: string
+}
+
+interface WikiData {
+  text: string
+  contents: Content[]
+}
+
 function WikiViewer() {
   const { title, ver } = useParams()
-  const myDivRef = useRef([])
+  const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
   const [isToggled, setIsToggled] = useState(false)
   const [isBookmark, setIsBookmark] = useState(false)
-  const [allText, setAllText] = useState('')
-  const [allContent, setAllContent] = useState([])
 
   const Ques = [
     {
@@ -44,7 +54,7 @@ function WikiViewer() {
     },
   ]
 
-  const data = [
+  const staticData: Content[] = [
     {
       index: '1.',
       section: '1',
@@ -76,27 +86,24 @@ function WikiViewer() {
   ]
 
   function handleClick(index: number) {
-    myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
+    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
   }
 
   function handleClickBookmark() {
     setIsBookmark(!isBookmark)
   }
 
-  const getWiki = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`)
-      setAllText(result.data.text)
-      setAllContent(result.data.contents)
-    } catch (error) {
-      console.error(error)
-      // alert(result.data.message);
-    }
+  const fetchWiki = async (): Promise<WikiData> => {
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`)
+    return response.data
   }
 
-  useEffect(() => {
-    getWiki()
-  }, [])
+  const { data: wikiData, error, isLoading } = useQuery(['wikiData', title, ver], fetchWiki)
+
+  if (isLoading) return <div>{'Loading...'}</div>
+  if (error) return <div>{'Error loading data'}</div>
+
+  const { text: allText, contents: allContent } = wikiData
 
   return (
     <div className={styles.container}>
@@ -138,36 +145,32 @@ function WikiViewer() {
               <button type={'button'}>{'전체 편집'}</button>
             </div>
             <div>
-              {allContent.map((item) => {
-                return (
-                  <li role={'presentation'} onClick={() => handleClick(item.section)} key={item.section}>
-                    <span className={styles.wikiIndex}>{item.index}</span> {item.title}
-                  </li>
-                )
-              })}
+              {allContent.map((item: Content) => (
+                <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
+                  <span className={styles.wikiIndex}>{item.index}</span> {item.title}
+                </li>
+              ))}
             </div>
           </div>
         </div>
         <div className={styles.wikicontent}>
-          {allContent.map((item) => {
-            return (
-              <div
-                ref={(el) => {
-                  myDivRef.current[item.section] = el
-                }}
-                key={item.section}
-              >
-                <WikiBox
-                  title={item.title}
-                  content={item.content}
-                  index={item.index}
-                  section={item.section}
-                  main={''}
-                  isZero={false}
-                />
-              </div>
-            )
-          })}
+          {allContent.map((item: Content) => (
+            <div
+              ref={(el) => {
+                myDivRef.current[Number(item.section)] = el
+              }}
+              key={item.section}
+            >
+              <WikiBox
+                title={item.title}
+                content={item.content}
+                index={item.index}
+                section={item.section}
+                main={''}
+                isZero={false}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
