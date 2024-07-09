@@ -4,7 +4,6 @@ import './index.css'
 import ReactGA from 'react-ga4'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RecoilRoot } from 'recoil'
 import reportWebVitals from './reportWebVitals'
 import App from './App'
 
@@ -19,9 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
+      <App />
     </QueryClientProvider>
   </React.StrictMode>,
 )
