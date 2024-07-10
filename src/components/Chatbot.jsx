@@ -10,9 +10,9 @@ import ClearModal from "./ClearModal";
 import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
 import { track } from "@amplitude/analytics-browser";
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import { useResizeDetector } from 'react-resize-detector';
+import PerfectScrollbar from "react-perfect-scrollbar";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import { useResizeDetector } from "react-resize-detector";
 import infoIcon from "../img/Info.svg";
 import refreshIcon from "../img/Refresh.svg";
 
@@ -60,7 +60,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
-        },
+        }
       );
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
@@ -79,14 +79,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     getUserInfo();
   }, []);
 
-  
   const scrollToBottom = () => {
     if (chatBottomRef.current) {
-      console.log("Scrolling to bottom:", chatBottomRef.current);
-      
-    setTimeout(() => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }), 100);
+      //console.log("Scrolling to bottom:", chatBottomRef.current);
+
+      setTimeout(
+        () => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }),
+        100
+      );
     } else {
-      console.log("chatBottomRef is not set");
+      //console.log("chatBottomRef is not set");
     }
   };
 
@@ -113,7 +115,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             q_content: inputValue,
             user_id: userId.data[0].id,
           },
-          { withCredentials: true },
+          { withCredentials: true }
         );
 
         setShowSuggest(false);
@@ -125,7 +127,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         let tempAnswer = "";
 
         while ((match = answerRegex.exec(response.data)) !== null) {
-          const answer = match[1].replace(/\\n/g, '\n');
+          const answer = match[1].replace(/\\n/g, "\n");
           finalAnswer += answer;
         }
 
@@ -136,7 +138,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
             setChatResponse((prevResponses) => {
               const updatedResponses = [...prevResponses];
-              updatedResponses[updatedResponses.length - 1].content = tempAnswer;
+              updatedResponses[updatedResponses.length - 1].content =
+                tempAnswer;
               return updatedResponses;
             });
 
@@ -209,16 +212,15 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       ];
       setChatResponse(updatedChatResponse);
       setInputValue("");
-      setShowSuggest(true);   
+      setShowSuggest(true);
     }, 3000); // 3초 후에 실행
-    
   };
 
   const chatBottomRef = useRef(null);
 
   // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [chatResponse]);
 
   useEffect(() => {
@@ -236,7 +238,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`,
+          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
@@ -257,7 +259,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     scrollToBottomOnLoadingChange();
   }, [loading]);
 
-  const [maxWidth, setMaxWidth] = useState('auto');
+  const [maxWidth, setMaxWidth] = useState("auto");
   const suggestContainerRef = useRef(null);
   const { width: containerWidth } = useResizeDetector({
     targetRef: suggestContainerRef,
@@ -278,7 +280,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         clearTimeout(timeoutId);
         setTimeoutId(null);
       }
-      scrollRef.current.style.overflowX = 'auto';
+      scrollRef.current.style.overflowX = "auto";
     }
   };
 
@@ -286,35 +288,34 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     if (scrollRef.current) {
       const id = setTimeout(() => {
         if (scrollRef.current) {
-          scrollRef.current.style.overflowX = 'hidden';
+          scrollRef.current.style.overflowX = "hidden";
         }
       }, 1000); // 1초 후에 가로 스크롤바 숨김
       setTimeoutId(id);
     }
   };
 
-
   return (
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
           <button id={styles.title}>AI 챗봇</button>
-          <div className={styles.buttonContainer}  onClick={handleClearModal}>
-            <img src={refreshIcon} className={styles.sidebarIcon} alt="refresh" />
-            <button className={styles.button}>
-              채팅 초기화
-            </button>
+          <div className={styles.buttonContainer} onClick={handleClearModal}>
+            <img
+              src={refreshIcon}
+              className={styles.sidebarIcon}
+              alt="refresh"
+            />
+            <button className={styles.button}>채팅 초기화</button>
           </div>
           <Link
             to="https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4"
             target="_blank"
-            style={{ textDecoration: "none"}}
-          >            
-            <div className={styles.buttonContainer}>              
+            style={{ textDecoration: "none" }}
+          >
+            <div className={styles.buttonContainer}>
               <img src={infoIcon} className={styles.sidebarIcon} alt="info" />
-              <button className={styles.button} >
-                도움말
-              </button>
+              <button className={styles.button}>도움말</button>
             </div>
           </Link>
         </div>
@@ -359,21 +360,24 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           {loading && <Spinner />}
         </div>
 
-        
-        <div className={styles.suggestContainer}
-        style={showSuggest ? {} : { display: "none" }}
-        ref={suggestContainerRef}>        
+        <div
+          className={styles.suggestContainer}
+          style={showSuggest ? {} : { display: "none" }}
+          ref={suggestContainerRef}
+        >
           <p id={styles.ref}>추천 검색어</p>
-          <div className={styles.scrollbarContainer}> 
-            <div className={styles.suggestScrollbar}
-            ref={scrollRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>               
+          <div className={styles.scrollbarContainer}>
+            <div
+              className={styles.suggestScrollbar}
+              ref={scrollRef}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <div className={styles.suggest}>
                 <span
                   id="ref_res_1"
                   className={styles.textBox}
-                  style={{marginLeft: "0px"}}
+                  style={{ marginLeft: "0px" }}
                   onClick={() => handleSuggestClick("너는 누구야?", 0)}
                 >
                   너는 누구야?
@@ -404,8 +408,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
                   이중전공은 어떻게 해?
                 </span>
               </div>
-            </div> 
-          </div>  
+            </div>
+          </div>
         </div>
 
         {isLoginModalVisible && (
@@ -427,8 +431,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             userId={userId}
           />
         )}
-        <div className={styles.promptWrap}
-        style={showSuggest ? {} : { marginTop: "25px" }}>
+        <div
+          className={styles.promptWrap}
+          style={showSuggest ? {} : { marginTop: "25px" }}
+        >
           <textarea
             className={styles.prompt}
             placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
