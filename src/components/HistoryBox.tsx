@@ -37,12 +37,19 @@ const HistoryBox = (props: HistoryBoxProps) => {
   // useMutation을 사용하여 롤백 처리
   const { mutate: handleRollback, isLoading: isRollbackLoading } = useMutation<unknown, AxiosError>(
     async () => {
-      const result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,
-        {},
-        { withCredentials: true },
-      )
-      return result.data
+      const returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)')
+
+      if (returnValue) {
+        // 사용자가 확인을 누른 경우에만 롤백 요청
+        const result = await axios.post(
+          `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,
+          {},
+          { withCredentials: true },
+        )
+        return result.data
+      } else {
+        throw new Error('롤백이 취소되었습니다.') // 롤백 취소 시 에러 발생
+      }
     },
     {
       onSuccess: (data) => {
