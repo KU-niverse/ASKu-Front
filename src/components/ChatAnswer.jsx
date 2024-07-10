@@ -153,8 +153,10 @@ const ChatAnswer = (props) => {
   return (
     <div>
       <div className={styles.answerBox}>
-        <div className={styles.characterContainer}>
-          <img src={haho} alt="character" className={styles.character} />
+        <div className={styles.characterWrapper}>
+          <div className={styles.characterContainer}>
+            <img src={haho} alt="character" className={styles.character} />
+          </div>
         </div>
         <div className={styles.chatTextWrap}>
           {/* <p className={styles.chatText}>{content}</p>*/}
