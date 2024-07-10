@@ -8,6 +8,7 @@ import falseBk from "../img/bookmarkfalse.svg";
 import trueBk from "../img/bookmarkFill.svg";
 import debate from "../img/debate.svg";
 import his from "../img/his.svg";
+import VectorRight from "../img/VectorRight.svg";
 import minilike from "../img/minilike.svg";
 import WikiBox from "../components/WikiBox";
 import Switch from "../components/Switch";
@@ -28,6 +29,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const [allText, setAllText] = useState("");
   const [allContent, setAllContent] = useState([]);
   const [ques, setQues] = useState([]);
+  const [titles, settitles] = useState([]);
   const [contribute, setContribute] = useState([]);
   const [totalPoint, setTotalPoint] = useState(null);
   const [flag, setFlag] = useState(0);
@@ -204,6 +206,21 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
     nav(`/debate/${encodedTitle}`);
   };
 
+  const linkToNextWiki = () => {
+    const currentIndex = titles.indexOf(title);
+    if (currentIndex !== -1) {
+      let nextTitle;
+      if (currentIndex < titles.length - 1) {
+        nextTitle = titles[currentIndex + 1];
+      } else {
+        nextTitle = titles[0];
+      }
+      nav(`/wiki/${encodeURIComponent(nextTitle)}`);
+      window.location.reload();
+    } else {
+      console.error("현재 title을 찾을 수 없습니다.");
+    }
+  };
   //contents가 비었으면 글이라도 띄우도록.
   //위키 데이터 가져오기
   const getWiki = async () => {
@@ -226,7 +243,17 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       //alert(result.data.message);
     }
   };
-
+  const getTitles = async () => {
+    try {
+      const result = await axios.get(
+        process.env.REACT_APP_HOST + `/wiki/titles`
+      );
+      settitles(result.data.titles);
+      console.log(result.data.titles)    
+    } catch (error) {
+      console.error(error);
+    }
+  }
   //질문 데이터 가져오기
   const getQues = async () => {
     try {
@@ -285,6 +312,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
     const fetchData = async () => {
       getWiki();
       getQues();
+      getTitles();
     };
     fetchData();
     // Amplitude
@@ -370,6 +398,11 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
             <button onClick={linkToHistory} className={styles.wikititleBtnTwo}>
               <img src={his} />
               &nbsp;히스토리
+            </button>
+
+            <button onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+              &nbsp;다음 문서
+              <img src={VectorRight} alt="다음 문서 아이콘" />
             </button>
           </div>
         </div>
