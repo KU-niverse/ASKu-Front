@@ -71,7 +71,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
         {},
         {
           withCredentials: true,
-        }
+        },
       );
       if (result.data.success === true) {
         setFavorite(true);
@@ -97,7 +97,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
         process.env.REACT_APP_HOST + `/wiki/favorite/${title}`,
         {
           withCredentials: true,
-        }
+        },
       );
       if (result.data.success === true) {
         setFavorite(false);
@@ -147,7 +147,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
     try {
       const res = await axios.get(
         process.env.REACT_APP_HOST + "/user/auth/issignedin",
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true);
@@ -226,7 +226,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getWiki = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/contents/${title}`
+        process.env.REACT_APP_HOST + `/wiki/contents/${title}`,
       );
       setAllContent(result.data.contents);
 
@@ -246,38 +246,37 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   const getTitles = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/titles`
+        process.env.REACT_APP_HOST + `/wiki/titles`,
       );
       settitles(result.data.titles);
-      console.log(result.data.titles)    
+      console.log(result.data.titles);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
   //질문 데이터 가져오기
   const getQues = async () => {
     try {
       const result = await axios.get(
         process.env.REACT_APP_HOST +
-          `/question/view/${flag}/${encodeURIComponent(title)}`
+          `/question/view/${flag}/${encodeURIComponent(title)}`,
       );
       setQues(result.data.data);
 
-      if (result.data.data.length === 0) {
-        setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자.
-      } else {
+      // 질문 데이터가 존재하는 경우에만 blank 상태를 false로 변경
+      if (result.data.data.length > 0) {
         setBlank(false);
       }
     } catch (error) {
       console.error(error);
-      //alert(result.data.message);
     }
   };
+
   //질문 데이터 가져오기
   const getContribute = async () => {
     try {
       const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/contributions/${title}`
+        process.env.REACT_APP_HOST + `/wiki/contributions/${title}`,
       );
       //console.log('기여도');
       setContribute(result.data.message);
@@ -287,7 +286,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
         //console.log(contribute);
         const total = contribute.reduce(
           (acc, item) => acc + parseInt(item.point),
-          0
+          0,
         );
         setTotalPoint(total);
       } else {
@@ -336,7 +335,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
         const documentHeight = document.documentElement.scrollHeight;
         const windowHeight = window.innerHeight;
         const scrollPercentage = Math.floor(
-          (scrollPosition / (documentHeight - windowHeight)) * 100
+          (scrollPosition / (documentHeight - windowHeight)) * 100,
         );
         // Amplitude
         scrollDepths.forEach((depth) => {
@@ -400,7 +399,10 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
               &nbsp;히스토리
             </button>
 
-            <button onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+            <button
+              onClick={linkToNextWiki}
+              className={styles.wikititleBtnThree}
+            >
               &nbsp;다음 문서
               <img src={VectorRight} alt="다음 문서 아이콘" />
             </button>
