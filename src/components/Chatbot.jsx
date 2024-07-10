@@ -49,7 +49,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
-        }
+        },
       );
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
@@ -84,7 +84,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           {
             q_content: inputValue,
             user_id: userIdToSend,
-          }
+          },
         );
 
         setShowSuggest(false);
@@ -197,7 +197,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          `https://asku.wiki/ai/chatbot/${userId.data[0].id}`
+          `https://asku.wiki/ai/chatbot/${userId.data[0].id}`,
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
@@ -271,7 +271,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         })}
         <div
           className={styles.suggest}
-          style={{ display: showSuggest ? "block" : "none" }}
+          style={{ display: loading ? "none" : showSuggest ? "block" : "none" }} // loading 상태에 따라 추천 질문 표시 여부 결정
         >
           <p id={styles.ref}>추천 질문</p>
           <span
