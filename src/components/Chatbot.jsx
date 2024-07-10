@@ -60,7 +60,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
-        }
+        },
       );
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
@@ -85,7 +85,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
       setTimeout(
         () => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }),
-        100
+        100,
       );
     } else {
       //console.log("chatBottomRef is not set");
@@ -115,7 +115,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             q_content: inputValue,
             user_id: userId.data[0].id,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         setShowSuggest(false);
@@ -238,7 +238,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`
+          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`,
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
