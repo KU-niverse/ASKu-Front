@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment, useRef } from "react";
 import styles from "./ChatAnswer.module.css";
 import like from "../img/chatbot_like.svg";
 import like_hover from "../img/chatbot_like_filled.svg";
@@ -10,6 +10,7 @@ import haho from "../img/3d_haho.png";
 import closeBtn from "../img/close_btn.png";
 import LikeModal from "./LikeModal";
 import UnlikeModal from "./UnlikeModal";
+import RuleModal from "./RuleModal";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -21,6 +22,9 @@ const ChatAnswer = (props) => {
   const [likeModalOpen, setLikeModalOpen] = useState(false);
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false);
   const [feedbackId, setFeedbackId] = useState(0);
+  const [processedContent, setProcessedContent] = useState(null);
+  const [ruleModalOpen, setRuleModalOpen] = useState(false);
+  const [ruleContent, setRuleContent] = useState("");
 
   const handleLikeMouseOver = () => {
     setLikeHovered(true);
@@ -95,6 +99,16 @@ const ChatAnswer = (props) => {
       });
   };
 
+  const handleRuleModalOpen = (ruleContent) => {
+    setRuleContent(ruleContent);
+    setRuleModalOpen(true);
+  };
+
+  const handleRuleModalClose = () => {
+    setRuleModalOpen(false);
+    setRuleContent("");
+  };
+
   const parseReference = (reference) => {
     if (reference === null) {
       return "";
@@ -104,8 +118,12 @@ const ChatAnswer = (props) => {
       const parsedReference = JSON.parse(reference);
       return (
         <div>
-          <p>관련 학칙:</p>
-          <p>{parsedReference["Rule"]}</p>
+          <button
+            className={styles.ruleButton}
+            onClick={() => handleRuleModalOpen(parsedReference["Rule"])}
+          >
+            관련 학칙
+          </button>
           {Object.entries(parsedReference)
             .filter(([key, value]) => key !== "Rule")
             .map(([link, value], index) => (
@@ -113,7 +131,6 @@ const ChatAnswer = (props) => {
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   참고문서:{link}
                 </Link>
-                <p>{value}</p>
               </div>
             ))}
         </div>
@@ -122,6 +139,16 @@ const ChatAnswer = (props) => {
       return reference;
     }
   };
+
+  useEffect(() => {
+    const newContent = content.split('\n').map((line, index) => (
+      <Fragment key={index}>
+        {line}
+        <br />
+      </Fragment>
+    ));
+    setProcessedContent(newContent); // 상태 업데이트
+  }, [content]); // content 변경 시에만 실행
 
   return (
     <div>
@@ -132,9 +159,16 @@ const ChatAnswer = (props) => {
           </div>
         </div>
         <div className={styles.chatTextWrap}>
-          <p className={styles.chatText}>{content}</p>
+          {/* <p className={styles.chatText}>{content}</p>*/}
+          <p className={styles.chatText}>{processedContent}</p>
         </div>
         <img src={dots} className={styles.dots} />
+        {/* <img
+          src={dots}
+          className={styles.dots}
+          style={{ display: loading ? "block" : "none" }}
+        />
+      */}
         <div
           className={styles.iconZip}
           style={{ visibility: blockIconZip ? "hidden" : "inherit" }}
@@ -187,7 +221,6 @@ const ChatAnswer = (props) => {
             </div>
             <div className={styles.reference_text}>
               <p>{parseReference(reference)}</p>
-              <p>{reference}</p>
             </div>
           </div>
         </div>
@@ -206,6 +239,11 @@ const ChatAnswer = (props) => {
           feedbackId={feedbackId}
         />
       )}
+      <RuleModal
+        isOpen={ruleModalOpen}
+        onClose={handleRuleModalClose}
+        ruleContent={ruleContent}
+      />
     </div>
   );
 };
