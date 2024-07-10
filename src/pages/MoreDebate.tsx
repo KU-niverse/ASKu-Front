@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
+import React from 'react'
+import { useQuery } from 'react-query'
+import axios, { AxiosError } from 'axios'
+import { useParams } from 'react-router-dom'
 import styles from './MoreDebate.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -25,58 +26,58 @@ interface DebateListData {
   data: Debate[]
 }
 
+// useQuery 훅을 사용하여 토론 목록 데이터 가져오기
+function useDebateList(title: string) {
+  return useQuery<DebateListData, AxiosError>(
+    ['debateList', title],
+    async () => {
+      const res = await axios.get<DebateListData>(
+        `${process.env.REACT_APP_HOST}/debate/list/${encodeURIComponent(title)}`,
+        { withCredentials: true },
+      )
+      return res.data
+    },
+    {
+      enabled: !!title, // title이 존재하는 경우에만 쿼리 실행
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('토론 목록 가져오기 에러:', error)
+        // 필요에 따라 에러 처리 로직 추가
+      },
+    },
+  )
+}
+
 function MoreDebate() {
-  const { title } = useParams()
-  const [debateListData, setDebateListData] = useState<DebateListData>({ data: [] })
+  const { title } = useParams<{ title: string }>()
 
-  useEffect(() => {
-    const takeDebateList = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/debate/list/${encodeURIComponent(title)}`, {
-          withCredentials: true,
-        })
-        if (res.status === 200) {
-          setDebateListData(res.data)
-        } else {
-          /* empty */
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    takeDebateList()
-  }, [title]) // 토론방 목록 가져오기
+  const { isLoading, isError, error, data: debateListData } = useDebateList(title)
 
   return (
     <div className={styles.container}>
-      <div>
-        <Header />
-      </div>
+      <Header />
 
       <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
+        <p className={styles.debate}>토론 ({title})</p>
       </div>
 
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <div className={styles.maincontent_box}>
-            <p className={styles.title}>{'이 문서의 토론 목록'}</p>
+            <p className={styles.title}>이 문서의 토론 목록</p>
             <div className={styles.menu}>
-              <span className={styles.menu1}>{'항목'}</span>
-              <span className={styles.menu2}>{'수정 시간'}</span>
+              <span className={styles.menu1}>항목</span>
+              <span className={styles.menu2}>수정 시간</span>
             </div>
 
-            {debateListData && debateListData.data && debateListData.data.length === 0 ? (
-              <p className={styles.none}>{'아직 생성된 토론방이 없습니다.'}</p>
+            {isLoading ? (
+              <p className={styles.none}>데이터를 불러오는 중입니다.</p>
+            ) : isError ? (
+              <p className={styles.none}>에러: {error.message}</p>
+            ) : debateListData?.data.length === 0 ? (
+              <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
-              debateListData &&
-              debateListData.data &&
-              debateListData.data.map((data: Debate) => (
+              debateListData?.data.map((data: Debate) => (
                 <DebateList
                   key={data.id}
                   id={data.id}
@@ -107,9 +108,7 @@ function MoreDebate() {
         </div>
       </div>
 
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

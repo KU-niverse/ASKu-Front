@@ -1,39 +1,46 @@
-import React, { PureComponent, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 import ReactDiffViewer from 'react-diff-viewer'
 import { useParams } from 'react-router-dom'
 import { useMediaQuery } from '@material-ui/core'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import his2 from '../img/his2.png'
 import styles from './HistoryDiff.module.css'
 import Header from '../components/Header'
 
-// const oldText = `
-// == 잉 ==
-// 잉잉잉잉잉잉
-// == 개요 ==
-// '[[정품]]'과 '~돌이'를 합친 인터넷 ==신조어이자 '[[복돌이]]'의 [[반대말]]로, 정상적인 프로그램 이용자를 일컫는 말. 이 문서에서는 정돌이의 행위를 다루어 설명한다.
-// == damm ==
-// 여기 수정됐지롱 ㅋㅋ 이름이라니 너무 웃기자나
-// == 복돌이의 인식 ==
-// 몇몇 무개념 [[복돌이]]들은 정돌이를 [[호갱]]이나 [[흑우]]로 보지만 정당한 소비를 하는 사람을 어떻게든 모욕할 이유가 없다. 복돌이들은 마치 도둑질해서 무료로 얻었는데 왜 정직하게 사냐는 망언을 하는 거랑 똑같다. 이는 물건을 제 값어치에 사는데 그걸 문제로 삼는 게 심각한 것이다.
-// `;
-// const newText = `
-// == 잉 ==
-// 엥엥엥엥엥엥
-// == 개요 ==
-// '[[정품]]'과 '~돌이'를 합친 인터넷 ==신조어이자 '[[복돌이]]'의 [[반대말]]로, 정상적인 프로그램 이용자를 일컫는 말이다.. 이 문서에서는 정돌이의 행위를 다루어 설명한다.
-// == damm ==
-// 이런이런 잘 되나
-// == 복돌이의 인식 ==
-// 몇몇 무개념 [[복돌이]]들은 정돌이를 [[호갱]]이나 [[흑우]]로 보지만 정당한 소비를 하는 사람을 어떻게든 모욕할 이유가 없다. 복돌이들은 마치 도둑질해서 무료로 얻었는데 왜 정직하게 사냐는 망언을 하는 거랑 똑같다. 이는 물건을 제 값어치에 사는데 그걸 문제로 삼는 게 심각한 것이다.
+interface ComparisonResponse {
+  jsonData: {
+    oldrev_text: string
+    rev_text: string
+  }
+}
 
-// `;
+function useCompareHistory(title: string, ver: string) {
+  return useQuery<ComparisonResponse, AxiosError>(
+    ['compareHistory', title, ver],
+    async () => {
+      const result = await axios.get<ComparisonResponse>(
+        `${process.env.REACT_APP_HOST}/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`,
+        {
+          withCredentials: true,
+        },
+      )
+      return result.data
+    },
+    {
+      enabled: !!title && !!ver, // title과 ver가 모두 유효할 때만 쿼리 실행
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error(error)
+        alert(error.response?.data || '비교 데이터를 가져오는 중 오류가 발생했습니다.')
+      },
+    },
+  )
+}
 
 const HistoryDiff = () => {
   const [isSplit, setIsSplit] = useState(true)
-  const { title, ver } = useParams()
-  const [newText, setNewText] = useState('')
-  const [oldText, setOldText] = useState('')
+  const { title, ver } = useParams<{ title: string; ver: string }>()
 
   const mediaQuery = useMediaQuery('(max-width: 767px)')
 
@@ -41,27 +48,13 @@ const HistoryDiff = () => {
     setIsSplit(!mediaQuery)
   }, [mediaQuery])
 
-  const compareHistory = async () => {
-    try {
-      const result = await axios.get(
-        `${process.env.REACT_APP_HOST}/wiki/comparison/${title}/rev/${ver}/oldrev/${Number(ver) - 1}`,
-        {
-          withCredentials: true,
-        },
-      )
-      if (result.status === 200) {
-        setOldText(result.data.jsonData.oldrev_text)
-        setNewText(result.data.jsonData.rev_text)
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error.response.data.message)
-    }
-  }
+  const { isLoading, isError, error, data: comparisonData } = useCompareHistory(title, ver)
 
-  useEffect(() => {
-    compareHistory()
-  }, [title, ver])
+  if (isLoading) return <div>로딩 중...</div>
+  if (isError) return <div>에러: {error.message}</div>
+
+  const oldText = comparisonData?.jsonData.oldrev_text || ''
+  const newText = comparisonData?.jsonData.rev_text || ''
 
   return (
     <div className={styles.container}>

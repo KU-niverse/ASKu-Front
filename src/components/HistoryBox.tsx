@@ -1,5 +1,6 @@
 import React from 'react'
-import axios from 'axios'
+import { useMutation } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import styles from './HistoryBox.module.css'
 import dots from '../img/dots.png'
@@ -14,60 +15,60 @@ interface HistoryBoxProps {
   summary: string
   user: string
   timestamp: string
-  doctitle: string
   target: number
   type: string
 }
+
+interface ErrorResponse {
+  status: number
+  message: string
+}
+
 const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
-  const { title } = props
-  const { version } = props
-  const { summary } = props
-  const { user } = props
-  const { timestamp } = props
-  const { doctitle } = props
-  const { target } = props
-  const { type } = props
+  const { title, version, summary, user, timestamp, target, type } = props // 구조 분해 할당
 
   const handleView = () => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/preview/${encodedTitle}/${version}`)
   }
 
-  const handleRollback = async (e: any) => {
-    const returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)')
+  // useMutation을 사용하여 롤백 처리
+  const { mutate: handleRollback, isLoading: isRollbackLoading } = useMutation<unknown, AxiosError>(
+    async () => {
+      const returnValue = window.confirm('정말 롤백하시겠습니까?\n(한번 롤백한 문서는 다시 되돌릴 수 없습니다.)')
 
-    if (returnValue === false) {
-      /* empty */
-    } else {
-      try {
+      if (returnValue) {
+        // 사용자가 확인을 누른 경우에만 롤백 요청
         const result = await axios.post(
           `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,
           {},
-          {
-            withCredentials: true,
-          },
-        ) // 전체 텍스트를 가져옴.
-        if (result.status === 200) {
-          alert(result.data.message)
-          const encodedTitle = encodeURIComponent(title)
-          nav(`/wiki/${encodedTitle}`)
-        } else {
-          alert('something went wrong')
-        }
-      } catch (error) {
-        if (error.response.status === 401) {
+          { withCredentials: true },
+        )
+        return result.data
+      } else {
+        throw new Error('롤백이 취소되었습니다.') // 롤백 취소 시 에러 발생
+      }
+    },
+    {
+      onSuccess: (data) => {
+        alert(data)
+        const encodedTitle = encodeURIComponent(title)
+        nav(`/wiki/${encodedTitle}`)
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
+        if (error.response?.status === 401) {
           alert('로그인이 필요합니다')
           nav('/signin')
-        } else if (error.response.status === 432) {
-          alert(error.response.data.message)
-        } else if (error.response.status === 403) {
-          alert(error.response.data.message)
+        } else if (error.response?.status === 432 || error.response?.status === 403) {
+          const errorResponse = error.response.data as ErrorResponse
+          alert(errorResponse.message)
         }
-      }
-    }
-  }
+      },
+    },
+  )
 
   const handleCompare = () => {
     if (type === 'create') {
@@ -109,9 +110,14 @@ const HistoryBox = (props: HistoryBoxProps) => {
             <img alt={'RAW버전 미리보기 버튼'} src={watch} />
             {'RAW버전 미리보기\r'}
           </span>
-          <span role={'presentation'} onClick={handleRollback} className={`${styles.versionbtn}`}>
-            <img alt={'이 버전으로 되돌리기 버튼'} src={rollback} />
-            {'이 버전으로 되돌리기\r'}
+          <span role={'presentation'} onClick={() => handleRollback()} className={`${styles.versionbtn}`}>
+            {isRollbackLoading ? (
+              '롤백 중...'
+            ) : (
+              <>
+                <img alt={'이 버전으로 되돌리기 버튼'} src={rollback} /> {'이 버전으로 되돌리기\r'}
+              </>
+            )}
           </span>
           <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
             <img alt={'전 버전이랑 비교하기 버튼'} src={verComp} />

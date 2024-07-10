@@ -1,5 +1,6 @@
 import React from 'react'
-import axios from 'axios'
+import { useMutation } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import styles from './HistoryBox.module.css'
 import dots from '../img/dots.png'
@@ -12,7 +13,7 @@ interface HistoryBoxProps {
   title: string
   version: number
   summary: string
-  user: number
+  user: string
   timestamp: string
   doctitle: string
   target: number
@@ -22,46 +23,39 @@ interface HistoryBoxProps {
 const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
-  const { title } = props
-  const { version } = props
-  const { summary } = props
-  const { user } = props
-  const { timestamp } = props
-  const { doctitle } = props
-  const { target } = props
-  const { type } = props
+  const { title, version, summary, user, timestamp, doctitle, target, type } = props // 구조 분해 할당
 
   const handleView = () => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/preview/${encodedTitle}/${version}`)
   }
 
-  const handleRollback = async (e: React.MouseEvent<HTMLSpanElement>) => {
-    try {
+  const { mutate: handleRollback, isLoading: isRollbackLoading } = useMutation(
+    async () => {
       const result = await axios.post(
         `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,
         {},
-        {
-          withCredentials: true,
-        },
-      ) // 전체 텍스트를 가져옴.
-      if (result.status === 200) {
-        alert(result.data.message)
+        { withCredentials: true },
+      )
+      return result.data
+    },
+    {
+      onSuccess: (data) => {
+        alert(data.message)
         const encodedTitle = encodeURIComponent(title)
         nav(`/wiki/${encodedTitle}`)
-      } else {
-        alert('something went wrong')
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 401) {
-        alert('로그인이 필요합니다')
-        nav('/signin')
-      } else if (error.response.status === 432) {
-        alert(error.response.data.message)
-      }
-    }
-  }
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
+        if (error.response?.status === 401) {
+          alert('로그인이 필요합니다')
+          nav('/signin')
+        } else if (error.response?.status === 432) {
+          alert(error.response.data)
+        }
+      },
+    },
+  )
 
   const handleCompare = () => {
     if (type === 'create') {

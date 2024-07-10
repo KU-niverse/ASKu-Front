@@ -1,4 +1,5 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 import styles from './MyQuestion.module.css'
 import Header from '../components/Header'
@@ -56,57 +57,60 @@ interface MypageDataResponse {
   data: UserData[]
 }
 
+// useQuery 훅을 사용하여 내가 쓴 질문 데이터 가져오기
+function useMyQuestion(arrange: string) {
+  return useQuery<MyQuestionResponse, Error>(
+    ['myQuestions', arrange],
+    async () => {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/${arrange}`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error) => {
+        console.error('내가 쓴 질문 가져오기 에러:', error)
+      },
+    },
+  )
+}
+
+// useQuery 훅을 사용하여 마이페이지 데이터 가져오기
+function useMypageData() {
+  return useQuery<MypageDataResponse, Error>(
+    'mypageData',
+    async () => {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error) => {
+        console.error('마이페이지 데이터 가져오기 에러:', error)
+      },
+    },
+  )
+}
+
 function MyQuestion() {
   const [isToggled, setIsToggled] = useState(false)
-  const [myQuestion, setMyQuestion] = useState<MyQuestionResponse>()
-  const [mypageData, setMypageData] = useState<MypageDataResponse>()
-  const [loadingMyQuestion, setLoadingMyQuestion] = useState(true)
-  const [loadingMypage, setLoadingMypage] = useState(true)
   const arrange = isToggled ? 'popularity' : 'latest'
 
-  useEffect(() => {
-    const takeMyQuestion = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/${arrange}`, {
-          withCredentials: true,
-        })
-        if (res.status === 201) {
-          setMyQuestion(res.data)
-          setLoadingMyQuestion(false)
-        }
-      } catch (error) {
-        console.error(error)
-        setLoadingMyQuestion(false)
-      }
-    }
-    takeMyQuestion()
-  }, [arrange])
+  const { isLoading: isLoadingMyQuestion, error: myQuestionError, data: myQuestionData } = useMyQuestion(arrange)
+  const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
 
-  useEffect(() => {
-    const takeMypage = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
-        if (res.status === 201) {
-          setMypageData(res.data)
-          setLoadingMypage(false)
-        }
-      } catch (error) {
-        console.error(error)
-        setLoadingMypage(false)
-      }
-    }
-    takeMypage()
-  }, [])
+  const questions = myQuestionData?.data || []
+  const user = mypageData?.data[0] // 사용자 정보는 한 개만 있다고 가정
 
   return (
     <div className={styles.container}>
-      <div>
-        <Header />
-      </div>
-      {loadingMyQuestion || loadingMypage ? (
-        <div>
-          <SpinnerMypage />
-        </div>
+      <Header />
+
+      {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
+        <SpinnerMypage />
       ) : (
         <div className={styles.content}>
           <div className={styles.header}>
@@ -115,13 +119,12 @@ function MyQuestion() {
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
           </div>
-          {mypageData.data && myQuestion && myQuestion.success && myQuestion.data.length === 0 ? (
-            <p>{'아직 작성한 질문이 없습니다.'}</p>
+          {myQuestionError || mypageError ? (
+            <div>에러: {(myQuestionError || mypageError).message}</div>
+          ) : questions.length === 0 ? (
+            <p>아직 작성한 질문이 없습니다.</p>
           ) : (
-            mypageData &&
-            myQuestion &&
-            myQuestion.success &&
-            myQuestion.data.map((question: Question) => (
+            questions.map((question) => (
               <MyQuestionList
                 key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                 id={question.id}
@@ -142,9 +145,7 @@ function MyQuestion() {
           )}
         </div>
       )}
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }
