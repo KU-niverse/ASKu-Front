@@ -61,18 +61,18 @@
   z-index: 200;
   font-size: 15px;
   font-weight: 800;
-  color: #9F132E;
+  color: #9f132e;
 }
 
-.q_cbox{
+.q_cbox {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   height: auto;
-  box-sizing:border-box;
+  box-sizing: border-box;
   padding: 10px;
-} 
-.q_ctextarea{
+}
+.q_ctextarea {
   resize: none;
   border: none;
   width: 100%;
@@ -80,29 +80,28 @@
   padding: 5px;
   border-radius: 12px;
   font-size: 17px;
-
 }
 
-.q_clastheader{
+.q_clastheader {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-left: auto;
   margin-top: 7px;
 }
-.div_btns{
+.div_btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 220px;
   margin-top: 30px;
 }
-.c_btn{
+.c_btn {
   width: 105px;
   height: 50px;
   border-radius: 12px;
-  background: linear-gradient(to left, #747474, #D5D5D5);
-  color: #FFF;
+  background: linear-gradient(to left, #747474, #d5d5d5);
+  color: #fff;
   font-size: 16px;
   font-weight: 700;
   border: none;
@@ -118,16 +117,15 @@
   border: none;
   color: white;
   cursor: pointer;
-  
 }
 
-.textnum{
+.textnum {
   font-size: 14px;
-  color:rgba(116, 116, 116, 1);
+  color: rgba(116, 116, 116, 1);
   margin-right: 10px;
   margin-top: 3px;
 }
-.dblcheck{
+.dblcheck {
   justify-content: center;
   align-items: center;
   width: 105px;
@@ -135,24 +133,20 @@
   border-radius: 12px;
   font-size: 16px;
   font-weight: 700;
-  background: linear-gradient(90deg, #DE3A58 0%, #9F132E 100%);
+  background: linear-gradient(90deg, #de3a58 0%, #9f132e 100%);
   color: white;
   border: none;
   box-sizing: border-box;
-  
-
-
 }
 
-.checkInput{
+.checkInput {
   display: flex;
   align-items: center;
   margin-top: 15px;
   width: 100%;
   height: auto;
-  
 }
-.nick_input{
+.nick_input {
   height: 50px;
   border-radius: 12px;
   padding-left: 15px;
@@ -164,10 +158,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .dblcheck{
+  .dblcheck {
     font-size: 14px;
   }
-
-  
-
 }

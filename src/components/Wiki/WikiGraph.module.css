@@ -1,14 +1,12 @@
-
-.g_container{
+.g_container {
   width: 100%;
 }
-.g_name{
+.g_name {
   margin-top: 0px;
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: 700;
 }
-
 
 .legend {
   margin-top: 10px;
@@ -34,32 +32,30 @@
 
 .legendname {
   font-size: 14px;
-  margin-right: 5px; 
+  margin-right: 5px;
 }
 
-.legendper{
+.legendper {
   font-size: 12px;
   color: rgba(116, 116, 116, 1);
 }
 
 @media only screen and (max-width: 767px) {
-  .g_container{
+  .g_container {
     width: 300px;
   }
-  
 
-  .legend{
+  .legend {
     width: 100%;
   }
 
   .legendname {
     font-size: 12px;
-    margin-right: 5px; 
+    margin-right: 5px;
   }
-  
-  .legendper{
+
+  .legendper {
     font-size: 12px;
     color: rgba(116, 116, 116, 1);
   }
-
 }

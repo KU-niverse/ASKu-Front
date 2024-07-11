@@ -19,6 +19,9 @@
   .questionBox {
     width: calc(100vw - 50px);
   }
+  .questionBox {
+    width: calc(100vw - 50px);
+  }
 }
 
 .characterWrapper{
@@ -54,9 +57,17 @@
   .chatText {
     max-width: 220px;
   }
+  .chatText {
+    max-width: 220px;
+  }
 }
 
 .dots {
+  position: relative;
+  bottom: 75px;
+  left: 505px;
+  cursor: pointer;
+  display: none;
   position: relative;
   bottom: 75px;
   left: 505px;
@@ -79,6 +90,10 @@
   height: 15px;
   margin-right: 15px;
   cursor: pointer;
+  width: 15px;
+  height: 15px;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
 .chatTextWrap {
@@ -86,6 +101,9 @@
     flex: 1;
 }
 @media screen and (max-width: 500px) {
+  .chatTextWrap {
+    max-width: 220px;
+  }
   .chatTextWrap {
     max-width: 220px;
   }

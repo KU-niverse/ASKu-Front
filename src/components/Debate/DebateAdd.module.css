@@ -1,115 +1,110 @@
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
- /* 스타일을 초기화하고 싶은 경우 */
- .linkTo {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 기본 텍스트 색상 유지 */
-  }
-  
-  /* 클릭 시 스타일 변경하고 싶은 경우 */
-  .linkTo:hover {
-    text-decoration: underline;
-    text-decoration: none; /* 클릭 시 밑줄 표시 */
-  }
-.addTitle{
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 0em;
-    text-align: left;
-    color:rgba(159, 19, 46, 1);
-    margin-bottom: 0px;
+/* 스타일을 초기화하고 싶은 경우 */
+.linkTo {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 기본 텍스트 색상 유지 */
+}
 
+/* 클릭 시 스타일 변경하고 싶은 경우 */
+.linkTo:hover {
+  text-decoration: underline;
+  text-decoration: none; /* 클릭 시 밑줄 표시 */
 }
-.addTitle p{
-    margin: 0;
-    margin-bottom: 5px;
+.addTitle {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(159, 19, 46, 1);
+  margin-bottom: 0px;
 }
-.addTitleMain{
-    font-size: 18px;
-    font-weight: 700;
-    
-
+.addTitle p {
+  margin: 0;
+  margin-bottom: 5px;
 }
-.addBtn{
-    background: linear-gradient(180deg, rgba(244, 109, 134, 0.3), rgba(244, 109, 134, 0) 100%);
-    border: 1px solid rgba(159, 20, 47, 1);
-    width: 100%;
-    height: 50px;
-    top: 380px;
-    left: 20px;
-    border-radius: 12px;
-    cursor: pointer;
+.addTitleMain {
+  font-size: 18px;
+  font-weight: 700;
+}
+.addBtn {
+  background: linear-gradient(180deg, rgba(244, 109, 134, 0.3), rgba(244, 109, 134, 0) 100%);
+  border: 1px solid rgba(159, 20, 47, 1);
+  width: 100%;
+  height: 50px;
+  top: 380px;
+  left: 20px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .inputContainer {
-    display: flex;
-    width: 25%;
-    position: relative;
+  display: flex;
+  width: 25%;
+  position: relative;
 }
 .headerInput {
-    border: 2px solid #D5D5D5;
-    border-radius: 12px;
-    width: 100%;
-    height: 50px;
-    padding-left: 20px;
-    box-sizing: border-box;
+  border: 2px solid #d5d5d5;
+  border-radius: 12px;
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  box-sizing: border-box;
 }
 
-@media only screen and (max-width: 767px){
-    .addBtn{
-        width: 300px;
-    }
-    .inputcontainer{
-        width: 300px;
-        
-    }
-    .headerInput{
-        width: 100%;
-    }
-    .createBtn{
-        right: 10px;
-        bottom: 12px;
-    }
-}
-.createBtn {
-    width: 46px;
-    height: 24px;
-    border-radius: 20px;
-    position: absolute;
+@media only screen and (max-width: 767px) {
+  .addBtn {
+    width: 300px;
+  }
+  .inputcontainer {
+    width: 300px;
+  }
+  .headerInput {
+    width: 100%;
+  }
+  .createBtn {
     right: 10px;
     bottom: 12px;
-    background: linear-gradient(180deg, #9F132E 31.77%, #DE3A58 100%);
-    border: none;
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
+  }
+}
+.createBtn {
+  width: 46px;
+  height: 24px;
+  border-radius: 20px;
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
+  background: linear-gradient(180deg, #9f132e 31.77%, #de3a58 100%);
+  border: none;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
 }
 
-.addLists{
-    display: flex;
-    flex-direction: column;
+.addLists {
+  display: flex;
+  flex-direction: column;
 }
-.addLists ul{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 0;
+.addLists ul {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
 }
-.listTitle{
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-
+.listTitle {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
 }
-.listTimestamp{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: right;
-    color: rgba(116, 116, 116, 1);
+.listTimestamp {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: right;
+  color: rgba(116, 116, 116, 1);
 }

@@ -11,25 +11,24 @@ body, html {
     width: 100%;
 }
 @media screen and (max-width: 767px) {
-    .container {
-        transition: all 0.3s ease;
-        position: relative;
-    }
+  .container {
+    transition: all 0.3s ease;
+    position: relative;
+  }
 }
 
 .headerContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  position: relative;
 }
 @media screen and (max-width: 767px) {
-    .headerContainer {
-        align-items: normal;
-    }
+  .headerContainer {
+    align-items: normal;
+  }
 }
-
 
 .headerButton {
     background-color: #ffffff;
@@ -80,11 +79,11 @@ body, html {
     align-items: center;
 }
 @media only screen and (max-width: 767px) {
-    .flexContainer {
-        position: relative;
-        right:50px;
-        width: 500px;
-    }
+  .flexContainer {
+    position: relative;
+    right: 50px;
+    width: 500px;
+  }
 }
 
 .inputcontainer {
@@ -94,14 +93,14 @@ body, html {
     margin-right: 30px;
 }
 @media only screen and (max-width: 767px) {
-    .inputcontainer {
-        position: absolute;
-        top: 20px;
-        right: 100px;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
+  .inputcontainer {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
 }
 
 .navContainer_right {
@@ -111,9 +110,9 @@ body, html {
     align-items: center;
 }
 @media only screen and (max-width: 767px) {
-    .navContainer_right {
-        display: none;
-    }
+  .navContainer_right {
+    display: none;
+  }
 }
 
 .navContainer_left {
@@ -125,9 +124,9 @@ body, html {
 }
 
 @media only screen and (max-width: 767px) {
-    .navContainer_left {
-        display: none;
-    }
+  .navContainer_left {
+    display: none;
+  }
 }
 .headerInput {
     border: 1px solid #D5D5D5;
@@ -147,12 +146,12 @@ body, html {
 
 
 .searchIcon {
-    width: 15px;
-    height: auto;
-    position: relative;
-    right: 30px;
-    z-index: 20;
-    cursor: pointer;
+  width: 15px;
+  height: auto;
+  position: relative;
+  right: 30px;
+  z-index: 20;
+  cursor: pointer;
 }
 
 
@@ -163,45 +162,45 @@ body, html {
     align-items: center;
 }
 @media only screen and (max-width: 767px) {
-    .logo {
-        position: absolute;
-        top: 20px;
-        left: 10px;
-    }
+  .logo {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+  }
 }
 
 .buttonWrap {
-    display: none;
+  display: none;
 }
 @media only screen and (max-width: 767px) {
-    .buttonWrap {
-        display: flex;
-        position: absolute;
-        top: 20px;
-        right: -15px;
-        flex-direction: row;
-        margin-right: -30px;
-        max-width: 160px;
-        height: 30px;
-    }
+  .buttonWrap {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    flex-direction: row;
+    margin-right: -30px;
+    max-width: 160px;
+    height: 30px;
+  }
 }
 
 .mobileButton {
-    display: none;
+  display: none;
 }
 @media only screen and (max-width: 767px) {
-    .mobileButton {
-        display: block;
-        cursor: pointer;
-        position: relative;
-        width: 20px;
-        height: 20px;
-        margin-right: 15px;
-    }
+  .mobileButton {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+  }
 }
 
 #mobileHeaderSearch {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .signinButton {
@@ -212,174 +211,173 @@ body, html {
 }
 
 .mypageWrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100px;
 }
 
 .mypageBtn {
-    width: 90px;
-    height: 30px;
-    position: absolute;
-    left: 0;
+  width: 90px;
+  height: 30px;
+  position: absolute;
+  left: 0;
 }
 
 .repBadge {
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    bottom: -12px;
-    right: 12px;
-    border-radius: 50%;
-    background-color: #FF6F6F;
-    color: white;
-    font-size: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  bottom: -12px;
+  right: 12px;
+  border-radius: 50%;
+  background-color: #ff6f6f;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
 }
 
 .nicknameText {
-    font-size: 12px;
-    margin: 0;
-    padding: 0;
-    width: 50px;
-    max-width: 100px;
-    position: absolute;
-    left: 10px;
-    z-index: 20;
-    color: white;
-    overflow: hidden;  
-    text-overflow: ellipsis;  
-    white-space: nowrap;  
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  max-width: 100px;
+  position: absolute;
+  left: 10px;
+  z-index: 20;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mobileHeader {
-    display: none;
+  display: none;
 }
 @media only screen and (max-width: 767px) {
-    .mobileHeader {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
+  .mobileHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
 }
 
 .mobileHamburger {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50px;
-    right: 80px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  right: 80px;
 }
 
 .mobileHamburgerMenu {
-    width: 130px;
-    height: 30px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  width: 130px;
+  height: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .mobileMenuText {
-    text-decoration: none;
-    margin-left: 10px;
-    color: black;
-    border: none;
-    background-color: transparent;
-    font-size: 16px;
-    margin: 0;
+  text-decoration: none;
+  margin-left: 10px;
+  color: black;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  margin: 0;
 }
 
 .mobileMenuWrap {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .mobileSearchWrap {
-    position: absolute;
-    top: 40px;
-    right: 0px;
-    transition: all 0.3s ease;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  transition: all 0.3s ease;
 }
 
-
 .mobileInputContainer {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    /* margin-top: 10px; */
-    margin-bottom: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 10px; */
+  margin-bottom: 10px;
 }
 
 .mobileHeaderInput {
-    border: 1px solid #D5D5D5;
-    border-radius: 35px;
-    width: 230px;
-    height: 25px;
-    margin-left: 0px;
-    padding-left: 20px;
-    margin-top: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  border: 1px solid #d5d5d5;
+  border-radius: 35px;
+  width: 230px;
+  height: 25px;
+  margin-left: 0px;
+  padding-left: 20px;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .mobileSearchIcon {
-    width: 15px;
-    height: auto;
-    position: relative;
-    right: 30px;
-    top: 5px;
-    z-index: 20;
-    cursor: pointer;
+  width: 15px;
+  height: auto;
+  position: relative;
+  right: 30px;
+  top: 5px;
+  z-index: 20;
+  cursor: pointer;
 }
 
 .loginbtn {
-    color: black;
-    background-color: transparent;
-    min-width: 50px;
-    height: 20px;
-    border: none;
-    font-size: 15px;
-    cursor: pointer;
-    padding: 0;
-    margin-right: 5px;
+  color: black;
+  background-color: transparent;
+  min-width: 50px;
+  height: 20px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 5px;
 }
 
 .mobileMenuBtn {
-    text-decoration-line: none;
-    color: black;
-    background-color: transparent;
-    width: 150px;
-    border: none;
-    display: flex;
-    justify-content: flex-start;
-    margin-right: 80px;
-    margin-top: 10px;
-    cursor: pointer;
+  text-decoration-line: none;
+  color: black;
+  background-color: transparent;
+  width: 150px;
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 80px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 .mobileIcon {
-    width: 22px;
-    height: 22px;
-    padding: 2px;
-    margin-right: 15px;
+  width: 22px;
+  height: 22px;
+  padding: 2px;
+  margin-right: 15px;
 }
 
 #mobileBookmark {
-    width: 18px;
-    margin-left: 2px;
+  width: 18px;
+  margin-left: 2px;
 }
 
 .randomDocs {
-    width: 15px;
-    height: auto;
-    cursor: pointer;
+  width: 15px;
+  height: auto;
+  cursor: pointer;
 }

@@ -38,7 +38,6 @@
     }
 }
 
-
 .inputContainer {
     height: 60px;
     display: flex;
@@ -50,11 +49,11 @@
     justify-content: center;
 }
 @media only screen and (max-width: 767px) {
-    .inputContainer {
-        width: calc(100% - 50px);
-        height: 30px;
-        margin-top: 30px;
-    }
+  .inputContainer {
+    width: calc(100% - 50px);
+    height: 30px;
+    margin-top: 30px;
+  }
 }
 
 .searchInput {
@@ -105,12 +104,12 @@
     cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
-    .searchIcon{
-        width: 22px;
-        height: 18px;
-        right: 40px;
-        top: 10px;
-    }
+  .searchIcon {
+    width: 22px;
+    height: 18px;
+    right: 40px;
+    top: 10px;
+  }
 }
 
 .chatBotContainer {
@@ -124,21 +123,21 @@
     scrollbar-width:none; 
 }
 @media only screen and (max-width: 767px) {
-    .chatBotContainer{
-        flex-direction: column;
-    }
+  .chatBotContainer {
+    flex-direction: column;
+  }
 }
 
 .chatBotBtn {
-    display: none;
-    cursor: pointer;
+  display: none;
+  cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
-    .chatBotBtn{
-        display: block;
-        width: 340px;
-        height: 200px;
-    }
+  .chatBotBtn {
+    display: block;
+    width: 340px;
+    height: 200px;
+  }
 }
 
 .realTime {
@@ -179,36 +178,35 @@
 }
 
 .realTimeTitle {
-    margin-left: 30px;
-    font-weight: 800;
-    font-size: 16px;
-    color: #9F132E;
+  margin-left: 30px;
+  font-weight: 800;
+  font-size: 16px;
+  color: #9f132e;
 }
 
 .rankWrap {
-    display: flex;
-    flex-direction: row;
-    height: 35px;
-    align-items: center;
-    text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+  align-items: center;
+  text-decoration: none;
 }
 
 .numberIcon {
-    margin-left: 30px;
-    font-weight: 400;
-    font-size: 18px;
-    color: #9F132E;
-    width: 15px;
+  margin-left: 30px;
+  font-weight: 400;
+  font-size: 18px;
+  color: #9f132e;
+  width: 15px;
 }
 
 .rankContent {
-    margin-left: 20px;
-    font-weight: 400;
-    font-size: 14px;
-    color: black;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-

@@ -1,41 +1,43 @@
-.rowname, .rowemail, .rowid{
+.rowname,
+.rowemail,
+.rowid {
   display: table;
   width: 100%;
   position: relative;
   table-layout: fixed;
 }
 
-.rowtitle{
+.rowtitle {
   display: table-cell;
   text-align: left;
   width: 15%;
   font-size: 18px;
-  color : rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   padding: 10px 0;
   font-weight: bold;
 }
 
-.text{
+.text {
   display: table-cell;
   width: 85%;
   font-size: 18px;
-  color : rgba(116, 116, 116, 1);
+  color: rgba(116, 116, 116, 1);
 }
 
-
 @media only screen and (max-width: 767px) {
-
-  .rowtitle, .text, .rank{
+  .rowtitle,
+  .text,
+  .rank {
     font-size: 14px;
   }
 
-  .rowtitle{
+  .rowtitle {
     width: 30%;
-    text-align: left;  
+    text-align: left;
     font-weight: bold;
   }
 
-  .text{
+  .text {
     width: 70%;
     font-weight: bold;
   }

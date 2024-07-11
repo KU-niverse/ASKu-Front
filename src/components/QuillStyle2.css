@@ -8,15 +8,13 @@
   border: 2px solid #ccc;
   border-radius: 12px 12px 0px 0px;
 }
-.ql-container.ql-snow{
+.ql-container.ql-snow {
   border: 2px solid #ccc;
   border-radius: 0px 0px 12px 12px;
   height: 450px;
 }
 
-  
-  /* Adjust the focus border color if needed */
-  /* .react-quill:focus {
+/* Adjust the focus border color if needed */
+/* .react-quill:focus {
     border-color: #333; /* Change this color as needed 
   } */
-  

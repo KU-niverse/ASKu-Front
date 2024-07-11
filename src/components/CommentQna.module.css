@@ -1,23 +1,23 @@
-.q_list{
+.q_list {
   width: 100%;
   border-top: 1px solid rgba(213, 213, 213, 1);
   margin: 0 20px;
-} 
-.q_header{
+}
+.q_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 12px;
 }
 
-.q_fronthead{
+.q_fronthead {
   display: flex;
   align-items: center;
 }
 
-.q_box{
+.q_box {
   width: 26px;
-  height:26px;
+  height: 26px;
   align-self: center;
   margin-right: 10px;
 }
@@ -27,30 +27,30 @@
   margin: 0;
 }
 
-.q_mynick{
+.q_mynick {
   font-size: 16px;
 }
-.q_date{
+.q_date {
   margin-left: 16px;
   font-size: 12px;
   color: rgba(116, 116, 116, 1);
 }
-.q_backhead{
+.q_backhead {
   cursor: pointer;
 }
-.q_backhead img{
+.q_backhead img {
   max-height: 6px;
   max-width: 24px;
 }
 
-.q_middle{
+.q_middle {
   display: flex;
   font-size: 16px;
   font-weight: 700;
   padding: 0 12px 18px 12px;
 }
 
-.q_footer{
+.q_footer {
   display: flex;
   justify-content: space-between;
   padding: 0px 12px 0px;
@@ -58,29 +58,26 @@
   padding-bottom: 15px;
 }
 
-.q_frontfooter{
+.q_frontfooter {
   display: flex;
   flex-direction: row;
   align-content: baseline;
 }
-.q_index{
+.q_index {
   display: flex;
   align-content: center;
-  color:  #747474;
+  color: #747474;
   font-size: 14px;
   font-weight: 400;
 }
 
-
-.q_message{
+.q_message {
   display: flex;
   align-content: center;
-  color:  #949494;
+  color: #949494;
   font-size: 12px;
   font-weight: 400;
 }
-
-
 
 /* .q_backfooter button{
   border-radius: 30px;
@@ -111,20 +108,15 @@
   align-items: center;
 } */
 
-
-
-
-
-
 @media only screen and (max-width: 767px) {
- 
-  .q_middle, .q_mynick {
+  .q_middle,
+  .q_mynick {
     font-size: 14px;
   }
-.q_comment {
- margin-left: 10px;
-}
-/* .q_footer img{
+  .q_comment {
+    margin-left: 10px;
+  }
+  /* .q_footer img{
   width: 15px;
   height: 16px;
   object-fit: contain;
@@ -137,25 +129,25 @@
 } */
 
   .q_date {
-    
     font-size: 12px;
   }
 
-  .q_message{
+  .q_message {
     font-size: 10px;
   }
-  .q_index{
+  .q_index {
     font-size: 12px;
   }
-  
-  .q_header, .q_middle, .q_footer{
+
+  .q_header,
+  .q_middle,
+  .q_footer {
     padding-left: 0px;
     padding-right: 0px;
   }
 
-  .q_list{
+  .q_list {
     padding: 0px;
     margin: 0 16px;
   }
-
 }

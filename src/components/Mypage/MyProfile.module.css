@@ -1,4 +1,4 @@
-.profileimg{
+.profileimg {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -6,22 +6,24 @@
   cursor: pointer;
 }
 
-.profileimg_content{
+.profileimg_content {
   border-radius: 100%;
   height: 100px;
   width: 100px;
-  border : 1px solid rgba(116, 116, 116, 1)
+  border: 1px solid rgba(116, 116, 116, 1);
 }
 
-.profilerow{
+.profilerow {
   display: grid;
 }
 
-.badgeedit{
+.badgeedit {
   display: none;
 }
 
-.rownick, .rowbadge, .rowpoint{
+.rownick,
+.rowbadge,
+.rowpoint {
   display: table;
   width: 75%;
   position: relative;
@@ -29,30 +31,30 @@
   justify-self: center;
 }
 
-.rowtitle{
+.rowtitle {
   display: table-cell;
   text-align: left;
   width: 35%;
   font-size: 18px;
-  color : rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   padding: 10px 0;
   font-weight: bold;
 }
 
-.text{
+.text {
   display: table-cell;
   width: 65%;
   font-size: 18px;
-  color : rgba(116, 116, 116, 1);
+  color: rgba(116, 116, 116, 1);
   cursor: pointer;
 }
 
-.rank{
+.rank {
   font-size: 14px;
-  color:rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   text-align: left;
 }
-.editbtn{
+.editbtn {
   width: 44px;
   /* height: 20px; */
   border-radius: 12px;
@@ -69,36 +71,39 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .rownick, .rowbadge, .rowpoint{
+  .rownick,
+  .rowbadge,
+  .rowpoint {
     width: 100%;
   }
-  
-  .rowtitle, .text, .rank{
+
+  .rowtitle,
+  .text,
+  .rank {
     font-size: 14px;
   }
 
-  .rowtitle{
+  .rowtitle {
     width: 30%;
-    text-align: left;  
+    text-align: left;
     font-weight: bold;
     padding: 10px 0;
   }
 
-  .text{
+  .text {
     width: 70%;
     font-weight: bold;
   }
-  
-  .rank{
+
+  .rank {
     font-weight: normal;
     font-size: 12px;
   }
 
-  .badgeedit{
+  .badgeedit {
     display: block;
     font-size: 10px;
     font-weight: 400;
     color: #747474;
-    
   }
 }
