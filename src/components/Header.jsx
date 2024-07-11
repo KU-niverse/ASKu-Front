@@ -260,10 +260,16 @@ function Header({ userInfo, setUserInfo }) {
               </Link>
             </div>
 
+            <div className={styles.alarmModalContainer}>
+              <AlarmModal
+                  isAlarmVisible={isAlarmVisible}
+                  handleAlarm={handleAlarm}
+                  isLoggedIn={isLoggedIn}
+              />
+            </div>
 
-            <div
-                className={styles.navContainer_right}
-            >
+
+            <div className={styles.navContainer_right}            >
               <div className={styles.inputcontainer}
                    style={{display: ismainpage ? "none" : "flex"}}>
                 <input
@@ -301,12 +307,9 @@ function Header({ userInfo, setUserInfo }) {
                       }
                     }}
                 />
-                <AlarmModal
-                    isAlarmVisible={isAlarmVisible}
-                    handleAlarm={handleAlarm}
-                    isLoggedIn={isLoggedIn}
-                />
+
               </div>
+
               {isLoggedIn ? (
                   <>
                     {/*

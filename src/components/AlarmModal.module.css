@@ -4,8 +4,9 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 20px;
-    left: 150%;
+    top: 50px;
+    left: 250px;
+
     width: 250px;
     height: 280px;
     z-index: 900;
@@ -19,8 +20,6 @@
 
 @media screen and (max-width: 1100px) {
     .alarmContainer {
-        top: 50px;
-        left: 120%;
     }
 }
 
