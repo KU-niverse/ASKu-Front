@@ -51,25 +51,6 @@ function Debate() {
     });
   }, []);
 
-  // const handleDebateSubmit = async (submitData) => {
-  //   try {
-  //     const res = await axios.post(
-  //       process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
-  //       submitData,
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 200) {
-  //       setData(res.data);
-  //       // alert(res.data.message)
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     if (error.response.status === 500) {
-  //       console.log(error.response.data.message);
-  //       alert(error.response.data.message);
-  //     }
-  //   }
-  // }; //토론 메세지 생성하기
   const handleDebateSubmit = async (submitData) => {
     try {
       const postResponse = await axios.post(
@@ -95,7 +76,6 @@ function Debate() {
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 500) {
-        //console.log(error.response.data.message);
         alert(error.response.data.message);
       }
     }

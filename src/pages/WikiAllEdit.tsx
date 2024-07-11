@@ -25,7 +25,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
   const [wikiDocs, setWikiDocs] = useState({});
 
   const from = location.state?.from || "/";
-  //console.log(from)
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -82,7 +81,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
   function onEditorChange(value) {
     setDesc(value);
-    //console.log(desc);
   }
 
   useEffect(() => {

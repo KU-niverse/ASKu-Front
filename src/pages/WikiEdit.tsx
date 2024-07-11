@@ -90,7 +90,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }) => {
 
   const onEditorChange = (value) => {
     setDesc(value);
-    //console.log(value);
     // No need to log 'desc' here
   };
 

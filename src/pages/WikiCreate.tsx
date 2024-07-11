@@ -20,7 +20,6 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const from = location.state?.from || "/";
-  //console.log(from)
 
   //로그인 체크 후 우회
   const checkLoginStatus = async () => {
@@ -65,7 +64,6 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
 
   function onEditorChange(value) {
     setDesc(value);
-    //console.log(value);
   }
 
   const handleCreateBtn = async (e) => {
@@ -121,7 +119,6 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
 
   const handleSelectedOption = (optionValue) => {
     setSelectedOption(optionValue);
-    //console.log(selectedOption);
   };
 
   return (

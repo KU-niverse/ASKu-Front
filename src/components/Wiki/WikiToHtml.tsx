@@ -1,6 +1,5 @@
 const WikiToHtml = (wikiText: any) => {
   let html = wikiText
-  // console.log("여기가 1번 : ", html);
   html = html
     .split('\n')
     .map((para: any) => `<p>${para}</p>`)
@@ -16,8 +15,6 @@ const WikiToHtml = (wikiText: any) => {
     const listType = '<ul>'
     return `${listType}<li>${content.trim()}</li>${listType.replace('<', '</')}`
   })
-
-  // console.log("여기가 2번 : ", html);
 
   // 단락 처리 (p)
   // <p> 태그를 \n으로 변환된 부분을 <p> 태그로 재변환
@@ -45,7 +42,6 @@ const WikiToHtml = (wikiText: any) => {
   html = html.replace(/&amp;/g, '&')
   // Convert [[File:...]] to <img> tags
   html = html.replace(/\[\[File:([^|\]]+)\]\]/g, '<img src="$1" />')
-  // console.log("여기가 3번 : ", html);
 
   // //3. [[멀틱스|신기한 운영체제]] -> <a href="../멀틱스">신기한 운영체제</a>
   //  html = html.replace(/\[\[(.*?)\|(.*?)\]\]/g, '<a href="http://localhost:3000/wiki/$1">$2</a>');

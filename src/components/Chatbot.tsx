@@ -81,14 +81,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
 
   const scrollToBottom = () => {
     if (chatBottomRef.current) {
-      //console.log("Scrolling to bottom:", chatBottomRef.current);
-
       setTimeout(
         () => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }),
         100
       );
     } else {
-      //console.log("chatBottomRef is not set");
+     
     }
   };
 

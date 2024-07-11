@@ -231,7 +231,6 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       setAllContent(result.data.contents);
 
       setFavorite(result.data.is_favorite);
-      //console.log(favorite);
 
       if (result.data.is_favorite === true) {
         setImageSource(trueBk);
@@ -248,8 +247,7 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       const result = await axios.get(
         process.env.REACT_APP_HOST + `/wiki/titles`
       );
-      settitles(result.data.titles);
-      console.log(result.data.titles)    
+      settitles(result.data.titles);  
     } catch (error) {
       console.error(error);
     }
@@ -279,19 +277,15 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       const result = await axios.get(
         process.env.REACT_APP_HOST + `/wiki/contributions/${title}`
       );
-      //console.log('기여도');
       setContribute(result.data.message);
-      //console.log(contribute);
 
       if (contribute.length !== 0) {
-        //console.log(contribute);
         const total = contribute.reduce(
           (acc, item) => acc + parseInt(item.point),
           0
         );
         setTotalPoint(total);
       } else {
-        //console.log('기여도 없음');
       }
 
       if (!contribute) {
