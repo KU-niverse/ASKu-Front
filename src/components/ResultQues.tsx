@@ -1,11 +1,11 @@
-import comment_icon from "../img/resultcomment.svg";
-import edit from "../img/resultedit.svg";
-import styles from "../components/ResultQues.module.css";
-import FormatDate from "./FormatDate";
-import ThreedotsMenu from "./ThreedotsMenu";
-import LikeorNot from "./LikeorNot";
-import { useNavigate } from "react-router-dom";
-import { track } from "@amplitude/analytics-browser";
+import { useNavigate } from 'react-router-dom'
+import { track } from '@amplitude/analytics-browser'
+import comment_icon from '../img/resultcomment.svg'
+import edit from '../img/resultedit.svg'
+import styles from './ResultQues.module.css'
+import FormatDate from './FormatDate'
+import ThreedotsMenu from './ThreedotsMenu'
+import LikeorNot from './LikeorNot'
 
 function Question({
   index,
@@ -21,22 +21,22 @@ function Question({
   nick,
   like_count,
 }) {
-  const formattedDate = FormatDate(created_at);
+  const formattedDate = FormatDate(created_at)
 
-  const nav = useNavigate();
+  const nav = useNavigate()
   const linktoQuestionEdit = () => {
-    const encodedTitle = encodeURIComponent(title);
+    const encodedTitle = encodeURIComponent(title)
     nav(`/question/edit/${encodedTitle}`, {
       state: {
         qid: id,
-        user_id: user_id,
-        content: content,
-        created_at: created_at,
-        like_count: like_count,
-        nick: nick,
+        user_id,
+        content,
+        created_at,
+        like_count,
+        nick,
       },
-    });
-  };
+    })
+  }
 
   return (
     <div className={styles.q_list}>
@@ -49,31 +49,32 @@ function Question({
         </div>
       </div>
       <div
+        role={'presentation'}
         className={styles.q_middle}
         onClick={() => {
-          const encodedTitle = encodeURIComponent(title);
+          const encodedTitle = encodeURIComponent(title)
           // Amplitude
-          track("click_qusetion_in_search_result", {
-            title: title,
-            index: index,
-          });
+          track('click_qusetion_in_search_result', {
+            title,
+            index,
+          })
 
           nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
             state: {
               question_id: id,
-              user_id: user_id,
-              content: content,
-              created_at: created_at,
-              like_count: like_count,
-              nick: nick,
-              index_title: index_title,
-              answer_count: answer_count,
-              title: title,
+              user_id,
+              content,
+              created_at,
+              like_count,
+              nick,
+              index_title,
+              answer_count,
+              title,
             },
-          });
+          })
         }}
       >
-        <span className={styles.q_icon}>Q. </span>
+        <span className={styles.q_icon}>{'Q. '}</span>
         <span className={styles.q_content}>{content}</span>
       </div>
       <div className={styles.q_footer}>
@@ -82,19 +83,19 @@ function Question({
             <LikeorNot questionId={id} like_count={like_count} nick={nick} />
           </div>
           <div className={styles.q_comment}>
-            <img src={comment_icon} alt="comment" />
+            <img src={comment_icon} alt={'comment'} />
             <span className={styles.commentCount}>{answer_count}</span>
           </div>
         </div>
         <div className={styles.q_backfooter}>
-          <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
-            <img src={edit} alt="edit" />
-            <span>질문을 기반으로 문서 수정하기</span>
+          <button type={'button'} onClick={linktoQuestionEdit} className={styles.q_editbtn}>
+            <img src={edit} alt={'edit'} />
+            <span>{'질문을 기반으로 문서 수정하기'}</span>
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Question;
+export default Question

@@ -1,111 +1,94 @@
-import React from "react";
-import styles from "./MyPage.module.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import haho from "../img/haho.png";
-import CommentList from "../components/Mypage/CommentList";
-import QuestionList from "../components/Mypage/QuestionList";
-import Contribute from "../components/Mypage/Contribute";
-import Graph from "../components/Mypage/Graph";
-import { Link } from "react-router-dom";
-import MyBadge from "../components/Mypage/MyBadge";
-import MyProfile from "../components/Mypage/MyProfile";
-import MyInfo from "../components/Mypage/MyInfo";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import SpinnerMypage from "../components/SpinnerMypage";
-import Paging from "../components/Paging";
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import styles from './MyPage.module.css'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import haho from '../img/haho.png'
+import CommentList from '../components/Mypage/CommentList'
+import QuestionList from '../components/Mypage/QuestionList'
+import Contribute from '../components/Mypage/Contribute'
+import Graph from '../components/Mypage/Graph'
+import MyBadge from '../components/Mypage/MyBadge'
+import MyProfile from '../components/Mypage/MyProfile'
+import MyInfo from '../components/Mypage/MyInfo'
+
+import SpinnerMypage from '../components/SpinnerMypage'
+import Paging from '../components/Paging'
 
 function MyPage({ loggedIn, setLoggedIn }) {
-  const [loading, setLoading] = useState(true);
-  const [myContribute, setMyContribute] = useState([]);
-  const [mypageData, setMypageData] = useState([]);
-  const [myQuestion, setMyQuestion] = useState([]);
-  const [myDebate, setMyDebate] = useState([]);
-  const [myBadge, setMyBadge] = useState([]);
-  const [myWiki, setMyWiki] = useState([]);
-  const [page, setPage] = useState(1); // 현재 페이지 상태 추가
-  const perPage = 12; // 페이지당 보여줄 컴포넌트 갯수
+  const [loading, setLoading] = useState(true)
+  const [myContribute, setMyContribute] = useState([])
+  const [mypageData, setMypageData] = useState([])
+  const [myQuestion, setMyQuestion] = useState([])
+  const [myDebate, setMyDebate] = useState([])
+  const [myBadge, setMyBadge] = useState([])
+  const [myWiki, setMyWiki] = useState([])
+  const [page, setPage] = useState(1) // 현재 페이지 상태 추가
+  const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
   const handlePageChange = (pageNumber) => {
-    setPage(pageNumber); // 페이지 번호 업데이트
-  };
+    setPage(pageNumber) // 페이지 번호 업데이트
+  }
 
-  //login status 체크하기
-  const Navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from || "/";
+  // login status 체크하기
+  const Navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || '/'
 
-  //로그인 체크 후 우회
+  // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true);
+        setLoggedIn(true)
       } else if (res.status === 401) {
-        setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return Navigate(from);
+        setLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        return Navigate(from)
       }
     } catch (error) {
-      console.error(error);
-      setLoggedIn(false);
+      console.error(error)
+      setLoggedIn(false)
       if (error.response.status === 401) {
-        setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return Navigate(from);
-      } else {
-        alert("에러가 발생하였습니다");
-        return Navigate(from);
+        setLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        return Navigate(from)
       }
+      alert('에러가 발생하였습니다')
+      return Navigate(from)
     }
-  };
+  }
   useEffect(() => {
-    checkLoginStatus();
-  }, []);
+    checkLoginStatus()
+  }, [])
   //
 
-  //데이터 불러오기
+  // 데이터 불러오기
   useEffect(() => {
     const getData = async (url, stateSetter) => {
       try {
-        const res = await axios.get(url, { withCredentials: true });
+        const res = await axios.get(url, { withCredentials: true })
 
         if (res.status === 200 || res.status === 201) {
           // 상태 코드에 따라 데이터 처리
-          stateSetter(res.data);
+          stateSetter(res.data)
         } else if (res.status === 401) {
+          /* empty */
         }
-        setLoading(false);
+        setLoading(false)
       } catch (error) {
-        console.error(error);
-        setLoading(false);
+        console.error(error)
+        setLoading(false)
       }
-    };
+    }
 
-    getData(process.env.REACT_APP_HOST + "/user/mypage/info", setMypageData);
-    getData(
-      process.env.REACT_APP_HOST + `/user/mypage/questionhistory/latest`,
-      setMyQuestion
-    );
-    getData(
-      process.env.REACT_APP_HOST + "/user/mypage/debatehistory",
-      setMyDebate
-    );
-    getData(
-      process.env.REACT_APP_HOST + "/user/mypage/badgehistory",
-      setMyBadge
-    );
-    getData(process.env.REACT_APP_HOST + "/user/mypage/wikihistory", setMyWiki);
-    getData(
-      process.env.REACT_APP_HOST + "/wiki/contributions",
-      setMyContribute
-    );
-  }, []);
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/info`, setMypageData)
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, setMyQuestion)
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, setMyDebate)
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, setMyBadge)
+    getData(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, setMyWiki)
+    getData(`${process.env.REACT_APP_HOST}/wiki/contributions`, setMyContribute)
+  }, [])
 
   //
 
@@ -115,7 +98,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
       <div>
         <SpinnerMypage />
       </div>
-    );
+    )
   }
   //
 
@@ -125,51 +108,51 @@ function MyPage({ loggedIn, setLoggedIn }) {
         <Header />
       </div>
       <div className={styles.header}>
-        <p className={styles.mypage}>MYPAGE</p>
+        <p className={styles.mypage}>{'MYPAGE'}</p>
       </div>
       <div className={`${styles.mypagecontent}`}>
         <div className={styles.uppercontent}>
           <div className={styles.leftcontent}>
             <div className={styles.profile}>
               <div className={styles.profileheader}>
-                <p className={styles.title}>내 프로필</p>
+                <p className={styles.title}>{'내 프로필'}</p>
                 {/* <Link to='/changeinfo'className={styles.edit_link} >
                 <button className={styles.edit}>수정하기</button>
                 </Link> */}
               </div>
 
-              {mypageData &&
-                mypageData.data &&
-                myBadge.data &&
-                myContribute &&
-                myContribute.message && (
-                  <MyProfile
-                    nick={mypageData.data[0].nickname}
-                    point={mypageData.data[0].point}
-                    badge={mypageData.data[0].rep_badge_name}
-                    badgeimg={mypageData.data[0].rep_badge_image}
-                    percent={myContribute.message.ranking_percentage.toFixed(2)}
-                  />
-                )}
+              {mypageData && mypageData.data && myBadge.data && myContribute && myContribute.message && (
+                <MyProfile
+                  nick={mypageData.data[0].nickname}
+                  point={mypageData.data[0].point}
+                  badge={mypageData.data[0].rep_badge_name}
+                  badgeimg={mypageData.data[0].rep_badge_image}
+                  percent={myContribute.message.ranking_percentage.toFixed(2)}
+                />
+              )}
             </div>
             <div className={styles.badge}>
               <div className={styles.badgeheader}>
                 <p className={styles.title}>
-                  뱃지{" "}
-                  <span style={{ color: "#9F132E" }}>
-                    ({myBadge && myBadge.data ? myBadge.data.length : 0})
+                  {'뱃지 '}
+                  <span style={{ color: '#9F132E' }}>
+                    {'('}
+                    {myBadge && myBadge.data ? myBadge.data.length : 0}
+                    {')'}
                   </span>
                 </p>
-                <Link to="/mypage/mybadge" className={styles.b_link}>
-                  <button className={styles.edit}> 더보기</button>
+                <Link to={'/mypage/mybadge'} className={styles.b_link}>
+                  <button type={'button'} className={styles.edit}>
+                    {' 더보기'}
+                  </button>
                 </Link>
               </div>
 
               <div className={styles.badgegrid}>
                 {myBadge && myBadge.data && myBadge.data.length === 0 ? (
-                  <p>아직 획득한 뱃지가 없습니다.</p>
+                  <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                 ) : (
-                  <>
+                  <div>
                     {myBadge &&
                       myBadge.data &&
                       myBadge.data
@@ -183,18 +166,13 @@ function MyPage({ loggedIn, setLoggedIn }) {
                             className={styles.badgeImage}
                           />
                         ))}
-                  </>
+                  </div>
                 )}
               </div>
 
               <div className={styles.paginationWrapper}>
                 {myBadge.data && myBadge.data.length > perPage && (
-                  <Paging
-                    total={myBadge.data.length}
-                    perPage={perPage}
-                    activePage={page}
-                    onChange={handlePageChange}
-                  />
+                  <Paging total={myBadge.data.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
                 )}
               </div>
             </div>
@@ -203,29 +181,26 @@ function MyPage({ loggedIn, setLoggedIn }) {
           <div className={styles.rightcontent}>
             <div className={`${styles.cb}`}>
               <p className={styles.title2}>
-                기여 목록{" "}
-                <span style={{ color: "#9F132E" }}>
-                  ({myWiki && myWiki.data ? myWiki.data.length : 0})
+                {'기여 목록 '}
+                <span style={{ color: '#9F132E' }}>
+                  {'('}
+                  {myWiki && myWiki.data ? myWiki.data.length : 0}
+                  {')'}
                 </span>
               </p>
               <div className={styles.graph}>
-                {myContribute &&
-                myContribute.message &&
-                myContribute.message.docs.length === 0 ? (
-                  <p></p>
+                {myContribute && myContribute.message && myContribute.message.docs.length === 0 ? (
+                  <p />
                 ) : (
                   myContribute &&
                   myContribute.message &&
                   myContribute.message.docs && (
-                    <Graph
-                      total_point={myContribute.message.point}
-                      docs={myContribute.message.docs}
-                    />
+                    <Graph total_point={myContribute.message.point} docs={myContribute.message.docs} />
                   )
                 )}
               </div>
               {myWiki && myWiki.message && myWiki.data.length === 0 ? (
-                <p>아직 기여한 내역이 없습니다.</p>
+                <p>{'아직 기여한 내역이 없습니다.'}</p>
               ) : (
                 myWiki &&
                 myWiki.message &&
@@ -254,21 +229,21 @@ function MyPage({ loggedIn, setLoggedIn }) {
             <div className={`${styles.ask}`}>
               <div className={styles.askheader}>
                 <p className={styles.title}>
-                  내가 쓴 질문{" "}
-                  <span style={{ color: "#9F132E" }}>
-                    (
+                  {'내가 쓴 질문'}{' '}
+                  <span style={{ color: '#9F132E' }}>
+                    {'('}
                     {myQuestion && myQuestion.data ? myQuestion.data.length : 0}
-                    )
+                    {')\r'}
                   </span>
                 </p>
-                <Link to="/mypage/myquestion" className={styles.q_link}>
-                  <button className={styles.edit}>더보기</button>
+                <Link to={'/mypage/myquestion'} className={styles.q_link}>
+                  <button type={'button'} className={styles.edit}>
+                    {'더보기'}
+                  </button>
                 </Link>
               </div>
-              {myQuestion &&
-              myQuestion.message &&
-              myQuestion.data.length === 0 ? (
-                <p>아직 작성한 질문이 없습니다.</p>
+              {myQuestion && myQuestion.message && myQuestion.data.length === 0 ? (
+                <p>{'아직 작성한 질문이 없습니다.'}</p>
               ) : (
                 myQuestion &&
                 myQuestion.message &&
@@ -296,19 +271,21 @@ function MyPage({ loggedIn, setLoggedIn }) {
             <div className={styles.comment}>
               <div className={styles.commentheader}>
                 <p className={styles.title}>
-                  내가 쓴 토론{" "}
-                  <span style={{ color: "#9F132E" }}>
-                    (
+                  {'내가 쓴 토론'}{' '}
+                  <span style={{ color: '#9F132E' }}>
+                    {'('}
                     {myDebate && myDebate.message ? myDebate.message.length : 0}
-                    )
+                    {')\r'}
                   </span>
                 </p>
-                <Link to="/mypage/mycomment" className={styles.c_link}>
-                  <button className={styles.edit}>더보기</button>
+                <Link to={'/mypage/mycomment'} className={styles.c_link}>
+                  <button type={'button'} className={styles.edit}>
+                    {'더보기'}
+                  </button>
                 </Link>
               </div>
               {myDebate && myDebate.message && myDebate.message.length === 0 ? (
-                <p>아직 작성한 토론이 없습니다.</p>
+                <p>{'아직 작성한 토론이 없습니다.'}</p>
               ) : (
                 myDebate &&
                 myDebate.message &&
@@ -333,7 +310,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
         <Footer />
       </div>
     </div>
-  );
+  )
 }
 
-export default MyPage;
+export default MyPage

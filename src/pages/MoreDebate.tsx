@@ -1,45 +1,40 @@
-import React from "react";
-import styles from "./MoreDebate.module.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
-import DebateList from "../components/Debate/DebateList";
-import DebateSearch from "../components/Debate/DebateSearch";
-import DebateAdd from "../components/Debate/DebateAdd";
-import DebateRecent from "../components/Debate/DebateRecent";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { track } from "@amplitude/analytics-browser";
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import axios from 'axios'
+import { track } from '@amplitude/analytics-browser'
+import styles from './MoreDebate.module.css'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import DebateList from '../components/Debate/DebateList'
+import DebateSearch from '../components/Debate/DebateSearch'
+import DebateAdd from '../components/Debate/DebateAdd'
+import DebateRecent from '../components/Debate/DebateRecent'
 
 function MoreDebate() {
-  const { title } = useParams();
-  const [debateListData, setDebateListData] = useState([]);
+  const { title } = useParams()
+  const [debateListData, setDebateListData] = useState([])
 
   useEffect(() => {
     const takeDebateList = async () => {
       try {
-        const res = await axios.get(
-          process.env.REACT_APP_HOST +
-            `/debate/list/${encodeURIComponent(title)}`,
-          { withCredentials: true }
-        );
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/debate/list/${encodeURIComponent(title)}`, {
+          withCredentials: true,
+        })
         if (res.status === 200) {
-          setDebateListData(res.data);
+          setDebateListData(res.data)
         } else {
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
+    }
 
-    takeDebateList();
-  }, [title]); //토론방 목록 가져오기
+    takeDebateList()
+  }, [title]) // 토론방 목록 가져오기
 
   useEffect(() => {
-    track("view_wiki_debate_list");
-  }, []);
+    track('view_wiki_debate_list')
+  }, [])
   return (
     <div className={styles.container}>
       <div>
@@ -47,22 +42,24 @@ function MoreDebate() {
       </div>
 
       <div className={styles.header}>
-        <p className={styles.debate}>토론 ({title})</p>
+        <p className={styles.debate}>
+          {'토론 ('}
+          {title}
+          {')'}
+        </p>
       </div>
 
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <div className={styles.maincontent_box}>
-            <p className={styles.title}>이 문서의 토론 목록</p>
+            <p className={styles.title}>{'이 문서의 토론 목록'}</p>
             <div className={styles.menu}>
-              <span className={styles.menu1}>항목</span>
-              <span className={styles.menu2}>수정 시간</span>
+              <span className={styles.menu1}>{'항목'}</span>
+              <span className={styles.menu2}>{'수정 시간'}</span>
             </div>
 
-            {debateListData &&
-            debateListData.data &&
-            debateListData.data.length === 0 ? (
-              <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
+            {debateListData && debateListData.data && debateListData.data.length === 0 ? (
+              <p className={styles.none}>{'아직 생성된 토론방이 없습니다.'}</p>
             ) : (
               debateListData &&
               debateListData.data &&
@@ -101,7 +98,7 @@ function MoreDebate() {
         <Footer />
       </div>
     </div>
-  );
+  )
 }
 
-export default MoreDebate;
+export default MoreDebate

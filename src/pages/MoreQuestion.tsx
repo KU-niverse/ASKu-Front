@@ -1,127 +1,117 @@
-import React from "react";
-import styles from "./MoreQuestion.module.css";
-import Header from "../components/Header";
-import Question from "../components/Question";
-import Footer from "../components/Footer";
-import Switch from "../components/Switch";
-import QuestionInput from "../components/QuestionInput";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import SpinnerMypage from "../components/SpinnerMypage";
-import { track } from "@amplitude/analytics-browser";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { track } from '@amplitude/analytics-browser'
+import styles from './MoreQuestion.module.css'
+import Header from '../components/Header'
+import Question from '../components/Question'
+import Footer from '../components/Footer'
+import Switch from '../components/Switch'
+import QuestionInput from '../components/QuestionInput'
+
+import SpinnerMypage from '../components/SpinnerMypage'
 
 const MoreQuestion = () => {
-  const { title } = useParams();
-  const [currentUserId, setCurrentUserId] = useState([]);
-  const [data, setData] = useState(null);
-  const [questionData, setQuestionData] = useState([]);
-  const [isToggled, setIsToggled] = useState(false); //import하려는 페이지에 구현
-  const [section, setSection] = useState("");
-  const location = useLocation();
-  const defaultOpt = location.state;
-  const [titles, setTitles] = useState([]); // 문서 목록 상태 추가
-  const [loading, setLoading] = useState(true);
+  const { title } = useParams()
+  const [currentUserId, setCurrentUserId] = useState([])
+  const [data, setData] = useState(null)
+  const [questionData, setQuestionData] = useState([])
+  const [isToggled, setIsToggled] = useState(false) // import하려는 페이지에 구현
+  const [section, setSection] = useState('')
+  const location = useLocation()
+  const defaultOpt = location.state
+  const [titles, setTitles] = useState([]) // 문서 목록 상태 추가
+  const [loading, setLoading] = useState(true)
 
   const getUserInfo = async () => {
     try {
-      const res = await axios.get(
-        process.env.REACT_APP_HOST + "/user/mypage/info",
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+        withCredentials: true,
+      })
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
-        setCurrentUserId(res.data);
+        setCurrentUserId(res.data)
       } else {
-        setCurrentUserId(null);
+        setCurrentUserId(null)
       }
     } catch (error) {
-      console.error(error);
-      setCurrentUserId(null);
+      console.error(error)
+      setCurrentUserId(null)
     }
-  };
+  }
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    getUserInfo()
+  }, [])
 
   useEffect(() => {
-    track("click_more_quesiton_in_wiki", {
-      title: title,
-    });
-  }, [title]);
+    track('click_more_quesiton_in_wiki', {
+      title,
+    })
+  }, [title])
 
-  //접속한 사용자 id 가져오기
+  // 접속한 사용자 id 가져오기
 
   useEffect(() => {
     const fetchTitles = async () => {
       try {
-        const res = await axios.get(
-          process.env.REACT_APP_HOST + "/wiki/titles"
-        );
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
         if (res.data.success) {
-          setTitles(res.data.titles);
+          setTitles(res.data.titles)
         }
-        setLoading(false);
+        setLoading(false)
       } catch (error) {
-        console.error(error);
-        setLoading(false);
+        console.error(error)
+        setLoading(false)
       }
-    };
+    }
 
     const takeQuestion = async () => {
       try {
-        const flag = isToggled ? 1 : 0;
+        const flag = isToggled ? 1 : 0
         const res = await axios.get(
-          process.env.REACT_APP_HOST +
-            `/question/view/${flag}/${encodeURIComponent(title)}`,
-          { withCredentials: true }
-        );
+          `${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`,
+          { withCredentials: true },
+        )
         if (res.status === 200) {
-          setQuestionData(res.data);
+          setQuestionData(res.data)
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
-
-    fetchTitles();
-    if (title) {
-      takeQuestion();
     }
-  }, [title, isToggled]);
+
+    fetchTitles()
+    if (title) {
+      takeQuestion()
+    }
+  }, [title, isToggled])
 
   const handleQuestionSubmit = async (submitData) => {
     try {
       const res = await axios.post(
-        process.env.REACT_APP_HOST +
-          `/question/new/${encodeURIComponent(title)}`,
+        `${process.env.REACT_APP_HOST}/question/new/${encodeURIComponent(title)}`,
         submitData,
-        { withCredentials: true }
-      );
+        { withCredentials: true },
+      )
       if (res.status === 200) {
-        setData(res.data);
-        alert(res.data.message);
+        setData(res.data)
+        alert(res.data.message)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       if (error.status === 500) {
-        //console.log(error.data.message);
-        alert(error.data.message);
+        // console.log(error.data.message);
+        alert(error.data.message)
       }
     }
-  }; //질문 생성하기
+  } // 질문 생성하기
 
   if (loading) {
     return (
       <div>
         <SpinnerMypage />
       </div>
-    );
+    )
   }
 
   return (
@@ -136,38 +126,25 @@ const MoreQuestion = () => {
             <div className={styles.header}>
               <div className={styles.frontheader}>
                 <p className={styles.q_pagename}>{title}</p>
-                <p className={styles.q_headline}>문서의 질문</p>
+                <p className={styles.q_headline}>{'문서의 질문'}</p>
               </div>
               <div className={styles.switch}>
-                <Switch
-                  isToggled={isToggled}
-                  onToggle={() => setIsToggled(!isToggled)}
-                />
+                <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
               </div>
             </div>
             <div>
-              <QuestionInput
-                onQuestionSubmit={handleQuestionSubmit}
-                title={title}
-                defaultOpt={defaultOpt}
-              />
+              <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt} />
             </div>
             <div>
-              {questionData &&
-              questionData.data &&
-              questionData.data.length === 0 ? (
-                <p>아직 작성한 질문이 없습니다.</p>
+              {questionData && questionData.data && questionData.data.length === 0 ? (
+                <p>{'아직 작성한 질문이 없습니다.'}</p>
               ) : (
                 questionData &&
                 questionData.data &&
                 questionData.data.map((data, index) => (
                   <Question
                     current_user_id={
-                      currentUserId &&
-                      currentUserId.data &&
-                      currentUserId.data[0]
-                        ? currentUserId.data[0].id
-                        : null
+                      currentUserId && currentUserId.data && currentUserId.data[0] ? currentUserId.data[0].id : null
                     }
                     key={data.id}
                     index={index}
@@ -190,14 +167,14 @@ const MoreQuestion = () => {
             </div>
           </div>
         ) : (
-          <p>존재하지 않는 문서입니다.</p>
+          <p>{'존재하지 않는 문서입니다.'}</p>
         )}
       </div>
       <div>
         <Footer />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MoreQuestion;
+export default MoreQuestion

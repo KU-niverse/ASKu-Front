@@ -1,55 +1,51 @@
-import React from "react";
-import styles from "./Debate.module.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
-import DebateTitle from "../components/Debate/DebateTitle";
-import DebateContent from "../components/Debate/DebateContent";
-import DebateInput from "../components/Debate/DebateInput";
-import DebateSearch from "../components/Debate/DebateSearch";
-import DebateAdd from "../components/Debate/DebateAdd";
-import DebateRecent from "../components/Debate/DebateRecent";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { track } from "@amplitude/analytics-browser";
+import React, { useEffect, useState } from 'react'
+import { Link, useParams, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import { track } from '@amplitude/analytics-browser'
+import styles from './Debate.module.css'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import DebateTitle from '../components/Debate/DebateTitle'
+import DebateContent from '../components/Debate/DebateContent'
+import DebateInput from '../components/Debate/DebateInput'
+import DebateSearch from '../components/Debate/DebateSearch'
+import DebateAdd from '../components/Debate/DebateAdd'
+import DebateRecent from '../components/Debate/DebateRecent'
 
 function Debate() {
-  const [data, setData] = useState(null);
-  const [debateContentData, setDebateContentData] = useState([]);
-  const location = useLocation();
-  const stateData = location.state;
-  const debateId = stateData.id;
-  const title = stateData.title;
-  const subject = stateData.subject;
+  const [data, setData] = useState(null)
+  const [debateContentData, setDebateContentData] = useState([])
+  const location = useLocation()
+  const stateData = location.state
+  const debateId = stateData.id
+  const { title } = stateData
+  const { subject } = stateData
 
   useEffect(() => {
     const takeDebateContent = async () => {
       try {
         const res = await axios.get(
-          process.env.REACT_APP_HOST +
-            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
-          { withCredentials: true }
-        );
+          `${process.env.REACT_APP_HOST}/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          { withCredentials: true },
+        )
         if (res.status === 200) {
-          setDebateContentData(res.data);
+          setDebateContentData(res.data)
         } else {
+          /* empty */
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
-    takeDebateContent();
-  }, [title, debateId]); //토론방 메시지 가져오기
+    }
+    takeDebateContent()
+  }, [title, debateId]) // 토론방 메시지 가져오기
 
   // Amplitude
   useEffect(() => {
-    track("view_debate_detail", {
+    track('view_debate_detail', {
       type: title,
-    });
-  }, []);
+    })
+  }, [])
 
   // const handleDebateSubmit = async (submitData) => {
   //   try {
@@ -73,40 +69,38 @@ function Debate() {
   const handleDebateSubmit = async (submitData) => {
     try {
       const postResponse = await axios.post(
-        process.env.REACT_APP_HOST +
-          `/debate/${encodeURIComponent(title)}/new/${debateId}`,
+        `${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`,
         submitData,
-        { withCredentials: true }
-      );
+        { withCredentials: true },
+      )
 
       if (postResponse.status === 200) {
         // POST 요청이 성공한 후 전체 메시지 목록을 다시 가져옵니다.
         const getResponse = await axios.get(
-          process.env.REACT_APP_HOST +
-            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
-          { withCredentials: true }
-        );
+          `${process.env.REACT_APP_HOST}/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          { withCredentials: true },
+        )
 
         if (getResponse.status === 200) {
           // 전체 메시지 목록으로 상태를 업데이트합니다.
-          setDebateContentData(getResponse.data);
+          setDebateContentData(getResponse.data)
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       if (error.response && error.response.status === 500) {
-        //console.log(error.response.data.message);
-        alert(error.response.data.message);
+        // console.log(error.response.data.message);
+        alert(error.response.data.message)
       }
     }
-  };
+  }
 
   // Amplitude
   useEffect(() => {
-    track("debate_wiki", {
+    track('debate_wiki', {
       type: title,
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -115,17 +109,19 @@ function Debate() {
       </div>
 
       <div className={styles.header}>
-        <p className={styles.debate}>토론 ({title})</p>
+        <p className={styles.debate}>
+          {'토론 ('}
+          {title}
+          {')'}
+        </p>
       </div>
 
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <DebateTitle title={title} subject={subject} />
 
-          {debateContentData &&
-          debateContentData.message &&
-          debateContentData.message.data === 0 ? (
-            <p>아직 작성된 토론 메세지가 없습니다.</p>
+          {debateContentData && debateContentData.message && debateContentData.message.data === 0 ? (
+            <p>{'아직 작성된 토론 메세지가 없습니다.'}</p>
           ) : (
             debateContentData &&
             debateContentData.message &&
@@ -144,11 +140,7 @@ function Debate() {
             ))
           )}
           <div className={styles.input}>
-            <DebateInput
-              onDebateSubmit={handleDebateSubmit}
-              title={title}
-              debateId={debateId}
-            />
+            <DebateInput onDebateSubmit={handleDebateSubmit} title={title} debateId={debateId} />
           </div>
         </div>
         <div className={styles.sidebar}>
@@ -166,7 +158,7 @@ function Debate() {
         <Footer />
       </div>
     </div>
-  );
+  )
 }
 
-export default Debate;
+export default Debate

@@ -50,8 +50,14 @@ const HistoryDiff = () => {
 
   const { isLoading, isError, error, data: comparisonData } = useCompareHistory(title, ver)
 
-  if (isLoading) return <div>로딩 중...</div>
-  if (isError) return <div>에러: {error.message}</div>
+  if (isLoading) return <div>{'로딩 중...'}</div>
+  if (isError)
+    return (
+      <div>
+        {'에러: '}
+        {error.message}
+      </div>
+    )
 
   const oldText = comparisonData?.jsonData.oldrev_text || ''
   const newText = comparisonData?.jsonData.rev_text || ''

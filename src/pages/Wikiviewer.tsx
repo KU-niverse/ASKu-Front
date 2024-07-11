@@ -1,115 +1,110 @@
-import Header from "../components/Header";
-import { Link } from "react-router-dom/dist";
-import React, { useRef, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom/dist";
-import axios from "axios";
-import styles from "./Wikiviewer.module.css";
-import falseBk from "../img/bookmarkfalse.svg";
-import trueBk from "../img/bookmarkFill.svg";
-import debate from "../img/debate.svg";
-import his from "../img/his.svg";
-import VectorRight from "../img/VectorRight.svg";
-import minilike from "../img/minilike.svg";
-import WikiBox from "../components/WikiBox";
-import Switch from "../components/Switch";
-import { useParams } from "react-router-dom/dist";
-import WikiGraph from "../components/Wiki/WikiGraph";
-import SpinnerMypage from "../components/SpinnerMypage";
-import Footer from "../components/Footer";
-import { track } from "@amplitude/analytics-browser";
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom/dist'
+import React, { useRef, useEffect, useState } from 'react'
+import axios from 'axios'
+import { track } from '@amplitude/analytics-browser'
+import Header from '../components/Header'
+import styles from './Wikiviewer.module.css'
+import falseBk from '../img/bookmarkfalse.svg'
+import trueBk from '../img/bookmarkFill.svg'
+import debate from '../img/debate.svg'
+import his from '../img/his.svg'
+import VectorRight from '../img/VectorRight.svg'
+import minilike from '../img/minilike.svg'
+import WikiBox from '../components/WikiBox'
+import Switch from '../components/Switch'
+import WikiGraph from '../components/Wiki/WikiGraph'
+import SpinnerMypage from '../components/SpinnerMypage'
+import Footer from '../components/Footer'
 
 function WikiViewer({ loggedIn, setLoggedIn }) {
-  const myDivRef = useRef([]);
-  const nav = useNavigate();
-  const location = useLocation();
-  const [isToggled, setIsToggled] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [isBookmark, setIsBookmark] = useState(false);
-  const { title } = useParams();
-  const [allText, setAllText] = useState("");
-  const [allContent, setAllContent] = useState([]);
-  const [ques, setQues] = useState([]);
-  const [titles, settitles] = useState([]);
-  const [contribute, setContribute] = useState([]);
-  const [totalPoint, setTotalPoint] = useState(null);
-  const [flag, setFlag] = useState(0);
-  const [blank, setBlank] = useState(false);
-  //문서: 아직 내용이 없습니다. 전체 편집에서 작성해보세요!
-  //기여도: 문서를 편집한 회원이 없습니다. 전체 편집으로 기여해보세요!
+  const myDivRef = useRef([])
+  const nav = useNavigate()
+  const location = useLocation()
+  const [isToggled, setIsToggled] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [isBookmark, setIsBookmark] = useState(false)
+  const { title } = useParams()
+  const [allText, setAllText] = useState('')
+  const [allContent, setAllContent] = useState([])
+  const [ques, setQues] = useState([])
+  const [titles, settitles] = useState([])
+  const [contribute, setContribute] = useState([])
+  const [totalPoint, setTotalPoint] = useState(null)
+  const [flag, setFlag] = useState(0)
+  const [blank, setBlank] = useState(false)
+  // 문서: 아직 내용이 없습니다. 전체 편집에서 작성해보세요!
+  // 기여도: 문서를 편집한 회원이 없습니다. 전체 편집으로 기여해보세요!
   // 질문: 해당 문서에 대한 질문이 없습니다.
-  const [favorite, setFavorite] = useState(false);
-  const [imageSource, setImageSource] = useState(falseBk);
+  const [favorite, setFavorite] = useState(false)
+  const [imageSource, setImageSource] = useState(falseBk)
   // const [isZero, setIsZero] = useState(false);
 
   const flagToggle = () => {
     if (isToggled === false) {
-      setFlag(0);
+      setFlag(0)
     } else {
-      setFlag(1);
+      setFlag(1)
     }
-  };
+  }
 
   useEffect(() => {
-    flagToggle();
-  }, [isToggled]);
+    flagToggle()
+  }, [isToggled])
 
   useEffect(() => {
-    getQues();
-  }, [flag]);
+    getQues()
+  }, [flag])
 
   function handleClick(index) {
-    myDivRef.current[index].scrollIntoView({ behavior: "smooth" });
+    myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
   }
 
   //
 
-  //북마크 추가
+  // 북마크 추가
   const addBookmark = async () => {
     try {
       const result = await axios.post(
-        process.env.REACT_APP_HOST + `/wiki/favorite/${title}`,
+        `${process.env.REACT_APP_HOST}/wiki/favorite/${title}`,
         {},
         {
           withCredentials: true,
-        }
-      );
+        },
+      )
       if (result.data.success === true) {
-        setFavorite(true);
-        alert("즐겨찾기에 추가되었습니다");
+        setFavorite(true)
+        alert('즐겨찾기에 추가되었습니다')
       } else {
-        alert("문제가 발생하였습니다");
+        alert('문제가 발생하였습니다')
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       if (error.response.status === 401) {
-        alert(error.response.data.message);
-        nav("/signin");
+        alert(error.response.data.message)
+        nav('/signin')
       } else {
-        alert(error.response.data.message);
+        alert(error.response.data.message)
       }
     }
-  };
+  }
 
-  //북마크 해제
+  // 북마크 해제
   const deleteBookmark = async () => {
     try {
-      const result = await axios.delete(
-        process.env.REACT_APP_HOST + `/wiki/favorite/${title}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+        withCredentials: true,
+      })
       if (result.data.success === true) {
-        setFavorite(false);
-        alert("즐겨찾기에서 삭제되었습니다");
+        setFavorite(false)
+        alert('즐겨찾기에서 삭제되었습니다')
       } else {
-        alert("문제가 발생하였습니다");
+        alert('문제가 발생하였습니다')
       }
     } catch (error) {
-      console.error(error);
-      return alert(error.response.data.message);
+      console.error(error)
+      return alert(error.response.data.message)
     }
-  };
+  }
 
   // 북마크 이미지 변경
   // 북마크 이미지 변경
@@ -129,240 +124,222 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
   async function handleClickBookmark() {
     try {
       if (favorite === true) {
-        await deleteBookmark();
-        setFavorite(false); // Update the state first
-        setImageSource(falseBk);
+        await deleteBookmark()
+        setFavorite(false) // Update the state first
+        setImageSource(falseBk)
       } else if (favorite === false) {
-        await addBookmark();
-        setFavorite(true); // Update the state first
-        setImageSource(trueBk);
+        await addBookmark()
+        setFavorite(true) // Update the state first
+        setImageSource(trueBk)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       // Handle error appropriately
     }
   }
   // 로그인중인지 체크
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(
-        process.env.REACT_APP_HOST + "/user/auth/issignedin",
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
-        setLoggedIn(true);
+        setLoggedIn(true)
       } else if (res.status === 401) {
-        setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return nav("/signin");
+        setLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        nav('/signin')
       }
     } catch (error) {
-      console.error(error);
-      setLoggedIn(false);
+      console.error(error)
+      setLoggedIn(false)
       if (error.response.status === 401) {
-        setLoggedIn(false);
-        alert("로그인이 필요한 서비스 입니다.");
-        return nav("/signin");
-      } else {
-        alert("에러가 발생하였습니다");
-        return nav("/");
+        setLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        nav('/signin')
       }
+      alert('에러가 발생하였습니다')
+      nav('/')
     }
-  };
+  }
   useEffect(() => {
-    checkLoginStatus();
-  }, []);
+    checkLoginStatus()
+  }, [])
 
   useEffect(() => {
     if (favorite === true) {
-      setImageSource(trueBk);
+      setImageSource(trueBk)
     } else if (favorite === false) {
-      setImageSource(falseBk);
+      setImageSource(falseBk)
     }
-  }, [favorite]);
+  }, [favorite])
 
-  //버튼 링크 연결 함수들
+  // 버튼 링크 연결 함수들
   const linkToHistory = () => {
-    const encodedTitle = encodeURIComponent(title);
-    nav(`/history/${encodedTitle}`);
-  };
+    const encodedTitle = encodeURIComponent(title)
+    nav(`/history/${encodedTitle}`)
+  }
 
   const linkToAllEdit = () => {
-    const encodedTitle = encodeURIComponent(title);
-    track("click_edit_all_in_wiki", {
-      title: title,
-      type: "all",
-    });
+    const encodedTitle = encodeURIComponent(title)
+    track('click_edit_all_in_wiki', {
+      title,
+      type: 'all',
+    })
     nav(`/wikiedit/${encodedTitle}/all`, {
       state: { from: location.pathname },
-    });
-  };
+    })
+  }
 
   const linkToDebate = () => {
-    track("click_debate_in_wiki", {
-      title: title,
-    });
-    const encodedTitle = encodeURIComponent(title);
-    nav(`/debate/${encodedTitle}`);
-  };
+    track('click_debate_in_wiki', {
+      title,
+    })
+    const encodedTitle = encodeURIComponent(title)
+    nav(`/debate/${encodedTitle}`)
+  }
 
   const linkToNextWiki = () => {
-    const currentIndex = titles.indexOf(title);
+    const currentIndex = titles.indexOf(title)
     if (currentIndex !== -1) {
-      let nextTitle;
+      let nextTitle
       if (currentIndex < titles.length - 1) {
-        nextTitle = titles[currentIndex + 1];
+        nextTitle = titles[currentIndex + 1]
       } else {
-        nextTitle = titles[0];
+        nextTitle = titles[0]
       }
-      nav(`/wiki/${encodeURIComponent(nextTitle)}`);
-      window.location.reload();
+      nav(`/wiki/${encodeURIComponent(nextTitle)}`)
+      window.location.reload()
     } else {
-      console.error("현재 title을 찾을 수 없습니다.");
-    }
-  };
-  //contents가 비었으면 글이라도 띄우도록.
-  //위키 데이터 가져오기
-  const getWiki = async () => {
-    try {
-      const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/contents/${title}`
-      );
-      setAllContent(result.data.contents);
-
-      setFavorite(result.data.is_favorite);
-      //console.log(favorite);
-
-      if (result.data.is_favorite === true) {
-        setImageSource(trueBk);
-      } else if (result.data.is_favorite === false) {
-        setImageSource(falseBk);
-      }
-    } catch (error) {
-      console.error(error);
-      //alert(result.data.message);
-    }
-  };
-  const getTitles = async () => {
-    try {
-      const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/titles`
-      );
-      settitles(result.data.titles);
-      console.log(result.data.titles)    
-    } catch (error) {
-      console.error(error);
+      console.error('현재 title을 찾을 수 없습니다.')
     }
   }
-  //질문 데이터 가져오기
-  const getQues = async () => {
+  // contents가 비었으면 글이라도 띄우도록.
+  // 위키 데이터 가져오기
+  const getWiki = async () => {
     try {
-      const result = await axios.get(
-        process.env.REACT_APP_HOST +
-          `/question/view/${flag}/${encodeURIComponent(title)}`
-      );
-      setQues(result.data.data);
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`)
+      setAllContent(result.data.contents)
 
-      if (result.data.data.length === 0) {
-        setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자.
-      } else {
-        setBlank(false);
+      setFavorite(result.data.is_favorite)
+      // console.log(favorite);
+
+      if (result.data.is_favorite === true) {
+        setImageSource(trueBk)
+      } else if (result.data.is_favorite === false) {
+        setImageSource(falseBk)
       }
     } catch (error) {
-      console.error(error);
-      //alert(result.data.message);
+      console.error(error)
+      // alert(result.data.message);
     }
-  };
-  //질문 데이터 가져오기
+  }
+  const getTitles = async () => {
+    try {
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
+      settitles(result.data.titles)
+      console.log(result.data.titles)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  // 질문 데이터 가져오기
+  const getQues = async () => {
+    try {
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`)
+      setQues(result.data.data)
+
+      if (result.data.data.length === 0) {
+        setBlank(true) // 어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자.
+      } else {
+        setBlank(false)
+      }
+    } catch (error) {
+      console.error(error)
+      // alert(result.data.message);
+    }
+  }
+  // 질문 데이터 가져오기
   const getContribute = async () => {
     try {
-      const result = await axios.get(
-        process.env.REACT_APP_HOST + `/wiki/contributions/${title}`
-      );
-      //console.log('기여도');
-      setContribute(result.data.message);
-      //console.log(contribute);
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`)
+      // console.log('기여도');
+      setContribute(result.data.message)
+      // console.log(contribute);
 
       if (contribute.length !== 0) {
-        //console.log(contribute);
-        const total = contribute.reduce(
-          (acc, item) => acc + parseInt(item.point),
-          0
-        );
-        setTotalPoint(total);
+        // console.log(contribute);
+        const total = contribute.reduce((acc, item) => acc + parseInt(item.point, 10), 0)
+        setTotalPoint(total)
       } else {
-        //console.log('기여도 없음');
+        // console.log('기여도 없음');
       }
 
       if (!contribute) {
-        setBlank(true); //어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자.
+        setBlank(true) // 어차피 문서 내용 없으나 질문 없으나 다 이거 띄워야 되니까 최적화 코드로 하자.
       } else {
-        setBlank(false);
+        setBlank(false)
       }
 
-      setLoading(false);
+      setLoading(false)
     } catch (error) {
-      console.error(error);
-      setLoading(false);
-      //alert(result.data.message);
+      console.error(error)
+      setLoading(false)
+      // alert(result.data.message);
     }
-  };
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      getWiki();
-      getQues();
-      getTitles();
-    };
-    fetchData();
+      getWiki()
+      getQues()
+      getTitles()
+    }
+    fetchData()
     // Amplitude
-    track("view_wiki", {
-      title: title,
-    });
+    track('view_wiki', {
+      title,
+    })
 
     // 스크롤 깊이 추적
-    const scrollDepths = [25, 50, 75, 100];
-    const scrollDepthsReached = {};
+    const scrollDepths = [25, 50, 75, 100]
+    const scrollDepthsReached = {}
 
-    let debounceTimer;
+    let debounceTimer
 
     const handleScroll = () => {
       if (debounceTimer) {
-        clearTimeout(debounceTimer);
+        clearTimeout(debounceTimer)
       }
 
       debounceTimer = setTimeout(() => {
-        const scrollPosition = window.scrollY;
-        const documentHeight = document.documentElement.scrollHeight;
-        const windowHeight = window.innerHeight;
-        const scrollPercentage = Math.floor(
-          (scrollPosition / (documentHeight - windowHeight)) * 100
-        );
+        const scrollPosition = window.scrollY
+        const documentHeight = document.documentElement.scrollHeight
+        const windowHeight = window.innerHeight
+        const scrollPercentage = Math.floor((scrollPosition / (documentHeight - windowHeight)) * 100)
         // Amplitude
         scrollDepths.forEach((depth) => {
           if (scrollPercentage >= depth && !scrollDepthsReached[depth]) {
-            scrollDepthsReached[depth] = true;
-            track("scroll_depth_wiki", {
+            scrollDepthsReached[depth] = true
+            track('scroll_depth_wiki', {
               scroll_depth: depth,
               page: title,
-            });
+            })
           }
-        });
-      }, 100);
-    };
+        })
+      }, 100)
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll)
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   useEffect(() => {
     if (!totalPoint) {
-      getContribute();
+      getContribute()
     }
-  }, [totalPoint, contribute]);
+  }, [totalPoint, contribute])
 
   // 로딩 중일 때 표시할 컴포넌트
   if (loading) {
@@ -370,10 +347,10 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
       <div>
         <SpinnerMypage />
       </div>
-    );
+    )
   }
 
-  //데이터 불러오기
+  // 데이터 불러오기
 
   return (
     <div className={styles.container}>
@@ -383,81 +360,80 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
           <h1>
             {title}
             <img
+              role={'presentation'}
               src={imageSource}
-              alt="Image"
+              alt={'북마크 이미지'}
               onClick={handleClickBookmark}
               className={styles.bookmarkImg}
             />
           </h1>
           <div className={styles.wikititleBtn}>
-            <button onClick={linkToDebate} className={styles.wikititleBtnOne}>
-              <img src={debate} />
-              &nbsp;토론하기
+            <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
+              <img alt={'토론하기'} src={debate} />
+              &nbsp;{'토론하기\r'}
             </button>
 
-            <button onClick={linkToHistory} className={styles.wikititleBtnTwo}>
-              <img src={his} />
-              &nbsp;히스토리
+            <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
+              <img alt={'히스토리'} src={his} />
+              &nbsp;{'히스토리\r'}
             </button>
 
-            <button onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
-              &nbsp;다음 문서
-              <img src={VectorRight} alt="다음 문서 아이콘" />
+            <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+              &nbsp;{'다음 문서\r'}
+              <img src={VectorRight} alt={'다음 문서 아이콘'} />
             </button>
           </div>
         </div>
         <div className={styles.wikiBoxLists}>
           <div className={styles.wikilist}>
             <div className={styles.wikilistTitle}>
-              <h2>목차</h2>
-              <button onClick={linkToAllEdit}>전체 편집</button>
+              <h2>{'목차'}</h2>
+              <button type={'button'} onClick={linkToAllEdit}>
+                {'전체 편집'}
+              </button>
             </div>
             <div>
               {allContent.map((item) => {
-                const tabCount = item.index.split(".").length - 1;
-                const tabs = "\u00a0\u00a0\u00a0".repeat(tabCount); // 탭은 유니코드 공백 문자 사용
+                const tabCount = item.index.split('.').length - 1
+                const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount) // 탭은 유니코드 공백 문자 사용
 
                 return (
-                  <li
-                    onClick={() => handleClick(item.section)}
-                    key={item.section}
-                  >
+                  <li role={'presentation'} onClick={() => handleClick(item.section)} key={item.section}>
                     <span className={styles.wikiIndex}>
                       {tabs}
-                      {item.index}.
-                    </span>{" "}
+                      {item.index}
+                      {'.\r'}
+                    </span>{' '}
                     {item.title}
                   </li>
-                );
+                )
               })}
             </div>
           </div>
           <div className={styles.wikiask}>
             <div className={styles.wikiaskTitle}>
-              <h2>질문</h2>
-              <Switch
-                isToggled={isToggled}
-                onToggle={() => setIsToggled(!isToggled)}
-              />
+              <h2>{'질문'}</h2>
+              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
             <div className={blank === false ? styles.quesWrap : styles.hidden}>
               {ques.length === 0 ? (
-                <p className={styles.noneComment}>"질문이 존재하지 않습니다"</p>
+                <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
               ) : (
                 ques.map((item, index) => {
                   if (index >= 5) {
-                    return null; // 패스 (무시)
+                    return null // 패스 (무시)
                   }
                   return (
                     <div className={styles.queslist}>
-                      <hr className={styles.customHr}></hr>
+                      <hr className={styles.customHr} />
                       <ul
+                        role={'presentation'}
                         key={item.id}
                         onClick={() => {
-                          const encodedTitle = encodeURIComponent(title);
-                          track("click_question_in_wiki", {
-                            index: index,
-                          });
+                          const encodedTitle = encodeURIComponent(title)
+                          track('click_question_in_wiki', {
+                            index,
+                          })
                           nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
                             state: {
                               question_id: item.id,
@@ -468,38 +444,43 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                               nick: item.nickname,
                               index_title: item.index_title,
                               answer_count: item.answer_count,
-                              title: title,
+                              title,
                             },
-                          });
+                          })
                         }}
                         className={styles.quesul}
                       >
                         <span className={styles.quesTitle}>
-                          Q.&nbsp;{item.content}
+                          {'Q.&nbsp;'}
+                          {item.content}
                         </span>
                         <span className={styles.quesNum}>
                           <span>{item.like_count}</span>
-                          <img src={minilike} />
+                          <img alt={'좋아요'} src={minilike} />
                         </span>
                       </ul>
                     </div>
-                  );
+                  )
                 })
               )}
             </div>
             <div className={styles.wikiaskFoot}>
               <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
-                <button className={styles.addQues}>나도 질문하기</button>
+                <button type={'button'} className={styles.addQues}>
+                  {'나도 질문하기'}
+                </button>
               </Link>
               <Link
                 to={`/wiki/morequestion/${encodeURIComponent(title)}`}
                 onClick={() => {
-                  track("view_question_list", {
-                    title: title,
-                  });
+                  track('view_question_list', {
+                    title,
+                  })
                 }}
               >
-                <button className={styles.moreQues}>더보기</button>
+                <button type={'button'} className={styles.moreQues}>
+                  {'더보기'}
+                </button>
               </Link>
             </div>
           </div>
@@ -507,39 +488,31 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
             {contribute && totalPoint ? (
               <WikiGraph total_point={totalPoint} users={contribute} />
             ) : (
-              <p className={styles.noneComment}>"기여도가 존재하지 않습니다"</p>
+              <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
             )}
           </div>
         </div>
         <div className={styles.wikicontent}>
           {allContent.length === 0 ? (
             <p>
-              <span className={styles.noneComment}>
-                "위키 문서가 없습니다.{" "}
-              </span>
-              <span
-                className={styles.newComment}
-                onClick={() => nav("/newwiki")}
-              >
-                새 문서를 생성해주세요"
+              <span className={styles.noneComment}>{'"위키 문서가 없습니다. '}</span>
+              <span role={'presentation'} className={styles.newComment} onClick={() => nav('/newwiki')}>
+                {'새 문서를 생성해주세요"\r'}
               </span>
             </p>
           ) : (
             allContent.map((item) => {
-              //0. 들어가며 일시 질문 및 편집 막기 위해 판단
-              let isZero;
+              // 0. 들어가며 일시 질문 및 편집 막기 위해 판단
+              let isZero
 
-              if (item.index === "0") {
-                isZero = true;
+              if (item.index === '0') {
+                isZero = true
               } else {
-                isZero = false;
+                isZero = false
               }
 
               return (
-                <div
-                  ref={(el) => (myDivRef.current[item.section] = el)}
-                  key={item.section}
-                >
+                <div ref={(el) => (myDivRef.current[item.section] = el)} key={item.section}>
                   <WikiBox
                     title={item.title}
                     content={item.content}
@@ -549,14 +522,14 @@ function WikiViewer({ loggedIn, setLoggedIn }) {
                     isZero={isZero}
                   />
                 </div>
-              );
+              )
             })
           )}
         </div>
       </div>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default WikiViewer;
+export default WikiViewer

@@ -52,7 +52,11 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
     return res.data
   }
 
-  const { data: myBadge, isLoading, isError } = useQuery('myBadge', fetchBadges, {
+  const {
+    data: myBadge,
+    isLoading,
+    isError,
+  } = useQuery('myBadge', fetchBadges, {
     enabled: isOpen,
   })
 
@@ -86,11 +90,11 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>{'Loading...'}</div>
   }
 
   if (isError) {
-    return <div>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</div>
+    return <div>{'오류가 발생했습니다. 잠시 후 다시 시도해주세요.'}</div>
   }
 
   return (
@@ -114,15 +118,18 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
                   {myBadge && myBadge.data && myBadge.data.length === 0 ? (
                     <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                   ) : (
-                    myBadge.data.slice(0, 12).map((badge) => (
-                      <img
-                        key={badge.id}
-                        src={badge.image}
-                        alt={badge.name}
-                        onClick={() => handleRepBadge(badge.badge_id)}
-                        className={styles.badge}
-                      />
-                    ))
+                    myBadge.data
+                      .slice(0, 12)
+                      .map((badge) => (
+                        <img
+                          role={'presentation'}
+                          key={badge.id}
+                          src={badge.image}
+                          alt={badge.name}
+                          onClick={() => handleRepBadge(badge.badge_id)}
+                          className={styles.badge}
+                        />
+                      ))
                   )}
                 </div>
               </div>

@@ -1,40 +1,40 @@
-import styles from "./LikeModal.module.css";
-import closeBtn from "../img/close_btn.png";
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import like from "../img/chatbot_like.svg";
+import { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
+import styles from './LikeModal.module.css'
+import closeBtn from '../img/close_btn.png'
+import like from '../img/chatbot_like.svg'
 
 function LikeModal({ isOpen, onClose, feedbackId }) {
-  const modalRef = useRef(null);
-  const [inputValue, setInputValue] = useState("");
-  const inputRef = useRef(null);
+  const modalRef = useRef(null)
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef(null)
 
   const inputChange = (e) => {
-    setInputValue(e.target.value);
-  };
+    setInputValue(e.target.value)
+  }
 
   const handleOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [isOpen]);
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [isOpen])
 
   const sendMessage = () => {
-    if (inputValue.trim() !== "") {
+    if (inputValue.trim() !== '') {
       axios
         .post(
-          process.env.REACT_APP_AI + "/chatbot/feedback/comment",
+          `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
           {
             feedback_id: feedbackId,
             content: inputValue,
@@ -42,45 +42,44 @@ function LikeModal({ isOpen, onClose, feedbackId }) {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-          }
+          },
         )
         .catch((error) => {
-          console.error(error);
-        });
+          console.error(error)
+        })
     }
-    onClose();
-  };
+    onClose()
+  }
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && event.target === inputRef.current) {
-      sendMessage();
+    if (event.key === 'Enter' && event.target === inputRef.current) {
+      sendMessage()
     }
-  };
+  }
 
   return (
-    <>
+    <div>
       {isOpen && (
         <div className={styles.modal_overlay}>
           <div ref={modalRef} className={styles.modal_wrapper}>
             <div className={styles.modal_inside}>
               <div className={styles.modal_close}>
                 <img
+                  role={'presentation'}
                   src={closeBtn}
-                  alt="close"
+                  alt={'close'}
                   className={styles.close_btn}
                   onClick={onClose}
                 />
               </div>
               <div className={styles.modal_content}>
                 <div className={styles.modal_title}>
-                  <img id={styles.feedback_icon} src={like} />
+                  <img alt={'피드백 아이콘'} id={styles.feedback_icon} src={like} />
                   <div className={styles.feedback_title}>
-                    <h1 id={styles.red_title}>이번 답변은 어떠셨나요?</h1>
-                    <p id={styles.gray_title}>
-                      피드백은 서비스 발전에 큰 도움이 됩니다.
-                    </p>
+                    <h1 id={styles.red_title}>{'이번 답변은 어떠셨나요?'}</h1>
+                    <p id={styles.gray_title}>{'피드백은 서비스 발전에 큰 도움이 됩니다.'}</p>
                   </div>
                 </div>
                 <textarea
@@ -89,16 +88,16 @@ function LikeModal({ isOpen, onClose, feedbackId }) {
                   onChange={inputChange}
                   onKeyDown={handleKeyDown}
                 />
-                <button className={styles.feedback_btn} onClick={sendMessage}>
-                  작성하기
+                <button type={'button'} className={styles.feedback_btn} onClick={sendMessage}>
+                  {'작성하기\r'}
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-    </>
-  );
+    </div>
+  )
 }
 
-export default LikeModal;
+export default LikeModal
