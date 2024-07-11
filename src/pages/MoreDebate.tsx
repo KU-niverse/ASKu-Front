@@ -1,61 +1,50 @@
-import React from 'react'
-import { useQuery } from 'react-query'
-import axios, { AxiosError } from 'axios'
-import { useParams } from 'react-router-dom'
-import styles from './MoreDebate.module.css'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import DebateList from '../components/Debate/DebateList'
-import DebateSearch from '../components/Debate/DebateSearch'
-import DebateAdd from '../components/Debate/DebateAdd'
-import DebateRecent from '../components/Debate/DebateRecent'
-
-interface Debate {
-  id: number
-  doc_id: number
-  user_id: number
-  subject: string
-  created_at: Date
-  recent_edited_at: Date
-  done_or_not: boolean
-  done_at: Date | null
-  is_bad: boolean
-}
-
-interface DebateListData {
-  data: Debate[]
-}
-
-// useQuery 훅을 사용하여 토론 목록 데이터 가져오기
-function useDebateList(title: string) {
-  return useQuery<DebateListData, AxiosError>(
-    ['debateList', title],
-    async () => {
-      const res = await axios.get<DebateListData>(
-        `${process.env.REACT_APP_HOST}/debate/list/${encodeURIComponent(title)}`,
-        { withCredentials: true },
-      )
-      return res.data
-    },
-    {
-      enabled: !!title, // title이 존재하는 경우에만 쿼리 실행
-      retry: false,
-      onError: (error: AxiosError) => {
-        console.error('토론 목록 가져오기 에러:', error)
-        // 필요에 따라 에러 처리 로직 추가
-      },
-    },
-  )
-}
+import React from "react";
+import styles from "./MoreDebate.module.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
+import DebateList from "../components/Debate/DebateList";
+import DebateSearch from "../components/Debate/DebateSearch";
+import DebateAdd from "../components/Debate/DebateAdd";
+import DebateRecent from "../components/Debate/DebateRecent";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function MoreDebate() {
-  const { title } = useParams<{ title: string }>()
+  const { title } = useParams();
+  const [debateListData, setDebateListData] = useState([]);
 
-  const { isLoading, isError, error, data: debateListData } = useDebateList(title)
+  useEffect(() => {
+    const takeDebateList = async () => {
+      try {
+        const res = await axios.get(
+          process.env.REACT_APP_HOST +
+            `/debate/list/${encodeURIComponent(title)}`,
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          setDebateListData(res.data);
+        } else {
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    takeDebateList();
+  }, [title]); //토론방 목록 가져오기
+
+  useEffect(() => {
+    track("view_wiki_debate_list");
+  }, []);
   return (
     <div className={styles.container}>
-      <Header />
+      <div>
+        <Header />
+      </div>
 
       <div className={styles.header}>
         <p className={styles.debate}>토론 ({title})</p>
@@ -70,14 +59,14 @@ function MoreDebate() {
               <span className={styles.menu2}>수정 시간</span>
             </div>
 
-            {isLoading ? (
-              <p className={styles.none}>데이터를 불러오는 중입니다.</p>
-            ) : isError ? (
-              <p className={styles.none}>에러: {error.message}</p>
-            ) : debateListData?.data.length === 0 ? (
+            {debateListData &&
+            debateListData.data &&
+            debateListData.data.length === 0 ? (
               <p className={styles.none}>아직 생성된 토론방이 없습니다.</p>
             ) : (
-              debateListData?.data.map((data: Debate) => (
+              debateListData &&
+              debateListData.data &&
+              debateListData.data.map((data) => (
                 <DebateList
                   key={data.id}
                   id={data.id}
@@ -108,9 +97,11 @@ function MoreDebate() {
         </div>
       </div>
 
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </div>
-  )
+  );
 }
 
-export default MoreDebate
+export default MoreDebate;

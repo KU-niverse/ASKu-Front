@@ -1,136 +1,112 @@
-import React, { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import axios, { AxiosError } from 'axios'
-import { useParams, useLocation } from 'react-router-dom'
-import styles from './Debate.module.css'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import DebateTitle from '../components/Debate/DebateTitle'
-import DebateContent from '../components/Debate/DebateContent'
-import DebateInput from '../components/Debate/DebateInput'
-import DebateSearch from '../components/Debate/DebateSearch'
-import DebateAdd from '../components/Debate/DebateAdd'
-import DebateRecent from '../components/Debate/DebateRecent'
+import React from "react";
+import styles from "./Debate.module.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
+import DebateTitle from "../components/Debate/DebateTitle";
+import DebateContent from "../components/Debate/DebateContent";
+import DebateInput from "../components/Debate/DebateInput";
+import DebateSearch from "../components/Debate/DebateSearch";
+import DebateAdd from "../components/Debate/DebateAdd";
+import DebateRecent from "../components/Debate/DebateRecent";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
-interface DebateState {
-  id: number
-  title: string
-  subject: string
-}
+function Debate() {
+  const [data, setData] = useState(null);
+  const [debateContentData, setDebateContentData] = useState([]);
+  const location = useLocation();
+  const stateData = location.state;
+  const debateId = stateData.id;
+  const title = stateData.title;
+  const subject = stateData.subject;
 
-interface DebateMessage {
-  id: number
-  user_id: number
-  content: string
-  created_at: Date
-  is_bad: boolean
-  nickname: string
-  badge_image: string
-}
+  useEffect(() => {
+    const takeDebateContent = async () => {
+      try {
+        const res = await axios.get(
+          process.env.REACT_APP_HOST +
+            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          setDebateContentData(res.data);
+        } else {
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    takeDebateContent();
+  }, [title, debateId]); //토론방 메시지 가져오기
 
-interface DebateContentData {
-  message: {
-    data: number | DebateMessage[]
-  }
-}
+  // Amplitude
+  useEffect(() => {
+    track("view_debate_detail", {
+      type: title,
+    });
+  }, []);
 
-interface SubmitData {
-  content: string
-}
-
-interface UserAuthResponse {
-  success: boolean
-}
-
-function useCheckLoginStatus() {
-  return useQuery<UserAuthResponse, AxiosError>(
-    'loginStatus',
-    async () => {
-      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
-        withCredentials: true,
-      })
-      return res.data
-    },
-    {
-      retry: false,
-      onError: (err: AxiosError) => {
-        console.error('로그인 상태 확인 에러:', err)
-      },
-    },
-  )
-}
-
-function useDebateMessages(title: string, debateId: number) {
-  return useQuery<DebateContentData, AxiosError>(
-    ['debateMessages', title, debateId],
-    async () => {
-      const res = await axios.get<DebateContentData>(
-        `${process.env.REACT_APP_HOST}/debate/view/${encodeURIComponent(title)}/${debateId}`,
-        { withCredentials: true },
-      )
-      return res.data
-    },
-    {
-      enabled: !!title && !!debateId,
-      retry: false,
-      onError: (err: AxiosError) => {
-        console.error('토론 메시지 가져오기 에러:', err)
-      },
-    },
-  )
-}
-
-function useSubmitDebate(title: string, debateId: number) {
-  const queryClient = useQueryClient()
-  return useMutation<DebateContentData, AxiosError, SubmitData>(
-    async (submitData) => {
+  // const handleDebateSubmit = async (submitData) => {
+  //   try {
+  //     const res = await axios.post(
+  //       process.env.REACT_APP_HOST+`/debate/${title}/new/${debateId}`,
+  //       submitData,
+  //       { withCredentials: true }
+  //     );
+  //     if (res.status === 200) {
+  //       setData(res.data);
+  //       // alert(res.data.message)
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     if (error.response.status === 500) {
+  //       console.log(error.response.data.message);
+  //       alert(error.response.data.message);
+  //     }
+  //   }
+  // }; //토론 메세지 생성하기
+  const handleDebateSubmit = async (submitData) => {
+    try {
       const postResponse = await axios.post(
-        `${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`,
+        process.env.REACT_APP_HOST +
+          `/debate/${encodeURIComponent(title)}/new/${debateId}`,
         submitData,
-        { withCredentials: true },
-      )
+        { withCredentials: true }
+      );
 
       if (postResponse.status === 200) {
-        const getResponse = await axios.get<DebateContentData>(
-          `${process.env.REACT_APP_HOST}/debate/view/${encodeURIComponent(title)}/${debateId}`,
-          { withCredentials: true },
-        )
+        // POST 요청이 성공한 후 전체 메시지 목록을 다시 가져옵니다.
+        const getResponse = await axios.get(
+          process.env.REACT_APP_HOST +
+            `/debate/view/${encodeURIComponent(title)}/${debateId}`,
+          { withCredentials: true }
+        );
 
         if (getResponse.status === 200) {
-          return getResponse.data
+          // 전체 메시지 목록으로 상태를 업데이트합니다.
+          setDebateContentData(getResponse.data);
         }
       }
-      throw new Error('의견 등록 실패')
-    },
-    {
-      onSuccess: (data) => {
-        queryClient.setQueryData(['debateMessages', title, debateId], data)
-      },
-      onError: (err: AxiosError) => {
-        console.error('의견 등록 에러:', err)
-        if (err.response && err.response.status === 500) {
-          alert(err.response.data)
-        }
-      },
-    },
-  )
-}
-
-const Debate: React.FC = () => {
-  const location = useLocation()
-  const stateData = location.state as DebateState
-  const { id: debateId, title, subject } = stateData
-
-  const { isError, error, data: debateContentData } = useDebateMessages(title, debateId)
-  const { mutateAsync: handleDebateSubmit } = useSubmitDebate(title, debateId)
-
-  const submitHandler = async (submitData: { content: string }) => {
-    try {
-      await handleDebateSubmit(submitData) // 여기서 형식을 명시적으로 변환
     } catch (error) {
-      console.error('의견 제출 에러:', error)
+      console.error(error);
+      if (error.response && error.response.status === 500) {
+        //console.log(error.response.data.message);
+        alert(error.response.data.message);
+      }
     }
-  }
+  };
+
+  // Amplitude
+  useEffect(() => {
+    track("debate_wiki", {
+      type: title,
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -139,22 +115,21 @@ const Debate: React.FC = () => {
       </div>
 
       <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
+        <p className={styles.debate}>토론 ({title})</p>
       </div>
 
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <DebateTitle title={title} subject={subject} />
-          {isError ? (
-            <div>에러: {error.message}</div>
-          ) : debateContentData?.message.data === 0 ? (
+
+          {debateContentData &&
+          debateContentData.message &&
+          debateContentData.message.data === 0 ? (
             <p>아직 작성된 토론 메세지가 없습니다.</p>
           ) : (
-            (debateContentData?.message.data as DebateMessage[]).map((debate, index) => (
+            debateContentData &&
+            debateContentData.message &&
+            debateContentData.data.map((debate, index) => (
               <DebateContent
                 key={debate.id}
                 r_id={debate.id}
@@ -165,12 +140,15 @@ const Debate: React.FC = () => {
                 is_bad={debate.is_bad}
                 nick={debate.nickname}
                 badge_image={debate.badge_image}
-                debate_id={0}
               />
             ))
           )}
           <div className={styles.input}>
-            <DebateInput onDebateSubmit={submitHandler} title={title} debateId={debateId} />
+            <DebateInput
+              onDebateSubmit={handleDebateSubmit}
+              title={title}
+              debateId={debateId}
+            />
           </div>
         </div>
         <div className={styles.sidebar}>
@@ -188,7 +166,7 @@ const Debate: React.FC = () => {
         <Footer />
       </div>
     </div>
-  )
+  );
 }
 
-export default Debate
+export default Debate;

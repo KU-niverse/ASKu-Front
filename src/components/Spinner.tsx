@@ -1,16 +1,19 @@
-import haho from '../img/3d_haho.png'
-import styles from './Spinner.module.css'
+import haho from '../img/3d_haho.png'; 
+import styles from "../components/Spinner.module.css"
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function Spinner() {
-  return (
-    <div className={styles.loading_spinner_wrap}>
-      <div className={styles.loader}>
-        <img src={haho} alt={'haho'} className={styles.haho} />
-      </div>
-      <p className={styles.text1}>{'답변 생성중입니다!'}</p>
-      <p className={styles.text2}>{'서버 환경에 따라 약 2분 정도 소요될 수 있습니다'}</p>
-    </div>
-  )
+    return(
+        <div>
+            <div className={styles.spinnerWrapper}>
+                <div className={styles.spinnerContainer}>
+                    <ClipLoader color="#9F132E" size="50px" className={styles.clipSpinner}/>
+                    <img src={haho} alt="haho" className={styles.haho} />            
+                </div>
+                <p className={styles.text1}>답변을 생성중입니다!</p>
+            </div>
+        </div>
+    )
 }
 
-export default Spinner
+export default Spinner;

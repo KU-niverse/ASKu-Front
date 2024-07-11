@@ -1,5 +1,6 @@
-import styles from './MyInfo.module.css'
-
+import { useEffect } from "react";
+import styles from "./MyInfo.module.css";
+import { track } from "@amplitude/analytics-browser";
 interface MyInfoProps {
   name: string
   email: string
@@ -7,6 +8,9 @@ interface MyInfoProps {
 }
 
 function MyInfo({ name, email, stu_id }: MyInfoProps) {
+  useEffect(() => {
+    track("view_mypage");
+  }, []);
   return (
     <div className={styles.inforow}>
       <div className={styles.rowname}>

@@ -1,25 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-import comment_icon from '../img/resultcomment.svg'
-import edit from '../img/resultedit.svg'
-import styles from './ResultQues.module.css'
-import FormatDate from './FormatDate'
-import LikeorNot from './LikeorNot'
-
-interface QuestionProps {
-  title: string
-  id: number
-  doc_id: number
-  user_id: number
-  index_title: string
-  content: string
-  created_at: Date
-  answer_count: number
-  is_bad: boolean
-  nick: string
-  like_count: number
-}
+import comment_icon from "../img/resultcomment.svg";
+import edit from "../img/resultedit.svg";
+import styles from "../components/ResultQues.module.css";
+import FormatDate from "./FormatDate";
+import ThreedotsMenu from "./ThreedotsMenu";
+import LikeorNot from "./LikeorNot";
+import { useNavigate } from "react-router-dom";
+import { track } from "@amplitude/analytics-browser";
 
 function Question({
+  index,
   title,
   id,
   doc_id,
@@ -31,23 +20,23 @@ function Question({
   is_bad,
   nick,
   like_count,
-}: QuestionProps) {
-  const formattedDate = FormatDate(created_at)
-  const nav = useNavigate()
+}) {
+  const formattedDate = FormatDate(created_at);
 
+  const nav = useNavigate();
   const linktoQuestionEdit = () => {
-    const encodedTitle = encodeURIComponent(title)
+    const encodedTitle = encodeURIComponent(title);
     nav(`/question/edit/${encodedTitle}`, {
       state: {
         qid: id,
-        user_id,
-        content,
-        created_at,
-        like_count,
-        nick,
+        user_id: user_id,
+        content: content,
+        created_at: created_at,
+        like_count: like_count,
+        nick: nick,
       },
-    })
-  }
+    });
+  };
 
   return (
     <div className={styles.q_list}>
@@ -60,47 +49,52 @@ function Question({
         </div>
       </div>
       <div
-        role={'presentation'}
         className={styles.q_middle}
         onClick={() => {
-          const encodedTitle = encodeURIComponent(title)
+          const encodedTitle = encodeURIComponent(title);
+          // Amplitude
+          track("click_qusetion_in_search_result", {
+            title: title,
+            index: index,
+          });
+
           nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
             state: {
               question_id: id,
-              user_id,
-              content,
-              created_at,
-              like_count,
-              nick,
-              index_title,
-              answer_count,
-              title,
+              user_id: user_id,
+              content: content,
+              created_at: created_at,
+              like_count: like_count,
+              nick: nick,
+              index_title: index_title,
+              answer_count: answer_count,
+              title: title,
             },
-          })
+          });
         }}
       >
-        <span className={styles.q_icon}>{'Q. '}</span>
+        <span className={styles.q_icon}>Q. </span>
         <span className={styles.q_content}>{content}</span>
       </div>
       <div className={styles.q_footer}>
         <div className={styles.q_frontfooter}>
           <div className={styles.q_like}>
-            <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
+            <LikeorNot questionId={id} like_count={like_count} nick={nick} />
           </div>
           <div className={styles.q_comment}>
-            <img src={comment_icon} alt={'comment'} />
+            <img src={comment_icon} alt="comment" />
             <span className={styles.commentCount}>{answer_count}</span>
           </div>
         </div>
         <div className={styles.q_backfooter}>
-          <button type={'button'} onClick={linktoQuestionEdit} className={styles.q_editbtn}>
-            <img src={edit} alt={'edit'} />
-            <span>{'질문을 기반으로 문서 수정하기'}</span>
+          <button onClick={linktoQuestionEdit} className={styles.q_editbtn}>
+            <img src={edit} alt="edit" />
+            <span>질문을 기반으로 문서 수정하기</span>
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Question
+export default Question;
