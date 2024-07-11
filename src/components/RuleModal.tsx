@@ -1,7 +1,13 @@
 import React from 'react'
-import styles from './RuleModal.module.css' // Create a CSS module for styling
+import styles from './RuleModal.module.css'
 
-const RuleModal = ({ isOpen, onClose, ruleContent }) => {
+interface RuleModalProps {
+  isOpen: boolean
+  onClose: () => void
+  ruleContent: string
+}
+
+const RuleModal: React.FC<RuleModalProps> = ({ isOpen, onClose, ruleContent }) => {
   if (!isOpen) {
     return null
   }

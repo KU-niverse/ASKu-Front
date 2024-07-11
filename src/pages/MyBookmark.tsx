@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useQuery } from 'react-query'
@@ -7,12 +7,31 @@ import Header from '../components/Header'
 import styles from './MyBookmark.module.css'
 import Footer from '../components/Footer'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 interface MyBookmarkProps {
   loggedIn: boolean
   setLoggedIn: (value: boolean) => void
 }
 
 const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const nav = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
@@ -63,7 +82,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.content}>
         <div className={styles.header}>
           <h3>{'즐겨찾기 한 문서'}</h3>
@@ -73,13 +92,11 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
           </div>
         </div>
         <div>
-          {lists.map((item: any) => {
-            return (
-              <div key={item.title}>
-                <BookmarkBox title={item.title} content={item.recent_filtered_content} is_favorite result={false} />
-              </div>
-            )
-          })}
+          {lists.map((item: any) => (
+            <div key={item.title}>
+              <BookmarkBox title={item.title} content={item.recent_filtered_content} is_favorite result={false} />
+            </div>
+          ))}
         </div>
       </div>
       <Footer />

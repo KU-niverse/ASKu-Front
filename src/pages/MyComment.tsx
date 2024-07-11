@@ -7,6 +7,24 @@ import Comment from '../components/Comment'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 interface MyDebateProps {
   success: boolean
   message: MyDebateMessage[]
@@ -47,6 +65,7 @@ interface MyInfoData {
 
 const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -78,7 +97,7 @@ const MyComment = () => {
   return (
     <div className={styles.container}>
       <div>
-        <Header />
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
       <div className={styles.content}>
         <div className={styles.header}>

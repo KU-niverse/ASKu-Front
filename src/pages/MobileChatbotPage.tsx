@@ -1,16 +1,29 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import Header from '../components/Header'
 import ChatbotMobile from '../components/ChatbotMobile'
 
-interface LoginStatusResponse {
-  success: boolean
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
 }
 
-interface UserInfoResponse {
+interface LoginStatusResponse {
   success: boolean
-  id: number
 }
 
 const fetchLoginStatus = async (): Promise<LoginStatusResponse> => {
@@ -18,15 +31,39 @@ const fetchLoginStatus = async (): Promise<LoginStatusResponse> => {
   return res.data
 }
 
-const fetchUserInfo = async (): Promise<UserInfoResponse> => {
+const fetchUserInfo = async (): Promise<UserInfo> => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
-  return res.data
+  if (!res.data.success) {
+    throw new Error('Failed to fetch user info')
+  }
+  return {
+    id: res.data.id,
+    name: res.data.name,
+    login_id: res.data.login_id,
+    stu_id: res.data.stu_id,
+    email: res.data.email,
+    rep_badge_id: res.data.rep_badge_id,
+    nickname: res.data.nickname,
+    created_at: new Date(res.data.created_at),
+    point: res.data.point,
+    is_admin: res.data.is_admin,
+    is_authorized: res.data.is_authorized,
+    restrict_period: res.data.restrict_period,
+    restrict_count: res.data.restrict_count,
+    rep_badge_name: res.data.rep_badge_name,
+    rep_badge_image: res.data.rep_badge_image,
+  }
 }
 
 const MobileChatBotPage = () => {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+
   const { data: loginStatus, refetch: refetchLoginStatus } = useQuery('loginStatus', fetchLoginStatus)
-  const { data: userInfo, refetch: refetchUserInfo } = useQuery('userInfo', fetchUserInfo, {
+  const { data: userInfoData, refetch: refetchUserInfo } = useQuery('userInfo', fetchUserInfo, {
     enabled: false, // 처음에는 비활성화
+    onSuccess: (data) => {
+      setUserInfo(data) // 데이터가 성공적으로 받아졌을 때 상태 업데이트
+    },
   })
 
   useEffect(() => {
@@ -42,13 +79,13 @@ const MobileChatBotPage = () => {
   const isLoggedIn = loginStatus?.success || false
   const userId = userInfo?.id || null
 
-  if (loginStatus === undefined || userInfo === undefined) {
-    return <div>Loading...</div>
+  if (loginStatus === undefined || userInfoData === undefined) {
+    return <div>{'Loading...'}</div>
   }
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={() => {}} />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={() => {}} />
     </>
   )

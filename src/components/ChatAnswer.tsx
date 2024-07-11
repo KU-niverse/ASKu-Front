@@ -1,6 +1,7 @@
-import { useState, useEffect, Fragment, useRef } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useMutation, useQueryClient } from 'react-query'
 import styles from './ChatAnswer.module.css'
 import like from '../img/chatbot_like.svg'
 import like_hover from '../img/chatbot_like_filled.svg'
@@ -14,108 +15,93 @@ import LikeModal from './LikeModal'
 import UnlikeModal from './UnlikeModal'
 import RuleModal from './RuleModal'
 
-const ChatAnswer = (props) => {
-  const { content, reference, qnaId, blockIconZip } = props
+interface ChatAnswerProps {
+  content: string
+  reference: string | null
+  qnaId: number
+  blockIconZip: boolean
+}
+
+const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, blockIconZip }) => {
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)
   const [referenceOpen, setReferenceOpen] = useState(false)
   const [likeModalOpen, setLikeModalOpen] = useState(false)
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false)
   const [feedbackId, setFeedbackId] = useState(0)
-  const [processedContent, setProcessedContent] = useState(null)
+  const [processedContent, setProcessedContent] = useState<JSX.Element[] | null>(null)
   const [ruleModalOpen, setRuleModalOpen] = useState(false)
-  const [ruleContent, setRuleContent] = useState('')
+  const [ruleDetails, setRuleDetails] = useState('')
 
-  const handleLikeMouseOver = () => {
-    setLikeHovered(true)
+  const queryClient = useQueryClient()
+
+  const sendLikeFeedback = async () => {
+    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
+      qna_id: qnaId,
+      feedback: true,
+    })
+    return response.data
   }
 
-  const handleLikeMouseLeave = () => {
-    setLikeHovered(false)
+  const sendUnlikeFeedback = async () => {
+    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
+      qna_id: qnaId,
+      feedback: false,
+    })
+    return response.data
   }
 
-  const handleUnlikeMouseOver = () => {
-    setUnlikeHovered(true)
-  }
-
-  const handleUnlikeMouseLeave = () => {
-    setUnlikeHovered(false)
-  }
-
-  const handleReferenceOpen = () => {
-    if (referenceOpen) {
-      setReferenceOpen(false)
-    } else {
-      setReferenceOpen(true)
-    }
-  }
-
-  const handleReferenceClose = () => {
-    setReferenceOpen(false)
-  }
-
-  const handleLikeClick = () => {
-    if (likeModalOpen) {
-      setLikeModalOpen(false)
-    } else {
+  const likeMutation = useMutation(sendLikeFeedback, {
+    onSuccess: (data) => {
+      setFeedbackId(data.id)
+      queryClient.invalidateQueries('feedback')
       setLikeModalOpen(true)
-    }
-  }
-  const handleUnlikeClick = () => {
-    if (unlikeModalOpen) {
-      setUnlikeModalOpen(false)
-    } else {
+      alert('피드백이 성공적으로 전송되었습니다.')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
+
+  const unlikeMutation = useMutation(sendUnlikeFeedback, {
+    onSuccess: (data) => {
+      setFeedbackId(data.id)
+      queryClient.invalidateQueries('feedback')
       setUnlikeModalOpen(true)
-    }
-  }
+      alert('피드백이 성공적으로 전송되었습니다.')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
 
-  const sendLikeFeedback = () => {
-    axios
-      .post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-        qna_id: qnaId,
-        feedback: true,
-      })
-      .then((response) => {
-        const updatedFeedbackId = response.data.id
-        setFeedbackId(updatedFeedbackId)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
+  const handleLikeMouseOver = () => setLikeHovered(true)
+  const handleLikeMouseLeave = () => setLikeHovered(false)
+  const handleUnlikeMouseOver = () => setUnlikeHovered(true)
+  const handleUnlikeMouseLeave = () => setUnlikeHovered(false)
+  const handleReferenceOpen = () => setReferenceOpen(!referenceOpen)
+  const handleReferenceClose = () => setReferenceOpen(false)
 
-  const sendUnlikeFeedback = () => {
-    axios
-      .post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-        qna_id: qnaId,
-        feedback: false,
-      })
-      .then((response) => {
-        const updatedFeedbackId = response.data.id
-        setFeedbackId(updatedFeedbackId)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
+  const handleLikeClick = () => likeMutation.mutate()
+  const handleUnlikeClick = () => unlikeMutation.mutate()
 
-  const handleRuleModalOpen = (ruleContent) => {
-    setRuleContent(ruleContent)
+  const handleRuleModalOpen = (details: string) => {
+    setRuleDetails(details)
     setRuleModalOpen(true)
   }
 
   const handleRuleModalClose = () => {
     setRuleModalOpen(false)
-    setRuleContent('')
+    setRuleDetails('')
   }
 
-  const parseReference = (reference) => {
-    if (reference === null) {
-      return ''
-    }
+  const parseReference = (ref: string | null) => {
+    if (ref === null) return ''
 
     try {
-      const parsedReference = JSON.parse(reference)
+      const parsedReference = JSON.parse(ref)
       return (
         <div>
           <button
@@ -126,31 +112,32 @@ const ChatAnswer = (props) => {
             {'관련 학칙\r'}
           </button>
           {Object.entries(parsedReference)
-            .filter(([key, value]) => key !== 'Rule')
-            .map(([link, value], index) => (
-              <div key={index}>
+            .filter(([key]) => key !== 'Rule')
+            .map(([link, value]) => (
+              <div key={link}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   {'참고문서:'}
                   {link}
                 </Link>
+                <p>{value}</p>
               </div>
             ))}
         </div>
       )
     } catch {
-      return reference
+      return ref
     }
   }
 
   useEffect(() => {
-    const newContent = content.split('\n').map((line, index) => (
-      <Fragment key={index}>
+    const newContent = content.split('\n').map((line) => (
+      <Fragment key={`content-line-${line}`}>
         {line}
         <br />
       </Fragment>
     ))
-    setProcessedContent(newContent) // 상태 업데이트
-  }, [content]) // content 변경 시에만 실행
+    setProcessedContent(newContent)
+  }, [content])
 
   return (
     <div>
@@ -161,16 +148,9 @@ const ChatAnswer = (props) => {
           </div>
         </div>
         <div className={styles.chatTextWrap}>
-          {/* <p className={styles.chatText}>{content}</p> */}
           <p className={styles.chatText}>{processedContent}</p>
         </div>
         <img alt={'dots'} src={dots} className={styles.dots} />
-        {/* <img
-          src={dots}
-          className={styles.dots}
-          style={{ display: loading ? "block" : "none" }}
-        />
-      */}
         <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
           <img
             role={'presentation'}
@@ -180,10 +160,9 @@ const ChatAnswer = (props) => {
             alt={'like'}
             onMouseOver={handleLikeMouseOver}
             onMouseLeave={handleLikeMouseLeave}
-            onClick={() => {
-              handleLikeClick()
-              sendLikeFeedback()
-            }}
+            onFocus={handleLikeMouseOver}
+            onBlur={handleLikeMouseLeave}
+            onClick={handleLikeClick}
           />
           <img
             role={'presentation'}
@@ -193,10 +172,9 @@ const ChatAnswer = (props) => {
             alt={'unlike'}
             onMouseOver={handleUnlikeMouseOver}
             onMouseLeave={handleUnlikeMouseLeave}
-            onClick={() => {
-              handleUnlikeClick()
-              sendUnlikeFeedback()
-            }}
+            onFocus={handleUnlikeMouseOver}
+            onBlur={handleUnlikeMouseLeave}
+            onClick={handleUnlikeClick}
           />
           <img
             role={'presentation'}
@@ -220,7 +198,8 @@ const ChatAnswer = (props) => {
               />
             </div>
             <div className={styles.reference_text}>
-              <p>{parseReference(reference)}</p>
+              {parseReference(reference)}
+              <p>{reference}</p>
             </div>
           </div>
         </div>
@@ -231,7 +210,7 @@ const ChatAnswer = (props) => {
       {unlikeModalOpen && (
         <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} feedbackId={feedbackId} />
       )}
-      <RuleModal isOpen={ruleModalOpen} onClose={handleRuleModalClose} ruleContent={ruleContent} />
+      <RuleModal isOpen={ruleModalOpen} onClose={handleRuleModalClose} ruleContent={ruleDetails} />
     </div>
   )
 }

@@ -6,6 +6,24 @@ import Footer from '../components/Footer'
 import Badge from '../components/Badge'
 import SpinnerMypage from '../components/SpinnerMypage'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 interface BadgeData {
   badge_id: number
   id: number
@@ -21,6 +39,7 @@ interface BadgeResponse {
 }
 
 function MyBadge() {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [loading, setLoading] = useState(true)
   // 뱃지 데이터 불러오기
   const [myBadge, setMyBadge] = useState<BadgeData[]>([])
@@ -93,7 +112,7 @@ function MyBadge() {
   return (
     <div className={styles.container}>
       <div>
-        <Header />
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
       <div className={styles.header}>
         <p className={styles.mypage}>{'MYPAGE'}</p>

@@ -5,14 +5,17 @@ import unlike from '../img/unlike.png'
 import reference from '../img/reference.png'
 import dots from '../img/dots.png'
 
-const ChatQuestion = (props) => {
-  const { content } = props
+interface ChatQuestionProps {
+  content: string
+}
+
+const ChatQuestion = ({ content }: ChatQuestionProps) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
       <div className={styles.questionBox}>
         <div className={styles.characterWrapper}>
           <div className={styles.characterContainer}>
-            <span>나</span>
+            <span>{'나'}</span>
           </div>
         </div>
         <div className={styles.chatTextWrap}>
@@ -20,9 +23,9 @@ const ChatQuestion = (props) => {
         </div>
         <img alt={'dots'} src={dots} className={styles.dots} />
         <div className={styles.iconZip}>
-          <img className={styles.icon} src={like} alt="like" />
-          <img className={styles.icon} src={unlike} alt="unlike" />
-          <img className={styles.icon} src={reference} alt="reference link" />
+          <img className={styles.icon} src={like} alt={'like'} />
+          <img className={styles.icon} src={unlike} alt={'unlike'} />
+          <img className={styles.icon} src={reference} alt={'reference link'} />
         </div>
       </div>
     </div>

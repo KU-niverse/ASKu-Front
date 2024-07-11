@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom/dist'
+import { useNavigate, useParams } from 'react-router-dom'
 import React, { useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
@@ -8,9 +8,7 @@ import bookmark from '../img/bookmark.png'
 import bookmarkFill from '../img/bookmarkFill.png'
 import debate from '../img/debate.png'
 import his from '../img/his.png'
-import answ from '../img/answ.png'
 import WikiBox from '../components/WikiBox'
-import Switch from '../components/Switch'
 
 interface Content {
   index: string
@@ -24,74 +22,30 @@ interface WikiData {
   contents: Content[]
 }
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 function WikiViewer() {
   const { title, ver } = useParams()
   const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
-  const [isToggled, setIsToggled] = useState(false)
   const [isBookmark, setIsBookmark] = useState(false)
-
-  const Ques = [
-    {
-      index: '1.',
-      number: '1',
-      title: '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요 ',
-    },
-    {
-      index: '2.',
-      number: '2',
-      title: '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-    },
-    {
-      index: '3.',
-      number: '3',
-      title: '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-    },
-    {
-      index: '4.',
-      number: '4',
-      title: '여기 질문있는데 봐주세요 여기 질문있는데 봐주세요',
-    },
-  ]
-
-  const staticData: Content[] = [
-    {
-      index: '1.',
-      section: '1',
-      title: '일번항목',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!',
-    },
-    {
-      index: '2.',
-      section: '2',
-      title: '이번항목',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. ddddddddostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!',
-    },
-    {
-      index: '3.',
-      section: '3',
-      title: '삼번항목',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elitdddddd. ostrum, optio, assumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!',
-    },
-    {
-      index: '4.',
-      section: '4',
-      title: '사번항목',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. ostrum, odfkjs;fjskdjf;alskdjf;sdlkfj;alsdkjf;alskdjf;laksssumenda distinctio autem, animi dolore velit nam vel impedit porro ad earum! Similique aperiam eaque aliquam ratione earum, unde sunt!',
-    },
-  ]
-
-  function handleClick(index: number) {
-    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  function handleClickBookmark() {
-    setIsBookmark(!isBookmark)
-  }
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const fetchWiki = async (): Promise<WikiData> => {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`)
@@ -105,9 +59,17 @@ function WikiViewer() {
 
   const { text: allText, contents: allContent } = wikiData
 
+  function handleClick(index: number) {
+    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  function handleClickBookmark() {
+    setIsBookmark(!isBookmark)
+  }
+
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.wikiviewer}>
         <div className={styles.wikititle}>
           <h1>
@@ -166,7 +128,7 @@ function WikiViewer() {
                 content={item.content}
                 index={item.index}
                 section={item.section}
-                main={''}
+                main={allText}
                 isZero={false}
               />
             </div>

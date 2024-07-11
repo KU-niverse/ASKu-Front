@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
 import search from '../img/SearchResult.svg'
@@ -12,138 +13,115 @@ import FormatTimeAgo from '../components/FormatTimeAgo'
 import BookmarkBox from '../components/BookmarkBox'
 import Footer from '../components/Footer'
 
-const data = [
-  {
-    title: '입실렌티',
-    recent_filtered_content:
-      '개요 벨 연구소에서 멀틱스 프로젝트에 참여한 바 있던 켄 톰슨, 데니스 리치 등이 멀틱스의 일부 아이디어를 가져와서 소형 컴퓨터에서도 작동할 수 있는 단순한 운영 체제를 만든 후 유닉스(UNIX)라는 이름을 붙였다. 유닉스는 1969년도부터 개발되기 시작하여 1973년 10월에 운영체제 분야의 최상위 학술대회인 ACM Symposium on Operating Systems Principles(SOSP)에서 공개되었다. 하하하하하호호호호호 히히 키키키키키키킼키키키키gggg BSD AT&T에서 학교에 비교적 저렴한 비용으로 연구용 유닉스의 소스 코드를 배포했는데, 이 소스 코드를 확보한 캘리포니아 대학교 버클리 캠퍼스의 대학원생이었던 빌 조이(Bill Joy) 등이 유닉스의 소스 코드를 개선하고 새로운 프로그램을 추가한 BSD를 만들어 1978년에 배포하였다. ​ 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 ꉂꉂ(ᵔᗜᵔ*) 푸항항 리눅스 Linux|리눅스는 유닉스의 직접적인 후계자는 아니지만 유닉스의 설계 개념 등에 영향을 받았다. 리눅스는 유닉스의 POSIX 규격을 거의 대부분 따른다. 따라서 리눅스도 그 족보를 거슬러 올라가면 멀틱스로부터 갈라져나온 셈ㄴㅁㅇㄻㄴㅇ. 분류:멀틱스 rhrhrh 고양이 고양이는 정말 귀여워원하시는 질문이 없으신가요? 새로운 질문을 생',
-  },
-  {
-    title: '입실렌티',
-    recent_filtered_content: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-  },
-  {
-    title: '입실렌티',
-    recent_filtered_content: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-  },
-  {
-    title: '입실렌티',
-    recent_filtered_content: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-  },
-]
-const lists = [
-  {
-    title: '대동제',
-    timestamp: '18:06',
-  },
-  {
-    title: '대동제',
-    timestamp: '18:06',
-  },
-  {
-    title: '대동제',
-    timestamp: '18:06',
-  },
-  {
-    title: '대동제',
-    timestamp: '18:06',
-  },
-]
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+const fetchDocs = async (title: string) => {
+  const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
+    withCredentials: true,
+  })
+  return result.data.message
+}
+
+const fetchQues = async (title: string) => {
+  const result = await axios.get(`${process.env.REACT_APP_HOST}/question/query/${title}`, {
+    withCredentials: true,
+  })
+  return result.data.data
+}
+
+const fetchHistory = async (type: string) => {
+  const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
+  return result.data.message
+}
 
 const SearchResearch = () => {
   const nav = useNavigate()
+  const { title, howto } = useParams<{ title: string; howto: string }>()
   const [isClicked, setIsClicked] = useState(true) // true: 문서 false: 질문
-
-  const { title, howto } = useParams()
-  const [docs, setDocs] = useState([])
-  const [historys, setHistorys] = useState([])
   const [type, setType] = useState('all')
-  const [docsCount, setDocsCount] = useState(-1)
-  const [quesCount, setQuesCount] = useState(-1)
-  const [ques, setQues] = useState([])
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+
+  const {
+    data: docs = [],
+    isLoading: isDocsLoading,
+    refetch: refetchDocs,
+  } = useQuery(['docs', title], () => fetchDocs(title!), {
+    enabled: !!title,
+  })
+
+  const {
+    data: ques = [],
+    isLoading: isQuesLoading,
+    refetch: refetchQues,
+  } = useQuery(['ques', title], () => fetchQues(title!), {
+    enabled: !!title,
+  })
+
+  const {
+    data: historys = [],
+    isLoading: isHistorysLoading,
+    refetch: refetchHistory,
+  } = useQuery(['history', type], () => fetchHistory(type), {
+    enabled: !!type,
+  })
+
+  useEffect(() => {
+    if (title) {
+      refetchDocs()
+      refetchQues()
+    }
+  }, [title])
+
+  useEffect(() => {
+    refetchHistory()
+  }, [type])
+
+  useEffect(() => {
+    if (docs.length !== 0 && ques.length !== 0) {
+      track('view_search_result', {
+        type: howto,
+        keyword: title,
+        wiki_count: docs.length,
+        question_count: ques.length,
+      })
+    }
+  }, [docs.length, ques.length])
 
   const handleButtonClick = () => {
     setIsClicked(!isClicked)
   }
 
-  const handleDocsClick = (title, index) => {
-    // Amplitude
+  const handleDocsClick = (docTitle: string, index: number) => {
     track('click_wiki_in_search_result', {
-      title,
+      title: docTitle,
       index,
     })
-    const encodedTitle = encodeURIComponent(title)
+    const encodedTitle = encodeURIComponent(docTitle)
     nav(`/wiki/${encodedTitle}`)
   }
 
-  const getDocs = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
-        withCredentials: true,
-      })
-      if (result.status === 200) {
-        setDocs(result.data.message)
-        setDocsCount(result.data.message.length)
-      }
-    } catch (error) {
-      console.error(error)
-      // return alert(error.response.data.message);
-    }
-  }
-
-  const getQues = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/question/query/${title}`, {
-        withCredentials: true,
-      })
-      if (result.status === 200) {
-        setQues(result.data.data)
-        setQuesCount(result.data.data.length)
-      }
-    } catch (error) {
-      console.error(error)
-      // return alert(error.response.message);
-    }
-  }
-
-  // 최근변경 리스트
-  const getHistory = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
-      setHistorys(result.data.message)
-    } catch (error) {
-      console.error(error)
-      // alert(result.data.message);
-    }
-  }
-
-  useEffect(() => {
-    getDocs()
-    getQues()
-  }, [title])
-
-  // Amplitude
-  useEffect(() => {
-    if (docsCount !== -1 && quesCount !== -1) {
-      track('view_search_result', {
-        type: howto,
-        keyword: title,
-        wiki_count: docsCount,
-        question_count: quesCount,
-      })
-    }
-  }, [docsCount, quesCount])
-
-  useEffect(() => {
-    getHistory()
-  }, [type])
-
   return (
     <div>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.results}>
         <div className={styles.header}>
-          <img alt={'검색'} src={search} />
+          <img alt={'검색 결과'} src={search} />
           <h4>
             {'"'}
             {title}
@@ -166,18 +144,16 @@ const SearchResearch = () => {
         <div className={styles.contents}>
           <div className={styles.boxes}>
             <div className={isClicked ? '' : styles.hidden}>
-              {docs.map((item, index) => {
-                return (
-                  <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
-                    <BookmarkBox
-                      title={item.title}
-                      content={item.recent_filtered_content}
-                      is_favorite={item.is_favorite}
-                      result
-                    />
-                  </div>
-                )
-              })}
+              {docs.map((item: any, index: number) => (
+                <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
+                  <BookmarkBox
+                    title={item.title}
+                    content={item.recent_filtered_content}
+                    is_favorite={item.is_favorite}
+                    result
+                  />
+                </div>
+              ))}
               <div className={styles.linkToNew}>
                 <Link
                   to={'/newwiki'}
@@ -193,32 +169,30 @@ const SearchResearch = () => {
               </div>
             </div>
             <div className={isClicked ? styles.hidden : ''}>
-              {ques.map((item, index) => {
-                return (
-                  <div className={styles.queboxes}>
-                    <ResultQues
-                      index={index}
-                      key={item.id}
-                      id={item.id}
-                      doc_id={item.doc_id}
-                      user_id={item.user_id}
-                      index_title={item.index_title}
-                      content={item.content}
-                      created_at={item.created_at}
-                      answer_count={item.answer_count}
-                      is_bad={item.is_bad}
-                      nick={item.nickname}
-                      like_count={item.like_count}
-                      title={item.title}
-                    />
-                  </div>
-                )
-              })}
+              {ques.map((item: any, index: number) => (
+                <div className={styles.queboxes} key={item.id}>
+                  <ResultQues
+                    index={index}
+                    key={item.id}
+                    id={item.id}
+                    doc_id={item.doc_id}
+                    user_id={item.user_id}
+                    index_title={item.index_title}
+                    content={item.content}
+                    created_at={item.created_at}
+                    answer_count={item.answer_count}
+                    is_bad={item.is_bad}
+                    nick={item.nickname}
+                    like_count={item.like_count}
+                    title={item.title}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className={styles.recents}>
             <div className={styles.recentWrap}>
-              {historys.slice(0, 8).map((item, index) => {
+              {historys.slice(0, 8).map((item: any, index: number) => {
                 const timestamp = FormatTimeAgo(item.created_at)
                 return (
                   <ul key={item.title}>

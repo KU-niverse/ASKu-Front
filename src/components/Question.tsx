@@ -8,6 +8,24 @@ import ThreedotsMenu from './ThreedotsMenu'
 import ThreedotsReport from './ThreedotsReport'
 import LikeorNot from './LikeorNot'
 
+interface QuestionProps {
+  badge_image: string
+  current_user_id: number
+  index: number
+  answer_count: number
+  title: string
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_or_not: boolean
+  is_bad: boolean
+  nick: string
+  like_count: number
+}
+
 function Question({
   badge_image,
   current_user_id,
@@ -24,11 +42,12 @@ function Question({
   is_bad,
   nick,
   like_count,
-}) {
+}: QuestionProps) {
   const formattedDate = FormatDate(created_at)
   const type = 2
   const nav = useNavigate()
   const location = useLocation()
+
   const linktoQuestionEdit = () => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/question/edit/${encodedTitle}`, {
@@ -79,7 +98,7 @@ function Question({
           {user_id === current_user_id ? (
             <ThreedotsMenu questionId={id} type={type} />
           ) : (
-            <ThreedotsReport questionId={id} type={type} />
+            <ThreedotsReport target={id} type={type} />
           )}
         </div>
       </div>

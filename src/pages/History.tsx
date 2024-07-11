@@ -9,6 +9,24 @@ import HistoryBox from '../components/HistoryBox'
 import Paging from '../components/Paging'
 import Footer from '../components/Footer'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 interface HistoryItem {
   version: number
   summary: string
@@ -16,7 +34,7 @@ interface HistoryItem {
   created_at: string
   is_bad?: boolean
   id?: number
-  doc_title: string // title 속성을 doc_title로 변경
+  doc_title: string
   timestamp: string
 }
 
@@ -26,6 +44,7 @@ interface HistoryResponse {
 }
 
 const History = () => {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const { title } = useParams<{ title: string }>()
   const [page, setPage] = useState<number>(1)
   const perPage = 6
@@ -66,7 +85,7 @@ const History = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.header}>
         <span>
           <img alt={'히스토리'} src={his2} />
@@ -80,7 +99,10 @@ const History = () => {
             <p className={styles.listTitle2}>{'문서의 변경 내용'}</p>
           </div>
           {isError ? (
-            <div>에러: {error.message}</div>
+            <div>
+              {'에러: '}
+              {error.message}
+            </div>
           ) : historys.length === 0 ? (
             <div>{'아직 히스토리가 없습니다'}</div>
           ) : (

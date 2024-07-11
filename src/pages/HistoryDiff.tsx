@@ -8,6 +8,24 @@ import his2 from '../img/his2.png'
 import styles from './HistoryDiff.module.css'
 import Header from '../components/Header'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 interface ComparisonResponse {
   jsonData: {
     oldrev_text: string
@@ -41,6 +59,7 @@ function useCompareHistory(title: string, ver: string) {
 const HistoryDiff = () => {
   const [isSplit, setIsSplit] = useState(true)
   const { title, ver } = useParams<{ title: string; ver: string }>()
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const mediaQuery = useMediaQuery('(max-width: 767px)')
 
@@ -64,7 +83,7 @@ const HistoryDiff = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.header}>
         <span>
           <img alt={'히스토리'} src={his2} />

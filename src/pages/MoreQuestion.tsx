@@ -13,6 +13,20 @@ import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
 }
 
 interface QuestionData {
@@ -112,7 +126,7 @@ const MoreQuestion: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={userInfo} />
       <div className={styles.content}>
         {titles?.includes(title) ? (
           <div>
@@ -125,7 +139,12 @@ const MoreQuestion: React.FC = () => {
                 <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
               </div>
             </div>
-            <QuestionInput onQuestionSubmit={handleQuestionSubmit} title={title} defaultOpt={defaultOpt} />
+            <QuestionInput
+              onQuestionSubmit={handleQuestionSubmit}
+              title={title}
+              defaultOpt={defaultOpt}
+              wikiData={undefined}
+            />
             <div>
               {questionData?.data.length === 0 ? (
                 <p>{'아직 작성한 질문이 없습니다.'}</p>
@@ -147,6 +166,7 @@ const MoreQuestion: React.FC = () => {
                     title={title}
                     answer_count={question.answer_count}
                     badge_image={question.badge_image}
+                    index={0}
                   />
                 ))
               )}

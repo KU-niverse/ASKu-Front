@@ -1,32 +1,168 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 import styles from './MyPage.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import haho from '../img/haho.png'
 import CommentList from '../components/Mypage/CommentList'
 import QuestionList from '../components/Mypage/QuestionList'
 import Contribute from '../components/Mypage/Contribute'
 import Graph from '../components/Mypage/Graph'
-import MyBadge from '../components/Mypage/MyBadge'
 import MyProfile from '../components/Mypage/MyProfile'
-import MyInfo from '../components/Mypage/MyInfo'
-
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
 
-function MyPage({ loggedIn, setLoggedIn }) {
-  const [loading, setLoading] = useState(true)
-  const [myContribute, setMyContribute] = useState([])
-  const [mypageData, setMypageData] = useState([])
-  const [myQuestion, setMyQuestion] = useState([])
-  const [myDebate, setMyDebate] = useState([])
-  const [myBadge, setMyBadge] = useState([])
-  const [myWiki, setMyWiki] = useState([])
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface Badge {
+  id: number
+  user_id: number
+  badge_id: number
+  created_at: Date
+  is_bad: boolean
+  image: string
+  name: string
+  description: string
+}
+
+interface BadgeDataProps {
+  success: boolean
+  data: Badge[]
+  message: string
+}
+
+interface User {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface MyPageDataProps {
+  success: boolean
+  message: string
+  data: User[]
+}
+
+interface WikiHistoryEntry {
+  id: number
+  user_id: number
+  doc_id: number
+  text_pointer: string
+  version: number
+  summary: string
+  created_at: Date
+  count: number
+  diff: number
+  is_bad: boolean
+  is_rollback: boolean
+  is_q_based: boolean
+  title: string
+}
+
+interface MyWikiProps {
+  success: boolean
+  message: string
+  data: WikiHistoryEntry[]
+}
+
+interface QuestionEntry {
+  id: number
+  doc_id: number
+  user_id: number
+  index_title: string
+  content: string
+  created_at: Date
+  answer_or_not: boolean
+  is_bad: boolean
+  nickname: string
+  rep_badge: number
+  badge_image: string
+  like_count: number
+  doc_title: string
+  answer_count: number
+}
+
+interface MyQuestionProps {
+  success: boolean
+  message: string
+  data: QuestionEntry[]
+}
+
+interface Debate {
+  debate_id: number
+  debate_subject: string
+  debate_content: string
+  debate_content_time: Date
+  is_bad: boolean
+  doc_title: string
+}
+
+interface MyDebateProps {
+  success: boolean
+  message: Debate[]
+}
+
+interface DocumentContribution {
+  doc_title: string
+  doc_id: number
+  doc_point: string
+  percentage: string
+}
+
+interface MyContributionMessage {
+  count: number
+  ranking: number
+  ranking_percentage: string
+  point: number
+  docs: DocumentContribution[]
+}
+
+interface MyContributionProps {
+  status: number
+  success: boolean
+  message: MyContributionMessage
+}
+
+interface MyPageProps {
+  loggedIn: boolean
+  setLoggedIn: (loggedIn: boolean) => void
+}
+
+const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
-  const handlePageChange = (pageNumber) => {
+
+  const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
   }
 
@@ -44,68 +180,88 @@ function MyPage({ loggedIn, setLoggedIn }) {
       } else if (res.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return Navigate(from)
+        Navigate(from)
       }
     } catch (error) {
       console.error(error)
       setLoggedIn(false)
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return Navigate(from)
+        Navigate(from)
       }
       alert('에러가 발생하였습니다')
-      return Navigate(from)
+      Navigate(from)
     }
   }
+
   useEffect(() => {
     checkLoginStatus()
   }, [])
-  //
 
-  // 데이터 불러오기
-  useEffect(() => {
-    const getData = async (url, stateSetter) => {
-      try {
-        const res = await axios.get(url, { withCredentials: true })
+  const fetchMyPageData = async (): Promise<MyPageDataProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
+    return res.data
+  }
 
-        if (res.status === 200 || res.status === 201) {
-          // 상태 코드에 따라 데이터 처리
-          stateSetter(res.data)
-        } else if (res.status === 401) {
-          /* empty */
-        }
-        setLoading(false)
-      } catch (error) {
-        console.error(error)
-        setLoading(false)
-      }
-    }
+  const fetchMyQuestion = async (): Promise<MyQuestionProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, {
+      withCredentials: true,
+    })
+    return res.data
+  }
 
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/info`, setMypageData)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, setMyQuestion)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, setMyDebate)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, setMyBadge)
-    getData(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, setMyWiki)
-    getData(`${process.env.REACT_APP_HOST}/wiki/contributions`, setMyContribute)
-  }, [])
+  const fetchMyDebate = async (): Promise<MyDebateProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, { withCredentials: true })
+    return res.data
+  }
 
-  //
+  const fetchMyBadge = async (): Promise<BadgeDataProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    return res.data
+  }
 
-  // 로딩 중일 때 표시할 컴포넌트
-  if (loading) {
+  const fetchMyWiki = async (): Promise<MyWikiProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, { withCredentials: true })
+    return res.data
+  }
+
+  const fetchMyContribute = async (): Promise<MyContributionProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions`, { withCredentials: true })
+    return res.data
+  }
+
+  const { data: mypageData, isLoading: loadingMypage, error: mypageError } = useQuery('mypageData', fetchMyPageData)
+  const {
+    data: myQuestion,
+    isLoading: loadingMyQuestion,
+    error: myQuestionError,
+  } = useQuery('myQuestion', fetchMyQuestion)
+  const { data: myDebate, isLoading: loadingMyDebate, error: myDebateError } = useQuery('myDebate', fetchMyDebate)
+  const { data: myBadge, isLoading: loadingMyBadge, error: myBadgeError } = useQuery('myBadge', fetchMyBadge)
+  const { data: myWiki, isLoading: loadingMyWiki, error: myWikiError } = useQuery('myWiki', fetchMyWiki)
+  const {
+    data: myContribute,
+    isLoading: loadingMyContribute,
+    error: myContributeError,
+  } = useQuery('myContribute', fetchMyContribute)
+
+  if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
       <div>
         <SpinnerMypage />
       </div>
     )
   }
-  //
+
+  if (mypageError || myQuestionError || myDebateError || myBadgeError || myWikiError || myContributeError) {
+    return <div>{'Error loading data'}</div>
+  }
 
   return (
     <div className={styles.container}>
       <div>
-        <Header />
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
       <div className={styles.header}>
         <p className={styles.mypage}>{'MYPAGE'}</p>
@@ -121,13 +277,13 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 </Link> */}
               </div>
 
-              {mypageData && mypageData.data && myBadge.data && myContribute && myContribute.message && (
+              {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
                 <MyProfile
                   nick={mypageData.data[0].nickname}
                   point={mypageData.data[0].point}
                   badge={mypageData.data[0].rep_badge_name}
                   badgeimg={mypageData.data[0].rep_badge_image}
-                  percent={myContribute.message.ranking_percentage.toFixed(2)}
+                  percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
                 />
               )}
             </div>
@@ -157,7 +313,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                       myBadge.data &&
                       myBadge.data
                         .slice((page - 1) * perPage, page * perPage)
-                        .map((badge) => (
+                        .map((badge: Badge) => (
                           <img
                             title={badge.name}
                             key={badge.id}
@@ -206,12 +362,12 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 myWiki.message &&
                 myWiki.data
                   .slice(0, 7)
-                  .map((wiki) => (
+                  .map((wiki: WikiHistoryEntry) => (
                     <Contribute
                       key={wiki.id}
                       user_id={wiki.user_id}
                       doc_id={wiki.doc_id}
-                      text_pointer={wiki.textpointer}
+                      text_pointer={wiki.text_pointer}
                       version={wiki.version}
                       summary={wiki.summary}
                       created_at={wiki.created_at}
@@ -248,7 +404,7 @@ function MyPage({ loggedIn, setLoggedIn }) {
                 myQuestion &&
                 myQuestion.message &&
                 myQuestion.data &&
-                myQuestion.data.slice(0, 5).map((question) => (
+                myQuestion.data.slice(0, 5).map((question: QuestionEntry) => (
                   <QuestionList
                     key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                     id={question.id}
@@ -259,8 +415,6 @@ function MyPage({ loggedIn, setLoggedIn }) {
                     time={question.created_at}
                     is_bad={question.is_bad}
                     nickname={question.nickname}
-                    rep_badge={question.rep_badge}
-                    badge_image={question.badge_image}
                     like_count={question.like_count}
                     doc_title={question.doc_title}
                     answer_count={question.answer_count}
@@ -289,18 +443,16 @@ function MyPage({ loggedIn, setLoggedIn }) {
               ) : (
                 myDebate &&
                 myDebate.message &&
-                myDebate.message
-                  .slice(0, 5)
-                  .map((debate) => (
-                    <CommentList
-                      key={debate.id}
-                      id={debate.debate_id}
-                      subject={debate.debate_subject}
-                      content={debate.debate_content}
-                      time={debate.debate_content_time}
-                      doc_title={debate.doc_title}
-                    />
-                  ))
+                myDebate.message.slice(0, 5).map((debate: Debate) => (
+                  <CommentList
+                    key={debate.debate_id} // 여기에 키 추가
+                    id={debate.debate_id}
+                    subject={debate.debate_subject}
+                    content={debate.debate_content}
+                    time={debate.debate_content_time}
+                    doc_title={debate.doc_title}
+                  />
+                ))
               )}
             </div>
           </div>

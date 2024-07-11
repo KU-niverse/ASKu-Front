@@ -4,11 +4,16 @@ import styles from './LoginModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import haho_login from '../img/haho_login.png'
 
-function LoginModal({ isOpen, onClose }) {
-  const modalRef = useRef(null)
+interface LoginModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
 
-  const handleOutsideClick = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       onClose()
     }
   }

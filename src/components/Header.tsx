@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom' // useLocation 추가
-import axios from 'axios'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Header.module.css'
 import logo from '../img/logo.png'
@@ -23,25 +24,96 @@ import all_document from '../img/all_document.svg'
 import recent_debate from '../img/recent_debate.svg'
 import random_document from '../img/random_document.svg'
 
-function Header({ userInfo, setUserInfo }) {
+interface UserData {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface MypageDataResponse {
+  success: boolean
+  message: string
+  data: UserData[]
+}
+
+interface RandomDocResponse {
+  title: string
+}
+
+// 유저 정보 useQuery
+function useUserInfo() {
+  return useQuery<MypageDataResponse, AxiosError>(
+    'userInfo',
+    async () => {
+      const response = await axios.get<MypageDataResponse>(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      retry: false,
+      onError: (error) => {
+        console.error('사용자 정보 가져오기 에러:', error)
+      },
+      enabled: !!sessionStorage.getItem('user'),
+    },
+  )
+}
+
+// 랜덤 문서 useQuery
+function useRandomDoc() {
+  return useQuery<RandomDocResponse, Error>(
+    'randomDoc',
+    async () => {
+      const response = await axios.get<RandomDocResponse>(`${process.env.REACT_APP_HOST}/wiki/random`, {
+        withCredentials: true,
+      })
+      return response.data
+    },
+    {
+      enabled: false,
+      retry: false,
+      onError: (error) => {
+        console.error('랜덤 문서 가져오기 에러:', error)
+      },
+    },
+  )
+}
+
+function Header({ userInfo, setUserInfo }: any) {
   const [inputValue, setInputValue] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px')
   const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px')
   const [nicknameText, setNicknameText] = useState('')
-  const [isAlarmVisible, setIsAlarmVisible] = useState()
+  const [isAlarmVisible, setIsAlarmVisible] = useState(false)
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
   const default_height = '60px'
   const [mobileHeaderHeight, setMobileHeaderHeight] = useState(default_height)
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [loadingMypage, setLoadingMypage] = useState(true)
   const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false)
-  const [randomDoc, setRandomDoc] = useState([])
+  const [ismainpage, setIsMainPage] = useState(false)
+  const [buttonTextVisible, setButtonTextVisible] = useState(true)
+  const [buttonDisplay, setButtonDisplay] = useState('inline-flex')
+
   const Nav = useNavigate()
-  const location = useLocation() // useLocation 추가
-  const [ismainpage, setIsMainPage] = useState(false) // ismainpage 상태 변수 추가
-  const [buttonTextVisible, setButtonTextVisible] = useState(true) // 상태 추가
-  const [buttonDisplay, setButtonDisplay] = useState('inline-flex') // 버튼 display 상태 추가
+  const location = useLocation()
+
+  const { data: userData, isFetching: isLoadingUser } = useUserInfo()
+  const { data: randomDoc, refetch: refetchRandomDoc } = useRandomDoc()
 
   const logOut = () => {
     setIsLoggedIn(false)
@@ -72,31 +144,20 @@ function Header({ userInfo, setUserInfo }) {
   }, [isLoggedIn])
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
-          withCredentials: true,
-        })
-
-        if (response.status === 201) {
-          if (userInfo != null) {
-            setUserInfo(response.data.data)
-          }
-          setNicknameText(response.data)
-          setLoadingMypage(false)
-        }
-      } catch (error) {
-        console.error(error)
-        setLoadingMypage(false)
+    if (isLoggedIn && userData) {
+      const fetchedUserInfo = userData.data[0]
+      if (typeof setUserInfo === 'function') {
+        setUserInfo(fetchedUserInfo)
+      } else {
+        console.error('setUserInfo is not a function')
       }
+      if (fetchedUserInfo.nickname) {
+        setNicknameText(fetchedUserInfo.nickname)
+      }
+      setLoadingMypage(false)
     }
+  }, [isLoggedIn, setUserInfo, userData])
 
-    if (isLoggedIn) {
-      fetchUserInfo()
-    }
-  }, [isLoggedIn])
-
-  // 현재 경로에 따라 ismainpage 상태를 설정하는 useEffect 추가
   useEffect(() => {
     setIsMainPage(location.pathname === '/')
   }, [location])
@@ -116,7 +177,7 @@ function Header({ userInfo, setUserInfo }) {
     }
 
     window.addEventListener('resize', handleResize)
-    handleResize() // 초기 상태 설정
+    handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
@@ -184,7 +245,7 @@ function Header({ userInfo, setUserInfo }) {
         withCredentials: true,
       })
       if (response.status === 200) {
-        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}` // 페이지를 새 URL로 이동 및 새로고침
+        window.location.href = `/wiki/${encodeURIComponent(response.data.title)}`
       }
     } catch (error) {
       console.error('Error fetching random document:', error)
@@ -237,25 +298,21 @@ function Header({ userInfo, setUserInfo }) {
                 {ismainpage || buttonTextVisible ? '최근 토론' : ''}
               </button>
             </Link>
-            <Link
+            <button
               onClick={() => {
                 track('click_header_navi', { type: '랜덤 문서' })
                 handleRandomDocClick()
               }}
-              to={''}
+              type={'button'}
+              className={styles.headerButton}
+              style={{
+                marginRight: '0px',
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+              }}
             >
-              <button
-                type={'button'}
-                className={styles.headerButton}
-                style={{
-                  marginRight: '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                }}
-              >
-                <img src={random_document} alt={'랜덤 문서'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '랜덤 문서' : ''}
-              </button>
-            </Link>
+              <img src={random_document} alt={'랜덤 문서'} className={styles.icon} />
+              {ismainpage || buttonTextVisible ? '랜덤 문서' : ''}
+            </button>
           </div>
 
           <div className={styles.navContainer_right}>
@@ -267,16 +324,14 @@ function Header({ userInfo, setUserInfo }) {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    // 엔터키를 누를 때
-                    e.preventDefault() // 기본 동작 방지 (폼 제출 등)
+                    e.preventDefault()
                     if (inputValue.trim() !== '') {
-                      window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}` // 페이지 이동
+                      window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
                       setInputValue('')
                     }
                   }
                 }}
               />
-
               <img
                 role={'presentation'}
                 src={searchIcon}
@@ -291,81 +346,57 @@ function Header({ userInfo, setUserInfo }) {
                   }
                 }}
               />
-
             </div>
             {isLoggedIn ? (
-                <>
-                  {/*
+              <>
                 <img
-                  src={randomDocs}
-                  alt="randomDocs"
+                  role={'presentation'}
+                  src={bookmark}
+                  alt={'bookmark_gray'}
                   className={styles.signinButton}
-                  onClick={handleRandomDocClick}
+                  onClick={() => {
+                    track('click_header_navi', { type: '즐겨찾는 문서' })
+                    Nav('/mybookmark')
+                  }}
                 />
-                */}
-                  <img
-                      role={'presentation'}
-                      src={bookmark}
-                      alt={'bookmark_gray'}
-                      className={styles.signinButton}
-                      onClick={() => {
-                        track('click_header_navi', {type: '즐겨찾는 문서'})
-                        Nav('/mybookmark')
-                      }}
-                  />
-                  <img
-                      role={'presentation'}
-                      src={alarm}
-                      alt={'alarm'}
-                      id={styles.temporaryAlarm}
-                      className={styles.signinButton}
-                      onClick={handleAlarm}
-                  />
-
-                  <div className={styles.alarmModalContainer}>
-                    <AlarmModal
-                        isAlarmVisible={isAlarmVisible}
-                        handleAlarm={handleAlarm}
-                        isLoggedIn={isLoggedIn}
-                    />
-                  </div>
-
-                  <button
-                      type={'button'}
-                      className={styles.headerButton}
-                      onClick={signOut}
-                      style={{marginRight: '30px'}}
-                  >
-                    {'로그아웃\r'}
-                  </button>
-                  {loadingMypage ? (
-                      <div/>
-                  ) : (
-                      <Link to={'/mypage'}>
-                        <div className={styles.mypageWrap}>
-                          <p className={styles.nicknameText}>
-                            {nicknameText.data[0].nickname}
-                            {' 님'}
-                          </p>
-                          <img src={mypage} alt={'mypage'} className={styles.mypageBtn}/>
-                          <img src={nicknameText.data[0].rep_badge_image} alt={'rep_badge'}
-                               className={styles.repBadge}/>
-                        </div>
-                      </Link>
-                  )}
-                </>
-            ) : (
-                <>
-                  {/*
                 <img
-                  src={randomDocs}
-                  alt="randomDocs"
-                  className={styles.randomDocs}
-                  onClick={handleRandomDocClick}
+                  role={'presentation'}
+                  src={alarm}
+                  alt={'alarm'}
+                  id={styles.temporaryAlarm}
+                  className={styles.signinButton}
+                  onClick={handleAlarm}
                 />
-                 <Link to="/signup">
-                  <button className={styles.headerButton}>회원가입</button>
-                </Link> */}
+                <div className={styles.alarmModalContainer}>
+                  <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
+                </div>
+                <button
+                  type={'button'}
+                  className={styles.headerButton}
+                  onClick={signOut}
+                  style={{ marginRight: '30px' }}
+                >
+                  {'로그아웃\r'}
+                </button>
+                {loadingMypage ? (
+                  <div />
+                ) : (
+                  <Link to={'/mypage'}>
+                    <div className={styles.mypageWrap}>
+                      <p className={styles.nicknameText}>
+                        {nicknameText}
+                        {' 님'}
+                      </p>
+                      <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
+                      {userInfo && userInfo.rep_badge_image && (
+                        <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                      )}
+                    </div>
+                  </Link>
+                )}
+              </>
+            ) : (
+              <>
                 <a href={'https://www.koreapas.com/m/member_join_new.php'}>
                   <button type={'button'} className={styles.headerButton}>
                     {'회원가입'}
@@ -430,17 +461,17 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
                     </div>
                   </Link>
-                  <Link
+                  <button
+                    type={'button'}
                     id={styles.temporaryMobileAlarm}
                     className={styles.mobileMenuBtn}
                     onClick={handleMobileAlarmModal}
-                    to={''}
                   >
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={mobilealarm} alt={''} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'알림'}</p>
                     </div>
-                  </Link>
+                  </button>
                   <Link
                     to={'/allhistory'}
                     className={styles.mobileMenuBtn}
@@ -465,19 +496,19 @@ function Header({ userInfo, setUserInfo }) {
                       <p className={styles.mobileMenuText}>{'토론'}</p>
                     </div>
                   </Link>
-                  <Link className={styles.mobileMenuBtn} onClick={handleRandomDocClick} to={''}>
+                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={randomDocs} alt={''} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
                     </div>
-                  </Link>
+                  </button>
                   {isLoggedIn ? (
-                    <Link className={styles.mobileMenuBtn} onClick={signOut} to={''}>
+                    <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
                       <div className={styles.mobileHamburgerMenu}>
                         <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
                         <p className={styles.mobileMenuText}>{'로그아웃'}</p>
                       </div>
-                    </Link>
+                    </button>
                   ) : (
                     <Link to={'/signin'} className={styles.mobileMenuBtn}>
                       <div className={styles.mobileHamburgerMenu}>
@@ -502,10 +533,7 @@ function Header({ userInfo, setUserInfo }) {
                         e.preventDefault()
                         if (inputValue.trim() !== '') {
                           Nav(
-                            `/result/${encodeURIComponent(inputValue).replace(
-                              /\./g,
-                              '%2E',
-                            )}/${encodeURIComponent(`search`)}`,
+                            `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
                           )
                           setInputValue('')
                         }
@@ -520,10 +548,7 @@ function Header({ userInfo, setUserInfo }) {
                     onClick={() => {
                       if (inputValue.trim() !== '') {
                         Nav(
-                          `/result/${encodeURIComponent(inputValue).replace(
-                            /\./g,
-                            '%2E',
-                          )}/${encodeURIComponent(`search`)}`,
+                          `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
                         )
                         setInputValue('')
                       }

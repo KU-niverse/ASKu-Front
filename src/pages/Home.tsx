@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
@@ -11,6 +10,24 @@ import logo from '../img/logo_big.png'
 import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
+
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
 
 interface HomeProps {
   loggedIn: boolean
@@ -52,6 +69,7 @@ const checkLoginStatus = async () => {
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
   const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
@@ -93,7 +111,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
 
   return (
     <div className={styles.pageWrap}>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeWrap}>
         <div className={styles.inputContainer}>
           <img src={logo} className={styles.logo} alt={'logo'} />
@@ -124,7 +142,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <div className={styles.keyWord}>
               <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
               {isKeywordsLoading ? (
-                <p>Loading...</p>
+                <p>{'Loading...'}</p>
               ) : (
                 popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
                   <Link
@@ -150,7 +168,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <div className={styles.question}>
               <p className={styles.realTimeTitle}>{'실시간 인기 질문'}</p>
               {isQuestionsLoading ? (
-                <p>Loading...</p>
+                <p>{'Loading...'}</p>
               ) : (
                 popularQuestions.map((question: PopularQuestion, index: number) => (
                   <Link

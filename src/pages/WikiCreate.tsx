@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FormEvent, useCallback } from 'react'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Editor from '../components/Quill'
 import styles from './WikiEdit.module.css'
@@ -10,119 +11,156 @@ import Footer from '../components/Footer'
 import HtmlToWiki from '../components/Wiki/HtmlToWiki'
 import TypeDrop from '../components/TypeDrop'
 
-const WikiCreate = ({ loggedIn, setLoggedIn }) => {
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface OptionType {
+  label: string
+  value: string
+}
+
+interface WikiCreateProps {
+  loggedIn: boolean
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const fetchLoginStatus = async () => {
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  return res.data
+}
+
+const WikiCreate = ({ loggedIn, setLoggedIn }: WikiCreateProps) => {
   const nav = useNavigate()
   const location = useLocation()
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
-  const [selectedOption, setSelectedOption] = useState(null) // 드롭다운 옵션
+  const [selectedOption, setSelectedOption] = useState<OptionType | null>(null)
   const [isChecked, setIsChecked] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const queryClient = useQueryClient()
 
   const from = location.state?.from || '/'
-  // console.log(from)
 
-  // 로그인 체크 후 우회
-  const checkLoginStatus = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      if (res.status === 201 && res.data.success === true) {
+  useQuery('loginStatus', fetchLoginStatus, {
+    onSuccess: (data) => {
+      if (data.success) {
         setLoggedIn(true)
-      } else if (res.status === 401) {
+        setUserInfo(data.user)
+      } else {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        return nav('/')
+        nav('/')
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error(error)
       setLoggedIn(false)
-      if (error.response.status === 401) {
-        setLoggedIn(false)
-        alert('로그인이 필요한 서비스 입니다.')
-        return nav('/')
-      }
       alert('에러가 발생하였습니다')
-      return nav('/')
-    }
-  }
-  useEffect(() => {
-    checkLoginStatus()
-  }, [])
+      nav('/')
+    },
+  })
 
   useEffect(() => {
     track('view_create_wiki', {
       loged_in: loggedIn,
     })
-  })
+  }, [loggedIn])
 
-  const handleCheckboxChange = () => {
-    setIsChecked((prevIsChecked) => !prevIsChecked)
-  }
-
-  function onEditorChange(value) {
-    setDesc(value)
-    // console.log(value);
-  }
-
-  const handleCreateBtn = async (e) => {
-    e.preventDefault()
-    track('click_complete_wiki_creation', {
-      title,
-    })
-    if (title.length > 30) {
-      // 30자를 초과하는 경우 alert를 띄우고 이전 값으로 되돌림
-      alert('제목은 30자 이내로 입력해주세요.')
-      // 함수 종료
-    }
-    const trimedTitle = title.trim()
-    if (desc.trim() === '') {
-      alert('내용을 작성해주세요')
-    }
-
-    const wikiMarkup = HtmlToWiki(desc)
-    // console.log(selectedOption);
-
-    if (isChecked === false) {
-      alert('정책에 맞게 작성하였음을 확인해주세요')
-    }
-
-    try {
+  const mutation = useMutation(
+    async (newWiki: { title: string; text: string }) => {
       const result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/contents/new/${trimedTitle}`,
+        `${process.env.REACT_APP_HOST}/wiki/contents/new/${encodeURIComponent(newWiki.title)}`,
         {
-          text: wikiMarkup,
+          text: newWiki.text,
           type: 'doc',
         },
         {
           withCredentials: true,
         },
       )
-      if (result.data.success === true) {
+      return result.data
+    },
+    {
+      onSuccess: () => {
         alert('문서를 생성해주셔서 감사합니다.')
         nav(`/wiki/${encodeURIComponent(title)}`)
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 401) {
-        alert('로그인이 필요합니다.')
-        // nav("/signin");
-      } else if (error.response.status === 500) {
-        alert('제출해 실패했습니다. 다시 시도해주세요.')
-        // setWiki(error.response.data.newContent);
-      } else {
-        alert(error.response.data.message)
-      }
-    }
+      },
+      onError: (error: any) => {
+        console.error(error)
+        if (error.response?.status === 401) {
+          alert('로그인이 필요합니다.')
+          nav('/signin')
+        } else if (error.response?.status === 500) {
+          alert('제출에 실패했습니다. 다시 시도해주세요.')
+        } else {
+          alert(error.response?.data.message || '문제가 발생하였습니다')
+        }
+      },
+    },
+  )
+
+  const handleCheckboxChange = () => {
+    setIsChecked((prevIsChecked) => !prevIsChecked)
   }
 
-  const handleSelectedOption = (optionValue) => {
-    setSelectedOption(optionValue)
-    // console.log(selectedOption);
+  const onEditorChange = (value: string) => {
+    setDesc(value)
   }
+
+  const handleCreateBtn = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
+
+    track('click_complete_wiki_creation', {
+      title,
+    })
+
+    if (title.length > 30) {
+      alert('제목은 30자 이내로 입력해주세요.')
+      return
+    }
+
+    const trimmedTitle = title.trim()
+    if (desc.trim() === '') {
+      alert('내용을 작성해주세요')
+      return
+    }
+
+    const wikiMarkup = HtmlToWiki(desc)
+
+    if (!isChecked) {
+      alert('정책에 맞게 작성하였음을 확인해주세요')
+      return
+    }
+
+    mutation.mutate({ title: trimmedTitle, text: wikiMarkup })
+  }
+
+  const handleSelectedOption = (optionValue: OptionType) => {
+    setSelectedOption(optionValue)
+  }
+
+  const handleWikiManualClick = useCallback(() => {
+    nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')
+  }, [nav])
 
   return (
     <div className={`${styles.container}`}>
-      <Header />
-
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={`${styles.edit}`}>
         <form onSubmit={handleCreateBtn}>
           <div className={`${styles.wikichar}`}>
@@ -138,15 +176,10 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
               />
             </div>
             <div className={`${styles.wikichar_char}`}>
-              {/* <h4>문서 성격</h4> //문서 성격 선택 기능 제거 (대신 문서 작성 방법 투입 예정)
-              <TypeDrop onSelectedOption={handleSelectedOption} /> */}
               <h4>{'위키 작성 방법'}</h4>
-              <p
-                role={'presentation'}
-                onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
-                className={styles.wikiManual}
-              >
-                {'위키 문법 알아보기!'}&nbsp;{'\r'}
+              <p role={'presentation'} onClick={handleWikiManualClick} className={styles.wikiManual}>
+                {'위키 문법 알아보기!'}
+                {'\r'}
                 <FaArrowUpRightFromSquare />
               </p>
             </div>
@@ -177,6 +210,7 @@ const WikiCreate = ({ loggedIn, setLoggedIn }) => {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   )
 }

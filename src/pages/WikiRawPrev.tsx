@@ -7,12 +7,31 @@ import styles from './Wikiviewer.module.css'
 import his from '../img/his.png'
 import WikiToHtml from '../components/Wiki/WikiToHtml'
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 function WikiViewer() {
   const { title, ver } = useParams()
   const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
   const [isToggled, setIsToggled] = useState(false)
   const [isBookmark, setIsBookmark] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const fetchWiki = async () => {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`)
@@ -33,7 +52,7 @@ function WikiViewer() {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.wikiviewer}>
         <div className={styles.wikititle}>
           <h1>{title}</h1>

@@ -1,286 +1,224 @@
 import React, { useState, useEffect } from 'react'
-
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { useQuery, useMutation, QueryFunctionContext } from 'react-query'
+import axios, { AxiosError } from 'axios'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
-import { track } from '@amplitude/analytics-browser'
 import Editor from '../components/Quill2'
 import styles from './WikiEdit.module.css'
 import Header from '../components/Header'
 import QuestionFor from '../components/QuestionFor'
 import WikiDropDown from '../components/WikiDropDown'
-import WikiToHtml from '../components/Wiki/WikiToHtml'
 import HtmlToWiki from '../components/Wiki/HtmlToWiki'
 import WikiToQuill from '../components/Wiki/WikiToQuill'
 import SpinnerMypage from '../components/SpinnerMypage'
 
-const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
+interface QuestionEditProps {
+  loggedIn: boolean
+  setLoggedIn: (loggedIn: boolean) => void
+}
+
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+interface WikiDocs {
+  text?: string
+  version: string
+  is_managed?: number
+}
+
+const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
   const nav = useNavigate()
+  const { main } = useParams<{ main: string }>()
+  const location = useLocation()
+  const stateData = location.state as any
+  const [desc, setDesc] = useState('')
   const [summary, setSummary] = useState('')
   const [version, setVersion] = useState('')
   const [copy, setCopy] = useState(false)
-  const { main } = useParams()
-  const location = useLocation()
-  const stateData = location.state
-  const [desc, setDesc] = useState('')
-  const [selectedOption, setSelectedOption] = useState('') // 드롭다운 옵션
-  const [selectedTitle, setSelectedTitle] = useState(stateData.index_title) // 드롭다운 옵션
-  const [isOptDisabled, setIsOptDisabled] = useState(false) // 같은 목차 없을 시 true
-  const { qid } = stateData
-  const [defaultOpt, setDefaultOpt] = useState(stateData.index_title)
-  const [loading, setLoading] = useState(true) // 일단 false로(dropdown불러오기 전에 풀려서 오류)
+  const [selectedOption, setSelectedOption] = useState('')
+  const [selectedTitle, setSelectedTitle] = useState(stateData.index_title)
+  const [isOptDisabled, setIsOptDisabled] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
-  const [userInfo, setUserInfo] = useState({})
-  const [wikiDocs, setWikiDocs] = useState({})
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [wikiDocs, setWikiDocs] = useState<WikiDocs>({ version: '' })
+  const [loading, setLoading] = useState(true)
 
+  const { qid } = stateData
   const from = stateData.from || '/'
-
-  // //로그인 체크 후 우회
-  // const checkLoginStatus = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       process.env.REACT_APP_HOST+"/user/auth/issignedin",
-  //       { withCredentials: true }
-  //     );
-  //     if (res.status === 201 && res.data.success === true) {
-  //       setLoggedIn(true);
-  //     } else if (res.status === 401) {
-  //       setLoggedIn(false);
-  //       alert("로그인이 필요한 서비스 입니다.");
-  //       return nav(from);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoggedIn(false);
-  //     if (error.response.status === 401) {
-  //       setLoggedIn(false);
-  //       //alert("로그인이 필요한 서비스 입니다.");
-  //       return nav(from);
-  //     }else{
-  //       alert("에러가 발생하였습니다");
-  //       return nav(from);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   checkLoginStatus();
-  // }, []);
 
   const handleCheckboxChange = () => {
     setIsChecked((prevIsChecked) => !prevIsChecked)
   }
 
-  function onEditorChange(value) {
+  const onEditorChange = (value: any) => {
     setDesc(value)
   }
-  // 일치하는 목차가 없을 경우 전체 문서를 불러옴
-  const getAllWiki = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${main}`, {
-        withCredentials: true,
-      }) // 전체 텍스트를 가져옴.
-      if (result.status === 200) {
-        setDesc(WikiToQuill(result.data.text))
-        setVersion(result.data.version)
-        setWikiDocs(result.data)
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 401) {
-        alert(error.response.data.message)
-        // nav("/signin");
-      } else {
-        alert('잘못된 접근입니다.')
-      }
-    }
+
+  const fetchWiki = async ({ queryKey }: QueryFunctionContext<[string, string]>) => {
+    const [, url] = queryKey
+    const { data } = await axios.get(url, { withCredentials: true })
+    return data
   }
 
-  // 해당 섹션의 문서를 가지고 옴
-  const getWiki = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${main}/section/${selectedOption}`, {
-        withCredentials: true,
-      }) // 전체 텍스트를 가져옴.
-      if (result.status === 200) {
-        setDesc(WikiToQuill(`${result.data.title}\n${result.data.content}`))
-        setVersion(result.data.version)
-        setWikiDocs(result.data)
-      }
-    } catch (error) {
-      console.error(error)
-      if (error.response.status === 401) {
-        alert(error.response.data.message)
-        return nav('/')
-      }
-      alert('잘못된 접근입니다.')
-    }
-  }
-  // qid로 같은 목차 존재하는지 확인하는 함수(있으면 그대로, 없으면 전체편집
-  const checkSameIndex = async () => {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/question/${qid}`, {
-        withCredentials: true,
-      })
-      if (result.status === 200) {
-        if (result.data.based_on_section === true) {
-          setSelectedOption(result.data.section)
+  const { data: allWikiData, refetch: refetchAllWiki } = useQuery(
+    ['wiki', `${process.env.REACT_APP_HOST}/wiki/contents/${main}`],
+    fetchWiki,
+    {
+      enabled: false,
+      onSuccess: (data) => {
+        setDesc(WikiToQuill(data.text))
+        setVersion(data.version)
+        setWikiDocs(data)
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
+        alert('잘못된 접근입니다.')
+        nav('/')
+      },
+    },
+  )
+
+  const { data: wikiSectionData, refetch: refetchWikiSection } = useQuery(
+    ['wikiSection', `${process.env.REACT_APP_HOST}/wiki/contents/${main}/section/${selectedOption}`],
+    fetchWiki,
+    {
+      enabled: false,
+      onSuccess: (data) => {
+        setDesc(WikiToQuill(`${data.title}\n${data.content}`))
+        setVersion(data.version)
+        setWikiDocs(data)
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
+        alert('잘못된 접근입니다.')
+        nav('/')
+      },
+    },
+  )
+
+  const { data: sameIndexData, refetch: refetchSameIndex } = useQuery(
+    ['sameIndex', `${process.env.REACT_APP_HOST}/wiki/contents/question/${qid}`],
+    fetchWiki,
+    {
+      onSuccess: (data) => {
+        if (data.based_on_section) {
+          setSelectedOption(data.section)
         } else {
           setSelectedOption('all')
           setIsOptDisabled(true)
         }
-      }
-    } catch (error) {
-      setLoading(false)
-      if (error.response.status === 401) {
-        setLoading(false)
+      },
+      onError: (error: AxiosError) => {
+        console.error(error)
         alert('로그인이 필요합니다.')
-        return nav(from)
-      }
-      setLoading(false)
-      alert(error.response.data.message)
-      // console.log(error);
-      // nav("/");
-    }
-  }
-
-  // useEffect(() => {
-  //     checkSameIndex();
-  //   }, [qid]);
+        nav(from)
+      },
+    },
+  )
 
   useEffect(() => {
-    checkSameIndex()
-
-    setCopy(false)
-  }, [])
-
-  // Amplitude
-  useEffect(() => {
-    track('view_edit_wiki', {
-      title: main,
-      type: 'question',
-    })
-  }, [])
-
-  useEffect(() => {
-    if (userInfo[0] !== undefined) {
-      if (wikiDocs.is_managed === 1) {
-        if (userInfo[0].is_authorized === 0) {
-          alert('인증받은 유저만 수정이 가능합니다.')
-          nav(-1)
-        }
-      }
-    }
-  }, [userInfo, wikiDocs])
-
-  // 첫 설정이 문제..
+    refetchSameIndex()
+  }, [qid])
 
   useEffect(() => {
     if (selectedOption) {
       if (selectedOption === 'all') {
-        getAllWiki()
-        setLoading(false)
+        refetchAllWiki()
       } else {
-        getWiki()
-        setLoading(false)
+        refetchWikiSection()
       }
-    } else {
-      /* empty */
+      setLoading(false)
     }
-
-    setCopy(false)
   }, [selectedOption])
 
-  const addWikiEdit = async (e) => {
+  useEffect(() => {
+    if (userInfo && wikiDocs.is_managed === 1 && userInfo.is_authorized === false) {
+      alert('인증받은 유저만 수정이 가능합니다.')
+      nav(-1)
+    }
+  }, [userInfo, wikiDocs])
+
+  const mutation = useMutation((newContent: { url: string; payload: any }) => {
+    return axios.post(newContent.url, newContent.payload, { withCredentials: true })
+  })
+
+  const addWikiEdit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // 본문 내용 입력 필수
-    if (desc.trim() === '') {
-      return alert('내용을 작성해주세요')
+    if (!desc.trim()) {
+      alert('내용을 작성해주세요')
+      return
     }
 
     const wikiMarkup = HtmlToWiki(desc)
 
-    if (isChecked === false) {
-      return alert('정책에 맞게 작성하였음을 확인해주세요')
-    }
-    if (summary === '') {
-      return alert('히스토리 요약을 작성해주세요')
+    if (!isChecked) {
+      alert('정책에 맞게 작성하였음을 확인해주세요')
+      return
     }
 
-    if (selectedOption === 'all') {
-      try {
-        const result = await axios.post(
-          `${process.env.REACT_APP_HOST}/wiki/contents/${main}`,
-          {
-            version,
-            new_content: wikiMarkup,
-            summary,
-            is_q_based: 1,
-            qid,
-            index_title: '전체',
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        if (result.status === 200) {
-          alert('수정이 완료되었습니다.')
-
-          nav(`/wiki/${main}`)
-        }
-      } catch (error) {
-        if (error.response.status === 401) {
-          setLoading(false)
-          alert('login이 필요합니다.')
-          nav('/signin')
-        } else if (error.response.status === 500) {
-          alert('제출에 실패했습니다. 다시 시도해주세요.')
-          // setWiki(error.response.data.newContent);
-        } else if (error.response.status === 426) {
-          alert('기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.')
-          setCopy(true)
-        }
-      }
-    } else {
-      try {
-        const result = await axios.post(
-          `${process.env.REACT_APP_HOST}/wiki/contents/${main}/section/${selectedOption}`,
-          {
-            version,
-            new_content: wikiMarkup,
-            summary,
-            is_q_based: 1,
-            qid,
-            index_title: selectedTitle,
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        if (result.status === 200) {
-          alert('수정이 완료되었습니다.')
-          nav(`/wiki/${main}`)
-        }
-      } catch (error) {
-        if (error.response.status === 401) {
-          alert('login이 필요합니다.')
-          nav('/signin')
-        } else if (error.response.status === 500) {
-          alert('제출에 실패했습니다. 다시 시도해주세요.')
-          // setWiki(error.response.data.newContent);
-        } else if (error.response.status === 426) {
-          alert('기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.')
-          setCopy(true)
-        }
-      }
+    if (!summary) {
+      alert('히스토리 요약을 작성해주세요')
+      return
     }
+
+    const payload = {
+      version,
+      new_content: wikiMarkup,
+      summary,
+      is_q_based: 1,
+      qid,
+      index_title: selectedOption === 'all' ? '전체' : selectedTitle,
+    }
+
+    const url =
+      selectedOption === 'all'
+        ? `${process.env.REACT_APP_HOST}/wiki/contents/${main}`
+        : `${process.env.REACT_APP_HOST}/wiki/contents/${main}/section/${selectedOption}`
+
+    mutation.mutate(
+      { url, payload },
+      {
+        onSuccess: () => {
+          alert('수정이 완료되었습니다.')
+          nav(`/wiki/${main}`)
+        },
+        onError: (error: AxiosError) => {
+          console.error(error)
+          if (error.response?.status === 401) {
+            alert('login이 필요합니다.')
+            nav('/signin')
+          } else if (error.response?.status === 500) {
+            alert('제출에 실패했습니다. 다시 시도해주세요.')
+          } else if (error.response?.status === 426) {
+            alert('기존 글이 수정되었습니다. 새로고침 후 다시 제출해주세요.')
+            setCopy(true)
+          }
+        },
+      },
+    )
   }
-  // dropdown에서 선택한 index 섹션으로 반영
-  const handleSelectedOption = (optionValue) => {
+
+  const handleSelectedOption = (optionValue: any) => {
     setSelectedOption(optionValue)
   }
-  // dropdown에서 선택한 index title 반영
-  const handleSelectedTitle = (optionValue) => {
+
+  const handleSelectedTitle = (optionValue: any) => {
     setSelectedTitle(optionValue)
   }
 
@@ -293,9 +231,9 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
   }
 
   return (
-    <div className={`${styles.container}`}>
+    <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={`${styles.edit}`}>
+      <div className={styles.edit}>
         <div>
           <QuestionFor
             nick={stateData.nick}
@@ -305,16 +243,16 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
           />
         </div>
         <form onSubmit={addWikiEdit}>
-          <div className={`${styles.wikiQues_header}`}>
-            <div className={`${styles.wikichar_title}`}>
+          <div className={styles.wikiQues_header}>
+            <div className={styles.wikichar_title}>
               <h4>{'문서 제목'}</h4>
-              <input type={'text'} required disabled={'true'} value={main} className={`${styles.title}`} />
+              <input type={'text'} required disabled value={main} className={styles.title} />
             </div>
-            <div className={`${styles.wikiQues_lists}`}>
+            <div className={styles.wikiQues_lists}>
               <h4>{'목차'}</h4>
               <div className={styles.q_dropdown}>
                 <WikiDropDown
-                  defaultOpt={defaultOpt}
+                  defaultOpt={selectedTitle}
                   onSelectedOption={handleSelectedOption}
                   onSelectedTitle={handleSelectedTitle}
                   title={main}
@@ -324,38 +262,32 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
             </div>
           </div>
           <div>
-            <div className={`${styles.QuesWikiManu}`}>
+            <div className={styles.QuesWikiManu}>
               <h4>{'문서 내용'}</h4>
               <p
                 role={'presentation'}
                 onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
                 className={styles.wikiManual}
               >
-                {'위키 문법 알아보기!'}&nbsp;{'\r'}
+                {'위키 문법 알아보기!'}&nbsp;
                 <FaArrowUpRightFromSquare />
               </p>
             </div>
-
-            <div className={`${styles.editorbox2}`}>
+            <div className={styles.editorbox2}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>
             <h4>{'히스토리 요약'}</h4>
             <textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
-              className={`${styles.summary}`}
+              className={styles.summary}
               maxLength={60}
               placeholder={'60자 이내로 작성해주세요'}
             />
           </div>
-          <div className={`${styles.submitbox}`}>
-            <span className={`${styles.chkdiv}`}>
-              <input
-                type={'checkbox'}
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className={`${styles.chkbox}`}
-              />
+          <div className={styles.submitbox}>
+            <span className={styles.chkdiv}>
+              <input type={'checkbox'} checked={isChecked} onChange={handleCheckboxChange} className={styles.chkbox} />
               <a
                 href={'https://034179.notion.site/e7421f1ad1064d2dbde0777d53766a7d'}
                 target={'_blank'}
@@ -364,7 +296,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }) => {
                 {'정책에 맞게 작성하였음을 확인합니다.\r'}
               </a>
             </span>
-            <button type={'button'} className={`${styles.submitWiki}`}>
+            <button type={'submit'} className={styles.submitWiki}>
               {'생성하기'}
             </button>
           </div>

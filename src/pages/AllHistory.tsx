@@ -28,6 +28,24 @@ interface HistoryItem {
   is_bad: number
 }
 
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 function useGetHistory(type: string, page: number, perPage: number) {
   return useQuery<HistoryItem[], AxiosError>(
     ['historys', type, page],
@@ -35,7 +53,6 @@ function useGetHistory(type: string, page: number, perPage: number) {
       const result = await axios.get<HistoryResponse>(
         `${process.env.REACT_APP_HOST}/wiki/historys?type=${type}&page=${page}&perPage=${perPage}`,
       )
-
       return result.data.message
     },
     {
@@ -48,10 +65,12 @@ function useGetHistory(type: string, page: number, perPage: number) {
   )
 }
 
-const AllHistory = () => {
+const AllHistory: React.FC = () => {
   const [type, setType] = useState<string>('all')
   const [page, setPage] = useState<number>(1)
   const perPage = 10 // 페이지당 보여줄 항목 수
+
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const { isError, error, data: historys } = useGetHistory(type, page, perPage)
 
@@ -78,7 +97,7 @@ const AllHistory = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.header}>
         <span>
           <img alt={'최근 변경 내역'} src={his2} />
@@ -87,7 +106,10 @@ const AllHistory = () => {
       </div>
       <div className={styles.history}>
         {isError ? (
-          <div>에러: {error.message}</div>
+          <div>
+            {'에러: '}
+            {error.message}
+          </div>
         ) : (
           <>
             <div className={type === 'all' ? styles.historyList : styles.hidden}>

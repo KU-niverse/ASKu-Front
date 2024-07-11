@@ -5,10 +5,26 @@ import styles from './MyQuestion.module.css'
 import Header from '../components/Header'
 import MyQuestionList from '../components/MyQuestionList'
 import Footer from '../components/Footer'
-
 import Switch from '../components/Switch'
-
 import SpinnerMypage from '../components/SpinnerMypage'
+
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
 
 interface Question {
   id: number
@@ -98,6 +114,7 @@ function useMypageData() {
 function MyQuestion() {
   const [isToggled, setIsToggled] = useState(false)
   const arrange = isToggled ? 'popularity' : 'latest'
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const { isLoading: isLoadingMyQuestion, error: myQuestionError, data: myQuestionData } = useMyQuestion(arrange)
   const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
@@ -107,7 +124,7 @@ function MyQuestion() {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
 
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
         <SpinnerMypage />

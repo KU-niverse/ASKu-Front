@@ -5,16 +5,26 @@ import { track } from '@amplitude/analytics-browser'
 import WikiToHtml from './Wiki/WikiToHtml'
 import styles from './WikiBox.module.css'
 
-const WikiBox = (props) => {
-  const { main } = props
-  const { title } = props
-  const content = WikiToHtml(props.content)
-  const { index } = props
-  const { section } = props
-  const { isZero } = props
+interface Content {
+  index: string
+  section: string
+  title: string
+  content: string
+}
+interface WikiBoxProps {
+  main: string
+  title: string
+  content: string // 수정된 부분
+  index: string
+  section: string
+  isZero: boolean
+}
+
+const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, index, section, isZero }) => {
+  const content = WikiToHtml(rawContent)
   const nav = useNavigate()
   const location = useLocation()
-  const [isOpen, setView] = useState(true) // 메뉴의 초기값을 false로 설정
+  const [isOpen, setView] = useState(true) // 메뉴의 초기값을 true로 설정
   const contentWithResponsiveImages = content.replace(/<img/g, '<img style="max-width: 100%; height: auto;"')
 
   const linkToWikiEdit = () => {
@@ -31,23 +41,24 @@ const WikiBox = (props) => {
       },
     })
   }
+
   const linkToWikiQue = () => {
     const encodedMain = encodeURIComponent(main)
     nav(`/wiki/morequestion/${encodedMain}`, { state: `${index} ${title}` })
   }
 
   const toggleView = () => {
-    setView((isOpen) => !isOpen) // on,off 개념 boolean
+    setView((currentState) => !currentState) // on, off 개념 boolean
   }
 
   return (
     <div className={styles.wikiContents}>
       <li role={'presentation'} onClick={toggleView} className={styles.wikiContentlist}>
         <div className={styles.wikiContentTitle}>
-          <span className={isOpen ? {} : `${styles.hidden}`}>
+          <span className={isOpen ? '' : styles.hidden}>
             <FaChevronDown size={'16'} color={'rgba(222, 58, 88, 1)'} />
           </span>
-          <span className={isOpen ? `${styles.hidden}` : {}}>
+          <span className={isOpen ? styles.hidden : ''}>
             <FaChevronRight size={'16'} color={'rgba(222, 58, 88, 1)'} />
           </span>
           <span className={styles.wikiIndex}>
