@@ -10,11 +10,16 @@ import ClearModal from "./ClearModal";
 import { Link } from "react-router-dom";
 import RefreshModal from "./RefreshModal";
 import { track } from "@amplitude/analytics-browser";
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import { useResizeDetector } from 'react-resize-detector';
+import PerfectScrollbar from "react-perfect-scrollbar";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import { useResizeDetector } from "react-resize-detector";
 import infoIcon from "../img/Info.svg";
 import refreshIcon from "../img/Refresh.svg";
+
+//interface IResponseObject {
+//  q_content : String;
+//  answer: String;
+//}
 
 function Chatbot({ isLoggedIn, setIsLoggedIn }) {
   const [inputValue, setInputValue] = useState("");
@@ -55,7 +60,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         process.env.REACT_APP_HOST + "/user/mypage/info",
         {
           withCredentials: true,
-        }
+        },
       );
       if (res.status === 201 && res.data.success === true) {
         // 사용자 정보에서 id를 가져옴
@@ -74,74 +79,82 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     getUserInfo();
   }, []);
 
-  
   const scrollToBottom = () => {
     if (chatBottomRef.current) {
-      console.log("Scrolling to bottom:", chatBottomRef.current);
-      
-    setTimeout(() => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }), 100);
+      //console.log("Scrolling to bottom:", chatBottomRef.current);
+
+      setTimeout(
+        () => chatBottomRef.current.scrollIntoView({ behavior: "smooth" }),
+        100,
+      );
     } else {
-      console.log("chatBottomRef is not set");
+      //console.log("chatBottomRef is not set");
     }
   };
 
   const sendMessage = async () => {
     if (!isLoggedIn) {
-      setLoginModalVisible(true); //로그인하지 않은 사용자는 LoginModal 표시!
-
+      setLoginModalVisible(true);
       return;
     }
 
     if (inputValue.trim() !== "") {
+      setChatResponse((prevResponses) => [
+        ...prevResponses,
+        { content: inputValue, isQuestion: true, blockIconZip: true },
+        { content: "", isQuestion: false, blockIconZip: true }, // 빈 답변 추가
+      ]);
+
       setLoading(true);
-      // Amplitude
-      track("click_button_in_home_haho", {
-        question_content: inputValue,
-      });
+      setInputValue(""); // 입력창 비우기
+
       try {
         const response = await axios.post(
-          process.env.REACT_APP_AI + `/chatbot/`,
+          process.env.REACT_APP_AI + `/chatbot/stream/`,
           {
             q_content: inputValue,
             user_id: userId.data[0].id,
-          }
+          },
+          { withCredentials: true },
         );
 
         setShowSuggest(false);
         inputRef.current.blur();
 
-        const newChatResponse = [
-          ...chatResponse,
-          { content: inputValue }, // 사용자의 질문 추가
-          {
-            content: response.data.a_content,
-            reference: response.data.reference,
-            qnaId: response.data.id,
-          }, // 서버 응답 추가
-        ];
-        track("view_haho_result", {
-          question_content: inputValue,
-        });
-        setChatResponse(newChatResponse);
-        setInputValue("");
+        const answerRegex = /'answer': '(.*?)'/g;
+        let match;
+        let finalAnswer = "";
+        let tempAnswer = "";
 
-        // axios 요청 완료 후 로딩 스피너를 비활성화
-        setLoading(false); // 로딩 스피너 숨기기
-        scrollToBottom();
+        while ((match = answerRegex.exec(response.data)) !== null) {
+          const answer = match[1].replace(/\\n/g, "\n");
+          finalAnswer += answer;
+        }
+
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+          if (currentIndex < finalAnswer.length) {
+            tempAnswer += finalAnswer[currentIndex];
+
+            setChatResponse((prevResponses) => {
+              const updatedResponses = [...prevResponses];
+              updatedResponses[updatedResponses.length - 1].content =
+                tempAnswer;
+              return updatedResponses;
+            });
+
+            currentIndex++;
+
+            // 첫 글자 출력 시 로딩 종료
+            if (currentIndex === 1) {
+              setLoading(false);
+            }
+          } else {
+            clearInterval(interval);
+          }
+        }, 50); // 한 글자씩 출력하는 간격
       } catch (error) {
-        console.error(error);
-        // 만약 에러 상태가 403인 경우 (권한 없음)
-        if (error.response && error.response.status === 403) {
-          // 로그인 모달을 띄우도록 처리
-          setLoginModalVisible(true);
-        }
-
-        if (error.response && error.response.status === 406) {
-          // 새로고침 모달을 띄우도록 처리
-          setRefreshModalOpen(true);
-        }
-
-        // axios 요청 실패 시에도 로딩 스피너를 비활성화
+        console.error("Error sending question: ", error);
         setLoading(false);
       }
     }
@@ -199,16 +212,15 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       ];
       setChatResponse(updatedChatResponse);
       setInputValue("");
-      setShowSuggest(true);   
+      setShowSuggest(true);
     }, 3000); // 3초 후에 실행
-    
   };
 
   const chatBottomRef = useRef(null);
 
   // chatResponse 배열이 업데이트될 때마다 스크롤을 최하단으로 이동
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [chatResponse]);
 
   useEffect(() => {
@@ -226,7 +238,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
       inputRef.current.focus();
       try {
         const response = await axios.get(
-          `https://asku.wiki/ai/chatbot/${userId.data[0].id}`
+          process.env.REACT_APP_AI + `/chatbot/${userId.data[0].id}`,
         );
         const previousHistory = response.data;
         setPreviousChatHistory(previousHistory);
@@ -247,7 +259,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     scrollToBottomOnLoadingChange();
   }, [loading]);
 
-  const [maxWidth, setMaxWidth] = useState('auto');
+  const [maxWidth, setMaxWidth] = useState("auto");
   const suggestContainerRef = useRef(null);
   const { width: containerWidth } = useResizeDetector({
     targetRef: suggestContainerRef,
@@ -268,7 +280,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
         clearTimeout(timeoutId);
         setTimeoutId(null);
       }
-      scrollRef.current.style.overflowX = 'auto';
+      scrollRef.current.style.overflowX = "auto";
     }
   };
 
@@ -276,35 +288,34 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
     if (scrollRef.current) {
       const id = setTimeout(() => {
         if (scrollRef.current) {
-          scrollRef.current.style.overflowX = 'hidden';
+          scrollRef.current.style.overflowX = "hidden";
         }
       }, 1000); // 1초 후에 가로 스크롤바 숨김
       setTimeoutId(id);
     }
   };
 
-
   return (
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
           <button id={styles.title}>AI 챗봇</button>
-          <div className={styles.buttonContainer}  onClick={handleClearModal}>
-            <img src={refreshIcon} className={styles.sidebarIcon} alt="refresh" />
-            <button className={styles.button}>
-              채팅 초기화
-            </button>
+          <div className={styles.buttonContainer} onClick={handleClearModal}>
+            <img
+              src={refreshIcon}
+              className={styles.sidebarIcon}
+              alt="refresh"
+            />
+            <button className={styles.button}>채팅 초기화</button>
           </div>
           <Link
             to="https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4"
             target="_blank"
-            style={{ textDecoration: "none"}}
-          >            
-            <div className={styles.buttonContainer}>              
+            style={{ textDecoration: "none" }}
+          >
+            <div className={styles.buttonContainer}>
               <img src={infoIcon} className={styles.sidebarIcon} alt="info" />
-              <button className={styles.button} >
-                도움말
-              </button>
+              <button className={styles.button}>도움말</button>
             </div>
           </Link>
         </div>
@@ -349,21 +360,24 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
           {loading && <Spinner />}
         </div>
 
-        
-        <div className={styles.suggestContainer}
-        style={showSuggest ? {} : { display: "none" }}
-        ref={suggestContainerRef}>        
+        <div
+          className={styles.suggestContainer}
+          style={showSuggest ? {} : { display: "none" }}
+          ref={suggestContainerRef}
+        >
           <p id={styles.ref}>추천 검색어</p>
-          <div className={styles.scrollbarContainer}> 
-            <div className={styles.suggestScrollbar}
-            ref={scrollRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>               
+          <div className={styles.scrollbarContainer}>
+            <div
+              className={styles.suggestScrollbar}
+              ref={scrollRef}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <div className={styles.suggest}>
                 <span
                   id="ref_res_1"
                   className={styles.textBox}
-                  style={{marginLeft: "0px"}}
+                  style={{ marginLeft: "0px" }}
                   onClick={() => handleSuggestClick("너는 누구야?", 0)}
                 >
                   너는 누구야?
@@ -394,8 +408,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
                   이중전공은 어떻게 해?
                 </span>
               </div>
-            </div> 
-          </div>  
+            </div>
+          </div>
         </div>
 
         {isLoginModalVisible && (
@@ -417,8 +431,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }) {
             userId={userId}
           />
         )}
-        <div className={styles.promptWrap}
-        style={showSuggest ? {} : { marginTop: "25px" }}>
+        <div
+          className={styles.promptWrap}
+          style={showSuggest ? {} : { marginTop: "25px" }}
+        >
           <textarea
             className={styles.prompt}
             placeholder="AI에게 무엇이든 물어보세요! (프롬프트 입력)"
