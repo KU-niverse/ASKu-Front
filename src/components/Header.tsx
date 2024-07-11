@@ -291,11 +291,11 @@ function Header({ userInfo, setUserInfo }) {
                   }
                 }}
               />
-              <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
+
             </div>
             {isLoggedIn ? (
-              <>
-                {/*
+                <>
+                  {/*
                 <img
                   src={randomDocs}
                   alt="randomDocs"
@@ -303,50 +303,60 @@ function Header({ userInfo, setUserInfo }) {
                   onClick={handleRandomDocClick}
                 />
                 */}
-                <img
-                  role={'presentation'}
-                  src={bookmark}
-                  alt={'bookmark_gray'}
-                  className={styles.signinButton}
-                  onClick={() => {
-                    track('click_header_navi', { type: '즐겨찾는 문서' })
-                    Nav('/mybookmark')
-                  }}
-                />
-                <img
-                  role={'presentation'}
-                  src={alarm}
-                  alt={'alarm'}
-                  id={styles.temporaryAlarm}
-                  className={styles.signinButton}
-                  onClick={handleAlarm}
-                />
-                <button
-                  type={'button'}
-                  className={styles.headerButton}
-                  onClick={signOut}
-                  style={{ marginRight: '30px' }}
-                >
-                  {'로그아웃\r'}
-                </button>
-                {loadingMypage ? (
-                  <div />
-                ) : (
-                  <Link to={'/mypage'}>
-                    <div className={styles.mypageWrap}>
-                      <p className={styles.nicknameText}>
-                        {nicknameText.data[0].nickname}
-                        {' 님'}
-                      </p>
-                      <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
-                      <img src={nicknameText.data[0].rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
-                    </div>
-                  </Link>
-                )}
-              </>
+                  <img
+                      role={'presentation'}
+                      src={bookmark}
+                      alt={'bookmark_gray'}
+                      className={styles.signinButton}
+                      onClick={() => {
+                        track('click_header_navi', {type: '즐겨찾는 문서'})
+                        Nav('/mybookmark')
+                      }}
+                  />
+                  <img
+                      role={'presentation'}
+                      src={alarm}
+                      alt={'alarm'}
+                      id={styles.temporaryAlarm}
+                      className={styles.signinButton}
+                      onClick={handleAlarm}
+                  />
+
+                  <div className={styles.alarmModalContainer}>
+                    <AlarmModal
+                        isAlarmVisible={isAlarmVisible}
+                        handleAlarm={handleAlarm}
+                        isLoggedIn={isLoggedIn}
+                    />
+                  </div>
+
+                  <button
+                      type={'button'}
+                      className={styles.headerButton}
+                      onClick={signOut}
+                      style={{marginRight: '30px'}}
+                  >
+                    {'로그아웃\r'}
+                  </button>
+                  {loadingMypage ? (
+                      <div/>
+                  ) : (
+                      <Link to={'/mypage'}>
+                        <div className={styles.mypageWrap}>
+                          <p className={styles.nicknameText}>
+                            {nicknameText.data[0].nickname}
+                            {' 님'}
+                          </p>
+                          <img src={mypage} alt={'mypage'} className={styles.mypageBtn}/>
+                          <img src={nicknameText.data[0].rep_badge_image} alt={'rep_badge'}
+                               className={styles.repBadge}/>
+                        </div>
+                      </Link>
+                  )}
+                </>
             ) : (
-              <>
-                {/*
+                <>
+                  {/*
                 <img
                   src={randomDocs}
                   alt="randomDocs"
