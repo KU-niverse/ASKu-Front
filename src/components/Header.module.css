@@ -3,6 +3,10 @@ body, html {
     margin: 0;
     padding: 0;
 }
+.alarmModalContainer {
+    height: 0;
+    width: 0;
+}
 .container {
     display: flex; 
     border-bottom: 0.5px solid #D5D5D5;
@@ -121,6 +125,7 @@ body, html {
     margin-right: 0px;
     right: 10px;
     flex: 1;
+    height: 100%;
 }
 
 @media only screen and (max-width: 767px) {
