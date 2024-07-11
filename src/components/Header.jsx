@@ -260,13 +260,6 @@ function Header({ userInfo, setUserInfo }) {
               </Link>
             </div>
 
-            <div className={styles.alarmModalContainer}>
-              <AlarmModal
-                  isAlarmVisible={isAlarmVisible}
-                  handleAlarm={handleAlarm}
-                  isLoggedIn={isLoggedIn}
-              />
-            </div>
 
 
             <div className={styles.navContainer_right}            >
@@ -336,6 +329,14 @@ function Header({ userInfo, setUserInfo }) {
                         className={styles.signinButton}
                         onClick={handleAlarm}
                     />
+
+                    <div className={styles.alarmModalContainer}>
+                      <AlarmModal
+                          isAlarmVisible={isAlarmVisible}
+                          handleAlarm={handleAlarm}
+                          isLoggedIn={isLoggedIn}
+                      />
+                    </div>
                     <button className={styles.headerButton}
                             onClick={signOut}
                             style={{marginRight: "30px"}}>
