@@ -6,6 +6,7 @@ import BookmarkBox from '../components/BookmarkBox'
 import Header from '../components/Header'
 import styles from './MyBookmark.module.css'
 import Footer from '../components/Footer'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -73,7 +74,11 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
   const { data: lists = [], isLoading, error } = useQuery('bookmarks', fetchBookmarks)
 
   if (isLoading) {
-    return <div>{'Loading...'}</div>
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
   }
 
   if (error) {
