@@ -57,10 +57,11 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
   const [summary, setSummary] = useState<string>('')
   const [version, setVersion] = useState<string>('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const from = location.state?.from || '/'
 
-  const { data: userInfo } = useQuery('userInfo', fetchUserInfo, {
+  const { data: queryUserInfo } = useQuery('userInfo', fetchUserInfo, {
     onSuccess: (data) => {
       if (data.success) {
         setLoggedIn(true)
@@ -90,13 +91,13 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
   })
 
   useEffect(() => {
-    if (userInfo && wikiDocs) {
-      if (wikiDocs.is_managed === 1 && userInfo.is_authorized === 0) {
+    if (queryUserInfo && wikiDocs) {
+      if (wikiDocs.is_managed === 1 && queryUserInfo.is_authorized === 0) {
         alert('인증받은 유저만 수정이 가능합니다.')
         nav(-1)
       }
     }
-  }, [userInfo, wikiDocs, nav])
+  }, [queryUserInfo, wikiDocs, nav])
 
   useEffect(() => {
     track('view_edit_wiki', {
@@ -167,7 +168,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
 
   return (
     <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={() => {}} />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.edit}>
         <form onSubmit={addWikiEdit}>
           <div className={styles.wikichar}>
