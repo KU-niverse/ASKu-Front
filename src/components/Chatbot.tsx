@@ -290,12 +290,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         >
           <p id={styles.ref}>{'추천 검색어'}</p>
           <div className={styles.scrollbarContainer}>
-            <div
-              className={styles.suggestScrollbar}
-              ref={scrollRef}
-              onMouseEnter={() => setShowSuggest(false)}
-              onMouseLeave={() => setShowSuggest(true)}
-            >
+            <div className={styles.suggestScrollbar} ref={scrollRef}>
               <div className={styles.suggest}>
                 <span
                   role={'presentation'}
