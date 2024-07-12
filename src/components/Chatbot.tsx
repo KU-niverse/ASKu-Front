@@ -47,11 +47,33 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
   const [user, setUser] = useState<UserData | null>(null)
 
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+  const [showSuggestScroll, setShowSuggestScroll] = useState(false)
+
   const queryClient = useQueryClient()
 
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
+  const handleMouseEnter = () => {
+    if (!scrollRef.current) return
+
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      setTimeoutId(null)
+    }
+
+    scrollRef.current.style.overflowX = 'auto'
+  }
+
+  const handleMouseLeave = () => {
+    const id = setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.style.overflowX = 'hidden'
+      }
+    }, 2000) // 2초 후 스크롤 숨김
+    setTimeoutId(id)
+  }
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
@@ -290,7 +312,18 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         >
           <p id={styles.ref}>{'추천 검색어'}</p>
           <div className={styles.scrollbarContainer}>
-            <div className={styles.suggestScrollbar} ref={scrollRef}>
+            <div
+              className={styles.suggestScrollbar}
+              ref={scrollRef}
+              onMouseEnter={() => {
+                setShowSuggestScroll(true)
+                handleMouseEnter()
+              }}
+              onMouseLeave={() => {
+                setShowSuggestScroll(false)
+                handleMouseLeave()
+              }}
+            >
               <div className={styles.suggest}>
                 <span
                   role={'presentation'}
