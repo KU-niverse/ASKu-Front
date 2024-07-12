@@ -55,52 +55,25 @@
   cursor: pointer;
   width: 20px;
 }
-.wikititleBtn{
-    display: flex;
-    justify-content: flex-start;
-    gap: 5px;
-    margin-right: 20px;
+.wikititleBtn {
+  display: flex;
+  justify-content: space-between;
+  width: 210px;
+  margin-right: 20px;
 }
-.wikititleBtn button{
-    width: auto;
-    height: 36px;
-    border-radius: 30px;
-    border: 2px solid rgba(159, 19, 46, 1);
-    background-color: white;
-    color: rgba(159, 19, 46, 1);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    padding: 0 15px; 
-    box-sizing: border-box;
-    font-size: 14px; 
-    font-weight: 500;
-}
-.wikititleBtn img {
-    margin-right: 2px; 
-    width: 16px; 
-    height: 16px; 
-}
-.wikititleBtnThree{
-    width: auto;
-    position: relative;
-    border-radius: 30px;
-    background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white !important;
-    padding: 0 15px;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-weight: 500;
-}
-.wikititleBtnThree img {
-    margin-left: 3px; 
-    width: 16px; 
-    height: 16px; 
+.wikititleBtn button {
+  width: 97px;
+  height: 36px;
+  border-radius: 30px;
+  border: 2px solid rgba(159, 19, 46, 1);
+  background-color: white;
+  color: rgba(159, 19, 46, 1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 13px;
+  box-sizing: border-box;
 }
 .wikiBoxLists {
   width: 100%;
@@ -284,61 +257,51 @@ li {
 }
 
 @media only screen and (max-width: 767px) {
-    .wikiviewer{
-        width: 90%;
-        margin: 5%;
-    }
-    .wikiBoxLists{
-        display: block;
-    }
-    .wikilist{
-        width: 80%;
-    }
-    .wikiask{
-        display: block;
-        width: 100%;
-    }
-    .wikigraph{
-        display: block;
-        width: 100%;
-
-    }
-    .wikititle h1{
-        font-size: 18px;
-    }
-    .wikititleBtn{
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-        align-items: right;
-        margin-left: 2px;
-        gap: 1px;
-    }
-    .wikititleBtnOne{
-        display: block;
-        margin-bottom: 4px;
-    }
-    .wikititleBtnTwo{
-        margin-top: 1px;
-        margin-bottom: 2px;
-    }
-    .wikititleBtnThree {
-        position: absolute;
-        right: 40px;
-        margin-top: 17px;
-        min-width: 70px; /* 최소 너비 설정 */
-        white-space: nowrap; /* 줄바꿈 방지 */
-    }
-    .wikititleBtn img{
-        width: 16px;
-        height: 10px;
-        object-fit: contain;
-    }
-    .wikititleBtn button{
-        width: 69px;
-        height: 25px;
-        font-size: 9px;
-        padding: 6px;
-    }
-
+  .wikiviewer {
+    width: 90%;
+    margin: 5%;
+  }
+  .wikiBoxLists {
+    display: block;
+  }
+  .wikilist {
+    width: 80%;
+  }
+  .wikiask {
+    display: block;
+    width: 100%;
+  }
+  .wikigraph {
+    display: block;
+    width: 100%;
+  }
+  .wikititle h1 {
+    font-size: 18px;
+  }
+  .wikititleBtn {
+    width: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 6px;
+  }
+  .wikititleBtnOne {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .wikititleBtnTwo {
+    display: block;
+    margin-top: 4px;
+  }
+  .wikititleBtn img {
+    width: 16px;
+    height: 10px;
+    object-fit: contain;
+  }
+  .wikititleBtn button {
+    width: 69px;
+    height: 25px;
+    font-size: 9px;
+    padding: 6px;
+  }
 }

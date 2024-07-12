@@ -63,7 +63,7 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
           </span>
           <span className={styles.wikiIndex}>
             &nbsp;{index}
-            {'.&nbsp;'}
+            &nbsp;
           </span>
           <span>{title}</span>
         </div>
