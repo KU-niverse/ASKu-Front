@@ -93,7 +93,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
 
   const handleSearch = () => {
     if (inputValue.trim() !== '') {
-      navigate(`/result/${encodeURIComponent(inputValue)}`)
+      navigate(`/result/${encodeURIComponent(inputValue)}/search`)
       setInputValue('')
     }
   }
