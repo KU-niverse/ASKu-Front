@@ -1,7 +1,8 @@
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
-import { useRef, useEffect, useState } from 'react'
-import { useQuery, useMutation } from 'react-query'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom/dist'
+import React, { useRef, useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
+import { track } from '@amplitude/analytics-browser'
+import { useQuery, useMutation } from 'react-query'
 import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import falseBk from '../img/bookmarkfalse.svg'
@@ -15,22 +16,15 @@ import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
 
-interface UserInfo {
-  id: number
-  name: string
-  login_id: string
-  stu_id: string
-  email: string
-  rep_badge_id: number
-  nickname: string
-  created_at: Date
-  point: number
-  is_admin: boolean
-  is_authorized: boolean
-  restrict_period: number | null
-  restrict_count: number
-  rep_badge_name: string
-  rep_badge_image: string
+interface AxiosErrorResponse {
+  message: string
+}
+
+type CustomAxiosError = AxiosError<AxiosErrorResponse>
+
+interface WikiViewerProps {
+  loggedIn: boolean
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface Content {
@@ -69,20 +63,15 @@ interface ContributionData {
   message: Contribution[]
 }
 
-interface WikiViewerProps {
-  loggedIn: boolean
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
-}
-
 function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
   const location = useLocation()
-  const { title } = useParams()
-
   const [isToggled, setIsToggled] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isBookmark, setIsBookmark] = useState(false)
+  const { title } = useParams()
+  const [allText, setAllText] = useState('')
   const [allContent, setAllContent] = useState<Content[]>([])
   const [ques, setQues] = useState<Question[]>([])
   const [contribute, setContribute] = useState<Contribution[]>([])
@@ -90,8 +79,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const [flag, setFlag] = useState(0)
   const [blank, setBlank] = useState(false)
   const [favorite, setFavorite] = useState(false)
-  const [imageSource, setImageSource] = useState<string>(falseBk)
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [imageSource, setImageSource] = useState(falseBk)
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -175,7 +163,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
       },
       onError: (error: unknown) => {
         setLoggedIn(false)
-        const axiosError = error as AxiosError
+        const axiosError = error as CustomAxiosError
         if (axiosError.response?.status === 401) {
           alert('로그인이 필요한 서비스 입니다.')
           nav('/signin')
@@ -208,13 +196,13 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
           alert('문제가 발생하였습니다')
         }
       },
-      onError: (error: unknown) => {
-        const axiosError = error as AxiosError
+      onError: (error: AxiosError) => {
+        const axiosError = error as CustomAxiosError
         if (axiosError.response?.status === 401) {
-          alert(axiosError.message)
+          alert(axiosError.response.data.message)
           nav('/signin')
         } else {
-          alert(axiosError.message)
+          alert(axiosError.response.data.message)
         }
       },
     },
@@ -238,8 +226,8 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
         }
       },
       onError: (error: unknown) => {
-        const axiosError = error as AxiosError
-        alert(axiosError.message)
+        const axiosError = error as CustomAxiosError
+        alert(axiosError.response?.data.message)
       },
     },
   )
@@ -256,50 +244,205 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const linkToHistory = () => {
+    const encodedTitle = encodeURIComponent(title!)
+    nav(`/history/${encodedTitle}`)
+  }
+
+  const linkToAllEdit = () => {
+    const encodedTitle = encodeURIComponent(title!)
+    nav(`/wikiedit/${encodedTitle}/all`, { state: { from: location.pathname } })
+  }
+
+  const linkToDebate = () => {
+    const encodedTitle = encodeURIComponent(title!)
+    nav(`/debate/${encodedTitle}`)
+  }
+
+  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading) {
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
+  }
+
+  if (wikiError || quesError || contributeError || checkLoginError) {
+    return <div>{'Error loading data'}</div>
+  }
+
   return (
-    <>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.container}>
-        <div className={styles.wikiViewer}>
-          <h1 className={styles.title}>{title}</h1>
-          <div className={styles.bookmarkWrapper}>
-            {loggedIn && !checkLoginLoading && !checkLoginError && (
-              <img
-                role={'presentation'}
-                src={imageSource}
-                className={styles.bookmark}
-                alt={favorite ? '즐겨찾기 취소' : '즐겨찾기'}
-                onClick={handleClickBookmark}
-              />
+    <div className={styles.container}>
+      <Header />
+      <div className={styles.wikiviewer}>
+        <div className={styles.wikititle}>
+          <h1>
+            {title}
+            <img
+              role={'presentation'}
+              src={imageSource}
+              alt={'북마크 버튼'}
+              onClick={handleClickBookmark}
+              className={styles.bookmarkImg}
+            />
+          </h1>
+          <div className={styles.wikititleBtn}>
+            <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
+              <img alt={'토론하기 버튼'} src={debate} />
+              &nbsp;{'토론하기\r'}
+            </button>
+
+            <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
+              <img alt={'히스토리 버튼'} src={his} />
+              &nbsp;{'히스토리\r'}
+            </button>
+          </div>
+        </div>
+        <div className={styles.wikiBoxLists}>
+          <div className={styles.wikilist}>
+            <div className={styles.wikilistTitle}>
+              <h2>{'목차'}</h2>
+              <button type={'button'} onClick={linkToAllEdit}>
+                {'전체 편집'}
+              </button>
+            </div>
+            <div>
+              {allContent.map((item) => {
+                const tabCount = item.index.split('.').length - 1
+                const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
+
+                return (
+                  <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
+                    <span className={styles.wikiIndex}>
+                      {tabs}
+                      {item.index}
+                      {'.\r'}
+                    </span>{' '}
+                    {item.title}
+                  </li>
+                )
+              })}
+            </div>
+          </div>
+          <div className={styles.wikiask}>
+            <div className={styles.wikiaskTitle}>
+              <h2>{'질문'}</h2>
+              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+            </div>
+            <div className={blank === false ? styles.quesWrap : styles.hidden}>
+              {ques.length === 0 ? (
+                <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
+              ) : (
+                ques.map((item, index) => {
+                  if (index >= 5) {
+                    return null
+                  }
+                  return (
+                    <div className={styles.queslist}>
+                      <hr className={styles.customHr} />
+                      <ul
+                        role={'presentation'}
+                        key={item.id}
+                        onClick={() => {
+                          const encodedTitle = encodeURIComponent(title)
+                          track('click_question_in_wiki', {
+                            index,
+                          })
+                          nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
+                            state: {
+                              question_id: item.id,
+                              user_id: item.user_id,
+                              content: item.content,
+                              created_at: item.created_at,
+                              like_count: item.like_count,
+                              nick: item.nickname,
+                              index_title: item.index_title,
+                              answer_count: item.answer_count,
+                              title,
+                            },
+                          })
+                        }}
+                        className={styles.quesul}
+                      >
+                        <span className={styles.quesTitle}>
+                          {'Q.&nbsp;'}
+                          {item.content}
+                        </span>
+                        <span className={styles.quesNum}>
+                          <span>{item.like_count}</span>
+                          <img alt={'좋아요'} src={minilike} />
+                        </span>
+                      </ul>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+            <div className={styles.wikiaskFoot}>
+              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
+                <button type={'button'} className={styles.addQues}>
+                  {'나도 질문하기'}
+                </button>
+              </Link>
+              <Link
+                to={`/wiki/morequestion/${encodeURIComponent(title)}`}
+                onClick={() => {
+                  track('view_question_list', {
+                    title,
+                  })
+                }}
+              >
+                <button type={'button'} className={styles.moreQues}>
+                  {'더보기'}
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className={styles.wikigraph}>
+            {contribute && totalPoint ? (
+              <WikiGraph total_point={totalPoint} users={contribute} />
+            ) : (
+              <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
             )}
           </div>
-          <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-          {(wikiLoading || quesLoading || contributeLoading || checkLoginLoading) && <SpinnerMypage />}
-          {wikiError && <div>{'Wiki 데이터를 불러오는 중 오류가 발생했습니다.'}</div>}
-          {quesError && <div>{'질문 데이터를 불러오는 중 오류가 발생했습니다.'}</div>}
-          {contributeError && <div>{'기여 데이터를 불러오는 중 오류가 발생했습니다.'}</div>}
-          {allContent.map((contentItem, index) => (
-            <div
-              ref={(el) => {
-                myDivRef.current[index] = el
-              }}
-              key={contentItem.section}
-            >
-              <WikiBox
-                title={contentItem.title}
-                content={contentItem.content} // 이 부분을 수정
-                index={contentItem.index}
-                section={contentItem.section}
-                main={contentItem.content} // main에 적절한 값을 전달
-                isZero={false}
-              />
-            </div>
-          ))}
+        </div>
+        <div className={styles.wikicontent}>
+          {allContent.length === 0 ? (
+            <p>
+              <span className={styles.noneComment}>{'"위키 문서가 없습니다. '}</span>
+              <span role={'presentation'} className={styles.newComment} onClick={() => nav('/newwiki')}>
+                {'새 문서를 생성해주세요"\r'}
+              </span>
+            </p>
+          ) : (
+            allContent.map((item) => {
+              // 0. 들어가며 일시 질문 및 편집 막기 위해 판단
+              let isZero
+
+              if (item.index === '0') {
+                isZero = true
+              } else {
+                isZero = false
+              }
+
+              return (
+                <div ref={(el) => myDivRef.current[Number(item.section)] === el} key={item.section}>
+                  <WikiBox
+                    title={item.title}
+                    content={item.content}
+                    index={item.index}
+                    section={item.section}
+                    main={title}
+                    isZero={isZero}
+                  />
+                </div>
+              )
+            })
+          )}
         </div>
       </div>
-      <WikiGraph total_point={totalPoint ?? 0} users={contribute} />
       <Footer />
-    </>
+    </div>
   )
 }
 
