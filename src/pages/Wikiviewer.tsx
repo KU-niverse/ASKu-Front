@@ -365,7 +365,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                         className={styles.quesul}
                       >
                         <span className={styles.quesTitle}>
-                          {'Q.&nbsp;'}
+                          {'Q. '}
                           {item.content}
                         </span>
                         <span className={styles.quesNum}>

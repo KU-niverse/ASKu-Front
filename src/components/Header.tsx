@@ -144,7 +144,7 @@ function Header({ userInfo, setUserInfo }: any) {
   }, [isLoggedIn])
 
   useEffect(() => {
-    if (isLoggedIn && userData) {
+    if (isLoggedIn && userData && Array.isArray(userData.data) && userData.data.length > 0) {
       const fetchedUserInfo = userData.data[0]
       if (typeof setUserInfo === 'function') {
         setUserInfo(fetchedUserInfo)
