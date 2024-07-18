@@ -146,7 +146,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
         const newChatResponse = [
           ...chatResponse,
-          { id: Date.now(), content: inputValue },
+          { id: Date.now(), isQuestion: true, content: inputValue },
           {
             id: data.id,
             content: data.a_content,
