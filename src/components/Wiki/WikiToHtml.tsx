@@ -1,14 +1,14 @@
 const WikiToHtml = (wikiText: any) => {
   // Convert list items before converting text to <p> tags
   const convertTextToHTML = (inputText: string): string => {
-    const pattern = /\* (.+)/g
+    const pattern = /\*\s*(.+)/g // Adjusted to match both * (content) and *(content)
     const lines = inputText.match(pattern)
 
     if (!lines) return inputText // Return original text if no matches found
 
     let convertedHtml = '<ul>\n'
     lines.forEach((line) => {
-      const content = line.replace('* ', '').trim()
+      const content = line.replace(/\*\s*/, '').trim() // Handle both * (content) and *(content)
       convertedHtml += `  <li>${content}</li>\n`
     })
     convertedHtml += '</ul>'
@@ -16,7 +16,7 @@ const WikiToHtml = (wikiText: any) => {
   }
 
   // Use regex to find and replace list patterns first
-  const listPattern = /(\* .+\n?)+/g
+  const listPattern = /(\*\s*.+\n?)+/g
   let html = wikiText.replace(listPattern, (match: string) => convertTextToHTML(match))
 
   // Now convert the remaining text to <p> tags, but only if it's not part of a list
