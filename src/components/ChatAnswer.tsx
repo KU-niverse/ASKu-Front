@@ -29,9 +29,9 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   const [likeModalOpen, setLikeModalOpen] = useState(false)
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false)
   const [feedbackId, setFeedbackId] = useState(0)
-  const [processedContent, setProcessedContent] = useState<JSX.Element[] | null>(null)
   const [ruleModalOpen, setRuleModalOpen] = useState(false)
   const [ruleDetails, setRuleDetails] = useState('')
+  const [processedContent, setProcessedContent] = useState<JSX.Element[] | null>(null)
 
   const queryClient = useQueryClient()
 
@@ -56,7 +56,6 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
       setFeedbackId(data.id)
       queryClient.invalidateQueries('feedback')
       setLikeModalOpen(true)
-      alert('피드백이 성공적으로 전송되었습니다.')
     },
     onError: (error: any) => {
       console.error(error)
@@ -69,7 +68,6 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
       setFeedbackId(data.id)
       queryClient.invalidateQueries('feedback')
       setUnlikeModalOpen(true)
-      alert('피드백이 성공적으로 전송되었습니다.')
     },
     onError: (error: any) => {
       console.error(error)
@@ -84,8 +82,13 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   const handleReferenceOpen = () => setReferenceOpen(!referenceOpen)
   const handleReferenceClose = () => setReferenceOpen(false)
 
-  const handleLikeClick = () => likeMutation.mutate()
-  const handleUnlikeClick = () => unlikeMutation.mutate()
+  const handleLikeClick = () => {
+    likeMutation.mutate()
+  }
+
+  const handleUnlikeClick = () => {
+    unlikeMutation.mutate()
+  }
 
   const handleRuleModalOpen = (details: string) => {
     setRuleDetails(details)
@@ -98,28 +101,25 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   }
 
   const parseReference = (ref: string | null) => {
-    if (ref === null) return ''
+    if (ref === null) {
+      return ''
+    }
 
     try {
       const parsedReference = JSON.parse(ref)
       return (
         <div>
-          <button
-            type={'button'}
-            className={styles.ruleButton}
-            onClick={() => handleRuleModalOpen(parsedReference.Rule)}
-          >
+          <button type="button" className={styles.ruleButton} onClick={() => handleRuleModalOpen(parsedReference.Rule)}>
             {'관련 학칙\r'}
           </button>
           {Object.entries(parsedReference)
             .filter(([key]) => key !== 'Rule')
-            .map(([link, value]) => (
+            .map(([link]) => (
               <div key={link}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
                   {'참고문서:'}
                   {link}
                 </Link>
-                <p>{value}</p>
               </div>
             ))}
         </div>
@@ -130,8 +130,9 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   }
 
   useEffect(() => {
-    const newContent = content.split('\n').map((line) => (
-      <Fragment key={`content-line-${line}`}>
+    const newContent = content.split('\n').map((line, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <Fragment key={`content-line-${index}`}>
         {line}
         <br />
       </Fragment>
@@ -144,20 +145,20 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
       <div className={styles.answerBox}>
         <div className={styles.characterWrapper}>
           <div className={styles.characterContainer}>
-            <img src={haho} alt={'character'} className={styles.character} />
+            <img src={haho} alt="character" className={styles.character} />
           </div>
         </div>
         <div className={styles.chatTextWrap}>
           <p className={styles.chatText}>{processedContent}</p>
         </div>
-        <img alt={'dots'} src={dots} className={styles.dots} />
-        <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
+        <img alt="dots" src={dots} className={styles.dots} />
+        <div style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }} className={styles.iconZip}>
           <img
-            role={'presentation'}
+            role="presentation"
             id={styles.like}
             className={styles.icon}
             src={likeHovered ? like_hover : like}
-            alt={'like'}
+            alt="like"
             onMouseOver={handleLikeMouseOver}
             onMouseLeave={handleLikeMouseLeave}
             onFocus={handleLikeMouseOver}
@@ -165,11 +166,11 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
             onClick={handleLikeClick}
           />
           <img
-            role={'presentation'}
+            role="presentation"
             id={styles.unlike}
             className={styles.icon}
             src={unlikeHovered ? unlike_hover : unlike}
-            alt={'unlike'}
+            alt="unlike"
             onMouseOver={handleUnlikeMouseOver}
             onMouseLeave={handleUnlikeMouseLeave}
             onFocus={handleUnlikeMouseOver}
@@ -177,11 +178,11 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
             onClick={handleUnlikeClick}
           />
           <img
-            role={'presentation'}
+            role="presentation"
             id={styles.referenceIcon}
             className={styles.icon}
             src={referenceIcon}
-            alt={'reference link'}
+            alt="reference link"
             onClick={handleReferenceOpen}
           />
         </div>
@@ -190,17 +191,14 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
             <div className={styles.header}>
               <p className={styles.reference_title}>{'출처'}</p>
               <img
-                role={'presentation'}
+                role="presentation"
                 className={styles.closeBtn}
                 src={closeBtn}
-                alt={'close button'}
+                alt="close button"
                 onClick={handleReferenceClose}
               />
             </div>
-            <div className={styles.reference_text}>
-              {parseReference(reference)}
-              <p>{reference}</p>
-            </div>
+            <div className={styles.reference_text}>{parseReference(reference)}</div>
           </div>
         </div>
       </div>

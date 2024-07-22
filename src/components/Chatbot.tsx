@@ -38,7 +38,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [chatResponse, setChatResponse] = useState<any[]>([])
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
   const [previousChatHistory, setPreviousChatHistory] = useState<any[]>([])
-  const blockIconZip = true
   const [ClearModalOpen, setClearModalOpen] = useState(false)
   const [qnaId, setQnaId] = useState('')
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
@@ -100,7 +99,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     onError: () => {
       setIsLoggedIn(false)
     },
-    enabled: isLoggedIn, // Only fetch user info if logged in
+    enabled: Boolean(isLoggedIn), // Only fetch user info if logged in
   })
 
   const fetchPreviousChatHistory = async (userId: number) => {
@@ -139,26 +138,50 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     {
       onMutate: () => {
         setLoading(true)
+        setChatResponse((prevResponses) => [...prevResponses, { content: inputValue, isQuestion: true }])
+        setInputValue('')
       },
       onSuccess: (data) => {
-        setShowSuggest(false)
-        inputRef.current?.blur()
+        try {
+          setShowSuggest(false)
+          inputRef.current?.blur()
 
-        const newChatResponse = [
-          ...chatResponse,
-          { id: Date.now(), isQuestion: true, content: inputValue },
-          {
-            id: data.id,
-            content: data.a_content,
-            reference: data.reference,
-            qnaId: data.id,
-          },
-        ]
+          let tempAnswer = ''
+          const finalAnswer = data.a_content
 
-        setChatResponse(newChatResponse)
-        setInputValue('')
-        setLoading(false)
-        scrollToBottom()
+          let currentIndex = 0
+          const interval = setInterval(() => {
+            if (currentIndex < finalAnswer.length) {
+              tempAnswer += finalAnswer[currentIndex]
+
+              setChatResponse((prevResponses) => {
+                const updatedResponses = [...prevResponses]
+                if (!updatedResponses[updatedResponses.length - 1].isQuestion) {
+                  updatedResponses[updatedResponses.length - 1].content = tempAnswer
+                } else {
+                  updatedResponses.push({
+                    content: tempAnswer,
+                    isQuestion: false,
+                    blockIconZip: false, // 여기서 아이콘을 항상 표시하도록 설정
+                    reference: data.reference,
+                  })
+                }
+                return updatedResponses
+              })
+
+              currentIndex += 1
+
+              if (currentIndex === 1) {
+                setLoading(false)
+              }
+            } else {
+              clearInterval(interval)
+            }
+          }, 50)
+        } catch (error) {
+          console.error('Error sending question: ', error)
+          setLoading(false)
+        }
       },
       onError: (error: any) => {
         console.error(error)
@@ -194,7 +217,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const handleSuggestClick = (content: string) => {
     setShowSuggest(false)
 
-    const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true, blockIconZip: true }]
+    const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true, isSuggest: true }]
     setChatResponse(newChatResponse)
 
     setLoading(true)
@@ -215,7 +238,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
       const answer = dummyAnswers[content] || '미리 저장된 답변이 없습니다.'
 
-      const updatedChatResponse = [...newChatResponse, { id: Date.now(), content: answer, blockIconZip: true }]
+      const updatedChatResponse = [
+        ...newChatResponse,
+        { id: Date.now(), content: answer, blockIconZip: true, isSuggest: true },
+      ]
       setChatResponse(updatedChatResponse)
       setInputValue('')
       setShowSuggest(true)
@@ -265,13 +291,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       </div>
       <div className={styles.chatbox}>
         <div className={styles.chat}>
-          <ChatAnswer
-            content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
-            // content="AI선배 하호는 지금 더 정확한 답변을 위해 업데이트 중입니다. 일주일 뒤에 다시 방문해주세요! :)"
-            blockIconZip={blockIconZip}
-            reference={null}
-            qnaId={0}
-          />
+          <ChatAnswer content={'안녕하세요! 무엇이든 제게 질문해주세요!'} reference={null} qnaId={0} blockIconZip />
           {previousChatHistory.length !== 0 && (
             <>
               {previousChatHistory.map((item) => (
@@ -281,7 +301,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     content={item.a_content}
                     qnaId={item.id}
                     reference={item.reference}
-                    blockIconZip={blockIconZip}
+                    blockIconZip={!isLoggedIn}
                   />
                 </Fragment>
               ))}
@@ -297,7 +317,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 content={item.content}
                 reference={item.reference}
                 qnaId={item.qnaId}
-                blockIconZip={!blockIconZip}
+                blockIconZip={item.isSuggest}
               />
             )
           })}
