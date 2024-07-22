@@ -1,25 +1,25 @@
 const WikiToHtml = (wikiText: any) => {
-  // Convert list items before converting text to <p> tags
+  // 리스트 항목의 텍스트를 <p> 태그로 변환
   const convertTextToHTML = (inputText: string): string => {
-    const pattern = /\*\s*(.+)/g // Adjusted to match both * (content) and *(content)
+    const pattern = /\*\s*(.+)/g // *(내용), * (내용) 띄워쓰기 유무 상관없이 인식 가능하도록 수정
     const lines = inputText.match(pattern)
 
-    if (!lines) return inputText // Return original text if no matches found
+    if (!lines) return inputText // 매칭 없을 시 원본 텍스트 반환
 
     let convertedHtml = '<ul>\n'
     lines.forEach((line) => {
-      const content = line.replace(/\*\s*/, '').trim() // Handle both * (content) and *(content)
+      const content = line.replace(/\*\s*/, '').trim()
       convertedHtml += `  <li>${content}</li>\n`
     })
     convertedHtml += '</ul>'
     return convertedHtml
   }
 
-  // Use regex to find and replace list patterns first
+  // 정규 표현식을 이용해 목록 패턴을 찾을 후 replace
   const listPattern = /(\*\s*.+\n?)+/g
   let html = wikiText.replace(listPattern, (match: string) => convertTextToHTML(match))
 
-  // Now convert the remaining text to <p> tags, but only if it's not part of a list
+  // 리스트 일부가 아닌 경우, 남은 텍스트를 <p> 태그로 변환
   html = html
     .split('\n')
     .map((para: any) => {
@@ -32,13 +32,13 @@ const WikiToHtml = (wikiText: any) => {
 
   html = html.replace(/<p><\/p>/g, '<br>')
 
-  // Additional conversions
-  html = html.replace(/'''([^']+)'''/g, '<strong>$1</strong>') // Bold
-  html = html.replace(/''([^']+)''/g, '<em>$1</em>') // Italics
-  html = html.replace(/--([^']+)--/g, '<del>$1</del>') // Strikethrough
-  html = html.replace(/--(.*?)--/g, '<s>$1</s>') // Strikethrough as <s>
-  html = html.replace(/@(.*?)@/g, '<blockquote>$1</blockquote>') // Blockquote
-  html = html.replace(/__(.*?)__/g, '<u>$1</u>') // Underline
+  // 추가 변환
+  html = html.replace(/'''([^']+)'''/g, '<strong>$1</strong>') // 굵게
+  html = html.replace(/''([^']+)''/g, '<em>$1</em>') // 이탤릭체
+  html = html.replace(/--([^']+)--/g, '<del>$1</del>') // 취소선
+  html = html.replace(/--(.*?)--/g, '<s>$1</s>') // 취소선 대체 <s>
+  html = html.replace(/@(.*?)@/g, '<blockquote>$1</blockquote>') // 인용
+  html = html.replace(/__(.*?)__/g, '<u>$1</u>') // 밑줄
   html = html.replace(/&amp;/g, '&') // &amp; to &
 
   // Convert [[File:...]] to <img> tags
