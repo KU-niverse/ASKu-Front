@@ -12,15 +12,6 @@ const WikiToHtml = (wikiText: string) => {
 
     return listItem
   }
-
-  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, formatListItem)
-
-  const wrapListItems = (match: string, content: string) => {
-    const listType = '<ul>'
-    return `${listType}<li>${content.trim()}</li>${listType.replace('<', '</')}`
-  }
-
-  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, wrapListItems)
   // console.log("여기가 2번 : ", html);
 
   // 단락 처리 (p)

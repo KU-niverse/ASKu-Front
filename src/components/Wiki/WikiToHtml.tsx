@@ -1,87 +1,63 @@
 const WikiToHtml = (wikiText: any) => {
-  let html = wikiText
-  // console.log("여기가 1번 : ", html);
+  // 리스트 항목의 텍스트를 <p> 태그로 변환
+  const convertTextToHTML = (inputText: string): string => {
+    const pattern = /\*\s*(.+)/g // *(내용), * (내용) 띄워쓰기 유무 상관없이 인식 가능하도록 수정
+    const lines = inputText.match(pattern)
+
+    if (!lines) return inputText // 매칭 없을 시 원본 텍스트 반환
+
+    let convertedHtml = '<ul>\n'
+    lines.forEach((line) => {
+      const content = line.replace(/\*\s*/, '').trim()
+      convertedHtml += `  <li>${content}</li>\n`
+    })
+    convertedHtml += '</ul>'
+    return convertedHtml
+  }
+
+  // 정규 표현식을 이용해 목록 패턴을 찾을 후 replace
+  const listPattern = /(\*\s*.+\n?)+/g
+  let html = wikiText.replace(listPattern, (match: string) => convertTextToHTML(match))
+
+  // 리스트 일부가 아닌 경우, 남은 텍스트를 <p> 태그로 변환
   html = html
     .split('\n')
-    .map((para: any) => `<p>${para}</p>`)
+    .map((para: any) => {
+      if (!para.startsWith('<ul>') && !para.startsWith('<li>') && para.trim() !== '') {
+        return `<p>${para}</p>`
+      }
+      return para
+    })
     .join('\n')
+
   html = html.replace(/<p><\/p>/g, '<br>')
-  html = html.replace(/([#*])([^#*]+)(?=\s|$)/g, function (match: any, marker: any, content: any) {
-    const listItem = `<li>${content.trim()}</li>`
 
-    return listItem
-  })
+  // 추가 변환
+  html = html.replace(/'''([^']+)'''/g, '<strong>$1</strong>') // 굵게
+  html = html.replace(/''([^']+)''/g, '<em>$1</em>') // 이탤릭체
+  html = html.replace(/--([^']+)--/g, '<del>$1</del>') // 취소선
+  html = html.replace(/--(.*?)--/g, '<s>$1</s>') // 취소선 대체 <s>
+  html = html.replace(/@(.*?)@/g, '<blockquote>$1</blockquote>') // 인용
+  html = html.replace(/__(.*?)__/g, '<u>$1</u>') // 밑줄
+  html = html.replace(/&amp;/g, '&') // &amp; to &
 
-  html = html.replace(/\s*<li>(.*)<\/li>\s*/g, function (match: any, content: any) {
-    const listType = '<ul>'
-    return `${listType}<li>${content.trim()}</li>${listType.replace('<', '</')}`
-  })
-
-  // console.log("여기가 2번 : ", html);
-
-  // 단락 처리 (p)
-  // <p> 태그를 \n으로 변환된 부분을 <p> 태그로 재변환
-  // <br> 태그를 \n으로 변환된 부분을 <br> 태그로 재변환
-
-  // 강조 처리 (strong)
-  html = html.replace(/'''([^']+)'''/g, '<strong>$1</strong>')
-
-  // 이탤릭 처리 (em)
-  html = html.replace(/''([^']+)''/g, '<em>$1</em>')
-
-  // 취소선 처리 (del)
-  html = html.replace(/--([^']+)--/g, '<del>$1</del>')
-
-  // 취소선 문법을 <s> 태그로 변환
-  html = html.replace(/--(.*?)--/g, '<s>$1</s>')
-
-  // 인용구를 <blockquote>으로 변환
-  html = html.replace(/@(.*?)@/g, '<blockquote>$1</blockquote>')
-
-  // 언더바 처리
-  html = html.replace(/__(.*?)__/g, '<u>$1</u>')
-
-  // &amp;를 &로 변환
-  html = html.replace(/&amp;/g, '&')
   // Convert [[File:...]] to <img> tags
   html = html.replace(/\[\[File:([^|\]]+)\]\]/g, '<img src="$1" />')
-  // console.log("여기가 3번 : ", html);
 
-  // //3. [[멀틱스|신기한 운영체제]] -> <a href="../멀틱스">신기한 운영체제</a>
-  //  html = html.replace(/\[\[(.*?)\|(.*?)\]\]/g, '<a href="http://localhost:3000/wiki/$1">$2</a>');
-  // 1. [[멀틱스]] -> <a href="../멀틱스">멀틱스</a>
-  // Convert [[멀틱스]] to <a href="../멀틱스">멀틱스</a>
-
+  // Convert [[link]] and [[link|display]] to <a> tags
   const linkRegex = /\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g
-
   html = html.replace(linkRegex, (match: any, urlText: any, displayText: any) => {
-    // 공백을 제거하고 URL을 검사합니다.
     const url = urlText.trim()
-
     if (url.startsWith('http://') || url.startsWith('https://')) {
-      // Case 2 and 4: Direct link with optional display text
       return `<a href="${url}">${displayText || url}</a>`
     }
     if (url.startsWith('File:')) {
-      // Case for File: links: Add the URL as an image src
       const imageUrl = url.slice('File:'.length)
       return `<img src="${imageUrl}" alt="${displayText || imageUrl}">`
     }
-    // Case 1 and 3: Internal link with optional display text
-    const baseUrl = '../wiki' // Adjust this base URL as needed
+    const baseUrl = '../wiki'
     return `<a href="${baseUrl}/${url}">${displayText || url}</a>`
   })
-
-  // html = html.replace(/\[\[([^\]]+)\]\]/g, (_, link) => {
-  //   // 링크가 HTTP 또는 HTTPS로 시작하는 경우
-  //   if (link.startsWith('http://') || link.startsWith('https://')) {
-  //     return `<a href="${link}">${link}</a>`;
-  //   }
-  //   // 내부 문서 링크로 처리
-  //   return `<a href="../${link}">${link}</a>`;
-  // });
-  // 1. [[멀틱스]] -> <a href="../멀틱스">멀틱스</a>
-  // html = html.replace(/\[\[([^\]]+)\]\]/g, '<a href="http://localhost:3000/wiki/$1">$1</a>');
 
   return html
 }
