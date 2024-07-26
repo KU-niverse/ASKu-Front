@@ -161,9 +161,15 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   const [page, setPage] = useState(1) // 현재 페이지 상태 추가
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
+  const [contributionPage, setContributionPage] = useState(1) // 기여 목록 페이지 상태 추가
+  const contributionPerPage = 7 // 기여 목록 페이지당 항목 수
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
+  }
+
+  const handleContributionPageChange = (pageNumber: number) => {
+    setContributionPage(pageNumber) // 기여 목록 페이지 번호 업데이트
   }
 
   // login status 체크하기
@@ -358,28 +364,41 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
               {myWiki && myWiki.message && myWiki.data.length === 0 ? (
                 <p>{'아직 기여한 내역이 없습니다.'}</p>
               ) : (
-                myWiki &&
-                myWiki.message &&
-                myWiki.data
-                  .slice(0, 7)
-                  .map((wiki: WikiHistoryEntry) => (
-                    <Contribute
-                      key={wiki.id}
-                      user_id={wiki.user_id}
-                      doc_id={wiki.doc_id}
-                      text_pointer={wiki.text_pointer}
-                      version={wiki.version}
-                      summary={wiki.summary}
-                      created_at={wiki.created_at}
-                      count={wiki.count}
-                      diff={wiki.diff}
-                      is_bad={wiki.is_bad}
-                      is_rollback={wiki.is_rollback}
-                      is_q_based={wiki.is_q_based}
-                      title={wiki.title}
-                    />
-                  ))
+                <div>
+                  {myWiki &&
+                    myWiki.message &&
+                    myWiki.data
+                      .slice((contributionPage - 1) * contributionPerPage, contributionPage * contributionPerPage)
+                      .map((wiki: WikiHistoryEntry) => (
+                        <Contribute
+                          key={wiki.id}
+                          user_id={wiki.user_id}
+                          doc_id={wiki.doc_id}
+                          text_pointer={wiki.text_pointer}
+                          version={wiki.version}
+                          summary={wiki.summary}
+                          created_at={wiki.created_at}
+                          count={wiki.count}
+                          diff={wiki.diff}
+                          is_bad={wiki.is_bad}
+                          is_rollback={wiki.is_rollback}
+                          is_q_based={wiki.is_q_based}
+                          title={wiki.title}
+                        />
+                      ))}
+                </div>
               )}
+
+              <div className={styles.paginationWrapper}>
+                {myWiki.data && myWiki.data.length > contributionPerPage && (
+                  <Paging
+                    total={myWiki.data.length}
+                    perPage={contributionPerPage}
+                    activePage={contributionPage}
+                    onChange={handleContributionPageChange}
+                  />
+                )}
+              </div>
             </div>
 
             <div className={`${styles.ask}`}>
