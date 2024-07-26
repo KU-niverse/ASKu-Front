@@ -1,3 +1,5 @@
+/* prettier-ignore */
+
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useQuery } from 'react-query'
@@ -256,158 +258,163 @@ function Header({ userInfo, setUserInfo }: any) {
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
       <div className={styles.headerContainer}>
         <div className={styles.flexContainer}>
-          <div className={styles.logoContainer} style={{ display: ismainpage ? 'none' : 'flex' }}>
+          <div className={styles.logoContainer} style={{display: ismainpage ? 'none' : 'flex'}}>
             <Link to={'/'}>
-              <img src={logo} alt={'logo'} className={styles.logo} />
+              <img src={logo} alt={'logo'} className={styles.logo}/>
+            </Link>
+          </div>
+          <div className={styles.mobilelogoContainer}>
+            <Link to={'/'}>
+              <img src={logo} alt={'logo'} className={styles.logo}/>
             </Link>
           </div>
           <div className={styles.navContainer_left}>
             <Link
-              to={'/allhistory'}
-              onClick={() => {
-                track('click_header_navi', { type: '모든 문서' })
-              }}
+                to={'/allhistory'}
+                onClick={() => {
+                  track('click_header_navi', {type: '모든 문서'})
+                }}
             >
               <button
-                type={'button'}
-                className={styles.headerButton}
-                style={{
-                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                }}
+                  type={'button'}
+                  className={styles.headerButton}
+                  style={{
+                    marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
+                    display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                  }}
               >
-                <img src={all_document} alt={'모든 문서'} className={styles.icon} />
+                <img src={all_document} alt={'모든 문서'} className={styles.icon}/>
                 {ismainpage || buttonTextVisible ? '모든 문서' : ''}
               </button>
             </Link>
             <Link
-              to={'/latestdebate'}
-              onClick={() => {
-                track('click_header_navi', { type: '최근 토론' })
-              }}
+                to={'/latestdebate'}
+                onClick={() => {
+                  track('click_header_navi', {type: '최근 토론'})
+                }}
             >
               <button
-                type={'button'}
-                className={styles.headerButton}
-                style={{
-                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                }}
+                  type={'button'}
+                  className={styles.headerButton}
+                  style={{
+                    marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
+                    display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                  }}
               >
-                <img src={recent_debate} alt={'최근 토론'} className={styles.icon} />
+                <img src={recent_debate} alt={'최근 토론'} className={styles.icon}/>
                 {ismainpage || buttonTextVisible ? '최근 토론' : ''}
               </button>
             </Link>
             <button
-              onClick={() => {
-                track('click_header_navi', { type: '랜덤 문서' })
-                handleRandomDocClick()
-              }}
-              type={'button'}
-              className={styles.headerButton}
-              style={{
-                marginRight: '0px',
-                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              }}
+                onClick={() => {
+                  track('click_header_navi', {type: '랜덤 문서'})
+                  handleRandomDocClick()
+                }}
+                type={'button'}
+                className={styles.headerButton}
+                style={{
+                  marginRight: '0px',
+                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                }}
             >
-              <img src={random_document} alt={'랜덤 문서'} className={styles.icon} />
+              <img src={random_document} alt={'랜덤 문서'} className={styles.icon}/>
               {ismainpage || buttonTextVisible ? '랜덤 문서' : ''}
             </button>
           </div>
 
           <div className={styles.navContainer_right}>
-            <div className={styles.inputcontainer} style={{ display: ismainpage ? 'none' : 'flex' }}>
+            <div className={styles.inputcontainer} style={{display: ismainpage ? 'none' : 'flex'}}>
               <input
-                className={styles.headerInput}
-                placeholder={'검색어를 입력하세요.'}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    if (inputValue.trim() !== '') {
-                      window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
-                      setInputValue('')
+                  className={styles.headerInput}
+                  placeholder={'검색어를 입력하세요.'}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      if (inputValue.trim() !== '') {
+                        window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
+                        setInputValue('')
+                      }
                     }
-                  }
-                }}
+                  }}
               />
               <img
-                role={'presentation'}
-                src={searchIcon}
-                alt={'icon'}
-                className={styles.searchIcon}
-                onClick={() => {
-                  if (inputValue.trim() !== '') {
-                    Nav(
-                      `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                    )
-                    setInputValue('')
-                  }
-                }}
+                  role={'presentation'}
+                  src={searchIcon}
+                  alt={'icon'}
+                  className={styles.searchIcon}
+                  onClick={() => {
+                    if (inputValue.trim() !== '') {
+                      Nav(
+                          `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
+                      )
+                      setInputValue('')
+                    }
+                  }}
               />
             </div>
             {isLoggedIn ? (
-              <>
-                <img
-                  role={'presentation'}
-                  src={bookmark}
-                  alt={'bookmark_gray'}
-                  className={styles.signinButton}
-                  onClick={() => {
-                    track('click_header_navi', { type: '즐겨찾는 문서' })
-                    Nav('/mybookmark')
-                  }}
-                />
-                <img
-                  role={'presentation'}
-                  src={alarm}
-                  alt={'alarm'}
-                  id={styles.temporaryAlarm}
-                  className={styles.signinButton}
-                  onClick={handleAlarm}
-                />
-                <div className={styles.alarmModalContainer}>
-                  <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
-                </div>
-                <button
-                  type={'button'}
-                  className={styles.headerButton}
-                  onClick={signOut}
-                  style={{ marginRight: '30px' }}
-                >
-                  {'로그아웃\r'}
-                </button>
-                {loadingMypage ? (
-                  <div />
-                ) : (
-                  <Link to={'/mypage'}>
-                    <div className={styles.mypageWrap}>
-                      <p className={styles.nicknameText}>
-                        {nicknameText}
-                        {' 님'}
-                      </p>
-                      <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
-                      {userInfo && userInfo.rep_badge_image && (
-                        <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
-                      )}
-                    </div>
-                  </Link>
-                )}
-              </>
+                <>
+                  <img
+                      role={'presentation'}
+                      src={bookmark}
+                      alt={'bookmark_gray'}
+                      className={styles.signinButton}
+                      onClick={() => {
+                        track('click_header_navi', {type: '즐겨찾는 문서'})
+                        Nav('/mybookmark')
+                      }}
+                  />
+                  <img
+                      role={'presentation'}
+                      src={alarm}
+                      alt={'alarm'}
+                      id={styles.temporaryAlarm}
+                      className={styles.signinButton}
+                      onClick={handleAlarm}
+                  />
+                  <div className={styles.alarmModalContainer}>
+                    <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn}/>
+                  </div>
+                  <button
+                      type={'button'}
+                      className={styles.headerButton}
+                      onClick={signOut}
+                      style={{marginRight: '30px'}}
+                  >
+                    {'로그아웃\r'}
+                  </button>
+                  {loadingMypage ? (
+                      <div/>
+                  ) : (
+                      <Link to={'/mypage'}>
+                        <div className={styles.mypageWrap}>
+                          <p className={styles.nicknameText}>
+                            {nicknameText}
+                            {' 님'}
+                          </p>
+                          <img src={mypage} alt={'mypage'} className={styles.mypageBtn}/>
+                          {userInfo && userInfo.rep_badge_image && (
+                              <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge}/>
+                          )}
+                        </div>
+                      </Link>
+                  )}
+                </>
             ) : (
-              <>
-                <a href={'https://www.koreapas.com/m/member_join_new.php'}>
-                  <button type={'button'} className={styles.headerButton}>
-                    {'회원가입'}
-                  </button>
-                </a>
-                <Link to={'/signin'}>
-                  <button type={'button'} className={styles.headerLoginButton}>
-                    {'로그인'}
-                  </button>
-                </Link>
-              </>
+                <>
+                  <a href={'https://www.koreapas.com/m/member_join_new.php'}>
+                    <button type={'button'} className={styles.headerButton}>
+                      {'회원가입'}
+                    </button>
+                  </a>
+                  <Link to={'/signin'}>
+                    <button type={'button'} className={styles.headerLoginButton}>
+                      {'로그인'}
+                    </button>
+                  </Link>
+                </>
             )}
           </div>
 
@@ -416,149 +423,149 @@ function Header({ userInfo, setUserInfo }: any) {
           <div className={styles.mobileHeader}>
             <div className={styles.buttonWrap}>
               {isLoggedIn ? (
-                <div />
+                  <div/>
               ) : (
-                <Link className={styles.loginbtn} to={'/signin'}>
-                  <button type={'button'} className={styles.loginbtn}>
-                    {'로그인'}
-                  </button>
-                </Link>
+                  <Link className={styles.loginbtn} to={'/signin'}>
+                    <button type={'button'} className={styles.loginbtn}>
+                      {'로그인'}
+                    </button>
+                  </Link>
               )}
               <img
-                role={'presentation'}
-                src={searchIconGray}
-                alt={'search_icon_gray'}
-                id={styles.mobileHeaderSearch}
-                className={styles.mobileButton}
-                onClick={handleMobileSearch}
+                  role={'presentation'}
+                  src={searchIconGray}
+                  alt={'search_icon_gray'}
+                  id={styles.mobileHeaderSearch}
+                  className={styles.mobileButton}
+                  onClick={handleMobileSearch}
               />
               <img
-                role={'presentation'}
-                src={hamburger}
-                alt={'hamburger'}
-                className={styles.mobileButton}
-                onClick={handleMobileMenu}
+                  role={'presentation'}
+                  src={hamburger}
+                  alt={'hamburger'}
+                  className={styles.mobileButton}
+                  onClick={handleMobileMenu}
               />
             </div>
             {mobileHeaderOpen && (
-              <div className={styles.mobileMenuWrap}>
-                <div className={styles.mobileHamburger}>
-                  <Link to={'/mypage'} className={styles.mobileMenuBtn}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'마이페이지'}</p>
-                    </div>
-                  </Link>
-                  <Link
-                    to={'/mybookmark'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '즐겨찾는 문서' })
-                    }}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
-                    </div>
-                  </Link>
-                  <button
-                    type={'button'}
-                    id={styles.temporaryMobileAlarm}
-                    className={styles.mobileMenuBtn}
-                    onClick={handleMobileAlarmModal}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilealarm} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'알림'}</p>
-                    </div>
-                  </button>
-                  <Link
-                    to={'/allhistory'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '최근 변경' })
-                    }}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilehistory} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'최근변경'}</p>
-                    </div>
-                  </Link>
-                  <Link
-                    to={'/latestdebate'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '토론' })
-                    }}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobiledebate} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'토론'}</p>
-                    </div>
-                  </Link>
-                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={randomDocs} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
-                    </div>
-                  </button>
-                  {isLoggedIn ? (
-                    <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
+                <div className={styles.mobileMenuWrap}>
+                  <div className={styles.mobileHamburger}>
+                    <Link to={'/mypage'} className={styles.mobileMenuBtn}>
                       <div className={styles.mobileHamburgerMenu}>
-                        <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                        <p className={styles.mobileMenuText}>{'로그아웃'}</p>
-                      </div>
-                    </button>
-                  ) : (
-                    <Link to={'/signin'} className={styles.mobileMenuBtn}>
-                      <div className={styles.mobileHamburgerMenu}>
-                        <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                        <p className={styles.mobileMenuText}>{'로그인'}</p>
+                        <img src={mobilemypage} alt={''} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'마이페이지'}</p>
                       </div>
                     </Link>
-                  )}
+                    <Link
+                        to={'/mybookmark'}
+                        className={styles.mobileMenuBtn}
+                        onClick={() => {
+                          track('click_header_navi', {type: '즐겨찾는 문서'})
+                        }}
+                    >
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
+                      </div>
+                    </Link>
+                    <button
+                        type={'button'}
+                        id={styles.temporaryMobileAlarm}
+                        className={styles.mobileMenuBtn}
+                        onClick={handleMobileAlarmModal}
+                    >
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={mobilealarm} alt={''} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'알림'}</p>
+                      </div>
+                    </button>
+                    <Link
+                        to={'/allhistory'}
+                        className={styles.mobileMenuBtn}
+                        onClick={() => {
+                          track('click_header_navi', {type: '최근 변경'})
+                        }}
+                    >
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={mobilehistory} alt={''} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'최근변경'}</p>
+                      </div>
+                    </Link>
+                    <Link
+                        to={'/latestdebate'}
+                        className={styles.mobileMenuBtn}
+                        onClick={() => {
+                          track('click_header_navi', {type: '토론'})
+                        }}
+                    >
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={mobiledebate} alt={''} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'토론'}</p>
+                      </div>
+                    </Link>
+                    <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={randomDocs} alt={''} className={styles.mobileIcon}/>
+                        <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
+                      </div>
+                    </button>
+                    {isLoggedIn ? (
+                        <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
+                          <div className={styles.mobileHamburgerMenu}>
+                            <img src={mobilelogout} alt={''} className={styles.mobileIcon}/>
+                            <p className={styles.mobileMenuText}>{'로그아웃'}</p>
+                          </div>
+                        </button>
+                    ) : (
+                        <Link to={'/signin'} className={styles.mobileMenuBtn}>
+                          <div className={styles.mobileHamburgerMenu}>
+                            <img src={mobilelogout} alt={''} className={styles.mobileIcon}/>
+                            <p className={styles.mobileMenuText}>{'로그인'}</p>
+                          </div>
+                        </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
             )}
             {mobileSearchOpen && (
-              <div className={styles.mobileSearchWrap}>
-                <div className={styles.mobileInputContainer}>
-                  <input
-                    className={styles.mobileHeaderInput}
-                    placeholder={'검색어를 입력하세요.'}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault()
-                        if (inputValue.trim() !== '') {
-                          Nav(
-                            `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                          )
-                          setInputValue('')
-                        }
-                      }
-                    }}
-                  />
-                  <img
-                    role={'presentation'}
-                    src={searchIcon}
-                    alt={'icon'}
-                    className={styles.mobileSearchIcon}
-                    onClick={() => {
-                      if (inputValue.trim() !== '') {
-                        Nav(
-                          `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                        )
-                        setInputValue('')
-                      }
-                    }}
-                  />
+                <div className={styles.mobileSearchWrap}>
+                  <div className={styles.mobileInputContainer}>
+                    <input
+                        className={styles.mobileHeaderInput}
+                        placeholder={'검색어를 입력하세요.'}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            if (inputValue.trim() !== '') {
+                              Nav(
+                                  `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
+                              )
+                              setInputValue('')
+                            }
+                          }
+                        }}
+                    />
+                    <img
+                        role={'presentation'}
+                        src={searchIcon}
+                        alt={'icon'}
+                        className={styles.mobileSearchIcon}
+                        onClick={() => {
+                          if (inputValue.trim() !== '') {
+                            Nav(
+                                `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
+                            )
+                            setInputValue('')
+                          }
+                        }}
+                    />
+                  </div>
                 </div>
-              </div>
             )}
             {mobileAlarmModalOpen && (
-              <AlarmMobileModal isOpen={mobileAlarmModalOpen} handleMobileAlarmModal={handleMobileAlarmModal} />
+                <AlarmMobileModal isOpen={mobileAlarmModalOpen} handleMobileAlarmModal={handleMobileAlarmModal}/>
             )}
           </div>
         </div>
