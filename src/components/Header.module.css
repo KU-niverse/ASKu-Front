@@ -74,6 +74,17 @@ body, html {
     justify-content: center;
     align-items: bottom; 
 }
+.mobilelogoContainer {
+    display: none;
+}
+@media only screen and (max-width: 767px) {
+    .mobilelogoContainer {
+        display: inline-block;
+        min-width: 60px;
+        justify-content: center;
+        align-items: bottom;
+    }
+}
 
 .flexContainer {
     display: flex;
@@ -85,8 +96,9 @@ body, html {
 @media only screen and (max-width: 767px) {
   .flexContainer {
     position: relative;
-    right: 50px;
-    width: 500px;
+    right: 0px;
+    height: 60px;
+    justify-content: flex-end
   }
 }
 
@@ -180,13 +192,8 @@ body, html {
 @media only screen and (max-width: 767px) {
   .buttonWrap {
     display: flex;
-    position: absolute;
-    top: 20px;
-    right: -15px;
+    align-items: center;
     flex-direction: row;
-    margin-right: -30px;
-    max-width: 160px;
-    height: 30px;
   }
 }
 
@@ -278,7 +285,6 @@ body, html {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 50px;
   right: 80px;
 }
 
@@ -329,7 +335,6 @@ body, html {
   height: 25px;
   margin-left: 0px;
   padding-left: 20px;
-  margin-top: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
