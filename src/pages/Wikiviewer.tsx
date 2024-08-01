@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import falseBk from '../img/bookmarkfalse.svg'
 import trueBk from '../img/bookmarkFill.svg'
+import VectorRight from '../img/VectorRight.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
 import minilike from '../img/minilike.svg'
@@ -50,6 +51,10 @@ interface Contribution {
   nickname: string
 }
 
+interface wikititle {
+  data: string
+}
+
 interface WikiData {
   contents: Content[]
   is_favorite: boolean
@@ -57,6 +62,10 @@ interface WikiData {
 
 interface QuestionData {
   data: Question[]
+}
+
+interface TitleData {
+  titles: wikititle[]
 }
 
 interface ContributionData {
@@ -80,6 +89,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const [blank, setBlank] = useState(false)
   const [favorite, setFavorite] = useState(false)
   const [imageSource, setImageSource] = useState(falseBk)
+  const [titles, settitles] = useState([])
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -103,6 +113,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     return response.data
   }
 
+  const fetchTitles = async (): Promise<TitleData> => {
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
+    return response.data
+  }
+
   const fetchContribute = async (): Promise<ContributionData> => {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`)
     const data = response.data.message.map((contribution: { point: string; nickname: string }) => ({
@@ -114,6 +129,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
   const { data: wikiData, isLoading: wikiLoading, error: wikiError } = useQuery(['wikiData', title], fetchWiki)
   const { data: quesData, isLoading: quesLoading, error: quesError } = useQuery(['quesData', title, flag], fetchQues)
+  const {
+    data: titlesData,
+    isLoading: titlesLoading,
+    error: titlesError,
+  } = useQuery(['titlesData', titles], fetchTitles)
   const {
     data: contributeData,
     isLoading: contributeLoading,
@@ -134,6 +154,12 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
       setBlank(quesData.data.length === 0)
     }
   }, [quesData])
+
+  useEffect(() => {
+    if (titlesData) {
+      settitles(titlesData.titles)
+    }
+  }, [titlesData])
 
   useEffect(() => {
     if (contributeData) {
@@ -259,7 +285,24 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     nav(`/debate/${encodedTitle}`)
   }
 
-  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading) {
+  const linkToNextWiki = () => {
+    const currentIndex = titles.indexOf(title)
+    if (currentIndex !== -1) {
+      let nextTitle
+      if (currentIndex < titles.length - 1) {
+        nextTitle = titles[currentIndex + 1]
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        nextTitle = titles[0]
+      }
+      nav(`/wiki/${encodeURIComponent(nextTitle)}`)
+      window.location.reload()
+    } else {
+      console.error('현재 title을 찾을 수 없습니다.')
+    }
+  }
+
+  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading || titlesLoading) {
     return (
       <div>
         <SpinnerMypage />
@@ -267,7 +310,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     )
   }
 
-  if (wikiError || quesError || contributeError || checkLoginError) {
+  if (wikiError || quesError || contributeError || checkLoginError || titlesError) {
     return <div>{'Error loading data'}</div>
   }
 
@@ -295,6 +338,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
             <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
               <img alt={'히스토리 버튼'} src={his} />
               &nbsp;{'히스토리\r'}
+            </button>
+
+            <button onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+              &nbsp;다음 문서
+              <img src={VectorRight} alt="다음 문서 아이콘" />
             </button>
           </div>
         </div>

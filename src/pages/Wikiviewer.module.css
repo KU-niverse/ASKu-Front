@@ -47,6 +47,7 @@
   margin-left: 20px;
   display: flex;
   align-items: center;
+  flex-direction: row;
   word-break: break-word;
 }
 .bookmarkImg {
@@ -57,12 +58,12 @@
 }
 .wikititleBtn {
   display: flex;
-  justify-content: space-between;
-  width: 210px;
+  margin-right: 95px;
+  gap: 5px;
   margin-right: 20px;
 }
 .wikititleBtn button {
-  width: 97px;
+  width: auto;
   height: 36px;
   border-radius: 30px;
   border: 2px solid rgba(159, 19, 46, 1);
@@ -70,10 +71,38 @@
   color: rgba(159, 19, 46, 1);
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   align-items: center;
-  padding-left: 13px;
+  justify-content: center; 
+  padding: 0 15px; 
   box-sizing: border-box;
+  font-size: 14px; 
+  font-weight: 500;
+}
+.wikititleBtn img {
+  margin-right: 2px; 
+  width: 16px; 
+  height: 16px; 
+}
+.wikititleBtnThree{
+  width: auto;
+  position: relative;
+  border-radius: 30px;
+  background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  padding: 0 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+}
+.wikititleBtnThree img {
+  margin-left: 3px; 
+  width: 16px; 
+  height: 16px; 
 }
 .wikiBoxLists {
   width: 100%;
@@ -279,19 +308,27 @@ li {
     font-size: 18px;
   }
   .wikititleBtn {
-    width: 105px;
+    width: 145px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-left: 6px;
+    align-items: right;
+    margin-left: 2px;
+    gap: 1px;
   }
   .wikititleBtnOne {
     display: block;
     margin-bottom: 4px;
   }
   .wikititleBtnTwo {
-    display: block;
-    margin-top: 4px;
+    margin-top: 1px;
+    margin-bottom: 2px;
+}
+  .wikititleBtnThree {
+    position: absolute;
+    right: 40px;
+    margin-top: 17px;
+    min-width: 70px; /* 최소 너비 설정 */
+    white-space: nowrap; /* 줄바꿈 방지 */
   }
   .wikititleBtn img {
     width: 16px;
