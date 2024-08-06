@@ -37,13 +37,19 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
 
   const likeMutation = useMutation(sendLikeFeedback, {
     onSuccess: (data) => {
+      console.log('🚀 ~ LikeModal ~ data:', data)
       const updatedFeedbackId = data.id
       setFeedbackId(updatedFeedbackId)
       queryClient.invalidateQueries('feedback')
     },
     onError: (error: any) => {
-      console.error(error)
-      // alert(error.response?.data?.message || '?문제가 발생하였습니다')
+      if (error.response.status === 403) {
+        alert('이미 피드백을 전송하였습니다.')
+        onClose()
+      } else {
+        console.error(error)
+        alert(error.response?.data?.message || '문제가 발생하였습니다.')
+      }
     },
   })
 
@@ -73,7 +79,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
     onError: (error: any) => {
       console.error(error)
       onClose()
-      // alert(error.response?.data?.message || '!문제가 발생하였습니다')
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
     },
   })
 
@@ -104,9 +110,22 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (feedbackId && inputValue.trim() !== '') {
+      likeCommentMutation.mutate(inputValue)
+    }
+  }, [feedbackId])
+
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
-      likeCommentMutation.mutate(inputValue)
+      if (!feedbackId) {
+        // 피드백 아이디가 없으면, 피드백 아이디가 설정될 때까지 기다림
+        setTimeout(() => {
+          handleSendMessage()
+        }, 100)
+      } else {
+        likeCommentMutation.mutate(inputValue)
+      }
     }
   }
 

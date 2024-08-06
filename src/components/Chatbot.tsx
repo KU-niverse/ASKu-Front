@@ -131,6 +131,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           q_content: inputValue,
           user_id: user.data[0].id,
         })
+        console.log('🚀 ~ response.data:', response.data)
         return response.data
       }
       return {}
@@ -151,6 +152,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
           let tempAnswer = ''
           const finalAnswer = data.a_content
+          const newQnaId = data.id
+          setQnaId(newQnaId)
 
           let currentIndex = 0
           const interval = setInterval(() => {
@@ -161,6 +164,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 const updatedResponses = [...prevResponses]
                 if (!updatedResponses[updatedResponses.length - 1].isQuestion) {
                   updatedResponses[updatedResponses.length - 1].content = tempAnswer
+                  updatedResponses[updatedResponses.length - 1].qnaId = newQnaId
                 } else {
                   updatedResponses.push({
                     id: Date.now(), // Adding a unique key
@@ -168,6 +172,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     isQuestion: false,
                     blockIconZip: false, // 여기서 아이콘을 항상 표시하도록 설정
                     reference: data.reference,
+                    qnaId: newQnaId,
                   })
                 }
                 return updatedResponses

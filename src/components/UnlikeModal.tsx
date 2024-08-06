@@ -42,8 +42,13 @@ function UnlikeModal({ isOpen, onClose, qnaId }: UnlikeModalProps) {
       queryClient.invalidateQueries('feedback')
     },
     onError: (error: any) => {
-      console.error(error)
-      // alert(error.response?.data?.message || '?문제가 발생하였습니다')
+      if (error.response.status === 403) {
+        alert('이미 피드백을 전송하였습니다.')
+        onClose()
+      } else {
+        console.error(error)
+        alert(error.response?.data?.message || '문제가 발생하였습니다.')
+      }
     },
   })
 
@@ -73,7 +78,7 @@ function UnlikeModal({ isOpen, onClose, qnaId }: UnlikeModalProps) {
     onError: (error: any) => {
       console.error(error)
       onClose()
-      // alert(error.response?.data?.message || '!문제가 발생하였습니다')
+      alert(error.response?.data?.message || '문제가 발생하였습니다.')
     },
   })
 
