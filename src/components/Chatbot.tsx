@@ -131,7 +131,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           q_content: inputValue,
           user_id: user.data[0].id,
         })
-        console.log('🚀 ~ response.data:', response.data)
         return response.data
       }
       return {}

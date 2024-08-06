@@ -37,7 +37,6 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
 
   const likeMutation = useMutation(sendLikeFeedback, {
     onSuccess: (data) => {
-      console.log('🚀 ~ LikeModal ~ data:', data)
       const updatedFeedbackId = data.id
       setFeedbackId(updatedFeedbackId)
       queryClient.invalidateQueries('feedback')
