@@ -138,7 +138,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     {
       onMutate: () => {
         setLoading(true)
-        setChatResponse((prevResponses) => [...prevResponses, { content: inputValue, isQuestion: true }])
+        setChatResponse((prevResponses) => [
+          ...prevResponses,
+          { id: Date.now(), content: inputValue, isQuestion: true },
+        ])
         setInputValue('')
       },
       onSuccess: (data) => {
@@ -160,6 +163,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                   updatedResponses[updatedResponses.length - 1].content = tempAnswer
                 } else {
                   updatedResponses.push({
+                    id: Date.now(), // Adding a unique key
                     content: tempAnswer,
                     isQuestion: false,
                     blockIconZip: false, // 여기서 아이콘을 항상 표시하도록 설정
@@ -296,8 +300,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             <>
               {previousChatHistory.map((item) => (
                 <Fragment key={item.id}>
-                  <ChatQuestion content={item.q_content} />
+                  <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
                   <ChatAnswer
+                    key={`answer-${item.id}`}
                     content={item.a_content}
                     qnaId={item.id}
                     reference={item.reference}
