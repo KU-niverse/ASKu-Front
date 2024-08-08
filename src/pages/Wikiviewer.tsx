@@ -340,9 +340,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               &nbsp;{'히스토리\r'}
             </button>
 
-            <button onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
-              &nbsp;다음 문서
-              <img src={VectorRight} alt="다음 문서 아이콘" />
+            <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+              &nbsp;{'다음 문서\r'}
+              <img src={VectorRight} alt={'다음 문서 아이콘'} />
             </button>
           </div>
         </div>
