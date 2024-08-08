@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import styles from './LikeModal.module.css'
 import closeBtn from '../img/close_btn.png'
 import like from '../img/chatbot_like.svg'
@@ -8,13 +8,79 @@ import like from '../img/chatbot_like.svg'
 interface LikeModalProps {
   isOpen: boolean
   onClose: () => void
-  feedbackId: number
+  qnaId: number
 }
 
-function LikeModal({ isOpen, onClose, feedbackId }: LikeModalProps) {
+function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const queryClient = useQueryClient()
+  const [feedbackId, setFeedbackId] = useState('')
+
+  const sendLikeFeedback = async () => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_AI}/chatbot/feedback/`,
+      {
+        qna_id: qnaId,
+        feedback: true,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    return response.data
+  }
+
+  const likeMutation = useMutation(sendLikeFeedback, {
+    onSuccess: (data) => {
+      const updatedFeedbackId = data.id
+      setFeedbackId(updatedFeedbackId)
+      queryClient.invalidateQueries('feedback')
+    },
+    onError: (error: any) => {
+      if (error.response.status === 403) {
+        alert('이미 피드백을 전송하였습니다.')
+        onClose()
+      } else {
+        console.error(error)
+        alert(error.response?.data?.message || '문제가 발생하였습니다.')
+      }
+    },
+  })
+
+  const sendLikeCommentFeedback = async (comment: string) => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+      {
+        feedback_id: feedbackId,
+        content: comment,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    return response.data
+  }
+
+  const likeCommentMutation = useMutation(sendLikeCommentFeedback, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('feedback')
+      onClose()
+      alert('피드백을 성공적으로 전송하였습니다.')
+    },
+    onError: (error: any) => {
+      console.error(error)
+      onClose()
+      alert(error.response?.data?.message || '문제가 발생하였습니다')
+    },
+  })
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
@@ -37,34 +103,28 @@ function LikeModal({ isOpen, onClose, feedbackId }: LikeModalProps) {
     }
   }, [isOpen])
 
-  const sendFeedback = async () => {
-    await axios.post(
-      `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
-      {
-        feedback_id: feedbackId,
-        content: inputValue,
-      },
-      {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-  }
+  useEffect(() => {
+    if (isOpen) {
+      likeMutation.mutate()
+    }
+  }, [isOpen])
 
-  const mutation = useMutation(sendFeedback, {
-    onSuccess: () => {
-      onClose()
-    },
-    onError: (error) => {
-      console.error('피드백을 보내는 중에 오류가 발생했습니다.', error)
-    },
-  })
+  useEffect(() => {
+    if (feedbackId && inputValue.trim() !== '') {
+      likeCommentMutation.mutate(inputValue)
+    }
+  }, [feedbackId])
 
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
-      mutation.mutate()
+      if (!feedbackId) {
+        // 피드백 아이디가 없으면, 피드백 아이디가 설정될 때까지 기다림
+        setTimeout(() => {
+          handleSendMessage()
+        }, 100)
+      } else {
+        likeCommentMutation.mutate(inputValue)
+      }
     }
   }
 

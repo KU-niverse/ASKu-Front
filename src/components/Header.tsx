@@ -191,9 +191,9 @@ function Header({ userInfo, setUserInfo }: any) {
       })
       if (result.status === 200) {
         alert(result.data.message)
-        Nav('/')
         logOut()
         setNicknameText('')
+        window.location.href = '/'
       }
     } catch (error) {
       console.error(error)

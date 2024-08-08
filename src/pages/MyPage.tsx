@@ -314,21 +314,19 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                 {myBadge && myBadge.data && myBadge.data.length === 0 ? (
                   <p>{'아직 획득한 뱃지가 없습니다.'}</p>
                 ) : (
-                  <div>
-                    {myBadge &&
-                      myBadge.data &&
-                      myBadge.data
-                        .slice((page - 1) * perPage, page * perPage)
-                        .map((badge: Badge) => (
-                          <img
-                            title={badge.name}
-                            key={badge.id}
-                            src={badge.image}
-                            alt={badge.name}
-                            className={styles.badgeImage}
-                          />
-                        ))}
-                  </div>
+                  myBadge &&
+                  myBadge.data &&
+                  myBadge.data
+                    .slice((page - 1) * perPage, page * perPage)
+                    .map((badge: Badge) => (
+                      <img
+                        title={badge.name}
+                        key={badge.id}
+                        src={badge.image}
+                        alt={badge.name}
+                        className={styles.badgeImage}
+                      />
+                    ))
                 )}
               </div>
 

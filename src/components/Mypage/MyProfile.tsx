@@ -46,9 +46,9 @@ function MyProfile({ nick, point, badge, percent, badgeimg }: MyProfileProps) {
           <span className={styles.rowtitle}>{'닉네임'}</span>
           <div className={styles.text}>
             <span className={styles.point}>{nick}</span>
-            <span role={'presentation'} className={styles.editbtn} onClick={handleNickEdit}>
+            {/* <span role={'presentation'} className={styles.editbtn} onClick={handleNickEdit}>
               {'수정\r'}
-            </span>
+            </span> */}
           </div>
         </div>
         <div className={styles.rowbadge}>

@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
+
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { track } from '@amplitude/analytics-browser'
@@ -9,6 +9,7 @@ import Footer from '../components/Footer'
 import LatestDebateList from '../components/Debate/LatestDebateList'
 import DebateAllSearch from '../components/Debate/DebateAllSearch'
 import DebateRecent from '../components/Debate/DebateRecent'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -62,11 +63,20 @@ function LatestDebate() {
   }, [])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return (
+      <div>
+        {'Error: '}
+        {error.message}
+      </div>
+    )
   }
 
   return (

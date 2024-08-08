@@ -1,7 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { useMutation, useQueryClient } from 'react-query'
 import styles from './ChatAnswer.module.css'
 import like from '../img/chatbot_like.svg'
 import like_hover from '../img/chatbot_like_filled.svg'
@@ -28,54 +26,9 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   const [referenceOpen, setReferenceOpen] = useState(false)
   const [likeModalOpen, setLikeModalOpen] = useState(false)
   const [unlikeModalOpen, setUnlikeModalOpen] = useState(false)
-  const [feedbackId, setFeedbackId] = useState(0)
   const [processedContent, setProcessedContent] = useState<JSX.Element[] | null>(null)
   const [ruleModalOpen, setRuleModalOpen] = useState(false)
   const [ruleDetails, setRuleDetails] = useState('')
-
-  const queryClient = useQueryClient()
-
-  const sendLikeFeedback = async () => {
-    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-      qna_id: qnaId,
-      feedback: true,
-    })
-    return response.data
-  }
-
-  const sendUnlikeFeedback = async () => {
-    const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/feedback/`, {
-      qna_id: qnaId,
-      feedback: false,
-    })
-    return response.data
-  }
-
-  const likeMutation = useMutation(sendLikeFeedback, {
-    onSuccess: (data) => {
-      setFeedbackId(data.id)
-      queryClient.invalidateQueries('feedback')
-      setLikeModalOpen(true)
-      alert('피드백이 성공적으로 전송되었습니다.')
-    },
-    onError: (error: any) => {
-      console.error(error)
-      alert(error.response?.data?.message || '문제가 발생하였습니다')
-    },
-  })
-
-  const unlikeMutation = useMutation(sendUnlikeFeedback, {
-    onSuccess: (data) => {
-      setFeedbackId(data.id)
-      queryClient.invalidateQueries('feedback')
-      setUnlikeModalOpen(true)
-      alert('피드백이 성공적으로 전송되었습니다.')
-    },
-    onError: (error: any) => {
-      console.error(error)
-      alert(error.response?.data?.message || '문제가 발생하였습니다')
-    },
-  })
 
   const handleLikeMouseOver = () => setLikeHovered(true)
   const handleLikeMouseLeave = () => setLikeHovered(false)
@@ -84,8 +37,8 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   const handleReferenceOpen = () => setReferenceOpen(!referenceOpen)
   const handleReferenceClose = () => setReferenceOpen(false)
 
-  const handleLikeClick = () => likeMutation.mutate()
-  const handleUnlikeClick = () => unlikeMutation.mutate()
+  const handleLikeClick = () => setLikeModalOpen(true)
+  const handleUnlikeClick = () => setUnlikeModalOpen(true)
 
   const handleRuleModalOpen = (details: string) => {
     setRuleDetails(details)
@@ -116,10 +69,9 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
             .map(([link, value]) => (
               <div key={link}>
                 <Link to={`/wiki/${link}`} className={styles.reference_link}>
-                  {'참고문서:'}
+                  {'참고문서: '}
                   {link}
                 </Link>
-                <p>{value}</p>
               </div>
             ))}
         </div>
@@ -197,18 +149,13 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
                 onClick={handleReferenceClose}
               />
             </div>
-            <div className={styles.reference_text}>
-              {parseReference(reference)}
-              <p>{reference}</p>
-            </div>
+            <div className={styles.reference_text}>{parseReference(reference)}</div>
           </div>
         </div>
       </div>
-      {likeModalOpen && (
-        <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} feedbackId={feedbackId} />
-      )}
+      {likeModalOpen && <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} qnaId={qnaId} />}
       {unlikeModalOpen && (
-        <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} feedbackId={feedbackId} />
+        <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} qnaId={qnaId} />
       )}
       <RuleModal isOpen={ruleModalOpen} onClose={handleRuleModalClose} ruleContent={ruleDetails} />
     </div>

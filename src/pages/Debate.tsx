@@ -48,9 +48,9 @@ interface DebateMessage {
 }
 
 interface DebateContentData {
-  message: {
-    data: number | DebateMessage[]
-  }
+  success: boolean
+  message: string
+  data: object[]
 }
 
 interface SubmitData {
@@ -166,7 +166,8 @@ const Debate: React.FC = () => {
   }, [title])
 
   const isDebateContentData = (data: any): data is DebateContentData => {
-    return data && data.message && (typeof data.message.data === 'number' || Array.isArray(data.message.data))
+    console.log('debateContent : ', data)
+    return data && data.success
   }
 
   return (
@@ -193,10 +194,10 @@ const Debate: React.FC = () => {
             </div> // Type assertion to access AxiosError properties
           ) : (
             isDebateContentData(debateContentData) &&
-            (debateContentData.message.data === 0 ? (
+            (debateContentData.data.length === 0 ? (
               <p>{'아직 작성된 토론 메세지가 없습니다.'}</p>
             ) : (
-              (debateContentData.message.data as DebateMessage[]).map((debate, index) => (
+              (debateContentData.data as DebateMessage[]).map((debate, index) => (
                 <DebateContent
                   key={debate.id}
                   r_id={debate.id}
