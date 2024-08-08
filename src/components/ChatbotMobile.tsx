@@ -23,6 +23,8 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggest, setShowSuggest] = useState(true)
+  const [showReference, setShowReference] = useState(false)
+  const [referenceList, setReferenceList] = useState<{ link: string; value: string }[]>([])
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [chatResponse, setChatResponse] = useState<any[]>([])
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
@@ -71,6 +73,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
       },
       onSuccess: (data) => {
         setShowSuggest(false)
+        setShowReference(true)
         inputRef.current?.blur()
 
         const newChatResponse = [
@@ -208,6 +211,10 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
     }
   }
 
+  const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
+    setReferenceList(references)
+  }
+
   return (
     <div className={styles.mobileChatbotContainer}>
       <meta name={'viewport'} content={'width=device-width, initial-scale=1.0, user-scalable=0'} />
@@ -232,6 +239,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
               reference={''}
               qnaId={0}
               blockIconZip={false}
+              onAddReferenceSuggestion={onAddReferenceSuggestion}
             />
             {previousChatHistory.length !== 0 && (
               <>
@@ -243,6 +251,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
                       qnaId={item.id}
                       reference={item.reference}
                       blockIconZip={false}
+                      onAddReferenceSuggestion={onAddReferenceSuggestion}
                     />
                   </Fragment>
                 ))}
@@ -259,6 +268,7 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
                   qnaId={item.qnaId}
                   reference={item.reference}
                   blockIconZip={false}
+                  onAddReferenceSuggestion={onAddReferenceSuggestion}
                 />
               )
             })}
@@ -292,6 +302,21 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
             <div ref={chatBottomRef} /> {/* 스크롤 최하단 이동을 위한 빈 div */}
             {loading && <Spinner />}
           </div>
+          {showReference && (
+            <div className={styles.suggest} style={{ display: showReference ? 'block' : 'none' }}>
+              <p className={styles.ref}>{'참고 문서'}</p>
+              {referenceList.map((ref, index) => (
+                <span
+                  role={'presentation'}
+                  className={styles.textBox}
+                  onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                  key={ref.link}
+                >
+                  {`[참고문서] ${ref.link}`}
+                </span>
+              ))}
+            </div>
+          )}
           {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
           {isLoginModalVisible && (
             <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
