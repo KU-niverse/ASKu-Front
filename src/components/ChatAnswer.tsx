@@ -18,9 +18,16 @@ interface ChatAnswerProps {
   reference: string | null
   qnaId: number
   blockIconZip: boolean
+  onAddReferenceSuggestion: (references: { link: string; value: string }[]) => void
 }
 
-const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, blockIconZip }) => {
+const ChatAnswer: React.FC<ChatAnswerProps> = ({
+  content,
+  reference,
+  qnaId,
+  blockIconZip,
+  onAddReferenceSuggestion,
+}) => {
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)
   const [referenceOpen, setReferenceOpen] = useState(false)
@@ -29,6 +36,10 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
   const [processedContent, setProcessedContent] = useState<JSX.Element[] | null>(null)
   const [ruleModalOpen, setRuleModalOpen] = useState(false)
   const [ruleDetails, setRuleDetails] = useState('')
+  const [parsedReferences, setParsedReferences] = useState<{
+    references: { link: string; value: string }[]
+    rule: string | null
+  } | null>(null)
 
   const handleLikeMouseOver = () => setLikeHovered(true)
   const handleLikeMouseLeave = () => setLikeHovered(false)
@@ -45,51 +56,41 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
     setRuleModalOpen(true)
   }
 
-  const handleRuleModalClose = () => {
-    setRuleModalOpen(false)
-    setRuleDetails('')
-  }
-
-  const parseReference = (ref: string | null) => {
-    if (ref === null) return ''
-
-    try {
-      const parsedReference = JSON.parse(ref)
-      return (
-        <div>
-          <button
-            type={'button'}
-            className={styles.ruleButton}
-            onClick={() => handleRuleModalOpen(parsedReference.Rule)}
-          >
-            {'관련 학칙\r'}
-          </button>
-          {Object.entries(parsedReference)
-            .filter(([key]) => key !== 'Rule')
-            .map(([link, value]) => (
-              <div key={link}>
-                <Link to={`/wiki/${link}`} className={styles.reference_link}>
-                  {'참고문서: '}
-                  {link}
-                </Link>
-              </div>
-            ))}
-        </div>
-      )
-    } catch {
-      return ref
-    }
-  }
+  const handleRuleModalClose = () => setRuleModalOpen(false)
 
   useEffect(() => {
-    const newContent = content.split('\n').map((line) => (
-      <Fragment key={`content-line-${line}`}>
-        {line}
-        <br />
-      </Fragment>
-    ))
-    setProcessedContent(newContent)
+    if (content) {
+      const newContent = content.split('\n').map((line) => (
+        <Fragment key={`content-line-${line}`}>
+          {line}
+          <br />
+        </Fragment>
+      ))
+      setProcessedContent(newContent)
+    }
   }, [content])
+
+  useEffect(() => {
+    const parseReference = (ref: string | null) => {
+      if (ref === null) return null
+      try {
+        const parsedReference = JSON.parse(ref)
+        const references = Object.entries(parsedReference)
+          .filter(([key]) => key !== 'Rule')
+          .map(([link, value]) => ({ link, value: value as string }))
+        return { references, rule: parsedReference.Rule || null }
+      } catch {
+        return null
+      }
+    }
+
+    const parsedRefs = parseReference(reference)
+    if (parsedRefs) {
+      onAddReferenceSuggestion(parsedRefs.references)
+      setParsedReferences(parsedRefs)
+      setRuleDetails(parsedRefs.rule || '')
+    }
+  }, [reference, onAddReferenceSuggestion])
 
   return (
     <div>
@@ -149,7 +150,21 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({ content, reference, qnaId, bloc
                 onClick={handleReferenceClose}
               />
             </div>
-            <div className={styles.reference_text}>{parseReference(reference)}</div>
+            <div className={styles.reference_text}>
+              {ruleDetails && (
+                <button type={'button'} className={styles.ruleButton} onClick={() => handleRuleModalOpen(ruleDetails)}>
+                  {'관련 학칙\r'}
+                </button>
+              )}
+              {parsedReferences?.references.map(({ link }) => (
+                <div key={link}>
+                  <Link to={`/wiki/${link}`} className={styles.reference_link}>
+                    {'참고문서: '}
+                    {link}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -34,6 +34,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggest, setShowSuggest] = useState(true)
+  const [showReference, setShowReference] = useState(false)
+  const [referenceList, setReferenceList] = useState<{ link: string; value: string }[]>([])
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [chatResponse, setChatResponse] = useState<any[]>([])
   const [isLoginModalVisible, setLoginModalVisible] = useState(false)
@@ -41,6 +43,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [ClearModalOpen, setClearModalOpen] = useState(false)
   const [qnaId, setQnaId] = useState('')
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
+  const queryClient = useQueryClient()
+
   const closeLoginModal = () => {
     setLoginModalVisible(false)
   }
@@ -48,8 +52,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
   const [showSuggestScroll, setShowSuggestScroll] = useState(false)
-
-  const queryClient = useQueryClient()
 
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -147,6 +149,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       onSuccess: (data) => {
         try {
           setShowSuggest(false)
+          setShowReference(true)
           inputRef.current?.blur()
 
           let tempAnswer = ''
@@ -224,6 +227,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const handleSuggestClick = (content: string) => {
     setShowSuggest(false)
+    setShowReference(true)
 
     const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true, isSuggest: true }]
     setChatResponse(newChatResponse)
@@ -270,6 +274,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     scrollToBottom()
   }, [loading])
 
+  const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
+    setReferenceList(references)
+  }
+
   return (
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
@@ -299,7 +307,13 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       </div>
       <div className={styles.chatbox}>
         <div className={styles.chat}>
-          <ChatAnswer content={'안녕하세요! 무엇이든 제게 질문해주세요!'} reference={null} qnaId={0} blockIconZip />
+          <ChatAnswer
+            content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
+            reference={null}
+            qnaId={0}
+            blockIconZip
+            onAddReferenceSuggestion={onAddReferenceSuggestion}
+          />
           {previousChatHistory.length !== 0 && (
             <>
               {previousChatHistory.map((item) => (
@@ -311,6 +325,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     qnaId={item.id}
                     reference={item.reference}
                     blockIconZip={!isLoggedIn}
+                    onAddReferenceSuggestion={onAddReferenceSuggestion}
                   />
                 </Fragment>
               ))}
@@ -327,6 +342,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 reference={item.reference}
                 qnaId={item.qnaId}
                 blockIconZip={item.isSuggest}
+                onAddReferenceSuggestion={onAddReferenceSuggestion}
               />
             )
           })}
@@ -336,10 +352,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
         <div
           className={styles.suggestContainer}
-          style={showSuggest ? {} : { display: 'none' }}
+          style={showSuggest || showReference ? {} : { display: 'none' }}
           ref={suggestContainerRef}
         >
-          <p id={styles.ref}>{'추천 검색어'}</p>
+          <p id={styles.ref}>{showSuggest ? '추천 검색어' : '참고 문서'}</p>
           <div className={styles.scrollbarContainer}>
             <div
               className={styles.suggestScrollbar}
@@ -354,39 +370,59 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
               }}
             >
               <div className={styles.suggest}>
-                <span
-                  role={'presentation'}
-                  id={'ref_res_1'}
-                  className={styles.textBox}
-                  style={{ marginLeft: '0px' }}
-                  onClick={() => handleSuggestClick('너는 누구야?')}
-                >
-                  {'너는 누구야?\r'}
-                </span>
-                <span
-                  role={'presentation'}
-                  id={'ref_res_2'}
-                  className={styles.textBox}
-                  onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
-                >
-                  {'휴학은 최대 몇 년까지 가능해?\r'}
-                </span>
-                <span
-                  role={'presentation'}
-                  id={'ref_res_3'}
-                  className={styles.textBox}
-                  onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
-                >
-                  {'강의 최소 출석 일수에 대해 알려줘.\r'}
-                </span>
-                <span
-                  role={'presentation'}
-                  id={'ref_res_4'}
-                  className={styles.textBox}
-                  onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
-                >
-                  {'이중전공은 어떻게 해?\r'}
-                </span>
+                {showSuggest && (
+                  <>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_1'}
+                      className={styles.textBox}
+                      style={{ marginLeft: '0px' }}
+                      onClick={() => handleSuggestClick('너는 누구야?')}
+                    >
+                      {'너는 누구야?\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_2'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
+                    >
+                      {'휴학은 최대 몇 년까지 가능해?\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_3'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
+                    >
+                      {'강의 최소 출석 일수에 대해 알려줘.\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_4'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
+                    >
+                      {'이중전공은 어떻게 해?\r'}
+                    </span>
+                  </>
+                )}
+                {!showSuggest && (
+                  <>
+                    {referenceList.map((ref, index) => (
+                      <span
+                        role={'presentation'}
+                        id={`ref_res_${index + 1}`}
+                        className={styles.textBox}
+                        style={index === 0 ? { marginLeft: '0px' } : {}}
+                        onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                        key={ref.link}
+                      >
+                        {`${ref.link}`}
+                      </span>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </div>
