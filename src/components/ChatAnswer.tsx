@@ -1,3 +1,5 @@
+// ChatAnswer.tsx
+
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ChatAnswer.module.css'
@@ -19,6 +21,8 @@ interface ChatAnswerProps {
   qnaId: number
   blockIconZip: boolean
   onAddReferenceSuggestion: (references: { link: string; value: string }[]) => void
+  recommendedQuestions: string[] // 추가된 필드
+  onRecommendQuestionClick: (question: string) => void // 추가된 콜백 함수
 }
 
 const ChatAnswer: React.FC<ChatAnswerProps> = ({
@@ -27,6 +31,8 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
   qnaId,
   blockIconZip,
   onAddReferenceSuggestion,
+  recommendedQuestions,
+  onRecommendQuestionClick,
 }) => {
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)

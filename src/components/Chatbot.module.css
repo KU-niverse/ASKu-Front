@@ -227,13 +227,16 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #9f132e;
-  width: 220px;
-  height: 30px;
+  width: 225px;
+  height: 35px;
   border-radius: 20px;
   font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  padding-left: 10px;
+  padding-right: 10px;
 }
+
 .textBox:hover {
   background-color: #9f132e;
   color: #fff;
