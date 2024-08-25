@@ -90,6 +90,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const [favorite, setFavorite] = useState(false)
   const [imageSource, setImageSource] = useState(falseBk)
   const [titles, settitles] = useState([])
+  const [isTocExpanded, setIsTocExpanded] = useState(false)
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -347,7 +348,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
           </div>
         </div>
         <div className={styles.wikiBoxLists}>
-          <div className={styles.wikilist}>
+          <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
             <div className={styles.wikilistTitle}>
               <h2>{'목차'}</h2>
               <button type={'button'} onClick={linkToAllEdit}>
@@ -361,17 +362,23 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
                 return (
                   <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
-                    <span className={styles.wikiIndex}>
+                    <span style={{ fontWeight: tabCount === 0 ? 'bold' : 'normal' }}>
                       {tabs}
-                      {item.index}
-                      {'.\r'}
-                    </span>{' '}
-                    {item.title}
+                      <span className={styles.wikiIndex}>
+                        {item.index}
+                        {'.\r'}
+                      </span>
+                      {item.title}
+                    </span>
                   </li>
                 )
               })}
             </div>
+            <button type="button" onClick={() => setIsTocExpanded(!isTocExpanded)} className={styles.tocExpandedButton}>
+              {isTocExpanded ? '목차 접기 ▲' : '목차 더보기 ▼'}
+            </button>
           </div>
+
           <div className={styles.wikiask}>
             <div className={styles.wikiaskTitle}>
               <h2>{'질문'}</h2>
