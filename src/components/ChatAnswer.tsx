@@ -1,6 +1,6 @@
 // ChatAnswer.tsx
 
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ChatAnswer.module.css'
 import like from '../img/chatbot_like.svg'
