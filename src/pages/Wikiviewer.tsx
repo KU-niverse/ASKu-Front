@@ -448,7 +448,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                 }}
               >
                 <button type={'button'} className={styles.moreQues}>
-                  {'더보기'}
+                  {'질문 더보기'}
                 </button>
               </Link>
             </div>

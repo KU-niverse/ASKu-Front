@@ -5,9 +5,12 @@
   cursor: pointer;
 }
 .noneComment {
+  position: relative;
+  top: 65px;
   font-size: 14px;
   font-weight: 500;
   color: rgba(116, 116, 116, 1);
+  text-align: center;
 }
 .newComment {
   font-size: 14px;
@@ -140,7 +143,7 @@
   display: block;
   margin-left: auto;
   position: absolute;
-  bottom: 10px; /* 아래에서 10px 떨어진 위치에 배치 */
+  bottom: 25px; /* 아래에서 10px 떨어진 위치에 배치 */
   right: 10px; /* 오른쪽에서 10px 떨어진 위치에 배치 */
 }
 .wikilist li {
@@ -215,12 +218,13 @@ h2 {
   cursor: pointer;
 }
 .moreQues {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(116, 116, 116, 1);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(159, 19, 46, 1);
   background-color: white;
   border: none;
   cursor: pointer;
+  text-decoration: underline;
 }
 .customHr {
   margin: 0;

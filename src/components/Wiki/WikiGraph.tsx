@@ -1,4 +1,4 @@
-import HSBar from 'react-horizontal-stacked-bar-chart'
+import React from 'react'
 import styles from './WikiGraph.module.css'
 
 interface User {
@@ -58,42 +58,50 @@ function WikiGraph({ total_point, users }: WikiGraphProps) {
     color: getColor(3),
   })
 
+  const radius = 50
+  const circumference = 2 * Math.PI * radius
+
+  let cumulativeValue = 0
+
   return (
     <div className={styles.g_container}>
-      <p className={styles.g_name}>{'문서별 기여도'}</p>
-      <div
-        style={{
-          borderRadius: '100px',
-          height: '22px',
-          overflow: 'hidden',
-          width: '100%',
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            width: 'calc(100% + 2px)',
-            height: '100%',
-            position: 'absolute',
-            left: '-1px',
-            top: '50%', // 중앙으로 위치시킵니다
-            transform: 'translateY(-50%)', // 높이의 50%만큼 위로 이동시킵니다
-          }}
-        >
-          <HSBar height={22} data={topContributions} outlineWidth={0.2} outlineColor={'white'} />
-        </div>
-      </div>
-
-      <div className={styles.legend}>
-        {topContributions.map((item: Contribution) => (
-          <div className={styles.legendItem} key={item.name}>
-            <div className={styles.legendColor} style={{ background: item.color }} />
-            <div className={styles.legendLabel}>
-              <span className={styles.legendname}>{item.name}</span>
-              <span className={styles.legendper}> {item.description}</span>
+      <p className={styles.g_name}>문서별 기여도</p>
+      <div className={styles.graphAndLegend}>
+        <div className={styles.legend}>
+          {topContributions.map((item: Contribution) => (
+            <div className={styles.legendItem} key={item.name}>
+              <div className={styles.legendColor} style={{ background: item.color }} />
+              <div className={styles.legendLabel}>
+                <span className={styles.legendname}>{item.name}</span>
+                <span className={styles.legendper}> {item.description}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className={styles.graphContainer}>
+          <svg className={styles.doughnut} viewBox="0 0 120 120">
+            {topContributions.map((item, index) => {
+              const offset = cumulativeValue * circumference
+              const value = item.value / 100
+              const strokeDasharray = `${value * circumference} ${circumference}`
+              cumulativeValue += value
+
+              return (
+                <circle
+                  key={item.name}
+                  r={radius}
+                  cx="60"
+                  cy="60"
+                  fill="transparent"
+                  stroke={item.color}
+                  strokeWidth="20"
+                  strokeDasharray={strokeDasharray}
+                  strokeDashoffset={-offset}
+                />
+              )
+            })}
+          </svg>
+        </div>
       </div>
     </div>
   )
