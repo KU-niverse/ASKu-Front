@@ -75,11 +75,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     }
   }
 
-  useEffect(() => {
-    console.log('Component mounted, clearing referenceList')
-    setReferenceList([])
-  }, [])
-
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
@@ -145,11 +140,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     }
   }, [chatResponse, referenceList])
 
-  useEffect(() => {
-    console.log('Current SuggestContainerState:', SuggestContainerState)
-    console.log('Current ReferenceList:', referenceList)
-  }, [SuggestContainerState, referenceList])
-
   const sendMessageMutation = useMutation(
     async () => {
       if (user) {
@@ -174,9 +164,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       },
       onSuccess: (data) => {
         try {
-          console.log('API 응답:', data)
           const newRecommendedQuestions = data.recommended_questions || []
-          console.log('새로운 RecommendedQuestions:', newRecommendedQuestions)
           setRecommendedQuestions(newRecommendedQuestions)
 
           if (newRecommendedQuestions.length > 0) {
@@ -232,10 +220,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         }
       },
       onSettled: () => {
-        // 여기에서 isInitialLoad.current를 false로 설정
-        console.log(isInitialLoad.current)
         isInitialLoad.current = false
-        console.log('변경 후 ', isInitialLoad.current)
       },
       onError: (error: any) => {
         console.error(error)
