@@ -80,14 +80,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     setReferenceList([])
   }, [])
 
-  useEffect(() => {
-    console.log('Component mounted, clearing previousChatHistory.length', previousChatHistory.length)
-    if (previousChatHistory.length > 0) {
-      // 기존 대화 기록이 있을 때 referenceList를 초기화
-      setReferenceList([])
-    }
-  }, [previousChatHistory])
-
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
@@ -129,7 +121,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       enabled: !!user, // Only fetch chat history if userId is available
       onSuccess: (data) => {
         setPreviousChatHistory(data)
-        setReferenceList([])
       },
     },
   )
@@ -145,13 +136,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       const lastResponse = chatResponse[chatResponse.length - 1]
       const hasRecommendedQuestions = lastResponse.recommendedQuestions && lastResponse.recommendedQuestions.length > 0
 
-      if (hasRecommendedQuestions) {
-        setSuggestContainerState('suggest')
-      } else if (referenceList.length > 0) {
-        setSuggestContainerState('reference')
-      } else {
+      if (isInitialLoad.current) {
+        // 초기 로드 시에는 SuggestContainerState를 'initial'로 설정
         setSuggestContainerState('initial')
-      }
+      } else if (hasRecommendedQuestions) {
+        setSuggestContainerState('suggest')
+      } else setSuggestContainerState('reference')
     }
   }, [chatResponse, referenceList])
 
@@ -241,6 +231,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           setLoading(false)
         }
       },
+      onSettled: () => {
+        // 여기에서 isInitialLoad.current를 false로 설정
+        console.log(isInitialLoad.current)
+        isInitialLoad.current = false
+        console.log('변경 후 ', isInitialLoad.current)
+      },
       onError: (error: any) => {
         console.error(error)
         if (error.response?.status === 403) {
@@ -273,6 +269,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setLoginModalVisible(true)
       return
     }
+
     sendMessageMutation.mutate()
   }
 
@@ -283,10 +280,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const handleSuggestClick = (content: string) => {
-    setReferenceList([])
-
-    console.log('Reference List after clearing!!:', referenceList) // 초기화 후 상태 확인
-
     const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true, isSuggest: true }]
     setChatResponse(newChatResponse)
 
@@ -333,13 +326,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }, [loading])
 
   const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
-    if (!isInitialLoad.current) {
-      setReferenceList(references)
-    }
+    setReferenceList(references)
   }
-  useEffect(() => {
-    isInitialLoad.current = false
-  }, [])
 
   return (
     <div className={styles.chatBot}>
