@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import styles from './HistoryBox.module.css'
+import versionimg from '../img/version.svg'
 import dots from '../img/dots.png'
 import rollback from '../img/return.png'
 import watch from '../img/watch.png'
@@ -70,43 +71,44 @@ const HistoryBox = (props: HistoryBoxProps) => {
 
   return (
     <div className={styles.historyBox}>
-      <div className={styles.contents}>
-        <div className={styles.contentsOne}>
-          <span className={styles.version}>
+      <div className={styles.contentsOne}>
+        <div className={styles.versionContainer}>
+          <img src={versionimg} alt={'버전이미지'} />
+          <div className={styles.version}>
             {'V'}
             {version}
-          </span>
-          <span className={styles.summary}>
-            {'수정요약: '}
-            {summary}
-          </span>
+          </div>
         </div>
-        <div className={styles.contentsTwo}>
-          <span className={styles.user}>{user}</span>
-          <span className={styles.timestamp}>{timestamp}</span>
-          <span className={styles.threedot}>
-            <ThreedotsReport type={1} target={target} />
-          </span>
+        <div className={styles.docTitleContainer}>
+          <div
+            role={'presentation'}
+            className={styles.docTitle}
+            onClick={() => {
+              const encodedTitle = encodeURIComponent(title)
+              nav(`/wiki/${encodedTitle}`)
+            }}
+          >
+            {title}
+          </div>
         </div>
       </div>
-      <div className={styles.allversionText}>
-        <div className={styles.allversionBtns}>
-          <div className={styles.docTitle}>
-            <span
-              role={'presentation'}
-              className={styles.docTitle}
-              onClick={() => {
-                const encodedTitle = encodeURIComponent(title)
-                nav(`/wiki/${encodedTitle}`)
-              }}
-            >
-              {title}
-            </span>
+      <div className={styles.contentsTwo}>
+        <div className={styles.summaryContainer}>
+          <div className={styles.summaryTitle}>{'수정 요약: '}</div>
+          <div className={styles.summary}>{summary}</div>
+        </div>
+        <div className={styles.rightContainer}>
+          <div className={styles.infoLine}>
+            <div className={styles.user}>{user}</div>
+            <div className={styles.timestamp}>{timestamp}</div>
+            <div className={styles.threedot}>
+              <ThreedotsReport type={1} target={target} />
+            </div>
           </div>
-          <div className={styles.allVerBtn}>
+          <div className={styles.allversionBtns}>
             <span role={'presentation'} onClick={handleView} className={`${styles.versionbtn}`}>
-              <img src={watch} alt={'RAW버전 미리보기 버튼'} />
-              {'RAW버전 미리보기\r'}
+              <img src={watch} alt={'RAW 버전 미리보기 버튼'} />
+              {'RAW 버전 미리보기\r'}
             </span>
             <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
               <img src={verComp} alt={'전 버전이랑 비교하기 버튼'} />

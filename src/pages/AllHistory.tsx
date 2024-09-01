@@ -98,12 +98,6 @@ const AllHistory: React.FC = () => {
   return (
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.header}>
-        <span>
-          <img alt={'최근 변경 내역'} src={his2} />
-          {'최근 변경\r'}
-        </span>
-      </div>
       <div className={styles.history}>
         {isError ? (
           <div>
@@ -153,7 +147,14 @@ const AllHistory: React.FC = () => {
                   />
                 </div>
               ))}
-              <Paging total={filteredHistorys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+              <div className={styles.pagingContainer}>
+                <Paging
+                  total={filteredHistorys.length}
+                  perPage={perPage}
+                  activePage={page}
+                  onChange={handlePageChange}
+                />
+              </div>
             </div>
             <div className={type === 'create' ? styles.historyList : styles.hidden}>
               <div className={styles.historyTitle}>
@@ -196,7 +197,14 @@ const AllHistory: React.FC = () => {
                   />
                 </div>
               ))}
-              <Paging total={filteredHistorys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+              <div className={styles.pagingContainer}>
+                <Paging
+                  total={filteredHistorys.length}
+                  perPage={perPage}
+                  activePage={page}
+                  onChange={handlePageChange}
+                />
+              </div>
             </div>
             <div className={type === 'rollback' ? styles.historyList : styles.hidden}>
               <div className={styles.historyTitle}>
@@ -239,7 +247,14 @@ const AllHistory: React.FC = () => {
                   />
                 </div>
               ))}
-              <Paging total={filteredHistorys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+              <div className={styles.pagingContainer}>
+                <Paging
+                  total={filteredHistorys.length}
+                  perPage={perPage}
+                  activePage={page}
+                  onChange={handlePageChange}
+                />
+              </div>
             </div>
           </>
         )}

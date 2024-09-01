@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Pagination from 'react-js-pagination'
 import './Paging.css'
+import leftArrow from '../img/left-arrow.svg'
+import leftDoubleArrow from '../img/left-double-arrow.svg'
 
 interface PagingProps {
   activePage: number
@@ -23,8 +25,12 @@ const Paging: React.FC<PagingProps> = ({ activePage, perPage, total, onChange })
       itemsCountPerPage={perPage}
       totalItemsCount={total}
       pageRangeDisplayed={5}
-      prevPageText={'‹'}
-      nextPageText={'›'}
+      firstPageText={<img src={leftDoubleArrow} alt={'왼쪽 더블 화살표'} />}
+      prevPageText={<img src={leftArrow} alt={'왼쪽 화살표'} style={{ marginRight: '14px' }} />}
+      nextPageText={
+        <img src={leftArrow} alt={'오른쪽 화살표'} style={{ transform: 'rotate(180deg)', marginLeft: '14px' }} />
+      }
+      lastPageText={<img src={leftDoubleArrow} alt={'왼쪽 더블 화살표'} style={{ transform: 'rotate(180deg)' }} />}
       onChange={handlePageChange}
     />
   )
