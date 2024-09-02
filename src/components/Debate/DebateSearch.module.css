@@ -1,53 +1,55 @@
-/* 스타일을 초기화하고 싶은 경우 */
-.linkTo {
-  text-decoration: none; /* 밑줄 제거 */
-  color: black; /* 기본 텍스트 색상 유지 */
+.searchTitle {
+  width: 89px;
+  position: relative;
+  font-size: 24px;
+  display: inline-block;
+  font-family: Pretendard;
+  color: #de3a58;
+  text-align: left;
 }
+.searchInput{
+  position: absolute;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: content-box;
+  width: 231px;
+  height: 47px;
+  padding-left: 50px;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #000;
+  font-family: Pretendard;
+}
+.searchIcon{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  left: 6%;
+  top: 36px;
+}
+.cancelIcon{
+  position: absolute;
+  top: 233px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 190px;
+  right: 0px;
 
-/* 클릭 시 스타일 변경하고 싶은 경우 */
-.linkTo:hover {
-  text-decoration: underline;
-  text-decoration: none; /* 클릭 시 밑줄 표시 */
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
-.searchTitle {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 22px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: rgba(159, 19, 46, 1);
-}
-.inputcontainer {
-  display: flex;
-  width: 25%;
-}
-.headerInput {
-  border: 2px solid #d5d5d5;
-  border-radius: 35px;
-  width: 20%;
-  height: 40px;
-  padding-left: 20px;
-  position: absolute;
-  box-sizing: border-box;
-}
-.searchIcon {
-  width: 21px;
-  height: 18px;
-  position: relative;
-  cursor: pointer;
-  left: 85%;
-  top: 10px;
-  z-index: 20;
-}
-.resultContainer {
+
+.result {
   display: flex;
   flex-direction: column;
   width: 25%;
 }
+
 .resultList {
   width: 90%;
   overflow: hidden;
@@ -58,4 +60,10 @@
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
+  padding-top: 20px;
+}
+
+.linkTo {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 기본 텍스트 색상 유지 */
 }

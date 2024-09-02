@@ -1,12 +1,20 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react'
+import React, { useState, KeyboardEvent, useRef } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styles from './DebateSearch.module.css'
-import searchIcon from '../../img/search_icon.svg'
+import cancelIcon from '../../img/cancelIcon.svg'
+import searchIcon_grey from '../../img/searchIcon_grey.svg'
+import searchIcon_red from '../../img/searchIcon_red.svg'
 
 interface DebateSearchProps {
   title: string
+}
+
+interface SearchResponse {
+  success: boolean
+  data: SearchResult[]
+  
 }
 
 interface SearchResult {
@@ -14,82 +22,72 @@ interface SearchResult {
   subject: string
 }
 
-interface SearchResponse {
-  success: boolean
-  data: SearchResult[]
+const getSearchDebate = async (title:string, word:string) => {
+  const result = await axios.get<SearchResponse>(`${process.env.REACT_APP_HOST}/debate/search/${title}/${word}`, 
+    {withCredentials: true})
+  return result.data
 }
 
-function useSearchDebate(title: string, word: string) {
-  return useQuery<SearchResponse, Error>(
-    ['searchDebate', title, word],
-    async () => {
-      const result = await axios.get<SearchResponse>(`${process.env.REACT_APP_HOST}/debate/search/${title}/${word}`, {
-        withCredentials: true,
-      })
-      return result.data
-    },
-    {
-      enabled: !!word,
-      retry: false,
-      onError: (error) => {
-        console.error('토론 검색 에러:', error)
-        alert(error.message)
-      },
-    },
-  )
-}
-
-const DebateSearch = ({ title }: DebateSearchProps) => {
+const DebateSearch = ({title}:DebateSearchProps) => {
   const [word, setWord] = useState('')
-  const [onClick, setOnClick] = useState(false)
-
-  const { isError, error, data: searchResults } = useSearchDebate(title, word)
-
-  const navigate = useNavigate()
-
-  const handleDebateSearch = () => {
-    setOnClick(true) // 검색 결과 보여주기
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const [showResult, setShowResult] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { data, isLoading, error } = useQuery(['searchDebate', title, word], () => getSearchDebate(title, word), {
+    enabled: !!word, // 검색어가 있을 때만 실행
+  });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWord(e.target.value)
   }
+  
+  const handleDebateSearch = () => {
+    setShowResult(true)
+  }
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleDebateSearch()
     }
   }
-
-  const results = searchResults?.data || []
-  const resultCount = results.length
+  const delWord = () => {
+    setWord('')
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
+  const results = data?.data || []
+  const lenResult = results.length
 
   return (
     <div>
-      <p className={styles.searchTitle}>{'토론 검색'}</p>
-      <div className={styles.inputContainer}>
-        <input
-          className={styles.headerInput}
-          type="text"
-          value={word}
-          onChange={handleChange}
-          placeholder="검색어를 입력하세요."
-          onKeyDown={handleKeyDown}
+      <b className={styles.searchTitle}>토론 검색</b>
+      <div>
+        <input 
+        className={styles.searchInput} 
+        type="text" 
+        value={word}
+        placeholder="검색어를 입력하세요."
+        onChange={handleInputChange}
+        ref={inputRef}
+        onKeyDown={handleKeyDown}
+        />
+
+        <img 
+        className = {styles.searchIcon}
+        src = {word? searchIcon_red : searchIcon_grey}
+        onClick = {handleDebateSearch} 
         />
         <img
-          role="presentation"
-          src={searchIcon}
-          alt="icon"
-          className={styles.searchIcon}
-          onClick={handleDebateSearch}
+        className = {word? styles.cancelIcon : styles.hidden}
+        src = {cancelIcon}
+        onClick = {delWord}
         />
-      </div>
 
-      <div className={onClick ? styles.resultContainer : styles.hidden}>
-        {isError ? (
-          <p>{error.message}</p>
-        ) : resultCount === 0 ? (
-          <p>{'검색결과가 없습니다.'}</p>
+      </div>
+      <div className = {showResult ? styles.result : styles.hidden}>
+        {error ? (
+          <p>오류가 발생하였습니다.</p>
+        ) : lenResult === 0 ? (
+          <p>검색결과가 없습니다.</p>
         ) : (
           results.map((item) => (
             <Link
@@ -104,6 +102,7 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
         )}
       </div>
     </div>
+    
   )
 }
 

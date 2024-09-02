@@ -11,6 +11,7 @@ import DebateList from '../components/Debate/DebateList'
 import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -80,18 +81,9 @@ const MoreDebate: React.FC = () => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
 
-      <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
-      </div>
-
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
-          <div className={styles.maincontent_box}>
-            <p className={styles.title}>{'이 문서의 토론 목록'}</p>
+            <p className={styles.title}><span className={styles.pink}>{title}</span> 문서의 토론 목록</p>
             <div className={styles.menu}>
               <span className={styles.menu1}>{'항목'}</span>
               <span className={styles.menu2}>{'수정 시간'}</span>
@@ -105,7 +97,9 @@ const MoreDebate: React.FC = () => {
                 {error?.message}
               </p>
             ) : debateListData?.data.length === 0 ? (
-              <p className={styles.none}>{'아직 생성된 토론방이 없습니다.'}</p>
+              <><div className = {styles.caution}><img src={CautionIcon} />
+              <p className={styles.none}>{'아직 생성된'}</p>
+              <p className={styles.none}>{'토론방이 없습니다.'}</p></div></>
             ) : (
               debateListData?.data.map((data) => (
                 <DebateList
@@ -123,7 +117,6 @@ const MoreDebate: React.FC = () => {
                 />
               ))
             )}
-          </div>
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>

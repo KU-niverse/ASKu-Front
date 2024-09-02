@@ -1,7 +1,38 @@
-.container {
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-top: 73px;
+  margin-bottom: 27px;
+}
+
+.menu {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  justify-content: space-between;
+  padding: 10px 0;
+  color: #DE3A58;
+  font-size: 24px;
+  font-weight: 700;
+  border-top: 4px solid #9F132E;
+  padding-top: 29px;
+
+}
+
+.pink{
+  color : #DE3A58;
+}
+
+.maincontent{
+  margin-left: 138px;
+  margin-right: 70px;
+  background-color: white;
+  width: 75%;
+  height: auto;
+}
+
+.caution{
+  text-align: center;
+  margin-top: 60px;
+
 }
 .hidden {
   display: none;
@@ -38,15 +69,16 @@
   align-items: center;
   padding: 30px;
   box-sizing: border-box;
+  border-radius: 12px;
+  padding-top: 36px;
+  margin-bottom: 70px;
+  margin-top: 73px;
+  margin-right: 138px;
+
 }
 .sidebar div {
   width: 100%;
   margin-bottom: 30px;
-}
-.maincontent {
-  background-color: white;
-  width: 75%;
-  height: auto;
 }
 
 .maincontent_box {
@@ -56,33 +88,15 @@
   padding-bottom: 35px;
 }
 
-.title {
-  font-size: 30px;
-  font-weight: 800;
-  text-align: center;
-  margin-top: 0;
-  padding-top: 30px;
-}
-.menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px 20px;
-  padding: 10px 0;
-  color: rgba(159, 19, 46, 1);
-  font-size: 18px;
-  font-weight: 700;
-  border-bottom: 1px solid rgba(213, 213, 213, 1);
-}
-.menu1 {
-  margin-left: 14px;
-}
-.menu2 {
-  margin-right: 14px;
-}
-
 .none {
-  margin-left: 34px;
+  color: #000;
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 767px) {
