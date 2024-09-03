@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useQuery, useMutation } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Signin.module.css'
 import logo from '../img/logo.png'
-import haho_login from '../img/login.png'
 
 interface SigninProps {
   loggedIn: boolean
@@ -139,8 +138,6 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
   return (
     <div className={styles.container}>
       <img role={'presentation'} className={styles.logo} src={logo} alt={'logo'} onClick={() => nav('/')} />
-      {/* <img className={styles.haho} src={haho_login} alt={'haho'} /> */}
-      {/* <h1 className={styles.login_headers}>{'LOGIN'}</h1> */}
       <p className={styles.login_instruction}>{'고파스 계정으로 바로 로그인하세요!'}</p>
       <form onSubmit={handleOnSubmit}>
         <div className={styles.login_input}>

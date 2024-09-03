@@ -267,7 +267,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   function handleClick(index: number) {
-    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
+    if (myDivRef.current[index]) {
+      myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const linkToHistory = () => {
@@ -355,7 +357,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               </button>
             </div>
             <div>
-              {allContent.map((item) => {
+              {allContent.map((item: Content) => {
                 const tabCount = item.index.split('.').length - 1
                 const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
 
@@ -474,7 +476,12 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               }
 
               return (
-                <div ref={(el) => myDivRef.current[Number(item.section)] === el} key={item.section}>
+                <div
+                  ref={(el) => {
+                    if (el) myDivRef.current[Number(item.section)] = el
+                  }}
+                  key={item.section}
+                >
                   <WikiBox
                     title={item.title}
                     content={item.content}
