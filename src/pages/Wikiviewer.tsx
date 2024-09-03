@@ -379,7 +379,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               <h2>{'질문'}</h2>
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
-            <div className={blank === false ? styles.quesWrap : styles.hidden}>
+            <div className={ques.length !== 0 ? styles.quesWrap : styles.noneComment}>
               {ques.length === 0 ? (
                 <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
               ) : (
@@ -388,7 +388,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                     return null
                   }
                   return (
-                    <div className={styles.queslist}>
+                    <div>
                       <hr className={styles.customHr} />
                       <ul
                         role={'presentation'}
