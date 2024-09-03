@@ -82,14 +82,17 @@ const AllHistory: React.FC = () => {
 
   const allBtn = () => {
     setType('all')
+    setPage(1)
   }
 
   const createBtn = () => {
     setType('create')
+    setPage(1)
   }
 
   const rollBtn = () => {
     setType('rollback')
+    setPage(1)
   }
 
   const startIndex = (page - 1) * perPage
