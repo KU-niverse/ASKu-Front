@@ -1,10 +1,6 @@
 import React from 'react'
-import { useMutation } from 'react-query'
-import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import styles from './HistoryBox.module.css'
-import dots from '../img/dots.png'
-import rollback from '../img/return.png'
 import watch from '../img/watch.png'
 import verComp from '../img/verComp.png'
 import ThreedotsReport from './ThreedotsReport'
@@ -15,57 +11,29 @@ interface HistoryBoxProps {
   summary: string
   user: string
   timestamp: string
-  doctitle: string
   target: number
   type: string
 }
 
-const HistoryBox = (props: HistoryBoxProps) => {
+const AllHistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
-  const { title, version, summary, user, timestamp, doctitle, target, type } = props // 구조 분해 할당
+  const { title, version, summary, user, timestamp, target, type } = props // 구조 분해 할당
 
   const handleView = () => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/preview/${encodedTitle}/${version}`)
   }
 
-  const { mutate: handleRollback, isLoading: isRollbackLoading } = useMutation(
-    async () => {
-      const result = await axios.post(
-        `${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${version}`,
-        {},
-        { withCredentials: true },
-      )
-      return result.data
-    },
-    {
-      onSuccess: (data) => {
-        alert(data.message)
-        const encodedTitle = encodeURIComponent(title)
-        nav(`/wiki/${encodedTitle}`)
-      },
-      onError: (error: AxiosError) => {
-        console.error(error)
-        if (error.response?.status === 401) {
-          alert('로그인이 필요합니다')
-          nav('/signin')
-        } else if (error.response?.status === 432) {
-          alert(error.response.data)
-        }
-      },
-    },
-  )
-
   const handleCompare = () => {
     if (type === 'create') {
       alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
-    }
-    if (version === 1) {
+    } else if (version === 1) {
       alert('첫번째 히스토리는 지원하지 않는 기능입니다')
+    } else {
+      const encodedTitle = encodeURIComponent(title)
+      nav(`/history/${encodedTitle}/diff/${version}`)
     }
-    const encodedTitle = encodeURIComponent(title)
-    nav(`/history/${encodedTitle}/diff/${version}`)
   }
 
   return (
@@ -119,4 +87,4 @@ const HistoryBox = (props: HistoryBoxProps) => {
   )
 }
 
-export default HistoryBox
+export default AllHistoryBox

@@ -149,7 +149,6 @@ const AllHistory: React.FC = () => {
                     title={item.doc_title}
                     target={item.id}
                     type={type}
-                    doctitle={''}
                   />
                 </div>
               ))}
@@ -192,7 +191,6 @@ const AllHistory: React.FC = () => {
                     title={item.doc_title}
                     target={item.id}
                     type={type}
-                    doctitle={''}
                   />
                 </div>
               ))}
@@ -235,7 +233,6 @@ const AllHistory: React.FC = () => {
                     title={item.doc_title}
                     target={item.id}
                     type={type}
-                    doctitle={''}
                   />
                 </div>
               ))}
