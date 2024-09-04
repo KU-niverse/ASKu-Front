@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import his from '../img/his.png'
 import WikiToHtml from '../components/Wiki/WikiToHtml'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -40,7 +41,7 @@ function WikiViewer() {
 
   const { data: wikiData, error, isLoading } = useQuery(['wikiData', title, ver], fetchWiki)
 
-  if (isLoading) return <div>{'Loading...'}</div>
+  if (isLoading) return <SpinnerMypage />
   if (error) return <div>{'Error loading data'}</div>
 
   const allText = WikiToHtml(wikiData.jsonData.text).replace(/<img/g, '<img style="max-width: 100%; height: auto;"')
