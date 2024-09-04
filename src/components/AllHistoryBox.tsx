@@ -62,7 +62,6 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
           <div className={styles.docTitle}>
             <span
               role={'presentation'}
-              className={styles.docTitle}
               onClick={() => {
                 const encodedTitle = encodeURIComponent(title)
                 nav(`/wiki/${encodedTitle}`)
