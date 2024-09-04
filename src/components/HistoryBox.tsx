@@ -70,15 +70,12 @@ const HistoryBox = (props: HistoryBoxProps) => {
   )
 
   const handleCompare = () => {
-    if (type === 'create') {
-      alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
-    }
     if (version === 1) {
       alert('첫번째 히스토리는 지원하지 않는 기능입니다')
+    } else {
+      const encodedTitle = encodeURIComponent(title)
+      nav(`/history/${encodedTitle}/diff/${version}`)
     }
-    const encodedTitle = encodeURIComponent(title)
-
-    nav(`/history/${encodedTitle}/diff/${version}`)
   }
 
   return (
