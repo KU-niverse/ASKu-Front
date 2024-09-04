@@ -48,6 +48,8 @@
   display: flex;
   flex-direction: column;
   width: 25%;
+  margin-top: 50px;
+  padding-left: 10px;
 }
 
 .resultList {
@@ -60,7 +62,7 @@
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
-  padding-top: 20px;
+  margin-bottom: 0px;
 }
 
 .linkTo {

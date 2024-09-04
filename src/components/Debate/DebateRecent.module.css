@@ -10,12 +10,12 @@
   text-decoration: none; /* 클릭 시 밑줄 표시 */
 }
 .recentTitle {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 22px;
-  letter-spacing: 0em;
+  width: 89px;
+  position: relative;
+  font-size: 24px;
+  font-family: Pretendard;
+  color: #de3a58;
   text-align: left;
-  color: rgba(159, 19, 46, 1);
 }
 .recentLists {
   display: flex;
@@ -29,12 +29,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 14px;
 }
 .listTitle {
   font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
