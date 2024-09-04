@@ -336,3 +336,8 @@
   height: 25px;
   border-radius: 20px;
 }
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
