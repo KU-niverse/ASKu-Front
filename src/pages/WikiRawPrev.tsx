@@ -43,8 +43,7 @@ function WikiViewer() {
   if (isLoading) return <div>{'Loading...'}</div>
   if (error) return <div>{'Error loading data'}</div>
 
-  const { text, contents: allContent } = wikiData
-  const allText = WikiToHtml(text).replace(/<img/g, '<img style="max-width: 100%; height: auto;"')
+  const allText = WikiToHtml(wikiData.jsonData.text).replace(/<img/g, '<img style="max-width: 100%; height: auto;"')
 
   function handleClick(index: number) {
     myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
