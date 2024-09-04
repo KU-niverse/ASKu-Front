@@ -284,7 +284,7 @@ function Header({ userInfo, setUserInfo }: any) {
                 }}
               >
                 <img src={all_document} alt={'모든 문서'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '모든 문서' : ''}
+                {ismainpage || buttonTextVisible ? '최근 변경' : ''}
               </button>
             </Link>
             <Link
