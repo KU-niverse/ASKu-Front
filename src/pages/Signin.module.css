@@ -46,15 +46,18 @@
   margin-left: 3%;
   height: 50px;
   margin-bottom: 10px;
-  border-radius: 43px;
-  background-color: rgba(240, 240, 240, 1);
-  border: 1px solid rgba(213, 213, 213, 1);
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255, 1);
+  border: 2px solid rgba(213, 213, 213, 1);
   padding: 10px;
   padding-left: 25px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.login_input input:not(:placeholder-shown) {
+  border-color: rgba(222, 58, 88, 1);
 }
 
 .login_btn {
@@ -81,6 +84,9 @@
   margin-left: 5px;
   margin-top: 3px;
 }
+.id_remem_checked {
+  color: rgba(222, 58, 88, 1);
+}
 .login_remem input {
   width: 11px;
   height: 11px;
@@ -99,6 +105,9 @@
   color: rgba(116, 116, 116, 1);
   text-decoration-line: none;
 }
+.login_signup a:hover {
+  color: rgba(222, 58, 88, 1);
+}
 .login_find {
   display: flex;
   justify-content: space-between;
@@ -112,6 +121,9 @@
 .login_find a {
   color: rgba(116, 116, 116, 1);
   text-decoration-line: none;
+}
+.login_find a:hover {
+  color: rgba(222, 58, 88, 1);
 }
 
 @media only screen and (max-width: 767px) {
