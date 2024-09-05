@@ -5,13 +5,39 @@
   cursor: pointer;
 }
 .noneComment {
-  position: relative;
-  top: 65px;
   font-size: 14px;
   font-weight: 500;
   color: rgba(116, 116, 116, 1);
   text-align: center;
+  margin-top: 10px;
 }
+.noQuestion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.askWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 55px;
+  margin-bottom: 10px;
+}
+
+.askIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.askText {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(222, 58, 88, 1);
+}
+
 .newComment {
   font-size: 14px;
   font-weight: 500;
@@ -132,14 +158,15 @@
   max-height: none;
 }
 .tocExpandedButton {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  color: rgba(159, 19, 46, 1);
+  color: rgba(222, 58, 88, 1);
   text-decoration: underline;
   background-color: white;
   border: none;
   cursor: pointer;
   margin-top: 10px;
+  margin-bottom: 3px;
   display: block;
   margin-left: auto;
   position: absolute;
@@ -162,7 +189,7 @@
 
 h2 {
   margin: 0px;
-  font-size: 18px;
+  font-size: 23px;
   font-weight: 700;
 }
 
@@ -178,6 +205,8 @@ h2 {
   margin-bottom: 20px;
 }
 .wikiask {
+  display: flex;
+  flex-direction: column;
   width: 28%;
   height: 303px;
   border: 1px solid rgba(213, 213, 213, 1);
@@ -210,17 +239,31 @@ h2 {
   align-items: center;
 }
 .addQues {
-  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
   font-weight: 700;
-  color: rgba(159, 19, 46, 1);
+  color: rgba(222, 58, 88, 1);
   background-color: white;
   border: none;
   cursor: pointer;
+  text-decoration: none;
 }
+.addQues:visited {
+  color: rgba(222, 58, 88, 1);
+  text-decoration: none;
+}
+.addQuesLink {
+  margin-top: 3px;
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 텍스트 색상을 상속 */
+}
+
 .moreQues {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  color: rgba(159, 19, 46, 1);
+  color: rgba(222, 58, 88, 1);
   background-color: white;
   border: none;
   cursor: pointer;

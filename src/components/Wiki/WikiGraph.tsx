@@ -101,6 +101,7 @@ function WikiGraph({ total_point, users }: WikiGraphProps) {
               )
             })}
           </svg>
+          <div className={styles.centerText}>{users.length}명</div>
         </div>
       </div>
     </div>

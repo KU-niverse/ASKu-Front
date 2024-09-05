@@ -16,6 +16,7 @@ import Switch from '../components/Switch'
 import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
+import question from '../img/wiki_qustion.svg'
 
 interface AxiosErrorResponse {
   message: string
@@ -362,7 +363,13 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
                 return (
                   <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
-                    <span style={{ fontWeight: tabCount === 0 ? 'bold' : 'normal' }}>
+                    <span
+                      style={{
+                        fontWeight: tabCount === 0 ? 'bold' : 'normal',
+                        fontSize: tabCount === 0 ? '16px' : '15px',
+                      }}
+                    >
+                      {' '}
                       {tabs}
                       <span className={styles.wikiIndex}>
                         {item.index}
@@ -386,7 +393,13 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
             </div>
             <div className={blank === false ? styles.quesWrap : styles.hidden}>
               {ques.length === 0 ? (
-                <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
+                <div className={styles.noQuestion}>
+                  <div className={styles.askWrapper}>
+                    <span className={styles.askText}>질문할래요</span>
+                    <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
+                  </div>
+                  <p className={styles.noneComment}>아직 질문이 존재하지 않습니다</p>
+                </div>
               ) : (
                 ques.map((item, index) => {
                   if (index >= 5) {
@@ -434,9 +447,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               )}
             </div>
             <div className={styles.wikiaskFoot}>
-              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
+              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
                 <button type={'button'} className={styles.addQues}>
-                  {'나도 질문하기'}
+                  {'나도 질문하기'} <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
                 </button>
               </Link>
               <Link
