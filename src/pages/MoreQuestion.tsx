@@ -59,7 +59,7 @@ const fetchUserInfo = async () => {
 
 const fetchTitles = async () => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
-  return res.data
+  return res.data.titles
 }
 
 const fetchQuestions = async (title: string, flag: number) => {
@@ -93,7 +93,7 @@ const MoreQuestion: React.FC = () => {
   const flag = isToggled ? 1 : 0
 
   const { data: userInfo, isLoading: userInfoLoading } = useQuery('userInfo', fetchUserInfo)
-  const { data: titles, isLoading: titlesLoading } = useQuery('titles', fetchTitles)
+  const { data: titles = [], isLoading: titlesLoading } = useQuery('titles', fetchTitles)
   const { data: questionData, isLoading: questionsLoading } = useQuery(
     ['questions', title, flag],
     () => fetchQuestions(title, flag),
@@ -128,7 +128,7 @@ const MoreQuestion: React.FC = () => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={userInfo} />
       <div className={styles.content}>
-        {titles?.includes(title) ? (
+        {titles.includes(title) ? (
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>
