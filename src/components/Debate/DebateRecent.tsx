@@ -16,6 +16,10 @@ interface RecentListData {
   data: RecentItem[]
 }
 
+interface DebateRecentProps{
+  title : string
+}
+
 function useRecentDebateList() {
   return useQuery<RecentListData, Error>(
     'recentDebateList',
@@ -34,7 +38,7 @@ function useRecentDebateList() {
   )
 }
 
-const DebateRecent = () => {
+const DebateRecent = ({title}:DebateRecentProps) => {
   const { isLoading, error, data: recentListData } = useRecentDebateList()
 
   return (
