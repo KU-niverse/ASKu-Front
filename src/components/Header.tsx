@@ -272,7 +272,7 @@ function Header({ userInfo, setUserInfo }: any) {
             <Link
               to={'/allhistory'}
               onClick={() => {
-                track('click_header_navi', { type: '모든 문서' })
+                track('click_header_navi', { type: '최근 변경' })
               }}
             >
               <button
@@ -283,8 +283,8 @@ function Header({ userInfo, setUserInfo }: any) {
                   display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
                 }}
               >
-                <img src={all_document} alt={'모든 문서'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '모든 문서' : ''}
+                <img src={all_document} alt={'최근 변경'} className={styles.icon} />
+                {ismainpage || buttonTextVisible ? '최근 변경' : ''}
               </button>
             </Link>
             <Link
