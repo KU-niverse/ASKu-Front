@@ -16,7 +16,6 @@ import RefreshModal from './RefreshModal'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
-import haho from '../img/3d_haho.png'
 
 interface User {
   id: number
@@ -293,9 +292,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
           <button type={'button'} id={styles.title}>
-            {'AI 챗봇: 하호'}
+            {'AI 챗봇'}
           </button>
-          <hr />
           <div role={'presentation'} className={styles.buttonContainer} onClick={handleClearModal}>
             <img src={refreshIcon} className={styles.sidebarIcon} alt={'refresh'} />
             <button type={'button'} className={styles.button}>

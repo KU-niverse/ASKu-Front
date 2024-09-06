@@ -114,15 +114,13 @@
 
 .chatBotContainer {
     display: flex;
+    width: 100%;
     flex: 1;
     flex-direction: row;
     margin-top: 25px;
     margin-bottom: 25px;
     overflow-y: scroll;
     scrollbar-width:none; 
-    margin-left: 132px;
-    margin-right: 132px;
-
 }
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
