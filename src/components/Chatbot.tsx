@@ -286,7 +286,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           <button type={'button'} id={styles.title}>
             {'AI 챗봇: 하호'}
           </button>
-          <hr/>
+          <hr />
           <div role={'presentation'} className={styles.buttonContainer} onClick={handleClearModal}>
             <img src={refreshIcon} className={styles.sidebarIcon} alt={'refresh'} />
             <button type={'button'} className={styles.button}>
