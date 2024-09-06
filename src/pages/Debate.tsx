@@ -166,7 +166,6 @@ const Debate: React.FC = () => {
   }, [title])
 
   const isDebateContentData = (data: any): data is DebateContentData => {
-    console.log('debateContent : ', data)
     return data && data.success
   }
 
@@ -195,7 +194,7 @@ const Debate: React.FC = () => {
           ) : (
             isDebateContentData(debateContentData) &&
             (debateContentData.data.length === 0 ? (
-              <p>{'아직 작성된 토론 메세지가 없습니다.'}</p>
+              <p className={styles.nonecomment}>{'아직 작성된 토론 메세지가 없습니다.'}</p>
             ) : (
               (debateContentData.data as DebateMessage[]).map((debate, index) => (
                 <DebateContent
