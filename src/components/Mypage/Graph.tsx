@@ -39,8 +39,8 @@ function Graph({ total_point, docs }: GraphProps) {
   // Calculate contributions and sort them
   const contributions = docs.map((doc: Document) => ({
     name: doc.doc_title,
-    value: (parseFloat(doc.doc_point) / total_point) * 100,
-    description: `${((parseFloat(doc.doc_point) / total_point) * 100).toFixed(2)}%`,
+    value: parseFloat(doc.percentage) * 10000,
+    description: `${(parseFloat(doc.percentage) * 100).toFixed(2)}%`,
     color: '', // Initialize color property
   }))
 
