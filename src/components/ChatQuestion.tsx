@@ -4,6 +4,7 @@ import like from '../img/like.png'
 import unlike from '../img/unlike.png'
 import reference from '../img/reference.png'
 import dots from '../img/dots.png'
+import catIcon from '../img/cutiecat.svg'
 
 interface ChatQuestionProps {
   content: string
@@ -15,7 +16,7 @@ const ChatQuestion = ({ content }: ChatQuestionProps) => {
       <div className={styles.questionBox}>
         <div className={styles.characterWrapper}>
           <div className={styles.characterContainer}>
-            <span>{'나'}</span>
+            <img src={catIcon} alt={'character'} className={styles.character} />
           </div>
         </div>
         <div className={styles.chatTextWrap}>
