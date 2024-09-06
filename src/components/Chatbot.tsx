@@ -219,11 +219,17 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setLoginModalVisible(true)
       return
     }
+    if (!inputValue.trim()) {
+      return
+    }
     sendMessageMutation.mutate()
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
+      if (!inputValue.trim()) {
+        return
+      }
       handleSendClick()
     }
   }
