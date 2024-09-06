@@ -38,12 +38,16 @@ function useCheckLoginStatus() {
   )
 }
 
-function useSubmitDebate(title:string, debateId: number) {
+function useSubmitDebate(title: string, debateId: number) {
   return useMutation<void, AxiosError, SubmitData>(
     async (submitData) => {
-      await axios.post(`${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`, submitData, {
-        withCredentials: true,
-      })
+      await axios.post(
+        `${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`,
+        submitData,
+        {
+          withCredentials: true,
+        },
+      )
     },
     {
       onSuccess: () => {
@@ -68,7 +72,7 @@ function useSubmitDebate(title:string, debateId: number) {
 function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   const [debateContent, setDebateContent] = useState<string>('')
   const { data: loginStatusData } = useCheckLoginStatus()
-  const { mutate: submitDebate, isLoading: isSubmitting } = useSubmitDebate(title,debateId)
+  const { mutate: submitDebate, isLoading: isSubmitting } = useSubmitDebate(title, debateId)
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
