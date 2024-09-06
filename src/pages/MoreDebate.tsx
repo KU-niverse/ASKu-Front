@@ -83,40 +83,44 @@ const MoreDebate: React.FC = () => {
 
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
-            <p className={styles.title}><span className={styles.pink}>{title}</span> 문서의 토론 목록</p>
-            <div className={styles.menu}>
-              <span className={styles.menu1}>{'항목'}</span>
-              <span className={styles.menu2}>{'수정 시간'}</span>
-            </div>
+          <p className={styles.title}>
+            <span className={styles.pink}>{title}</span> 문서의 토론 목록
+          </p>
+          <div className={styles.menu}>
+            <span className={styles.menu1}>{'항목'}</span>
+            <span className={styles.menu2}>{'수정 시간'}</span>
+          </div>
 
-            {isLoading ? (
-              <p className={styles.none}>{'데이터를 불러오는 중입니다.'}</p>
-            ) : isError ? (
-              <p className={styles.none}>
-                {'에러: '}
-                {error?.message}
-              </p>
-            ) : debateListData?.data.length === 0 ? (
-              <><div className = {styles.caution}><img src={CautionIcon} />
+          {isLoading ? (
+            <p className={styles.none}>{'데이터를 불러오는 중입니다.'}</p>
+          ) : isError ? (
+            <p className={styles.none}>
+              {'에러: '}
+              {error?.message}
+            </p>
+          ) : debateListData?.data.length === 0 ? (
+            <div className={styles.caution}>
+              <img src={CautionIcon} alt={'삭제'} />
               <p className={styles.none}>{'아직 생성된'}</p>
-              <p className={styles.none}>{'토론방이 없습니다.'}</p></div></>
-            ) : (
-              debateListData?.data.map((data) => (
-                <DebateList
-                  key={data.id}
-                  id={data.id}
-                  doc_id={data.doc_id}
-                  user_id={data.user_id}
-                  subject={data.subject}
-                  created_at={data.created_at}
-                  recent_edited_at={data.recent_edited_at}
-                  done_or_not={data.done_or_not}
-                  done_at={data.done_at}
-                  is_bad={data.is_bad}
-                  title={title}
-                />
-              ))
-            )}
+              <p className={styles.none}>{'토론방이 없습니다.'}</p>
+            </div>
+          ) : (
+            debateListData?.data.map((data) => (
+              <DebateList
+                key={data.id}
+                id={data.id}
+                doc_id={data.doc_id}
+                user_id={data.user_id}
+                subject={data.subject}
+                created_at={data.created_at}
+                recent_edited_at={data.recent_edited_at}
+                done_or_not={data.done_or_not}
+                done_at={data.done_at}
+                is_bad={data.is_bad}
+                title={title}
+              />
+            ))
+          )}
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>

@@ -7,7 +7,7 @@
   color: #de3a58;
   text-align: left;
 }
-.searchInput{
+.searchInput {
   position: absolute;
   border-radius: 35px;
   background-color: #fff;
@@ -21,7 +21,7 @@
   color: #000;
   font-family: Pretendard;
 }
-.searchIcon{
+.searchIcon {
   width: 20px;
   height: 20px;
   position: relative;
@@ -29,7 +29,7 @@
   left: 6%;
   top: 36px;
 }
-.cancelIcon{
+.cancelIcon {
   position: absolute;
   top: 233px;
   width: 24px;
@@ -37,7 +37,6 @@
   cursor: pointer;
   margin-right: 190px;
   right: 0px;
-
 }
 
 .hidden {

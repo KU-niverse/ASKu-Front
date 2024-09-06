@@ -20,14 +20,14 @@
   margin-bottom: 5px;
 }
 
-.addBotton{
-  background: linear-gradient(166deg, #FFF -32.12%, #FFA1B0 110.81%);
-  border: 1px solid #DE3A58;
+.addButton {
+  background: linear-gradient(166deg, #fff -32.12%, #ffa1b0 110.81%);
+  border: 1px solid #de3a58;
   border-radius: 12px;
   width: 281px;
   height: 111px;
   flex-shrink: 0;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .none {
@@ -37,8 +37,8 @@
 .hidden {
   visibility: hidden;
 }
-.addInput{
-  border: 1px solid #DE3A58;
+.addInput {
+  border: 1px solid #de3a58;
   border-radius: 12px;
   width: 269px;
   height: 89px;
@@ -49,19 +49,18 @@
   padding-left: 30px;
   padding-top: 20px;
   resize: none;
-
 }
-.createButton{
+.createButton {
   width: 59.222px;
   height: 26px;
   cursor: pointer;
   border-radius: 21.667px;
-  background: linear-gradient(90deg, #9F132E 30.34%, #DE3A58 100%);
-  box-shadow: 0px 3.611px 14.444px -3.611px rgba(0, 0, 0, 0.20);
+  background: linear-gradient(90deg, #9f132e 30.34%, #de3a58 100%);
+  box-shadow: 0px 3.611px 14.444px -3.611px rgba(0, 0, 0, 0.2);
   border: none;
   color: white;
   margin-top: 10px;
 }
-.addPart{
+.addPart {
   margin-bottom: 16px;
 }

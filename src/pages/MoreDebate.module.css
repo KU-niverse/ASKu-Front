@@ -9,19 +9,18 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  color: #DE3A58;
+  color: #de3a58;
   font-size: 24px;
   font-weight: 700;
-  border-top: 4px solid #9F132E;
+  border-top: 4px solid #9f132e;
   padding-top: 29px;
-
 }
 
-.pink{
-  color : #DE3A58;
+.pink {
+  color: #de3a58;
 }
 
-.maincontent{
+.maincontent {
   margin-left: 138px;
   margin-right: 70px;
   background-color: white;
@@ -29,10 +28,9 @@
   height: auto;
 }
 
-.caution{
+.caution {
   text-align: center;
   margin-top: 60px;
-
 }
 .hidden {
   display: none;
@@ -74,7 +72,6 @@
   margin-bottom: 70px;
   margin-top: 73px;
   margin-right: 138px;
-
 }
 .sidebar div {
   width: 100%;

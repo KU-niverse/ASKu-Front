@@ -16,8 +16,8 @@ interface RecentListData {
   data: RecentItem[]
 }
 
-interface DebateRecentProps{
-  title : string
+interface DebateRecentProps {
+  title: string
 }
 
 function useRecentDebateList() {
@@ -38,7 +38,7 @@ function useRecentDebateList() {
   )
 }
 
-const DebateRecent = ({title}:DebateRecentProps) => {
+const DebateRecent = ({ title }: DebateRecentProps) => {
   const { isLoading, error, data: recentListData } = useRecentDebateList()
 
   return (
