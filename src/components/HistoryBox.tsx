@@ -46,13 +46,13 @@ const HistoryBox = (props: HistoryBoxProps) => {
           {},
           { withCredentials: true },
         )
-        return result.data
+        return result.data.message
       }
       throw new Error('롤백이 취소되었습니다.') // 롤백 취소 시 에러 발생
     },
     {
-      onSuccess: (data) => {
-        alert(data)
+      onSuccess: (message) => {
+        alert(message)
         const encodedTitle = encodeURIComponent(title)
         nav(`/wiki/${encodedTitle}`)
       },
