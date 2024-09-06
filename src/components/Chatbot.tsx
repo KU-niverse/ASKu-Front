@@ -45,6 +45,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [qnaId, setQnaId] = useState('')
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
   const queryClient = useQueryClient()
+  const [isStreaming, setIsStreaming] = useState(false)
 
   const closeLoginModal = () => {
     setLoginModalVisible(false)
@@ -141,6 +142,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     {
       onMutate: () => {
         setLoading(true)
+        setIsStreaming(false)
         setChatResponse((prevResponses) => [
           ...prevResponses,
           { id: Date.now(), content: inputValue, isQuestion: true },
@@ -157,6 +159,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           const finalAnswer = data.a_content
           const newQnaId = data.id
           setQnaId(newQnaId)
+          setIsStreaming(true)
 
           let currentIndex = 0
           const interval = setInterval(() => {
@@ -182,17 +185,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
               })
 
               currentIndex += 1
-
-              if (currentIndex === 1) {
-                setLoading(false)
-              }
             } else {
               clearInterval(interval)
+              setIsStreaming(false)
+              setLoading(false)
             }
           }, 50)
         } catch (error) {
           console.error('Error sending question: ', error)
           setLoading(false)
+          setIsStreaming(false)
         }
       },
       onError: (error: any) => {
@@ -204,6 +206,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           setRefreshModalOpen(true)
         }
         setLoading(false)
+        setIsStreaming(false)
       },
     },
   )
@@ -217,11 +220,17 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setLoginModalVisible(true)
       return
     }
+    if (!inputValue.trim()) {
+      return
+    }
     sendMessageMutation.mutate()
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
+      if (!inputValue.trim()) {
+        return
+      }
       handleSendClick()
     }
   }
@@ -349,11 +358,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             )
           })}
           <div ref={chatBottomRef} />
-          {loading && <Spinner />}
+          {loading && !isStreaming && <Spinner />}
         </div>
 
         <div
-          className={styles.suggestContainer}
+          className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
           style={showSuggest || showReference ? {} : { display: 'none' }}
           ref={suggestContainerRef}
         >
@@ -437,7 +446,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         )}
         <div className={styles.promptWrap} style={showSuggest ? {} : { marginTop: '25px' }}>
           <textarea
-            className={styles.prompt}
+            className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
             placeholder={'AI에게 무엇이든 물어보세요! (프롬프트 입력)'}
             value={inputValue}
             onChange={inputChange}
