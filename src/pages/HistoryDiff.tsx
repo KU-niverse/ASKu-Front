@@ -7,6 +7,7 @@ import axios, { AxiosError } from 'axios'
 import his2 from '../img/his2.png'
 import styles from './HistoryDiff.module.css'
 import Header from '../components/Header'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -69,7 +70,12 @@ const HistoryDiff = () => {
 
   const { isLoading, isError, error, data: comparisonData } = useCompareHistory(title, ver)
 
-  if (isLoading) return <div>{'로딩 중...'}</div>
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
   if (isError)
     return (
       <div>
