@@ -348,12 +348,13 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
             </button>
           </div>
         </div>
+
         <div className={styles.wikiBoxLists}>
           <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
             <div className={styles.wikilistTitle}>
               <h2>{'목차'}</h2>
               <button type={'button'} onClick={linkToAllEdit}>
-                {'전체 편집'}
+                {'편집 하기'}
               </button>
             </div>
             <div>
@@ -381,9 +382,17 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                 )
               })}
             </div>
-            <button type="button" onClick={() => setIsTocExpanded(!isTocExpanded)} className={styles.tocExpandedButton}>
-              {isTocExpanded ? '목차 접기 ▲' : '목차 더보기 ▼'}
-            </button>
+
+            <div className={styles.tocExpandedButtonContainer}>
+              <button
+                type="button"
+                onClick={() => setIsTocExpanded(!isTocExpanded)}
+                className={styles.tocExpandedButton}
+              >
+                <div className={styles.tocexpandedButtonText}>{isTocExpanded ? '목차 접기' : '목차 더보기'}</div>
+                <div className={styles.tocexpandedButtonIcon}>{isTocExpanded ? '▲' : '▼'}</div>
+              </button>
+            </div>
           </div>
 
           <div className={styles.wikiask}>

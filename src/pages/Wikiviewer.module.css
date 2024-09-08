@@ -115,6 +115,7 @@
 }
 .wikititleBtnThree {
   width: auto;
+  border: none !important;
   position: relative;
   border-radius: 30px;
   background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
@@ -140,7 +141,7 @@
   justify-content: space-between;
 }
 .wikilist {
-  width: 28%;
+  width: 31%;
   max-height: 303px;
   overflow: hidden;
   height: auto;
@@ -154,25 +155,43 @@
   position: relative;
   transition: max-height 0.3s ease;
 }
+.wikilistContainer {
+  position: relative;
+  width: 100%;
+  padding-right: 10px;
+}
 .wikilist.expanded {
   max-height: none;
+  padding-bottom: 30px;
 }
+
+.tocExpandedButtonContainer {
+  width: 100%;
+  background-color: black;
+}
+
 .tocExpandedButton {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+
   font-size: 12px;
   font-weight: 700;
-  color: rgba(222, 58, 88, 1);
-  text-decoration: underline;
   background-color: white;
+  color: rgba(222, 58, 88, 1);
   border: none;
   cursor: pointer;
   margin-top: 10px;
-  margin-bottom: 3px;
-  display: block;
-  margin-left: auto;
   position: absolute;
-  bottom: 25px;
-  right: 10px;
+  padding-bottom: 20px;
+  bottom: 0px;
 }
+
+.tocexpandedButtonText {
+  margin-right: 5px;
+  text-decoration: underline;
+}
+
 .wikilist li {
   cursor: pointer;
   margin-bottom: 7px;
@@ -232,7 +251,7 @@ h2 {
 .wikiaskFoot {
   width: 90%;
   position: absolute;
-  bottom: 25px;
+  bottom: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -262,12 +281,13 @@ h2 {
 
 .moreQues {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: rgba(222, 58, 88, 1);
   background-color: white;
   border: none;
   cursor: pointer;
   text-decoration: underline;
+  margin-right: 3px;
 }
 .customHr {
   margin: 0;
