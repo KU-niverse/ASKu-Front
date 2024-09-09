@@ -267,7 +267,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   function handleClick(index: number) {
-    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
+    if (myDivRef.current[index]) {
+      myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const linkToHistory = () => {
@@ -355,7 +357,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               </button>
             </div>
             <div>
-              {allContent.map((item) => {
+              {allContent.map((item: Content) => {
                 const tabCount = item.index.split('.').length - 1
                 const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
 
@@ -377,7 +379,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               <h2>{'질문'}</h2>
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
-            <div className={blank === false ? styles.quesWrap : styles.hidden}>
+            <div className={ques.length !== 0 ? styles.quesWrap : styles.noneComment}>
               {ques.length === 0 ? (
                 <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
               ) : (
@@ -386,7 +388,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                     return null
                   }
                   return (
-                    <div className={styles.queslist}>
+                    <div>
                       <hr className={styles.customHr} />
                       <ul
                         role={'presentation'}
@@ -474,7 +476,12 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               }
 
               return (
-                <div ref={(el) => myDivRef.current[Number(item.section)] === el} key={item.section}>
+                <div
+                  ref={(el) => {
+                    if (el) myDivRef.current[Number(item.section)] = el
+                  }}
+                  key={item.section}
+                >
                   <WikiBox
                     title={item.title}
                     content={item.content}

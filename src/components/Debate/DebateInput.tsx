@@ -38,12 +38,16 @@ function useCheckLoginStatus() {
   )
 }
 
-function useSubmitDebate(debateId: number) {
+function useSubmitDebate(title: string, debateId: number) {
   return useMutation<void, AxiosError, SubmitData>(
     async (submitData) => {
-      await axios.post(`${process.env.REACT_APP_HOST}/debate/${debateId}`, submitData, {
-        withCredentials: true,
-      })
+      await axios.post(
+        `${process.env.REACT_APP_HOST}/debate/${encodeURIComponent(title)}/new/${debateId}`,
+        submitData,
+        {
+          withCredentials: true,
+        },
+      )
     },
     {
       onSuccess: () => {
@@ -68,7 +72,7 @@ function useSubmitDebate(debateId: number) {
 function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   const [debateContent, setDebateContent] = useState<string>('')
   const { data: loginStatusData } = useCheckLoginStatus()
-  const { mutate: submitDebate, isLoading: isSubmitting } = useSubmitDebate(debateId)
+  const { mutate: submitDebate, isLoading: isSubmitting } = useSubmitDebate(title, debateId)
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
@@ -93,8 +97,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
       return
     }
     try {
-      await submitDebate({ content: debateContent })
-      alert('의견이 성공적으로 등록되었습니다.')
+      submitDebate({ content: debateContent })
       setDebateContent('')
       // Amplitude
       track('click_button_in_debate', {
