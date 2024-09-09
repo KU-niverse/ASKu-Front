@@ -3,10 +3,10 @@ body, html {
     margin: 0;
     padding: 0;
 }
-.alarmModalContainer {
+/* .alarmModalContainer {
     height: 0;
     width: 0;
-}
+} */
 .container {
     display: flex; 
     border-bottom: 0.5px solid #D5D5D5;
