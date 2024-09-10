@@ -214,6 +214,10 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
   const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
     setReferenceList(references)
   }
+  const handleRecommendQuestionClick = (question: string) => {
+    setInputValue(question)
+    sendMessageMutation.mutate()
+  }
 
   return (
     <div className={styles.mobileChatbotContainer}>
@@ -240,6 +244,8 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
               qnaId={0}
               blockIconZip={false}
               onAddReferenceSuggestion={onAddReferenceSuggestion}
+              recommendedQuestions={[]} // 초기 빈 배열
+              onRecommendQuestionClick={handleRecommendQuestionClick} // 클릭 핸들러 추가
             />
             {previousChatHistory.length !== 0 && (
               <>
@@ -252,6 +258,8 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
                       reference={item.reference}
                       blockIconZip={false}
                       onAddReferenceSuggestion={onAddReferenceSuggestion}
+                      recommendedQuestions={[]} // 초기 빈 배열
+                      onRecommendQuestionClick={handleRecommendQuestionClick} // 클릭 핸들러 추가
                     />
                   </Fragment>
                 ))}
@@ -269,6 +277,8 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
                   reference={item.reference}
                   blockIconZip={false}
                   onAddReferenceSuggestion={onAddReferenceSuggestion}
+                  recommendedQuestions={[]} // 초기 빈 배열
+                  onRecommendQuestionClick={handleRecommendQuestionClick} // 클릭 핸들러 추가
                 />
               )
             })}
