@@ -54,7 +54,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
 
   const sendLikeCommentFeedback = async (comment: string) => {
     const response = await axios.post(
-      `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+      `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
       {
         feedback_id: feedbackId,
         content: comment,

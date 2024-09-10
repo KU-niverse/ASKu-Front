@@ -54,7 +54,7 @@ function UnlikeModal({ isOpen, onClose, qnaId }: UnlikeModalProps) {
 
   const sendUnLikeCommentFeedback = async (comment: string) => {
     const response = await axios.post(
-      `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+      `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
       {
         feedback_id: feedbackId,
         content: comment,
