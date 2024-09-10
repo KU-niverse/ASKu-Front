@@ -48,7 +48,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
 
-
   const closeLoginModal = () => {
     setLoginModalVisible(false)
   }
