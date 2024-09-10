@@ -17,6 +17,7 @@ interface HistoryBoxProps {
   timestamp: string
   target: number
   type: string
+  newest: number
 }
 
 interface ErrorResponse {
@@ -27,7 +28,7 @@ interface ErrorResponse {
 const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
-  const { title, version, summary, user, timestamp, target, type } = props // 구조 분해 할당
+  const { title, version, summary, user, timestamp, target, type, newest } = props // 구조 분해 할당
 
   const handleView = () => {
     const encodedTitle = encodeURIComponent(title)
@@ -106,7 +107,11 @@ const HistoryBox = (props: HistoryBoxProps) => {
             <img alt={'RAW버전 미리보기 버튼'} src={watch} />
             {'RAW버전 미리보기\r'}
           </span>
-          <span role={'presentation'} onClick={() => handleRollback()} className={`${styles.versionbtn}`}>
+          <span
+            role={'presentation'}
+            onClick={version === newest ? () => alert('최신 버전으로는 롤백할 수 없습니다.') : () => handleRollback()}
+            className={`${styles.versionbtn}`}
+          >
             {isRollbackLoading ? (
               '롤백 중...'
             ) : (
