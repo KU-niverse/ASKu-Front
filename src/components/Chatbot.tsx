@@ -16,6 +16,7 @@ import RefreshModal from './RefreshModal'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
+import haho from '../img/3d_haho.png'
 
 interface User {
   id: number
@@ -45,6 +46,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const queryClient = useQueryClient()
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
+  const [isStreaming, setIsStreaming] = useState(false)
+
 
   const closeLoginModal = () => {
     setLoginModalVisible(false)
@@ -155,6 +158,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       onMutate: () => {
         setLoading(true)
         setSuggestContainerState('')
+        setIsStreaming(false)
 
         setChatResponse((prevResponses) => [
           ...prevResponses,
@@ -178,6 +182,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           const newQnaId = data.id
 
           setQnaId(newQnaId)
+          setIsStreaming(true)
 
           inputRef.current?.blur()
 
@@ -206,17 +211,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
               })
 
               currentIndex += 1
-
-              if (currentIndex === 1) {
-                setLoading(false)
-              }
             } else {
               clearInterval(interval)
+              setIsStreaming(false)
+              setLoading(false)
             }
           }, 50)
         } catch (error) {
           console.error('Error sending question: ', error)
           setLoading(false)
+          setIsStreaming(false)
         }
       },
       onSettled: () => {
@@ -231,6 +235,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           setRefreshModalOpen(true)
         }
         setLoading(false)
+        setIsStreaming(false)
       },
     },
   )
@@ -255,11 +260,18 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       return
     }
 
+    if (!inputValue.trim()) {
+      return
+    }
+
     sendMessageMutation.mutate()
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && event.target === inputRef.current) {
+      if (!inputValue.trim()) {
+        return
+      }
       handleSendClick()
     }
   }
@@ -318,9 +330,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     <div className={styles.chatBot}>
       <div className={styles.sideBar}>
         <div className={styles.textWrap}>
-          <button type={'button'} id={styles.title}>
-            {'AI 챗봇'}
-          </button>
+          <b className={styles.title}>{'AI 챗봇: 하호'}</b>
+          <hr />
           <div role={'presentation'} className={styles.buttonContainer} onClick={handleClearModal}>
             <img src={refreshIcon} className={styles.sidebarIcon} alt={'refresh'} />
             <button type={'button'} className={styles.button}>
@@ -389,11 +400,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             )
           })}
           <div ref={chatBottomRef} />
-          {loading && <Spinner />}
+          {loading && !isStreaming && <Spinner />}
         </div>
 
         <div
-          className={styles.suggestContainer}
+          className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
           ref={suggestContainerRef}
           style={{ display: SuggestContainerState === '' || loading ? 'none' : 'block' }}
         >
@@ -489,7 +500,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         )}
         <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
           <textarea
-            className={styles.prompt}
+            className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
             placeholder={'AI에게 무엇이든 물어보세요! (프롬프트 입력)'}
             value={inputValue}
             onChange={inputChange}

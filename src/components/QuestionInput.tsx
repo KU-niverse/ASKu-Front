@@ -63,7 +63,7 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
 
   const mutation = useMutation(
     async (newQuestion: { index_title: string; content: string }) => {
-      const res = await axios.post(`${process.env.REACT_APP_HOST}/question/submit`, newQuestion, {
+      const res = await axios.post(`${process.env.REACT_APP_HOST}/question/new/${title}`, newQuestion, {
         withCredentials: true,
       })
       return res.data

@@ -34,7 +34,9 @@
   }
 }
 .contentsOne {
-  width: 65%;
+  display: flex;
+  align-items: center;
+  max-width: 65%;
 }
 .contentsTwo {
   width: auto;
@@ -69,7 +71,6 @@
 }
 @media only screen and (max-width: 767px) {
   .summary {
-    max-width: 150px;
     font-size: 13px;
   }
 }
@@ -84,13 +85,14 @@
     margin-right: 5px;
   }
 }
-
 .docTitle {
   font-size: 16px;
   color: rgba(159, 19, 46, 1);
   margin-right: 20px;
   cursor: pointer;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 @media only screen and (max-width: 767px) {
   .docTitle {
@@ -150,13 +152,14 @@
   justify-content: space-between;
 }
 .allVerBtn {
+  min-width: 292px;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 14px;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .versionbtn {
   display: flex;
@@ -180,16 +183,16 @@
     justify-content: space-between;
   }
   .allversionBtns {
-    width: 90%;
+    width: 95%;
     padding-top: 15px;
     display: flex;
     justify-content: space-between;
   }
   .allVerBtn {
-    width: 74%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    min-width: 220px;
   }
   .versionbtn {
     font-size: 11px;

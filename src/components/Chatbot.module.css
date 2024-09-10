@@ -32,7 +32,7 @@
 
 .sideBar {
   display: flex;
-  background-color: #fef2f4;
+  background: linear-gradient(to bottom,#9f132e,#de3a58);
   min-width: 150px;
   min-height: 400px;
   height: auto;
@@ -49,17 +49,17 @@
   margin-top: 20px;
 }
 
-#title {
-  font-weight: 800;
-  font-size: 20px;
-  color: #9f132e;
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #FFF;
   cursor: default;
   text-align: center;
   width: 85px;
-  border: none;
-  background-color: #fef2f4;
+  background-color: rgba(0,0,0,0);
   margin-top: 10px;
   margin-bottom: 10px;
+  padding-left: 15px;
 }
 .buttonContainer {
   display: flex;
@@ -71,8 +71,8 @@
 .button {
   width: 85px;
   border: none;
-  color: #747474;
-  background-color: #fef2f4;
+  color: rgba(255, 255, 255, 0.80);
+  background-color: rgba(0,0,0,0);
   cursor: pointer;
   text-align: start;
 }
@@ -92,6 +92,7 @@
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   width: 100%;
+  background: linear-gradient(150deg, rgba(255, 229, 234, 0.40) -27.56%, #FFF 53.28%);
 }
 
 .defaultChat {
@@ -339,4 +340,13 @@
   width: 50px;
   height: 25px;
   border-radius: 20px;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+hr {
+  width : 120px;
 }
