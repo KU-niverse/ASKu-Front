@@ -104,22 +104,33 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }, [isToggled])
 
   const fetchWiki = async (): Promise<WikiData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
+      withCredentials: true,
+    })
     return response.data
   }
 
   const fetchQues = async (): Promise<QuestionData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`)
+    const response = await axios.get(
+      `${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`,
+      {
+        withCredentials: true,
+      },
+    )
     return response.data
   }
 
   const fetchTitles = async (): Promise<TitleData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`, {
+      withCredentials: true,
+    })
     return response.data
   }
 
   const fetchContribute = async (): Promise<ContributionData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`, {
+      withCredentials: true,
+    })
     const data = response.data.message.map((contribution: { point: string; nickname: string }) => ({
       ...contribution,
       point: parseInt(contribution.point, 10),
@@ -236,7 +247,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
   const deleteBookmarkMutation = useMutation(
     async () => {
-      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${encodeURIComponent(title)}`, {
         withCredentials: true,
       })
       return result.data
