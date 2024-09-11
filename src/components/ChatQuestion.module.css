@@ -1,19 +1,18 @@
 .questionBox {
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    margin-top: 25px;
-    width: calc(70% - 100px);
-    height: auto;
-    border-radius: 12px;
-    margin-left: 50px;
-    margin-right: 50px;
-    word-break:keep-all;
-    position: relative;
-    min-height: 92px;
-    align-items: center;
-    border: 2px solid var(--Linear, #9F132E);
-    max-width: 800px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  margin-top: 25px;
+  width: calc(70% - 100px);
+  height: auto;
+  border-radius: 12px;
+  margin-left: 50px;
+  word-break: keep-all;
+  position: relative;
+  min-height: 92px;
+  align-items: center;
+  border: 2px solid var(--Linear, #9f132e);
+  max-width: 800px;
 }
 @media screen and (max-width: 767px) {
   .questionBox {
@@ -24,33 +23,33 @@
   }
 }
 
-.characterWrapper{
-    width: 92px;
-    min-height: 92px;
-    height: 100%;
+.characterWrapper {
+  width: 92px;
+  min-height: 92px;
+  height: 100%;
 }
 .characterContainer {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #747474;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #747474;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
 }
 
 .chatText {
-    width: calc(100% - 50px);
-    margin-left: 0px;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    line-height: 150%;
-    word-break: break-word;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  width: calc(100% - 50px);
+  margin-left: 0px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  line-height: 150%;
+  word-break: break-word;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 500px) {
@@ -76,13 +75,13 @@
 }
 
 .iconZip {
-    visibility: hidden;
-    display: flex;
-    position: absolute;
-    bottom: 20px;
-    right: 15px;
-    flex-direction: row;
-    width: auto;
+  visibility: hidden;
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+  right: 15px;
+  flex-direction: row;
+  width: auto;
 }
 
 .icon {
@@ -97,8 +96,8 @@
 }
 
 .chatTextWrap {
-    position: relative;
-    flex: 1;
+  position: relative;
+  flex: 1;
 }
 @media screen and (max-width: 500px) {
   .chatTextWrap {

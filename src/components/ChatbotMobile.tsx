@@ -78,14 +78,15 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
         const newChatResponse = [
           ...chatResponse,
-          { id: Date.now(), content: inputValue }, // User's question
+          { id: Date.now(), content: inputValue, isQuestion: true }, // 질문은 ChatQuestion
           {
             id: data.id,
             content: data.a_content,
             reference: data.reference,
             qnaId: data.id,
             blockIconZip: false, // Ensure blockIconZip is included
-          }, // Server response
+            isQuestion: false, // 답변은 ChatAnswer
+          },
         ]
 
         setChatResponse(newChatResponse)
