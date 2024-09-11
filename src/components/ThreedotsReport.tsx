@@ -51,7 +51,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
       setReportModalVisible(true)
     } else {
       alert('로그인이 필요한 서비스 입니다.')
-      navigate(from)
+      navigate('/signin')
     }
   }
 

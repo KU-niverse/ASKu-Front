@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent, useCallback } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
@@ -64,14 +64,19 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: WikiCreateProps) => {
       } else {
         setLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        nav('/')
+        nav(from)
       }
     },
-    onError: (error) => {
+    onError: (error: AxiosError) => {
       console.error(error)
       setLoggedIn(false)
-      alert('에러가 발생하였습니다')
-      nav('/')
+      if (error.response?.status === 401) {
+        alert('로그인이 필요합니다')
+        nav(from)
+      } else if (error.response?.status === 500) {
+        alert('에러가 발생하였습니다')
+        nav(from)
+      }
     },
   })
 

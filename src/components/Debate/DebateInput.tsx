@@ -88,7 +88,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
 
   const handleSubmit = async () => {
     if (!loginStatusData?.success) {
-      alert('로그인 후에 의견을 작성할 수 있습니다. 로그인 페이지로 이동합니다.')
+      alert('로그인이 필요한 서비스입니다.')
       navigate('/signin')
       return
     }
