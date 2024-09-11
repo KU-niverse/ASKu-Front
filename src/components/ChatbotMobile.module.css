@@ -112,10 +112,15 @@
   display: flex;
   flex-direction: column;
   text-align: right;
-
   width: 100%;
 }
-
+.referenceSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  width: 100%;
+}
 .ref {
   width: 100 px;
   font-weight: 700;

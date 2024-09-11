@@ -312,22 +312,23 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
             </div>
             <div ref={chatBottomRef} /> {/* 스크롤 최하단 이동을 위한 빈 div */}
             {loading && <Spinner />}
+            {showReference && (
+              <div className={styles.referenceSection} style={{ display: showReference ? 'block' : 'none' }}>
+                <p className={styles.ref}>{'참고 문서'}</p>
+                {referenceList.map((ref, index) => (
+                  <span
+                    role={'presentation'}
+                    className={styles.textBox}
+                    onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                    key={ref.link}
+                  >
+                    {ref.link}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
-          {showReference && (
-            <div className={styles.suggest} style={{ display: showReference ? 'block' : 'none' }}>
-              <p className={styles.ref}>{'참고 문서'}</p>
-              {referenceList.map((ref, index) => (
-                <span
-                  role={'presentation'}
-                  className={styles.textBox}
-                  onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                  key={ref.link}
-                >
-                  {`[참고문서] ${ref.link}`}
-                </span>
-              ))}
-            </div>
-          )}
+
           {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
           {isLoginModalVisible && (
             <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
