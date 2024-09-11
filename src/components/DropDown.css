@@ -11,6 +11,7 @@
 .dropdowncontrol {
   border: none;
   cursor: pointer;
+  padding-right: 25px;
 }
 
 .dropdownmenu {
@@ -24,6 +25,9 @@
   font-weight: 400;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @media only screen and (max-width: 767px) {
