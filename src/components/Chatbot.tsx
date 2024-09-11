@@ -34,8 +34,7 @@ interface ChatbotProps {
 function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showSuggest, setShowSuggest] = useState(true)
-  const [showReference, setShowReference] = useState(false)
+  const [SuggestContainerState, setSuggestContainerState] = useState('initial') // 'initial', 'suggest', 'reference'
   const [referenceList, setReferenceList] = useState<{ link: string; value: string }[]>([])
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [chatResponse, setChatResponse] = useState<any[]>([])
@@ -45,7 +44,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [qnaId, setQnaId] = useState('')
   const [RefreshModalOpen, setRefreshModalOpen] = useState(false)
   const queryClient = useQueryClient()
+  const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
+  const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
+
 
   const closeLoginModal = () => {
     setLoginModalVisible(false)
@@ -53,30 +55,29 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [user, setUser] = useState<UserData | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
-  const [showSuggestScroll, setShowSuggestScroll] = useState(false)
 
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const handleMouseEnter = () => {
+  const handleMouseHover = (isHovering: boolean) => {
     if (!scrollRef.current) return
 
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-      setTimeoutId(null)
-    }
-
-    scrollRef.current.style.overflowX = 'auto'
-  }
-
-  const handleMouseLeave = () => {
-    const id = setTimeout(() => {
-      if (scrollRef.current) {
-        scrollRef.current.style.overflowX = 'hidden'
+    if (isHovering) {
+      scrollRef.current.style.overflowX = 'auto'
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        setTimeoutId(null)
       }
-    }, 2000) // 2초 후 스크롤 숨김
-    setTimeoutId(id)
+    } else {
+      const id = setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.style.overflowX = 'hidden'
+        }
+      }, 2000) // 2초 후 스크롤 숨김
+      setTimeoutId(id)
+    }
   }
+
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
@@ -128,6 +129,20 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     }
   }, [isLoggedIn])
 
+  useEffect(() => {
+    if (chatResponse.length > 0) {
+      const lastResponse = chatResponse[chatResponse.length - 1]
+      const hasRecommendedQuestions = lastResponse.recommendedQuestions && lastResponse.recommendedQuestions.length > 0
+
+      if (isInitialLoad.current) {
+        // 초기 로드 시에는 SuggestContainerState를 'initial'로 설정
+        setSuggestContainerState('initial')
+      } else if (hasRecommendedQuestions) {
+        setSuggestContainerState('suggest')
+      } else setSuggestContainerState('reference')
+    }
+  }, [chatResponse, referenceList])
+
   const sendMessageMutation = useMutation(
     async () => {
       if (user) {
@@ -142,7 +157,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     {
       onMutate: () => {
         setLoading(true)
+        setSuggestContainerState('')
         setIsStreaming(false)
+
         setChatResponse((prevResponses) => [
           ...prevResponses,
           { id: Date.now(), content: inputValue, isQuestion: true },
@@ -151,15 +168,23 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       },
       onSuccess: (data) => {
         try {
-          setShowSuggest(false)
-          setShowReference(true)
-          inputRef.current?.blur()
+          const newRecommendedQuestions = data.recommended_questions || []
+          setRecommendedQuestions(newRecommendedQuestions)
+
+          if (newRecommendedQuestions.length > 0) {
+            setSuggestContainerState('suggest')
+          } else {
+            setSuggestContainerState('reference')
+          }
 
           let tempAnswer = ''
           const finalAnswer = data.a_content
           const newQnaId = data.id
+
           setQnaId(newQnaId)
           setIsStreaming(true)
+
+          inputRef.current?.blur()
 
           let currentIndex = 0
           const interval = setInterval(() => {
@@ -179,6 +204,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     blockIconZip: false, // 여기서 아이콘을 항상 표시하도록 설정
                     reference: data.reference,
                     qnaId: newQnaId,
+                    recommendedQuestions: newRecommendedQuestions, // 추천 질문 전달
                   })
                 }
                 return updatedResponses
@@ -197,6 +223,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           setIsStreaming(false)
         }
       },
+      onSettled: () => {
+        isInitialLoad.current = false
+      },
       onError: (error: any) => {
         console.error(error)
         if (error.response?.status === 403) {
@@ -211,6 +240,16 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     },
   )
 
+  const handleRecommendQuestionClick = (question: string) => {
+    setSuggestContainerState('')
+    setInputValue(question)
+
+    setTimeout(() => {
+      sendMessageMutation.mutate()
+    }, 0)
+    setSuggestContainerState('reference')
+  }
+
   const scrollToBottom = () => {
     chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -220,9 +259,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setLoginModalVisible(true)
       return
     }
+
     if (!inputValue.trim()) {
       return
     }
+
     sendMessageMutation.mutate()
   }
 
@@ -236,9 +277,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const handleSuggestClick = (content: string) => {
-    setShowSuggest(false)
-    setShowReference(true)
-
     const newChatResponse = [...chatResponse, { id: Date.now(), content, isQuestion: true, isSuggest: true }]
     setChatResponse(newChatResponse)
 
@@ -266,7 +304,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       ]
       setChatResponse(updatedChatResponse)
       setInputValue('')
-      setShowSuggest(true)
+      setSuggestContainerState('initial')
     }, 3000)
   }
 
@@ -322,6 +360,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             qnaId={0}
             blockIconZip
             onAddReferenceSuggestion={onAddReferenceSuggestion}
+            recommendedQuestions={[]} // 초기 빈 배열
+            onRecommendQuestionClick={handleRecommendQuestionClick} // 클릭 핸들러 추가
           />
           {previousChatHistory.length !== 0 && (
             <>
@@ -335,6 +375,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     reference={item.reference}
                     blockIconZip={!isLoggedIn}
                     onAddReferenceSuggestion={onAddReferenceSuggestion}
+                    recommendedQuestions={[]} // 초기 빈 배열
+                    onRecommendQuestionClick={handleRecommendQuestionClick}
                   />
                 </Fragment>
               ))}
@@ -352,6 +394,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 qnaId={item.qnaId}
                 blockIconZip={item.isSuggest}
                 onAddReferenceSuggestion={onAddReferenceSuggestion}
+                recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
+                onRecommendQuestionClick={handleRecommendQuestionClick}
               />
             )
           })}
@@ -361,25 +405,27 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
         <div
           className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
-          style={showSuggest || showReference ? {} : { display: 'none' }}
           ref={suggestContainerRef}
+          style={{ display: SuggestContainerState === '' || loading ? 'none' : 'block' }}
         >
-          <p id={styles.ref}>{showSuggest ? '추천 검색어' : '참고 문서'}</p>
+          <p id={styles.ref}>
+            {SuggestContainerState === 'initial'
+              ? '추천 검색어'
+              : SuggestContainerState === 'suggest'
+                ? '추천 질문'
+                : SuggestContainerState === 'reference'
+                  ? '참고 문서'
+                  : null}
+          </p>
           <div className={styles.scrollbarContainer}>
             <div
               className={styles.suggestScrollbar}
               ref={scrollRef}
-              onMouseEnter={() => {
-                setShowSuggestScroll(true)
-                handleMouseEnter()
-              }}
-              onMouseLeave={() => {
-                setShowSuggestScroll(false)
-                handleMouseLeave()
-              }}
+              onMouseEnter={() => handleMouseHover(true)}
+              onMouseLeave={() => handleMouseHover(false)}
             >
               <div className={styles.suggest}>
-                {showSuggest && (
+                {SuggestContainerState === 'initial' && (
                   <>
                     <span
                       role={'presentation'}
@@ -416,22 +462,32 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                     </span>
                   </>
                 )}
-                {!showSuggest && (
-                  <>
-                    {referenceList.map((ref, index) => (
-                      <span
-                        role={'presentation'}
-                        id={`ref_res_${index + 1}`}
-                        className={styles.textBox}
-                        style={index === 0 ? { marginLeft: '0px' } : {}}
-                        onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                        key={ref.link}
-                      >
-                        {`${ref.link}`}
-                      </span>
-                    ))}
-                  </>
-                )}
+                {SuggestContainerState === 'suggest' &&
+                  chatResponse.length > 0 &&
+                  chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
+                    <span
+                      role={'presentation'}
+                      key={`ref_res_${index + 1}`}
+                      className={styles.textBox}
+                      onClick={() => handleRecommendQuestionClick(question)}
+                    >
+                      {question}
+                    </span>
+                  ))}
+                {SuggestContainerState === 'reference' &&
+                  referenceList.length > 0 &&
+                  referenceList.map((ref, index) => (
+                    <span
+                      role={'presentation'}
+                      id={`ref_res_${index + 1}`}
+                      className={styles.textBox}
+                      style={index === 0 ? { marginLeft: '0px' } : {}}
+                      onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                      key={ref.link}
+                    >
+                      {`${ref.link}`}
+                    </span>
+                  ))}
               </div>
             </div>
           </div>
@@ -442,7 +498,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         {ClearModalOpen && (
           <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
         )}
-        <div className={styles.promptWrap} style={showSuggest ? {} : { marginTop: '25px' }}>
+        <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
           <textarea
             className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
             placeholder={'AI에게 무엇이든 물어보세요! (프롬프트 입력)'}
