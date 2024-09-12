@@ -33,25 +33,26 @@ const fetchLoginStatus = async (): Promise<LoginStatusResponse> => {
 
 const fetchUserInfo = async (): Promise<UserInfo> => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
+
   if (!res.data.success) {
     throw new Error('Failed to fetch user info')
   }
   return {
-    id: res.data.id,
-    name: res.data.name,
-    login_id: res.data.login_id,
-    stu_id: res.data.stu_id,
-    email: res.data.email,
-    rep_badge_id: res.data.rep_badge_id,
-    nickname: res.data.nickname,
-    created_at: new Date(res.data.created_at),
-    point: res.data.point,
-    is_admin: res.data.is_admin,
-    is_authorized: res.data.is_authorized,
-    restrict_period: res.data.restrict_period,
-    restrict_count: res.data.restrict_count,
-    rep_badge_name: res.data.rep_badge_name,
-    rep_badge_image: res.data.rep_badge_image,
+    id: res.data.data[0].id,
+    name: res.data.data[0].name,
+    login_id: res.data.data[0].login_id,
+    stu_id: res.data.data[0].stu_id,
+    email: res.data.data[0].email,
+    rep_badge_id: res.data.data[0].rep_badge_id,
+    nickname: res.data.data[0].nickname,
+    created_at: new Date(res.data.data[0].created_at),
+    point: res.data.data[0].point,
+    is_admin: res.data.data[0].is_admin,
+    is_authorized: res.data.data[0].is_authorized,
+    restrict_period: res.data.data[0].restrict_period,
+    restrict_count: res.data.data[0].restrict_count,
+    rep_badge_name: res.data.data[0].rep_badge_name,
+    rep_badge_image: res.data.data[0].rep_badge_image,
   }
 }
 
@@ -60,7 +61,6 @@ const MobileChatBotPage = () => {
 
   const { data: loginStatus, refetch: refetchLoginStatus } = useQuery('loginStatus', fetchLoginStatus)
   const { data: userInfoData, refetch: refetchUserInfo } = useQuery('userInfo', fetchUserInfo, {
-    enabled: false, // 처음에는 비활성화
     onSuccess: (data) => {
       setUserInfo(data) // 데이터가 성공적으로 받아졌을 때 상태 업데이트
     },
@@ -78,10 +78,6 @@ const MobileChatBotPage = () => {
 
   const isLoggedIn = loginStatus?.success || false
   const userId = userInfo?.id || null
-
-  if (loginStatus === undefined || userInfoData === undefined) {
-    return <div>{'Loading...'}</div>
-  }
 
   return (
     <>

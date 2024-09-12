@@ -78,14 +78,15 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
 
         const newChatResponse = [
           ...chatResponse,
-          { id: Date.now(), content: inputValue }, // User's question
+          { id: Date.now(), content: inputValue, isQuestion: true }, // 질문은 ChatQuestion
           {
             id: data.id,
             content: data.a_content,
             reference: data.reference,
             qnaId: data.id,
             blockIconZip: false, // Ensure blockIconZip is included
-          }, // Server response
+            isQuestion: false, // 답변은 ChatAnswer
+          },
         ]
 
         setChatResponse(newChatResponse)
@@ -311,22 +312,23 @@ function ChatbotMobile({ isLoggedIn, setIsLoggedIn, userId }: ChatbotMobileProps
             </div>
             <div ref={chatBottomRef} /> {/* 스크롤 최하단 이동을 위한 빈 div */}
             {loading && <Spinner />}
+            {showReference && (
+              <div className={styles.referenceSection} style={{ display: showReference ? 'block' : 'none' }}>
+                <p className={styles.ref}>{'참고 문서'}</p>
+                {referenceList.map((ref, index) => (
+                  <span
+                    role={'presentation'}
+                    className={styles.textBox}
+                    onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                    key={ref.link}
+                  >
+                    {ref.link}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
-          {showReference && (
-            <div className={styles.suggest} style={{ display: showReference ? 'block' : 'none' }}>
-              <p className={styles.ref}>{'참고 문서'}</p>
-              {referenceList.map((ref, index) => (
-                <span
-                  role={'presentation'}
-                  className={styles.textBox}
-                  onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                  key={ref.link}
-                >
-                  {`[참고문서] ${ref.link}`}
-                </span>
-              ))}
-            </div>
-          )}
+
           {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
           {isLoginModalVisible && (
             <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
