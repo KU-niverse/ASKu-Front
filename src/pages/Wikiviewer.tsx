@@ -263,8 +263,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
         }
       },
       onError: (error: unknown) => {
-        const axiosError = error as CustomAxiosError
-        alert(axiosError.response?.data.message)
+        // const axiosError = error as CustomAxiosError
+        // alert(axiosError.response?.data.message)
+        setFavorite(false)
+        setImageSource(falseBk)
+        alert('즐겨찾기에서 삭제되었습니다')
       },
     },
   )
