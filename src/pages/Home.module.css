@@ -120,8 +120,6 @@
   margin-bottom: 25px;
   overflow-y: scroll;
   scrollbar-width: none;
-  margin-left: 132px;
-  margin-right: 132px;
 }
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
