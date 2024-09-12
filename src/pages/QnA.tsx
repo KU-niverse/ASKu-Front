@@ -43,6 +43,13 @@ interface AnswerData {
   index_title: string
 }
 
+// 서버에서 반환하는 데이터의 구조 반영
+interface AnswerResponse {
+  success: boolean
+  message: string
+  data: AnswerData[] // 실제 답변 목록을 포함하는 배열
+}
+
 interface QuestionDataItem {
   user_id: number
   nickname: string
@@ -71,7 +78,7 @@ const fetchUserInfo = async () => {
 }
 
 const fetchAnswers = async (question_id: string) => {
-  const res = await axios.get<AnswerData[]>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
+  const res = await axios.get<AnswerResponse>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
     withCredentials: true,
   })
   return res.data
@@ -154,11 +161,11 @@ const QnA: React.FC = () => {
           {questionData && questionData.data && (
             <span className={styles.c_num}>{questionData.data[0].answer_count}</span>
           )}
-          {Array.isArray(answerData) && answerData.length === 0 ? (
+          {answerData && Array.isArray(answerData.data) && answerData.data.length === 0 ? (
             <p className={styles.no_answer}>{'아직 작성된 답변이 없습니다.'}</p>
           ) : (
-            Array.isArray(answerData) &&
-            answerData.map((data) => (
+            Array.isArray(answerData?.data) &&
+            answerData.data.map((data) => (
               <CommentQna
                 key={data.id}
                 id={data.id}
