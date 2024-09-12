@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
@@ -31,6 +32,10 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface UserAuthResponse {
+  success: boolean
+}
+
 const fetchDocs = async (title: string) => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
     withCredentials: true,
@@ -50,12 +55,31 @@ const fetchHistory = async (type: string) => {
   return result.data.message
 }
 
+function useCheckLoginStatus() {
+  return useQuery<UserAuthResponse, AxiosError>(
+    'loginStatus',
+    async () => {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('로그인 상태 확인 에러:', error)
+      },
+    },
+  )
+}
+
 const SearchResearch = () => {
   const nav = useNavigate()
   const { title, howto } = useParams<{ title: string; howto: string }>()
   const [isClicked, setIsClicked] = useState(true) // true: 문서 false: 질문
   const [type, setType] = useState('all')
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const { data: loginStatusData } = useCheckLoginStatus()
 
   const {
     data: docs = [],
@@ -116,6 +140,18 @@ const SearchResearch = () => {
     nav(`/wiki/${encodedTitle}`)
   }
 
+  const handleNewwikiClick = async () => {
+    if (!loginStatusData?.success) {
+      alert('로그인이 필요한 서비스입니다')
+      nav('/signin')
+      return
+    }
+    track('click_to_navigate_create_wiki', {
+      from_page: title,
+    })
+    nav('/newwiki')
+  }
+
   return (
     <div>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
@@ -155,17 +191,9 @@ const SearchResearch = () => {
                 </div>
               ))}
               <div className={styles.linkToNew}>
-                <Link
-                  to={'/newwiki'}
-                  className={styles.link}
-                  onClick={() => {
-                    track('click_to_navigate_create_wiki', {
-                      from_page: title,
-                    })
-                  }}
-                >
+                <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
                   {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
-                </Link>
+                </button>
               </div>
             </div>
             <div className={isClicked ? styles.hidden : ''}>

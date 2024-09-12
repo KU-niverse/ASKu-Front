@@ -119,6 +119,10 @@
   color: rgba(116, 116, 116, 1);
   font-size: 15px;
   text-decoration: none;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 .link:hover {
   text-decoration: underline;

@@ -72,7 +72,29 @@ interface ContributionData {
   message: Contribution[]
 }
 
-function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
+interface UserAuthResponse {
+  success: boolean
+}
+
+function useCheckLoginStatus() {
+  return useQuery<UserAuthResponse, AxiosError>(
+    'loginStatus',
+    async () => {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('로그인 상태 확인 에러:', error)
+      },
+    },
+  )
+}
+
+function WikiViewer() {
   const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
   const location = useLocation()
@@ -90,6 +112,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const [favorite, setFavorite] = useState(false)
   const [imageSource, setImageSource] = useState(falseBk)
   const [titles, settitles] = useState([])
+  const { data: loginStatusData } = useCheckLoginStatus()
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -182,36 +205,6 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     }
   }, [contributeData])
 
-  const { isLoading: checkLoginLoading, error: checkLoginError } = useQuery(
-    'checkLoginStatus',
-    async () => {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      return res.data
-    },
-    {
-      onSuccess: (data) => {
-        if (data.success) {
-          setLoggedIn(true)
-        } else {
-          setLoggedIn(false)
-          alert('로그인이 필요한 서비스 입니다.')
-          nav('/signin')
-        }
-      },
-      onError: (error: unknown) => {
-        setLoggedIn(false)
-        const axiosError = error as CustomAxiosError
-        if (axiosError.response?.status === 401) {
-          alert('로그인이 필요한 서비스 입니다.')
-          nav('/signin')
-        } else {
-          alert('에러가 발생하였습니다')
-          nav('/')
-        }
-      },
-    },
-  )
-
   const addBookmarkMutation = useMutation(
     async () => {
       const result = await axios.post(
@@ -292,6 +285,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   const linkToAllEdit = () => {
+    if (!loginStatusData?.success) {
+      alert('로그인이 필요한 서비스입니다')
+      nav('/signin')
+      return
+    }
     const encodedTitle = encodeURIComponent(title!)
     nav(`/wikiedit/${encodedTitle}/all`, { state: { from: location.pathname } })
   }
@@ -318,7 +316,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     }
   }
 
-  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading || titlesLoading) {
+  if (wikiLoading || quesLoading || contributeLoading || loading || titlesLoading) {
     return (
       <div>
         <SpinnerMypage />
@@ -326,7 +324,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     )
   }
 
-  if (wikiError || quesError || contributeError || checkLoginError || titlesError) {
+  if (wikiError || quesError || contributeError || titlesError) {
     return <div>{'Error loading data'}</div>
   }
 
