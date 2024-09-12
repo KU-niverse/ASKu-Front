@@ -1,52 +1,52 @@
 .pageWrap {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
 
 .homeWrap {
-    flex: 1;
-    display: flex;
-    width: 100vw;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;    
-    overflow-y: scroll;
-    scrollbar-width:none; 
+  flex: 1;
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .logo {
-    margin-left: 300px;
-    margin-right: 40px;
-    width: auto;
-    height: calc(100% - 10px);
+  margin-left: 300px;
+  margin-right: 40px;
+  width: auto;
+  height: calc(100% - 10px);
 }
 @media only screen and (max-width: 1300px) {
-    .logo {
-        margin-left: 200px;
-    }
+  .logo {
+    margin-left: 200px;
+  }
 }
 @media only screen and (max-width: 900px) {
-    .logo {
-        margin-left: 100px;
-    }
+  .logo {
+    margin-left: 100px;
+  }
 }
 @media only screen and (max-width: 767px) {
-    .logo {
-        display: none;
-    }
+  .logo {
+    display: none;
+  }
 }
 
 .inputContainer {
-    height: 60px;
-    display: flex;
-    width: 100%;
-    position: relative;
-    margin-top: 40px;
-    margin-bottom: 15px;
-    align-items:center;
-    justify-content: center;
+  height: 60px;
+  display: flex;
+  width: 75%;
+  position: relative;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: center;
 }
 @media only screen and (max-width: 767px) {
   .inputContainer {
@@ -57,51 +57,51 @@
 }
 
 .searchInput {
-    position: relative;
-    border: 2.5px solid #9c0909;
-    border-radius: 35px;
-    flex: 1;
-    height: 100%;
-    padding-left: 40px;
-    box-sizing: border-box;
-    padding-right: 80px;
-    font-size: 18px;    
-    letter-spacing: 0.5px;
-    min-width: 325px;
+  position: relative;
+  border: 2.5px solid #9c0909;
+  border-radius: 35px;
+  flex: 1;
+  height: 100%;
+  padding-left: 40px;
+  box-sizing: border-box;
+  padding-right: 80px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  min-width: 325px;
 }
 
 @media only screen and (max-width: 767px) {
-    .searchInput{
-        height: 40px;
-        padding-left: 20px;
-        margin-left: 20px;
-        padding-right: 55px;
-    }
+  .searchInput {
+    height: 40px;
+    padding-left: 20px;
+    margin-left: 20px;
+    padding-right: 55px;
+  }
 }
 
-.searchIconContainer{
-    position: relative;
-    display: flex;
-    width: 400px;
-    height: 100%;
-    align-items: center;
+.searchIconContainer {
+  position: relative;
+  display: flex;
+  width: 400px;
+  height: 100%;
+  align-items: center;
 }
 @media only screen and (max-width: 1300px) {
-    .searchIconContainer {
-        width: 200px;
-    }
+  .searchIconContainer {
+    width: 200px;
+  }
 }
 @media only screen and (max-width: 900px) {
-    .searchIconContainer{
-        width: 100px;
-    }
+  .searchIconContainer {
+    width: 100px;
+  }
 }
 .searchIcon {
-    position: absolute;
-    margin-left: -60px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+  position: absolute;
+  margin-left: -60px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
   .searchIcon {
@@ -113,15 +113,13 @@
 }
 
 .chatBotContainer {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    overflow-y: scroll;
-    scrollbar-width:none; 
-    margin-left: 132px;
-    margin-right: 132px;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
@@ -145,48 +143,48 @@
 }
 
 .realTime {
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    margin-right: 75px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 75px;
 }
 @media (max-width: 1300px) {
-    .realTime {
-        display: none;
-    }
+  .realTime {
+    display: none;
+  }
 }
 @media (max-width: 767px) {
-    .realTime {
-        display: flex;
-        margin: auto;
-    }
+  .realTime {
+    display: flex;
+    margin: auto;
+  }
 }
 
 .keyWord {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: 270px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 20px -5px #00000033;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 270px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px -5px #00000033;
+  margin-bottom: 20px;
 }
 
 .question {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: 270px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 20px -5px #00000033;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 270px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px -5px #00000033;
+  margin-bottom: 20px;
 }
 
 .realTimeTitle {
   margin-left: 30px;
   font-weight: 800;
   font-size: 16px;
-  color: #9f132e;
+  color: #de3a58;
 }
 
 .rankWrap {
@@ -199,9 +197,16 @@
 
 .numberIcon {
   margin-left: 30px;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 18px;
-  color: #9f132e;
+  color: #de3a58;
+  width: 15px;
+}
+.blackNumberIcon {
+  margin-left: 30px;
+  font-weight: 500;
+  font-size: 18px;
+  color: black; /* 검정색 */
   width: 15px;
 }
 
