@@ -86,7 +86,7 @@ const submitQuestion = async ({
 const MoreQuestion: React.FC = () => {
   const { title } = useParams<{ title: string }>()
   const location = useLocation()
-  const defaultOpt = location.state?.defaultOpt
+  const defaultOpt = location.state
   const queryClient = useQueryClient()
 
   const [isToggled, setIsToggled] = useState(false)
