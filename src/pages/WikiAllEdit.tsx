@@ -7,6 +7,7 @@ import { track } from '@amplitude/analytics-browser'
 import Editor from '../components/Quill'
 import styles from './WikiEdit.module.css'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import HtmlToWiki from '../components/Wiki/HtmlToWiki'
 import WikiToQuill from '../components/Wiki/WikiToQuill'
 
@@ -220,6 +221,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   )
 }
