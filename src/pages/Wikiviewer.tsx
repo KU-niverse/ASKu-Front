@@ -333,7 +333,7 @@ function WikiViewer() {
       <Header />
       <div className={styles.wikiviewer}>
         <div className={styles.wikititle}>
-          <h1>
+          <h1 className={styles.wikimaintitle}>
             {title}
             <img
               role={'presentation'}
