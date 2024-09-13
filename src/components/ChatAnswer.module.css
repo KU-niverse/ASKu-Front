@@ -7,6 +7,7 @@
   height: auto;
   border-radius: 12px;
   margin-right: 50px;
+  margin-left: 20px;  
   word-break: keep-all;
   position: relative;
   min-height: 92px;
@@ -16,6 +17,7 @@
 @media screen and (max-width: 767px) {
   .answerBox {
     width: calc(100vw - 50px);
+    margin-left: 15px;
   }
   .answerBox {
     width: calc(100vw - 50px);
