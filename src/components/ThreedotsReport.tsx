@@ -49,6 +49,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
     }
     if (loggedInStatus) {
       setReportModalVisible(true)
+      console.log('reportmodal을 띄웁니다')
     } else {
       alert('로그인이 필요한 서비스 입니다.')
       navigate('/signin')
@@ -66,6 +67,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
       <MenuItem className={styles.menuitem} onClick={handleReportClick}>
         {'신고하기\r'}
       </MenuItem>
+
       {isReportModalVisible && (
         <ReportModal
           type={type}

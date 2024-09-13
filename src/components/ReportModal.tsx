@@ -63,13 +63,15 @@ function ReportModal({ type, target, isOpen, onClose }: ReportModalProps) {
   }
 
   const handleOutsideClick = (event: any) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      console.log('모달 외부 클릭')
       onClose()
     }
   }
 
   useEffect(() => {
     if (isOpen) {
+      console.log('리포트 모달이 열렸습니다.')
       document.addEventListener('mousedown', handleOutsideClick)
     } else {
       document.removeEventListener('mousedown', handleOutsideClick)
@@ -77,6 +79,10 @@ function ReportModal({ type, target, isOpen, onClose }: ReportModalProps) {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick)
     }
+  }, [isOpen])
+
+  useEffect(() => {
+    console.log('isOpen 상태:', isOpen) // isOpen이 true로 출력되는지 확인
   }, [isOpen])
 
   const handleChange = (e: any) => {
