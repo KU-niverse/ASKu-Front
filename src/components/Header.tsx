@@ -241,6 +241,25 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  const handleClickMobileMypage = () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요한 서비스입니다')
+      Nav('/signin')
+      return
+    }
+    Nav('/mypage')
+  }
+
+  const handleClickMobileBookmark = () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요한 서비스입니다')
+      Nav('/signin')
+      return
+    }
+    track('click_header_navi', { type: '즐겨찾는 문서' })
+    Nav('/mybookmark')
+  }
+
   return (
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
       <div className={styles.headerContainer}>
@@ -426,24 +445,18 @@ function Header({ userInfo, setUserInfo }: any) {
             {mobileHeaderOpen && (
               <div className={styles.mobileMenuWrap}>
                 <div className={styles.mobileHamburger}>
-                  <Link to={'/mypage'} className={styles.mobileMenuBtn}>
+                  <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'마이페이지'}</p>
                     </div>
-                  </Link>
-                  <Link
-                    to={'/mybookmark'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '즐겨찾는 문서' })
-                    }}
-                  >
+                  </button>
+                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
                     </div>
-                  </Link>
+                  </button>
                   <Link
                     to={'/allhistory'}
                     className={styles.mobileMenuBtn}
