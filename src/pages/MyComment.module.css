@@ -3,47 +3,43 @@
   flex-direction: column;
   min-height: 100vh;
 }
-.content{
+.content {
   display: flex;
   padding: 30px 0;
   flex-direction: column;
   width: 74%;
   height: auto;
   margin-left: 13%;
-  flex:1;
-} 
-.header{
+  flex: 1;
+}
+.header {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   border-radius: 12px;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;  
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 
-
-.comment{
+.comment {
   font-size: 24px;
   font-weight: bold;
   padding-left: 30px;
 }
-.switch{
+.switch {
   padding-right: 30px;
 }
 
-
-
 @media only screen and (max-width: 767px) {
-  .content{
+  .content {
     display: flex;
     flex-direction: column;
     width: 86%;
     margin: 7%;
     padding: initial;
   }
-  .comment{
+  .comment {
     font-size: 20px;
   }
-  
 }

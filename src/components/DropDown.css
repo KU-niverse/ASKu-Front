@@ -1,40 +1,42 @@
-.dropdown-container{
+.dropdown-container {
   cursor: pointer;
 }
-.dropdown{
+.dropdown {
   width: 166px;
   margin-left: 20px;
   border-bottom: 1px solid rgba(116, 116, 116, 1);
   cursor: pointer;
 }
 
-.dropdowncontrol{
+.dropdowncontrol {
   border: none;
   cursor: pointer;
+  padding-right: 25px;
 }
 
-
-.dropdownmenu{
-font-size: 16px;
-color: rgba(116, 116, 116, 1);
-cursor: pointer;
-}
-
-.dropdownph{
+.dropdownmenu {
   font-size: 16px;
-  font-weight: 400;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
 }
 
+.dropdownph {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(116, 116, 116, 1);
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 @media only screen and (max-width: 767px) {
-.dropdown{
-  width: 125px;
-}
+  .dropdown {
+    width: 125px;
+  }
 
-.dropdownmenu, .dropdownph{
-  font-size: 14px;
-}
-
+  .dropdownmenu,
+  .dropdownph {
+    font-size: 14px;
+  }
 }

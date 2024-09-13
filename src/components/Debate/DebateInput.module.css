@@ -1,11 +1,10 @@
-.container{
-  margin:50px 30px;
+.container {
+  margin: 50px 30px;
   border: 1px solid rgba(213, 213, 213, 1);
   border-radius: 12px;
-
 }
 
-.title{
+.title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,20 +12,20 @@
   border-bottom: 1px solid rgba(213, 213, 213, 1);
   border-radius: 12px 12px 0 0;
 }
-.title{
+.title {
   font-size: 16px;
   font-weight: 700;
   padding-left: 16px;
 }
 
-.title img{
+.title img {
   height: 30px;
   width: 57px;
   padding: 8px 20px;
   cursor: pointer;
 }
 
-.textbox{
+.textbox {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -37,7 +36,7 @@
   padding: 10px;
 }
 
-.textarea{
+.textarea {
   resize: none;
   border: none;
   width: 100%;
@@ -48,11 +47,10 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .container{
-    margin: 50px 0
+  .container {
+    margin: 50px 0;
   }
-  .textbox{
+  .textbox {
     font-size: 16px;
   }
-  
 }

@@ -1,27 +1,25 @@
-
-
 .header {
   display: flex;
   justify-content: center;
-  align-items :center;
+  align-items: center;
   background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   height: 80px;
-  width : 100%;
+  width: 100%;
 }
 
-.mypage{
+.mypage {
   font-size: 30px;
-  font-weight:bolder;
-  color: white; 
+  font-weight: bolder;
+  color: white;
 }
 
-.mypagecontent{
-  width : 74%;
+.mypagecontent {
+  width: 74%;
   margin-left: 13%;
   height: auto;
 }
 
-.uppercontent{
+.uppercontent {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -29,20 +27,19 @@
   margin-bottom: 70px;
 }
 
-
-.leftcontent{
+.leftcontent {
   width: 40%;
   height: auto;
   border-radius: 12px;
   margin-right: 12px;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
 .leftcontent > * {
   margin-bottom: 0;
 }
 
-.rightcontent{
+.rightcontent {
   display: flex;
   flex-direction: column;
   width: 60%;
@@ -56,55 +53,58 @@
   margin-bottom: 0;
 }
 
-
-.middlecontent{
+.middlecontent {
   margin-top: 10px;
-  
 }
 
-
-.downcontent{
+.downcontent {
   margin: 10px 0 50px;
-
 }
 
-.comment{
+.comment {
   border-radius: 12px;
   padding-bottom: 2rem;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
-.profile{
+.profile {
   padding: 0 30px;
 }
 
-.profileheader, .badgeheader, .askheader, .commentheader{
+.profileheader,
+.badgeheader,
+.askheader,
+.commentheader {
   display: flex;
   width: 100%;
   position: relative;
 }
 
-.badge{
+.badge {
   padding: 0 30px;
 }
 
-.badge_content{
+.badge_content {
   border-radius: 10%;
   height: 70px;
   width: 70px;
-  border : 1px solid rgba(116, 116, 116, 1)
+  border: 1px solid rgba(116, 116, 116, 1);
 }
 
-.title, .title2{
+.title,
+.title2 {
   width: 40%;
   text-align: left;
   font-size: 24px;
-  font-weight :bold;
-  color : rgba(116, 116, 116, 1);
+  font-weight: bold;
+  color: rgba(116, 116, 116, 1);
   padding: 10px 0;
 }
 
-.b_link, .c_link, .q_link, .edit_link {
+.b_link,
+.c_link,
+.q_link,
+.edit_link {
   justify-content: flex-end;
   text-align: right;
   width: 60%;
@@ -112,64 +112,61 @@
   align-self: center;
 }
 
-.edit{
+.edit {
   justify-content: flex-end;
   text-align: right;
   width: 60%;
   font-size: 14px;
-  color:rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   border: none;
   background: white;
   cursor: pointer;
-  align-self: center;  
+  align-self: center;
 }
 
-
-
-.profileimg{
+.profileimg {
   display: flex;
   width: 100%;
   justify-content: center;
   padding-bottom: 15px;
 }
 
-.profileimg_content{
+.profileimg_content {
   border-radius: 100%;
   height: 100px;
   width: 100px;
-  border : 1px solid rgba(116, 116, 116, 1)
+  border: 1px solid rgba(116, 116, 116, 1);
 }
 
-
-.info{
+.info {
   padding: 0 30px;
 }
 @media only screen and (max-width: 767px) {
-.info{
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-}}
+  .info {
+    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+  }
+}
 
-.infoedit{
+.infoedit {
   display: flex;
   justify-content: flex-end;
 }
 
-.edit2, .edit3{
+.edit2,
+.edit3 {
   text-align: right;
   font-size: 14px;
-  color:rgba(159, 19, 46, 1);
+  color: rgba(159, 19, 46, 1);
   border: none;
   background: white;
   cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
-.edit2{
-  padding-bottom: 2em;
-}}
-
-
-
+  .edit2 {
+    padding-bottom: 2em;
+  }
+}
 
 .badgegrid {
   padding: 0 0px 10px 0px;
@@ -189,28 +186,28 @@
   border-radius: 10%;
 }
 
-.paginationWrapper{
+.paginationWrapper {
   padding-bottom: 1em;
 }
 
-.paginationWrapper ul{
+.paginationWrapper ul {
   padding: initial;
 }
 
-
-
-.cb{
+.cb {
   padding: 0 30px 2em 30px;
   border-radius: 12px;
   padding-bottom: 2rem;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  height: 90%; /*박스의 크기를 고정적으로 바꿈*/
 }
 
 @media only screen and (max-width: 767px) {
-.cb{
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-}}
+  .cb {
+    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+  }
+}
 
 .graph {
   display: flex;
@@ -225,91 +222,91 @@
   object-fit: contain;
 }
 
-.ask{
+.ask {
   border-radius: 12px;
   padding: 0 30px 2rem 30px;
-  box-shadow : 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
-
-.comment{
+.comment {
   padding: 0 30px 2em 30px;
 }
 
 @media only screen and (max-width: 767px) {
-  .mypagecontent{
+  .mypagecontent {
     width: 86%;
     margin-left: 7%;
     display: flex;
     flex-direction: column;
   }
-  .uppercontent, .middlecontent, .downcontent{
+  .uppercontent,
+  .middlecontent,
+  .downcontent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .leftcontent, .rightcontent{
+  .leftcontent,
+  .rightcontent {
     width: 100%;
     padding: initial;
   }
   .leftcontent {
-    margin:  0;
+    margin: 0;
     padding-bottom: 10px;
   }
   .rightcontent {
-    margin:  0;
+    margin: 0;
     padding-bottom: 10px;
   }
 
-  .middlecontent, .downcontent{
+  .middlecontent,
+  .downcontent {
     margin: 0 30px 0 30px;
   }
-  .ask, .comment{
+  .ask,
+  .comment {
     width: auto;
   }
 
-  .comment{
+  .comment {
     margin-bottom: 30px;
   }
-  
-  .title, .title2{
+
+  .title,
+  .title2 {
     font-size: 12px;
-    font-weight :bold;
-    color : rgba(116, 116, 116, 1);
+    font-weight: bold;
+    color: rgba(116, 116, 116, 1);
   }
 
-  .title2{
+  .title2 {
     padding-top: 22px;
   }
-  
-  .edit{
+
+  .edit {
     font-size: 10px;
   }
-  .edit2, .edit3{
+  .edit2,
+  .edit3 {
     padding-top: 10px;
     font-size: 10px;
   }
 
-  .edit2{
+  .edit2 {
     padding-right: 5px;
   }
 
-
-  .badge{
+  .badge {
     display: none;
   }
-
 
   /* .leftcontent, .ask, .comment{
     box-shadow: 0 5 2 0 rgba(0, 0, 0, 0.2);
   } */
-  .rightcontent{
+  .rightcontent {
     box-shadow: initial;
     border-radius: initial;
   }
-
-
-
 }
-

@@ -1,14 +1,14 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css');
 * {
-    font-family: 'Pretendard';
+  font-family: 'Pretendard';
 }
 
-.css-1ks9aww-gutter{
-    min-width: 20px !important;
+.css-1ks9aww-gutter {
+  min-width: 20px !important;
 }
-td{
-    white-space: pre-wrap; /* CSS3*/
+td {
+  white-space: pre-wrap; /* CSS3*/
 }
-.css-o1u8iu-content-text{
-    word-break: break-all;
+.css-o1u8iu-content-text {
+  word-break: break-all;
 }
