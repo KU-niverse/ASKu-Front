@@ -33,8 +33,7 @@
 .sideBar {
   display: flex;
   background: linear-gradient(to bottom, #9f132e, #de3a58);
-  min-width: 150px;
-  min-height: 400px;
+  min-width: 120px;
   height: auto;
   border-radius: 12px 0px 0px 12px;
   justify-content: center;
@@ -47,11 +46,12 @@
   font-size: 12px;
   color: #747474;
   margin-top: 20px;
+  margin-left: 10;
 }
 
 .title {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   cursor: default;
   text-align: center;
@@ -197,9 +197,9 @@
   display: flex;
   width: calc(100% - 100px);
   flex-direction: column;
-  height: 90px;
   margin-left: 50px;
   margin-right: 50px;
+  margin-bottom: 14px;
 }
 .suggestScrollbar {
   display: flex;
@@ -226,16 +226,17 @@
 }
 
 .textBox {
-  margin-left: 25px;
+  margin-left: 0px;
+  margin-right: 15px;
   font-weight: 550;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #9f132e;
   width: 180px;
-  height: 40px;
+  height: 20px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding-left: 23px;
@@ -251,17 +252,17 @@
 #ref {
   font-weight: 700;
   color: #9f132e;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .promptWrap {
   display: flex;
   width: calc(100% - 100px);
-  height: 100px;
+  height: 60px;
   border: 1px solid #9f132e;
   border-radius: 20px;
-  margin-bottom: 25px;
-  margin-top: 5px;
+  margin-bottom: 20px;
+  margin-top: 0px;
 }
 .prompt {
   overflow-y: scroll;
@@ -273,10 +274,10 @@
   line-height: 15px;
   max-height: 30px;
   border: none;
-  margin-top: 20px;
   margin-right: 20px;
   margin-left: 20px;
   resize: none;
+  padding-top: 10px;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
 }
@@ -338,7 +339,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 65px;
+  top: 30px;
   right: 10px;
   background-image: linear-gradient(to right, #9f132e, #de3a58);
   width: 50px;
@@ -352,5 +353,5 @@
 }
 
 hr {
-  width: 120px;
+  width: 100px;
 }
