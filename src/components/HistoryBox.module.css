@@ -55,7 +55,7 @@
   min-width: 160px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 @media only screen and (max-width: 767px) {
   .contentsTwo {
@@ -69,6 +69,8 @@
   }
 }
 .infoLine {
+  width: 100%;
+  justify-content: flex-end;
   display: flex;
   align-items: center;
   margin-bottom: 26px;
@@ -156,8 +158,12 @@
   font-weight: 600;
   font-size: 17px;
   margin-right: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .timestamp {
+  min-width: max-content;
   font-weight: 600;
   font-size: 17px;
   color: #747474;

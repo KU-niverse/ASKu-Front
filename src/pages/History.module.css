@@ -99,6 +99,9 @@
     height: auto;
   }
 }
+.listTitleStart {
+  color: #de3a58;
+}
 .pagingContainer {
   margin: 56px 0;
 }

@@ -105,13 +105,19 @@ const AllHistory: React.FC = () => {
           <div className={styles.historyList}>
             <div className={styles.historyTitle}>
               <p className={styles.listTitle2}>
-                {type === 'all'
-                  ? '최근 변경된 모든 문서'
-                  : type === 'create'
-                    ? '새로 생성된 모든 문서'
-                    : type === 'rollback'
-                      ? '최근 롤백된 모든 문서'
-                      : null}
+                {type === 'all' ? (
+                  <>
+                    <span className={styles.listTitleStart}>{'최근 변경된'}</span> {'모든 문서'}
+                  </>
+                ) : type === 'create' ? (
+                  <>
+                    <span className={styles.listTitleStart}>{'새로 생성된'}</span> {'모든 문서'}
+                  </>
+                ) : type === 'rollback' ? (
+                  <>
+                    <span className={styles.listTitleStart}>{'최근 롤백된'}</span> {'모든 문서'}
+                  </>
+                ) : null}
               </p>
 
               <div className={styles.historyTypes}>
