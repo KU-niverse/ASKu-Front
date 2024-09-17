@@ -76,14 +76,17 @@ const AllHistory: React.FC = () => {
 
   const allBtn = () => {
     setType('all')
+    setPage(1)
   }
 
   const createBtn = () => {
     setType('create')
+    setPage(1)
   }
 
   const rollbackBtn = () => {
     setType('rollback')
+    setPage(1)
   }
 
   const { isError, error, data: historys } = useGetHistory(type, page, perPage)
