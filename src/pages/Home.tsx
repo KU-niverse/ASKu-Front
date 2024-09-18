@@ -11,6 +11,7 @@ import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
 import RealTimePopularSearchesComponent from '../components/Home/RealTimePopularSearchesComponent'
+import RealTimePopularQuestionsComponent from '../components/Home/RealTimePopularQuestionsComponent'
 
 interface UserInfo {
   id: number
@@ -35,33 +36,6 @@ interface HomeProps {
   setLoggedIn: (loggedIn: boolean) => void
 }
 
-interface PopularKeyword {
-  keyword: string
-  id: number
-}
-
-interface PopularQuestion {
-  id: number
-  user_id: number
-  content: string
-  created_at: Date
-  like_count: number
-  nickname: string
-  index_title: string
-  answer_count: number
-  title: string
-}
-
-const fetchPopularKeywords = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/search/popular`)
-  return response.data.data
-}
-
-const fetchPopularQuestions = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/question/popular`)
-  return response.data.data
-}
-
 const checkLoginStatus = async () => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
   return res.data.success
@@ -71,12 +45,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-
-  const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
-  const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
-    'popularQuestions',
-    fetchPopularQuestions,
-  )
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {
@@ -106,6 +74,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     }
   }
 
+  // Amplitude
   useEffect(() => {
     track('view_home')
   }, [])
@@ -141,40 +110,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </Link>
           <div className={styles.realTime}>
             <RealTimePopularSearchesComponent />
-            <div className={styles.question}>
-              <p className={styles.realTimeTitle}>{'실시간 인기 질문'}</p>
-              {isQuestionsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                popularQuestions.map((question: PopularQuestion, index: number) => (
-                  <Link
-                    to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
-                    state={{
-                      question_id: question.id,
-                      user_id: question.user_id,
-                      content: question.content,
-                      created_at: question.created_at,
-                      like_count: question.like_count,
-                      nick: question.nickname,
-                      index_title: question.index_title,
-                      answer_count: question.answer_count,
-                      title: question.title,
-                    }}
-                    className={styles.rankWrap}
-                    key={question.id}
-                    onClick={() => {
-                      track('click_trend_search_question', {
-                        question_rank: index + 1,
-                        question_title: question.content,
-                      })
-                    }}
-                  >
-                    <p className={styles.numberIcon}>{'Q.'}</p>
-                    <p className={styles.rankContent}>{question.content}</p>
-                  </Link>
-                ))
-              )}
-            </div>
+            <RealTimePopularQuestionsComponent />
           </div>
         </div>
       </div>
