@@ -10,6 +10,7 @@ import logo from '../img/logo_big.png'
 import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
+import RealTimePopularSearchesComponent from '../components/Home/RealTimePopularSearchesComponent'
 
 interface UserInfo {
   id: number
@@ -139,32 +140,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <img src={chatBotBtn} alt={'button'} className={styles.chatBotBtn} />
           </Link>
           <div className={styles.realTime}>
-            <div className={styles.keyWord}>
-              <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
-              {isKeywordsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
-                  <Link
-                    to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
-                    className={styles.rankWrap}
-                    key={keyword.id}
-                    onClick={() => {
-                      track('click_trend_search_keyword', {
-                        search_rank: index + 1,
-                        search_keyword: keyword.keyword,
-                      })
-                    }}
-                  >
-                    <p className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.numberIcon}>
-                      {index + 1}
-                      {'.'}
-                    </p>
-                    <p className={styles.rankContent}>{keyword.keyword}</p>
-                  </Link>
-                ))
-              )}
-            </div>
+            <RealTimePopularSearchesComponent />
             <div className={styles.question}>
               <p className={styles.realTimeTitle}>{'실시간 인기 질문'}</p>
               {isQuestionsLoading ? (
