@@ -28,7 +28,7 @@ const SearchInputComponent: React.FC = () => {
     <div className={styles.inputContainer}>
       <img src={logo} className={styles.logo} alt={'logo'} />
       <input
-        className={styles.searchInput}
+        className={`${styles.searchInput} ${inputValue.trim() !== '' ? styles.active : ''}`}
         placeholder={'Wiki 검색어를 입력하세요.'}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}

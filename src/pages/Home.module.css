@@ -16,6 +16,11 @@
   scrollbar-width: none;
   margin-top: clamp(12px, 3vh, 100px);
 }
+@media only screen and (max-width: 767px) {
+  .homeWrap {
+    margin-top: 10px;
+  }
+}
 
 .logo {
   margin-left: 300px;
@@ -58,7 +63,7 @@
 
 .searchInput {
   position: relative;
-  border: 2.5px solid #9c0909;
+  border: 2.5px solid #9e9e9e;
   border-radius: 35px;
   flex: 1;
   height: 43px;
@@ -68,6 +73,10 @@
   font-size: 13px;
   letter-spacing: 0.5px;
   min-width: 325px;
+}
+
+.searchInput.active {
+  border-color: #9c0909;
 }
 
 @media only screen and (max-width: 767px) {
