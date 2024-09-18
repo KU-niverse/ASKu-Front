@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: row;
   margin-top: 25px;
-  width: calc(80% - 1px);
+  width: calc(80% - 150px);
   height: auto;
   border-radius: 12px;
   margin-left: 50px;
@@ -12,15 +12,14 @@
   position: relative;
   align-items: center;
   border: 1px solid var(--Linear, #9f132e);
-  max-width: 800px;
+  max-width: 500px;
+  margin-right: 30px;
 }
+
 @media screen and (max-width: 767px) {
   .questionBox {
-    width: calc(100vw - 50px);
+    width: calc(100vw - 100px);
     margin-right: 15px;
-  }
-  .questionBox {
-    width: calc(100vw - 50px);
   }
 }
 

@@ -3,11 +3,11 @@
   flex-direction: row;
   background-color: #fef2f4;
   margin-top: 25px;
-  width: calc(100% - 100px);
+  width: calc(100% - 50px);
   height: auto;
   border-radius: 12px;
   margin-right: 50px;
-  margin-left: 20px;  
+  margin-left: 20px;
   word-break: keep-all;
   position: relative;
   min-height: 92px;

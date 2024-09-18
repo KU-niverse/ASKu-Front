@@ -80,6 +80,7 @@
   text-align: start;
 }
 
+/* 입력창을 포함한 챗봇 컨테이너 */
 .chatbox {
   display: flex;
   flex-direction: column; /* 세로 방향으로 배치 */
@@ -88,6 +89,8 @@
   width: 900px;
   height: 100%;
 }
+
+/* 대화만 포함하는 챗봇 컨테이너 */
 .chat {
   flex: 1;
   width: 100%;
@@ -242,7 +245,7 @@
   width: 130px;
   height: 20px;
   border-radius: 20px;
-  font-size: 8px;
+  font-size: 9px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding-left: 23px;
@@ -258,7 +261,7 @@
 #ref {
   font-weight: 700;
   color: #9f132e;
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .promptWrap {
