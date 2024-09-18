@@ -23,7 +23,7 @@
 }
 
 .logo {
-  margin-left: 300px;
+  margin-left: clamp(200px, 20vw, 1000px);
   margin-right: 20px;
   width: auto;
   height: calc(100% - 20px);
@@ -44,7 +44,7 @@
   }
 }
 
-/* 검색창을 포함하는 컨테이너 */
+/* 로고와검색창을 포함하는 컨테이너 */
 .inputContainer {
   height: 60px;
   display: flex;
@@ -72,7 +72,8 @@
   padding-right: 80px;
   font-size: 13px;
   letter-spacing: 0.5px;
-  min-width: 325px;
+  min-width: 400px;
+  max-width: 600px;
 }
 
 .searchInput.active {
