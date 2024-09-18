@@ -46,6 +46,7 @@
   margin-top: 10px;
   margin-bottom: 15px;
   align-items: center;
+  background-color: red;
 }
 @media only screen and (max-width: 767px) {
   .inputContainer {

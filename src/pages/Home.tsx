@@ -12,6 +12,7 @@ import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
 import RealTimePopularSearchesComponent from '../components/Home/RealTimePopularSearchesComponent'
 import RealTimePopularQuestionsComponent from '../components/Home/RealTimePopularQuestionsComponent'
+import SearchInputComponent from '../components/Home/SearchInputComponent'
 
 interface UserInfo {
   id: number
@@ -42,8 +43,6 @@ const checkLoginStatus = async () => {
 }
 
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
-  const [inputValue, setInputValue] = useState('')
-  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
@@ -60,20 +59,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     refetchLoginStatus()
   }, [refetchLoginStatus])
 
-  const handleSearch = () => {
-    if (inputValue.trim() !== '') {
-      navigate(`/result/${encodeURIComponent(inputValue)}/search`)
-      setInputValue('')
-    }
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSearch()
-    }
-  }
-
   // Amplitude
   useEffect(() => {
     track('view_home')
@@ -83,28 +68,13 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeWrap}>
-        <div className={styles.inputContainer}>
-          <img src={logo} className={styles.logo} alt={'logo'} />
-          <input
-            className={styles.searchInput}
-            placeholder={'Wiki 검색어를 입력하세요.'}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            value={inputValue}
-          />
-          <div className={styles.searchIconContainer}>
-            <img
-              role={'presentation'}
-              src={searchIcon}
-              alt={'icon'}
-              className={styles.searchIcon}
-              onClick={handleSearch}
-            />
-          </div>
-        </div>
+        {/* 아래부터 검색 창 */}
+        <SearchInputComponent />
 
         <div className={styles.chatBotContainer}>
+          {/* 웹에서만 보이는 챗봇 컴포넌트 */}
           <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+          {/* 모바일 시에만 보이는 챗봇 페이지 넘어가기 버튼 */}
           <Link to={'/chatbot'}>
             <img src={chatBotBtn} alt={'button'} className={styles.chatBotBtn} />
           </Link>
