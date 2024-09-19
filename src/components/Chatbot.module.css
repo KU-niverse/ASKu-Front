@@ -5,16 +5,12 @@
   border-radius: 12px;
   box-shadow: 0px 5px 20px -5px #00000033;
   margin-right: 20px;
-  margin-left: 75px;
+  margin-left: 5%;
   margin-bottom: 5px;
   margin-top: 5px;
-  width: 40%;
+  width: 35%;
 }
-@media only screen and (max-width: 1300px) {
-  .chatBot {
-    margin-right: 75px;
-  }
-}
+
 @media only screen and (max-width: 900px) {
   .chatBot {
     margin-right: calc((100vw - 750px) / 2);
@@ -82,8 +78,8 @@
   flex-direction: column; /* 세로 방향으로 배치 */
   flex: 1; /* 가로 방향으로 flex 1 */
   align-items: center;
-  width: 900px;
   height: 100%;
+  width:35%;
 }
 .chat {
   flex: 1;

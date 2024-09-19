@@ -1,0 +1,32 @@
+.container {
+  width: 150px;
+  background: linear-gradient(to bottom, #000 0%, #666 100%);
+  border-radius: 14.11px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.subject{
+  text-align: center;
+  color: #FFF;
+  font-size: 11px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 13px;
+  overflow: hidden;
+  padding-bottom: 3px;
+}
+.joinDebate {
+  font-size: 8px;
+  width: 75px;
+  height: 18px;
+  border-radius: 19.381px;
+  background-color: #FFF;
+  margin-bottom: 12px;
+  margin-right: auto;
+  margin-left: auto;
+  color: #FF768F;
+  border-color:#00000000;
+}

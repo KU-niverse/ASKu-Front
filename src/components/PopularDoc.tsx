@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from './PopularDoc.module.css'
 import watch from '../img/watch.png'
 import verComp from '../img/verComp.png'
-// import versionimg from '../img/version.svg'
+import versionimg from '../img/version.svg'
 
 interface HistoryBoxProps {
   title: string
@@ -16,27 +16,25 @@ const PopularDoc = (props: HistoryBoxProps) => {
   const { title, version } = props // 구조 분해 할당
 
   return (
-    <div className={styles.historyBox}>
-      <div className={styles.contents}>
-        <div className={styles.contentsOne}>
-          <span className={styles.version}>
+    <div className={styles.contents}>
+      <div className={styles.contentsOne}>
+        <div className={styles.versionContainer}>
+          <img src={versionimg} alt={'버전이미지'} className={styles.versionIcon} />
+          <div className={styles.version}>
             {'V'}
             {version}
-          </span>
+          </div>
         </div>
-      </div>
-      <div className={styles.allversionText}>
-        <div className={styles.allversionBtns}>
-          <div className={styles.docTitle}>
-            <span
-              role={'presentation'}
-              onClick={() => {
-                const encodedTitle = encodeURIComponent(title)
-                nav(`/wiki/${encodedTitle}`)
-              }}
-            >
-              {title}
-            </span>
+        <div className={styles.docTitleContainer}>
+          <div
+            role={'presentation'}
+            className={styles.docTitle}
+            onClick={() => {
+              const encodedTitle = encodeURIComponent(title)
+              nav(`/wiki/${encodedTitle}`)
+            }}
+          >
+            {title}
           </div>
         </div>
       </div>

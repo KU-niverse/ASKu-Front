@@ -36,7 +36,8 @@
 .contentsOne {
   display: flex;
   align-items: center;
-  max-width: 65%;
+  flex-direction: column;
+  width:80px;
 }
 .contentsTwo {
   width: auto;
@@ -48,11 +49,18 @@
 .contentsTwo img {
   cursor: pointer;
 }
+.versionContainer {
+  position: relative;
+}
 
 .version {
-  font-size: 29px;
-  color: rgba(159, 19, 46, 1);
-  margin-right: 30px;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 9.5px;
 }
 @media only screen and (max-width: 767px) {
   .version {
@@ -86,13 +94,19 @@
   }
 }
 .docTitle {
-  font-size: 16px;
-  color: rgba(159, 19, 46, 1);
-  margin-right: 20px;
+  font-size: 11px;
+  color: #000;
+  margin-right: 10px;
+  margin-left: 10px;
   cursor: pointer;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 75px;
+  text-align: center;
+  font-weight: 700;
+}
+.versionIcon {
+  width: 43px;
 }
 @media only screen and (max-width: 767px) {
   .docTitle {

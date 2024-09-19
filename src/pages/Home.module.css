@@ -5,20 +5,54 @@
   height: 100vh;
 }
 .popDocList {
-  display: block;
+  display: flex;
 }
 
 .homeWrap {
   flex: 1;
   display: flex;
   width: 100vw;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
   scrollbar-width: none;
+  margin-top: 0.5%;
 }
-
+.HomeTitle {
+  display: flex;
+  align-items: flex-start;
+}
+.HomeSubTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000;
+  margin-top: 0px;
+}
+.SubTitleMore {
+  font-size: 7px;
+  color: #979797;
+  font-weight: 500;
+  line-height: 15px;
+  text-decoration-line: underline;
+  text-align: center;
+  margin-left: 8px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+.HomePart{
+  height:25%;
+  margin-bottom: 10px;
+}
+.HotDebateList{
+  display: flex;
+  width: max-content;
+}
+.questionList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 150%;
+}
 .logo {
   margin-left: 300px;
   margin-right: 40px;
@@ -108,13 +142,10 @@
 }
 
 .chatBotContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  overflow-y: scroll;
-  scrollbar-width: none;
+  width: 35%;
+  height: 100%;
+  font-size:100px;
+  background-color: #d1cacb;
 }
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
@@ -138,10 +169,11 @@
 }
 
 .realTime {
-  width: 40%;
+  width: 35%;
   display: flex;
   flex-direction: column;
-  margin-right: 75px;
+  margin-right: 5%;
+  height: 100%;
 }
 
 @media (max-width: 767px) {
@@ -150,15 +182,27 @@
     margin: auto;
   }
 }
-
-.keyWord {
+.BottomPart {
   display: flex;
+  width: max-content;
+}
+
+.realTimeBox {
   flex-direction: column;
-  width: 320px;
-  height: 270px;
-  border-radius: 12px;
+  border-radius: 11.125px;
   box-shadow: 0px 5px 20px -5px #00000033;
-  margin-bottom: 20px;
+}
+.realTimerank {
+  font-size: 7px;
+  margin-left: 5px;
+  font-weight: 400;
+  color: black;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 22px;
+  margin-top:0px;
 }
 
 .question {
@@ -174,40 +218,75 @@
 .realTimeTitle {
   margin-left: 30px;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 8px;
   color: #de3a58;
+}
+.realrankWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  align-items: flex-start;
 }
 
 .rankWrap {
   display: flex;
   flex-direction: row;
-  height: 35px;
   align-items: center;
   text-decoration: none;
+  align-items: flex-start;
 }
 
-.numberIcon {
-  margin-left: 30px;
-  font-weight: 500;
-  font-size: 18px;
-  color: #de3a58;
-  width: 15px;
+.bubbleIcon {
+  width: 12px;
+  height: 12px;
+  margin-top: 2px;
 }
 .blackNumberIcon {
-  margin-left: 30px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 7px;
   color: black; /* 검정색 */
   width: 15px;
+  margin-top: 0px;
+}
+.pinkNumberIcon{
+  font-weight: 500;
+  font-size: 7px;
+  color: #de3a58;
+  width: 15px;
+  margin-top: 0px;
 }
 
 .rankContent {
-  margin-left: 20px;
-  font-weight: 400;
+  margin-left: 5px;
+  font-weight: 600;
   font-size: 14px;
   color: black;
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-right: 22px;
+  margin-top:0px;
+  margin-bottom: 5px;
+}
+.randomDocBox {
+  flex-direction: column;
+  border-radius: 11.125px;
+  box-shadow: 0px 5px 20px -5px #00000033;
+}
+.randomDocBack {
+  width: 100px;
+}
+.randomLink {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 기본 텍스트 색상 유지 */
+  font-size:8px;
+  cursor: pointer;
+}
+.randomDocBottom {
+  display: flex;
+}
+.randomBtn {
+  width: 17px;
 }

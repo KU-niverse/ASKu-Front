@@ -42,9 +42,12 @@ function HotDebate({
   }
   return (
     <div className={styles.container}>
-      <span role={'presentation'} onClick={linktoDebateRoom} className={styles.title}>
+      <div className={styles.subject} role={'presentation'} onClick={linktoDebateRoom}>
         {subject}
-      </span>
+      </div>
+      <button type="button" className={styles.joinDebate} onClick={linktoDebateRoom}>
+        나도 참여할래!
+      </button>
     </div>
   )
 }
