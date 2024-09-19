@@ -52,8 +52,8 @@
 }
 
 .debatecontent {
-  height: auto;
-  width: auto;
+  height: 90vh;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   flex: 1;
