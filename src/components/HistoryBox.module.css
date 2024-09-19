@@ -1,22 +1,23 @@
 .hidden {
   display: none;
 }
-
 .historyBox {
   width: 100%;
-  height: 101px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  height: 142px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(186, 186, 186, 0.25);
   margin-bottom: 20px;
-  padding: 20px;
   box-sizing: border-box;
-  border: 0.5px solid rgba(213, 213, 213, 1);
+  border: 1px #d5d5d5 solid;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  padding: 13px 0;
 }
 @media only screen and (max-width: 767px) {
   .historyBox {
-    position: relative;
-    height: 115px;
-    padding: 15px;
+    height: 100px;
+    padding: 10px 0;
+    box-sizing: content-box;
   }
 }
 .contents {
@@ -34,104 +35,152 @@
   }
 }
 .contentsOne {
+  min-width: 120px;
+  border-right: 1px #d5d5d5 solid;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  max-width: 65%;
+  justify-content: center;
 }
 .contentsTwo {
-  width: auto;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 30px;
 }
-
+.summaryContainer {
+  margin-right: 30px;
+}
+.rightContainer {
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+@media only screen and (max-width: 767px) {
+  .contentsTwo {
+    padding: 0 17px;
+  }
+  .rightContainer {
+    min-width: 150px;
+  }
+  .summaryContainer {
+    margin-right: 20px;
+  }
+}
+.infoLine {
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+}
+@media only screen and (max-width: 767px) {
+  .infoLine {
+    margin-bottom: 15px;
+  }
+}
 .contentsTwo img {
   cursor: pointer;
 }
-
+.versionContainer {
+  position: relative;
+  margin-top: 6px;
+}
 .version {
-  font-size: 29px;
-  color: rgba(159, 19, 46, 1);
-  margin-right: 30px;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
 }
 @media only screen and (max-width: 767px) {
   .version {
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 15px;
   }
 }
-.summary {
-  display: inline-block;
-  max-width: 400px;
-  font-size: 18px;
-  color: rgba(0, 0, 0, 1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.docTitleContainer {
+  padding: 0 13px;
 }
-@media only screen and (max-width: 767px) {
-  .summary {
-    font-size: 13px;
-  }
-}
-.user {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 1);
-  margin-right: 20px;
-}
-@media only screen and (max-width: 767px) {
-  .user {
-    font-size: 11px;
-    margin-right: 5px;
-  }
-}
+
 .docTitle {
-  font-size: 16px;
-  color: rgba(159, 19, 46, 1);
-  margin-right: 20px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
+  font-weight: 700;
+  font-size: 24px;
+  color: #de3a58;
+  margin-top: 15px;
+  text-align: center;
   text-overflow: ellipsis;
+  overflow: hidden;
+  height: 30px;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
 }
 @media only screen and (max-width: 767px) {
   .docTitle {
-    font-size: 12px;
-    margin-right: 5px;
+    font-size: 18px;
+    margin-top: 10px;
+    height: 20px;
   }
+}
+.summaryTitle {
+  font-weight: 600;
+  font-size: 20px;
+  color: #747474;
+  margin-bottom: 4px;
+}
+.summary {
+  font-weight: 700;
+  font-size: 32px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+@media only screen and (max-width: 767px) {
+  .summaryTitle {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .summary {
+    font-size: 24px;
+  }
+}
+.user {
+  font-weight: 600;
+  font-size: 17px;
+  margin-right: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .timestamp {
-  font-size: 13px;
-  color: rgba(116, 116, 116, 1);
-  margin-right: 7px;
+  min-width: max-content;
+  font-weight: 600;
+  font-size: 17px;
+  color: #747474;
+  margin-right: 11px;
 }
 @media only screen and (max-width: 767px) {
+  .user {
+    font-size: 14px;
+    margin-right: 5px;
+  }
   .timestamp {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
-.versionText {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.allversionText {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-@media only screen and (max-width: 767px) {
-  .versionText {
-    position: absolute;
-    bottom: 18px;
-  }
-  .allversionText {
-    width: 100%;
-    position: absolute;
-    bottom: 18px;
-  }
+.threedot {
+  padding-bottom: 4px;
 }
 .versionBtns {
   width: 450px;
@@ -143,37 +192,17 @@
   justify-content: space-between;
 }
 .allversionBtns {
-  width: 100%;
-  padding-top: 15px;
-  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.allVerBtn {
-  min-width: 292px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
+  flex-direction: column;
   cursor: pointer;
-  margin-left: 15px;
+  gap: 12px;
 }
 .versionbtn {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
-  cursor: pointer;
-  margin-left: 10px;
-}
-.versionbtn img {
-  width: 20px;
-  height: 16px;
-  margin-right: 5px;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
 }
 @media only screen and (max-width: 767px) {
   .versionBtns {
@@ -182,26 +211,12 @@
     display: flex;
     justify-content: space-between;
   }
-  .allversionBtns {
-    width: 95%;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .allVerBtn {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    min-width: 220px;
-  }
   .versionbtn {
-    font-size: 11px;
+    font-size: 13px;
     margin-left: 0px;
     margin-right: 6px;
   }
   .versionbtn img {
-    width: 13px;
-    height: 11px;
     margin-right: 3px;
   }
 }
