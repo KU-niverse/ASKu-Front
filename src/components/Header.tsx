@@ -50,7 +50,7 @@ interface RandomDocResponse {
   title: string
 }
 
-// 유저 정보 useQuery
+// 유저 정보 useQuery 훅: 사용자 정보를 서버에서 가져와 캐싱합니다.
 function useUserInfo() {
   return useQuery<MypageDataResponse, AxiosError>(
     'userInfo',
@@ -65,12 +65,12 @@ function useUserInfo() {
       onError: (error) => {
         console.error('사용자 정보 가져오기 에러:', error)
       },
-      enabled: !!sessionStorage.getItem('user'),
+      enabled: !!sessionStorage.getItem('user'), // sessionStorage에 유저 정보가 있을 때만 실행
     },
   )
 }
 
-// 랜덤 문서 useQuery
+// 랜덤 문서 useQuery 훅: 랜덤 문서를 서버에서 가져와 캐싱합니다.
 function useRandomDoc() {
   return useQuery<RandomDocResponse, Error>(
     'randomDoc',
@@ -81,7 +81,7 @@ function useRandomDoc() {
       return response.data
     },
     {
-      enabled: false,
+      enabled: false, // 기본적으로 비활성화 상태에서 필요시 호출됨
       retry: false,
       onError: (error) => {
         console.error('랜덤 문서 가져오기 에러:', error)
@@ -90,32 +90,37 @@ function useRandomDoc() {
   )
 }
 
+// Header 컴포넌트: 네비게이션 바와 검색, 로그인 상태 등을 관리하는 UI 컴포넌트
 function Header({ userInfo, setUserInfo }: any) {
-  const [inputValue, setInputValue] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px')
-  const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px')
-  const [nicknameText, setNicknameText] = useState('')
-  const [isAlarmVisible, setIsAlarmVisible] = useState(false)
-  const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false)
-  const default_height = '60px'
-  const [mobileHeaderHeight, setMobileHeaderHeight] = useState(default_height)
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
-  const [loadingMypage, setLoadingMypage] = useState(true)
-  const [ismainpage, setIsMainPage] = useState(false)
-  const [buttonTextVisible, setButtonTextVisible] = useState(true)
-  const [buttonDisplay, setButtonDisplay] = useState('inline-flex')
+  // 컴포넌트의 상태 관리 (로그인 상태, 검색어, 닉네임, 모바일 헤더 상태 등)
+  const [inputValue, setInputValue] = useState('') // 검색어 입력값
+  const [isLoggedIn, setIsLoggedIn] = useState(false) // 로그인 여부
+  const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px') // 네비게이션 바 우측 너비
+  const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px') // 네비게이션 바 우측 마진
+  const [nicknameText, setNicknameText] = useState('') // 유저 닉네임
+  const [isAlarmVisible, setIsAlarmVisible] = useState(false) // 알람 창 표시 여부
+  const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false) // 모바일 헤더 열림 상태
+  const default_height = '60px' // 기본 모바일 헤더 높이
+  const [mobileHeaderHeight, setMobileHeaderHeight] = useState(default_height) // 모바일 헤더 높이
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false) // 모바일 검색창 열림 상태
+  const [loadingMypage, setLoadingMypage] = useState(true) // 마이페이지 로딩 상태
+  const [ismainpage, setIsMainPage] = useState(false) // 현재 페이지가 메인 페이지인지 여부
+  const [buttonTextVisible, setButtonTextVisible] = useState(true) // 버튼 텍스트 표시 여부
+  const [buttonDisplay, setButtonDisplay] = useState('inline-flex') // 버튼 디스플레이 속성
 
+  // React Router 훅: 페이지 이동 및 현재 경로 확인
   const Nav = useNavigate()
   const location = useLocation()
 
   const { data: userData, isFetching: isLoadingUser } = useUserInfo()
   const { data: randomDoc, refetch: refetchRandomDoc } = useRandomDoc()
 
+  // 로그아웃 함수: 로그인 상태를 해제하고 초기화
   const logOut = () => {
     setIsLoggedIn(false)
   }
 
+  // 컴포넌트 마운트 시 로그인 상태 확인
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -135,11 +140,13 @@ function Header({ userInfo, setUserInfo }: any) {
     checkLoginStatus()
   }, [])
 
+  // 로그인 상태에 따른 UI 변경 (네비게이션 바 너비와 마진)
   useEffect(() => {
     setNavContainerRightWidth(isLoggedIn ? '250px' : '150px')
     setNavContainerRightMargin(isLoggedIn ? '50px' : '100px')
   }, [isLoggedIn])
 
+  // 유저 데이터에 따른 닉네임 설정
   useEffect(() => {
     if (isLoggedIn && userData && Array.isArray(userData.data) && userData.data.length > 0) {
       const fetchedUserInfo = userData.data[0]
@@ -155,10 +162,12 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }, [isLoggedIn, setUserInfo, userData])
 
+  // 현재 경로에 따라 메인 페이지 여부 설정
   useEffect(() => {
     setIsMainPage(location.pathname === '/')
   }, [location])
 
+  // 화면 크기에 따른 버튼 표시 여부 설정
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1300) {
@@ -179,6 +188,7 @@ function Header({ userInfo, setUserInfo }: any) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // 로그아웃 함수: 서버에서 로그아웃 요청 후 상태 초기화
   const signOut = async () => {
     try {
       const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/signout`, {
@@ -196,6 +206,7 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  // 모바일 검색창 열림 상태 관리
   const handleMobileSearch = () => {
     setMobileHeaderOpen(false)
     if (mobileSearchOpen) {
@@ -207,6 +218,7 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  // 모바일 메뉴 열림 상태 관리
   const handleMobileMenu = () => {
     setMobileSearchOpen(false)
     if (mobileHeaderOpen) {
@@ -218,6 +230,7 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  // 윈도우 크기에 따른 알람 표시와 헤더 상태 초기화
   const handleWindowResize = () => {
     setIsAlarmVisible(false)
     if (window.innerWidth > 767) {
@@ -227,6 +240,7 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  // 랜덤 문서 클릭 시 해당 문서로 이동
   const handleRandomDocClick = async () => {
     track('click_header_navi', { type: '셔플' })
     try {
@@ -241,6 +255,7 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
+  // 모바일 마이페이지 버튼 클릭 처리
   const handleClickMobileMypage = () => {
     if (!isLoggedIn) {
       alert('로그인이 필요한 서비스입니다')
@@ -250,6 +265,7 @@ function Header({ userInfo, setUserInfo }: any) {
     Nav('/mypage')
   }
 
+  // 모바일 즐겨찾기 버튼 클릭 처리
   const handleClickMobileBookmark = () => {
     if (!isLoggedIn) {
       alert('로그인이 필요한 서비스입니다')
