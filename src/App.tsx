@@ -59,7 +59,7 @@ function App() {
         <Route path={'/'} element={<Home loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/result/:title/:howto'} element={<SearchResult />} />
         <Route path={'/chatbot'} element={<MobileChatBotPage />} />
-        <Route path={'/wiki/:title'} element={<WikiViewer loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+        <Route path={'/wiki/:title'} element={<WikiViewer />} />
         <Route path={'/wikiedit/:title/all'} element={<WikiAllEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/wikiedit/:main/:section'} element={<WikiEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/question/edit/:main'} element={<QuestionEdit loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />

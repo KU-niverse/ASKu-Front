@@ -325,7 +325,7 @@ li {
 }
   .wikititleBtnThree {
     position: absolute;
-    right: 40px;
+    right: 30px;
     margin-top: 17px;
     min-width: 70px; /* 최소 너비 설정 */
     white-space: nowrap; /* 줄바꿈 방지 */
@@ -340,5 +340,8 @@ li {
     height: 25px;
     font-size: 9px;
     padding: 6px;
+  }
+  .wikimaintitle{
+    max-width: 150px;
   }
 }

@@ -72,6 +72,7 @@ const History = () => {
   )
 
   const historys = historyData?.historys || [] // historyData가 존재하면 historys를 추출, 아니면 빈 배열
+  const newest = historys[0]?.version
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber)
@@ -113,9 +114,10 @@ const History = () => {
                   summary={item.summary}
                   user={item.nick || ''} // 닉네임이 없을 경우 빈 문자열 처리
                   timestamp={item.timestamp}
-                  title={item.doc_title}
+                  title={title}
                   target={item.id || 0} // id가 없을 경우 0 처리
                   type={''}
+                  newest={newest}
                 />
               </div>
             ))

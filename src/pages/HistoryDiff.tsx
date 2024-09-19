@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import ReactDiffViewer from 'react-diff-viewer'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@material-ui/core'
 import axios, { AxiosError } from 'axios'
 import his2 from '../img/his2.png'
 import styles from './HistoryDiff.module.css'
 import Header from '../components/Header'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -34,6 +35,8 @@ interface ComparisonResponse {
 }
 
 function useCompareHistory(title: string, ver: string) {
+  const nav = useNavigate()
+
   return useQuery<ComparisonResponse, AxiosError>(
     ['compareHistory', title, ver],
     async () => {
@@ -50,7 +53,9 @@ function useCompareHistory(title: string, ver: string) {
       retry: false,
       onError: (error: AxiosError) => {
         console.error(error)
-        alert(error.response?.data || '비교 데이터를 가져오는 중 오류가 발생했습니다.')
+        console.error(error.response?.data)
+        alert('비교 데이터를 가져오는 중 오류가 발생했습니다.')
+        nav(`/history/${encodeURIComponent(title)}`)
       },
     },
   )
@@ -69,7 +74,12 @@ const HistoryDiff = () => {
 
   const { isLoading, isError, error, data: comparisonData } = useCompareHistory(title, ver)
 
-  if (isLoading) return <div>{'로딩 중...'}</div>
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
   if (isError)
     return (
       <div>

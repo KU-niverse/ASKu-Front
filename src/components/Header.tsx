@@ -10,17 +10,13 @@ import logo from '../img/logo.png'
 import searchIcon from '../img/search_icon.svg'
 import searchIconGray from '../img/search_icon_gray.png'
 import hamburger from '../img/hamburger.png'
-import alarm from '../img/bell.svg'
 import bookmark from '../img/bookmark_grey.svg'
 import mypage from '../img/mypage_btn.png'
 import mobilemypage from '../img/mobile_mypage.png'
-import mobilealarm from '../img/mobile_alarm.png'
 import mobilelogout from '../img/mobile_logout.png'
 import mobiledebate from '../img/mobile_debate.png'
 import mobilebookmark from '../img/mobile_bookmark.png'
 import mobilehistory from '../img/mobile_history.png'
-import AlarmModal from './AlarmModal'
-import AlarmMobileModal from './AlarmMobileModal'
 import randomDocs from '../img/random.svg'
 import all_document from '../img/all_document.svg'
 import recent_debate from '../img/recent_debate.svg'
@@ -106,7 +102,6 @@ function Header({ userInfo, setUserInfo }: any) {
   const [mobileHeaderHeight, setMobileHeaderHeight] = useState(default_height)
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [loadingMypage, setLoadingMypage] = useState(true)
-  const [mobileAlarmModalOpen, setMobileAlarmModalOpen] = useState(false)
   const [ismainpage, setIsMainPage] = useState(false)
   const [buttonTextVisible, setButtonTextVisible] = useState(true)
   const [buttonDisplay, setButtonDisplay] = useState('inline-flex')
@@ -223,10 +218,6 @@ function Header({ userInfo, setUserInfo }: any) {
     }
   }
 
-  const handleAlarm = () => {
-    setIsAlarmVisible(!isAlarmVisible)
-  }
-
   const handleWindowResize = () => {
     setIsAlarmVisible(false)
     if (window.innerWidth > 767) {
@@ -234,10 +225,6 @@ function Header({ userInfo, setUserInfo }: any) {
       setMobileSearchOpen(false)
       setMobileHeaderHeight(default_height)
     }
-  }
-
-  const handleMobileAlarmModal = () => {
-    setMobileAlarmModalOpen(!mobileAlarmModalOpen)
   }
 
   const handleRandomDocClick = async () => {
@@ -252,6 +239,25 @@ function Header({ userInfo, setUserInfo }: any) {
     } catch (error) {
       console.error('Error fetching random document:', error)
     }
+  }
+
+  const handleClickMobileMypage = () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요한 서비스입니다')
+      Nav('/signin')
+      return
+    }
+    Nav('/mypage')
+  }
+
+  const handleClickMobileBookmark = () => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요한 서비스입니다')
+      Nav('/signin')
+      return
+    }
+    track('click_header_navi', { type: '즐겨찾는 문서' })
+    Nav('/mybookmark')
   }
 
   return (
@@ -272,7 +278,7 @@ function Header({ userInfo, setUserInfo }: any) {
             <Link
               to={'/allhistory'}
               onClick={() => {
-                track('click_header_navi', { type: '모든 문서' })
+                track('click_header_navi', { type: '최근 변경' })
               }}
             >
               <button
@@ -283,8 +289,8 @@ function Header({ userInfo, setUserInfo }: any) {
                   display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
                 }}
               >
-                <img src={all_document} alt={'모든 문서'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '모든 문서' : ''}
+                <img src={all_document} alt={'최근 변경'} className={styles.icon} />
+                {ismainpage || buttonTextVisible ? '최근 변경' : ''}
               </button>
             </Link>
             <Link
@@ -366,17 +372,6 @@ function Header({ userInfo, setUserInfo }: any) {
                     Nav('/mybookmark')
                   }}
                 />
-                <img
-                  role={'presentation'}
-                  src={alarm}
-                  alt={'alarm'}
-                  id={styles.temporaryAlarm}
-                  className={styles.signinButton}
-                  onClick={handleAlarm}
-                />
-                <div className={styles.alarmModalContainer}>
-                  <AlarmModal isAlarmVisible={isAlarmVisible} handleAlarm={handleAlarm} isLoggedIn={isLoggedIn} />
-                </div>
                 <button
                   type={'button'}
                   className={styles.headerButton}
@@ -450,33 +445,16 @@ function Header({ userInfo, setUserInfo }: any) {
             {mobileHeaderOpen && (
               <div className={styles.mobileMenuWrap}>
                 <div className={styles.mobileHamburger}>
-                  <Link to={'/mypage'} className={styles.mobileMenuBtn}>
+                  <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'마이페이지'}</p>
                     </div>
-                  </Link>
-                  <Link
-                    to={'/mybookmark'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '즐겨찾는 문서' })
-                    }}
-                  >
+                  </button>
+                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
                     <div className={styles.mobileHamburgerMenu}>
                       <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
                       <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
-                    </div>
-                  </Link>
-                  <button
-                    type={'button'}
-                    id={styles.temporaryMobileAlarm}
-                    className={styles.mobileMenuBtn}
-                    onClick={handleMobileAlarmModal}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilealarm} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'알림'}</p>
                     </div>
                   </button>
                   <Link
@@ -563,9 +541,6 @@ function Header({ userInfo, setUserInfo }: any) {
                   />
                 </div>
               </div>
-            )}
-            {mobileAlarmModalOpen && (
-              <AlarmMobileModal isOpen={mobileAlarmModalOpen} handleMobileAlarmModal={handleMobileAlarmModal} />
             )}
           </div>
         </div>
