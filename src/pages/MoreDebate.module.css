@@ -112,12 +112,14 @@
   .maincontent {
     width: 100%;
     height: auto;
+    margin-right: 0px;
+    margin-left: 0px;
   }
   .sidebar {
     display: block;
     background-color: white;
     width: 100%;
-    padding: 0;
+    margin-right: 0px;
   }
 
   .debateSearch {
