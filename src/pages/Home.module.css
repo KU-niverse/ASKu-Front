@@ -55,9 +55,13 @@
 }
 @media only screen and (max-width: 767px) {
   .inputContainer {
+    width: 100%;
+    position: relative;
     width: calc(100% - 50px);
     height: 30px;
     margin-top: 30px;
+    padding-left: 30%;
+    padding-right: 30%;
   }
 }
 
@@ -82,10 +86,13 @@
 
 @media only screen and (max-width: 767px) {
   .searchInput {
+    width: 200px;
     height: 40px;
     padding-left: 20px;
-    margin-left: 20px;
+    margin-left: 19px;
     padding-right: 55px;
+    flex: 1;
+    min-width: 100px;
   }
 }
 
@@ -103,9 +110,10 @@
 }
 @media only screen and (max-width: 900px) {
   .searchIconContainer {
-    width: 100px;
+    width: 20px;
   }
 }
+
 .searchIcon {
   position: absolute;
   margin-left: -60px;
@@ -117,8 +125,8 @@
   .searchIcon {
     width: 22px;
     height: 18px;
-    right: 40px;
-    top: 10px;
+    right: 37px;
+    top: 7px;
   }
 }
 
