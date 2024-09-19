@@ -1,8 +1,8 @@
 .title {
-  font-size: 36px;
+  font-size: 22px;
   font-weight: 700;
-  margin-top: 73px;
-  margin-bottom: 27px;
+  margin-top: 51px;
+  margin-bottom: 16px;
 }
 
 .menu {
@@ -10,10 +10,10 @@
   justify-content: space-between;
   padding: 10px 0;
   color: #de3a58;
-  font-size: 24px;
+  font-size: 14.5px;
   font-weight: 700;
   border-top: 4px solid #9f132e;
-  padding-top: 29px;
+  padding-top: 17px;
 }
 
 .pink {
@@ -23,6 +23,7 @@
 .maincontent {
   margin-left: 138px;
   margin-right: 70px;
+  margin-top: 10px;
   background-color: white;
   width: 75%;
   height: auto;
@@ -65,17 +66,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 18px;
+  padding-bottom: 0px;
   box-sizing: border-box;
   border-radius: 12px;
-  padding-top: 36px;
-  margin-bottom: 70px;
-  margin-top: 73px;
+  padding-top: 27.6px;
+  margin-bottom: 29.5px;
+  margin-top: 46px;
   margin-right: 138px;
 }
 .sidebar div {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .maincontent_box {
@@ -88,7 +90,7 @@
 .none {
   color: #000;
   text-align: center;
-  font-size: 32px;
+  font-size: 19px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -156,4 +158,8 @@
   .menu {
     font-size: 14px;
   }
+}
+.cautionIcon {
+  width: 47px;
+
 }

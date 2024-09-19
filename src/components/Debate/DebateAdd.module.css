@@ -1,7 +1,7 @@
 .addTitle {
   width: 89px;
   position: relative;
-  font-size: 24px;
+  font-size: 14.5px;
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
@@ -10,7 +10,7 @@
 .subTitle {
   width: 142px;
   position: relative;
-  font-size: 18px;
+  font-size: 11px;
   font-weight: 500;
   font-family: Pretendard;
   color: #747474;
@@ -24,8 +24,8 @@
   background: linear-gradient(166deg, #fff -32.12%, #ffa1b0 110.81%);
   border: 1px solid #de3a58;
   border-radius: 12px;
-  width: 281px;
-  height: 111px;
+  width: 196px;
+  height: 75px;
   flex-shrink: 0;
   cursor: pointer;
 }
@@ -40,14 +40,14 @@
 .addInput {
   border: 1px solid #de3a58;
   border-radius: 12px;
-  width: 269px;
-  height: 89px;
+  width: 196px;
+  height: 75px;
   flex-shrink: 0;
   color: #000000;
-  font-size: 16px;
+  font-size: 9.5px;
   font-weight: 600;
-  padding-left: 30px;
-  padding-top: 20px;
+  padding-left: 12px;
+  padding-top: 8.5px;
   resize: none;
 }
 .createButton {
@@ -63,4 +63,9 @@
 }
 .addPart {
   margin-bottom: 16px;
+}
+
+.plusIcon {
+  width: 24px;
+  height: 24px;
 }

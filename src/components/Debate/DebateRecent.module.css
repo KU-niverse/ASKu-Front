@@ -12,10 +12,11 @@
 .recentTitle {
   width: 89px;
   position: relative;
-  font-size: 24px;
+  font-size: 14.5px;
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
+  margin-bottom: 13.2px;
 }
 .recentLists {
   display: flex;
@@ -29,17 +30,22 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 .listTitle {
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 11px;
   font-weight: 600;
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 144px;
 }
 .listTimestamp {
-  font-size: 14px;
+  font-size: 8px;
   font-weight: 400;
   line-height: 17px;
   letter-spacing: 0em;

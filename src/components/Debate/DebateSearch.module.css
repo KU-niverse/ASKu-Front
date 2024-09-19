@@ -1,7 +1,7 @@
 .searchTitle {
   width: 89px;
   position: relative;
-  font-size: 24px;
+  font-size: 14.5px;
   display: inline-block;
   font-family: Pretendard;
   color: #de3a58;
@@ -13,27 +13,27 @@
   background-color: #fff;
   border: 1px solid rgba(116, 116, 116, 0.5);
   box-sizing: content-box;
-  width: 231px;
-  height: 47px;
+  width: 146px;
+  height: 28px;
   padding-left: 50px;
-  margin-top: 20px;
-  font-size: 16px;
+  margin-top: 13.2px;
+  font-size: 9.6px;
   color: #000;
   font-family: Pretendard;
 }
 .searchIcon {
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   position: relative;
   cursor: pointer;
   left: 6%;
-  top: 36px;
+  top: 15px;
 }
 .cancelIcon {
   position: absolute;
-  top: 233px;
-  width: 24px;
-  height: 24px;
+  top: 178px;
+  width: 12px;
+  height: 12px;
   cursor: pointer;
   margin-right: 190px;
   right: 0px;
@@ -46,22 +46,22 @@
 .result {
   display: flex;
   flex-direction: column;
-  width: 25%;
-  margin-top: 50px;
+  margin-top: 30px;
   padding-left: 10px;
 }
 
 .resultList {
-  width: 90%;
+  width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 14px;
+  font-size: 8px;
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
   margin-bottom: 0px;
+
 }
 
 .linkTo {

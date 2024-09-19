@@ -53,6 +53,12 @@ const DebateAdd = ({ title }: DebateAddProps) => {
     useCreateDebate()
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      handleCreate()
+    }
+  }
+
   useEffect(() => {
     const takeDebateList = async () => {
       try {
@@ -73,7 +79,10 @@ const DebateAdd = ({ title }: DebateAddProps) => {
   return (
     <div>
       <div className={styles.addPart}>
-        <b className={styles.addTitle}>{title}</b>
+        <b className={styles.addTitle}>
+          {title}
+          {' 토론방 생성'}
+        </b>
         <p className={styles.subTitle}>
           {'문서의 다른 토론('}
           {num}
@@ -83,19 +92,21 @@ const DebateAdd = ({ title }: DebateAddProps) => {
 
       <div>
         <button className={IsClick ? styles.none : styles.addButton} onClick={handleClick} type={'submit'}>
-          <img src={addButton} alt={'생성'} />
+          <img src={addButton} alt={'생성'} className={styles.plusIcon} />
         </button>
         <textarea
           className={IsClick ? styles.addInput : styles.none}
           placeholder={'생성할 토론방을 입력하세요.'}
           // eslint-disable-next-line arrow-parens
           onChange={(e) => setWord(e.target.value)}
+          onKeyDown={handleKeyDown}
         >
           {word}
         </textarea>
-        <button className={styles.createButton} type={'button'} onClick={handleCreate}>
+        {/* <button className={styles.createButton} type={'button'} onClick={handleCreate}>
           {'생성\r'}
-        </button>
+        </button> */}
+        {/* 버튼 예쁘게 달기 실패해서 없애버렸습니다.. */}
       </div>
     </div>
   )

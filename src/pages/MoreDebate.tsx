@@ -100,7 +100,7 @@ const MoreDebate: React.FC = () => {
             </p>
           ) : debateListData?.data.length === 0 ? (
             <div className={styles.caution}>
-              <img src={CautionIcon} alt={'삭제'} />
+              <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
               <p className={styles.none}>{'아직 생성된'}</p>
               <p className={styles.none}>{'토론방이 없습니다.'}</p>
             </div>
