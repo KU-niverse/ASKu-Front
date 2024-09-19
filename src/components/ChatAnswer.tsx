@@ -1,4 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react'
+// ChatAnswer.tsx
+
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ChatAnswer.module.css'
 import like from '../img/chatbot_like.svg'
@@ -19,6 +21,8 @@ interface ChatAnswerProps {
   qnaId: number
   blockIconZip: boolean
   onAddReferenceSuggestion: (references: { link: string; value: string }[]) => void
+  recommendedQuestions: string[] // 추가된 필드
+  onRecommendQuestionClick: (question: string) => void // 추가된 콜백 함수
 }
 
 const ChatAnswer: React.FC<ChatAnswerProps> = ({
@@ -27,6 +31,8 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
   qnaId,
   blockIconZip,
   onAddReferenceSuggestion,
+  recommendedQuestions,
+  onRecommendQuestionClick,
 }) => {
   const [likeHovered, setLikeHovered] = useState(false)
   const [unlikeHovered, setUnlikeHovered] = useState(false)
@@ -40,6 +46,7 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
     references: { link: string; value: string }[]
     rule: string | null
   } | null>(null)
+  const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
 
   const handleLikeMouseOver = () => setLikeHovered(true)
   const handleLikeMouseLeave = () => setLikeHovered(false)
@@ -83,14 +90,18 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
         return null
       }
     }
-
     const parsedRefs = parseReference(reference)
     if (parsedRefs) {
+      if (isInitialLoad.current) {
+        onAddReferenceSuggestion([]) // 초기 로드 시에는 referenceList를 비웁니다.
+      } else {
+        onAddReferenceSuggestion(parsedRefs.references) // 이후에는 referenceList를 채웁니다.
+      }
       onAddReferenceSuggestion(parsedRefs.references)
       setParsedReferences(parsedRefs)
       setRuleDetails(parsedRefs.rule || '')
     }
-  }, [reference, onAddReferenceSuggestion])
+  }, [reference])
 
   return (
     <div>

@@ -59,8 +59,12 @@ const BookmarkBox = ({ title, content, is_favorite, result }: BookmarkBoxProps) 
       queryClient.invalidateQueries('bookmarks')
     },
     onError: (error: any) => {
-      console.error(error)
-      alert(error.response?.data?.message || '문제가 발생하였습니다')
+      // console.error(error)
+      // alert(error.response?.data?.message || '문제가 발생하였습니다')
+      setFavorite(false)
+      setImageSource(falseBk)
+      alert('즐겨찾기에서 삭제되었습니다')
+      queryClient.invalidateQueries('bookmarks')
     },
   })
 

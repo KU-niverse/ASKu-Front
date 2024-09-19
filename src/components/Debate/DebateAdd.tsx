@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery, useMutation } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import plus from '../../img/Vector.png'
 import styles from './DebateAdd.module.css'
 
@@ -37,6 +37,7 @@ function useDebateList(title: string) {
 }
 
 function useCreateDebate(title: string) {
+  const nav = useNavigate()
   return useMutation<DebateListResponse, AxiosError, { subject: string }>(
     async ({ subject }) => {
       const response = await axios.post(
@@ -55,6 +56,7 @@ function useCreateDebate(title: string) {
         console.error('토론 생성 에러:', error)
         if (error.response?.status === 401) {
           alert('로그인이 필요한 서비스입니다.')
+          nav('/signin')
         } else if (error.response?.status === 400) {
           alert('잘못된 입력입니다.')
         } else {

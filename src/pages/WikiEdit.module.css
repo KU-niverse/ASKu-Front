@@ -3,7 +3,6 @@
   height: auto;
   margin-left: 10%;
   margin-top: 60px;
-  position: relative;
 }
 .edit form {
   width: 90%;
@@ -102,13 +101,11 @@ h4 {
   font-size: 16px;
 }
 .submitbox {
-  width: 565px;
+  width: 100%;
   margin-top: 40px;
-  position: absolute;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  right: 50px;
   margin-bottom: 30px;
 }
 .submitbox span {
