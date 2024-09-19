@@ -4,6 +4,9 @@
   width: 100vw;
   height: 100vh;
 }
+.popDocList {
+  display: block;
+}
 
 .homeWrap {
   flex: 1;
@@ -22,11 +25,7 @@
   width: auto;
   height: calc(100% - 10px);
 }
-@media only screen and (max-width: 1300px) {
-  .logo {
-    margin-left: 200px;
-  }
-}
+
 @media only screen and (max-width: 900px) {
   .logo {
     margin-left: 100px;
@@ -86,11 +85,7 @@
   height: 100%;
   align-items: center;
 }
-@media only screen and (max-width: 1300px) {
-  .searchIconContainer {
-    width: 200px;
-  }
-}
+
 @media only screen and (max-width: 900px) {
   .searchIconContainer {
     width: 100px;
@@ -143,16 +138,12 @@
 }
 
 .realTime {
-  width: 320px;
+  width: 40%;
   display: flex;
   flex-direction: column;
   margin-right: 75px;
 }
-@media (max-width: 1300px) {
-  .realTime {
-    display: none;
-  }
-}
+
 @media (max-width: 767px) {
   .realTime {
     display: flex;

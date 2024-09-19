@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
@@ -10,7 +10,26 @@ import logo from '../img/logo_big.png'
 import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
+import PopularDoc from '../components/PopularDoc'
 
+interface HistoryResponse {
+  success: boolean
+  message: HistoryItem[]
+}
+
+interface HistoryItem {
+  id: number
+  user_id: number
+  doc_id: number
+  version: number
+  summary: string
+  created_at: string
+  diff: number
+  is_rollback: number
+  doc_title: string
+  nick: string
+  is_bad: number
+}
 interface UserInfo {
   id: number
   name: string
@@ -51,6 +70,22 @@ interface PopularQuestion {
   title: string
 }
 
+function useGetHistory() {
+  return useQuery<HistoryItem[], AxiosError>(
+    ['historys'],
+    async () => {
+      const result = await axios.get<HistoryResponse>(`${process.env.REACT_APP_HOST}/wiki/historys?type=all`)
+      console.log(result.data.message)
+      return result.data.message
+    },
+    {
+      keepPreviousData: true,
+      onError: (error: AxiosError) => {
+        console.error('API 요청 중 에러 발생:', error)
+      },
+    },
+  )
+}
 const fetchPopularKeywords = async () => {
   const response = await axios.get(`${process.env.REACT_APP_HOST}/search/popular`)
   return response.data.data
@@ -76,6 +111,8 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     'popularQuestions',
     fetchPopularQuestions,
   )
+  const { isError, error, data: historys } = useGetHistory()
+  const PopularDoclist = historys ? historys.slice(0, 6) : []
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {
@@ -119,6 +156,16 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <img src={chatBotBtn} alt={'button'} className={styles.chatBotBtn} />
           </Link>
           <div className={styles.realTime}>
+            <div>
+              <p className={styles.popularDoc}>{'인기 문서'}</p>
+              <div className={styles.popDocList}>
+                {PopularDoclist.map((item) => (
+                  <div key={item.id}>
+                    <PopularDoc version={item.version} title={item.doc_title} />
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className={styles.keyWord}>
               <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
               {isKeywordsLoading ? (

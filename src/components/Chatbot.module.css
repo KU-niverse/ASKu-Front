@@ -8,7 +8,7 @@
   margin-left: 75px;
   margin-bottom: 5px;
   margin-top: 5px;
-  min-width: 750px;
+  width: 40%;
 }
 @media only screen and (max-width: 1300px) {
   .chatBot {
