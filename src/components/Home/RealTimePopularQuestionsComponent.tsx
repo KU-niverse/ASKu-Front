@@ -56,8 +56,8 @@ const RealTimePopularQuestionsComponent: React.FC = () => {
               })
             }}
           >
-            <p className={styles.numberIcon}>{'Q.'}</p>
-            <p className={styles.rankContent}>{question.content}</p>
+            <div className={styles.numberIcon}>{'Q.'}</div>
+            <div className={styles.rankContent}>{question.content}</div>
           </Link>
         ))
       )}

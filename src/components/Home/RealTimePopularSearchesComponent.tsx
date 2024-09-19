@@ -35,11 +35,11 @@ const RealTimePopularSearchesComponent: React.FC = () => {
               })
             }}
           >
-            <p className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.numberIcon}>
+            <div className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.numberIcon}>
               {index + 1}
               {'.'}
-            </p>
-            <p className={styles.rankContent}>{keyword.keyword}</p>
+            </div>
+            <div className={styles.rankContent}>{keyword.keyword}</div>
           </Link>
         ))
       )}
