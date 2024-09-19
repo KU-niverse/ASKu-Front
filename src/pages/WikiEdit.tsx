@@ -224,6 +224,7 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: { loggedIn: boolean; setLoggedIn: (
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   )
 }

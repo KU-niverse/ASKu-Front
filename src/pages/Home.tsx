@@ -156,7 +156,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                       })
                     }}
                   >
-                    <p className={styles.numberIcon}>
+                    <p className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.numberIcon}>
                       {index + 1}
                       {'.'}
                     </p>
