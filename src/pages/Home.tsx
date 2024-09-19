@@ -113,26 +113,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeWrap}>
-        <div className={styles.inputContainer}>
-          <img src={logo} className={styles.logo} alt={'logo'} />
-          <input
-            className={styles.searchInput}
-            placeholder={'Wiki 검색어를 입력하세요.'}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            value={inputValue}
-          />
-          <div className={styles.searchIconContainer}>
-            <img
-              role={'presentation'}
-              src={searchIcon}
-              alt={'icon'}
-              className={styles.searchIcon}
-              onClick={handleSearch}
-            />
-          </div>
-        </div>
-
         <div className={styles.chatBotContainer}>
           <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
           <Link to={'/chatbot'}>
