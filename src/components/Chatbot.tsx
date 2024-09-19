@@ -327,30 +327,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   return (
     <div className={styles.chatBot}>
-      <div className={styles.sideBar}>
-        <div className={styles.textWrap}>
-          <b className={styles.title}>{'AI 챗봇: 하호'}</b>
-          <hr />
-          <div role={'presentation'} className={styles.buttonContainer} onClick={handleClearModal}>
-            <img src={refreshIcon} className={styles.sidebarIcon} alt={'refresh'} />
-            <button type={'button'} className={styles.button}>
-              {'채팅 초기화'}
-            </button>
-          </div>
-          <Link
-            to={'https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4'}
-            target={'_blank'}
-            style={{ textDecoration: 'none' }}
-          >
-            <div className={styles.buttonContainer}>
-              <img src={infoIcon} className={styles.sidebarIcon} alt={'info'} />
-              <button type={'button'} className={styles.button}>
-                {'도움말'}
-              </button>
-            </div>
-          </Link>
-        </div>
-      </div>
       <div className={styles.chatbox}>
         <div className={styles.chat}>
           <ChatAnswer
