@@ -13,14 +13,8 @@
   margin-top: 10px;
   height: 90px;
   object-fit: contain;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   cursor: pointer;
-}
-.haho {
-  display: none;
-  width: 50%;
-  height: 50%;
-  margin-bottom: 30px;
 }
 .container form {
   display: flex;
@@ -34,8 +28,10 @@
   margin-bottom: auto;
 }
 .login_instruction {
-  font-size: 14px;
-  margin-bottom: 1rem;
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 37px;
 }
 .login_input {
   width: 390px;
@@ -45,16 +41,19 @@
   width: 94%;
   margin-left: 3%;
   height: 50px;
-  margin-bottom: 10px;
-  border-radius: 43px;
-  background-color: rgba(240, 240, 240, 1);
-  border: 1px solid rgba(213, 213, 213, 1);
+  margin-bottom: 13px;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255, 1);
+  border: 2px solid rgba(213, 213, 213, 1);
   padding: 10px;
   padding-left: 25px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.login_input input:not(:placeholder-shown) {
+  border-color: rgba(222, 58, 88, 1);
 }
 
 .login_btn {
@@ -70,8 +69,9 @@
   box-shadow: 0px 10px 25px -5px rgba(159, 19, 46, 0.35);
 }
 .login_remem {
-  width: 94%;
-  font-size: 11px;
+  width: 96%;
+  font-size: 13px;
+  color: rgba(116, 116, 116, 1);
   display: flex;
   justify-content: space-between;
 }
@@ -79,12 +79,38 @@
   display: flex;
   align-items: center;
   margin-left: 5px;
-  margin-top: 3px;
+  margin-top: 1px;
 }
-.login_remem input {
-  width: 11px;
-  height: 11px;
-  accent-color: rgba(222, 58, 88, 1);
+.id_remem_checked {
+  color: rgba(222, 58, 88, 1);
+}
+.login_remem input[type='checkbox'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid rgba(213, 213, 213, 1); 
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  background-color: #fff;
+}
+.login_remem input[type='checkbox']:checked {
+  background: linear-gradient(to top, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  border: 1px solid rgba(213, 213, 213, 1);
+}
+.login_remem input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .login_signup {
@@ -93,11 +119,15 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  margin: 30px 0px 18px 0px;
+  margin: 27px 0px 18px 0px;
 }
 .login_signup a {
   color: rgba(116, 116, 116, 1);
+  font-weight: bold;
   text-decoration-line: none;
+}
+.login_signup a:hover {
+  color: rgba(222, 58, 88, 1);
 }
 .login_find {
   display: flex;
@@ -111,7 +141,11 @@
 
 .login_find a {
   color: rgba(116, 116, 116, 1);
-  text-decoration-line: none;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px
+}
+.login_find a:hover {
+  color: rgba(222, 58, 88, 1);
 }
 
 @media only screen and (max-width: 767px) {

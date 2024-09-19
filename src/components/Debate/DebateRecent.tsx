@@ -56,6 +56,7 @@ const DebateRecent = ({ title }: DebateRecentProps) => {
               to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}
               state={{ title: item.title, subject: item.subject, id: item.id }}
               className={styles.linkTo}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
               <ul>
                 <span className={styles.listTitle}>{item.subject}</span>

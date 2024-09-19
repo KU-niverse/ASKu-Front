@@ -37,12 +37,18 @@ function Graph({ total_point, docs }: GraphProps) {
   }
 
   // Calculate contributions and sort them
-  const contributions = docs.map((doc: Document) => ({
-    name: doc.doc_title,
-    value: (parseFloat(doc.doc_point) / total_point) * 100,
-    description: `${((parseFloat(doc.doc_point) / total_point) * 100).toFixed(2)}%`,
-    color: '', // Initialize color property
-  }))
+  const contributions = docs.map((doc: Document) => {
+    // doc.percentage를 float로 변환, NaN인 경우 0으로 설정
+    const percentage = parseFloat(doc.percentage)
+    // eslint-disable-next-line no-restricted-globals
+    const validPercentage = isNaN(percentage) ? 0 : percentage
+    return {
+      name: doc.doc_title,
+      value: validPercentage * 10000,
+      description: `${(validPercentage * 100).toFixed(2)}%`,
+      color: '', // Initialize color property
+    }
+  })
 
   // Sort contributions by value in descending order
   contributions.sort((a: Contribution, b: Contribution) => b.value - a.value)
