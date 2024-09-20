@@ -277,105 +277,118 @@ function Header({ userInfo, setUserInfo }: any) {
   }
 
   return (
+    // 전체 헤더 컨테이너 (모바일 헤더 높이 상태에 따라 스타일이 동적으로 적용됨)
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
       <div className={styles.headerContainer}>
         <div className={styles.flexContainer}>
-          <div className={styles.logoContainer} style={{ display: ismainpage ? 'none' : 'flex' }}>
+          {/* 데스크탑용 로고 영역 */}
+          <div className={styles.logoContainer}>
             <Link to={'/'}>
               <img src={logo} alt={'logo'} className={styles.logo} />
             </Link>
           </div>
+
+          {/* 모바일용 로고 영역 */}
           <div className={styles.mobilelogoContainer}>
             <Link to={'/'}>
               <img src={logo} alt={'logo'} className={styles.logo} />
             </Link>
           </div>
-          <div className={styles.navContainer_left}>
-            <Link
-              to={'/allhistory'}
-              onClick={() => {
-                track('click_header_navi', { type: '최근 변경' })
-              }}
-            >
-              <button
-                type={'button'}
-                className={styles.headerButton}
-                style={{
-                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                }}
-              >
-                <img src={all_document} alt={'최근 변경'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '최근 변경' : ''}
-              </button>
-            </Link>
-            <Link
-              to={'/latestdebate'}
-              onClick={() => {
-                track('click_header_navi', { type: '최근 토론' })
-              }}
-            >
-              <button
-                type={'button'}
-                className={styles.headerButton}
-                style={{
-                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                }}
-              >
-                <img src={recent_debate} alt={'최근 토론'} className={styles.icon} />
-                {ismainpage || buttonTextVisible ? '최근 토론' : ''}
-              </button>
-            </Link>
-            <button
-              onClick={() => {
-                track('click_header_navi', { type: '랜덤 문서' })
-                handleRandomDocClick()
-              }}
-              type={'button'}
-              className={styles.headerButton}
-              style={{
-                marginRight: '0px',
-                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              }}
-            >
-              <img src={random_document} alt={'랜덤 문서'} className={styles.icon} />
-              {ismainpage || buttonTextVisible ? '랜덤 문서' : ''}
-            </button>
-          </div>
 
-          <div className={styles.navContainer_right}>
-            <div className={styles.inputcontainer} style={{ display: ismainpage ? 'none' : 'flex' }}>
-              <input
-                className={styles.headerInput}
-                placeholder={'검색어를 입력하세요.'}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    if (inputValue.trim() !== '') {
-                      window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
-                      setInputValue('')
-                    }
-                  }
-                }}
-              />
-              <img
-                role={'presentation'}
-                src={searchIcon}
-                alt={'icon'}
-                className={styles.searchIcon}
-                onClick={() => {
+          {/* 검색 입력 필드 */}
+          <div className={styles.inputcontainer}>
+            <input
+              className={styles.headerInput}
+              placeholder={'어떤 정보를 찾으시나요?'}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
                   if (inputValue.trim() !== '') {
-                    Nav(
-                      `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                    )
+                    window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
                     setInputValue('')
                   }
+                }
+              }}
+            />
+            <img
+              role={'presentation'}
+              src={searchIcon}
+              alt={'icon'}
+              className={styles.searchIcon}
+              onClick={() => {
+                if (inputValue.trim() !== '') {
+                  Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
+                  setInputValue('')
+                }
+              }}
+            />
+          </div>
+
+          {/* 왼쪽 네비게이션 버튼 영역 (최근 변경, 최근 토론, 랜덤 문서 등) */}
+          <div className={styles.navContainer_fourItem}>
+            {/* Home 버튼 (화면 크기 및 메인 페이지 여부에 따라 버튼 표시 여부 조정) */}
+            <Link
+              to={'/'}
+              onClick={() => {
+                track('click_header_navi', { type: 'Home' })
+              }}
+            >
+              <button
+                type={'button'}
+                className={styles.navHome}
+                style={{
+                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
+                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                  color: location.pathname === '/' ? 'black' : '#979797',
                 }}
-              />
+              >
+                {ismainpage || buttonTextVisible ? 'Home' : ''}
+              </button>
+            </Link>
+
+            {/* 문서  */}
+            <div
+              className={styles.navDocs}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color: location.pathname.startsWith('/wiki/morequestion')
+                  ? '#979797' // /wiki/morequestion로 시작하는 경로는 모두 회색
+                  : location.pathname.startsWith('/wiki')
+                    ? 'black' // /wiki로 시작하는 다른 경로는 검정색
+                    : '#979797', // 그 외 경로는 회색
+              }}
+            >
+              문서
             </div>
+
+            {/* 토론 */}
+            <div
+              className={styles.navDebate}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color: location.pathname.startsWith('/debate') ? 'black' : '#979797',
+              }}
+            >
+              토론
+            </div>
+
+            {/* 질문 */}
+            <div
+              className={styles.navQuestions}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color: location.pathname.startsWith('/wiki/morequestion') ? 'black' : '#979797',
+              }}
+            >
+              질문
+            </div>
+          </div>
+
+          {/* 오른쪽 네비게이션 (검색, 즐겨찾기, 로그인/로그아웃) */}
+          <div className={styles.navContainer_right}>
+            {/* 로그인 상태일 때 UI */}
             {isLoggedIn ? (
               <>
                 <img
@@ -388,14 +401,13 @@ function Header({ userInfo, setUserInfo }: any) {
                     Nav('/mybookmark')
                   }}
                 />
-                <button
-                  type={'button'}
-                  className={styles.headerButton}
-                  onClick={signOut}
-                  style={{ marginRight: '30px' }}
-                >
+
+                {/* 로그아웃 버튼 */}
+                <button type={'button'} className={styles.navItem} onClick={signOut} style={{ marginRight: '30px' }}>
                   {'로그아웃\r'}
                 </button>
+
+                {/* 마이페이지 UI (마이페이지 로딩 완료 시에만 표시) */}
                 {loadingMypage ? (
                   <div />
                 ) : (
@@ -416,7 +428,7 @@ function Header({ userInfo, setUserInfo }: any) {
             ) : (
               <>
                 <a href={'https://www.koreapas.com/m/member_join_new.php'}>
-                  <button type={'button'} className={styles.headerButton}>
+                  <button type={'button'} className={styles.navItem}>
                     {'회원가입'}
                   </button>
                 </a>

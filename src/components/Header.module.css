@@ -35,26 +35,76 @@ html {
   }
 }
 
-.headerButton {
+.navHome {
   background-color: #ffffff;
   border: none;
   cursor: pointer;
-  font-size: 20px;
-  color: #747474;
+  font-size: 16px;
+  color: #979797;
   font-weight: 500;
-  margin-right: 40px;
+  margin-right: 60px;
+  display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
+  align-items: center; /* Align items vertically in the center */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+.navDocs {
+  background-color: #ffffff;
+  border: none;
+  font-size: 16px;
+  color: #979797;
+  font-weight: 500;
+  margin-right: 60px;
+  display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
+  align-items: center; /* Align items vertically in the center */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+.navDebate {
+  background-color: #ffffff;
+  border: none;
+  font-size: 16px;
+  color: #979797;
+  font-weight: 500;
+  margin-right: 60px;
+  display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
+  align-items: center; /* Align items vertically in the center */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+.navQuestions {
+  background-color: #ffffff;
+  border: none;
+  font-size: 16px;
+  color: #979797;
+  font-weight: 500;
+  margin-right: 60px;
   display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
   align-items: center; /* Align items vertically in the center */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
 }
 
+.navHome:hover {
+  color: black;
+}
+.navDocs:hover {
+  color: black;
+}
+.navDebate:hover {
+  color: black;
+}
+.navQuestions:hover {
+  color: black;
+}
+
+/* 현재 경로에 있을 때 텍스트 색상 변경 */
+.active {
+  color: black;
+}
 .headerLoginButton {
   background-color: rgba(252, 188, 200, 0.2);
   border: none;
   cursor: pointer;
   font-size: 20px;
   color: inherit; /* 폰트 색상을 상속 */
-  color: #747474;
+  color: #979797;
   margin-right: 25px;
   display: inline-flex;
   align-items: center;
@@ -106,7 +156,7 @@ html {
   display: flex;
   width: 250px;
   position: relative;
-  margin-right: 30px;
+  margin-left: 30px;
 }
 @media only screen and (max-width: 767px) {
   .inputcontainer {
@@ -131,9 +181,9 @@ html {
   }
 }
 
-.navContainer_left {
+.navContainer_fourItem {
   display: inline-block;
-  margin-left: 60px;
+  margin-left: 400px;
   margin-right: 0px;
   right: 10px;
   flex: 1;
