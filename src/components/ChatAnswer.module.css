@@ -28,6 +28,7 @@
   min-height: 92px;
   height: 100%;
   position: static;
+  padding-top: 15px;
 }
 .characterContainer {
   position: absolute;
@@ -54,7 +55,7 @@
   line-height: 150%;
   word-break: break-word;
   margin-top: 15px;
-  margin-bottom: 35px;
+  margin-bottom: 15px;
 }
 
 .dots {
