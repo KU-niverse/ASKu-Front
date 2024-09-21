@@ -7,7 +7,8 @@ import axios, { AxiosError } from 'axios'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Header.module.css'
 import logo from '../img/logo.png'
-import searchIcon from '../img/search_icon.svg'
+import searchIconBlack from '../img/search_icon_black.svg'
+import searchIconRed from '../img/search_icon_red.svg'
 import searchIconGray from '../img/search_icon_gray.png'
 import hamburger from '../img/hamburger.png'
 import bookmark from '../img/bookmark_grey.svg'
@@ -279,298 +280,292 @@ function Header({ userInfo, setUserInfo }: any) {
   return (
     // 전체 헤더 컨테이너 (모바일 헤더 높이 상태에 따라 스타일이 동적으로 적용됨)
     <div className={styles.container} style={{ height: mobileHeaderHeight }}>
-      <div className={styles.headerContainer}>
-        <div className={styles.flexContainer}>
-          {/* 데스크탑용 로고 영역 */}
-          <div className={styles.logoContainer}>
-            <Link to={'/'}>
-              <img src={logo} alt={'logo'} className={styles.logo} />
-            </Link>
-          </div>
+      <div className={styles.flexContainer}>
+        {/* 데스크탑용 로고 영역 */}
+        <div className={styles.logoContainer}>
+          <Link to={'/'}>
+            <img src={logo} alt={'logo'} className={styles.logo} />
+          </Link>
+        </div>
 
-          {/* 모바일용 로고 영역 */}
-          <div className={styles.mobilelogoContainer}>
-            <Link to={'/'}>
-              <img src={logo} alt={'logo'} className={styles.logo} />
-            </Link>
-          </div>
+        {/* 모바일용 로고 영역 */}
+        <div className={styles.mobilelogoContainer}>
+          <Link to={'/'}>
+            <img src={logo} alt={'logo'} className={styles.logo} />
+          </Link>
+        </div>
 
-          {/* 검색 입력 필드 */}
-          <div className={styles.inputcontainer}>
-            <input
-              className={styles.headerInput}
-              placeholder={'어떤 정보를 찾으시나요?'}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                  if (inputValue.trim() !== '') {
-                    window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
-                    setInputValue('')
-                  }
-                }
-              }}
-            />
-            <img
-              role={'presentation'}
-              src={searchIcon}
-              alt={'icon'}
-              className={styles.searchIcon}
-              onClick={() => {
+        {/* 검색 입력 필드 */}
+        <div className={styles.inputcontainer}>
+          <img
+            role={'presentation'}
+            src={inputValue.trim() ? searchIconRed : searchIconBlack} // inputValue가 있으면 searchIconRed, 없으면 searchIconBlack
+            alt={'icon'}
+            className={styles.searchIcon}
+            onClick={() => {
+              if (inputValue.trim() !== '') {
+                Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
+                setInputValue('')
+              }
+            }}
+          />
+          <input
+            className={styles.headerInput}
+            placeholder={'어떤 정보를 찾으시나요?'}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
                 if (inputValue.trim() !== '') {
-                  Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
+                  window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
                   setInputValue('')
                 }
-              }}
-            />
-          </div>
+              }
+            }}
+          />
+        </div>
 
-          {/* 왼쪽 네비게이션 버튼 영역 (최근 변경, 최근 토론, 랜덤 문서 등) */}
-          <div className={styles.navContainer_fourItem}>
-            {/* Home 버튼 (화면 크기 및 메인 페이지 여부에 따라 버튼 표시 여부 조정) */}
+        {/* 왼쪽 네비게이션 버튼 영역 (최근 변경, 최근 토론, 랜덤 문서 등) */}
+        <div className={styles.navContainer_fourItem}>
+          {/* Home 버튼 (화면 크기 및 메인 페이지 여부에 따라 버튼 표시 여부 조정) */}
+
+          <button
+            type={'button'}
+            className={styles.navHome}
+            style={{
+              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+              color: location.pathname === '/' ? 'black' : '#979797',
+            }}
+          >
             <Link
               to={'/'}
               onClick={() => {
                 track('click_header_navi', { type: 'Home' })
               }}
             >
-              <button
-                type={'button'}
-                className={styles.navHome}
-                style={{
-                  marginRight: ismainpage || buttonTextVisible ? '40px' : '0px',
-                  display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                  color: location.pathname === '/' ? 'black' : '#979797',
-                }}
-              >
-                {ismainpage || buttonTextVisible ? 'Home' : ''}
-              </button>
+              {' '}
             </Link>
+            {ismainpage || buttonTextVisible ? 'Home' : ''}
+          </button>
 
-            {/* 문서  */}
-            <div
-              className={styles.navDocs}
-              style={{
-                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                color: location.pathname.startsWith('/wiki/morequestion')
-                  ? '#979797' // /wiki/morequestion로 시작하는 경로는 모두 회색
-                  : location.pathname.startsWith('/wiki')
-                    ? 'black' // /wiki로 시작하는 다른 경로는 검정색
-                    : '#979797', // 그 외 경로는 회색
-              }}
-            >
-              문서
-            </div>
-
-            {/* 토론 */}
-            <div
-              className={styles.navDebate}
-              style={{
-                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                color: location.pathname.startsWith('/debate') ? 'black' : '#979797',
-              }}
-            >
-              토론
-            </div>
-
-            {/* 질문 */}
-            <div
-              className={styles.navQuestions}
-              style={{
-                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-                color: location.pathname.startsWith('/wiki/morequestion') ? 'black' : '#979797',
-              }}
-            >
-              질문
-            </div>
+          {/* 문서  */}
+          <div
+            className={styles.navDocs}
+            style={{
+              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+              color: location.pathname.startsWith('/wiki/morequestion')
+                ? '#979797' // /wiki/morequestion로 시작하는 경로는 모두 회색
+                : location.pathname.startsWith('/wiki')
+                  ? 'black' // /wiki로 시작하는 다른 경로는 검정색
+                  : '#979797', // 그 외 경로는 회색
+            }}
+          >
+            문서
           </div>
 
-          {/* 오른쪽 네비게이션 (검색, 즐겨찾기, 로그인/로그아웃) */}
-          <div className={styles.navContainer_right}>
-            {/* 로그인 상태일 때 UI */}
-            {isLoggedIn ? (
-              <>
-                <img
-                  role={'presentation'}
-                  src={bookmark}
-                  alt={'bookmark_gray'}
-                  className={styles.signinButton}
-                  onClick={() => {
-                    track('click_header_navi', { type: '즐겨찾는 문서' })
-                    Nav('/mybookmark')
-                  }}
-                />
+          {/* 토론 */}
+          <div
+            className={styles.navDebate}
+            style={{
+              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+              color: location.pathname.startsWith('/debate') ? 'black' : '#979797',
+            }}
+          >
+            토론
+          </div>
 
-                {/* 로그아웃 버튼 */}
-                <button type={'button'} className={styles.navItem} onClick={signOut} style={{ marginRight: '30px' }}>
-                  {'로그아웃\r'}
+          {/* 질문 */}
+          <div
+            className={styles.navQuestions}
+            style={{
+              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+              color: location.pathname.startsWith('/wiki/morequestion') ? 'black' : '#979797',
+            }}
+          >
+            질문
+          </div>
+        </div>
+
+        {/* 오른쪽 네비게이션 (검색, 즐겨찾기, 로그인/로그아웃) */}
+        <div className={styles.navContainer_right}>
+          {/* 로그인 상태일 때 UI */}
+          {isLoggedIn ? (
+            <>
+              <img
+                role={'presentation'}
+                src={bookmark}
+                alt={'bookmark_gray'}
+                className={styles.signinButton}
+                onClick={() => {
+                  track('click_header_navi', { type: '즐겨찾는 문서' })
+                  Nav('/mybookmark')
+                }}
+              />
+              <button type={'button'} className={styles.navItem} onClick={signOut} style={{ marginRight: '30px' }}>
+                {'로그아웃\r'}
+              </button>
+              {loadingMypage ? (
+                <div />
+              ) : (
+                <Link to={'/mypage'}>
+                  <div className={styles.mypageWrap}>
+                    <p className={styles.nicknameText}>
+                      {nicknameText}
+                      {' 님'}
+                    </p>
+                    <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
+                    {userInfo && userInfo.rep_badge_image && (
+                      <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                    )}
+                  </div>
+                </Link>
+              )}
+            </>
+          ) : (
+            <div className={styles.signContainer}>
+              <button type={'button'} className={styles.registerBtn}>
+                <a href={'https://www.koreapas.com/m/member_join_new.php'}>{'간편회원가입'} </a>
+              </button>
+
+              <Link to={'/signin'}>
+                <button type={'button'} className={styles.loginBtn}>
+                  {'로그인'}
                 </button>
+              </Link>
+            </div>
+          )}
+        </div>
 
-                {/* 마이페이지 UI (마이페이지 로딩 완료 시에만 표시) */}
-                {loadingMypage ? (
-                  <div />
+        {/* 여기부터 모바일? */}
+
+        <div className={styles.mobileHeader}>
+          <div className={styles.buttonWrap}>
+            {isLoggedIn ? (
+              <div />
+            ) : (
+              <Link className={styles.loginbtn} to={'/signin'}>
+                <button type={'button'} className={styles.loginbtn}>
+                  {'로그인'}
+                </button>
+              </Link>
+            )}
+            <img
+              role={'presentation'}
+              src={searchIconGray}
+              alt={'search_icon_gray'}
+              id={styles.mobileHeaderSearch}
+              className={styles.mobileButton}
+              onClick={handleMobileSearch}
+            />
+            <img
+              role={'presentation'}
+              src={hamburger}
+              alt={'hamburger'}
+              className={styles.mobileButton}
+              onClick={handleMobileMenu}
+            />
+          </div>
+          {mobileHeaderOpen && (
+            <div className={styles.mobileMenuWrap}>
+              <div className={styles.mobileHamburger}>
+                <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
+                    <p className={styles.mobileMenuText}>{'마이페이지'}</p>
+                  </div>
+                </button>
+                <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
+                    <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
+                  </div>
+                </button>
+                <Link
+                  to={'/allhistory'}
+                  className={styles.mobileMenuBtn}
+                  onClick={() => {
+                    track('click_header_navi', { type: '최근 변경' })
+                  }}
+                >
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobilehistory} alt={''} className={styles.mobileIcon} />
+                    <p className={styles.mobileMenuText}>{'최근변경'}</p>
+                  </div>
+                </Link>
+                <Link
+                  to={'/latestdebate'}
+                  className={styles.mobileMenuBtn}
+                  onClick={() => {
+                    track('click_header_navi', { type: '토론' })
+                  }}
+                >
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobiledebate} alt={''} className={styles.mobileIcon} />
+                    <p className={styles.mobileMenuText}>{'토론'}</p>
+                  </div>
+                </Link>
+                <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={randomDocs} alt={''} className={styles.mobileIcon} />
+                    <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
+                  </div>
+                </button>
+                {isLoggedIn ? (
+                  <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
+                    <div className={styles.mobileHamburgerMenu}>
+                      <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
+                      <p className={styles.mobileMenuText}>{'로그아웃'}</p>
+                    </div>
+                  </button>
                 ) : (
-                  <Link to={'/mypage'}>
-                    <div className={styles.mypageWrap}>
-                      <p className={styles.nicknameText}>
-                        {nicknameText}
-                        {' 님'}
-                      </p>
-                      <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
-                      {userInfo && userInfo.rep_badge_image && (
-                        <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
-                      )}
+                  <Link to={'/signin'} className={styles.mobileMenuBtn}>
+                    <div className={styles.mobileHamburgerMenu}>
+                      <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
+                      <p className={styles.mobileMenuText}>{'로그인'}</p>
                     </div>
                   </Link>
                 )}
-              </>
-            ) : (
-              <>
-                <a href={'https://www.koreapas.com/m/member_join_new.php'}>
-                  <button type={'button'} className={styles.navItem}>
-                    {'회원가입'}
-                  </button>
-                </a>
-                <Link to={'/signin'}>
-                  <button type={'button'} className={styles.headerLoginButton}>
-                    {'로그인'}
-                  </button>
-                </Link>
-              </>
-            )}
-          </div>
-
-          {/* 여기부터 모바일? */}
-
-          <div className={styles.mobileHeader}>
-            <div className={styles.buttonWrap}>
-              {isLoggedIn ? (
-                <div />
-              ) : (
-                <Link className={styles.loginbtn} to={'/signin'}>
-                  <button type={'button'} className={styles.loginbtn}>
-                    {'로그인'}
-                  </button>
-                </Link>
-              )}
-              <img
-                role={'presentation'}
-                src={searchIconGray}
-                alt={'search_icon_gray'}
-                id={styles.mobileHeaderSearch}
-                className={styles.mobileButton}
-                onClick={handleMobileSearch}
-              />
-              <img
-                role={'presentation'}
-                src={hamburger}
-                alt={'hamburger'}
-                className={styles.mobileButton}
-                onClick={handleMobileMenu}
-              />
-            </div>
-            {mobileHeaderOpen && (
-              <div className={styles.mobileMenuWrap}>
-                <div className={styles.mobileHamburger}>
-                  <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'마이페이지'}</p>
-                    </div>
-                  </button>
-                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
-                    </div>
-                  </button>
-                  <Link
-                    to={'/allhistory'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '최근 변경' })
-                    }}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilehistory} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'최근변경'}</p>
-                    </div>
-                  </Link>
-                  <Link
-                    to={'/latestdebate'}
-                    className={styles.mobileMenuBtn}
-                    onClick={() => {
-                      track('click_header_navi', { type: '토론' })
-                    }}
-                  >
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobiledebate} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'토론'}</p>
-                    </div>
-                  </Link>
-                  <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={randomDocs} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
-                    </div>
-                  </button>
-                  {isLoggedIn ? (
-                    <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
-                      <div className={styles.mobileHamburgerMenu}>
-                        <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                        <p className={styles.mobileMenuText}>{'로그아웃'}</p>
-                      </div>
-                    </button>
-                  ) : (
-                    <Link to={'/signin'} className={styles.mobileMenuBtn}>
-                      <div className={styles.mobileHamburgerMenu}>
-                        <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                        <p className={styles.mobileMenuText}>{'로그인'}</p>
-                      </div>
-                    </Link>
-                  )}
-                </div>
               </div>
-            )}
-            {mobileSearchOpen && (
-              <div className={styles.mobileSearchWrap}>
-                <div className={styles.mobileInputContainer}>
-                  <input
-                    className={styles.mobileHeaderInput}
-                    placeholder={'검색어를 입력하세요.'}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault()
-                        if (inputValue.trim() !== '') {
-                          Nav(
-                            `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                          )
-                          setInputValue('')
-                        }
-                      }
-                    }}
-                  />
-                  <img
-                    role={'presentation'}
-                    src={searchIcon}
-                    alt={'icon'}
-                    className={styles.mobileSearchIcon}
-                    onClick={() => {
+            </div>
+          )}
+          {mobileSearchOpen && (
+            <div className={styles.mobileSearchWrap}>
+              <div className={styles.mobileInputContainer}>
+                <input
+                  className={styles.mobileHeaderInput}
+                  placeholder={'검색어를 입력하세요.'}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
                       if (inputValue.trim() !== '') {
                         Nav(
                           `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
                         )
                         setInputValue('')
                       }
-                    }}
-                  />
-                </div>
+                    }
+                  }}
+                />
+                <img
+                  role={'presentation'}
+                  src={searchIconBlack}
+                  alt={'icon'}
+                  className={styles.mobileSearchIcon}
+                  onClick={() => {
+                    if (inputValue.trim() !== '') {
+                      Nav(
+                        `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
+                      )
+                      setInputValue('')
+                    }
+                  }}
+                />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
