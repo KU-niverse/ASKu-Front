@@ -20,21 +20,13 @@ import version from '../img/version.svg'
 
 interface HistoryResponse {
   success: boolean
-  message: HistoryItem[]
+  data: HistoryItem[]
 }
 
 interface HistoryItem {
   id: number
-  user_id: number
-  doc_id: number
-  version: number
-  summary: string
-  created_at: string
-  diff: number
-  is_rollback: number
-  doc_title: string
-  nick: string
-  is_bad: number
+  title: string
+  latest_ver: number
 }
 interface UserInfo {
   id: number
@@ -114,28 +106,18 @@ function useRandomDoc() {
     },
   )
 }
-function useGetHistory() {
-  return useQuery<HistoryItem[], AxiosError>(
-    ['historys'],
-    async () => {
-      const result = await axios.get<HistoryResponse>(`${process.env.REACT_APP_HOST}/wiki/historys?type=all`)
-      console.log(result.data.message)
-      return result.data.message
-    },
-    {
-      keepPreviousData: true,
-      onError: (error: AxiosError) => {
-        console.error('API 요청 중 에러 발생:', error)
-      },
-    },
-  )
+
+const fetchDocsViews = async (): Promise<HistoryItem[]> => {
+  const res = await axios.get<HistoryResponse>(`${process.env.REACT_APP_HOST}/admin/docsviews`, {
+    withCredentials: true,
+  })
+  return res.data.data
 }
 
 const fetchDebateList = async (): Promise<DebateData[]> => {
   const res = await axios.get<DebateResponse>(`${process.env.REACT_APP_HOST}/debate/all/recent`, {
     withCredentials: true,
   })
-  console.log(res.data.data)
   return res.data.data
 }
 const fetchPopularKeywords = async () => {
@@ -164,9 +146,10 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     'popularQuestions',
     fetchPopularQuestions,
   )
-  const { isError, error, data: historys } = useGetHistory()
+  // const { isError, error, data: historys } = fetchDocsViews()
+  const { data: historys } = useQuery<HistoryItem[], Error>('historyList', fetchDocsViews)
   const { data: debates, isLoading } = useQuery<DebateData[], Error>('debateList', fetchDebateList)
-  const PopularDoclist = historys ? historys.slice(0, 6) : []
+  const PopularDoclist = historys ? historys.slice(0, 7) : []
   const debateListData = debates ? debates.slice(0, 3) : []
   const questionList = popularQuestions ? popularQuestions.slice(0, 4) : []
 
@@ -230,7 +213,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <div className={styles.popDocList}>
               {PopularDoclist.map((item) => (
                 <div key={item.id}>
-                  <PopularDoc version={item.version} title={item.doc_title} />
+                  <PopularDoc version={item.latest_ver} title={item.title} />
                 </div>
               ))}
             </div>

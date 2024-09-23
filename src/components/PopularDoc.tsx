@@ -1,8 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './PopularDoc.module.css'
-import watch from '../img/watch.png'
-import verComp from '../img/verComp.png'
 import versionimg from '../img/version.svg'
 
 interface HistoryBoxProps {
