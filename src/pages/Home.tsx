@@ -203,7 +203,9 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeWrap}>
-        <div className={styles.chatBotContainer}>{'챗봇자리'}</div>
+        <div className={styles.chatBotContainer}>
+          <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+        </div>
         <div className={styles.realTime}>
           <div className={styles.HomePart}>
             <div className={styles.HomeTitle}>

@@ -34,6 +34,7 @@ interface ChatbotProps {
 function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
+  const [initialChat, setInitialChat] = useState(true)
   const [SuggestContainerState, setSuggestContainerState] = useState('initial') // 'initial', 'suggest', 'reference'
   const [referenceList, setReferenceList] = useState<{ link: string; value: string }[]>([])
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -48,9 +49,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
 
-  const closeLoginModal = () => {
-    setLoginModalVisible(false)
-  }
+  // const closeLoginModal = () => {
+  //   setLoginModalVisible(false)
+  // }
   const [user, setUser] = useState<UserData | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
@@ -158,6 +159,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         setLoading(true)
         setSuggestContainerState('')
         setIsStreaming(false)
+        setInitialChat(false)
 
         setChatResponse((prevResponses) => [
           ...prevResponses,
@@ -304,6 +306,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setChatResponse(updatedChatResponse)
       setInputValue('')
       setSuggestContainerState('initial')
+      setInitialChat(false)
     }, 3000)
   }
 
@@ -326,10 +329,41 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   return (
-    <div className={styles.chatBot}>
+    <div className={styles.chatbot}>
+      <div className={styles.chatbotHeader}>
+        <div className={styles.title}>
+          <img src={haho} alt={'haho'} className={styles.haho} />
+          <div>{'AI 챗봇: 하호'}</div>
+        </div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.button}>
+            <button
+              type={'button'}
+              className={styles.buttonText}
+              onClick={() =>
+                window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
+              }
+            >
+              <img src={infoIcon} className={styles.smallIcon} alt="info" />
+              {'도움말'}
+            </button>
+          </div>
+          <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
+            <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
+            <button type={'button'} className={styles.buttonText}>
+              {'채팅 초기화'}
+            </button>
+          </div>
+        </div>
+      </div>
       <div className={styles.chatbox}>
         <div className={styles.chat}>
-          <ChatAnswer
+          {previousChatHistory.length === 0 && initialChat === true && (
+            <div className={styles.initialChatbox}>
+              <img src={haho} alt={'haho'} className={styles.haho} />
+            </div>
+          )}
+          {/* <ChatAnswer
             content={'안녕하세요! 무엇이든 제게 질문해주세요!'}
             reference={null}
             qnaId={0}
@@ -337,7 +371,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             onAddReferenceSuggestion={onAddReferenceSuggestion}
             recommendedQuestions={[]} // 초기 빈 배열
             onRecommendQuestionClick={handleRecommendQuestionClick} // 클릭 핸들러 추가
-          />
+          /> */}
           {previousChatHistory.length !== 0 && (
             <>
               {previousChatHistory.map((item) => (

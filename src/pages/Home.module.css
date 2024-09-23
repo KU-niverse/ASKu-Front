@@ -146,7 +146,7 @@
 .chatBotContainer {
   height: 100%;
   font-size:100px;
-  background-color: #d1cacb;
+  background-color: red;
   grid-column: 1/2;
 }
 @media only screen and (max-width: 767px) {

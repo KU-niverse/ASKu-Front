@@ -1,14 +1,14 @@
-.chatBot {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  border-radius: 12px;
-  box-shadow: 0px 5px 20px -5px #00000033;
-  margin-right: 20px;
-  margin-left: 5%;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  width: 35%;
+.chatbot {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(16.67%, auto));
+  grid-template-rows: repeat(auto-fill, minmax(10%, auto));
+  border-radius: 20px;
+  border-color: rgba(213,213,213,0.8);
+  border: 0.1rem solid;
+  background: linear-gradient(to bottom, #FFEEF0, #FFFFFF);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 @media only screen and (max-width: 900px) {
@@ -26,7 +26,7 @@
   }
 }
 
-.sideBar {
+/* .sideBar {
   display: flex;
   background: linear-gradient(to bottom, #9f132e, #de3a58);
   min-width: 150px;
@@ -34,53 +34,81 @@
   height: auto;
   border-radius: 12px 0px 0px 12px;
   justify-content: center;
-}
+} */
 
-.textWrap {
+/* 챗봇박스 헤더 - 로고, 도움말/초기화 버튼 포함 */
+.chatbotHeader {
+  grid-column: 1/6 span;
+  grid-row: 1/2;
   display: flex;
-  flex-direction: column;
-  font-weight: 400;
-  font-size: 12px;
-  color: #747474;
-  margin-top: 20px;
+  flex: row;
+  justify-content: space-between;
+  margin-left: 3.2rem;
+  margin-right: 3.2rem;
+  border-bottom: 0.1rem solid rgba(213, 213, 213, 0.5);
 }
 
 .title {
-  font-weight: 700;
-  font-size: 16px;
-  color: #fff;
-  cursor: default;
-  text-align: center;
-  width: 85px;
-  background-color: rgba(0, 0, 0, 0);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-left: 15px;
-}
-.buttonContainer {
   display: flex;
-  cursor: pointer;
+  flex: row;
   align-items: center;
-  justify-items: start;
-  margin-top: 15px;
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: rgb(0, 0, 0);
+  cursor: default;
+  margin-left: 1.8rem;
 }
-.button {
-  width: 85px;
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
-  background-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
-  text-align: start;
+.haho {
+  margin-right: 1.6rem;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #FF768F, #DE3A58);;
 }
 
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0;
+  margin: 0;
+  gap: 1.6rem;
+}
+.button{
+  display: flex;
+  align-items: center;
+}
+.smallIcon {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.4rem;
+  filter: hue-rotate(0deg) brightness(0.8);
+  vertical-align: middle;
+}
+.buttonText {
+  height: 1.7rem;
+  font-size: 1.4rem;
+  border: none;
+  color: rgba(158, 158, 158, 1);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+/* 입력창을 포함한 챗봇 컨테이너 */
 .chatbox {
   display: flex;
   flex-direction: column; /* 세로 방향으로 배치 */
   flex: 1; /* 가로 방향으로 flex 1 */
   align-items: center;
+  /* width: 900px; */
   height: 100%;
-  width:35%;
 }
+
+/* 대화만 포함하는 챗봇 컨테이너 */
 .chat {
   flex: 1;
   width: 100%;
@@ -89,9 +117,10 @@
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   width: 100%;
-  background: linear-gradient(150deg, rgba(255, 229, 234, 0.4) -27.56%, #fff 53.28%);
 }
+.initialChatbox{
 
+}
 .defaultChat {
   position: relative;
   background-color: #fef2f4;
@@ -174,29 +203,27 @@
 }
 
 .icon {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   margin-right: 15px;
   cursor: pointer;
   width: 15px;
   height: 15px;
   margin-right: 15px;
   cursor: pointer;
-}
-.sidebarIcon {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
 }
 
+
+/* 챗봇 추천 질문 컨테이너 */
 .suggestContainer {
   display: flex;
   width: calc(100% - 100px);
   flex-direction: column;
-  height: 90px;
   margin-left: 50px;
   margin-right: 50px;
+  margin-bottom: 14px;
 }
+
 .suggestScrollbar {
   display: flex;
   flex-direction: row;
@@ -221,17 +248,19 @@
   transition: opacity 0.5s ease;
 }
 
+/* 추천 질문 내의 각 항목 */
 .textBox {
-  margin-left: 25px;
+  margin-left: 0px;
+  margin-right: 10px;
   font-weight: 550;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #9f132e;
-  width: 180px;
-  height: 40px;
+  width: 130px;
+  height: 20px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 9px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding-left: 23px;
@@ -247,17 +276,17 @@
 #ref {
   font-weight: 700;
   color: #9f132e;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .promptWrap {
   display: flex;
   width: calc(100% - 100px);
-  height: 100px;
+  height: 60px;
   border: 1px solid #9f132e;
   border-radius: 20px;
-  margin-bottom: 25px;
-  margin-top: 5px;
+  margin-bottom: 20px;
+  margin-top: 0px;
 }
 .prompt {
   overflow-y: scroll;
@@ -269,10 +298,10 @@
   line-height: 15px;
   max-height: 30px;
   border: none;
-  margin-top: 20px;
   margin-right: 20px;
   margin-left: 20px;
   resize: none;
+  padding-top: 10px;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
 }
@@ -334,7 +363,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 65px;
+  top: 30px;
   right: 10px;
   background-image: linear-gradient(to right, #9f132e, #de3a58);
   width: 50px;
@@ -348,5 +377,5 @@
 }
 
 hr {
-  width: 120px;
+  width: 100px;
 }
