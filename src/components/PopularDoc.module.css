@@ -51,6 +51,7 @@
 }
 .versionContainer {
   position: relative;
+  width: 60%;
 }
 
 .version {
@@ -60,7 +61,7 @@
   transform: translate(-50%, -50%);
   color: white;
   font-weight: 700;
-  font-size: 9.5px;
+  font-size: 70%;
 }
 @media only screen and (max-width: 767px) {
   .version {
@@ -94,8 +95,8 @@
   }
 }
 .docTitle {
-  font-size: 11px;
-  color: #000;
+  font-size: 60%;
+  color: #FF768F;
   margin-right: 10px;
   margin-left: 10px;
   cursor: pointer;
@@ -106,7 +107,7 @@
   font-weight: 700;
 }
 .versionIcon {
-  width: 43px;
+  width: 100%;
 }
 @media only screen and (max-width: 767px) {
   .docTitle {
