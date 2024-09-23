@@ -14,15 +14,21 @@
   cursor: pointer;
 }
 .results {
-  display: flex;
-  padding: 30px;
-  flex-direction: column;
-  width: 74%;
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  column-gap: 24px;
+  row-gap: 0px;
   min-height: 80vh;
   height: auto;
-  margin-left: 13%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+}
+.searchText{
+  color:#DE3A58;
 }
 .header {
+  grid-column: 2/13;
   display: flex;
   width: 100%;
   align-items: center;
@@ -44,6 +50,7 @@
 }
 
 .typeWrap {
+  grid-column: 2/13;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,7 +74,7 @@
   font-weight: 700;
 }
 .btnRed {
-  color: rgba(159, 19, 46, 1);
+  color: #000;
 }
 .btnGray {
   color: rgba(116, 116, 116, 1);
@@ -76,7 +83,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(159, 19, 46, 1);
+  background: #000;
   width: 34px;
   height: 19px;
   border-radius: 11px;
@@ -100,12 +107,13 @@
   width: 30%;
 }
 .contents {
+  grid-column: 2/13;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .boxes {
-  width: 66%;
+  grid-column: 2/9;
   display: flex;
   flex-direction: column;
 }
@@ -127,17 +135,20 @@
 .link:hover {
   text-decoration: underline;
 }
+.recentTitle{
+  color: #DE3A58;
+  font-weight: 700;
+  margin-bottom: 0px;
+}
 
 .recents {
-  width: 30%;
+  grid-column: 9/12;
   height: auto;
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
   margin-bottom: 20px;
   box-sizing: border-box;
 }
 .recentWrap {
-  padding: 10px;
+  
 }
 .recentWrap ul {
   padding: 0;
@@ -150,10 +161,11 @@
   white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
 }
 .listTitle {
-  font-weight: 700;
+  font-weight: 600;
 }
 .listTimestamp {
   margin-left: 5px;
+  font-weight: 400;
 }
 
 /* 스타일을 초기화하고 싶은 경우 */
