@@ -280,7 +280,7 @@ function Header({ userInfo, setUserInfo }: any) {
 
   return (
     // 전체 헤더 컨테이너 (모바일 헤더 높이 상태에 따라 스타일이 동적으로 적용됨)
-    <div className={styles.container} style={{ height: mobileHeaderHeight }}>
+    <div className={styles.container}>
       <div className={styles.flexContainer}>
         {/* 데스크탑용 로고 영역 */}
         <div className={styles.logoContainer}>
