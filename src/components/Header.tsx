@@ -22,6 +22,7 @@ import randomDocs from '../img/random.svg'
 import all_document from '../img/all_document.svg'
 import recent_debate from '../img/recent_debate.svg'
 import random_document from '../img/random_document.svg'
+import arrow_down from '../img/arrow_down.svg'
 
 interface UserData {
   id: number
@@ -387,41 +388,48 @@ function Header({ userInfo, setUserInfo }: any) {
           </div>
         </div>
 
-        {/* 오른쪽 네비게이션 (검색, 즐겨찾기, 로그인/로그아웃) */}
         <div className={styles.navContainer_right}>
-          {/* 로그인 상태일 때 UI */}
           {isLoggedIn ? (
-            <>
-              <img
-                role={'presentation'}
-                src={bookmark}
-                alt={'bookmark_gray'}
-                className={styles.signinButton}
-                onClick={() => {
-                  track('click_header_navi', { type: '즐겨찾는 문서' })
-                  Nav('/mybookmark')
-                }}
-              />
-              <button type={'button'} className={styles.navItem} onClick={signOut} style={{ marginRight: '30px' }}>
-                {'로그아웃\r'}
-              </button>
-              {loadingMypage ? (
-                <div />
-              ) : (
-                <Link to={'/mypage'}>
-                  <div className={styles.mypageWrap}>
-                    <p className={styles.nicknameText}>
-                      {nicknameText}
-                      {' 님'}
-                    </p>
-                    <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
-                    {userInfo && userInfo.rep_badge_image && (
-                      <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
-                    )}
-                  </div>
-                </Link>
-              )}
-            </>
+            loadingMypage ? (
+              <div />
+            ) : (
+              <div className={styles.nicknameContainer}>
+                <div className={styles.nickname_badge}>
+                  <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                </div>
+                <div className={styles.nickname}>
+                  <div className={styles.nicknameText}>{nicknameText}</div>
+                  <div className={styles.honorific}> 님</div>
+                  <img src={arrow_down} alt={'arrow_down'} className={styles.arrowDown} />
+                </div>
+
+                {/* 호버 시 나타나는 메뉴 */}
+                <div className={styles.dropdownMenu}>
+                  <button type="button" onClick={() => Nav('/mypage')} className={styles.menuItem}>
+                    마이페이지
+                  </button>
+                  <button type="button" onClick={() => Nav('/mybookmark')} className={styles.menuItem}>
+                    관심목록
+                  </button>
+                  <button type="button" onClick={signOut} className={styles.menuItem}>
+                    로그아웃
+                  </button>
+                </div>
+              </div>
+
+              // <Link to={'/mypage'}>
+              //   <div className={styles.mypageWrap}>
+              //     <p className={styles.nicknameText}>
+              //       {nicknameText}
+              //       {' 님'}
+              //     </p>
+              //     <img src={mypage} alt={'mypage'} className={styles.mypageBtn} />
+              //     {userInfo && userInfo.rep_badge_image && (
+              //       <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+              //     )}
+              //   </div>
+              // </Link>
+            )
           ) : (
             <div className={styles.signContainer}>
               <button type={'button'} className={styles.registerBtn}>
