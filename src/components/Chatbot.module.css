@@ -2,8 +2,9 @@
   display: grid;
   grid-template-columns: repeat(6, minmax(16.67%, auto));
   grid-template-rows: repeat(auto-fill, minmax(10%, auto));
+  align-content: stretch;
   border-radius: 20px;
-  border-color: rgba(213,213,213,0.8);
+  border-color: rgba(213, 213, 213, 0.8);
   border: 0.1rem solid;
   background: linear-gradient(to bottom, #FFEEF0, #FFFFFF);
   width: 100%;
@@ -17,16 +18,18 @@
     margin-left: calc((100vw - 750px) / 2);
   }
 }
+
 @media only screen and (max-width: 767px) {
   .chatBot {
     display: none;
   }
+
   .chatBot {
     display: none;
   }
 }
 
-/* .sideBar {
+.sideBar {
   display: flex;
   background: linear-gradient(to bottom, #9f132e, #de3a58);
   min-width: 150px;
@@ -34,12 +37,12 @@
   height: auto;
   border-radius: 12px 0px 0px 12px;
   justify-content: center;
-} */
+}
 
 /* 챗봇박스 헤더 - 로고, 도움말/초기화 버튼 포함 */
 .chatbotHeader {
-  grid-column: 1/6 span;
-  grid-row: 1/2;
+  grid-column: 1/ span 6;
+  grid-row: 1/ span 1;
   display: flex;
   flex: row;
   justify-content: space-between;
@@ -58,13 +61,14 @@
   cursor: default;
   margin-left: 1.8rem;
 }
+
 .haho {
   margin-right: 1.6rem;
   width: 4rem;
   height: 4rem;
   padding: 0.3rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);;
+  background: linear-gradient(to bottom, #FF768F, #DE3A58);
 }
 
 .buttonContainer {
@@ -75,10 +79,12 @@
   margin: 0;
   gap: 1.6rem;
 }
-.button{
+
+.button {
   display: flex;
   align-items: center;
 }
+
 .smallIcon {
   width: 1.4rem;
   height: 1.4rem;
@@ -86,6 +92,7 @@
   filter: hue-rotate(0deg) brightness(0.8);
   vertical-align: middle;
 }
+
 .buttonText {
   height: 1.7rem;
   font-size: 1.4rem;
@@ -98,29 +105,85 @@
   padding: 0;
 }
 
-/* 입력창을 포함한 챗봇 컨테이너 */
-.chatbox {
-  display: flex;
-  flex-direction: column; /* 세로 방향으로 배치 */
-  flex: 1; /* 가로 방향으로 flex 1 */
-  align-items: center;
-  /* width: 900px; */
-  height: 100%;
-}
-
-/* 대화만 포함하는 챗봇 컨테이너 */
+/* 대화만 포함하는 컨테이너 */
 .chat {
-  flex: 1;
-  width: 100%;
+  grid-column: 1/span 6;
+  grid-row: 2/span 5;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   overflow-y: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  width: 100%;
+  padding: 0;
+  margin: 0;
 }
-.initialChatbox{
 
+.initialChatbox {
+  grid-column: 1/6 span;
+  grid-row: 2/5 span;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(16.67%, auto));
+  justify-items: center;
+  align-items: center;
+  grid-template-rows: repeat(5, 1fr);
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
 }
+
+.initialMessage {
+  grid-row: 1/ 2 span;
+  grid-column: 3/ 2 span;
+  align-self: end;
+  font-size: 3.2rem;
+  letter-spacing: 9%;
+  font-weight: 700;
+  background: linear-gradient(to right, #9F132E, #FF768F);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.initialSummaryImg {
+  grid-row: 3 / 3 span;
+  grid-column: 2 / 4 span;
+  justify-self: stretch;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  justify-self: center;
+  padding-left: 3rem;
+}
+
+.initialSummary {
+  grid-row: 6 / 1 span;
+  grid-column: 2 / 4 span;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 3rem;
+  justify-content: space-around;
+}
+
+.initialSummaryContent {
+  line-height: 167%;
+  text-align: center;
+  font-size: 1.2rem;
+  color: rgba(151, 151, 151, 1);
+  justify-self: center;
+}
+
+.initialSummaryTitle {
+  text-align: center;
+  justify-self: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1.1rem;
+}
+
 .defaultChat {
   position: relative;
   background-color: #fef2f4;
@@ -216,56 +279,41 @@
 
 /* 챗봇 추천 질문 컨테이너 */
 .suggestContainer {
-  display: flex;
-  width: calc(100% - 100px);
-  flex-direction: column;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 14px;
+  grid-row: 7 / 2 span;
+  grid-column: 1 / 6 span;
+  justify-self: end;
+  display: grid;
+  grid-template-rows: repeat(3, 33.33%);
+  align-content: stretch;
+  row-gap: 1.2rem;
+  width: 51rem;
+  height: 13.7rem;
+  /* height: auto; */
+  margin-right: 7.4rem;
 }
 
-.suggestScrollbar {
-  display: flex;
-  flex-direction: row;
-  width: 500px;
-  flex: 1;
-  overflow-x: hidden;
-}
-.scrollbarContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: auto;
-  margin-left: 0;
-  margin-right: 0;
-  overflow-x: visible; /* 필요시 가로 스크롤을 표시 */
-}
 .suggest {
-  position: relative;
+  grid-row: 2 / 2 span;
   display: flex;
-  flex-direction: row;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  /* 아이템이 넘칠 경우 줄바꿈 */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
 }
 
 /* 추천 질문 내의 각 항목 */
 .textBox {
-  margin-left: 0px;
-  margin-right: 10px;
-  font-weight: 550;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: 1px solid #9f132e;
-  width: 130px;
   height: 20px;
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 1.6rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  padding-left: 23px;
-  padding-right: 18px;
   text-align: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
 }
 
 .textBox:hover {
@@ -274,20 +322,29 @@
 }
 
 #ref {
+  grid-row: 1 / 1 span;
+  justify-self: end;
+  align-self: end;
   font-weight: 700;
-  color: #9f132e;
-  font-size: 13px;
+  color: rgba(222, 58, 88, 1);
+  font-size: 2rem;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .promptWrap {
-  display: flex;
-  width: calc(100% - 100px);
-  height: 60px;
+  grid-column: 1 / 6 span;
+  grid-row: 9 / 2 span;
+  justify-self: stretch;
+  align-self: center;
   border: 1px solid #9f132e;
-  border-radius: 20px;
+  height: 50%;
+  border-radius: 60px;
   margin-bottom: 20px;
   margin-top: 0px;
 }
+
 .prompt {
   overflow-y: scroll;
   position: relative;
@@ -302,16 +359,20 @@
   margin-left: 20px;
   resize: none;
   padding-top: 10px;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  -ms-overflow-style: none;
+  /* 인터넷 익스플로러 */
+  scrollbar-width: none;
+  /* 파이어폭스 */
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
 
 /* 스크롤바의 전체 너비를 설정 */
 ::-webkit-scrollbar {
-  width: 10px; /* 세로 스크롤바의 너비 */
-  height: 12px; /* 가로 스크롤바의 높이 */
+  width: 10px;
+  /* 세로 스크롤바의 너비 */
+  height: 12px;
+  /* 가로 스크롤바의 높이 */
 }
 
 /* 스크롤바 트랙 */
@@ -323,7 +384,8 @@
 ::-webkit-scrollbar-thumb {
   background: #d7d7d7;
   border-radius: 10px;
-  border: 2px solid #f1f1f1; /* 핸들에 테두리를 추가하여 더 세련된 효과 */
+  border: 2px solid #f1f1f1;
+  /* 핸들에 테두리를 추가하여 더 세련된 효과 */
 }
 
 /* 스크롤바 핸들 (호버 상태) */
@@ -339,6 +401,7 @@
   outline: none;
   outline: none;
 }
+
 .prompt:disabled {
   background-color: #fff;
   color: #747474;
