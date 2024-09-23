@@ -3,11 +3,11 @@
   flex-direction: row;
   background-color: #fef2f4;
   margin-top: 25px;
-  width: calc(100% - 100px);
+  width: calc(100% - 50px);
   height: auto;
   border-radius: 12px;
   margin-right: 50px;
-  margin-left: 20px;  
+  margin-left: 20px;
   word-break: keep-all;
   position: relative;
   min-height: 92px;
@@ -28,6 +28,7 @@
   min-height: 92px;
   height: 100%;
   position: static;
+  padding-top: 15px;
 }
 .characterContainer {
   position: absolute;
@@ -49,12 +50,12 @@
 .chatText {
   width: calc(100% - 50px);
   margin-left: 0px;
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   line-height: 150%;
   word-break: break-word;
-  margin-top: 35px;
-  margin-bottom: 35px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .dots {
@@ -84,15 +85,11 @@
   }
 }
 .icon {
-  width: 15px;
-  min-width: 15px;
-  height: 15px;
-  margin-right: 15px;
   cursor: pointer;
-  width: 15px;
-  min-width: 15px;
-  height: 15px;
-  margin-right: 15px;
+  width: 11px;
+  min-width: 11px;
+  height: 11px;
+  margin-right: 11px;
   cursor: pointer;
 }
 
