@@ -8,7 +8,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import ChatAnswer from './ChatAnswer'
 import ChatQuestion from './ChatQuestion'
 import styles from './Chatbot.module.css'
-import arrow from '../img/arrow.png'
+import send from '../img/send.png'
 import Spinner from './Spinner'
 import LoginModal from './LoginModal'
 import ClearModal from './ClearModal'
@@ -512,21 +512,26 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
         <textarea
           className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-          placeholder={'AI에게 무엇이든 물어보세요! (프롬프트 입력)'}
+          placeholder={'AI에게 무엇이든 물어보세요!'}
           value={inputValue}
           onChange={inputChange}
           onKeyDown={handleKeyDown}
           ref={inputRef}
           disabled={loading}
         />
-        <div
-          role={'presentation'}
-          className={styles.sendBtn}
-          onClick={loading ? null : handleSendClick}
-          style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
+        <button
+          type="button"
+          onClick={loading ? undefined : handleSendClick}
+          style={{
+            cursor: loading ? 'not-allowed' : 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+            marginRight: '1.5rem',
+          }}
+          disabled={loading}
         >
-          <img alt={'전송'} src={arrow} />
-        </div>
+          <img src={send} alt={'전송'} className={styles.sendBtn} />
+        </button>
       </div>
     </div>
   )

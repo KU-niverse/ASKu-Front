@@ -158,7 +158,6 @@
 .chatBotContainer {
   height: 80vh;
   font-size: 100px;
-  background-color: red;
   grid-column: 1/2;
 }
 

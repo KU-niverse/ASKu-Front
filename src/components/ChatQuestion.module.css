@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: row;
   margin-top: 3.9rem;
-  height: 4rem;
   margin-right: 2.3rem;
   word-break: keep-all;
   align-items: center;
@@ -99,6 +98,7 @@
 }
 
 .character {
+  align-self: flex-start;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
