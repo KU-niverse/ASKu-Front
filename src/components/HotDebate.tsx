@@ -43,7 +43,7 @@ function HotDebate({
   return (
     <div className={styles.container}>
       <div className={styles.subject} role={'presentation'} onClick={linktoDebateRoom}>
-        {subject}
+        <p className={styles.question}>{subject}</p>
       </div>
       <button type="button" className={styles.joinDebate} onClick={linktoDebateRoom}>
         나도 참여할래!

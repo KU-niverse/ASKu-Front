@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width:80px;
+  width:100%;
 }
 .contentsTwo {
   width: auto;
@@ -94,17 +94,18 @@
     margin-right: 5px;
   }
 }
+.docTitleContainer{
+  width: 100%;
+}
 .docTitle {
   font-size: 60%;
   color: #FF768F;
-  margin-right: 10px;
-  margin-left: 10px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 75px;
   text-align: center;
   font-weight: 700;
+  padding-top: 10%;
 }
 .versionIcon {
   width: 100%;
