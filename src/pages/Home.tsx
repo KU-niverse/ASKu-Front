@@ -207,20 +207,22 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
         </div>
         <div className={styles.realTime}>
-          <div className={styles.HomePart}>
+          <div className={styles.popularDoc}>
             <div className={styles.HomeTitle}>
               <p className={styles.HomeSubTitle}>{'인기 문서'}</p>
               <p className={styles.SubTitleMore}>{'문서 더보기'}</p>
             </div>
-            <div className={styles.popDocList}>
-              {PopularDoclist.map((item) => (
-                <div key={item.id}>
-                  <PopularDoc version={item.latest_ver} title={item.title} />
-                </div>
-              ))}
+            <div>
+              <div className={styles.popDocList}>
+                {PopularDoclist.map((item) => (
+                  <div key={item.id}>
+                    <PopularDoc version={item.latest_ver} title={item.title} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <div className={styles.HomePart}>
+          <div className={styles.HotDebate}>
             <div className={styles.HomeTitle}>
               <p className={styles.HomeSubTitle}>{'최근 핫한 토론방'}</p>
               <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
@@ -246,7 +248,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           </div>
-          <div className={styles.HomePart}>
+          <div className={styles.PopularQuestion}>
             <div className={styles.HomeTitle}>
               <p className={styles.HomeSubTitle}>{'실시간 인기 질문'}</p>
               <p className={styles.SubTitleMore}>{'질문 더보기'}</p>
@@ -285,56 +287,53 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
               )}
             </div>
           </div>
-          <div className={styles.HomePart}>
-            <div className={styles.BottomPart}>
-              <div className={styles.randomDocBox}>
-                <p className={styles.realTimeTitle}>{'실시간 랜덤 문서'}</p>
-                <div>
-                  <img className={styles.randomDocBack} src={randomBack} alt={'배경'} />
-                </div>
-                <div className={styles.randomDocBottom}>
-                  <img className={styles.randomBtn} src={randomLeft} alt={'Left'} onClick={handleRandomDoc} />
-                  <div>
-                    <Link
-                      className={styles.randomLink}
-                      to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
-                      key={randomTitle}
-                    >
-                      <p>{randomTitle}</p>
-                    </Link>
-                  </div>
-                  <img className={styles.randomBtn} src={randomRight} alt={'Right'} onClick={handleRandomDoc} />
-                </div>
+          <div className={styles.randomDocBox}>
+            <p className={styles.realTimeTitle}>{'실시간 랜덤 문서'}</p>
+            <div>
+              <Link
+                className={styles.randomLink}
+                to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
+                key={randomTitle}
+              >
+                <img className={styles.randomDocBack} src={randomBack} alt={'배경'} />
+              </Link>
+            </div>
+            <div className={styles.randomDocBottom}>
+              <img className={styles.randomBtn} src={randomLeft} alt={'Left'} onClick={handleRandomDoc} />
+              <div>
+                <Link
+                  className={styles.randomLink}
+                  to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
+                  key={randomTitle}
+                >
+                  <p>{randomTitle}</p>
+                </Link>
               </div>
-              <div className={styles.realTimeBox}>
-                <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
-                {isKeywordsLoading ? (
-                  <p>{'Loading...'}</p>
-                ) : (
-                  popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
-                    <Link
-                      to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
-                      className={styles.realrankWrap}
-                      key={keyword.id}
-                      onClick={() => {
-                        track('click_trend_search_keyword', {
-                          search_rank: index + 1,
-                          search_keyword: keyword.keyword,
-                        })
-                      }}
-                    >
-                      <p
-                        className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.pinkNumberIcon}
-                      >
-                        {index + 1}
-                        {'.'}
-                      </p>
-                      <p className={styles.realTimerank}>{keyword.keyword}</p>
-                    </Link>
-                  ))
-                )}
-              </div>
-              <div>{'kk'}</div>
+              <img className={styles.randomBtn} src={randomRight} alt={'Right'} onClick={handleRandomDoc} />
+            </div>
+          </div>
+          <div className={styles.recommendTag}>
+            <p className={styles.recommendTagTitle}>{'실시간 추천 태그'}</p>
+            <div className={styles.recommendList}>
+              {isKeywordsLoading ? (
+                <p>{'Loading...'}</p>
+              ) : (
+                popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
+                  <Link
+                    to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
+                    className={styles.realrankWrap}
+                    key={keyword.id}
+                    onClick={() => {
+                      track('click_trend_search_keyword', {
+                        search_rank: index + 1,
+                        search_keyword: keyword.keyword,
+                      })
+                    }}
+                  >
+                    <p className={styles.realTimerank}>#{keyword.keyword}</p>
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         </div>
