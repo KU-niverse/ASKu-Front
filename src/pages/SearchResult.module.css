@@ -31,7 +31,7 @@
   grid-column: 2/13;
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: flex-end;
   font-size: 24px;
   font-weight: 700;
   margin: 20px 0px 20px 0px;
@@ -52,7 +52,7 @@
 .typeWrap {
   grid-column: 2/13;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 15px;
 }
