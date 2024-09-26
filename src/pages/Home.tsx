@@ -227,25 +227,24 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
               <p className={styles.HomeSubTitle}>{'최근 핫한 토론방'}</p>
               <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
             </div>
-            <div>
-              <div className={styles.HotDebateList}>
-                {debateListData &&
-                  debateListData.map((item) => (
-                    <HotDebate
-                      key={item.id}
-                      id={item.id}
-                      doc_id={item.doc_id}
-                      user_id={item.user_id}
-                      subject={item.subject}
-                      created_at={item.created_at}
-                      recent_edited_at={item.recent_edited_at}
-                      done_or_not={item.done_or_not}
-                      done_at={item.done_at}
-                      is_bad={item.is_bad}
-                      title={item.title}
-                    />
-                  ))}
-              </div>
+
+            <div className={styles.HotDebateList}>
+              {debateListData &&
+                debateListData.map((item) => (
+                  <HotDebate
+                    key={item.id}
+                    id={item.id}
+                    doc_id={item.doc_id}
+                    user_id={item.user_id}
+                    subject={item.subject}
+                    created_at={item.created_at}
+                    recent_edited_at={item.recent_edited_at}
+                    done_or_not={item.done_or_not}
+                    done_at={item.done_at}
+                    is_bad={item.is_bad}
+                    title={item.title}
+                  />
+                ))}
             </div>
           </div>
           <div className={styles.PopularQuestion}>

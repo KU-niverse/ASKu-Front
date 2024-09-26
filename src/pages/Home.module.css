@@ -7,8 +7,8 @@
 }
 
 .popDocList {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
 }
 
 .homeWrap {
@@ -33,6 +33,8 @@
   font-weight: 700;
   color: #000;
   margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 200%;
 }
 
 .SubTitleMore {
@@ -59,6 +61,9 @@
   grid-row: 3/4;
   margin-bottom: 10px;
   border-bottom: solid #EBEBEB 2px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .recommendTag {
@@ -76,6 +81,7 @@
 .HotDebateList {
   display: flex;
   justify-content: space-between;
+  height: 70%;
 }
 
 .questionList {
@@ -83,7 +89,7 @@
   flex-wrap: wrap;
   width: 100%;
   justify-content: flex-start;
-  margin-bottom: 20px;
+  margin-top: 1%;
 }
 
 .logo {
@@ -217,6 +223,8 @@
   font-weight: 700;
   color: #000;
   margin-top: 0px;
+  font-size: 200%;
+  margin-bottom: 5%;
 
 }
 
@@ -225,7 +233,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr 1fr 0.3fr 1fr;
-  height: 100%;
+  height: 75vh;
   column-gap: 24px;
 }
 
@@ -268,6 +276,7 @@
   padding-right: 20%;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-bottom: 5%;
 }
 
 .realTimerank:hover {
@@ -341,7 +350,7 @@
 .rankContent {
   margin-left: 5px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 150%;
   color: black;
   max-width: 200px;
   overflow: hidden;
