@@ -128,6 +128,7 @@
   box-sizing: border-box;
   font-size: 14px;
   font-weight: 500;
+  margin-left: 10px;
 }
 .wikititleBtnThree img {
   margin-left: 3px;
@@ -171,27 +172,32 @@
 }
 
 .tocExpandedButton {
-  width: 90%;
+  width: 93%;
   display: flex;
   justify-content: flex-end;
-
   font-size: 12px;
   font-weight: 700;
   background-color: white;
   color: rgba(222, 58, 88, 1);
   border: none;
   cursor: pointer;
-  margin-top: 10px;
   position: absolute;
-  padding-bottom: 20px;
+  padding-top: 0px;
+  padding-bottom: 15px;
   bottom: 0px;
 }
 
 .tocexpandedButtonText {
+  display: flex;
+  align-items: center;
   margin-right: 5px;
   text-decoration: underline;
 }
 
+.tocexpandedButtonIcon {
+  width: 24px;
+  height: 24px;
+}
 .wikilist li {
   cursor: pointer;
   margin-bottom: 7px;

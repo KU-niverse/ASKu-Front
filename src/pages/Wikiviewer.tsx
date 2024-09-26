@@ -17,6 +17,8 @@ import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
 import question from '../img/wiki_qustion.svg'
+import arrowUp from '../img/arrow_up_red.svg'
+import arrowDown from '../img/arrow_down_red.svg'
 
 interface AxiosErrorResponse {
   message: string
@@ -389,8 +391,14 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                 onClick={() => setIsTocExpanded(!isTocExpanded)}
                 className={styles.tocExpandedButton}
               >
-                <div className={styles.tocexpandedButtonText}>{isTocExpanded ? '목차 접기' : '목차 더보기'}</div>
-                <div className={styles.tocexpandedButtonIcon}>{isTocExpanded ? '▲' : '▼'}</div>
+                <div className={styles.tocexpandedButtonText}>
+                  {isTocExpanded ? '목차 접기' : '목차 더보기'}
+                  <img
+                    src={isTocExpanded ? arrowUp : arrowDown}
+                    alt={isTocExpanded ? 'Collapse Icon' : 'Expand Icon'}
+                    className={styles.tocexpandedButtonIcon}
+                  />
+                </div>
               </button>
             </div>
           </div>
@@ -400,7 +408,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               <h2>{'질문'}</h2>
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
-            <div className={blank === false ? styles.quesWrap : styles.hidden}>
+            <div className={styles.quesWrap}>
               {ques.length === 0 ? (
                 <div className={styles.noQuestion}>
                   <div className={styles.askWrapper}>
@@ -415,16 +423,13 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                     return null
                   }
                   return (
-                    <div className={styles.queslist}>
+                    <div className={styles.queslist} key={item.id}>
                       <hr className={styles.customHr} />
                       <ul
                         role={'presentation'}
-                        key={item.id}
                         onClick={() => {
                           const encodedTitle = encodeURIComponent(title)
-                          track('click_question_in_wiki', {
-                            index,
-                          })
+                          track('click_question_in_wiki', { index })
                           nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
                             state: {
                               question_id: item.id,
@@ -441,10 +446,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                         }}
                         className={styles.quesul}
                       >
-                        <span className={styles.quesTitle}>
-                          {'Q. '}
-                          {item.content}
-                        </span>
+                        <span className={styles.quesTitle}>Q. {item.content}</span>
                         <span className={styles.quesNum}>
                           <span>{item.like_count}</span>
                           <img alt={'좋아요'} src={minilike} />
@@ -455,6 +457,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                 })
               )}
             </div>
+
             <div className={styles.wikiaskFoot}>
               <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
                 <button type={'button'} className={styles.addQues}>
