@@ -7,7 +7,7 @@
 .myPageContainer {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1fr 1.5fr;
   overflow-y: scroll;
   scrollbar-width: none;
 }
@@ -86,7 +86,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2.5rem 0;
+  padding: 2.5rem 4rem;
 }
 .contentTitle {
   font-size: 3rem;
@@ -247,4 +247,9 @@
 .debateElement {
   border-bottom: 0.1rem #d5d5d5 solid;
   height: 3.8rem;
+}
+@media screen and (min-width: 768px) and (max-width: 940px) {
+  * {
+    font-size: 40%;
+  }
 }
