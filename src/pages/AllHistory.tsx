@@ -96,9 +96,9 @@ const AllHistory: React.FC = () => {
   const endIndex = page * perPage
 
   return (
-    <div className={styles.container}>
+    <div className={styles.historyContainer}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.history}>
+      <div className={styles.historyContent}>
         {isError ? (
           <div>
             {'에러: '}
@@ -107,7 +107,7 @@ const AllHistory: React.FC = () => {
         ) : (
           <div className={styles.historyList}>
             <div className={styles.historyTitle}>
-              <p className={styles.listTitle2}>
+              <p className={styles.listTitles}>
                 {type === 'all' ? (
                   <>
                     <span className={styles.listTitleStart}>{'최근 변경된'}</span> {'모든 문서'}
