@@ -77,7 +77,29 @@
   font-size: 14px;
   color: #666;
 }
+.noQuestionsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
 
+.noQuestionsContent {
+  text-align: center;
+}
+
+.noQuestionsIcon {
+  width: 78px;
+  height: 78px;
+  margin-bottom: 26px;
+}
+
+.noQuestionsText {
+  margin-top: 0px;
+  font-size: 32px;
+  color: black;
+  font-weight: 500;
+}
 @media only screen and (max-width: 767px) {
   .content {
     display: flex;

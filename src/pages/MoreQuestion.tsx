@@ -11,6 +11,7 @@ import Switch from '../components/Switch'
 import QuestionInput from '../components/QuestionInput'
 import SpinnerMypage from '../components/SpinnerMypage'
 import docLink from '../img/doc_link.svg'
+import noQuestion from '../img/noQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -166,7 +167,18 @@ const MoreQuestion: React.FC = () => {
 
               {/* 질문 리스트 */}
               {questionData?.data.length === 0 ? (
-                <p>{'아직 작성한 질문이 없습니다.'}</p>
+                <div className={styles.noQuestionsContainer}>
+                  <div className={styles.noQuestionsContent}>
+                    {/* 아이콘 */}
+                    <img role={'presentation'} src={noQuestion} alt={noQuestion} className={styles.noQuestionsIcon} />
+
+                    {/* 텍스트 */}
+                    <p className={styles.noQuestionsText}>
+                      아직 질문이
+                      <br /> 없습니다
+                    </p>
+                  </div>
+                </div>
               ) : (
                 questionData?.data.map((question) => (
                   <Question
