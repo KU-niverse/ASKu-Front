@@ -11,8 +11,8 @@
 }
 .q_cheadline {
   font-size: 24px;
-  font-weight: bold;
-  color: rgba(159, 19, 46, 1);
+  font-weight: 700;
+  color: black;
 }
 
 .q_cbox {
@@ -31,9 +31,20 @@
   border: none;
   width: 100%;
   height: auto;
-  padding: 5px;
+  padding: 8px;
   border-radius: 12px;
   font-size: 18px;
+}
+
+.q_ctextarea::placeholder {
+  font-size: 20px;
+  font-weight: 600;
+  color: #cccbcb;
+}
+
+.q_ctextarea:focus {
+  outline: none;
+  border: none;
 }
 
 .q_clastheader {
@@ -44,16 +55,22 @@
   margin-top: 7px;
 }
 
-.q_clastheader button {
+.q_csubmit {
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  width: 100px;
-  border-radius: 12px;
+  width: 85px;
+  border-radius: 50px;
   height: 35px;
   font-size: 14px;
   border: none;
-  color: white;
+  color: white; /* 기본 텍스트 색상 */
   cursor: pointer;
   margin-left: auto;
+}
+
+.q_csubmit.disabled {
+  background: #d5d5d5; /* 비활성화 색상 */
+  cursor: not-allowed; /* 비활성화된 상태에서 마우스 커서 변경 */
+  color: #ffffff; /* 비활성화된 텍스트 색상 */
 }
 
 .textnum {
@@ -88,8 +105,9 @@
     font-size: 12px;
   }
 
-  .q_ctextarea {
-    font-size: 14px;
+  .q_ctextarea::placeholder {
+    font-size: 20px;
+    font-weight: 600;
   }
 
   .textnum {

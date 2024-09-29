@@ -126,8 +126,13 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
         />
         <div className={styles.q_clastheader}>
           <span className={styles.textnum}>{countCharacters()}</span>
-          <button type={'button'} className={styles.q_csubmit} onClick={handleSubmit}>
-            {'생성하기\r'}
+          <button
+            type={'button'}
+            className={`${styles.q_csubmit} ${questionContent.trim() === '' ? styles.disabled : ''}`}
+            onClick={handleSubmit}
+            disabled={questionContent.trim() === ''}
+          >
+            {'생성\r'}
           </button>
         </div>
       </div>
