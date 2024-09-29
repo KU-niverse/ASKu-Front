@@ -240,6 +240,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
             content={stateData.content}
             like_count={stateData.like_count}
             created_at={stateData.created_at}
+            badge_image={stateData.badge_image}
           />
         </div>
         <form onSubmit={addWikiEdit}>

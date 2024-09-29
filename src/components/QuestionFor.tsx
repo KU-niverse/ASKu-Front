@@ -12,15 +12,19 @@ interface QuestionForProps {
   nick: string
   like_count: number
   content: string
+  badge_image: string
 }
 
-const QuestionFor: React.FC<QuestionForProps> = ({ created_at, nick, like_count, content }) => {
+const QuestionFor: React.FC<QuestionForProps> = ({ created_at, nick, like_count, content, badge_image }) => {
   const timestamp = FormatDate(created_at)
 
   return (
     <div className={styles.q_list}>
       <div className={styles.q_header}>
         <div className={styles.q_fronthead}>
+          <div className={styles.q_box}>
+            <img className={styles.q_badge} src={badge_image} alt={'badge'} />
+          </div>
           <span className={styles.q_mynick}>{nick}</span>
           <span className={styles.q_date}>{timestamp}</span>
         </div>
