@@ -242,7 +242,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #9f132e;
-  width: 130px;
+  width: 140px;
   height: 20px;
   border-radius: 20px;
   font-size: 9px;
@@ -250,6 +250,8 @@
   transition: background-color 0.3s ease;
   padding-left: 23px;
   padding-right: 18px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   text-align: center;
 }
 
