@@ -26,6 +26,11 @@
   box-sizing: border-box;
   padding: 10px;
 }
+
+.q_cbox.focused {
+  border: 1px solid #eb516d; /* focus 되었을 때 빨간색으로 */
+}
+
 .q_ctextarea {
   resize: none;
   border: none;
@@ -34,6 +39,7 @@
   padding: 8px;
   border-radius: 12px;
   font-size: 18px;
+  outline: none;
 }
 
 .q_ctextarea::placeholder {
