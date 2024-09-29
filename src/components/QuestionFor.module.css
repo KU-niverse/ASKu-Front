@@ -97,6 +97,17 @@
   font-size: 16px;
   font-weight: bold;
 }
+.q_comment span {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.q_comment img {
+  object-fit: contain;
+  cursor: pointer;
+  width: 18px;
+}
 
 .q_like {
   margin-left: 3px;

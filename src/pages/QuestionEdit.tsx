@@ -241,6 +241,11 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
             like_count={stateData.like_count}
             created_at={stateData.created_at}
             badge_image={stateData.badge_image}
+            id={stateData.qid}
+            user_id={stateData.user_id}
+            answer_count={stateData.answer_count || 0}
+            title={stateData.title || '제목 없음'}
+            index_title={stateData.index_title || '전체'}
           />
         </div>
         <form onSubmit={addWikiEdit}>
