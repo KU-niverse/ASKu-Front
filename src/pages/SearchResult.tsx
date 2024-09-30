@@ -163,7 +163,7 @@ const SearchResearch = () => {
             {title}
             {'"'}
           </h4>
-          <h4>{'검색 결과'}</h4>
+          <h4>&nbsp;검색 결과</h4>
         </div>
         <div className={styles.typeWrap}>
           <p className={styles.type}>
