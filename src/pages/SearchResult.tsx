@@ -11,7 +11,7 @@ import ResultBox from '../components/ResultBox'
 import Question from '../components/Question'
 import ResultQues from '../components/ResultQues'
 import FormatTimeAgo from '../components/FormatTimeAgo'
-import BookmarkBox from '../components/BookmarkBox'
+import SearchResultBox from '../components/SearchResultBox'
 import Footer from '../components/Footer'
 
 interface UserInfo {
@@ -158,11 +158,12 @@ const SearchResearch = () => {
       <div className={styles.results}>
         <div className={styles.header}>
           <img alt={'검색 결과'} src={search} />
-          <h4>
+          <h4 className={styles.searchText}>
             {'"'}
             {title}
-            {'" 검색결과'}
+            {'"'}
           </h4>
+          <h4>&nbsp;검색 결과</h4>
         </div>
         <div className={styles.typeWrap}>
           <p className={styles.type}>
@@ -175,72 +176,71 @@ const SearchResearch = () => {
               <div className={isClicked ? styles.numberGray : styles.numberRed}>{ques.length}</div>
             </button>
           </p>
-          <p className={styles.title}>{'최근 변경'}</p>
         </div>
-        <div className={styles.contents}>
-          <div className={styles.boxes}>
-            <div className={isClicked ? '' : styles.hidden}>
-              {docs.map((item: any, index: number) => (
-                <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
-                  <BookmarkBox
-                    title={item.title}
-                    content={item.recent_filtered_content}
-                    is_favorite={item.is_favorite}
-                    result
-                  />
-                </div>
-              ))}
-              <div className={styles.linkToNew}>
-                <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
-                  {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
-                </button>
+        <div className={styles.boxes}>
+          <div className={isClicked ? '' : styles.hidden}>
+            {docs.map((item: any, index: number) => (
+              <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
+                <SearchResultBox
+                  title={item.title}
+                  content={item.recent_filtered_content}
+                  is_favorite={item.is_favorite}
+                  result
+                  version={item.latest_ver}
+                />
               </div>
-            </div>
-            <div className={isClicked ? styles.hidden : ''}>
-              {ques.map((item: any, index: number) => (
-                <div className={styles.queboxes} key={item.id}>
-                  <ResultQues
-                    index={index}
-                    key={item.id}
-                    id={item.id}
-                    doc_id={item.doc_id}
-                    user_id={item.user_id}
-                    index_title={item.index_title}
-                    content={item.content}
-                    created_at={item.created_at}
-                    answer_count={item.answer_count}
-                    is_bad={item.is_bad}
-                    nick={item.nickname}
-                    like_count={item.like_count}
-                    title={item.title}
-                  />
-                </div>
-              ))}
+            ))}
+            <div className={styles.linkToNew}>
+              <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
+                {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
+              </button>
             </div>
           </div>
-          <div className={styles.recents}>
-            <div className={styles.recentWrap}>
-              {historys.slice(0, 8).map((item: any, index: number) => {
-                const timestamp = FormatTimeAgo(item.created_at)
-                return (
-                  <ul key={item.title}>
-                    <Link
-                      to={`/wiki/${encodeURIComponent(item.doc_title)}`}
-                      className={styles.linkTo}
-                      onClick={() => {
-                        track('click_recent_edit_wiki_in_search_result', {
-                          title: item.title,
-                          index,
-                        })
-                      }}
-                    >
-                      <span className={styles.listTitle}>{item.doc_title}</span>
-                    </Link>
-                    <span className={styles.listTimestamp}>{timestamp}</span>
-                  </ul>
-                )
-              })}
-            </div>
+          <div className={isClicked ? styles.hidden : ''}>
+            {ques.map((item: any, index: number) => (
+              <div className={styles.queboxes} key={item.id}>
+                <ResultQues
+                  index={index}
+                  key={item.id}
+                  id={item.id}
+                  doc_id={item.doc_id}
+                  user_id={item.user_id}
+                  index_title={item.index_title}
+                  content={item.content}
+                  created_at={item.created_at}
+                  answer_count={item.answer_count}
+                  is_bad={item.is_bad}
+                  nick={item.nickname}
+                  like_count={item.like_count}
+                  title={item.title}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.recents}>
+          <p className={styles.recentTitle}>최근 변경</p>
+          <div className={styles.recentWrap}>
+            {historys.slice(0, 8).map((item: any, index: number) => {
+              const timestamp = FormatTimeAgo(item.created_at)
+              return (
+                <ul key={item.title}>
+                  <Link
+                    to={`/wiki/${encodeURIComponent(item.doc_title)}`}
+                    className={styles.linkTo}
+                    onClick={() => {
+                      track('click_recent_edit_wiki_in_search_result', {
+                        title: item.title,
+                        index,
+                      })
+                    }}
+                  >
+                    <span className={styles.listTitle}>{item.doc_title}</span>
+                  </Link>
+                  <span className={styles.listTimestamp}>{timestamp}</span>
+                </ul>
+              )
+            })}
           </div>
         </div>
       </div>
