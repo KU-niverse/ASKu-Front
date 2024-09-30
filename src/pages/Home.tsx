@@ -14,6 +14,7 @@ import PopularDoc from '../components/PopularDoc'
 import HotDebate from '../components/HotDebate'
 import questionBubble from '../img/questionBubble.svg'
 import randomBack from '../img/randomBack.svg'
+import randomDocBack from '../img/randomDocBack.gif'
 import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
@@ -305,12 +306,12 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                 to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
                 key={randomTitle}
               >
-                <img className={styles.randomDocBack} src={randomBack} alt={'배경'} />
+                <img className={styles.randomDocBack} src={randomDocBack} alt={'배경'} />
               </Link>
             </div>
             <div className={styles.randomDocBottom}>
               <img className={styles.randomBtn} src={randomLeft} alt={'Left'} onClick={handleRandomDoc} />
-              <div>
+              <div className={styles.randomDocTitleContainer}>
                 <Link
                   className={styles.randomLink}
                   to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
