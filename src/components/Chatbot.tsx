@@ -8,7 +8,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import ChatAnswer from './ChatAnswer'
 import ChatQuestion from './ChatQuestion'
 import styles from './Chatbot.module.css'
-import arrow from '../img/arrow.png'
+import arrow2 from '../img/arrow.png'
 import Spinner from './Spinner'
 import LoginModal from './LoginModal'
 import ClearModal from './ClearModal'
@@ -17,6 +17,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
+import arrow from '../img/arrow.svg'
 
 interface User {
   id: number

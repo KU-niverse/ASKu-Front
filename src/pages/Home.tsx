@@ -10,6 +10,9 @@ import logo from '../img/logo_big.png'
 import styles from './Home.module.css'
 import searchIcon from '../img/search_icon.svg'
 import chatBotBtn from '../img/chatBotBtn.png'
+import RealTimePopularSearchesComponent from '../components/Home/RealTimePopularSearchesComponent'
+import RealTimePopularQuestionsComponent from '../components/Home/RealTimePopularQuestionsComponent'
+import SearchInputComponent from '../components/Home/SearchInputComponent'
 
 interface UserInfo {
   id: number
@@ -34,48 +37,13 @@ interface HomeProps {
   setLoggedIn: (loggedIn: boolean) => void
 }
 
-interface PopularKeyword {
-  keyword: string
-  id: number
-}
-
-interface PopularQuestion {
-  id: number
-  user_id: number
-  content: string
-  created_at: Date
-  like_count: number
-  nickname: string
-  index_title: string
-  answer_count: number
-  title: string
-}
-
-const fetchPopularKeywords = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/search/popular`)
-  return response.data.data
-}
-
-const fetchPopularQuestions = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/question/popular`)
-  return response.data.data
-}
-
 const checkLoginStatus = async () => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
   return res.data.success
 }
 
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
-  const [inputValue, setInputValue] = useState('')
-  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-
-  const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
-  const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
-    'popularQuestions',
-    fetchPopularQuestions,
-  )
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {
@@ -91,20 +59,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     refetchLoginStatus()
   }, [refetchLoginStatus])
 
-  const handleSearch = () => {
-    if (inputValue.trim() !== '') {
-      navigate(`/result/${encodeURIComponent(inputValue)}/search`)
-      setInputValue('')
-    }
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSearch()
-    }
-  }
-
+  // Amplitude
   useEffect(() => {
     track('view_home')
   }, [])
@@ -113,92 +68,19 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeWrap}>
-        <div className={styles.inputContainer}>
-          <img src={logo} className={styles.logo} alt={'logo'} />
-          <input
-            className={styles.searchInput}
-            placeholder={'Wiki 검색어를 입력하세요.'}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            value={inputValue}
-          />
-          <div className={styles.searchIconContainer}>
-            <img
-              role={'presentation'}
-              src={searchIcon}
-              alt={'icon'}
-              className={styles.searchIcon}
-              onClick={handleSearch}
-            />
-          </div>
-        </div>
+        {/* 아래부터 검색 창 */}
+        <SearchInputComponent />
 
         <div className={styles.chatBotContainer}>
+          {/* 웹에서만 보이는 챗봇 컴포넌트 */}
           <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+          {/* 모바일 시에만 보이는 챗봇 페이지 넘어가기 버튼 */}
           <Link to={'/chatbot'}>
             <img src={chatBotBtn} alt={'button'} className={styles.chatBotBtn} />
           </Link>
           <div className={styles.realTime}>
-            <div className={styles.keyWord}>
-              <p className={styles.realTimeTitle}>{'실시간 인기 검색어'}</p>
-              {isKeywordsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
-                  <Link
-                    to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
-                    className={styles.rankWrap}
-                    key={keyword.id}
-                    onClick={() => {
-                      track('click_trend_search_keyword', {
-                        search_rank: index + 1,
-                        search_keyword: keyword.keyword,
-                      })
-                    }}
-                  >
-                    <p className={index + 1 === 4 || index + 1 === 5 ? styles.blackNumberIcon : styles.numberIcon}>
-                      {index + 1}
-                      {'.'}
-                    </p>
-                    <p className={styles.rankContent}>{keyword.keyword}</p>
-                  </Link>
-                ))
-              )}
-            </div>
-            <div className={styles.question}>
-              <p className={styles.realTimeTitle}>{'실시간 인기 질문'}</p>
-              {isQuestionsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                popularQuestions.map((question: PopularQuestion, index: number) => (
-                  <Link
-                    to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
-                    state={{
-                      question_id: question.id,
-                      user_id: question.user_id,
-                      content: question.content,
-                      created_at: question.created_at,
-                      like_count: question.like_count,
-                      nick: question.nickname,
-                      index_title: question.index_title,
-                      answer_count: question.answer_count,
-                      title: question.title,
-                    }}
-                    className={styles.rankWrap}
-                    key={question.id}
-                    onClick={() => {
-                      track('click_trend_search_question', {
-                        question_rank: index + 1,
-                        question_title: question.content,
-                      })
-                    }}
-                  >
-                    <p className={styles.numberIcon}>{'Q.'}</p>
-                    <p className={styles.rankContent}>{question.content}</p>
-                  </Link>
-                ))
-              )}
-            </div>
+            <RealTimePopularSearchesComponent />
+            <RealTimePopularQuestionsComponent />
           </div>
         </div>
       </div>

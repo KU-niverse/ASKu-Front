@@ -23,7 +23,7 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
   const [selectedOption, setSelectedOption] = useState('전체')
   const [loggedIn, setLoggedIn] = useState(false)
   const Navigate = useNavigate()
-
+  const [isFocused, setIsFocused] = useState(false)
   const location = useLocation()
   const from = location.state?.from || '/'
   const queryClient = useQueryClient()
@@ -104,6 +104,14 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
     return `${questionContent.length}/200`
   }
 
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
+
   return (
     <form className={styles.q_c}>
       <div className={styles.q_cheader}>
@@ -115,7 +123,7 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
         </div>
       </div>
 
-      <div className={styles.q_cbox}>
+      <div className={`${styles.q_cbox} ${isFocused ? styles.focused : ''}`}>
         <textarea
           rows={4}
           className={styles.q_ctextarea}
@@ -123,11 +131,18 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
           value={questionContent}
           maxLength={200}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
         <div className={styles.q_clastheader}>
           <span className={styles.textnum}>{countCharacters()}</span>
-          <button type={'button'} className={styles.q_csubmit} onClick={handleSubmit}>
-            {'생성하기\r'}
+          <button
+            type={'button'}
+            className={`${styles.q_csubmit} ${questionContent.trim() === '' ? styles.disabled : ''}`}
+            onClick={handleSubmit}
+            disabled={questionContent.trim() === ''}
+          >
+            {'생성\r'}
           </button>
         </div>
       </div>
