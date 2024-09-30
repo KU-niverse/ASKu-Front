@@ -18,7 +18,7 @@ import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
 import folderImg from '../img/initialchat_folder.png'
-import plusImg from '../img/initialChat_plus.png'
+import plusImg from '../img/initialchat_plus.png'
 import chatImg from '../img/initialchat_chat.png'
 
 interface User {
@@ -368,7 +368,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           </div>
           <div className={styles.initialSummaryImgWrap}>
             <img src={folderImg} alt={'summary_img'} className={styles.initialSummaryImg} />
-            <img src={plusImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+            <img src={plusImg} alt={'summary_img'} id={styles.plusImg} />
             <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
           </div>
           <div className={styles.initialSummary}>
