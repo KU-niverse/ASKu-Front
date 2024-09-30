@@ -17,7 +17,9 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
-import initialChatImg from '../img/initialchat.png'
+import folderImg from '../img/initialchat_folder.png'
+import plusImg from '../img/initialchat_plus.png'
+import chatImg from '../img/initialchat_chat.png'
 
 interface User {
   id: number
@@ -364,7 +366,11 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             <br />
             {`정보를 한 번에 보기`}
           </div>
-          <img src={initialChatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+          <div className={styles.initialSummaryImgWrap}>
+            <img src={folderImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+            <img src={plusImg} alt={'summary_img'} id={styles.plusImg} />
+            <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+          </div>
           <div className={styles.initialSummary}>
             <div className={styles.initialSummaryContent}>
               <div className={styles.initialSummaryTitle}>{'WIKI'}</div>
@@ -520,13 +526,15 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           disabled={loading}
         />
         <button
-          type="button"
+          type={'button'}
           onClick={loading ? undefined : handleSendClick}
           style={{
             cursor: loading ? 'not-allowed' : 'pointer',
             backgroundColor: 'transparent',
             border: 'none',
             marginRight: '1.5rem',
+            display: 'flex',
+            alignItems: 'center', // 수직 가운데 정렬
           }}
           disabled={loading}
         >
