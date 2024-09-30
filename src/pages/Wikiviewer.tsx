@@ -354,9 +354,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
         <div className={styles.wikiBoxLists}>
           <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
             <div className={styles.wikilistTitle}>
-              <h2>{'목차'}</h2>
+              목차
               <button type={'button'} onClick={linkToAllEdit}>
-                {'편집 하기'}
+                {'편집하기'}
               </button>
             </div>
             <div>
@@ -368,8 +368,8 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                   <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
                     <span
                       style={{
-                        fontWeight: tabCount === 0 ? 'bold' : 'normal',
-                        fontSize: tabCount === 0 ? '16px' : '15px',
+                        fontWeight: tabCount === 0 ? '600' : '500',
+                        fontSize: tabCount === 0 ? '2rem' : '1.6rem',
                       }}
                     >
                       {' '}
@@ -405,7 +405,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
           <div className={styles.wikiask}>
             <div className={styles.wikiaskTitle}>
-              <h2>{'질문'}</h2>
+              질문
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
             <div className={styles.quesWrap}>
@@ -424,7 +424,6 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                   }
                   return (
                     <div className={styles.queslist} key={item.id}>
-                      <hr className={styles.customHr} />
                       <ul
                         role={'presentation'}
                         onClick={() => {
