@@ -1,312 +1,255 @@
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  height: 80px;
-  width: 100%;
-}
-
-.mypage {
-  font-size: 30px;
-  font-weight: bolder;
-  color: white;
-}
-
-.mypagecontent {
-  width: 74%;
-  margin-left: 13%;
-  height: auto;
-}
-
-.uppercontent {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 70px 0 0;
-  margin-bottom: 70px;
-}
-
-.leftcontent {
-  width: 40%;
-  height: auto;
-  border-radius: 12px;
-  margin-right: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-}
-
-.leftcontent > * {
-  margin-bottom: 0;
-}
-
-.rightcontent {
+.pagewrap {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100vw;
+  height: 100vh;
 }
-
-.rightcontent > * {
-  margin-bottom: 10px;
-}
-
-.rightcontent > *:last-child {
-  margin-bottom: 0;
-}
-
-.middlecontent {
-  margin-top: 10px;
-}
-
-.downcontent {
-  margin: 10px 0 50px;
-}
-
-.comment {
-  border-radius: 12px;
-  padding-bottom: 2rem;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-}
-
-.profile {
-  padding: 0 30px;
-}
-
-.profileheader,
-.badgeheader,
-.askheader,
-.commentheader {
-  display: flex;
-  width: 100%;
-  position: relative;
-}
-
-.badge {
-  padding: 0 30px;
-}
-
-.badge_content {
-  border-radius: 10%;
-  height: 70px;
-  width: 70px;
-  border: 1px solid rgba(116, 116, 116, 1);
-}
-
-.title,
-.title2 {
-  width: 40%;
-  text-align: left;
-  font-size: 24px;
-  font-weight: bold;
-  color: rgba(116, 116, 116, 1);
-  padding: 10px 0;
-}
-
-.b_link,
-.c_link,
-.q_link,
-.edit_link {
-  justify-content: flex-end;
-  text-align: right;
-  width: 60%;
-  cursor: pointer;
-  align-self: center;
-}
-
-.edit {
-  justify-content: flex-end;
-  text-align: right;
-  width: 60%;
-  font-size: 14px;
-  color: rgba(159, 19, 46, 1);
-  border: none;
-  background: white;
-  cursor: pointer;
-  align-self: center;
-}
-
-.profileimg {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding-bottom: 15px;
-}
-
-.profileimg_content {
-  border-radius: 100%;
-  height: 100px;
-  width: 100px;
-  border: 1px solid rgba(116, 116, 116, 1);
-}
-
-.info {
-  padding: 0 30px;
-}
-@media only screen and (max-width: 767px) {
-  .info {
-    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-  }
-}
-
-.infoedit {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.edit2,
-.edit3 {
-  text-align: right;
-  font-size: 14px;
-  color: rgba(159, 19, 46, 1);
-  border: none;
-  background: white;
-  cursor: pointer;
-}
-@media only screen and (max-width: 767px) {
-  .edit2 {
-    padding-bottom: 2em;
-  }
-}
-
-.badgegrid {
-  padding: 0 0px 10px 0px;
+.myPageContainer {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  gap: 20px 15px;
-  justify-items: center;
+  grid-template-columns: 1fr 1.5fr;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.navContainer {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
-
+.navSubContainer {
+  width: 50%;
+}
+.userGreeting {
+  width: 100%;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 3.7rem;
+}
+.allNavigators {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  margin-bottom: 4.5rem;
+}
+.nowNav {
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 6.4rem;
+  padding: 0 2rem 0 3.2rem;
+  border-radius: 1.2rem;
+  font-size: 2.3rem;
+  font-weight: 700;
+  cursor: default;
+  color: white;
+  background-image: linear-gradient(to right, #de3a58, #9f132e);
+  box-shadow: 0rem 1rem 2.5rem -0.5rem #9f132e59;
+}
+.defaultNav {
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 6.4rem;
+  padding: 0 2rem 0 3.2rem;
+  border-radius: 1.2rem;
+  font-size: 2.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: white;
+  background-color: #d5d5d5;
+}
+.navArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.8rem;
+  height: 3.8rem;
+}
+.logout {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #747474;
+}
+.contentContainer {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 4rem;
+}
+.contentTitle {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.contentSubContainer {
+  width: 68.5rem;
+}
+.profileContainer {
+  margin-bottom: 5.8rem;
+}
+.profileBox {
+  background-color: white;
+  border-radius: 3.4rem;
+  box-shadow: 0rem 0.2rem 6rem -0.5rem #00000014;
+  padding: 2.8rem 0 4.25rem 0;
+}
+.profileHeader {
+  margin-bottom: 2.8rem;
+}
+.badgeHeader {
+  display: flex;
+  gap: 1.7rem;
+  margin-bottom: 3.3rem;
+}
+.contentNum {
+  font-size: 3rem;
+  background-image: linear-gradient(to top, #de3a58, #9f132e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.moreBadge {
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.moreBadgeText {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #de3a58;
+  text-decoration: underline;
+}
+.moreBadgeImg {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.moreBadgeImgContent {
+  color: #de3a58;
+}
+.badgesContainer {
+  display: flex;
+  gap: 2.7rem;
+}
+.badgeContent {
+  display: flex;
+  justify-content: space-between;
+}
 .badgeImage {
-  width: 100%; /* 원하는 크기로 조정 */
-  height: 100%; /* 원하는 크기로 조정 */
-  object-fit: contain; /* 이미지가 잘리지 않고 유지되도록 설정 */
-  border: solid 1px rgba(116, 116, 116, 1);
-  border-radius: 10%;
+  width: 11.2rem;
+  height: 11.2rem;
+  border-radius: 100%;
+  border: 0.1rem solid rgba(116, 116, 116, 1);
 }
-
-.paginationWrapper {
-  padding-bottom: 1em;
+.lockedImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11.4rem;
+  height: 11.4rem;
+  border-radius: 100%;
+  border: 0.1rem solid rgba(116, 116, 116, 1);
+  background-color: #e4e4e4;
 }
-
-.paginationWrapper ul {
-  padding: initial;
+.contributeHeader {
+  display: flex;
+  gap: 1.7rem;
+  margin-bottom: 2.8rem;
 }
-
-.cb {
-  padding: 0 30px 2em 30px;
-  border-radius: 12px;
-  padding-bottom: 2rem;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-  height: 90%; /*박스의 크기를 고정적으로 바꿈*/
+.contributionBox {
+  margin-bottom: 3rem;
+  background-color: white;
+  border-radius: 3.4rem;
+  box-shadow: 0rem 0.2rem 6rem -0.5rem #00000014;
+  padding: 4.4rem 7rem;
 }
-
-@media only screen and (max-width: 767px) {
-  .cb {
-    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-  }
+.contributionList {
+  height: 25rem;
+  margin-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-
-.graph {
+.contributionElement {
+  border-bottom: 0.1rem #d5d5d5 solid;
+  height: 3.8rem;
+}
+.noList {
+  height: 45rem;
+  padding-top: 12rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.warningsign {
+  width: 7.8rem;
+  height: 7.8rem;
+  border-radius: 100%;
+  background-color: #fef2f4;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 2em;
+  margin-bottom: 2.6rem;
+}
+.warningtext {
+  font-size: 3.2rem;
+  font-weight: 500;
+  text-align: center;
+}
+.questionHeader {
+  display: flex;
+  gap: 1.7rem;
+  margin-bottom: 4.6rem;
+}
+.questionList {
+  height: 34rem;
+  margin-bottom: 27rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.questionElement {
+  border-bottom: 0.1rem #d5d5d5 solid;
+  height: 3.8rem;
 }
 
-.graph img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.debateHeader {
+  display: flex;
+  gap: 1.7rem;
+  margin-bottom: 4.6rem;
 }
-
-.ask {
-  border-radius: 12px;
-  padding: 0 30px 2rem 30px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+.debateList {
+  height: 34rem;
+  margin-bottom: 27rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-
-.comment {
-  padding: 0 30px 2em 30px;
+.debateElement {
+  border-bottom: 0.1rem #d5d5d5 solid;
+  height: 3.8rem;
 }
-
-@media only screen and (max-width: 767px) {
-  .mypagecontent {
-    width: 86%;
-    margin-left: 7%;
-    display: flex;
-    flex-direction: column;
-  }
-  .uppercontent,
-  .middlecontent,
-  .downcontent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .leftcontent,
-  .rightcontent {
-    width: 100%;
-    padding: initial;
-  }
-  .leftcontent {
-    margin: 0;
-    padding-bottom: 10px;
-  }
-  .rightcontent {
-    margin: 0;
-    padding-bottom: 10px;
-  }
-
-  .middlecontent,
-  .downcontent {
-    margin: 0 30px 0 30px;
-  }
-  .ask,
-  .comment {
-    width: auto;
-  }
-
-  .comment {
-    margin-bottom: 30px;
-  }
-
-  .title,
-  .title2 {
-    font-size: 12px;
-    font-weight: bold;
-    color: rgba(116, 116, 116, 1);
-  }
-
-  .title2 {
-    padding-top: 22px;
-  }
-
-  .edit {
-    font-size: 10px;
-  }
-  .edit2,
-  .edit3 {
-    padding-top: 10px;
-    font-size: 10px;
-  }
-
-  .edit2 {
-    padding-right: 5px;
-  }
-
-  .badge {
-    display: none;
-  }
-
-  /* .leftcontent, .ask, .comment{
-    box-shadow: 0 5 2 0 rgba(0, 0, 0, 0.2);
-  } */
-  .rightcontent {
-    box-shadow: initial;
-    border-radius: initial;
+@media screen and (min-width: 768px) and (max-width: 940px) {
+  * {
+    font-size: 40%;
   }
 }

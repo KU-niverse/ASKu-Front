@@ -68,12 +68,12 @@ function QuestionList({
       <div role={'presentation'} onClick={linktoAnswer} className={styles.comment_icon}>
         {answer_count === 0 ? ( // answer_count가 0일 때
           <>
+            <span className={styles.comment_num}>{answer_count}</span>
             <img
               className={styles.comment_png}
               src={nocomment_icon} // nocomment_icon을 보여줌
               alt={'nocomment_icon'}
             />
-            <span className={styles.comment_num}>{answer_count}</span>
           </>
         ) : (
           // answer_count가 0이 아닐 때

@@ -31,40 +31,40 @@ function MyProfile({ nick, point, badge, percent, badgeimg }: MyProfileProps) {
   }
 
   return (
-    <div>
-      <div className={styles.profileimg}>
+    <div className={styles.profileContainer}>
+      <div className={styles.profileImg}>
         <img
           role={'presentation'}
-          className={styles.profileimg_content}
+          className={styles.profileImgContent}
           onClick={linktoBadge}
           src={badgeimg}
           alt={'haho'}
         />
       </div>
-      <div className={styles.profilerow}>
-        <div className={styles.rownick}>
-          <span className={styles.rowtitle}>{'닉네임'}</span>
-          <div className={styles.text}>
-            <span className={styles.point}>{nick}</span>
-            {/* <span role={'presentation'} className={styles.editbtn} onClick={handleNickEdit}>
+      <div className={styles.rowNick}>
+        <span className={styles.name}>{`${nick}`}</span>
+        <span className={styles.nameText}>{` 님`}</span>
+        {/* <span role={'presentation'} className={styles.editbtn} onClick={handleNickEdit}>
               {'수정\r'}
             </span> */}
-          </div>
-        </div>
-        <div className={styles.rowbadge}>
-          <span className={styles.rowtitle}>{'대표 뱃지'}</span>
-          <span role={'presentation'} className={styles.text} onClick={linktoBadge}>
+      </div>
+      <div className={styles.infoRows}>
+        <div className={styles.rowBadge}>
+          <span className={styles.rowTitle}>{'대표 뱃지'}</span>
+          <span className={styles.titleLine}>{'|'}</span>
+          <span role={'presentation'} className={styles.badgeText} onClick={linktoBadge}>
             {badge}
           </span>
         </div>
-        <div className={styles.rowpoint}>
-          <span className={styles.rowtitle}>{'기여도'}</span>
-          <div className={styles.text}>
-            <span className={styles.point}>
+        <div className={styles.rowPoint}>
+          <span className={styles.rowTitle}>{'포인트'}</span>
+          <span className={styles.titleLine}>{'|'}</span>
+          <div className={styles.rowPointText}>
+            <span className={styles.pointText}>
               {point}
               {'p'}
             </span>
-            <span className={styles.rank}>
+            <span className={styles.rankText}>
               {' 상위 '}
               {percent}
               {'%'}
