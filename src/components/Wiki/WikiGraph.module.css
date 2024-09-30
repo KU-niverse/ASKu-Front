@@ -62,6 +62,7 @@
   height: 12px;
   margin-right: 8px;
   border-radius: 100%;
+  flex-shrink: 0;
 }
 
 .legendname {

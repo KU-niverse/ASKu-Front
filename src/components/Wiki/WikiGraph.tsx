@@ -20,12 +20,7 @@ interface WikiGraphProps {
 
 function WikiGraph({ total_point, users }: WikiGraphProps) {
   const getColor = (index: number): string => {
-    const colors = [
-      'rgba(251, 108, 108, 1)',
-      'rgba(255, 214, 0, 1)',
-      'rgba(251, 193, 108, 1)',
-      'rgba(217, 217, 217, 1)',
-    ]
+    const colors = ['#f26262', '#f9e48e', '#6cd395', 'rgba(217, 217, 217, 1)']
 
     // Ensure index is within the valid range
     const validIndex = Math.min(Math.max(index, 0), colors.length - 1)
