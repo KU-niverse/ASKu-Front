@@ -212,6 +212,7 @@
   grid-row: 1/2;
   margin-bottom: 2%;
   border-bottom: solid #EBEBEB 2px;
+  padding-bottom: 1%;
 }
 
 @media only screen and (max-width: 767px) {

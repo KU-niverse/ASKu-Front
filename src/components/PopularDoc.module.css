@@ -99,13 +99,14 @@
 }
 .docTitle {
   font-size: 60%;
-  color: #FF768F;
+  color: #DE3A58;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
   font-weight: 700;
   padding-top: 10%;
+  word-break: keep-all;
 }
 .versionIcon {
   width: 100%;
