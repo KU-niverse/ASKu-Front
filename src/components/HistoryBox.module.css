@@ -3,22 +3,15 @@
 }
 .historyBox {
   width: 100%;
-  height: 142px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0px rgba(186, 186, 186, 0.25);
-  margin-bottom: 20px;
+  height: 17.5rem;
+  border-radius: 1rem;
+  box-shadow: 0rem 0.5rem 2rem -0.5rem #0000001f;
+  margin-bottom: 2rem;
   box-sizing: border-box;
-  border: 1px #d5d5d5 solid;
+  border: 0.1rem #d5d5d5 solid;
   display: grid;
-  grid-template-columns: 1fr 6fr;
-  padding: 13px 0;
-}
-@media only screen and (max-width: 767px) {
-  .historyBox {
-    height: 100px;
-    padding: 10px 0;
-    box-sizing: content-box;
-  }
+  grid-template-columns: 1fr 4.5fr;
+  padding: 1.3rem 0;
 }
 .contents {
   width: 100%;
@@ -28,15 +21,9 @@
   align-items: center;
   box-sizing: border-box;
 }
-@media only screen and (max-width: 767px) {
-  .contents {
-    margin-top: 10px;
-    padding-bottom: 4px;
-  }
-}
 .contentsOne {
-  min-width: 120px;
-  border-right: 1px #d5d5d5 solid;
+  min-width: 12rem;
+  border-right: 0.1rem #d5d5d5 solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,46 +33,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 3rem;
 }
 .summaryContainer {
-  margin-right: 30px;
+  margin-right: 3rem;
 }
 .rightContainer {
-  min-width: 160px;
+  min-width: 16rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
-@media only screen and (max-width: 767px) {
-  .contentsTwo {
-    padding: 0 17px;
-  }
-  .rightContainer {
-    min-width: 150px;
-  }
-  .summaryContainer {
-    margin-right: 20px;
-  }
 }
 .infoLine {
   width: 100%;
   justify-content: flex-end;
   display: flex;
   align-items: center;
-  margin-bottom: 26px;
-}
-@media only screen and (max-width: 767px) {
-  .infoLine {
-    margin-bottom: 15px;
-  }
+  margin-bottom: 2.6rem;
 }
 .contentsTwo img {
   cursor: pointer;
 }
 .versionContainer {
   position: relative;
-  margin-top: 6px;
+  margin-top: 0.6rem;
 }
 .version {
   position: absolute;
@@ -94,27 +65,25 @@
   transform: translate(-50%, -50%);
   color: white;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1.95rem;
 }
-@media only screen and (max-width: 767px) {
-  .version {
-    font-size: 16px;
-    margin-right: 15px;
-  }
+.versionimg {
+  width: 6.7rem;
+  height: 6.7rem;
 }
 .docTitleContainer {
-  padding: 0 13px;
+  padding: 0 1.3rem;
 }
 
 .docTitle {
   font-weight: 700;
-  font-size: 24px;
+  font-size: 2.4rem;
   color: #de3a58;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 30px;
+  height: 3rem;
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -122,22 +91,15 @@
   -webkit-box-orient: vertical;
   cursor: pointer;
 }
-@media only screen and (max-width: 767px) {
-  .docTitle {
-    font-size: 18px;
-    margin-top: 10px;
-    height: 20px;
-  }
-}
 .summaryTitle {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 2rem;
   color: #747474;
-  margin-bottom: 4px;
+  margin-bottom: 0.4rem;
 }
 .summary {
   font-weight: 700;
-  font-size: 32px;
+  font-size: 3.2rem;
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
@@ -146,19 +108,10 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-@media only screen and (max-width: 767px) {
-  .summaryTitle {
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
-  .summary {
-    font-size: 24px;
-  }
-}
 .user {
   font-weight: 600;
-  font-size: 17px;
-  margin-right: 6px;
+  font-size: 1.7rem;
+  margin-right: 0.6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -166,25 +119,16 @@
 .timestamp {
   min-width: max-content;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 1.7rem;
   color: #747474;
-  margin-right: 11px;
-}
-@media only screen and (max-width: 767px) {
-  .user {
-    font-size: 14px;
-    margin-right: 5px;
-  }
-  .timestamp {
-    font-size: 14px;
-  }
+  margin-right: 1.1rem;
 }
 .threedot {
-  padding-bottom: 4px;
+  padding-bottom: 0.4rem;
 }
 .versionBtns {
-  width: 450px;
-  padding-top: 18px;
+  width: 45rem;
+  padding-top: 1.8rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -195,28 +139,20 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  gap: 12px;
+  gap: 1.2rem;
 }
 .versionbtn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.8rem;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 1.5rem;
 }
-@media only screen and (max-width: 767px) {
-  .versionBtns {
-    width: 100%;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .versionbtn {
-    font-size: 13px;
-    margin-left: 0px;
-    margin-right: 6px;
-  }
-  .versionbtn img {
-    margin-right: 3px;
-  }
+.rawviewimg {
+  width: 2rem;
+  height: 1.5rem;
+}
+.vercmpimg {
+  width: 1.7rem;
+  height: 1.7rem;
 }

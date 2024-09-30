@@ -12,22 +12,14 @@ interface ChatQuestionProps {
 
 const ChatQuestion = ({ content }: ChatQuestionProps) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-      <div className={styles.questionBox}>
-        <div className={styles.characterWrapper}>
-          <div className={styles.characterContainer}>
-            <img src={catIcon} alt={'character'} className={styles.character} />
-          </div>
-        </div>
-        <div className={styles.chatTextWrap}>
-          <p className={styles.chatText}>{content}</p>
-        </div>
-        <img alt={'dots'} src={dots} className={styles.dots} />
-        <div className={styles.iconZip}>
-          <img className={styles.icon} src={like} alt={'like'} />
-          <img className={styles.icon} src={unlike} alt={'unlike'} />
-          <img className={styles.icon} src={reference} alt={'reference link'} />
-        </div>
+    <div className={styles.questionBox}>
+      <p className={styles.chatText}>{content}</p>
+      <img src={catIcon} alt={'character'} className={styles.character} />
+      <img alt={'dots'} src={dots} className={styles.dots} />
+      <div className={styles.iconZip}>
+        <img className={styles.icon} src={like} alt={'like'} />
+        <img className={styles.icon} src={unlike} alt={'unlike'} />
+        <img className={styles.icon} src={reference} alt={'reference link'} />
       </div>
     </div>
   )
