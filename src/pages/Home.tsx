@@ -288,7 +288,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
           <div className={styles.randomDocBox}>
             <p className={styles.realTimeTitle}>{'실시간 랜덤 문서'}</p>
-            <div>
+            <div className={styles.randomBackContainer}>
               <Link
                 className={styles.randomLink}
                 to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
