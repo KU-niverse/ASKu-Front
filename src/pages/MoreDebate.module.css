@@ -87,6 +87,9 @@
   margin: 37px 12px 21px 12px;
   padding-bottom: 35px;
 }
+.menu1,.menu2{
+  font-size: 2.4rem;
+}
 
 .none {
   color: #000;
@@ -156,6 +159,7 @@
   .menu1,
   .menu2 {
     margin: 0;
+    font-size: 2.4rem;
   }
 
   .menu {
