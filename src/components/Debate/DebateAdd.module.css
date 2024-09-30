@@ -1,7 +1,7 @@
 .addTitle {
   width: 89px;
   position: relative;
-  font-size: 14.5px;
+  font-size: 2.4rem;
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
@@ -10,7 +10,7 @@
 .subTitle {
   width: 142px;
   position: relative;
-  font-size: 11px;
+  font-size: 1.8rem;
   font-weight: 500;
   font-family: Pretendard;
   color: #747474;
