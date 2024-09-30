@@ -17,6 +17,7 @@ import randomBack from '../img/randomBack.svg'
 import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
+import subArrow from '../img/homeSubArrow.svg'
 
 interface HistoryResponse {
   success: boolean
@@ -210,7 +211,14 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           <div className={styles.popularDoc}>
             <div className={styles.HomeTitle}>
               <p className={styles.HomeSubTitle}>{'인기 문서'}</p>
-              <p className={styles.SubTitleMore}>{'문서 더보기'}</p>
+              <Link
+                className={styles.more}
+                to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
+                key={randomTitle}
+              >
+                <p className={styles.SubTitleMore}>{'문서 더보기'}</p>
+                <img src={subArrow} alt={'arrow'} />
+              </Link>
             </div>
             <div>
               <div className={styles.popDocList}>
@@ -225,7 +233,10 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           <div className={styles.HotDebate}>
             <div className={styles.HomeTitle}>
               <p className={styles.HomeSubTitle}>{'최근 핫한 토론방'}</p>
-              <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
+              <Link className={styles.more} to={`/latestdebate`}>
+                <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
+                <img src={subArrow} alt={'arrow'} />
+              </Link>
             </div>
 
             <div className={styles.HotDebateList}>

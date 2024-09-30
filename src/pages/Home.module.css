@@ -25,8 +25,9 @@
 
 .HomeTitle {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   height: 25%;
+  padding-bottom: 1%;
 }
 
 .HomeSubTitle {
@@ -38,7 +39,7 @@
 }
 
 .SubTitleMore {
-  font-size: 20%;
+  font-size: 15%;
   color: #979797;
   font-weight: 500;
   line-height: 15px;
@@ -378,6 +379,10 @@
 }
 .randomBackContainer{
   text-align: center;
+}
+.more{
+  display: flex;
+  align-items: center;
 }
 
 .randomLink {
