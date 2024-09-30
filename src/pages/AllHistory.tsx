@@ -96,75 +96,82 @@ const AllHistory: React.FC = () => {
   const endIndex = page * perPage
 
   return (
-    <div className={styles.historyContainer}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.historyContent}>
-        {isError ? (
-          <div>
-            {'에러: '}
-            {error.message}
-          </div>
-        ) : (
-          <div className={styles.historyList}>
-            <div className={styles.historyTitle}>
-              <p className={styles.listTitles}>
-                {type === 'all' ? (
-                  <>
-                    <span className={styles.listTitleStart}>{'최근 변경된'}</span> {'모든 문서'}
-                  </>
-                ) : type === 'create' ? (
-                  <>
-                    <span className={styles.listTitleStart}>{'새로 생성된'}</span> {'모든 문서'}
-                  </>
-                ) : type === 'rollback' ? (
-                  <>
-                    <span className={styles.listTitleStart}>{'최근 롤백된'}</span> {'모든 문서'}
-                  </>
-                ) : null}
-              </p>
-
-              <div className={styles.historyTypes}>
-                <p
-                  role={'presentation'}
-                  onClick={allBtn}
-                  className={type === 'all' ? styles.clickType : styles.default}
-                >
-                  {'all'}
-                </p>
-                <p
-                  role={'presentation'}
-                  onClick={createBtn}
-                  className={type === 'create' ? styles.clickType : styles.default}
-                >
-                  {'create'}
-                </p>
-                <p
-                  role={'presentation'}
-                  onClick={rollbackBtn}
-                  className={type === 'rollback' ? styles.clickType : styles.default}
-                >
-                  {'rollback'}
-                </p>
-              </div>
+    <div>
+      <div className={styles.historyContainer}>
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        <div className={styles.historyContent}>
+          {isError ? (
+            <div>
+              {'에러: '}
+              {error.message}
             </div>
-            {filteredHistorys.slice(startIndex, endIndex).map((item) => (
-              <div key={item.id}>
-                <AllHistoryBox
-                  version={item.version}
-                  summary={item.summary}
-                  user={item.nick}
-                  timestamp={FormatTimeAgo(item.created_at)}
-                  title={item.doc_title}
-                  target={item.id}
-                  type={type}
+          ) : (
+            <div className={styles.historyList}>
+              <div className={styles.historyTitle}>
+                <p className={styles.listTitles}>
+                  {type === 'all' ? (
+                    <>
+                      <span className={styles.listTitleStart}>{'최근 변경된'}</span> {'모든 문서'}
+                    </>
+                  ) : type === 'create' ? (
+                    <>
+                      <span className={styles.listTitleStart}>{'새로 생성된'}</span> {'모든 문서'}
+                    </>
+                  ) : type === 'rollback' ? (
+                    <>
+                      <span className={styles.listTitleStart}>{'최근 롤백된'}</span> {'모든 문서'}
+                    </>
+                  ) : null}
+                </p>
+
+                <div className={styles.historyTypes}>
+                  <p
+                    role={'presentation'}
+                    onClick={allBtn}
+                    className={type === 'all' ? styles.clickType : styles.default}
+                  >
+                    {'all'}
+                  </p>
+                  <p
+                    role={'presentation'}
+                    onClick={createBtn}
+                    className={type === 'create' ? styles.clickType : styles.default}
+                  >
+                    {'create'}
+                  </p>
+                  <p
+                    role={'presentation'}
+                    onClick={rollbackBtn}
+                    className={type === 'rollback' ? styles.clickType : styles.default}
+                  >
+                    {'rollback'}
+                  </p>
+                </div>
+              </div>
+              {filteredHistorys.slice(startIndex, endIndex).map((item) => (
+                <div key={item.id}>
+                  <AllHistoryBox
+                    version={item.version}
+                    summary={item.summary}
+                    user={item.nick}
+                    timestamp={FormatTimeAgo(item.created_at)}
+                    title={item.doc_title}
+                    target={item.id}
+                    type={type}
+                  />
+                </div>
+              ))}
+              <div className={styles.pagingContainer}>
+                <Paging
+                  total={filteredHistorys.length}
+                  perPage={perPage}
+                  activePage={page}
+                  onChange={handlePageChange}
                 />
               </div>
-            ))}
-            <div className={styles.pagingContainer}>
-              <Paging total={filteredHistorys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       <Footer />
     </div>
