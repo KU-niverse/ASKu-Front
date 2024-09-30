@@ -13,22 +13,21 @@ td {
   word-break: break-all;
 }
 
+/* 해상도 1550px ~ */
 @media screen and (min-width: 1550px) {
-  html {
-    font-size: 62.5%;
+  * {
+    font-size: 62.5%; /* 1rem = 10px*/
   }
 }
-
 /* 해상도 768px ~ 1549px */
 @media screen and (min-width: 768px) and (max-width: 1549px) {
-  html {
+  * {
     font-size: 50%;
   }
 }
-
-/* 해상도 767px 이하 */
+/* 해상도 ~767px*/
 @media screen and (max-width: 767px) {
-  html {
+  * {
     font-size: 40%;
   }
 }
