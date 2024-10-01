@@ -4,19 +4,23 @@
 .wikiContentTitle {
   display: flex;
   align-items: center;
+  font-size: 3.2rem;
+  font-weight: 600;
 }
-@media only screen and (max-width: 767px) {
-  .wikiContentTitle {
-    width: 200px;
-  }
-}
+
 .wikiContentTitle span {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 3.2rem;
+  font-weight: 600;
 }
 .wikiIndex {
   color: rgba(222, 58, 88, 1);
-  font-size: 22px;
+  font-size: 3.2rem;
+}
+
+.wikiArrowIcon {
+  margin-left: 2.2rem;
+  width: 4rem;
+  height: 4rem;
 }
 
 .wikiContentBtns {
@@ -25,25 +29,29 @@
   justify-content: space-between;
   align-items: center;
 }
-@media only screen and (max-width: 767px) {
-  .wikiContentBtns {
-    width: 102px;
-  }
-  .wikiContentBtns button {
-    width: 47px;
-    font-size: 11px;
-    height: 25px;
-  }
-}
+
 .wikiContentBtn {
-  width: 52px;
-  height: 26px;
+  width: 8.2rem;
+  height: 3.6rem;
   border: none;
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   color: white;
   border-radius: 20px;
   font-size: 12px;
   cursor: pointer;
+}
+
+.wikiContentQuestionBtn {
+  margin-left: 1.1rem;
+  border: 1px solid rgba(159, 19, 46, 1);
+  width: 8.2rem;
+  height: 3.6rem;
+  background: white;
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #de3a58;
 }
 .wikiContents hr {
   width: 100%;
@@ -61,15 +69,19 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 0px;
+  padding-bottom: 3.2rem;
+  border-bottom: 1px solid #d5d5d5;
 }
 .wikiText {
-  font-size: 14px;
+  font-size: 8rem;
   width: 100%;
   word-break: break-word;
+  border-bottom: 0.5px solid #d5d5d5;
 }
 .wikiText a {
   width: 100%;
+  font-size: 1.8rem;
+  font-weight: 400;
   word-wrap: break-word; /* 단어 단위로 줄 바꿈 */
   display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
 }

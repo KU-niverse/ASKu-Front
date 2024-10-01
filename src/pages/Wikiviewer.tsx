@@ -10,7 +10,7 @@ import trueBk from '../img/bookmarkFill.svg'
 import VectorRight from '../img/VectorRight.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
-import minilike from '../img/minilike.svg'
+import comment from '../img/comment_icon.svg'
 import WikiBox from '../components/WikiBox'
 import Switch from '../components/Switch'
 import WikiGraph from '../components/Wiki/WikiGraph'
@@ -448,7 +448,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                         <span className={styles.quesTitle}>Q. {item.content}</span>
                         <span className={styles.quesNum}>
                           <span>{item.like_count}</span>
-                          <img alt={'좋아요'} src={minilike} />
+                          <img alt={'좋아요'} src={comment} />
                         </span>
                       </ul>
                     </div>

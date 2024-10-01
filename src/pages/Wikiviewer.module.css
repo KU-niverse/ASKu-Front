@@ -4,6 +4,7 @@
 .quesul {
   cursor: pointer;
   margin-top: 2.4rem;
+  border-bottom: 1px solid #d5d5d5;
 }
 .noneComment {
   font-size: 1.4rem;
@@ -310,21 +311,19 @@
   border: none;
   cursor: pointer;
   text-decoration: underline;
-  margin-right: 3px;
 }
 .customHr {
   margin: 0;
   padding: 0;
   border-color: rgba(237, 237, 237, 0.5);
 }
-.queswrap {
-}
+
 .quesWrap p {
   margin: 0;
   padding: 0;
 }
 .quesWrap ul {
-  padding: 3px 0px 3px 0px;
+  padding: 1.1rem 0 1.1rem 0;
   display: flex;
   justify-content: space-between;
   margin: 5px 0px 5px 0px;
@@ -332,7 +331,7 @@
   align-items: center;
 }
 .quesTitle {
-  width: 60%;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -355,26 +354,25 @@
   object-fit: contain;
 }
 
+.quesNum span {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
 .wikigraph {
-  width: 38%;
-  height: 303px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  width: 45.8rem;
+  height: 32.4rem;
+  border: 1px solid #d9d9d9;
   border-radius: 12px;
-  margin-bottom: 20px;
-  padding: 18px;
-  padding-top: 23px;
+  padding: 1.9rem;
   box-sizing: border-box;
 }
 .wikicontent {
   width: 100%;
   height: auto;
   min-height: 500px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   margin-bottom: 20px;
-  padding: 18px;
   padding-top: 23px;
   box-sizing: border-box;
 }
