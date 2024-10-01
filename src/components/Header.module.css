@@ -25,7 +25,7 @@ html {
   grid-template-columns: repeat(14, 1fr);
   column-gap: 24px;
   width: 100%;
-  height: 60px;
+  height: 8rem;
   align-items: center;
 }
 @media only screen and (max-width: 767px) {
@@ -46,6 +46,7 @@ html {
   display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
   align-items: center; /* Align items vertically in the center */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
+  font-size: 1.9rem;
 }
 .navDocs {
   background-color: #ffffff;
@@ -55,6 +56,7 @@ html {
   display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
   align-items: center; /* Align items vertically in the center */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
+  font-size: 1.9rem;
 }
 .navDebate {
   background-color: #ffffff;
@@ -64,6 +66,7 @@ html {
   display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
   align-items: center; /* Align items vertically in the center */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
+  font-size: 1.9rem;
 }
 .navQuestions {
   background-color: #ffffff;
@@ -73,6 +76,7 @@ html {
   display: inline-flex; /* Use inline-flex to keep the buttons in a single line */
   align-items: center; /* Align items vertically in the center */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
+  font-size: 1.9rem;
 }
 
 .navHome:hover {
@@ -131,19 +135,21 @@ html {
 }
 
 .inputcontainer {
-  grid-column: 3/6;
   display: flex;
   align-items: center; /* 아이템을 수직 가운데 정렬 */
   position: relative;
+  height: 3rem;
+  width: 6rem;
 }
 
 .searchIcon {
-  height: 80%;
+  width: 3rem;
+  height: 3rem;
   position: absolute;
-
   cursor: pointer;
   z-index: 1; /* 아이콘을 입력 필드 위에 놓이도록 */
-  margin-left: 10px;
+  margin-left: 1rem;
+  padding-top: 0.2rem;
 }
 @media only screen and (max-width: 767px) {
   .inputcontainer {
@@ -158,9 +164,9 @@ html {
 
 .headerInput {
   border: none;
-  height: 80%;
-  padding-left: 50px;
-  padding-right: 40px; /* 아이콘이 입력창 내부에 들어가기 때문에 오른쪽 패딩 조정 */
+  height: 100%;
+  padding-left: 5rem;
+  font-size: 2.4rem;
   font-weight: 600;
 }
 .headerInput:focus {
@@ -169,6 +175,7 @@ html {
 }
 .headerInput::placeholder {
   color: #cccbcb;
+  font-size: 2rem;
 }
 .icon {
   width: 20px; /* Adjust the size as needed */
@@ -200,6 +207,8 @@ html {
   cursor: pointer;
 }
 .nickname_badge {
+  border: 1px solid #d5d5d5;
+  border-radius: 50%;
   margin-right: 15px;
 }
 
