@@ -90,3 +90,7 @@
 .wikiText li {
   list-style-type: disc;
 }
+
+.wikiText * {
+  font-size: 2rem;
+}
