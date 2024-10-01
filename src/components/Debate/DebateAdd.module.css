@@ -24,8 +24,8 @@
   background: linear-gradient(166deg, #fff -32.12%, #ffa1b0 110.81%);
   border: 1px solid #de3a58;
   border-radius: 12px;
-  width: 196px;
-  height: 75px;
+  width: 32.7rem;
+  height: 12.5rem;
   flex-shrink: 0;
   cursor: pointer;
 }
@@ -40,8 +40,8 @@
 .addInput {
   border: 1px solid #de3a58;
   border-radius: 12px;
-  width: 196px;
-  height: 75px;
+  width: 32.7rem;
+  height: 12.5rem;
   flex-shrink: 0;
   color: #000000;
   font-size: 9.5px;
