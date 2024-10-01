@@ -36,8 +36,9 @@
   border: none;
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   color: white;
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: 2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -48,20 +49,21 @@
   height: 3.6rem;
   background: white;
   color: white;
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: 2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
   cursor: pointer;
   color: #de3a58;
 }
 .wikiContents hr {
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 0.8rem;
   color: rgba(0, 0, 0, 0.3);
 }
 
 .wikiContents {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 .wikiContentlist {
   list-style-type: none;
@@ -70,13 +72,13 @@
   align-items: center;
   cursor: pointer;
   padding-bottom: 3.2rem;
-  border-bottom: 1px solid #d5d5d5;
+  border-bottom: 0.1rem solid #d5d5d5;
 }
 .wikiText {
   font-size: 8rem;
   width: 100%;
   word-break: break-word;
-  border-bottom: 0.5px solid #d5d5d5;
+  border-bottom: 0.1rem solid #d5d5d5;
 }
 .wikiText a {
   width: 100%;
