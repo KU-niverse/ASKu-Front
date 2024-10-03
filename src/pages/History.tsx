@@ -6,6 +6,7 @@ import styles from './History.module.css'
 import Header from '../components/Header'
 import his2 from '../img/his2.png'
 import HistoryBox from '../components/HistoryBox'
+import FormatTimeAgo from '../components/FormatTimeAgo'
 import Paging from '../components/Paging'
 import Footer from '../components/Footer'
 
@@ -85,49 +86,44 @@ const History = () => {
   const visibleHistorys = historys.slice(startIndex, endIndex)
 
   return (
-    <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.header}>
-        <span>
-          <img alt={'히스토리'} src={his2} />
-          {'히스토리\r'}
-        </span>
-      </div>
-      <div className={styles.history}>
-        <div className={styles.historyList}>
-          <div className={styles.historyTitle}>
-            <p className={styles.listTitle}>{title}</p>
-            <p className={styles.listTitle2}>{'문서의 변경 내용'}</p>
-          </div>
-          {isError ? (
-            <div>
-              {'에러: '}
-              {error.message}
+    <>
+      <div className={styles.historyContainer}>
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        <div className={styles.historyContent}>
+          <div className={styles.historyList}>
+            <div className={styles.historyTitle}>
+              <p className={styles.docTitle}>{title}</p>
+              <p className={styles.listTitles}>{'문서의 변경 내용'}</p>
             </div>
-          ) : historys.length === 0 ? (
-            <div>{'아직 히스토리가 없습니다'}</div>
-          ) : (
-            visibleHistorys.map((item) => (
-              <div key={item.id}>
-                <HistoryBox
-                  version={item.version}
-                  summary={item.summary}
-                  user={item.nick || ''} // 닉네임이 없을 경우 빈 문자열 처리
-                  timestamp={item.timestamp}
-                  title={title}
-                  target={item.id || 0} // id가 없을 경우 0 처리
-                  type={''}
-                  newest={newest}
-                />
+            {isError ? (
+              <div>
+                {'에러: '}
+                {error.message}
               </div>
-            ))
-          )}
-
-          <Paging total={historys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+            ) : (
+              visibleHistorys.map((item) => (
+                <div key={item.id}>
+                  <HistoryBox
+                    version={item.version}
+                    summary={item.summary}
+                    user={item.nick || ''} // 닉네임이 없을 경우 빈 문자열 처리
+                    timestamp={FormatTimeAgo(item.created_at)}
+                    title={title}
+                    target={item.id || 0} // id가 없을 경우 0 처리
+                    type={''}
+                    newest={newest}
+                  />
+                </div>
+              ))
+            )}
+            <div className={styles.pagingContainer}>
+              <Paging total={historys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   )
 }
 
