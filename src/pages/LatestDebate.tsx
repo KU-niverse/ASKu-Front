@@ -56,7 +56,7 @@ const fetchDebateList = async (): Promise<DebateData[]> => {
 function LatestDebate() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const { data: debateListData, error, isLoading } = useQuery<DebateData[], Error>('debateList', fetchDebateList)
-  const perPage = 8
+  const perPage = 7
   const [page, setPage] = useState<number>(1)
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber)
