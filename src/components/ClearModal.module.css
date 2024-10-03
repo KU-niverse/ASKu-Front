@@ -67,7 +67,9 @@
   width: 150px;
   height: auto;
 }
+
 .signin {
+  font-size: 1.5rem;
   margin-top: 30px;
   margin-left: 10px;
   background-image: linear-gradient(to left, #9f132e, #de3a58);
@@ -80,6 +82,7 @@
 }
 
 .signup {
+  font-size: 1.5rem;
   margin-top: 10px;
   margin-left: 10px;
   background-image: linear-gradient(to left, #747474, #d5d5d5);
