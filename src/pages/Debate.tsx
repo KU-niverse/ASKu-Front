@@ -175,16 +175,12 @@ const Debate: React.FC = () => {
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
 
-      <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
-      </div>
-
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
+          <div className={styles.header}>
+            <p className={styles.debate2}>{title}</p>
+            <p className={styles.debate}>&nbsp;문서 기반 토론</p>
+          </div>
           <DebateTitle title={title} subject={subject} />
           {isError ? (
             <div>

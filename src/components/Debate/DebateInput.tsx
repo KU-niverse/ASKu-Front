@@ -124,16 +124,6 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <span>{'의견 달기'}</span>
-        <img
-          role={'presentation'}
-          src={submit}
-          alt={'submit'}
-          onClick={handleSubmit}
-          style={{ cursor: isSubmitting ? 'wait' : 'pointer' }} // 롤백 중 커서 변경
-        />
-      </div>
       <div className={styles.textbox}>
         <textarea
           rows={4}
@@ -142,6 +132,13 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
           value={debateContent}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+        />
+        <img
+          role={'presentation'}
+          src={submit}
+          alt={'submit'}
+          onClick={handleSubmit}
+          style={{ cursor: isSubmitting ? 'wait' : 'pointer' }} // 롤백 중 커서 변경
         />
       </div>
     </div>

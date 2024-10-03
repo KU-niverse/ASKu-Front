@@ -13,16 +13,18 @@
   background-color: #fff;
   border: 1px solid rgba(116, 116, 116, 0.5);
   box-sizing: content-box;
-  width: 15%;
-  height: 28px;
-  padding-left: 50px;
-  margin-top: 13.2px;
+  width: 13%;
+  height: 4.7rem;
+  padding-left: 5rem;
   font-size: 9.6px;
   color: #000;
   font-family: Pretendard;
 }
 .searchInputContainer{
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top:3rem;
 }
 .searchIcon {
   width: 12px;
@@ -30,16 +32,13 @@
   position: relative;
   cursor: pointer;
   left: 6%;
-  top: 3rem;
 }
 .cancelIcon {
   position: absolute;
-  top: 22.5rem;
   width: 12px;
   height: 12px;
   cursor: pointer;
-  margin-right: 28rem;
-  right: 0px;
+  right: 20%;
 }
 
 .hidden {
@@ -59,7 +58,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 8px;
+  font-size: 1.3rem;
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
