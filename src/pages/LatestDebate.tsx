@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { track } from '@amplitude/analytics-browser'
@@ -83,10 +82,6 @@ function LatestDebate() {
     <div className={styles.container}>
       <div>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      </div>
-
-      <div className={styles.header}>
-        <p className={styles.debate}>{'토론'}</p>
       </div>
 
       <div className={styles.debatecontent}>

@@ -1,4 +1,5 @@
 .searchTitle {
+  font-weight: 700;
   width: 89px;
   position: relative;
   font-size: 2.4rem;
@@ -6,7 +7,9 @@
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
+  margin:0;
 }
+
 .searchInput {
   position: absolute;
   border-radius: 35px;
@@ -26,6 +29,12 @@
   flex-direction: row;
   margin-top:3rem;
 }
+.InputContainer{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top:3rem;
+}
 .searchIcon {
   width: 12px;
   height: 12px;
@@ -39,6 +48,18 @@
   height: 12px;
   cursor: pointer;
   right: 20%;
+}
+.headerInput{
+  position: absolute;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: content-box;
+  height: 4.7rem;
+  padding-left: 5rem;
+  font-size: 9.6px;
+  color: #000;
+  font-family: Pretendard;
 }
 
 .hidden {

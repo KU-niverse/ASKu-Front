@@ -74,6 +74,7 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
         />
 
         <img
+          role={'presentation'}
           className={styles.searchIcon}
           src={word ? searchIcon_red : searchIcon_grey}
           onClick={handleDebateSearch}
