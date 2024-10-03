@@ -20,7 +20,7 @@
   width: auto;
   display: grid;
   grid-template-columns: repeat(12,1fr);
-  margin: 7rem 12rem;
+  margin: 3.7rem 12rem;
   grid-gap: 2.4rem;
   flex-direction: row;
   flex: 1;
@@ -36,6 +36,10 @@
   padding: 3.7rem;
   box-sizing: border-box;
   border-radius: 12px;
+  position: -webkit-sticky;
+  position: sticky;
+  align-self: flex-start;
+  top: 10rem;
 }
 .sidebar div {
   width: 100%;
@@ -48,6 +52,7 @@
 
 .maincontent_box {
   padding-right: 3.3rem;
+  padding-bottom: 4.3rem;
 }
 
 .title {
@@ -73,7 +78,7 @@
 .menu2 {
 }
 .debateRecent{
-  margin-top: 20rem;
+  margin-top: 10rem;
 }
 .debatesearch{
   width: 100%;

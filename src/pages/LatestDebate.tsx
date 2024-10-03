@@ -9,6 +9,7 @@ import LatestDebateList from '../components/Debate/LatestDebateList'
 import DebateAllSearch from '../components/Debate/DebateAllSearch'
 import DebateRecent from '../components/Debate/DebateRecent'
 import SpinnerMypage from '../components/SpinnerMypage'
+import Paging from '../components/Paging'
 
 interface UserInfo {
   id: number
@@ -55,6 +56,11 @@ const fetchDebateList = async (): Promise<DebateData[]> => {
 function LatestDebate() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const { data: debateListData, error, isLoading } = useQuery<DebateData[], Error>('debateList', fetchDebateList)
+  const perPage = 8
+  const [page, setPage] = useState<number>(1)
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber)
+  }
 
   // Amplitude
   React.useEffect(() => {
@@ -77,6 +83,10 @@ function LatestDebate() {
       </div>
     )
   }
+  const totalPages = Math.ceil(debateListData.length / perPage) // 총 페이지 수 계산
+  const startIndex = (page - 1) * perPage
+  const endIndex = startIndex + perPage
+  const visibleDebates = debateListData.slice(startIndex, endIndex)
 
   return (
     <div className={styles.container}>
@@ -96,7 +106,7 @@ function LatestDebate() {
               <p className={styles.nodebate}>{'아직 생성된 토론방이 없습니다.'}</p>
             ) : (
               debateListData &&
-              debateListData.map((data) => (
+              visibleDebates.map((data) => (
                 <LatestDebateList
                   key={data.id}
                   id={data.id}
@@ -113,6 +123,7 @@ function LatestDebate() {
               ))
             )}
           </div>
+          <Paging total={debateListData.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>

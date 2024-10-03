@@ -37,10 +37,14 @@
   padding: 3rem;
   box-sizing: border-box;
   border-radius: 12px;
+  position: -webkit-sticky;
+  position: sticky;
+  align-self: flex-start;
+  top: 10rem;
 }
 .debateSearch {
   width: 100%;
-  margin-bottom: 20rem;
+  margin-bottom: 10rem;
 }
 .maincontent {
   background-color: white;
