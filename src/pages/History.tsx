@@ -9,6 +9,7 @@ import HistoryBox from '../components/HistoryBox'
 import FormatTimeAgo from '../components/FormatTimeAgo'
 import Paging from '../components/Paging'
 import Footer from '../components/Footer'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -51,6 +52,7 @@ const History = () => {
   const perPage = 6
 
   const {
+    isLoading,
     isError,
     error,
     data: historyData,
@@ -78,6 +80,13 @@ const History = () => {
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber)
   }
+
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
 
   // 페이지네이션 관련 변수 계산
   const totalPages = Math.ceil(historys.length / perPage) // 총 페이지 수 계산
