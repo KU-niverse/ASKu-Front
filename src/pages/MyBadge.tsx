@@ -114,9 +114,6 @@ function MyBadge() {
       <div>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
-      <div className={styles.header}>
-        <p className={styles.mypage}>{'MYPAGE'}</p>
-      </div>
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>{'나의 뱃지 목록'}</p>

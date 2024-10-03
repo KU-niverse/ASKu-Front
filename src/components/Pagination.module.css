@@ -2,37 +2,41 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  margin: 16px;
 }
 
 .Button {
   border: none;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 0.8rem;
   margin: 0;
-  background: white;
-  color: black;
-  font-size: 16px;
+  padding: 0;
+  background: transparent;
+  color: #747474;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    background: white;
     cursor: pointer;
-    color: rgba(159, 19, 46, 1);
-    transform: translateY(-2px);
+    /* color: rgba(159, 19, 46, 1);
+    transform: translateY(-2px); */
   }
 
   &[disabled] {
     cursor: revert;
-    transform: revert;
     color: black;
+    /* transform: revert; */
   }
 
   &[aria-current] {
-    background: white;
-    font-weight: bold;
+    background: transparent;
     cursor: revert;
-    transform: revert;
-    color: rgba(159, 19, 46, 1);
+    /* transform: revert; */
+    color: black;
   }
+}
+
+.Numbers {
+  display: flex;
+  gap: 0.8rem;
 }

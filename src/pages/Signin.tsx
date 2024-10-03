@@ -142,6 +142,8 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
       <form onSubmit={handleOnSubmit}>
         <div className={styles.login_input}>
           <input type={'text'} value={id} onChange={(e) => setId(e.target.value)} placeholder={'아이디를 입력하세요'} />
+        </div>
+        <div className={styles.login_input}>
           <input
             type={'password'}
             value={password}

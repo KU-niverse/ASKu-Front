@@ -104,81 +104,74 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
   }, [reference])
 
   return (
-    <div>
-      <div className={styles.answerBox}>
-        <div className={styles.characterWrapper}>
-          <div className={styles.characterContainer}>
-            <img src={haho} alt={'character'} className={styles.character} />
+    <div className={styles.answerBox}>
+      <img src={haho} alt={'character'} className={styles.character} />
+      <p className={styles.chatText}>{processedContent}</p>
+      <img alt={'dots'} src={dots} className={styles.dots} />
+      <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
+        <img
+          role={'presentation'}
+          id={styles.like}
+          className={styles.icon}
+          src={likeHovered ? like_hover : like}
+          alt={'like'}
+          onMouseOver={handleLikeMouseOver}
+          onMouseLeave={handleLikeMouseLeave}
+          onFocus={handleLikeMouseOver}
+          onBlur={handleLikeMouseLeave}
+          onClick={handleLikeClick}
+        />
+        <img
+          role={'presentation'}
+          id={styles.unlike}
+          className={styles.icon}
+          src={unlikeHovered ? unlike_hover : unlike}
+          alt={'unlike'}
+          onMouseOver={handleUnlikeMouseOver}
+          onMouseLeave={handleUnlikeMouseLeave}
+          onFocus={handleUnlikeMouseOver}
+          onBlur={handleUnlikeMouseLeave}
+          onClick={handleUnlikeClick}
+        />
+        <img
+          role={'presentation'}
+          id={styles.referenceIcon}
+          className={styles.icon}
+          src={referenceIcon}
+          alt={'reference link'}
+          onClick={handleReferenceOpen}
+        />
+      </div>
+      <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
+        <div className={styles.reference}>
+          <div className={styles.header}>
+            <p className={styles.reference_title}>{'출처'}</p>
+            <img
+              role={'presentation'}
+              className={styles.closeBtn}
+              src={closeBtn}
+              alt={'close button'}
+              onClick={handleReferenceClose}
+            />
           </div>
-        </div>
-        <div className={styles.chatTextWrap}>
-          <p className={styles.chatText}>{processedContent}</p>
-        </div>
-        <img alt={'dots'} src={dots} className={styles.dots} />
-        <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
-          <img
-            role={'presentation'}
-            id={styles.like}
-            className={styles.icon}
-            src={likeHovered ? like_hover : like}
-            alt={'like'}
-            onMouseOver={handleLikeMouseOver}
-            onMouseLeave={handleLikeMouseLeave}
-            onFocus={handleLikeMouseOver}
-            onBlur={handleLikeMouseLeave}
-            onClick={handleLikeClick}
-          />
-          <img
-            role={'presentation'}
-            id={styles.unlike}
-            className={styles.icon}
-            src={unlikeHovered ? unlike_hover : unlike}
-            alt={'unlike'}
-            onMouseOver={handleUnlikeMouseOver}
-            onMouseLeave={handleUnlikeMouseLeave}
-            onFocus={handleUnlikeMouseOver}
-            onBlur={handleUnlikeMouseLeave}
-            onClick={handleUnlikeClick}
-          />
-          <img
-            role={'presentation'}
-            id={styles.referenceIcon}
-            className={styles.icon}
-            src={referenceIcon}
-            alt={'reference link'}
-            onClick={handleReferenceOpen}
-          />
-        </div>
-        <div style={{ display: referenceOpen ? 'block' : 'none' }} className={styles.reference_wrap}>
-          <div className={styles.reference}>
-            <div className={styles.header}>
-              <p className={styles.reference_title}>{'출처'}</p>
-              <img
-                role={'presentation'}
-                className={styles.closeBtn}
-                src={closeBtn}
-                alt={'close button'}
-                onClick={handleReferenceClose}
-              />
-            </div>
-            <div className={styles.reference_text}>
-              {ruleDetails && (
-                <button type={'button'} className={styles.ruleButton} onClick={() => handleRuleModalOpen(ruleDetails)}>
-                  {'관련 학칙\r'}
-                </button>
-              )}
-              {parsedReferences?.references.map(({ link }) => (
-                <div key={link}>
-                  <Link to={`/wiki/${link}`} className={styles.reference_link}>
-                    {'참고문서: '}
-                    {link}
-                  </Link>
-                </div>
-              ))}
-            </div>
+          <div className={styles.reference_text}>
+            {ruleDetails && (
+              <button type={'button'} className={styles.ruleButton} onClick={() => handleRuleModalOpen(ruleDetails)}>
+                {'관련 학칙\r'}
+              </button>
+            )}
+            {parsedReferences?.references.map(({ link }) => (
+              <div key={link}>
+                <Link to={`/wiki/${link}`} className={styles.reference_link}>
+                  {'참고문서: '}
+                  {link}
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
       {likeModalOpen && <LikeModal isOpen={likeModalOpen} onClose={() => setLikeModalOpen(false)} qnaId={qnaId} />}
       {unlikeModalOpen && (
         <UnlikeModal isOpen={unlikeModalOpen} onClose={() => setUnlikeModalOpen(false)} qnaId={qnaId} />

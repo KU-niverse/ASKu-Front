@@ -1,47 +1,47 @@
 .ask_list {
   display: flex;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 0;
   justify-content: space-between;
 }
 .ask_front {
-  width: 90%;
+  width: 85%;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ask_icon {
-  color: rgba(159, 19, 46, 1);
+  font-size: 1.9rem;
+  margin-right: 0.5rem;
 }
 
 .ask_content {
-  padding-left: 10px;
   cursor: pointer;
   word-break: break-word;
+  font-size: 1.9rem;
 }
 
 .comment_icon {
   align-self: center;
   display: flex;
   flex-direction: row;
-  width: 5%;
   cursor: pointer;
 }
 
-.comment_png {
-  object-fit: contain;
-  position: relative;
-  vertical-align: top;
-  margin-right: 10px;
-  width: 18px;
-}
-
 .comment_num {
-  font-size: 16px;
+  font-size: 1.9rem;
+  margin-right: 1.2rem;
   color: #747474;
   font-weight: 700;
 }
 
-@media only screen and (max-width: 767px) {
+.comment_png {
+  object-fit: contain;
+  vertical-align: top;
+  width: 1.8rem;
+}
+
+/* @media only screen and (max-width: 767px) {
   .ask_list {
     font-size: 14px;
   }
@@ -58,4 +58,4 @@
   .comment_num {
     font-size: 12px;
   }
-}
+} */
