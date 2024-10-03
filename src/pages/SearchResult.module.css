@@ -37,7 +37,7 @@
 }
 .header h4 {
   margin: 0px;
-  font-size: 25px;
+  font-size: 3.6rem;
   font-weight: 700;
 }
 .header img {
@@ -139,6 +139,7 @@
   color: #DE3A58;
   font-weight: 700;
   margin-bottom: 0px;
+  font-size: 2.4rem;
 }
 
 .recents {
@@ -156,16 +157,18 @@
   align-items: center;
   justify-content: space-between;
   margin: 15px 0px 15px 0px;
-  font-size: 14px;
+  font-size: 1.8rem;
   cursor: pointer;
   white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
 }
 .listTitle {
   font-weight: 600;
+  font-size: 1.8rem;
 }
 .listTimestamp {
   margin-left: 5px;
   font-weight: 400;
+  font-size: 1.4rem;
 }
 
 /* 스타일을 초기화하고 싶은 경우 */

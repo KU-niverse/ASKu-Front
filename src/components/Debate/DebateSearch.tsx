@@ -62,7 +62,7 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
   return (
     <div>
       <b className={styles.searchTitle}>{'토론 검색'}</b>
-      <div>
+      <div className={styles.searchInputContainer}>
         <input
           className={styles.searchInput}
           type={'text'}

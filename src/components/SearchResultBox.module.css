@@ -51,7 +51,7 @@
 
 .title {
   color: #000;
-  font-size: 18px;
+  font-size: 3.2rem;
   word-break: break-word;
   font-weight: 700;
 }
@@ -61,7 +61,7 @@
 }
 
 .content {
-  font-size: 12px;
+  font-size: 1.8rem;
   max-height: 4em; /* 2줄 크기를 나타내는 값으로 조절 */
   overflow: hidden;
   text-overflow: ellipsis; /* 텍스트가 길 경우 ...으로 표시 */

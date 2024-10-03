@@ -16,7 +16,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 24px 24px;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   overflow-y: scroll;
   scrollbar-width: none;
   margin-left: 5%;
@@ -35,17 +35,17 @@
   color: #000;
   margin-top: 0px;
   margin-bottom: 0px;
-  font-size: 200%;
+  font-size: 2.2rem;
 }
 
 .SubTitleMore {
-  font-size: 15%;
+  font-size: 1.2rem;
   color: #979797;
   font-weight: 500;
-  line-height: 15px;
+  line-height: 1.5rem;
   text-decoration-line: underline;
   text-align: center;
-  margin-left: 8px;
+  margin-left: 1.4rem;
   margin-bottom: 0px;
   margin-top: 0px;
 }
@@ -227,7 +227,7 @@
   font-weight: 700;
   color: #000;
   margin-top: 0px;
-  font-size: 200%;
+  font-size: 2.4rem;
   margin-bottom: 5%;
 
 }
@@ -266,7 +266,7 @@
 }
 
 .realTimerank {
-  font-size: 10%;
+  font-size: 1.3rem;
   margin-left: 5px;
   font-weight: 600;
   color: black;
@@ -302,7 +302,7 @@
 .realTimeTitle {
   font-weight: 800;
   height: 20%;
-  font-size: 150%;
+  font-size: 1.4rem;
   color: #000000;
   font-weight: 700;
   margin-bottom: 0px;
@@ -355,13 +355,12 @@
 .rankContent {
   margin-left: 5px;
   font-weight: 600;
-  font-size: 150%;
+  font-size: 1.7rem;
   color: black;
-  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 22px;
+  margin-right: 2.2rem;
   margin-top: 0px;
   margin-bottom: 5px;
 }
@@ -377,7 +376,7 @@
 }
 
 .randomDocBack {
-  width: 100%;
+  width: 90%;
   padding-top: 5%;
 }
 .randomBackContainer{
@@ -398,14 +397,14 @@
   /* 밑줄 제거 */
   color: black;
   /* 기본 텍스트 색상 유지 */
-  font-size: 10%;
+  font-size: 2rem;
   cursor: pointer;
 }
 
 .randomDocBottom {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 .randomBtn {
