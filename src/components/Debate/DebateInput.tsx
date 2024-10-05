@@ -3,8 +3,8 @@ import { useMutation, useQuery } from 'react-query'
 import axios, { AxiosError } from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
-import submit from '../../img/submit.png'
 import styles from './DebateInput.module.css'
+import submit from '../../img/send.png'
 
 interface DebateInputProps {
   onDebateSubmit: (submitData: { content: string }) => Promise<void>
@@ -134,6 +134,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
           onKeyDown={handleKeyDown}
         />
         <img
+          className={debateContent ? styles.sendBtn_red : styles.sendBtn_grey}
           role={'presentation'}
           src={submit}
           alt={'submit'}
