@@ -2,12 +2,14 @@
   display: grid;
   grid-template-columns: repeat(12,1fr);
   column-gap: 2.4rem;
-  margin: 0 12rem;
+  padding: 0 12rem;
   padding-top: 30px;
   flex-direction: column;
   min-height: 80vh;
   height: auto;
+  background: #F9F9F9;
 }
+
 .text{
   font-size: 3rem;
   margin: 0;
@@ -21,7 +23,8 @@
   row-gap: 3.2rem;
 }
 .pagingContainer{
-  margin:6rem 0;
+  padding:6rem 0;
+  background: #F9F9F9;
 }
 .header {
   grid-column: 1 / 3;
