@@ -87,3 +87,15 @@
   margin-top: 4px;
   color: blue; /* 링크 색상을 원하는 색상으로 조정 */
 }
+@media only screen and (max-width: 767px) {
+.versionContainer{
+  border-right: solid #D5D5D5 1px;
+  padding-right: 2rem;
+}
+.bkbox{
+  border: 1px solid rgba(213, 213, 213, 0.80);
+}
+.version{
+  left: 40%;
+}
+}

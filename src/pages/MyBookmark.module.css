@@ -54,8 +54,14 @@
   .content {
     display: flex;
     flex-direction: column;
-    width: 90%;
     height: auto;
-    margin-left: 5%;
+    margin:0;
+    padding: 0;
+  }
+  .bookmarkContents{
+    display: flex;
+    row-gap: 2rem;
+    flex-direction: column;
+    padding: 2rem 2rem;
   }
 }
