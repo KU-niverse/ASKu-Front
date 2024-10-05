@@ -73,11 +73,11 @@
 .content {
   font-size: 1.8rem;
   font-weight: 400;
-  max-height: 4em; /* 2줄 크기를 나타내는 값으로 조절 */
+  max-height: 6rem; /* 2줄 크기를 나타내는 값으로 조절 */
   overflow: hidden;
   text-overflow: ellipsis; /* 텍스트가 길 경우 ...으로 표시 */
   white-space: normal; /* 텍스트가 여러 줄에 나타날 수 있도록 합니다. */
-  line-height: 2em; /* 각 줄의 높이를 2em로 설정하여 2줄을 나타냅니다. */
+  line-height: 2rem; /* 각 줄의 높이를 2em로 설정하여 2줄을 나타냅니다. */
   color: #747474;
 }
 
@@ -100,5 +100,8 @@
 }
 .bkbox{
   box-shadow: none;
+}
+.content{
+  max-height: 8rem;
 }
 }
