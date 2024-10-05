@@ -11,22 +11,25 @@
 }
 
 .searchInput {
-  position: absolute;
-  border-radius: 35px;
-  background-color: #fff;
-  border: 1px solid rgba(116, 116, 116, 0.5);
-  box-sizing: content-box;
-  height: 4.7rem;
-  padding-left: 5rem;
-  font-size: 9.6px;
+  height: 3.7rem;
+  padding-left: 2rem;
+  font-size: 1.6rem;
   color: #000;
   font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin:1rem;
+  width:80%;
 }
 .searchInputContainer{
   display: flex;
   align-items: center;
   flex-direction: row;
   margin-top:3rem;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: border-box;
 }
 .InputContainer{
   display: flex;
@@ -42,11 +45,10 @@
   left: 6%;
 }
 .cancelIcon {
-  position: absolute;
   width: 12px;
   height: 12px;
   cursor: pointer;
-  right: 20%;
+  padding-right: 2rem;
 }
 .headerInput{
   position: absolute;
