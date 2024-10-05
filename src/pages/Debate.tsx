@@ -12,6 +12,7 @@ import DebateContent from '../components/Debate/DebateContent'
 import DebateInput from '../components/Debate/DebateInput'
 import DebateSearch from '../components/Debate/DebateSearch'
 import DebateRecent from '../components/Debate/DebateRecent'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -190,7 +191,11 @@ const Debate: React.FC = () => {
           ) : (
             isDebateContentData(debateContentData) &&
             (debateContentData.data.length === 0 ? (
-              <p className={styles.nonecomment}>{'아직 작성된 토론 메세지가 없습니다.'}</p>
+              <div className={styles.caution}>
+                <img src={CautionIcon} alt={'caution'} className={styles.cautionIcon} />
+                <p className={styles.nonecomment}>{'작성된 토론이'}</p>
+                <p className={styles.nonecomment}>{'없습니다.'}</p>
+              </div>
             ) : (
               (debateContentData.data as DebateMessage[]).map((debate, index) => (
                 <DebateContent

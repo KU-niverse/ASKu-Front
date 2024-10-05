@@ -26,6 +26,17 @@
   margin-top:7.7rem;
   margin-bottom: 7rem;
 }
+.caution{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin:8rem 0;
+}
+.cautionIcon{
+  width: 7.8rem;
+  height: 7.8rem;
+  margin-bottom: 2rem;
+}
 
 .sidebar {
   grid-column: 9/12;
@@ -53,7 +64,9 @@
   padding-right: 3.3rem;
 }
 .nonecomment{
-  font-size: 1.2rem;
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin:0;
 }
 .debate2{
   font-size: 3.6rem;
