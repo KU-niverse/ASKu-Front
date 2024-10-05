@@ -98,4 +98,7 @@
 .version{
   left: 40%;
 }
+.bkbox{
+  box-shadow: none;
+}
 }

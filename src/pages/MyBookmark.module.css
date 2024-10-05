@@ -57,11 +57,15 @@
     height: auto;
     margin:0;
     padding: 0;
+    background: #fff;
   }
   .bookmarkContents{
     display: flex;
     row-gap: 2rem;
     flex-direction: column;
     padding: 2rem 2rem;
+  }
+  .pagingContainer{
+    background: #fff;
   }
 }
