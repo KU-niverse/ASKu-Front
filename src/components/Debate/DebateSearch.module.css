@@ -36,6 +36,10 @@
   align-items: center;
   flex-direction: row;
   margin-top:3rem;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: border-box;
 }
 .searchIcon {
   width: 12px;
@@ -51,16 +55,15 @@
   padding-right: 2rem;
 }
 .headerInput{
-  position: absolute;
-  border-radius: 35px;
-  background-color: #fff;
-  border: 1px solid rgba(116, 116, 116, 0.5);
-  box-sizing: content-box;
-  height: 4.7rem;
-  padding-left: 5rem;
-  font-size: 9.6px;
+  height: 3.7rem;
+  padding-left: 2rem;
+  font-size: 1.6rem;
   color: #000;
   font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin:1rem;
+  width:80%;
 }
 
 .hidden {
@@ -80,7 +83,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;

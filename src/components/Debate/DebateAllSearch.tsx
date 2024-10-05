@@ -53,6 +53,13 @@ const DebateAllSearch = () => {
     <div className={styles.debateSearch}>
       <p className={styles.searchTitle}>{'토론 검색'}</p>
       <div className={styles.InputContainer}>
+        <img
+          role={'presentation'}
+          src={word ? searchIcon_red : searchIcon_grey}
+          alt={'search'}
+          className={styles.searchIcon}
+          onClick={handleDebateSearch}
+        />
         <input
           className={styles.headerInput}
           type={'text'}
@@ -61,13 +68,7 @@ const DebateAllSearch = () => {
           placeholder={'검색어를 입력하세요.'}
           onKeyDown={handleKeyDown} // Use onKeyDown instead
         />
-        <img
-          role={'presentation'}
-          src={word ? searchIcon_red : searchIcon_grey}
-          alt={'search'}
-          className={styles.searchIcon}
-          onClick={handleDebateSearch}
-        />
+
         <img className={word ? styles.cancelIcon : styles.hidden} src={cancelIcon} onClick={delWord} alt={'del'} />
       </div>
 
