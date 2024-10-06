@@ -143,7 +143,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [randomTitle, setRandomTitle] = useState('ASKu사용방법')
-  const [ChatbotModalOpen, setChatbotModalOpen] = useState(false)
+  const [ChatbotModalOpen, setChatbotModalOpen] = useState(true)
 
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
   const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
