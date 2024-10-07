@@ -139,8 +139,8 @@ const MoreQuestion: React.FC = () => {
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>
-                <p className={styles.q_pagename}>{title}</p>
-                <p className={styles.q_headline}>{'문서의 질문'}</p>
+                <div className={styles.q_pagename}>{title}</div>
+                <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
 
               <button type="button" className={styles.docLinkBtn} onClick={handleDocLinkClick}>
