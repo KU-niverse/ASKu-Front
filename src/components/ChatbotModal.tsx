@@ -66,9 +66,6 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const modalCloseRef = useRef<HTMLDivElement | null>(null)
-  const handleModalClose = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsModalOpen(false)
-  }
 
   const handleMouseHover = (isHovering: boolean) => {
     if (!scrollRef.current) return
@@ -340,218 +337,223 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
   }
 
   return (
-    isModalOpen && (
-      <div
-        className={styles.chatbotModalWrapper}
-        ref={modalCloseRef}
-        onClick={handleModalClose}
-        role={'button'}
-        tabIndex={-1}
-        onKeyDown={(e) => null}
-      >
+    <div>
+      {isModalOpen && (
         <div
-          className={styles.chatbot}
-          onClick={(event: React.MouseEvent<HTMLElement>) => event.stopPropagation()}
+          className={styles.chatbotModalWrapper}
+          ref={modalCloseRef}
+          onClick={() => setIsModalOpen(false)}
           role={'button'}
           tabIndex={-1}
           onKeyDown={(e) => null}
         >
-          <div className={styles.chatbotHeader}>
-            <div className={styles.title}>
-              <img src={haho} alt={'haho'} className={styles.haho} />
-              <div>{'AI 챗봇: 하호'}</div>
-            </div>
-            <div className={styles.buttonContainer}>
-              <div className={styles.button}>
-                <button
-                  type={'button'}
-                  className={styles.buttonText}
-                  onClick={() =>
-                    window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
-                  }
-                >
-                  <img src={infoIcon} className={styles.smallIcon} alt="info" />
-                  {'도움말'}
-                </button>
-              </div>
-              <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
-                <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
-                <button type={'button'} className={styles.buttonText}>
-                  {'채팅 초기화'}
-                </button>
-              </div>
-            </div>
-          </div>
-          {previousChatHistory.length === 0 && initialChat ? (
-            <div className={styles.initialChatbox}>
-              <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
-              <div className={styles.initialSummaryContent}>
-                <div className={styles.initialSummaryTitle}>{'AI 챗봇'}</div>
-                {`고려대학교 학칙을 기반으로 답변해주는 AI`}
-                <br />
-                {`챗봇에게 궁금한 점을 바로 질문해보세요!`}
-              </div>
-            </div>
-          ) : (
-            <div className={styles.chat}>
-              {previousChatHistory.length !== 0 && (
-                <>
-                  {previousChatHistory.map((item) => (
-                    <Fragment key={item.id}>
-                      <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                      <ChatAnswer
-                        key={`answer-${item.id}`}
-                        content={item.a_content}
-                        qnaId={item.id}
-                        reference={item.reference}
-                        blockIconZip={!isLoggedIn}
-                        onAddReferenceSuggestion={onAddReferenceSuggestion}
-                        recommendedQuestions={[]} // 초기 빈 배열
-                        onRecommendQuestionClick={handleRecommendQuestionClick}
-                      />
-                    </Fragment>
-                  ))}
-                </>
-              )}
-              {chatResponse.map((item) => {
-                if (item.isQuestion) {
-                  return <ChatQuestion key={item.id} content={item.content} />
-                }
-                return (
-                  <ChatAnswer
-                    key={item.id}
-                    content={item.content}
-                    reference={item.reference}
-                    qnaId={item.qnaId}
-                    blockIconZip={item.isSuggest}
-                    onAddReferenceSuggestion={onAddReferenceSuggestion}
-                    recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
-                    onRecommendQuestionClick={handleRecommendQuestionClick}
-                  />
-                )
-              })}
-              <div ref={chatBottomRef} />
-              {loading && !isStreaming && <Spinner />}
-            </div>
-          )}
-
           <div
-            className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
-            ref={suggestContainerRef}
-            style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
+            className={styles.chatbot}
+            onClick={(event: React.MouseEvent<HTMLElement>) => event.stopPropagation()}
+            role={'button'}
+            tabIndex={-1}
+            onKeyDown={(e) => null}
           >
-            <p id={styles.ref}>
-              {SuggestContainerState === 'initial'
-                ? '추천 질문이에요:)'
-                : SuggestContainerState === 'suggest'
-                  ? '추천 질문이에요:)'
-                  : SuggestContainerState === 'reference'
-                    ? '참고 문서'
-                    : null}
-            </p>
-            <div className={styles.suggest}>
-              {SuggestContainerState === 'initial' && (
-                <>
-                  <span
-                    role={'presentation'}
-                    id={'ref_res_1'}
-                    className={styles.textBox}
-                    style={{ marginLeft: '0px' }}
-                    onClick={() => handleSuggestClick('너는 누구야?')}
+            <div className={styles.chatbotHeader}>
+              <div className={styles.title}>
+                <img src={haho} alt={'haho'} className={styles.haho} />
+                <div>{'AI 챗봇: 하호'}</div>
+              </div>
+              <div className={styles.buttonContainer}>
+                <div className={styles.button}>
+                  <button
+                    type={'button'}
+                    className={styles.buttonText}
+                    onClick={() =>
+                      window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
+                    }
                   >
-                    {'너는 누구야?\r'}
-                  </span>
-                  <span
-                    role={'presentation'}
-                    id={'ref_res_2'}
-                    className={styles.textBox}
-                    onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
-                  >
-                    {'휴학은 최대 몇 년까지 가능해?\r'}
-                  </span>
-                  <span
-                    role={'presentation'}
-                    id={'ref_res_3'}
-                    className={styles.textBox}
-                    onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
-                  >
-                    {'강의 최소 출석 일수에 대해 알려줘.\r'}
-                  </span>
-                  <span
-                    role={'presentation'}
-                    id={'ref_res_4'}
-                    className={styles.textBox}
-                    onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
-                  >
-                    {'이중전공은 어떻게 해?\r'}
-                  </span>
-                </>
-              )}
-              {SuggestContainerState === 'suggest' &&
-                chatResponse.length > 0 &&
-                chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
-                  <span
-                    role={'presentation'}
-                    key={`ref_res_${index + 1}`}
-                    className={styles.textBox}
-                    onClick={() => handleRecommendQuestionClick(question)}
-                  >
-                    {question}
-                  </span>
-                ))}
-              {SuggestContainerState === 'reference' &&
-                referenceList.length > 0 &&
-                referenceList.map((ref, index) => (
-                  <span
-                    role={'presentation'}
-                    id={`ref_res_${index + 1}`}
-                    className={styles.textBox}
-                    style={index === 0 ? { marginLeft: '0px' } : {}}
-                    onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                    key={ref.link}
-                  >
-                    {`${ref.link}`}
-                  </span>
-                ))}
+                    <img src={infoIcon} className={styles.smallIcon} alt="info" />
+                    {'도움말'}
+                  </button>
+                </div>
+                <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
+                  <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
+                  <button type={'button'} className={styles.buttonText}>
+                    {'채팅 초기화'}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+            {previousChatHistory.length === 0 && initialChat ? (
+              <div className={styles.initialChatbox}>
+                <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+                <div className={styles.initialSummaryContent}>
+                  <div className={styles.initialSummaryTitle}>{'AI 챗봇'}</div>
+                  {`고려대학교 학칙을 기반으로 답변해주는 AI`}
+                  <br />
+                  {`챗봇에게 궁금한 점을 바로 질문해보세요!`}
+                </div>
+              </div>
+            ) : (
+              <div className={styles.chat}>
+                {previousChatHistory.length !== 0 && (
+                  <>
+                    {previousChatHistory.map((item) => (
+                      <Fragment key={item.id}>
+                        <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                        <ChatAnswer
+                          key={`answer-${item.id}`}
+                          content={item.a_content}
+                          qnaId={item.id}
+                          reference={item.reference}
+                          blockIconZip={!isLoggedIn}
+                          onAddReferenceSuggestion={onAddReferenceSuggestion}
+                          recommendedQuestions={[]} // 초기 빈 배열
+                          onRecommendQuestionClick={handleRecommendQuestionClick}
+                        />
+                      </Fragment>
+                    ))}
+                  </>
+                )}
+                {chatResponse.map((item) => {
+                  if (item.isQuestion) {
+                    return <ChatQuestion key={item.id} content={item.content} />
+                  }
+                  return (
+                    <ChatAnswer
+                      key={item.id}
+                      content={item.content}
+                      reference={item.reference}
+                      qnaId={item.qnaId}
+                      blockIconZip={item.isSuggest}
+                      onAddReferenceSuggestion={onAddReferenceSuggestion}
+                      recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
+                      onRecommendQuestionClick={handleRecommendQuestionClick}
+                    />
+                  )
+                })}
+                <div ref={chatBottomRef} />
+                {loading && !isStreaming && <Spinner />}
+              </div>
+            )}
 
-          {isLoginModalVisible && (
-            <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
-          )}
-          {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
-          {ClearModalOpen && (
-            <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
-          )}
-          <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
-            <textarea
-              className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-              placeholder={'AI에게 무엇이든 물어보세요!'}
-              value={inputValue}
-              onChange={inputChange}
-              onKeyDown={handleKeyDown}
-              ref={inputRef}
-              disabled={loading}
-            />
-            <button
-              type={'button'}
-              onClick={loading ? undefined : handleSendClick}
-              style={{
-                cursor: loading ? 'not-allowed' : 'pointer',
-                backgroundColor: 'transparent',
-                border: 'none',
-                marginRight: '1.5rem',
-                display: 'flex',
-                alignItems: 'center', // 수직 가운데 정렬
-              }}
-              disabled={loading}
+            <div
+              className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
+              ref={suggestContainerRef}
+              style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
             >
-              <img src={send} alt={'전송'} className={styles.sendBtn} />
-            </button>
+              <p id={styles.ref}>
+                {SuggestContainerState === 'initial'
+                  ? '추천 질문이에요:)'
+                  : SuggestContainerState === 'suggest'
+                    ? '추천 질문이에요:)'
+                    : SuggestContainerState === 'reference'
+                      ? '참고 문서'
+                      : null}
+              </p>
+              <div className={styles.suggest}>
+                {SuggestContainerState === 'initial' && (
+                  <>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_1'}
+                      className={styles.textBox}
+                      style={{ marginLeft: '0px' }}
+                      onClick={() => handleSuggestClick('너는 누구야?')}
+                    >
+                      {'너는 누구야?\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_2'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
+                    >
+                      {'휴학은 최대 몇 년까지 가능해?\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_3'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
+                    >
+                      {'강의 최소 출석 일수에 대해 알려줘.\r'}
+                    </span>
+                    <span
+                      role={'presentation'}
+                      id={'ref_res_4'}
+                      className={styles.textBox}
+                      onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
+                    >
+                      {'이중전공은 어떻게 해?\r'}
+                    </span>
+                  </>
+                )}
+                {SuggestContainerState === 'suggest' &&
+                  chatResponse.length > 0 &&
+                  chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
+                    <span
+                      role={'presentation'}
+                      key={`ref_res_${index + 1}`}
+                      className={styles.textBox}
+                      onClick={() => handleRecommendQuestionClick(question)}
+                    >
+                      {question}
+                    </span>
+                  ))}
+                {SuggestContainerState === 'reference' &&
+                  referenceList.length > 0 &&
+                  referenceList.map((ref, index) => (
+                    <span
+                      role={'presentation'}
+                      id={`ref_res_${index + 1}`}
+                      className={styles.textBox}
+                      style={index === 0 ? { marginLeft: '0px' } : {}}
+                      onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                      key={ref.link}
+                    >
+                      {`${ref.link}`}
+                    </span>
+                  ))}
+              </div>
+            </div>
+
+            {isLoginModalVisible && (
+              <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
+            )}
+            {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
+            {ClearModalOpen && (
+              <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
+            )}
+            <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
+              <textarea
+                className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
+                placeholder={'AI에게 무엇이든 물어보세요!'}
+                value={inputValue}
+                onChange={inputChange}
+                onKeyDown={handleKeyDown}
+                ref={inputRef}
+                disabled={loading}
+              />
+              <button
+                type={'button'}
+                onClick={loading ? undefined : handleSendClick}
+                style={{
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  marginRight: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center', // 수직 가운데 정렬
+                }}
+                disabled={loading}
+              >
+                <img src={send} alt={'전송'} className={styles.sendBtn} />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )}
+      <button type="button" onClick={() => setIsModalOpen(true)}>
+        <img src={haho} alt={'Chatbot_Modal'} className={styles.defaultChatbotModal} />
+      </button>
+    </div>
   )
 }
 

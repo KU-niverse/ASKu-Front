@@ -1,3 +1,10 @@
+.defaultChatbotModal {
+  width: 8.4rem;
+  height: 8.2rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+}
+
 .chatbotModalWrapper {
   position: fixed;
   left: 0;
@@ -14,8 +21,8 @@
   top: 50%;
   left: 50%;
   /* 모달 크기 */
-  width: 44rem;
-  height: 70rem;
+  width: 82.8rem;
+  height: 83.1rem;
   box-sizing: border-box;
 
   transform: translate(-50%, -50%);
