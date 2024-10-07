@@ -14,8 +14,8 @@
   top: 50%;
   left: 50%;
   /* 모달 크기 */
-  width: 64rem;
-  height: 90rem;
+  width: 44rem;
+  height: 70rem;
   box-sizing: border-box;
 
   transform: translate(-50%, -50%);
@@ -138,13 +138,25 @@
 .initialChatbox {
   grid-column: 1/6 span;
   grid-row: 2/5 span;
+  /* display: grid;
   grid-template-columns: repeat(6, minmax(16.67%, auto));
-  justify-items: center;
-  align-items: center;
-  grid-template-rows: repeat(5, 1fr);
-  height: 100%;
+  grid-template-rows: repeat(5, 1fr); */
+  justify-content: center;
+  align-content: center;
   overflow-y: scroll;
   -ms-overflow-style: none;
+}
+
+.initialSummaryImg {
+  justify-content: center;
+  align-content: center;
+  display: block;
+  margin: auto;
+  width: 55%;
+  height: auto;
+  /* 높이는 자동으로 설정하여 비율 유지 */
+  object-fit: contain;
+  /* 이미지 비율을 유지하면서 맞춤 */
 }
 
 .initialMessage {
@@ -158,14 +170,6 @@
   /* 줄바꿈을 방지 */
   -webkit-background-clip: text;
   color: transparent;
-}
-
-.initialSummaryImg {
-  width: 45%;
-  height: auto;
-  /* 높이는 자동으로 설정하여 비율 유지 */
-  object-fit: contain;
-  /* 이미지 비율을 유지하면서 맞춤 */
 }
 
 #plusImg {
@@ -189,9 +193,9 @@
 }
 
 .initialSummaryContent {
-  line-height: 167%;
+  line-height: 147%;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: rgba(151, 151, 151, 1);
   justify-self: center;
 }
@@ -306,15 +310,15 @@
   grid-row: 7 / span 2;
   grid-column: 1 / span 6;
   justify-self: end;
+  align-self: center;
   display: grid;
   grid-template-rows: repeat(3, 33.33%);
-  padding-left: 7rem;
+  /* padding-left: 7rem; */
   align-content: stretch;
-  max-width: 90%;
-  height: 13.7rem;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
-  /* height: auto; */
-  margin-right: 7.4rem;
+  margin-right: 5%;
 }
 
 .suggest {
@@ -365,7 +369,7 @@
 .promptWrap {
   overflow: visible;
   grid-column: 1 / span 6;
-  grid-row: 9 / span 2;
+  grid-row: 9 / span 1;
   justify-self: center;
   align-self: center;
   display: flex;
@@ -375,7 +379,7 @@
   border: 1px solid #9f132e;
   border-radius: 60px;
   width: 90%;
-  height: 40%;
+  height: 70%;
 }
 
 .prompt {
