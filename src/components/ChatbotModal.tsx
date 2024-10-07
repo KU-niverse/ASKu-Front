@@ -61,7 +61,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const [isMouseHover, setIsMouseHover] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const modalCloseRef = useRef<HTMLDivElement | null>(null)
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
