@@ -63,25 +63,6 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const modalCloseRef = useRef<HTMLDivElement | null>(null)
 
-  const handleMouseHover = (isHovering: boolean) => {
-    if (!scrollRef.current) return
-
-    if (isHovering) {
-      scrollRef.current.style.overflowX = 'auto'
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        setTimeoutId(null)
-      }
-    } else {
-      const id = setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.style.overflowX = 'hidden'
-        }
-      }, 2000) // 2초 후 스크롤 숨김
-      setTimeoutId(id)
-    }
-  }
-
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
   }
