@@ -318,7 +318,10 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
     <div
       className={styles.chatbotModalWrapper}
       ref={modalCloseRef}
-      onClick={() => setIsModalOpen(false)}
+      onClick={() => {
+        setIsModalOpen(false)
+        setIsMouseHover(false)
+      }}
       role={'button'}
       tabIndex={-1}
       onKeyDown={(e) => null}
