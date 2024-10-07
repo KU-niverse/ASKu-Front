@@ -337,6 +337,7 @@
   grid-template-rows: repeat(3, 33.33%);
   /* padding-left: 7rem; */
   font-size: 2rem;
+  font-weight: 900;
   align-content: stretch;
   width: 80%;
   height: 90%;
@@ -414,15 +415,12 @@
   border: none;
   margin-left: 2.7rem;
   resize: none;
-  /* margin-top: 1.9rem; */
-  /* margin-bottom: 2rem; */
   background: none;
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   /* 텍스트가 수직 가운데 정렬된 것처럼 보이도록 조정 */
   font-size: 1.7rem;
   font-weight: 500;
   height: 50%;
-  line-height: 50%;
   -ms-overflow-style: none;
   /* 인터넷 익스플로러 */
   scrollbar-width: none;
