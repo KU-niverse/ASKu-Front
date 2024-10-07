@@ -15,13 +15,13 @@
 }
 
 .dropdownmenu {
-  font-size: 16px;
+  font-size: 3rem;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
 }
 
 .dropdownph {
-  font-size: 16px;
+  font-size: 2rem;
   font-weight: 400;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;

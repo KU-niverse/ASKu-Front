@@ -10,7 +10,7 @@
   align-items: center;
 }
 .q_cheadline {
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 700;
   color: black;
 }
@@ -18,8 +18,8 @@
 .q_cbox {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  height: auto;
+  width: 140rem;
+  height: 17.5rem;
   font-size: 18px;
   border-radius: 12px;
   border: 1px solid rgba(213, 213, 213, 1);
@@ -43,7 +43,7 @@
 }
 
 .q_ctextarea::placeholder {
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 600;
   color: #cccbcb;
 }
@@ -58,7 +58,7 @@
   flex-direction: row;
   align-items: center;
   margin-left: auto;
-  margin-top: 7px;
+  margin-top: -1.5rem;
 }
 
 .q_csubmit {
@@ -66,7 +66,7 @@
   width: 85px;
   border-radius: 50px;
   height: 35px;
-  font-size: 14px;
+  font-size: 1.4rem;
   border: none;
   color: white; /* 기본 텍스트 색상 */
   cursor: pointer;
@@ -80,12 +80,18 @@
 }
 
 .textnum {
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
-  margin-right: 10px;
-  margin-top: 15px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #d5d5d5;
+  margin-right: 1rem;
+  margin-top: 1.5rem;
 }
 
+.q_dropdown {
+  width: 18rem;
+  height: 4.8rem;
+  font-size: 1.4rem;
+}
 @media only screen and (max-width: 767px) {
   .q_cheader {
     display: flex;
@@ -112,12 +118,12 @@
   }
 
   .q_ctextarea::placeholder {
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 600;
   }
 
   .textnum {
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: 1.2rem;
+    margin-top: 1rem;
   }
 }
