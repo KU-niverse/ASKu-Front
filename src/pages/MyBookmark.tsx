@@ -8,6 +8,7 @@ import styles from './MyBookmark.module.css'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -103,17 +104,25 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
             <p className={styles.text}>{'나의 관심 목록'}&nbsp;</p>
             <div className={styles.number}>({lists.length})</div>
           </div>
-          {lists.slice(startIndex, endIndex).map((item: any) => (
-            <div key={item.title}>
-              <BookmarkBox
-                title={item.title}
-                content={item.recent_filtered_content}
-                is_favorite
-                result={false}
-                version={item.latest_ver}
-              />
+          {lists?.length === 0 ? (
+            <div className={styles.caution}>
+              <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
+              <p className={styles.none}>{'아직 관심 목록이'}</p>
+              <p className={styles.none}>{'없습니다.'}</p>
             </div>
-          ))}
+          ) : (
+            lists.slice(startIndex, endIndex).map((item: any) => (
+              <div key={item.title}>
+                <BookmarkBox
+                  title={item.title}
+                  content={item.recent_filtered_content}
+                  is_favorite
+                  result={false}
+                  version={item.latest_ver}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
       <div className={styles.pagingContainer}>

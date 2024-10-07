@@ -9,6 +9,28 @@
   height: auto;
   background: #F9F9F9;
 }
+.cautionIcon {
+  width: 7.8rem;
+}
+
+.none {
+  color: #000;
+  text-align: center;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.caution{
+  display: flex;
+  grid-column: 1 / 3;
+  grid-row: 3 / 5;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
 .text{
   font-size: 3rem;
@@ -67,5 +89,8 @@
   }
   .pagingContainer{
     background: #fff;
+  }
+  .caution{
+    margin-top: 50%;
   }
 }
