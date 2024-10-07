@@ -418,11 +418,8 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                   <p className={styles.noneComment}>아직 질문이 존재하지 않습니다</p>
                 </div>
               ) : (
-                ques.map((item, index) => {
-                  if (index >= 5) {
-                    return null
-                  }
-                  return (
+                <>
+                  {ques.slice(0, 3).map((item, index) => (
                     <div className={styles.queslist} key={item.id}>
                       <ul
                         role={'presentation'}
@@ -452,8 +449,15 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                         </span>
                       </ul>
                     </div>
-                  )
-                })
+                  ))}
+                  {ques.length > 4 && (
+                    <div className={styles.moreIndicator}>
+                      <span>.</span>
+                      <span>.</span>
+                      <span>.</span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

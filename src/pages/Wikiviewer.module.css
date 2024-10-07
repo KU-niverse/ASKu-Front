@@ -379,6 +379,21 @@
 li {
   list-style-type: none;
 }
+
+.moreIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.moreIndicator span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: #999;
+}
+
 @media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
     display: block;
