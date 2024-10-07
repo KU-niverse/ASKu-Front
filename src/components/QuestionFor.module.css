@@ -32,11 +32,13 @@
   margin: 0;
 }
 .q_mynick {
-  font-size: 16px;
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 .q_date {
-  margin-left: 20px;
-  font-size: 12px;
+  margin-left: 2rem;
+  font-weight: 400;
+  font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
 
@@ -64,10 +66,13 @@
 
 .q_icon {
   color: rgba(159, 19, 46, 1);
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .q_content {
-  padding-left: 10px;
+  padding-left: 1rem;
+  font-size: 2rem;
 }
 
 .q_footer {
@@ -98,7 +103,8 @@
   font-weight: bold;
 }
 .q_comment span {
-  margin-left: 5px;
+  font-size: 1.6rem;
+  margin-left: 1rem;
   display: flex;
   align-items: center;
 }
@@ -107,10 +113,6 @@
   object-fit: contain;
   cursor: pointer;
   width: 18px;
-}
-
-.q_like {
-  margin-left: 3px;
 }
 
 .q_backfooter button {
