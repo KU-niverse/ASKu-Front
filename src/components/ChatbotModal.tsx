@@ -60,6 +60,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
+  const [isMouseHover, setIsMouseHover] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const modalCloseRef = useRef<HTMLDivElement | null>(null)
 
@@ -527,8 +528,25 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       </div>
     </div>
   ) : (
-    <button className={styles.modalButton} type="button" onClick={() => setIsModalOpen(true)}>
-      <img src={haho} alt={'Chatbot_Modal'} className={styles.chatbotModalImg} />
+    <button
+      className={styles.modalButton}
+      type="button"
+      onMouseEnter={() => setIsMouseHover(true)}
+      onMouseLeave={() => setIsMouseHover(false)}
+      onClick={() => setIsModalOpen(true)}
+    >
+      {isMouseHover ? (
+        <div className={styles.hoverModal}>
+          <div className={styles.hoverModalText}>
+            {'하호에게'}
+            <br />
+            {'물어보세요!'}
+          </div>
+          <img src={haho} alt={'Chatbot_Modal'} className={styles.hoverModalImg} />
+        </div>
+      ) : (
+        <img src={haho} alt={'Chatbot_Modal'} className={styles.chatbotModalImg} />
+      )}
     </button>
   )
 }
