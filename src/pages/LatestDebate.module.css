@@ -20,10 +20,11 @@
   width: auto;
   display: grid;
   grid-template-columns: repeat(12,1fr);
-  margin: 3.7rem 12rem;
+  margin: 0 12rem;
   grid-gap: 2.4rem;
   flex-direction: row;
   flex: 1;
+  padding-top:3.2rem;
 }
 
 .sidebar {
