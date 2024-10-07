@@ -125,7 +125,7 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
           )}
         </div>
       </div>
-      <div className={styles.pagingContainer}>
+      <div className={lists?.length === 0 ? styles.hidden : styles.pagingContainer}>
         <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
       </div>
       <Footer />

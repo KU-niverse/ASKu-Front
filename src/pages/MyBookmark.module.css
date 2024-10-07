@@ -45,8 +45,11 @@
   row-gap: 3.2rem;
 }
 .pagingContainer{
-  padding:6rem 0;
+  padding:3rem 0;
   background: #F9F9F9;
+}
+.hidden{
+  visibility: hidden;
 }
 .header {
   grid-column: 1 / 3;
