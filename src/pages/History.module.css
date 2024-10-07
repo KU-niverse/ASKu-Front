@@ -29,13 +29,21 @@
 .header img {
   margin-right: 1rem;
 }
-.historyTitle {
+.allhistoryTitle {
   display: flex;
   align-items: center;
   flex-direction: row;
   align-items: flex-end;
   margin-top: 7.7rem;
   margin-bottom: 3.1rem;
+}
+.historyTitle {
+  display: flex;
+  align-items: center;
+  margin-top: 7.7rem;
+  margin-bottom: 3.1rem;
+  gap: 0.5rem;
+  width: 100%;
 }
 .listTitle {
   font-size: 2.4rem;
@@ -48,6 +56,15 @@
   padding: 0 0.3rem;
   margin: 0;
   min-width: 31rem;
+}
+.docTitle {
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: #de3a58;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .historyTypes {
   display: flex;

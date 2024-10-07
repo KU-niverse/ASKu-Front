@@ -4,10 +4,11 @@ import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import styles from './HistoryBox.module.css'
 import dots from '../img/dots.png'
-import rollback from '../img/return.png'
-import watch from '../img/watch.png'
-import verComp from '../img/verComp.png'
+import rollback from '../img/redo.svg'
+import rawView from '../img/watch.svg'
+import verCmp from '../img/verComp.svg'
 import ThreedotsReport from './ThreedotsReport'
+import versionimg from '../img/version.svg'
 
 interface HistoryBoxProps {
   title: string
@@ -30,7 +31,7 @@ const HistoryBox = (props: HistoryBoxProps) => {
 
   const { title, version, summary, user, timestamp, target, type, newest } = props // 구조 분해 할당
 
-  const handleView = () => {
+  const handleRawView = () => {
     const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/preview/${encodedTitle}/${version}`)
   }
@@ -81,49 +82,52 @@ const HistoryBox = (props: HistoryBoxProps) => {
 
   return (
     <div className={styles.historyBox}>
-      <div className={styles.contents}>
-        <div className={styles.contentsOne}>
-          <span className={styles.version}>
+      <div className={styles.contentsOne}>
+        <div className={styles.versionContainer}>
+          <img className={styles.bigversionimg} src={versionimg} alt={'버전이미지'} />
+          <div className={styles.bigversion}>
             {'V'}
             {version}
-          </span>
-          <span className={styles.summary}>
-            {'수정요약: '}
-            {summary}
-          </span>
-        </div>
-        <div className={styles.contentsTwo}>
-          <span className={styles.user}>{user}</span>
-          <span className={styles.timestamp}>{timestamp}</span>
-          <span className={styles.threedot}>
-            <ThreedotsReport type={1} target={target} />
-          </span>
+          </div>
         </div>
       </div>
-      <div className={styles.versionText}>
-        <div />
-        <div className={styles.versionBtns}>
-          <span role={'presentation'} onClick={handleView} className={`${styles.versionbtn}`}>
-            <img alt={'RAW버전 미리보기 버튼'} src={watch} />
-            {'RAW버전 미리보기\r'}
-          </span>
-          <span
-            role={'presentation'}
-            onClick={version === newest ? () => alert('최신 버전으로는 롤백할 수 없습니다.') : () => handleRollback()}
-            className={`${styles.versionbtn}`}
-          >
-            {isRollbackLoading ? (
-              '롤백 중...'
-            ) : (
-              <>
-                <img alt={'이 버전으로 되돌리기 버튼'} src={rollback} /> {'이 버전으로 되돌리기\r'}
-              </>
-            )}
-          </span>
-          <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
-            <img alt={'전 버전이랑 비교하기 버튼'} src={verComp} />
-            {'전 버전이랑 비교하기\r'}
-          </span>
+      <div className={styles.contentsTwo}>
+        <div className={styles.summaryContainer}>
+          <div className={styles.summaryTitle}>{'수정 요약: '}</div>
+          <div className={styles.summary}>{summary}</div>
+        </div>
+        <div className={styles.rightContainer}>
+          <div className={styles.infoLine}>
+            <div className={styles.user}>{user}</div>
+            <div className={styles.timestamp}>{timestamp}</div>
+            <div className={styles.threedot}>
+              <ThreedotsReport type={1} target={target} />
+            </div>
+          </div>
+          <div className={styles.allversionBtns}>
+            <span role={'presentation'} onClick={handleRawView} className={`${styles.versionbtn}`}>
+              <img className={styles.rawviewimg} src={rawView} alt={'RAW 버전 미리보기 버튼'} />
+              {'RAW버전 미리보기\r'}
+            </span>
+            <span
+              role={'presentation'}
+              onClick={version === newest ? () => alert('최신 버전으로는 롤백할 수 없습니다.') : () => handleRollback()}
+              className={`${styles.versionbtn}`}
+            >
+              {isRollbackLoading ? (
+                '롤백 중...'
+              ) : (
+                <>
+                  <img className={styles.rollbackimg} src={rollback} alt={'이 버전으로 되돌리기 버튼'} />{' '}
+                  {'이 버전으로 되돌리기\r'}
+                </>
+              )}
+            </span>
+            <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
+              <img className={styles.vercmpimg} src={verCmp} alt={'전 버전이랑 비교하기 버튼'} />
+              {'전 버전이랑 비교하기\r'}
+            </span>
+          </div>
         </div>
       </div>
     </div>

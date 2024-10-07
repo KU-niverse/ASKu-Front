@@ -107,7 +107,7 @@ const AllHistory: React.FC = () => {
             </div>
           ) : (
             <div className={styles.historyList}>
-              <div className={styles.historyTitle}>
+              <div className={styles.allhistoryTitle}>
                 <p className={styles.listTitles}>
                   {type === 'all' ? (
                     <>
