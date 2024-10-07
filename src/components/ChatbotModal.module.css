@@ -21,8 +21,8 @@
   top: 50%;
   left: 50%;
   /* 모달 크기 */
-  width: 82.8rem;
-  height: 83.1rem;
+  width: 72.8rem;
+  height: 73.1rem;
   box-sizing: border-box;
 
   transform: translate(-50%, -50%);
@@ -148,8 +148,10 @@
   /* display: grid;
   grid-template-columns: repeat(6, minmax(16.67%, auto));
   grid-template-rows: repeat(5, 1fr); */
-  justify-content: center;
-  align-content: center;
+  width: 100%;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
   overflow-y: scroll;
   -ms-overflow-style: none;
 }
@@ -159,7 +161,7 @@
   align-content: center;
   display: block;
   margin: auto;
-  width: 55%;
+  width: 45%;
   height: auto;
   /* 높이는 자동으로 설정하여 비율 유지 */
   object-fit: contain;
@@ -202,21 +204,22 @@
 .initialSummaryContent {
   line-height: 147%;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.87rem;
   color: rgba(151, 151, 151, 1);
   justify-self: center;
+  margin-top: 0.9rem;
 }
 
 .initialSummaryTitle {
   text-align: center;
   justify-self: center;
-  font-size: 1.8rem;
+  font-size: 2.8rem;
   font-weight: 700;
   background: linear-gradient(to bottom, #FF768F, #DE3A58);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.7rem;
 }
 
 .defaultChat {
@@ -311,21 +314,33 @@
   cursor: pointer;
 }
 
+/* 추천 질문과 질문 프롬프트 컨테이너*/
+.suggestAndPrompt {
+  grid-row: 7 / span 4;
+  grid-column: 1 / span 6;
+  margin-right: 6%;
+  margin-left: 6%;
+  margin-bottom: 5%;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 100%;
+}
 
 /* 챗봇 추천 질문 컨테이너 */
 .suggestContainer {
-  grid-row: 7 / span 2;
-  grid-column: 1 / span 6;
+  grid-row: 1 / span 2;
   justify-self: end;
-  align-self: center;
+  align-self: end;
+  margin-bottom: 2rem;
+
   display: grid;
   grid-template-rows: repeat(3, 33.33%);
   /* padding-left: 7rem; */
+  font-size: 2rem;
   align-content: stretch;
-  width: 90%;
+  width: 80%;
   height: 90%;
   box-sizing: border-box;
-  margin-right: 5%;
 }
 
 .suggest {
@@ -334,6 +349,7 @@
   /* 아이템이 넘칠 경우 줄바꿈 */
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-content: flex-start;
   gap: 0.5rem 0.5rem;
   overflow-y: scroll;
   box-sizing: border-box;
@@ -344,11 +360,13 @@
   border: 1px solid #9f132e;
   height: 20px;
   border-radius: 20px;
-  font-size: 1.6rem;
+  font-size: 1.648rem;
+  font-weight: 600;
+  line-height: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
-  margin-top: 0.3rem;
+  margin-top: 1rem;
   /* 순서대로 padding-top, padding-right, padding-bottom, padding-left */
   padding: 0.6rem 2rem 0.4rem 2rem;
   /* 줄바꿈을 방지 */
@@ -376,7 +394,7 @@
 .promptWrap {
   overflow: visible;
   grid-column: 1 / span 6;
-  grid-row: 9 / span 1;
+  grid-row: 3 / span 1;
   justify-self: center;
   align-self: center;
   display: flex;
@@ -385,7 +403,7 @@
   align-content: center;
   border: 1px solid #9f132e;
   border-radius: 60px;
-  width: 90%;
+  width: 100%;
   height: 70%;
 }
 
@@ -396,11 +414,15 @@
   border: none;
   margin-left: 2.7rem;
   resize: none;
-  margin-top: 1.9rem;
-  margin-bottom: 2rem;
+  /* margin-top: 1.9rem; */
+  /* margin-bottom: 2rem; */
+  background: none;
+  padding-top: 2rem;
+  /* 텍스트가 수직 가운데 정렬된 것처럼 보이도록 조정 */
   font-size: 1.7rem;
   font-weight: 500;
-  height: 40%;
+  height: 50%;
+  line-height: 50%;
   -ms-overflow-style: none;
   /* 인터넷 익스플로러 */
   scrollbar-width: none;

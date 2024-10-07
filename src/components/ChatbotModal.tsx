@@ -17,9 +17,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
-import folderImg from '../img/initialchat_folder.png'
-import plusImg from '../img/initialchat_plus.png'
-import chatImg from '../img/initialchat_chat.png'
+import chatImg from '../img/chatModal.png'
 
 interface User {
   id: number
@@ -433,119 +431,132 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
               </div>
             )}
 
-            <div
-              className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
-              ref={suggestContainerRef}
-              style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
-            >
-              <p id={styles.ref}>
-                {SuggestContainerState === 'initial'
-                  ? '추천 질문이에요:)'
-                  : SuggestContainerState === 'suggest'
-                    ? '추천 질문이에요:)'
-                    : SuggestContainerState === 'reference'
-                      ? '참고 문서'
-                      : null}
-              </p>
-              <div className={styles.suggest}>
-                {SuggestContainerState === 'initial' && (
-                  <>
-                    <span
-                      role={'presentation'}
-                      id={'ref_res_1'}
-                      className={styles.textBox}
-                      style={{ marginLeft: '0px' }}
-                      onClick={() => handleSuggestClick('너는 누구야?')}
-                    >
-                      {'너는 누구야?\r'}
-                    </span>
-                    <span
-                      role={'presentation'}
-                      id={'ref_res_2'}
-                      className={styles.textBox}
-                      onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
-                    >
-                      {'휴학은 최대 몇 년까지 가능해?\r'}
-                    </span>
-                    <span
-                      role={'presentation'}
-                      id={'ref_res_3'}
-                      className={styles.textBox}
-                      onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
-                    >
-                      {'강의 최소 출석 일수에 대해 알려줘.\r'}
-                    </span>
-                    <span
-                      role={'presentation'}
-                      id={'ref_res_4'}
-                      className={styles.textBox}
-                      onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
-                    >
-                      {'이중전공은 어떻게 해?\r'}
-                    </span>
-                  </>
-                )}
-                {SuggestContainerState === 'suggest' &&
-                  chatResponse.length > 0 &&
-                  chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
-                    <span
-                      role={'presentation'}
-                      key={`ref_res_${index + 1}`}
-                      className={styles.textBox}
-                      onClick={() => handleRecommendQuestionClick(question)}
-                    >
-                      {question}
-                    </span>
-                  ))}
-                {SuggestContainerState === 'reference' &&
-                  referenceList.length > 0 &&
-                  referenceList.map((ref, index) => (
-                    <span
-                      role={'presentation'}
-                      id={`ref_res_${index + 1}`}
-                      className={styles.textBox}
-                      style={index === 0 ? { marginLeft: '0px' } : {}}
-                      onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                      key={ref.link}
-                    >
-                      {`${ref.link}`}
-                    </span>
-                  ))}
-              </div>
-            </div>
-
-            {isLoginModalVisible && (
-              <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
-            )}
-            {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
-            {ClearModalOpen && (
-              <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
-            )}
-            <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
-              <textarea
-                className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-                placeholder={'AI에게 무엇이든 물어보세요!'}
-                value={inputValue}
-                onChange={inputChange}
-                onKeyDown={handleKeyDown}
-                ref={inputRef}
-                disabled={loading}
-              />
-              <button
-                type={'button'}
-                onClick={loading ? undefined : handleSendClick}
-                style={{
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  marginRight: '1.5rem',
-                  display: 'flex',
-                  alignItems: 'center', // 수직 가운데 정렬
-                }}
-                disabled={loading}
+            <div className={styles.suggestAndPrompt}>
+              <div
+                className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
+                ref={suggestContainerRef}
+                style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
               >
-                <img src={send} alt={'전송'} className={styles.sendBtn} />
-              </button>
+                <p id={styles.ref}>
+                  {SuggestContainerState === 'initial'
+                    ? '추천 질문이에요:)'
+                    : SuggestContainerState === 'suggest'
+                      ? '추천 질문이에요:)'
+                      : SuggestContainerState === 'reference'
+                        ? '참고 문서'
+                        : null}
+                </p>
+                <div className={styles.suggest}>
+                  {SuggestContainerState === 'initial' && (
+                    <>
+                      <span
+                        role={'presentation'}
+                        id={'ref_res_1'}
+                        className={styles.textBox}
+                        style={{ marginLeft: '0px' }}
+                        onClick={() => handleSuggestClick('너는 누구야?')}
+                      >
+                        {'너는 누구야?\r'}
+                      </span>
+                      <span
+                        role={'presentation'}
+                        id={'ref_res_2'}
+                        className={styles.textBox}
+                        onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
+                      >
+                        {'휴학은 최대 몇 년까지 가능해?\r'}
+                      </span>
+                      <span
+                        role={'presentation'}
+                        id={'ref_res_3'}
+                        className={styles.textBox}
+                        onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
+                      >
+                        {'강의 최소 출석 일수에 대해 알려줘.\r'}
+                      </span>
+                      <span
+                        role={'presentation'}
+                        id={'ref_res_4'}
+                        className={styles.textBox}
+                        onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
+                      >
+                        {'이중전공은 어떻게 해?\r'}
+                      </span>
+                    </>
+                  )}
+                  {SuggestContainerState === 'suggest' &&
+                    chatResponse.length > 0 &&
+                    chatResponse[chatResponse.length - 1].recommendedQuestions?.map(
+                      (question: string, index: number) => (
+                        <span
+                          role={'presentation'}
+                          key={`ref_res_${index + 1}`}
+                          className={styles.textBox}
+                          onClick={() => handleRecommendQuestionClick(question)}
+                        >
+                          {question}
+                        </span>
+                      ),
+                    )}
+                  {SuggestContainerState === 'reference' &&
+                    referenceList.length > 0 &&
+                    referenceList.map((ref, index) => (
+                      <span
+                        role={'presentation'}
+                        id={`ref_res_${index + 1}`}
+                        className={styles.textBox}
+                        style={index === 0 ? { marginLeft: '0px' } : {}}
+                        onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                        key={ref.link}
+                      >
+                        {`${ref.link}`}
+                      </span>
+                    ))}
+                </div>
+              </div>
+
+              {isLoginModalVisible && (
+                <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
+              )}
+              {RefreshModalOpen && (
+                <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />
+              )}
+              {ClearModalOpen && (
+                <ClearModal
+                  isOpen={ClearModalOpen}
+                  onClose={() => setClearModalOpen(false)}
+                  userId={user?.data[0].id}
+                />
+              )}
+              <div
+                className={styles.promptWrap}
+                style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}
+              >
+                <textarea
+                  className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
+                  placeholder={'하호에게 무엇이든 물어보세요!'}
+                  value={inputValue}
+                  onChange={inputChange}
+                  onKeyDown={handleKeyDown}
+                  ref={inputRef}
+                  disabled={loading}
+                />
+                <button
+                  type={'button'}
+                  onClick={loading ? undefined : handleSendClick}
+                  style={{
+                    cursor: loading ? 'not-allowed' : 'pointer',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    marginRight: '1.5rem',
+                    display: 'flex',
+                    alignItems: 'center', // 수직 가운데 정렬
+                  }}
+                  disabled={loading}
+                >
+                  <img src={send} alt={'전송'} className={styles.sendBtn} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
