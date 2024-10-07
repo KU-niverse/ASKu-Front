@@ -350,7 +350,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
         </div>
       </div>
-      <ChatbotModal isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
       <Footer />
     </div>
   )
