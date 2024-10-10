@@ -13,6 +13,7 @@ td {
   word-break: break-all;
 }
 
+
 /* 해상도 1550px ~ */
 @media screen and (min-width: 1550px) {
   * {
