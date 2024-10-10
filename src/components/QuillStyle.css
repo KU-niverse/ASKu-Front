@@ -4,16 +4,23 @@
 
 /* Increase border thickness and set border-radius */
 /* Example using a more specific selector */
-.ql-toolbar.ql-snow {
-  border: 2px solid #ccc;
-  border-radius: 12px 12px 0px 0px;
-}
-.ql-container.ql-snow {
-  border: 2px solid #ccc;
-  border-radius: 0px 0px 12px 12px;
-  height: 450px;
+/* 툴바 아이콘 및 텍스트 크기 조정 */
+.ql-toolbar.ql-snow .ql-picker-label,
+.ql-toolbar.ql-snow .ql-picker-item,
+.ql-toolbar.ql-snow button {
+  font-size: 1.6rem; /* 툴바 아이콘 및 텍스트 크기 */
 }
 
+/* 기타 에디터 스타일 */
+.ql-toolbar.ql-snow {
+  border: 0.2rem solid #ccc;
+  border-radius: 1.2rem 1.2rem 0 0;
+}
+/* 퀼 에디터 내부 텍스트 크기 조정 */
+.ql-editor {
+  font-size: 3.2rem; /* 원하는 크기로 설정 */
+  line-height: 1.4;
+}
 /* Adjust the focus border color if needed */
 /* .react-quill:focus {
     border-color: #333; /* Change this color as needed 

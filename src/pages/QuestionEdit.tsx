@@ -234,6 +234,7 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.edit}>
+        <h4 className={styles.editTitle}>{'문서 수정하기'}</h4>
         <div>
           <QuestionFor
             nick={stateData.nick}
