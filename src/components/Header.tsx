@@ -328,64 +328,53 @@ function Header({ userInfo, setUserInfo }: any) {
         </div>
 
         {/* 왼쪽 네비게이션 버튼 영역 (최근 변경, 최근 토론, 랜덤 문서 등) */}
-        <div className={styles.navContainer_fourItem}>
+        <div className={styles.navContainer_threeItem}>
           {/* Home 버튼 (화면 크기 및 메인 페이지 여부에 따라 버튼 표시 여부 조정) */}
 
-          <button
-            type={'button'}
-            className={styles.navHome}
-            style={{
-              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              color: location.pathname === '/' ? 'black' : '#979797',
-            }}
-          >
-            <Link
-              to={'/'}
-              onClick={() => {
-                track('click_header_navi', { type: 'Home' })
+          <Link to={'/'}>
+            <div
+              className={styles.navHome}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color: location.pathname === '/' ? 'black' : '#979797',
               }}
             >
-              {' '}
-            </Link>
-            {ismainpage || buttonTextVisible ? 'Home' : ''}
-          </button>
+              Home
+            </div>
+          </Link>
 
           {/* 문서  */}
-          <div
-            className={styles.navDocs}
-            style={{
-              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              color: location.pathname.startsWith('/wiki/morequestion')
-                ? '#979797' // /wiki/morequestion로 시작하는 경로는 모두 회색
-                : location.pathname.startsWith('/wiki')
-                  ? 'black' // /wiki로 시작하는 다른 경로는 검정색
-                  : '#979797', // 그 외 경로는 회색
-            }}
-          >
-            문서
-          </div>
-
+          <Link to="/allhistory">
+            <div
+              className={styles.navDocs}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color: location.pathname.startsWith('/wiki/morequestion')
+                  ? '#979797' // /wiki/morequestion로 시작하는 경로는 모두 회색
+                  : location.pathname.startsWith('/wiki') || location.pathname === '/allhistory'
+                    ? 'black' // /wiki로 시작하는 다른 경로는 검정색
+                    : '#979797', // 그 외 경로는 회색
+              }}
+            >
+              문서
+            </div>
+          </Link>
           {/* 토론 */}
-          <div
-            className={styles.navDebate}
-            style={{
-              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              color: location.pathname.startsWith('/debate') ? 'black' : '#979797',
-            }}
-          >
-            토론
-          </div>
 
-          {/* 질문 */}
-          <div
-            className={styles.navQuestions}
-            style={{
-              display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
-              color: location.pathname.startsWith('/wiki/morequestion') ? 'black' : '#979797',
-            }}
-          >
-            질문
-          </div>
+          <Link to="/latestdebate">
+            <div
+              className={styles.navDebate}
+              style={{
+                display: !ismainpage && window.innerWidth <= 950 ? 'none' : 'inline-flex',
+                color:
+                  location.pathname.startsWith('/debate') || location.pathname === '/latestdebate'
+                    ? 'black'
+                    : '#979797',
+              }}
+            >
+              토론
+            </div>
+          </Link>
         </div>
 
         <div className={styles.navContainer_right}>
