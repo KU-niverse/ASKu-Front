@@ -56,7 +56,7 @@ box-sizing: border-box;
 
 @media only screen and (max-width: 767px) {
   .container {
-    margin: 50px 0;
+    margin: 7% 0;
   }
   .textbox {
     font-size: 16px;
