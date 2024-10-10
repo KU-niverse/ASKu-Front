@@ -95,3 +95,9 @@
   text-decoration: none; /* 밑줄 제거 */
   color: black; /* 기본 텍스트 색상 유지 */
 }
+@media only screen and (max-width: 767px) {
+  .resultList{
+    width: 100%;
+  }
+
+}
