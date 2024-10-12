@@ -97,15 +97,23 @@ div.navDebate:hover {
   justify-content: center;
   align-items: bottom;
 }
+
+@media only screen and (max-width: 767px) {
+  .logoContainer {
+    display: none;
+  }
+}
+
 .mobilelogoContainer {
   display: none;
 }
 @media only screen and (max-width: 767px) {
   .mobilelogoContainer {
-    display: inline-block;
+    display: flex;
     min-width: 60px;
     justify-content: center;
     align-items: bottom;
+    margin-left: 3.4rem;
   }
 }
 
@@ -128,12 +136,7 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .inputcontainer {
-    position: absolute;
-    top: 20px;
-    right: 100px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+    display: none;
   }
 }
 
@@ -258,7 +261,7 @@ div.navDebate:hover {
 }
 
 @media only screen and (max-width: 767px) {
-  .navContainer_left {
+  .navContainer_threeItem {
     display: none;
   }
 }
@@ -269,9 +272,8 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .logo {
-    position: absolute;
-    top: 20px;
-    left: 10px;
+    width: 11.875rem;
+    height: 3.666rem;
   }
 }
 
@@ -293,10 +295,10 @@ div.navDebate:hover {
   .mobileButton {
     display: block;
     cursor: pointer;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    margin-right: 15px;
+    position: absolute;
+    right: 3.4rem;
+    width: 3.7rem;
+    height: 3.7rem;
   }
 }
 
@@ -360,10 +362,9 @@ div.navDebate:hover {
 @media only screen and (max-width: 767px) {
   .mobileHeader {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
   }
 }
 
@@ -395,7 +396,6 @@ div.navDebate:hover {
 .mobileMenuWrap {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .mobileSearchWrap {

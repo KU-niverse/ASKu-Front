@@ -10,7 +10,7 @@ import logo from '../img/logo.png'
 import searchIconBlack from '../img/search_icon_black.svg'
 import searchIconRed from '../img/search_icon_red.svg'
 import searchIconGray from '../img/search_icon_gray.png'
-import hamburger from '../img/hamburger.png'
+import hamburger from '../img/hamburger.svg'
 import bookmark from '../img/bookmark_grey.svg'
 import mypage from '../img/mypage_btn.png'
 import mobilemypage from '../img/mobile_mypage.png'
@@ -222,6 +222,8 @@ function Header({ userInfo, setUserInfo }: any) {
 
   // 모바일 메뉴 열림 상태 관리
   const handleMobileMenu = () => {
+    console.log('현재 mobileHeaderOpen 상태:', mobileHeaderOpen)
+
     setMobileSearchOpen(false)
     if (mobileHeaderOpen) {
       setMobileHeaderOpen(false)
@@ -284,13 +286,6 @@ function Header({ userInfo, setUserInfo }: any) {
       <div className={styles.flexContainer}>
         {/* 데스크탑용 로고 영역 */}
         <div className={styles.logoContainer}>
-          <Link to={'/'}>
-            <img src={logo} alt={'logo'} className={styles.logo} />
-          </Link>
-        </div>
-
-        {/* 모바일용 로고 영역 */}
-        <div className={styles.mobilelogoContainer}>
           <Link to={'/'}>
             <img src={logo} alt={'logo'} className={styles.logo} />
           </Link>
@@ -437,6 +432,11 @@ function Header({ userInfo, setUserInfo }: any) {
         {/* 여기부터 모바일? */}
 
         <div className={styles.mobileHeader}>
+          <div className={styles.mobilelogoContainer}>
+            <Link to={'/'}>
+              <img src={logo} alt={'logo'} className={styles.logo} />
+            </Link>
+          </div>
           <div className={styles.buttonWrap}>
             {isLoggedIn ? (
               <div />
@@ -447,14 +447,14 @@ function Header({ userInfo, setUserInfo }: any) {
                 </button>
               </Link>
             )}
-            <img
+            {/* <img
               role={'presentation'}
               src={searchIconGray}
               alt={'search_icon_gray'}
               id={styles.mobileHeaderSearch}
               className={styles.mobileButton}
               onClick={handleMobileSearch}
-            />
+            /> */}
             <img
               role={'presentation'}
               src={hamburger}
