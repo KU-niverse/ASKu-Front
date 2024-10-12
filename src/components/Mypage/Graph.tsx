@@ -1,5 +1,3 @@
-import React from 'react'
-import HSBar from 'react-horizontal-stacked-bar-chart'
 import styles from './Graph.module.css'
 
 interface Document {
@@ -22,13 +20,13 @@ interface Contribution {
 }
 
 function Graph({ total_point, docs }: GraphProps) {
+  const radius = 50
+  const circumference = 2 * Math.PI * radius
+
+  let cumulativeValue = 0
+
   const getColor = (index: number) => {
-    const colors = [
-      'rgba(251, 108, 108, 1)',
-      'rgba(255, 214, 0, 1)',
-      'rgba(251, 193, 108, 1)',
-      'rgba(217, 217, 217, 1)',
-    ]
+    const colors = ['#f9e482', '#f26262', '#6cd395', 'rgba(217, 217, 217, 1)']
 
     // Ensure index is within the valid range
     const validIndex = Math.min(Math.max(index, 0), colors.length - 1)
@@ -37,12 +35,18 @@ function Graph({ total_point, docs }: GraphProps) {
   }
 
   // Calculate contributions and sort them
-  const contributions = docs.map((doc: Document) => ({
-    name: doc.doc_title,
-    value: (parseFloat(doc.doc_point) / total_point) * 100,
-    description: `${((parseFloat(doc.doc_point) / total_point) * 100).toFixed(2)}%`,
-    color: '', // Initialize color property
-  }))
+  const contributions = docs.map((doc: Document) => {
+    // doc.percentage를 float로 변환, NaN인 경우 0으로 설정
+    const percentage = parseFloat(doc.percentage)
+    // eslint-disable-next-line no-restricted-globals
+    const validPercentage = isNaN(percentage) ? 0 : percentage
+    return {
+      name: doc.doc_title,
+      value: validPercentage * 10000,
+      description: `${(validPercentage * 100).toFixed(2)}%`,
+      color: '', // Initialize color property
+    }
+  })
 
   // Sort contributions by value in descending order
   contributions.sort((a: Contribution, b: Contribution) => b.value - a.value)
@@ -64,11 +68,11 @@ function Graph({ total_point, docs }: GraphProps) {
   updatedTopContributions.push({
     name: '기타',
     value: otherContributionValue,
-    description: `${otherContributionValue.toFixed(2)}%`,
+    description: `${(otherContributionValue * 0.01).toFixed(2)}%`,
     color: getColor(3),
   })
 
-  // 이름을 10자로 제한하고 넘어가면 "..."으로 처리하는 함수
+  // 이름의 길이를 num으로 제한하고 넘어가면 "..."으로 처리하는 함수
   const truncateString = (str: string, num: number) => {
     if (str.length > num) {
       return `${str.slice(0, num)}...`
@@ -78,39 +82,40 @@ function Graph({ total_point, docs }: GraphProps) {
 
   return (
     <div className={styles.g_container}>
-      <p className={styles.g_name}>{'문서별 기여도'}</p>
-      <div
-        style={{
-          borderRadius: '100px',
-          height: '22px',
-          overflow: 'hidden',
-          width: '100%',
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            width: 'calc(100% + 2px)',
-            height: '100%',
-            position: 'absolute',
-            left: '-1px',
-            top: '50%', // 중앙으로 위치시킵니다
-            transform: 'translateY(-50%)', // 높이의 50%만큼 위로 이동시킵니다
-          }}
-        >
-          <HSBar id={'cb_bar'} height={22} data={updatedTopContributions} outlineWidth={0.2} outlineColor={'white'} />
-        </div>
-      </div>
       <div className={styles.legend}>
         {updatedTopContributions.map((item: Contribution) => (
           <div className={styles.legendItem} key={item.name}>
             <div className={styles.legendColor} style={{ background: item.color }} />
             <div className={styles.legendLabel}>
-              <span className={styles.legendname}>{truncateString(item.name, 8)}</span>
+              <span className={styles.legendname}>{truncateString(item.name, 15)}</span>
               <span className={styles.legendper}> {item.description}</span>
             </div>
           </div>
         ))}
+      </div>
+      <div className={styles.graphContainer}>
+        <svg className={styles.doughnut} viewBox={'0 0 120 120'}>
+          {updatedTopContributions.map((item, index) => {
+            const offset = cumulativeValue * circumference
+            const value = item.value / 10000
+            const strokeDasharray = `${value * circumference} ${circumference}`
+            cumulativeValue += value
+            return (
+              <circle
+                key={item.name}
+                r={radius}
+                cx={'60'}
+                cy={'60'}
+                fill={'transparent'}
+                stroke={item.color}
+                strokeWidth={'20'}
+                strokeDasharray={strokeDasharray}
+                strokeDashoffset={-offset}
+              />
+            )
+          })}
+        </svg>
+        <div className={styles.centerText}>{`${total_point}P`}</div>
       </div>
     </div>
   )

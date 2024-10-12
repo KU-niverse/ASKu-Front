@@ -1,14 +1,27 @@
 .menubtn {
+  width: 136px;
+  height: 39px;
   border: none;
-  background: none;
+  outline: none;
+  border-radius: 28.46px;
+  background: black;
+  color: white;
   cursor: pointer;
+  font-size: 13.28px;
+  font-weight: 700;
+  padding: 10px 24px;
 }
 
-.menubtn img {
-  width: 23.4px;
-  object-fit: contain;
-}
-
-.menuitem {
-  width: auto;
+.disabledbtn {
+  width: 136px;
+  height: 39px;
+  border: none;
+  outline: none;
+  border-radius: 28.46px;
+  background: #d5d5d5;
+  color: white;
+  cursor: default;
+  font-size: 13.28px;
+  font-weight: 700;
+  padding: 10px 24px;
 }

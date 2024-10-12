@@ -451,7 +451,7 @@ li {
   }
   .wikititleBtnThree {
     position: absolute;
-    right: 40px;
+    right: 30px;
     margin-top: 17px;
     min-width: 70px;
     white-space: nowrap;
@@ -466,5 +466,8 @@ li {
     height: 25px;
     font-size: 9px;
     padding: 6px;
+  }
+  .wikimaintitle{
+    max-width: 150px;
   }
 }

@@ -75,7 +75,47 @@ interface ContributionData {
   message: Contribution[]
 }
 
-function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
+interface UserAuthResponse {
+  success: boolean
+}
+
+interface UserInfo {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
+function useCheckLoginStatus() {
+  return useQuery<UserAuthResponse, AxiosError>(
+    'loginStatus',
+    async () => {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('로그인 상태 확인 에러:', error)
+      },
+    },
+  )
+}
+
+function WikiViewer() {
   const myDivRef = useRef<(HTMLDivElement | null)[]>([])
   const nav = useNavigate()
   const location = useLocation()
@@ -94,6 +134,8 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   const [imageSource, setImageSource] = useState(falseBk)
   const [titles, settitles] = useState([])
   const [isTocExpanded, setIsTocExpanded] = useState(false)
+  const { data: loginStatusData } = useCheckLoginStatus()
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -108,22 +150,33 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }, [isToggled])
 
   const fetchWiki = async (): Promise<WikiData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
+      withCredentials: true,
+    })
     return response.data
   }
 
   const fetchQues = async (): Promise<QuestionData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`)
+    const response = await axios.get(
+      `${process.env.REACT_APP_HOST}/question/view/${flag}/${encodeURIComponent(title)}`,
+      {
+        withCredentials: true,
+      },
+    )
     return response.data
   }
 
   const fetchTitles = async (): Promise<TitleData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`, {
+      withCredentials: true,
+    })
     return response.data
   }
 
   const fetchContribute = async (): Promise<ContributionData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`, {
+      withCredentials: true,
+    })
     const data = response.data.message.map((contribution: { point: string; nickname: string }) => ({
       ...contribution,
       point: parseInt(contribution.point, 10),
@@ -175,36 +228,6 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     }
   }, [contributeData])
 
-  const { isLoading: checkLoginLoading, error: checkLoginError } = useQuery(
-    'checkLoginStatus',
-    async () => {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-      return res.data
-    },
-    {
-      onSuccess: (data) => {
-        if (data.success) {
-          setLoggedIn(true)
-        } else {
-          setLoggedIn(false)
-          alert('로그인이 필요한 서비스 입니다.')
-          nav('/signin')
-        }
-      },
-      onError: (error: unknown) => {
-        setLoggedIn(false)
-        const axiosError = error as CustomAxiosError
-        if (axiosError.response?.status === 401) {
-          alert('로그인이 필요한 서비스 입니다.')
-          nav('/signin')
-        } else {
-          alert('에러가 발생하였습니다')
-          nav('/')
-        }
-      },
-    },
-  )
-
   const addBookmarkMutation = useMutation(
     async () => {
       const result = await axios.post(
@@ -240,7 +263,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
 
   const deleteBookmarkMutation = useMutation(
     async () => {
-      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${encodeURIComponent(title)}`, {
         withCredentials: true,
       })
       return result.data
@@ -256,8 +279,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
         }
       },
       onError: (error: unknown) => {
-        const axiosError = error as CustomAxiosError
-        alert(axiosError.response?.data.message)
+        // const axiosError = error as CustomAxiosError
+        // alert(axiosError.response?.data.message)
+        setFavorite(false)
+        setImageSource(falseBk)
+        alert('즐겨찾기에서 삭제되었습니다')
       },
     },
   )
@@ -271,7 +297,9 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   function handleClick(index: number) {
-    myDivRef.current[index]?.scrollIntoView({ behavior: 'smooth' })
+    if (myDivRef.current[index]) {
+      myDivRef.current[index].scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const linkToHistory = () => {
@@ -280,6 +308,11 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
   }
 
   const linkToAllEdit = () => {
+    if (!loginStatusData?.success) {
+      alert('로그인이 필요한 서비스입니다')
+      nav('/signin')
+      return
+    }
     const encodedTitle = encodeURIComponent(title!)
     nav(`/wikiedit/${encodedTitle}/all`, { state: { from: location.pathname } })
   }
@@ -306,7 +339,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     }
   }
 
-  if (wikiLoading || quesLoading || contributeLoading || loading || checkLoginLoading || titlesLoading) {
+  if (wikiLoading || quesLoading || contributeLoading || loading || titlesLoading) {
     return (
       <div>
         <SpinnerMypage />
@@ -314,16 +347,16 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
     )
   }
 
-  if (wikiError || quesError || contributeError || checkLoginError || titlesError) {
+  if (wikiError || quesError || contributeError || titlesError) {
     return <div>{'Error loading data'}</div>
   }
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.wikiviewer}>
         <div className={styles.wikititle}>
-          <h1>
+          <h1 className={styles.wikimaintitle}>
             {title}
             <img
               role={'presentation'}
@@ -360,7 +393,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               </button>
             </div>
             <div>
-              {allContent.map((item) => {
+              {allContent.map((item: Content) => {
                 const tabCount = item.index.split('.').length - 1
                 const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
 
@@ -409,6 +442,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
             <div className={styles.quesWrap}>
+
               {ques.length === 0 ? (
                 <div className={styles.noQuestion}>
                   <div className={styles.askWrapper}>
@@ -421,6 +455,7 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
                 <>
                   {ques.slice(0, 3).map((item, index) => (
                     <div className={styles.queslist} key={item.id}>
+
                       <ul
                         role={'presentation'}
                         onClick={() => {
@@ -509,7 +544,12 @@ function WikiViewer({ loggedIn, setLoggedIn }: WikiViewerProps) {
               }
 
               return (
-                <div ref={(el) => myDivRef.current[Number(item.section)] === el} key={item.section}>
+                <div
+                  ref={(el) => {
+                    if (el) myDivRef.current[Number(item.section)] = el
+                  }}
+                  key={item.section}
+                >
                   <WikiBox
                     title={item.title}
                     content={item.content}

@@ -5,16 +5,29 @@
 .bkbox {
   /* 다른 스타일을 적용하는 코드 */
   width: 100%;
-  height: 120px; /* 최대 높이 설정 */
   overflow: hidden;
   position: relative;
-  border-radius: 12px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin-bottom: 20px;
-  padding: 16px;
+  border-radius: 30px;
+  box-shadow: 0px 2px 60px -5px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
   box-sizing: border-box;
   cursor: pointer;
-  border: 0.5px solid rgba(213, 213, 213, 1);
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  column-gap: 2.4rem;
+  padding-top: 0;
+  height: 18rem;
+
+
+}
+.bkTag{
+  display: flex;
+  grid-column: 4 / 5;
+  justify-content: center;
+  height: 3.6rem;
+}
+.body{
+  background: #F9F9F9;
 }
 
 .contents {
@@ -26,10 +39,30 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
+.versionContainer{
+  grid-column: 1/2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contentContainer{
+  grid-column: 2/5;
+}
+.version{
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+}
 
 .title {
-  color: rgba(159, 19, 46, 1);
-  font-size: 18px;
+  color: #000;
+  font-size: 2.2rem;
+  font-weight: 700;
   word-break: break-word;
 }
 
@@ -38,13 +71,14 @@
 }
 
 .content {
-  font-size: 12px;
-  max-height: 4em; /* 2줄 크기를 나타내는 값으로 조절 */
+  font-size: 1.8rem;
+  font-weight: 400;
+  max-height: 6rem; /* 2줄 크기를 나타내는 값으로 조절 */
   overflow: hidden;
   text-overflow: ellipsis; /* 텍스트가 길 경우 ...으로 표시 */
   white-space: normal; /* 텍스트가 여러 줄에 나타날 수 있도록 합니다. */
-  line-height: 2em; /* 각 줄의 높이를 2em로 설정하여 2줄을 나타냅니다. */
-  color: rgba(116, 116, 116, 1);
+  line-height: 2rem; /* 각 줄의 높이를 2em로 설정하여 2줄을 나타냅니다. */
+  color: #747474;
 }
 
 .morelink {
@@ -52,4 +86,22 @@
   display: block;
   margin-top: 4px;
   color: blue; /* 링크 색상을 원하는 색상으로 조정 */
+}
+@media only screen and (max-width: 767px) {
+.versionContainer{
+  border-right: solid #D5D5D5 1px;
+  padding-right: 2rem;
+}
+.bkbox{
+  border: 1px solid rgba(213, 213, 213, 0.80);
+}
+.version{
+  left: 40%;
+}
+.bkbox{
+  box-shadow: none;
+}
+.content{
+  max-height: 8rem;
+}
 }

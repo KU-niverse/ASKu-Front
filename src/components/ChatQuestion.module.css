@@ -1,62 +1,48 @@
 .questionBox {
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    margin-top: 25px;
-    width: calc(100% - 100px);
-    height: auto;
-    border-radius: 12px;
-    margin-left: 50px;
-    margin-right: 50px;
-    word-break:keep-all;
-    position: relative;
-    min-height: 92px;
-    align-items: center;
-    border: 1px solid #D5D5D5;
-    max-width: 800px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  margin-top: 3.9rem;
+  margin-right: 2.3rem;
+  word-break: keep-all;
+  align-items: center;
+  max-width: 60%;
 }
+
 @media screen and (max-width: 767px) {
   .questionBox {
     width: calc(100vw - 50px);
+    margin-right: 15px;
   }
+
   .questionBox {
     width: calc(100vw - 50px);
   }
 }
 
-.characterWrapper{
-    width: 92px;
-    min-height: 92px;
-    height: 100%;
-}
-.characterContainer {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #D9D9D9;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-}
-
 .chatText {
-    width: calc(100% - 50px);
-    margin-left: 0px;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    line-height: 150%;
-    word-break: break-word;
-    margin-top: 35px;
-    margin-bottom: 35px;
+  border: 0.11rem solid rgba(222, 58, 88, 1);
+  background-color: white;
+  border-radius: 21.66px;
+  font-size: 1.5rem;
+  text-align: center;
+  padding-left: 2.3rem;
+  padding-right: 2.3rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  margin-right: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  letter-spacing: 0.5px;
+  line-height: 150%;
+  word-break: break-word;
 }
 
 @media screen and (max-width: 500px) {
   .chatText {
     max-width: 220px;
   }
+
   .chatText {
     max-width: 220px;
   }
@@ -76,13 +62,13 @@
 }
 
 .iconZip {
-    visibility: hidden;
-    display: flex;
-    position: absolute;
-    bottom: 20px;
-    right: 15px;
-    flex-direction: row;
-    width: auto;
+  visibility: hidden;
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+  right: 15px;
+  flex-direction: row;
+  width: auto;
 }
 
 .icon {
@@ -97,14 +83,24 @@
 }
 
 .chatTextWrap {
-    position: relative;
-    flex: 1;
+  position: relative;
+  flex: 1;
 }
+
 @media screen and (max-width: 500px) {
   .chatTextWrap {
     max-width: 220px;
   }
+
   .chatTextWrap {
     max-width: 220px;
   }
+}
+
+.character {
+  align-self: flex-start;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #D5D5D5, #6F6F6F);
 }

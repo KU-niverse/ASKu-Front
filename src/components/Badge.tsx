@@ -1,47 +1,29 @@
-import React from 'react'
-import haho from '../img/haho.png'
 import styles from './Badge.module.css'
 import ThreedotsBadge from './ThreedotsBadge'
-import FormatDate from './FormatDate'
-import lock from '../img/lock.png'
+// import FormatDate from './FormatDate'
+import locked from '../img/locked.svg'
 
 function Badge({ myBadgeIds, id, name, image, description, event, count }: any) {
   return (
-    <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-      <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-        <div className={`${styles.b_thumb} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-          <img src={myBadgeIds.has(id) ? image : lock} alt={name} />
-        </div>
-        <div className={`${styles.b_right} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-          <div className={`${styles.b_listhead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-            <span
-              className={`${styles.b_listfronthead} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}
-            >
-              {myBadgeIds.has(id) ? name : '잠긴 뱃지입니다.'}
-            </span>
-            <div
-              className={`${styles.b_listput} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}
-            >
-              <ThreedotsBadge badge_id={id} />
-            </div>
-          </div>
-          <div className={`${styles.b_listmid} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-            <p className={`${styles.midtext} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-              {description}
-            </p>
-          </div>
-          <div className={`${styles.b_listfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
-            <span
-              className={`${styles.b_listfrontfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}
-            >
-              {'달성자 수 : '}
-              {count}
-              {'명\r'}
-            </span>
-            {/* <span className={`${styles.b_listlastfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+    <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+      <div className={`${styles.b_thumb}`}>
+        <img src={myBadgeIds.has(id) ? image : locked} alt={name} />
+      </div>
+      <div className={`${styles.b_info}`}>
+        <div className={`${styles.b_achievement}`}>
+          <span className={`${styles.b_people} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
+            {'달성자 수 : '}
+            {count}
+            {'명\r'}
+          </span>
+          {/* <span className={`${styles.b_listlastfoot} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
               획득일 : {formattedDate}
             </span> */}
-          </div>
+        </div>
+        <div className={`${styles.b_badgename}`}>{myBadgeIds.has(id) ? name : '잠긴 뱃지입니다'}</div>
+        <div className={`${styles.b_badgedescription}`}>{description}</div>
+        <div className={`${styles.b_repbadgebtn}`}>
+          <ThreedotsBadge badge_id={id} badge_disabled={!myBadgeIds.has(id)} />
         </div>
       </div>
     </div>

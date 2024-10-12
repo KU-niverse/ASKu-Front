@@ -1,7 +1,38 @@
-.container {
+.title {
+  font-size: 3.6rem;
+  font-weight: 700;
+  margin-top: 51px;
+  margin-bottom: 16px;
+}
+
+.menu {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  justify-content: space-between;
+  padding: 10px 0;
+  color: #de3a58;
+  font-size: 2.4rem;
+  font-weight: 700;
+  border-top: 4px solid #9f132e;
+  padding-top: 17px;
+}
+
+.pink {
+  color: #de3a58;
+  font-size: 3.6rem;
+}
+
+.maincontent {
+  margin-left: 138px;
+  margin-right: 70px;
+  margin-top: 10px;
+  background-color: white;
+  width: 75%;
+  height: auto;
+}
+
+.caution {
+  text-align: center;
+  margin-top: 60px;
 }
 .hidden {
   display: none;
@@ -22,8 +53,8 @@
 }
 
 .debatecontent {
-  height: auto;
-  width: auto;
+  height: 90vh;
+  width: 98vw;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -36,17 +67,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 18px;
+  padding-bottom: 0px;
   box-sizing: border-box;
+  border-radius: 12px;
+  padding-top: 27.6px;
+  margin-bottom: 29.5px;
+  margin-top: 46px;
+  margin-right: 138px;
 }
 .sidebar div {
   width: 100%;
-  margin-bottom: 30px;
-}
-.maincontent {
-  background-color: white;
-  width: 75%;
-  height: auto;
+  margin-bottom: 15px;
 }
 
 .maincontent_box {
@@ -55,34 +87,19 @@
   margin: 37px 12px 21px 12px;
   padding-bottom: 35px;
 }
-
-.title {
-  font-size: 30px;
-  font-weight: 800;
-  text-align: center;
-  margin-top: 0;
-  padding-top: 30px;
-}
-.menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px 20px;
-  padding: 10px 0;
-  color: rgba(159, 19, 46, 1);
-  font-size: 18px;
-  font-weight: 700;
-  border-bottom: 1px solid rgba(213, 213, 213, 1);
-}
-.menu1 {
-  margin-left: 14px;
-}
-.menu2 {
-  margin-right: 14px;
+.menu1,.menu2{
+  font-size: 2.4rem;
 }
 
 .none {
-  margin-left: 34px;
+  color: #000;
+  text-align: center;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -99,12 +116,14 @@
   .maincontent {
     width: 100%;
     height: auto;
+    margin-right: 0px;
+    margin-left: 0px;
   }
   .sidebar {
     display: block;
     background-color: white;
     width: 100%;
-    padding: 0;
+    margin-right: 0px;
   }
 
   .debateSearch {
@@ -140,9 +159,14 @@
   .menu1,
   .menu2 {
     margin: 0;
+    font-size: 2.4rem;
   }
 
   .menu {
     font-size: 14px;
   }
+}
+.cautionIcon {
+  width: 47px;
+
 }

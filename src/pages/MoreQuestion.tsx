@@ -86,14 +86,14 @@ const submitQuestion = async ({
 const MoreQuestion: React.FC = () => {
   const { title } = useParams<{ title: string }>()
   const location = useLocation()
-  const defaultOpt = location.state?.defaultOpt
+  const defaultOpt = location.state
   const queryClient = useQueryClient()
 
   const [isToggled, setIsToggled] = useState(false)
   const flag = isToggled ? 1 : 0
 
   const { data: userInfo, isLoading: userInfoLoading } = useQuery('userInfo', fetchUserInfo)
-  const { data: titles, isLoading: titlesLoading } = useQuery('titles', fetchTitles)
+  const { data: titles = [], isLoading: titlesLoading } = useQuery('titles', fetchTitles)
   const { data: questionData, isLoading: questionsLoading } = useQuery(
     ['questions', title, flag],
     () => fetchQuestions(title, flag),
@@ -128,7 +128,7 @@ const MoreQuestion: React.FC = () => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={userInfo} />
       <div className={styles.content}>
-        {titles?.includes(title) ? (
+        {titles.includes(title) ? (
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>

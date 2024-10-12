@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useQuery, useMutation } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Signin.module.css'
 import logo from '../img/logo.png'
-import haho_login from '../img/login.png'
 
 interface SigninProps {
   loggedIn: boolean
@@ -25,15 +24,21 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const [saveIDFlag, setSaveIDFlag] = useState(false)
+  const loginRememColor = saveIDFlag ? styles.id_remem_checked : styles.id_remem
+  const isMount = useRef(false)
 
-  window.onpopstate = function (event) {
-    // 뒤로 가기 버튼 클릭 시 새로고침하고자 하는 동작 수행
-    window.location.reload()
-  }
+  // window.onpopstate = function (event) {
+  //   // 뒤로 가기 버튼 클릭 시 새로고침하고자 하는 동작 수행
+  //   window.location.reload()
+  // }
 
   // Amplitude
   useEffect(() => {
-    track('view_login')
+    // 마운트 될 때 1회만 트래킹 정보 전송
+    if (!isMount) {
+      isMount.current = true
+      track('view_login')
+    }
   }, [])
 
   const {
@@ -95,6 +100,7 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
 
   const handleSaveIDFlag = () => {
     const newFlag = !saveIDFlag
+
     setSaveIDFlag(newFlag)
     localStorage.setItem(LS_KEY_SAVE_ID_FLAG, JSON.stringify(newFlag))
     if (!newFlag) {
@@ -104,12 +110,14 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
 
   useEffect(() => {
     const idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG) || 'false')
-    setSaveIDFlag(idFlag)
-    if (idFlag) {
-      const storedId = localStorage.getItem(LS_KEY_ID)
-      if (storedId) {
-        setId(storedId)
-      }
+    const storedId = localStorage.getItem(LS_KEY_ID)
+
+    // 렌더링 시 저장된 아이디가 있을 때만 체크박스 활성화
+    if (idFlag && storedId) {
+      setSaveIDFlag(true)
+      setId(storedId)
+    } else {
+      setSaveIDFlag(false)
     }
   }, [])
 
@@ -130,12 +138,12 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
   return (
     <div className={styles.container}>
       <img role={'presentation'} className={styles.logo} src={logo} alt={'logo'} onClick={() => nav('/')} />
-      <img className={styles.haho} src={haho_login} alt={'haho'} />
-      <h1 className={styles.login_headers}>{'LOGIN'}</h1>
       <p className={styles.login_instruction}>{'고파스 계정으로 바로 로그인하세요!'}</p>
       <form onSubmit={handleOnSubmit}>
         <div className={styles.login_input}>
           <input type={'text'} value={id} onChange={(e) => setId(e.target.value)} placeholder={'아이디를 입력하세요'} />
+        </div>
+        <div className={styles.login_input}>
           <input
             type={'password'}
             value={password}
@@ -146,7 +154,7 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
         <div className={styles.login_remem}>
           <span className={styles.id_rem}>
             <input type={'checkbox'} id={'chkbox'} checked={saveIDFlag} onChange={handleSaveIDFlag} />
-            <span>{'아이디 기억하기'}</span>
+            <span className={loginRememColor}>{'아이디 기억하기'}</span>
           </span>
         </div>
         <button className={styles.login_btn} type={'submit'}>

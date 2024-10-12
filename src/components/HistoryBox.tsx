@@ -17,6 +17,7 @@ interface HistoryBoxProps {
   timestamp: string
   target: number
   type: string
+  newest: number
 }
 
 interface ErrorResponse {
@@ -27,7 +28,7 @@ interface ErrorResponse {
 const HistoryBox = (props: HistoryBoxProps) => {
   const nav = useNavigate()
 
-  const { title, version, summary, user, timestamp, target, type } = props // 구조 분해 할당
+  const { title, version, summary, user, timestamp, target, type, newest } = props // 구조 분해 할당
 
   const handleView = () => {
     const encodedTitle = encodeURIComponent(title)
@@ -46,13 +47,13 @@ const HistoryBox = (props: HistoryBoxProps) => {
           {},
           { withCredentials: true },
         )
-        return result.data
+        return result.data.message
       }
       throw new Error('롤백이 취소되었습니다.') // 롤백 취소 시 에러 발생
     },
     {
-      onSuccess: (data) => {
-        alert(data)
+      onSuccess: (message) => {
+        alert(message)
         const encodedTitle = encodeURIComponent(title)
         nav(`/wiki/${encodedTitle}`)
       },
@@ -70,15 +71,12 @@ const HistoryBox = (props: HistoryBoxProps) => {
   )
 
   const handleCompare = () => {
-    if (type === 'create') {
-      alert('새로 생성된 문서 히스토리는 지원하지 않는 기능입니다')
-    }
     if (version === 1) {
       alert('첫번째 히스토리는 지원하지 않는 기능입니다')
+    } else {
+      const encodedTitle = encodeURIComponent(title)
+      nav(`/history/${encodedTitle}/diff/${version}`)
     }
-    const encodedTitle = encodeURIComponent(title)
-
-    nav(`/history/${encodedTitle}/diff/${version}`)
   }
 
   return (
@@ -109,7 +107,11 @@ const HistoryBox = (props: HistoryBoxProps) => {
             <img alt={'RAW버전 미리보기 버튼'} src={watch} />
             {'RAW버전 미리보기\r'}
           </span>
-          <span role={'presentation'} onClick={() => handleRollback()} className={`${styles.versionbtn}`}>
+          <span
+            role={'presentation'}
+            onClick={version === newest ? () => alert('최신 버전으로는 롤백할 수 없습니다.') : () => handleRollback()}
+            className={`${styles.versionbtn}`}
+          >
             {isRollbackLoading ? (
               '롤백 중...'
             ) : (
