@@ -442,7 +442,6 @@ function WikiViewer() {
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
             <div className={styles.quesWrap}>
-
               {ques.length === 0 ? (
                 <div className={styles.noQuestion}>
                   <div className={styles.askWrapper}>
@@ -455,7 +454,6 @@ function WikiViewer() {
                 <>
                   {ques.slice(0, 3).map((item, index) => (
                     <div className={styles.queslist} key={item.id}>
-
                       <ul
                         role={'presentation'}
                         onClick={() => {
