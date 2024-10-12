@@ -127,8 +127,8 @@ const QnA: React.FC = () => {
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.frontheader}>
-            <p className={styles.q_pagename}>{title}</p>
-            <p className={styles.q_headline}>{'문서의 질문'}</p>
+            <div className={styles.q_pagename}>{title}</div>
+            <div className={styles.q_headline}>{'문서의 질문'}</div>
           </div>
           <div className={styles.backheader}>
             <button type={'button'} onClick={linktoWiki} className={styles.q_editbtn}>

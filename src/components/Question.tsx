@@ -60,6 +60,7 @@ function Question({
         like_count,
         nick,
         index_title,
+        badge_image,
       },
     })
   }
@@ -80,6 +81,7 @@ function Question({
         index_title,
         answer_count,
         title,
+        badge_image,
       },
     })
   }
