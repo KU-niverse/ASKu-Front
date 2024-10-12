@@ -10,15 +10,12 @@ import trueBk from '../img/bookmarkFill.svg'
 import VectorRight from '../img/VectorRight.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
-import comment from '../img/comment_icon.svg'
+import minilike from '../img/minilike.svg'
 import WikiBox from '../components/WikiBox'
 import Switch from '../components/Switch'
 import WikiGraph from '../components/Wiki/WikiGraph'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Footer from '../components/Footer'
-import question from '../img/wiki_qustion.svg'
-import arrowUp from '../img/arrow_up_red.svg'
-import arrowDown from '../img/arrow_down_red.svg'
 
 interface AxiosErrorResponse {
   message: string
@@ -133,7 +130,6 @@ function WikiViewer() {
   const [favorite, setFavorite] = useState(false)
   const [imageSource, setImageSource] = useState(falseBk)
   const [titles, settitles] = useState([])
-  const [isTocExpanded, setIsTocExpanded] = useState(false)
   const { data: loginStatusData } = useCheckLoginStatus()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
@@ -383,13 +379,12 @@ function WikiViewer() {
             </button>
           </div>
         </div>
-
         <div className={styles.wikiBoxLists}>
-          <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
+          <div className={styles.wikilist}>
             <div className={styles.wikilistTitle}>
-              목차
+              <h2>{'목차'}</h2>
               <button type={'button'} onClick={linkToAllEdit}>
-                {'편집하기'}
+                {'전체 편집'}
               </button>
             </div>
             <div>
@@ -399,68 +394,41 @@ function WikiViewer() {
 
                 return (
                   <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
-                    <span
-                      style={{
-                        fontWeight: tabCount === 0 ? '600' : '500',
-                        fontSize: tabCount === 0 ? '2rem' : '1.6rem',
-                      }}
-                    >
-                      {' '}
+                    <span className={styles.wikiIndex}>
                       {tabs}
-                      <span className={styles.wikiIndex}>
-                        {item.index}
-                        {'.\r'}
-                      </span>
-                      {item.title}
-                    </span>
+                      {item.index}
+                      {'.\r'}
+                    </span>{' '}
+                    {item.title}
                   </li>
                 )
               })}
             </div>
-
-            <div className={styles.tocExpandedButtonContainer}>
-              <button
-                type="button"
-                onClick={() => setIsTocExpanded(!isTocExpanded)}
-                className={styles.tocExpandedButton}
-              >
-                <div className={styles.tocexpandedButtonText}>
-                  {isTocExpanded ? '목차 접기' : '목차 더보기'}
-                  <img
-                    src={isTocExpanded ? arrowUp : arrowDown}
-                    alt={isTocExpanded ? 'Collapse Icon' : 'Expand Icon'}
-                    className={styles.tocexpandedButtonIcon}
-                  />
-                </div>
-              </button>
-            </div>
           </div>
-
           <div className={styles.wikiask}>
             <div className={styles.wikiaskTitle}>
-              질문
+              <h2>{'질문'}</h2>
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
-            <div className={styles.quesWrap}>
-
+            <div className={ques.length !== 0 ? styles.quesWrap : styles.noneComment}>
               {ques.length === 0 ? (
-                <div className={styles.noQuestion}>
-                  <div className={styles.askWrapper}>
-                    <span className={styles.askText}>질문할래요</span>
-                    <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
-                  </div>
-                  <p className={styles.noneComment}>아직 질문이 존재하지 않습니다</p>
-                </div>
+                <p className={styles.noneComment}>{'"질문이 존재하지 않습니다"'}</p>
               ) : (
-                <>
-                  {ques.slice(0, 3).map((item, index) => (
-                    <div className={styles.queslist} key={item.id}>
-
+                ques.map((item, index) => {
+                  if (index >= 5) {
+                    return null
+                  }
+                  return (
+                    <div>
+                      <hr className={styles.customHr} />
                       <ul
                         role={'presentation'}
+                        key={item.id}
                         onClick={() => {
                           const encodedTitle = encodeURIComponent(title)
-                          track('click_question_in_wiki', { index })
+                          track('click_question_in_wiki', {
+                            index,
+                          })
                           nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
                             state: {
                               question_id: item.id,
@@ -477,29 +445,24 @@ function WikiViewer() {
                         }}
                         className={styles.quesul}
                       >
-                        <span className={styles.quesTitle}>Q. {item.content}</span>
+                        <span className={styles.quesTitle}>
+                          {'Q. '}
+                          {item.content}
+                        </span>
                         <span className={styles.quesNum}>
                           <span>{item.like_count}</span>
-                          <img alt={'좋아요'} src={comment} />
+                          <img alt={'좋아요'} src={minilike} />
                         </span>
                       </ul>
                     </div>
-                  ))}
-                  {ques.length > 4 && (
-                    <div className={styles.moreIndicator}>
-                      <span>.</span>
-                      <span>.</span>
-                      <span>.</span>
-                    </div>
-                  )}
-                </>
+                  )
+                })
               )}
             </div>
-
             <div className={styles.wikiaskFoot}>
-              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
+              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`}>
                 <button type={'button'} className={styles.addQues}>
-                  {'나도 질문하기'} <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
+                  {'나도 질문하기'}
                 </button>
               </Link>
               <Link
@@ -511,7 +474,7 @@ function WikiViewer() {
                 }}
               >
                 <button type={'button'} className={styles.moreQues}>
-                  {'질문 더보기'}
+                  {'더보기'}
                 </button>
               </Link>
             </div>

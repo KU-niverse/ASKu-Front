@@ -6,8 +6,6 @@ import { FaChevronDown, FaChevronRight } from 'react-icons/fa6'
 import { track } from '@amplitude/analytics-browser'
 import WikiToHtml from './Wiki/WikiToHtml'
 import styles from './WikiBox.module.css'
-import arrowUp from '../img/arrow_up_black.svg'
-import arrowDown from '../img/arrow_down_black.svg'
 
 interface Content {
   index: string
@@ -87,24 +85,28 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
     <div className={styles.wikiContents}>
       <li role={'presentation'} onClick={toggleView} className={styles.wikiContentlist}>
         <div className={styles.wikiContentTitle}>
-          <span className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</span>
+          <span className={isOpen ? '' : styles.hidden}>
+            <FaChevronDown size={'16'} color={'rgba(222, 58, 88, 1)'} />
+          </span>
+          <span className={isOpen ? styles.hidden : ''}>
+            <FaChevronRight size={'16'} color={'rgba(222, 58, 88, 1)'} />
+          </span>
+          <span className={styles.wikiIndex}>
+            &nbsp;{index}
+            &nbsp;
+          </span>
           <span>{title}</span>
-          <div className={isOpen ? '' : styles.hidden}>
-            <img className={styles.wikiArrowIcon} src={arrowDown} alt="Arrow Down" />
-          </div>
-          <div className={isOpen ? styles.hidden : ''}>
-            <img className={styles.wikiArrowIcon} src={arrowUp} alt="Arrow Up" />
-          </div>
         </div>
         <div className={isZero ? `${styles.hidden}` : `${styles.wikiContentBtns}`}>
           <button type={'button'} onClick={linkToWikiEdit} className={styles.wikiContentBtn}>
             {'편집\r'}
           </button>
-          <button type={'button'} onClick={linkToWikiQue} className={styles.wikiContentQuestionBtn}>
+          <button type={'button'} onClick={linkToWikiQue} className={styles.wikiContentBtn}>
             {'질문\r'}
           </button>
         </div>
       </li>
+      <hr />
       <div className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}>
         <div dangerouslySetInnerHTML={{ __html: contentWithResponsiveImages }} />
       </div>
