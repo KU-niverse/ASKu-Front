@@ -1,110 +1,71 @@
-.hidden {
-  display: none;
-}
-/* 스타일을 초기화하고 싶은 경우 */
-.linkTo {
-  text-decoration: none; /* 밑줄 제거 */
-  color: black; /* 기본 텍스트 색상 유지 */
+.addTitle {
+  width: 89px;
+  position: relative;
+  font-size: 2.4rem;
+  font-family: Pretendard;
+  color: #de3a58;
+  text-align: left;
 }
 
-/* 클릭 시 스타일 변경하고 싶은 경우 */
-.linkTo:hover {
-  text-decoration: underline;
-  text-decoration: none; /* 클릭 시 밑줄 표시 */
-}
-.addTitle {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0em;
+.subTitle {
+  width: 142px;
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: 500;
+  font-family: Pretendard;
+  color: #747474;
   text-align: left;
-  color: rgba(159, 19, 46, 1);
-  margin-bottom: 0px;
-}
-.addTitle p {
-  margin: 0;
+  display: block;
+  margin-top: 5px;
   margin-bottom: 5px;
 }
-.addTitleMain {
-  font-size: 18px;
-  font-weight: 700;
-}
-.addBtn {
-  background: linear-gradient(180deg, rgba(244, 109, 134, 0.3), rgba(244, 109, 134, 0) 100%);
-  border: 1px solid rgba(159, 20, 47, 1);
-  width: 100%;
-  height: 50px;
-  top: 380px;
-  left: 20px;
+
+.addButton {
+  background: linear-gradient(166deg, #fff -32.12%, #ffa1b0 110.81%);
+  border: 1px solid #de3a58;
   border-radius: 12px;
+  width: 32.7rem;
+  height: 12.5rem;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
-.inputContainer {
-  display: flex;
-  width: 25%;
-  position: relative;
-}
-.headerInput {
-  border: 2px solid #d5d5d5;
-  border-radius: 12px;
-  width: 100%;
-  height: 50px;
-  padding-left: 20px;
-  box-sizing: border-box;
+.none {
+  display: none;
 }
 
-@media only screen and (max-width: 767px) {
-  .addBtn {
-    width: 300px;
-  }
-  .inputcontainer {
-    width: 300px;
-  }
-  .headerInput {
-    width: 100%;
-  }
-  .createBtn {
-    right: 10px;
-    bottom: 12px;
-  }
+.hidden {
+  visibility: hidden;
 }
-.createBtn {
-  width: 46px;
-  height: 24px;
-  border-radius: 20px;
-  position: absolute;
-  right: 10px;
-  bottom: 12px;
-  background: linear-gradient(180deg, #9f132e 31.77%, #de3a58 100%);
+.addInput {
+  border: 1px solid #de3a58;
+  border-radius: 12px;
+  width: 32.7rem;
+  height: 12.5rem;
+  flex-shrink: 0;
+  color: #000000;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding-left: 12px;
+  padding-top: 8.5px;
+  resize: none;
+}
+.createButton {
+  width: 59.222px;
+  height: 26px;
+  cursor: pointer;
+  border-radius: 21.667px;
+  background: linear-gradient(90deg, #9f132e 30.34%, #de3a58 100%);
+  box-shadow: 0px 3.611px 14.444px -3.611px rgba(0, 0, 0, 0.2);
   border: none;
   color: white;
-  font-size: 10px;
-  font-weight: 700;
+  margin-top: 10px;
+}
+.addPart {
+  margin-bottom: 16px;
 }
 
-.addLists {
-  display: flex;
-  flex-direction: column;
-}
-.addLists ul {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 0;
-}
-.listTitle {
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 17px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-.listTimestamp {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-  letter-spacing: 0em;
-  text-align: right;
-  color: rgba(116, 116, 116, 1);
+.plusIcon {
+  width: 24px;
+  height: 24px;
 }

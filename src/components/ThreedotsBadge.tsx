@@ -1,15 +1,22 @@
-import { Menu, MenuItem, MenuButton, ClickEvent } from '@szhsin/react-menu'
+// import { Menu, MenuItem, MenuButton, ClickEvent } from '@szhsin/react-menu'
+import React from 'react'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import axios from 'axios'
-import threedots from '../img/threedots.png'
 import styles from './ThreedotsBadge.module.css'
 
 interface ThreedotsBadgeProps {
   badge_id: number
+  badge_disabled: boolean
 }
 
-function ThreedotsBadge({ badge_id }: ThreedotsBadgeProps) {
+function ThreedotsBadge({ badge_id, badge_disabled }: ThreedotsBadgeProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    onRepBadge()
+  }
+
   const onRepBadge = async () => {
     try {
       const response = await axios.put(
@@ -30,24 +37,14 @@ function ThreedotsBadge({ badge_id }: ThreedotsBadgeProps) {
   } // 대표 뱃지 변경
 
   return (
-    <Menu
-      menuButton={
-        <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt={'Menu'} />
-        </MenuButton>
-      }
+    <button
+      type={'button'}
+      onClick={handleClick}
+      className={badge_disabled ? styles.disabledbtn : styles.menubtn}
+      disabled={badge_disabled}
     >
-      <MenuItem
-        className={styles.menuitem}
-        onClick={(e: ClickEvent) => {
-          e.syntheticEvent.stopPropagation()
-          e.syntheticEvent.preventDefault()
-          onRepBadge()
-        }}
-      >
-        {'대표 뱃지로 설정\r'}
-      </MenuItem>
-    </Menu>
+      {badge_disabled ? '잠긴 뱃지' : '대표 뱃지로 설정'}
+    </button>
   )
 }
 

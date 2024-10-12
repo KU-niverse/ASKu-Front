@@ -14,25 +14,30 @@
   cursor: pointer;
 }
 .results {
-  display: flex;
-  padding: 30px;
-  flex-direction: column;
-  width: 74%;
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  column-gap: 24px;
+  row-gap: 0px;
   min-height: 80vh;
   height: auto;
-  margin-left: 13%;
+  padding-left: 12rem;
+  padding-right:12rem;
+}
+.searchText{
+  color:#DE3A58;
 }
 .header {
+  grid-column: 2/13;
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: flex-end;
   font-size: 24px;
   font-weight: 700;
   margin: 20px 0px 20px 0px;
 }
 .header h4 {
   margin: 0px;
-  font-size: 25px;
+  font-size: 3.6rem;
   font-weight: 700;
 }
 .header img {
@@ -44,8 +49,9 @@
 }
 
 .typeWrap {
+  grid-column: 2/13;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 15px;
 }
@@ -67,7 +73,7 @@
   font-weight: 700;
 }
 .btnRed {
-  color: rgba(159, 19, 46, 1);
+  color: #000;
 }
 .btnGray {
   color: rgba(116, 116, 116, 1);
@@ -76,7 +82,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(159, 19, 46, 1);
+  background: #000;
   width: 34px;
   height: 19px;
   border-radius: 11px;
@@ -100,12 +106,13 @@
   width: 30%;
 }
 .contents {
+  grid-column: 2/13;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .boxes {
-  width: 66%;
+  grid-column: 2/9;
   display: flex;
   flex-direction: column;
 }
@@ -113,31 +120,37 @@
 
 .linkToNew {
   margin-top: 10px;
-  text-align: right; /* 우측 정렬을 위해 text-align을 right로 설정합니다. */
+  text-align: center;
 }
 .link {
   color: rgba(116, 116, 116, 1);
-  font-size: 15px;
+  font-size: 1.6rem;
   text-decoration: none;
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
+  margin-bottom: 5%;
+  text-decoration-line : underline;
 }
 .link:hover {
   text-decoration: underline;
 }
+.recentTitle{
+  color: #DE3A58;
+  font-weight: 700;
+  margin-bottom: 0px;
+  font-size: 2.4rem;
+}
 
 .recents {
-  width: 30%;
+  grid-column: 9/12;
   height: auto;
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
   margin-bottom: 20px;
   box-sizing: border-box;
 }
 .recentWrap {
-  padding: 10px;
+  
 }
 .recentWrap ul {
   padding: 0;
@@ -145,15 +158,18 @@
   align-items: center;
   justify-content: space-between;
   margin: 15px 0px 15px 0px;
-  font-size: 14px;
+  font-size: 1.8rem;
   cursor: pointer;
   white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
 }
 .listTitle {
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 1.8rem;
 }
 .listTimestamp {
   margin-left: 5px;
+  font-weight: 400;
+  font-size: 1.4rem;
 }
 
 /* 스타일을 초기화하고 싶은 경우 */
@@ -177,7 +193,6 @@
     display: flex;
     padding: 30px;
     flex-direction: column;
-    width: 94%;
     height: auto;
     margin-left: 3%;
   }
@@ -191,6 +206,7 @@
     height: auto;
     margin-left: 3%;
   }
+  
   .type {
     width: 95%;
   }
@@ -204,6 +220,7 @@
     display: none;
   }
   .link {
-    font-size: 12px;
+    font-size: 10px;
+    margin: 3.4rem;
   }
 }

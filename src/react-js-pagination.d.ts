@@ -8,6 +8,8 @@ declare module 'react-js-pagination' {
     pageRangeDisplayed: number
     prevPageText?: React.ReactNode
     nextPageText?: React.ReactNode
+    firstPageText?: React.ReactNode
+    lastPageText?: React.ReactNode
     onChange: (pageNumber: number) => void
   }
 

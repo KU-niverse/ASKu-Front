@@ -1,16 +1,16 @@
 .footer {
-  border-top: 0.5px #d5d5d5 solid;
-  border-bottom: 0.5px #d5d5d5 solid;
+  border-top: 0.05rem #d5d5d5 solid;
+  border-bottom: 0.05rem #d5d5d5 solid;
   display: flex;
   align-items: center;
   flex-direction: row;
   position: relative;
-  height: 50px;
+  height: 6rem;
   background-color: #ffffff;
 }
 @media only screen and (max-width: 767px) {
   .footer {
-    height: 100px;
+    height: 10rem;
   }
 }
 
@@ -23,22 +23,21 @@
   background-color: #ffffff;
   border: none;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 1.2rem;
   color: black;
   font-weight: 400;
-  margin-bottom: 7px;
-  height: 11px;
+  margin-bottom: 0.1rem;
 }
 @media only screen and (max-width: 767px) {
   .footerButton {
-    margin-bottom: 10.5px;
+    margin-bottom: 0.5rem;
   }
 }
 
 .footerTitle {
-  margin-left: 20px;
+  margin-left: 3rem;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 1.5rem;
   background-color: #ffffff;
   border: none;
   color: black;
@@ -66,15 +65,15 @@
   display: flex;
   align-items: center;
   position: absolute;
-  right: 30px;
+  right: 3rem;
 }
 @media only screen and (max-width: 767px) {
   .logoWrap {
-    bottom: 15px;
+    bottom: 1.5rem;
   }
 }
 
 .logoGray {
-  width: 50px;
+  width: 6rem;
   height: auto;
 }
