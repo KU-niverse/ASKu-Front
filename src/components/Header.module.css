@@ -181,11 +181,6 @@ div.navDebate:hover {
   align-items: center;
   cursor: pointer;
 }
-.nickname_badge {
-  border: 1px solid #d5d5d5;
-  border-radius: 50%;
-  margin-right: 15px;
-}
 
 .nicknameText {
   font-weight: 700;
@@ -351,6 +346,9 @@ div.navDebate:hover {
 }
 
 .repBadge {
+  border: 0.1rem solid #d5d5d5;
+  border-radius: 50%;
+  margin-right: 15px;
   width: 3.8rem;
   height: 3.8rem;
   border-radius: 50%; /* 이미지의 둥글기 설정 */
