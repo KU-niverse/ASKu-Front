@@ -50,7 +50,7 @@ const DebateRecent = ({ title }: DebateRecentProps) => {
         ) : error ? (
           <p className={styles.none}>{'최근 변경된 토론이 없습니다.'}</p>
         ) : (
-          recentListData?.data.slice(0, 4).map((item: RecentItem) => (
+          recentListData?.data.slice(0, 6).map((item: RecentItem) => (
             <Link
               key={item.id}
               to={`/debate/${encodeURIComponent(item.title)}/${item.subject}`}

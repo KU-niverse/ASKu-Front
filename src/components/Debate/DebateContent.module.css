@@ -1,7 +1,6 @@
 .container {
-  margin: 0 30px;
   border-bottom: 1px solid rgba(213, 213, 213, 1);
-  padding: 20px;
+  padding: 20px 0px;
 }
 .header {
   margin-bottom: 10px;
@@ -29,7 +28,7 @@
 
 .num,
 .user {
-  font-size: 14px;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 .num {
@@ -37,7 +36,7 @@
 }
 
 .date {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 400;
   color: rgba(116, 116, 116, 1);
   margin-left: 14px;
@@ -50,6 +49,8 @@
 
 .debate_content {
   word-break: break-word;
+  font-size: 2rem;
+  font-weight:600 ;
 }
 
 @media only screen and (max-width: 767px) {
