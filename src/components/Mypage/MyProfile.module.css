@@ -39,6 +39,7 @@
   flex-direction: column;
   gap: 1.65rem;
 }
+
 .rowBadge,
 .rowPoint {
   display: flex;
@@ -74,57 +75,14 @@
   font-weight: 400;
   color: #de3a58;
 }
-/*
-.editbtn {
-  width: 44px;
-  height: 20px;
-  border-radius: 12px;
-  background-color: rgba(254, 242, 244, 1);
-  border: none;
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(222, 58, 88, 1);
-  right: 20px;
-  margin-left: 15px;
-  cursor: pointer;
-  align-self: center;
-  padding: 3px 10px;
-}
 
+/* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
-  .rownick,
-  .rowbadge,
-  .rowpoint {
+  .infoRows {
+    background-color: white;
     width: 100%;
+    max-width: revert;
+    padding: 2.5rem 3.5rem;
+    border-radius: 1.8rem;
   }
-
-  .rowtitle,
-  .text,
-  .rank {
-    font-size: 14px;
-  }
-
-  .rowtitle {
-    width: 30%;
-    text-align: left;
-    font-weight: bold;
-    padding: 10px 0;
-  }
-
-  .text {
-    width: 70%;
-    font-weight: bold;
-  }
-
-  .rank {
-    font-weight: normal;
-    font-size: 12px;
-  }
-
-  .badgeedit {
-    display: block;
-    font-size: 10px;
-    font-weight: 400;
-    color: #747474;
-  }
-} */
+}
