@@ -621,7 +621,32 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
             )}
           </div>
         </div>
-        <div className={styles.mobileNavContainer}>{'nav'}</div>
+        <div className={styles.mobileNavContainer}>
+          <button type={'button'} onClick={() => Navigate('/')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 기여 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 뱃지 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/myquestion')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 질문'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mycomment')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 토론'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+        </div>
       </div>
       <div>
         <Footer />

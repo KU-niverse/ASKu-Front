@@ -269,11 +269,30 @@
     flex-direction: column;
   }
   .mobileProfileContainer {
-    padding: 3rem;
+    padding: 1rem 3rem;
   }
   .mobileProfileBox {
     background: linear-gradient(172.18deg, #fff7f0 -40.24%, #fdeff6 106.25%);
     border-radius: 3.6rem;
     padding: 4.5rem;
+  }
+  .mobileNavBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid #d5d5d5;
+    background-color: transparent;
+    padding: 2.7rem 3rem;
+    cursor: pointer;
+  }
+  .mobileNavText {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .mobileNavArrowImg {
+    filter: invert(59%) sepia(0%) saturate(0%) hue-rotate(318deg) brightness(150%) contrast(89%);
+    width: 1rem;
   }
 }
