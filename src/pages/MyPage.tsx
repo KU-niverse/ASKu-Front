@@ -648,7 +648,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
           </button>
         </div>
       </div>
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>
