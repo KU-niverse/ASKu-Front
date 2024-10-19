@@ -1,86 +1,59 @@
-.header {
+.historyDiffContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  height: 80px;
+  padding-bottom: 4rem;
+}
+.historyDiffContent {
+  width: 75%;
+}
+.historyDiffTitle {
+  display: flex;
+  align-items: center;
+  margin-top: 7.7rem;
+  margin-bottom: 3.1rem;
+  gap: 0.5rem;
   width: 100%;
+}
+.docTitle {
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: #de3a58;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.listTitles {
+  font-weight: 700;
+  font-size: 3.6rem;
+  padding: 0 0.3rem;
+  margin: 0;
+  min-width: 31rem;
+}
+.historyDiffBox {
+  border-radius: 1.2rem;
+  border: 0.1rem #d5d5d5 solid;
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
 }
 .diffBox {
   width: 100%;
 }
-.header span {
-  font-size: 30px;
-  font-weight: bolder;
-  color: white;
-}
-.header img {
-  margin-right: 10px;
-}
-.historyTitle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-}
-
-.historyCompare {
-  width: 74%;
-  margin-left: 13%;
-  height: auto;
-  margin-bottom: 40px;
-}
-
-.historyTitle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-}
-.listTitle {
-  font-size: 24px;
-  font-weight: 700;
-  margin-right: 10px;
-}
-.listTitle2 {
-  font-size: 18px;
-  font-weight: 700;
-}
-.historyDiff {
-  border-radius: 12px;
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+.diffBox pre,
+.diffBox span {
+  font-size: 1.8rem;
 }
 .verCompare {
   width: 100%;
   height: 70px;
-  color: rgba(159, 19, 46, 1);
+  color: #9f132d;
   display: flex;
+  gap: 1.5rem;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  border-bottom: 0.2rem solid rgba(213, 213, 213, 1);
+}
+.verCompareNum {
+  font-size: 3.3rem;
   font-weight: 600;
-  border-bottom: 2px solid rgba(213, 213, 213, 1);
-}
-.verCompareVs {
-  color: rgba(116, 116, 116, 1);
-  font-size: 24px;
-}
-@media only screen and (max-width: 767px) {
-  .historyCompare {
-    width: 90%;
-    margin-left: 5%;
-    height: auto;
-    margin-bottom: 40px;
-  }
-  .verCompareNum {
-    font-size: 17px;
-  }
-  .verCompareVs {
-    font-size: 15px;
-  }
-  .diffBox {
-    width: 100%;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
 }
