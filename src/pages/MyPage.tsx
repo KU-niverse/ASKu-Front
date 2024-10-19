@@ -290,9 +290,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
 
   return (
     <div className={styles.pagewrap}>
-      <div>
+      <div className={styles.headerContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
+      {/* 웹 뷰 */}
       <div className={styles.myPageContainer}>
         <div className={styles.navContainer}>
           <div className={styles.navSubContainer}>
@@ -603,6 +604,24 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
             </div>
           ) : null}
         </div>
+      </div>
+
+      {/* 모바일 뷰 */}
+      <div className={styles.mobileMyPageContainer}>
+        <div className={styles.mobileProfileContainer}>
+          <div className={styles.mobileProfileBox}>
+            {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
+              <MyProfile
+                nick={mypageData.data[0].nickname}
+                point={mypageData.data[0].point}
+                badge={mypageData.data[0].rep_badge_name}
+                badgeimg={mypageData.data[0].rep_badge_image}
+                percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
+              />
+            )}
+          </div>
+        </div>
+        <div className={styles.mobileNavContainer}>{'nav'}</div>
       </div>
       <div>
         <Footer />

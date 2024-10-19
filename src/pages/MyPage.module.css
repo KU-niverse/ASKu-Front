@@ -3,13 +3,12 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 .myPageContainer {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  overflow-y: scroll;
-  scrollbar-width: none;
 }
 .navContainer {
   display: flex;
@@ -102,7 +101,7 @@
   background-color: white;
   border-radius: 3.4rem;
   box-shadow: 0rem 0.2rem 6rem -0.5rem #00000014;
-  padding: 2.8rem 0 4.25rem 0;
+  padding: 2.8rem 3rem 4.25rem 3rem;
 }
 .profileHeader {
   margin-bottom: 2.8rem;
@@ -251,5 +250,30 @@
 @media screen and (min-width: 768px) and (max-width: 940px) {
   * {
     font-size: 40%;
+  }
+}
+
+/* 모바일뷰 */
+.mobileMyPageContainer {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .headerContainer {
+    display: none;
+  }
+  .myPageContainer {
+    display: none;
+  }
+  .mobileMyPageContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobileProfileContainer {
+    padding: 3rem;
+  }
+  .mobileProfileBox {
+    background: linear-gradient(172.18deg, #fff7f0 -40.24%, #fdeff6 106.25%);
+    border-radius: 3.6rem;
+    padding: 4.5rem;
   }
 }
