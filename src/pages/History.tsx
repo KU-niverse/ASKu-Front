@@ -95,9 +95,11 @@ const History = () => {
   const visibleHistorys = historys.slice(startIndex, endIndex)
 
   return (
-    <>
-      <div className={styles.historyContainer}>
+    <div className={styles.pageWrap}>
+      <div className={styles.historyHeaderContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+      </div>
+      <div className={styles.historyContainer}>
         <div className={styles.historyContent}>
           <div className={styles.historyList}>
             <div className={styles.historyTitle}>
@@ -131,8 +133,10 @@ const History = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className={styles.historyFooterContainer}>
+        <Footer />
+      </div>
+    </div>
   )
 }
 

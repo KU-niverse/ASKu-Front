@@ -36,7 +36,7 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
   }
 
   return (
-    <div className={styles.historyBox}>
+    <div className={styles.allHistoryBox}>
       <div className={styles.contentsOne}>
         <div className={styles.versionContainer}>
           <img className={styles.versionimg} src={versionimg} alt={'버전이미지'} />
@@ -58,6 +58,7 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
           </div>
         </div>
       </div>
+      <div className={styles.verticalLine} />
       {/* 웹 뷰 오른쪽 contents */}
       <div className={styles.contentsTwo}>
         <div className={styles.summaryContainer}>

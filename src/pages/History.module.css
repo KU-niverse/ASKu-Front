@@ -1,6 +1,11 @@
 .hidden {
   display: none;
 }
+.pageWrap {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
 .historyContainer {
   display: flex;
   flex-direction: column;
@@ -90,10 +95,13 @@
 .pagingContainer {
   margin: 7.6rem 0;
 }
+.historyFooterContainer {
+  margin-top: auto;
+}
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
-  .allHistoryHeaderContainer {
+  .historyHeaderContainer {
     display: none;
   }
   .allhistoryTitle {
