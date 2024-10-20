@@ -98,7 +98,9 @@ const AllHistory: React.FC = () => {
   return (
     <div>
       <div className={styles.historyContainer}>
-        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        <div className={styles.allHistoryHeaderContainer}>
+          <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        </div>
         <div className={styles.historyContent}>
           {isError ? (
             <div>

@@ -174,3 +174,63 @@
   height: 1.5rem;
   margin-bottom: 0.3rem;
 }
+
+/* 모바일 뷰 */
+.mobileContentsTwo {
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  .historyBox {
+    height: 18rem;
+    border-radius: 2.7rem;
+    padding: 1.6rem 0;
+    box-shadow: revert;
+    border: 0.1rem solid #d5d5d5cc;
+  }
+  .versionimg {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  .version {
+    font-size: 1.6rem;
+  }
+  .docTitle {
+    background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 1.8rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    height: 4.5rem;
+    margin-top: 1rem;
+  }
+  .contentsOne {
+    border-right: 0.05rem #d5d5d5 solid;
+    padding-top: 1.5rem;
+  }
+  .contentsTwo {
+    display: none;
+  }
+  .mobileContentsTwo {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2.2rem;
+  }
+  .infoLine {
+    box-sizing: border-box;
+    margin-bottom: 0;
+  }
+  .summary {
+    margin-bottom: 2rem;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  .allversionBtns {
+    flex-direction: row;
+    margin-bottom: 1.5rem;
+  }
+  .versionbtn {
+    font-size: 1.6rem;
+  }
+}
