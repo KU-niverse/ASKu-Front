@@ -93,14 +93,33 @@
   color: #de3a58;
 }
 .pagingContainer {
-  margin: 7.6rem 0;
+  margin: 5rem 0;
 }
 .historyFooterContainer {
   margin-top: auto;
 }
+.linkToNew {
+  margin-top: 10px;
+  text-align: center;
+}
+.link {
+  color: rgba(116, 116, 116, 1);
+  font-size: 1.6rem;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 5%;
+  text-decoration-line: underline;
+}
+.link:hover {
+  text-decoration: underline;
+}
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
+  .allHistoryHeaderContainer,
   .historyHeaderContainer {
     display: none;
   }

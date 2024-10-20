@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import styles from './History.module.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -45,6 +46,10 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface UserAuthResponse {
+  success: boolean
+}
+
 function useGetHistory(type: string, page: number, perPage: number) {
   return useQuery<HistoryItem[], AxiosError>(
     ['historys', type, page],
@@ -59,6 +64,24 @@ function useGetHistory(type: string, page: number, perPage: number) {
       enabled: !!type, // type이 null 또는 undefined가 아닐 때만 쿼리 활성화
       onError: (error: AxiosError) => {
         console.error('API 요청 중 에러 발생:', error)
+      },
+    },
+  )
+}
+
+function useCheckLoginStatus() {
+  return useQuery<UserAuthResponse, AxiosError>(
+    'loginStatus',
+    async () => {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        withCredentials: true,
+      })
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (error: AxiosError) => {
+        console.error('로그인 상태 확인 에러:', error)
       },
     },
   )
@@ -94,6 +117,18 @@ const AllHistory: React.FC = () => {
 
   const startIndex = (page - 1) * perPage
   const endIndex = page * perPage
+
+  const { data: loginStatusData } = useCheckLoginStatus()
+  const nav = useNavigate()
+
+  const handleNewwikiClick = async () => {
+    if (!loginStatusData?.success) {
+      alert('로그인이 필요한 서비스입니다')
+      nav('/signin')
+      return
+    }
+    nav('/newwiki')
+  }
 
   return (
     <div>
@@ -170,6 +205,11 @@ const AllHistory: React.FC = () => {
                   activePage={page}
                   onChange={handlePageChange}
                 />
+              </div>
+              <div className={styles.linkToNew}>
+                <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
+                  {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
+                </button>
               </div>
             </div>
           )}
