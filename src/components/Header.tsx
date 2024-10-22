@@ -13,11 +13,11 @@ import searchIconGray from '../img/search_icon_gray.png'
 import hamburger from '../img/hamburger.svg'
 import bookmark from '../img/bookmark_grey.svg'
 import mypage from '../img/mypage_btn.png'
-import mobilemypage from '../img/mobile_mypage.png'
-import mobilelogout from '../img/mobile_logout.png'
-import mobiledebate from '../img/mobile_debate.png'
-import mobilebookmark from '../img/mobile_bookmark.png'
-import mobilehistory from '../img/mobile_history.png'
+import mobileMypage from '../img/mobile_mypage.svg'
+import mobilelogout from '../img/mobile_logout.svg'
+import mobileDebate from '../img/mobile_debate.svg'
+import mobileBookmark from '../img/mobile_bookmark.svg'
+import mobileDocument from '../img/mobile_document.svg'
 import randomDocs from '../img/random.svg'
 import all_document from '../img/all_document.svg'
 import recent_debate from '../img/recent_debate.svg'
@@ -222,8 +222,6 @@ function Header({ userInfo, setUserInfo }: any) {
 
   // 모바일 메뉴 열림 상태 관리
   const handleMobileMenu = () => {
-    console.log('현재 mobileHeaderOpen 상태:', mobileHeaderOpen)
-
     setMobileSearchOpen(false)
     if (mobileHeaderOpen) {
       setMobileHeaderOpen(false)
@@ -429,139 +427,88 @@ function Header({ userInfo, setUserInfo }: any) {
           )}
         </div>
 
-        {/* 여기부터 모바일? */}
-
+        {/* 모바일 헤더 */}
         <div className={styles.mobileHeader}>
           <div className={styles.mobilelogoContainer}>
             <Link to={'/'}>
               <img src={logo} alt={'logo'} className={styles.logo} />
             </Link>
           </div>
-          <div className={styles.buttonWrap}>
-            {isLoggedIn ? (
-              <div />
-            ) : (
-              <Link className={styles.loginbtn} to={'/signin'}>
-                <button type={'button'} className={styles.loginbtn}>
-                  {'로그인'}
-                </button>
-              </Link>
-            )}
-            {/* <img
-              role={'presentation'}
-              src={searchIconGray}
-              alt={'search_icon_gray'}
-              id={styles.mobileHeaderSearch}
-              className={styles.mobileButton}
-              onClick={handleMobileSearch}
-            /> */}
-            <img
-              role={'presentation'}
-              src={hamburger}
-              alt={'hamburger'}
-              className={styles.mobileButton}
-              onClick={handleMobileMenu}
-            />
+          <div
+            className={styles.buttonWrap}
+            onClick={handleMobileMenu}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleMobileMenu()
+              }
+            }}
+          >
+            <img role={'presentation'} src={hamburger} alt={'hamburger'} className={styles.mobileButton} />
           </div>
           {mobileHeaderOpen && (
-            <div className={styles.mobileMenuWrap}>
-              <div className={styles.mobileHamburger}>
-                <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
-                  <div className={styles.mobileHamburgerMenu}>
-                    <img src={mobilemypage} alt={''} className={styles.mobileIcon} />
-                    <p className={styles.mobileMenuText}>{'마이페이지'}</p>
-                  </div>
-                </button>
-                <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
-                  <div className={styles.mobileHamburgerMenu}>
-                    <img src={mobilebookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
-                    <p className={styles.mobileMenuText}>{'즐겨찾기'}</p>
-                  </div>
-                </button>
-                <Link
-                  to={'/allhistory'}
-                  className={styles.mobileMenuBtn}
-                  onClick={() => {
-                    track('click_header_navi', { type: '최근 변경' })
-                  }}
-                >
-                  <div className={styles.mobileHamburgerMenu}>
-                    <img src={mobilehistory} alt={''} className={styles.mobileIcon} />
-                    <p className={styles.mobileMenuText}>{'최근변경'}</p>
-                  </div>
-                </Link>
-                <Link
-                  to={'/latestdebate'}
-                  className={styles.mobileMenuBtn}
-                  onClick={() => {
-                    track('click_header_navi', { type: '토론' })
-                  }}
-                >
-                  <div className={styles.mobileHamburgerMenu}>
-                    <img src={mobiledebate} alt={''} className={styles.mobileIcon} />
-                    <p className={styles.mobileMenuText}>{'토론'}</p>
-                  </div>
-                </Link>
-                <button type={'button'} className={styles.mobileMenuBtn} onClick={handleRandomDocClick}>
-                  <div className={styles.mobileHamburgerMenu}>
-                    <img src={randomDocs} alt={''} className={styles.mobileIcon} />
-                    <p className={styles.mobileMenuText}>{'랜덤 문서'}</p>
-                  </div>
-                </button>
+            <>
+              <div
+                className={styles.overlay}
+                onClick={handleMobileMenu}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleMobileMenu()
+                  }
+                }}
+                aria-label="닫기" // 레이블 추가
+              />
+              <div className={`${styles.mobileMenuWrap} ${mobileHeaderOpen ? styles.open : ''}`}>
                 {isLoggedIn ? (
-                  <button type={'button'} className={styles.mobileMenuBtn} onClick={signOut}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'로그아웃'}</p>
-                    </div>
-                  </button>
+                  <div className={styles.mobileUserInfo}>
+                    <img src={userInfo?.rep_badge_image || mobileMypage} alt="user badge" className={styles.repBadge} />
+                    <div className={styles.nicknameText}>{nicknameText}</div>
+                    <div className={styles.honorific}>&nbsp;님</div>
+                  </div>
                 ) : (
-                  <Link to={'/signin'} className={styles.mobileMenuBtn}>
-                    <div className={styles.mobileHamburgerMenu}>
-                      <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
-                      <p className={styles.mobileMenuText}>{'로그인'}</p>
-                    </div>
+                  <Link to={'/signin'} className={styles.mobileLoginText}>
+                    {'로그인/회원가입하기'}
                   </Link>
                 )}
+                <button type={'button'} onClick={handleClickMobileMypage} className={styles.mobileMenuBtn}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobileMypage} alt={''} className={styles.mobileIcon} />
+                    <div className={styles.mobileMenuText}>{'마이페이지'}</div>
+                  </div>
+                </button>
+                <Link to={'/allhistory'} className={styles.mobileMenuBtn}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobileDocument} alt={''} className={styles.mobileIcon} />
+                    <div className={styles.mobileMenuText}>{'문서'}</div>
+                  </div>
+                </Link>
+                <Link to={'/latestdebate'} className={styles.mobileMenuBtn}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobileDebate} alt={''} className={styles.mobileIcon} />
+                    <div className={styles.mobileMenuText}>{'토론'}</div>
+                  </div>
+                </Link>
+                <button type={'button'} className={styles.mobileMenuBtn} onClick={handleClickMobileBookmark}>
+                  <div className={styles.mobileHamburgerMenu}>
+                    <img src={mobileBookmark} alt={''} id={styles.mobileBookmark} className={styles.mobileIcon} />
+                    <div className={styles.mobileMenuText}>{'관심 목록'}</div>
+                  </div>
+                </button>
+                <div className={styles.logOutContainer}>
+                  {isLoggedIn ? (
+                    <button type={'button'} className={styles.mobileLogOutBtn} onClick={signOut}>
+                      <div className={styles.mobileHamburgerMenu}>
+                        <img src={mobilelogout} alt={''} className={styles.mobileIcon} />
+                        <div className={styles.logOutText}>{'로그아웃'}</div>
+                      </div>
+                    </button>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          )}
-          {mobileSearchOpen && (
-            <div className={styles.mobileSearchWrap}>
-              <div className={styles.mobileInputContainer}>
-                <input
-                  className={styles.mobileHeaderInput}
-                  placeholder={'검색어를 입력하세요.'}
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault()
-                      if (inputValue.trim() !== '') {
-                        Nav(
-                          `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                        )
-                        setInputValue('')
-                      }
-                    }
-                  }}
-                />
-                <img
-                  role={'presentation'}
-                  src={searchIconBlack}
-                  alt={'icon'}
-                  className={styles.mobileSearchIcon}
-                  onClick={() => {
-                    if (inputValue.trim() !== '') {
-                      Nav(
-                        `/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`,
-                      )
-                      setInputValue('')
-                    }
-                  }}
-                />
-              </div>
-            </div>
+            </>
           )}
         </div>
       </div>
