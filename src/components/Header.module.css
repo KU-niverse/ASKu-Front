@@ -97,15 +97,23 @@ div.navDebate:hover {
   justify-content: center;
   align-items: bottom;
 }
+
+@media only screen and (max-width: 767px) {
+  .logoContainer {
+    display: none;
+  }
+}
+
 .mobilelogoContainer {
   display: none;
 }
 @media only screen and (max-width: 767px) {
   .mobilelogoContainer {
-    display: inline-block;
+    display: flex;
     min-width: 60px;
     justify-content: center;
     align-items: bottom;
+    margin-left: 3.4rem;
   }
 }
 
@@ -128,12 +136,7 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .inputcontainer {
-    position: absolute;
-    top: 20px;
-    right: 100px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+    display: none;
   }
 }
 
@@ -184,13 +187,30 @@ div.navDebate:hover {
 
 .nicknameText {
   font-weight: 700;
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   margin-right: 0.3rem;
+}
+@media only screen and (max-width: 767px) {
+  .nicknameText {
+    font-size: 3.5rem;
+  }
+}
+
+/* 링크가 방문된 상태에서도 동일한 스타일을 유지하도록 설정 */
+.mobileLoginText:visited {
+  color: black; /* 방문 후에도 색상이 유지되도록 설정 */
+  text-decoration: none; /* 밑줄 제거 */
 }
 
 .honorific {
   font-weight: 600;
-  font-size: 17px;
+  font-size: 1.7rem;
+}
+@media only screen and (max-width: 767px) {
+  .honorific {
+    font-size: 3.5rem;
+    font-weight: 600;
+  }
 }
 
 .arrowDown {
@@ -258,7 +278,7 @@ div.navDebate:hover {
 }
 
 @media only screen and (max-width: 767px) {
-  .navContainer_left {
+  .navContainer_threeItem {
     display: none;
   }
 }
@@ -269,9 +289,8 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .logo {
-    position: absolute;
-    top: 20px;
-    left: 10px;
+    width: 11.875rem;
+    height: 3.666rem;
   }
 }
 
@@ -293,10 +312,10 @@ div.navDebate:hover {
   .mobileButton {
     display: block;
     cursor: pointer;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    margin-right: 15px;
+    position: absolute;
+    right: 3.4rem;
+    width: 3.7rem;
+    height: 3.7rem;
   }
 }
 
@@ -346,12 +365,20 @@ div.navDebate:hover {
 }
 
 .repBadge {
-  border: 0.1rem solid #d5d5d5;
-  border-radius: 50%;
-  margin-right: 15px;
   width: 3.8rem;
   height: 3.8rem;
-  border-radius: 50%; /* 이미지의 둥글기 설정 */
+  border-radius: 50%;
+  border: 0.1rem solid #d5d5d5;
+  margin-right: 1.5rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .repBadge {
+    margin-left: 3.75rem;
+    width: 7rem; /* 모바일 화면에서는 더 작은 크기로 설정 */
+    height: 7rem;
+    margin-right: 10px; /* 여백도 모바일에 맞게 조정 */
+  }
 }
 
 .mobileHeader {
@@ -360,11 +387,20 @@ div.navDebate:hover {
 @media only screen and (max-width: 767px) {
   .mobileHeader {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
   }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(169, 169, 169, 0.5);
+  z-index: 20; /* Place behind the menu but in front of other content */
 }
 
 .mobileHamburger {
@@ -376,28 +412,46 @@ div.navDebate:hover {
 
 .mobileHamburgerMenu {
   width: 130px;
-  height: 30px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
 .mobileMenuText {
-  text-decoration: none;
-  margin-left: 10px;
-  color: black;
+  color: #000000;
   border: none;
-  background-color: transparent;
-  font-size: 16px;
-  margin: 0;
+  font-size: 2.45rem;
+  font-weight: 500;
 }
-
+.logOutContainer {
+  margin-top: auto; /* 로그아웃 버튼을 맨 아래로 */
+  padding: 1rem;
+}
+.logOutText {
+  font-size: 2.61rem;
+  font-weight: 500;
+  color: #979797;
+}
 .mobileMenuWrap {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 10; /* 초기 상태에서는 낮은 z-index를 유지 */
+  justify-content: space-between; /* 위, 아래 요소들을 균등하게 배치 */
+  padding-bottom: 2rem; /* 하단에 여유 공간 추가 */
 }
 
+.mobileMenuWrap.open {
+  right: 0;
+  z-index: 30; /* 메뉴가 열릴 때 z-index를 높여 다른 요소 위에 표시 */
+}
 .mobileSearchWrap {
   position: absolute;
   top: 40px;
@@ -448,30 +502,60 @@ div.navDebate:hover {
   margin-right: 5px;
 }
 
+.mobileUserInfo {
+  display: flex;
+  height: 17%;
+  align-items: center;
+  padding-top: 4rem;
+}
+
+.mobileLoginText {
+  display: flex;
+  height: 17%;
+  padding-top: 4rem;
+  margin-left: 3.75rem;
+  align-items: center;
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 텍스트 색상 설정 */
+  font-weight: 700;
+  font-size: 3.5rem;
+}
+
 .mobileMenuBtn {
-  text-decoration-line: none;
+  text-decoration: none;
+  height: 7%;
   color: black;
   background-color: transparent;
-  width: 150px;
   border: none;
   display: flex;
-  justify-content: flex-start;
-  margin-right: 80px;
-  margin-top: 10px;
+  align-items: center;
+  padding: 1rem;
   cursor: pointer;
-  padding: 1px 6px;
+  border-top: 1px solid #d5d5d5;
+}
+.mobileLogOutBtn {
+  text-decoration: none;
+  height: 7%;
+  color: black;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 .mobileIcon {
-  width: 22px;
-  height: 22px;
-  padding: 2px;
-  margin-right: 15px;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-left: 3.5rem;
+  margin-right: 2rem;
 }
 
 #mobileBookmark {
-  width: 18px;
-  margin-left: 2px;
+  width: 3.2rem;
+  margin-left: 3.5rem;
+  margin-right: 3rem;
 }
 
 .randomDocs {
