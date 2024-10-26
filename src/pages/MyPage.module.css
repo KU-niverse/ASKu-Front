@@ -261,15 +261,13 @@
   display: none;
 }
 @media screen and (max-width: 767px) {
-  .headerContainer {
-    display: none;
-  }
   .myPageContainer {
     display: none;
   }
   .mobileMyPageContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 2rem;
   }
   .mobileProfileContainer {
     padding: 1rem 3rem;
