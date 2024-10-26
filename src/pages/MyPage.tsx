@@ -312,16 +312,18 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                   <img alt={'myPageNavArrow'} src={Arrow} />
                 </div>
               </button>
-              <button
-                type={'button'}
-                onClick={() => handleClickBtn('mycontribution')}
-                className={type === 'mycontribution' ? styles.nowNav : styles.defaultNav}
-              >
-                {'기여 목록'}
-                <div className={styles.navArrow}>
-                  <img alt={'myPageNavArrow'} src={Arrow} />
-                </div>
-              </button>
+              <Link to="/mypage/mycontribution">
+                <button
+                  type={'button'}
+                  onClick={() => handleClickBtn('mycontribution')}
+                  className={type === 'mycontribution' ? styles.nowNav : styles.defaultNav}
+                >
+                  {'기여 목록'}
+                  <div className={styles.navArrow}>
+                    <img alt={'myPageNavArrow'} src={Arrow} />
+                  </div>
+                </button>
+              </Link>
               <button
                 type={'button'}
                 onClick={() => handleClickBtn('myquestion')}
