@@ -1,16 +1,21 @@
+.pageWrap {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
 .historyDiffContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 4rem;
 }
 .historyDiffContent {
   width: 75%;
+  margin-top: 7.7rem;
+  margin-bottom: 4rem;
 }
 .historyDiffTitle {
   display: flex;
   align-items: center;
-  margin-top: 7.7rem;
   margin-bottom: 3.1rem;
   gap: 0.5rem;
   width: 100%;
@@ -29,7 +34,7 @@
   font-size: 3.6rem;
   padding: 0 0.3rem;
   margin: 0;
-  min-width: 31rem;
+  white-space: nowrap;
 }
 .historyDiffBox {
   border-radius: 1.2rem;
@@ -56,4 +61,16 @@
 .verCompareNum {
   font-size: 3.3rem;
   font-weight: 600;
+}
+.footerContainer {
+  margin-top: auto;
+}
+
+/* 모바일 뷰 */
+@media only screen and (max-width: 767px) {
+  .historyDiffContent {
+    width: 90%;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+  }
 }
