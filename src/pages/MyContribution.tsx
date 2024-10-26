@@ -130,9 +130,9 @@ const MyContribution: React.FC = () => {
               <img alt={'warningsign'} src={warning} />
             </div>
             <div className={styles.warningtext}>
-              {'아직 기여한'}
+              {'아직 기여한 목록이'}
               <br />
-              {'내역이 없습니다'}
+              {'없습니다'}
             </div>
           </div>
         ) : (
