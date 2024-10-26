@@ -40,3 +40,7 @@
   display: flex;
   gap: 0.8rem;
 }
+.mobileNumbers {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
