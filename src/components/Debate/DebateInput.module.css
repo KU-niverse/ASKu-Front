@@ -1,6 +1,11 @@
-.container {
+.container_grey {
   margin: 50px 0px;
   border: 1px solid rgba(213, 213, 213, 1);
+  border-radius: 12px;
+}
+.container_red {
+  margin: 50px 0px;
+  border: 1px solid #de3a58;
   border-radius: 12px;
 }
 .sendBtn_red{

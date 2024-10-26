@@ -123,7 +123,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={debateContent ? styles.container_red : styles.container_grey}>
       <div className={styles.textbox}>
         <textarea
           rows={4}
