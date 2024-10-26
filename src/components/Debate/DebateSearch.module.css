@@ -46,7 +46,7 @@
   height: 12px;
   position: relative;
   cursor: pointer;
-  left: 6%;
+  margin-left: 2rem;
 }
 .cancelIcon {
   width: 12px;

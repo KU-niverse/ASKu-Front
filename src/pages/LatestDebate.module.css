@@ -44,6 +44,8 @@
 }
 .sidebar div {
   width: 100%;
+  font-size:3.5rem;
+  font-weight: 600;
 }
 .maincontent {
   background-color: white;
