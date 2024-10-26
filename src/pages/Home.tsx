@@ -19,6 +19,7 @@ import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
 import subArrow from '../img/homeSubArrow.svg'
+import SearchInputComponent from '../components/Home/SearchInputComponent'
 
 interface HistoryResponse {
   success: boolean
@@ -138,6 +139,7 @@ const checkLoginStatus = async () => {
 }
 
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
+  const [mobileViewMode, setMobileViewMode] = useState<boolean>(window.innerWidth <= 767)
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
@@ -201,154 +203,183 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     track('view_home')
   }, [])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 767) {
+        setMobileViewMode(true)
+      } else {
+        setMobileViewMode(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.homeWrap}>
-        <div className={styles.chatBotContainer}>
-          <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+      {mobileViewMode ? (
+        /* 모바일 뷰 */
+        <div className={styles.mobileViewContainer}>
+          <div className={styles.mobileTitleContainer}>
+            <SearchInputComponent inputValue={inputValue} setInputValue={setInputValue} />
+          </div>
+          <div>b</div>
         </div>
-        <div className={styles.realTime}>
-          <div className={styles.popularDoc}>
-            <div className={styles.HomeTitle}>
-              <p className={styles.HomeSubTitle}>{'인기 문서'}</p>
-              <Link
-                className={styles.more}
-                to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
-                key={randomTitle}
-              >
-                <p className={styles.SubTitleMore}>{'문서 더보기'}</p>
-                <img src={subArrow} alt={'arrow'} />
-              </Link>
-            </div>
-            <div>
-              <div className={styles.popDocList}>
-                {PopularDoclist.map((item) => (
-                  <div key={item.id}>
-                    <PopularDoc version={item.latest_ver} title={item.title} />
-                  </div>
-                ))}
+      ) : (
+        /* 데스크 탑 뷰 */
+
+        <div className={styles.desktopViewContainer}>
+          <div className={styles.chatBotContainer}>
+            <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+          </div>
+          <div className={styles.realTime}>
+            <div className={styles.popularDoc}>
+              <div className={styles.HomeTitle}>
+                <p className={styles.HomeSubTitle}>{'인기 문서'}</p>
+                <Link
+                  className={styles.more}
+                  to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
+                  key={randomTitle}
+                >
+                  <p className={styles.SubTitleMore}>{'문서 더보기'}</p>
+                  <img src={subArrow} alt={'arrow'} />
+                </Link>
+              </div>
+              <div>
+                <div className={styles.popDocList}>
+                  {PopularDoclist.map((item) => (
+                    <div key={item.id}>
+                      <PopularDoc version={item.latest_ver} title={item.title} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          <div className={styles.HotDebate}>
-            <div className={styles.HomeTitle}>
-              <p className={styles.HomeSubTitle}>{'최근 핫한 토론방'}</p>
-              <Link className={styles.more} to={`/latestdebate`}>
-                <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
-                <img src={subArrow} alt={'arrow'} />
-              </Link>
-            </div>
+            <div className={styles.HotDebate}>
+              <div className={styles.HomeTitle}>
+                <p className={styles.HomeSubTitle}>{'최근 핫한 토론방'}</p>
+                <Link className={styles.more} to={`/latestdebate`}>
+                  <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
+                  <img src={subArrow} alt={'arrow'} />
+                </Link>
+              </div>
 
-            <div className={styles.HotDebateList}>
-              {debateListData &&
-                debateListData.map((item) => (
-                  <HotDebate
-                    key={item.id}
-                    id={item.id}
-                    doc_id={item.doc_id}
-                    user_id={item.user_id}
-                    subject={item.subject}
-                    created_at={item.created_at}
-                    recent_edited_at={item.recent_edited_at}
-                    done_or_not={item.done_or_not}
-                    done_at={item.done_at}
-                    is_bad={item.is_bad}
-                    title={item.title}
-                  />
-                ))}
+              <div className={styles.HotDebateList}>
+                {debateListData &&
+                  debateListData.map((item) => (
+                    <HotDebate
+                      key={item.id}
+                      id={item.id}
+                      doc_id={item.doc_id}
+                      user_id={item.user_id}
+                      subject={item.subject}
+                      created_at={item.created_at}
+                      recent_edited_at={item.recent_edited_at}
+                      done_or_not={item.done_or_not}
+                      done_at={item.done_at}
+                      is_bad={item.is_bad}
+                      title={item.title}
+                    />
+                  ))}
+              </div>
             </div>
-          </div>
-          <div className={styles.PopularQuestion}>
-            <div className={styles.HomeTitle}>
-              <p className={styles.HomeSubTitle}>{'실시간 인기 질문'}</p>
-              <p className={styles.SubTitleMore}>{'질문 더보기'}</p>
+            <div className={styles.PopularQuestion}>
+              <div className={styles.HomeTitle}>
+                <p className={styles.HomeSubTitle}>{'실시간 인기 질문'}</p>
+                <p className={styles.SubTitleMore}>{'질문 더보기'}</p>
+              </div>
+              <div className={styles.questionList}>
+                {isQuestionsLoading ? (
+                  <p>{'Loading...'}</p>
+                ) : (
+                  questionList.map((question: PopularQuestion, index: number) => (
+                    <Link
+                      to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
+                      state={{
+                        question_id: question.id,
+                        user_id: question.user_id,
+                        content: question.content,
+                        created_at: question.created_at,
+                        like_count: question.like_count,
+                        nick: question.nickname,
+                        index_title: question.index_title,
+                        answer_count: question.answer_count,
+                        title: question.title,
+                      }}
+                      className={styles.rankWrap}
+                      key={question.id}
+                      onClick={() => {
+                        track('click_trend_search_question', {
+                          question_rank: index + 1,
+                          question_title: question.content,
+                        })
+                      }}
+                    >
+                      <img src={questionBubble} alt={'물음표 아이콘'} className={styles.bubbleIcon} />
+                      <p className={styles.rankContent}>{question.content}</p>
+                    </Link>
+                  ))
+                )}
+              </div>
             </div>
-            <div className={styles.questionList}>
-              {isQuestionsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                questionList.map((question: PopularQuestion, index: number) => (
-                  <Link
-                    to={`wiki/morequestion/${encodeURIComponent(question.title)}/${question.id}`}
-                    state={{
-                      question_id: question.id,
-                      user_id: question.user_id,
-                      content: question.content,
-                      created_at: question.created_at,
-                      like_count: question.like_count,
-                      nick: question.nickname,
-                      index_title: question.index_title,
-                      answer_count: question.answer_count,
-                      title: question.title,
-                    }}
-                    className={styles.rankWrap}
-                    key={question.id}
-                    onClick={() => {
-                      track('click_trend_search_question', {
-                        question_rank: index + 1,
-                        question_title: question.content,
-                      })
-                    }}
-                  >
-                    <img src={questionBubble} alt={'물음표 아이콘'} className={styles.bubbleIcon} />
-                    <p className={styles.rankContent}>{question.content}</p>
-                  </Link>
-                ))
-              )}
-            </div>
-          </div>
-          <div className={styles.randomDocBox}>
-            <p className={styles.realTimeTitle}>{'실시간 랜덤 문서'}</p>
-            <div className={styles.randomBackContainer}>
-              <Link
-                className={styles.randomLink}
-                to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
-                key={randomTitle}
-              >
-                <img className={styles.randomDocBack} src={randomDocBack} alt={'배경'} />
-              </Link>
-            </div>
-            <div className={styles.randomDocBottom}>
-              <img className={styles.randomBtn} src={randomLeft} alt={'Left'} onClick={handleRandomDoc} />
-              <div className={styles.randomDocTitleContainer}>
+            <div className={styles.randomDocBox}>
+              <p className={styles.realTimeTitle}>{'실시간 랜덤 문서'}</p>
+              <div className={styles.randomBackContainer}>
                 <Link
                   className={styles.randomLink}
                   to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
                   key={randomTitle}
                 >
-                  <p>{randomTitle}</p>
+                  <img className={styles.randomDocBack} src={randomDocBack} alt={'배경'} />
                 </Link>
               </div>
-              <img className={styles.randomBtn} src={randomRight} alt={'Right'} onClick={handleRandomDoc} />
-            </div>
-          </div>
-          <div className={styles.recommendTag}>
-            <p className={styles.recommendTagTitle}>{'실시간 추천 태그'}</p>
-            <div className={styles.recommendList}>
-              {isKeywordsLoading ? (
-                <p>{'Loading...'}</p>
-              ) : (
-                popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
+              <div className={styles.randomDocBottom}>
+                <img className={styles.randomBtn} src={randomLeft} alt={'Left'} onClick={handleRandomDoc} />
+                <div className={styles.randomDocTitleContainer}>
                   <Link
-                    to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
-                    className={styles.realrankWrap}
-                    key={keyword.id}
-                    onClick={() => {
-                      track('click_trend_search_keyword', {
-                        search_rank: index + 1,
-                        search_keyword: keyword.keyword,
-                      })
-                    }}
+                    className={styles.randomLink}
+                    to={`/wiki/${encodeURIComponent(randomTitle).replace(/\./g, '%2E')}`}
+                    key={randomTitle}
                   >
-                    <p className={styles.realTimerank}>#{keyword.keyword}</p>
+                    <p>{randomTitle}</p>
                   </Link>
-                ))
-              )}
+                </div>
+                <img className={styles.randomBtn} src={randomRight} alt={'Right'} onClick={handleRandomDoc} />
+              </div>
+            </div>
+            <div className={styles.recommendTag}>
+              <p className={styles.recommendTagTitle}>{'실시간 추천 태그'}</p>
+              <div className={styles.recommendList}>
+                {isKeywordsLoading ? (
+                  <p>{'Loading...'}</p>
+                ) : (
+                  popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
+                    <Link
+                      to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
+                      className={styles.realrankWrap}
+                      key={keyword.id}
+                      onClick={() => {
+                        track('click_trend_search_keyword', {
+                          search_rank: index + 1,
+                          search_keyword: keyword.keyword,
+                        })
+                      }}
+                    >
+                      <p className={styles.realTimerank}>#{keyword.keyword}</p>
+                    </Link>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       <Footer />
     </div>
   )
