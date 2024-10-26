@@ -81,6 +81,9 @@
   .wikititle {
     color: #de3a58;
   }
+  .wikititle h1 {
+    font-size: 3.2rem;
+  }
   .wikititleBtn {
     display: none;
   }

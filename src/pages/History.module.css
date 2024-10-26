@@ -127,6 +127,11 @@
     flex-direction: column;
     align-items: flex-start;
   }
+  .docTitle,
+  .listTitleStart,
+  .listTitles {
+    font-size: 3.2rem;
+  }
   .historyTitle {
     margin-top: 5rem;
   }

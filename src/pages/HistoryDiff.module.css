@@ -73,4 +73,11 @@
     margin-top: 5rem;
     margin-bottom: 3rem;
   }
+  .docTitle,
+  .listTitles {
+    font-size: 3.2rem;
+  }
+  .verCompareNum {
+    font-size: 3rem;
+  }
 }
