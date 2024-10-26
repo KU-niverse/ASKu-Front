@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 86rem;
 }
 .contentSubContainer {
   width: 100%;
-  min-height: 100vh;
+  min-height: 86rem;
 
   margin: 0 auto;
 
