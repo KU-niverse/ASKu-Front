@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 import AllHistoryBox from '../components/AllHistoryBox'
 import FormatTimeAgo from '../components/FormatTimeAgo'
 import Paging from '../components/Paging'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface HistoryItem {
   id: number
@@ -112,7 +113,7 @@ const AllHistory: React.FC = () => {
     setPage(1)
   }
 
-  const { isError, error, data: historys } = useGetHistory(type, page, perPage)
+  const { isLoading, isError, error, data: historys } = useGetHistory(type, page, perPage)
   const filteredHistorys = historys?.filter((item) => item.is_bad !== 1) || []
 
   const startIndex = (page - 1) * perPage
@@ -129,6 +130,13 @@ const AllHistory: React.FC = () => {
     }
     nav('/newwiki')
   }
+
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
 
   return (
     <div>
