@@ -65,7 +65,7 @@
 }
 .version {
   position: absolute;
-  top: 65%;
+  top: 67%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -74,7 +74,7 @@
 }
 .bigversion {
   position: absolute;
-  top: 65%;
+  top: 67%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;

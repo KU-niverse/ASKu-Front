@@ -137,7 +137,7 @@ const History = () => {
           </div>
         </div>
       </div>
-      <div className={styles.historyFooterContainer}>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>
