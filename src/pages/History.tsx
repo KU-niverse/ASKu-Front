@@ -132,7 +132,7 @@ const History = () => {
                 <Paging total={historys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
               </div>
             ) : (
-              <div className={styles.pagingContainer} />
+              <div className={styles.blank} />
             )}
           </div>
         </div>
