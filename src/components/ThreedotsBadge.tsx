@@ -38,12 +38,14 @@ function ThreedotsBadge({ badge_id, badge_disabled }: ThreedotsBadgeProps) {
 
   return (
     <button
-      type={'button'}
+      type="button"
       onClick={handleClick}
       className={badge_disabled ? styles.disabledbtn : styles.menubtn}
       disabled={badge_disabled}
     >
-      {badge_disabled ? '잠긴 뱃지' : '대표 뱃지로 설정'}
+      <span className={badge_disabled ? styles.disabledText : styles.menuText}>
+        {badge_disabled ? '잠긴 뱃지' : '대표 뱃지로 설정'}
+      </span>
     </button>
   )
 }

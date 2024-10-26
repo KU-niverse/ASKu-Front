@@ -1,5 +1,5 @@
 .b_content {
-  width: 54.4rem;
+  width: 100%;
   height: 18.2rem;
   display: flex;
   gap: 2.6rem;
@@ -44,70 +44,8 @@
   margin-bottom: 2rem;
 }
 
-/*
-@media only screen and (max-width: 980px) {
-  .myBadgeStyle .b_content {
-    width: 335px;
-    padding: 0;
+@media only screen and (max-width: 767px) {
+  .b_content {
+    border: 1px solid #d5d5d5cc;
   }
-
-  .myBadgeStyle .b_thumb {
-    padding: 15px 10px 15px 15px;
-  }
-
-  .myBadgeStyle .b_thumb img {
-    height: 80px;
-    width: 80px;
-  }
-
-  .myBadgeStyle .b_info {
-    padding: 16px 15px 16px 10px;
-  }
-
-  .myBadgeStyle .b_listhead {
-    flex-direction: row;
-    font-size: 12px;
-  }
-
-  .myBadgeStyle .b_listmid {
-    font-size: 14px;
-  }
-
-  .myBadgeStyle .b_people {
-    font-size: 10px;
-  }
-  .myBadgeStyle .b_listlastfoot {
-    font-size: 10px;
-  }
-
-  .normalBadgeStyle .b_content {
-    width: 335px;
-    padding: 0;
-  }
-
-  .normalBadgeStyle .b_thumb {
-    padding: 15px 10px 15px 15px;
-  }
-
-  .normalBadgeStyle .b_thumb img {
-    height: 80px;
-    width: 80px;
-  }
-
-  .normalBadgeStyle .b_info {
-    padding: 16px 15px 16px 10px;
-  }
-
-  .normalBadgeStyle .b_listhead {
-    flex-direction: row;
-    font-size: 12px;
-  }
-
-  .normalBadgeStyle .b_listmid {
-    font-size: 14px;
-  }
-
-  .normalBadgeStyle .b_people .b_listlastfoot {
-    font-size: 10px;
-  }
-} */
+}
