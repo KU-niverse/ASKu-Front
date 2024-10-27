@@ -58,14 +58,17 @@
 .contentsTwo img {
   cursor: pointer;
 }
-.versionContainer,
-.bigversionContainer {
+.versionContainer {
+  cursor: pointer;
   position: relative;
   margin-top: 0.6rem;
 }
+.bigversionContainer {
+  position: relative;
+}
 .version {
   position: absolute;
-  top: 67%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -74,7 +77,7 @@
 }
 .bigversion {
   position: absolute;
-  top: 67%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -219,11 +222,8 @@
     font-size: 1.8rem;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    height: 4.5rem;
+    height: min-content;
     margin-top: 1rem;
-  }
-  .contentsOne {
-    padding-top: 1.5rem;
   }
   .verticalLine {
     border-right: 0.05rem #d5d5d5 solid;

@@ -38,7 +38,14 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
   return (
     <div className={styles.allHistoryBox}>
       <div className={styles.contentsOne}>
-        <div className={styles.versionContainer}>
+        <div
+          className={styles.versionContainer}
+          role={'presentation'}
+          onClick={() => {
+            const encodedTitle = encodeURIComponent(title)
+            nav(`/wiki/${encodedTitle}`)
+          }}
+        >
           <img className={styles.versionimg} src={versionimg} alt={'버전이미지'} />
           <div className={styles.version}>
             {'V'}
