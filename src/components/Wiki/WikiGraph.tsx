@@ -60,7 +60,6 @@ function WikiGraph({ total_point, users }: WikiGraphProps) {
 
   return (
     <div className={styles.g_container}>
-      <p className={styles.g_name}>문서별 기여도</p>
       <div className={styles.graphAndLegend}>
         <div className={styles.legend}>
           {topContributions.map((item: Contribution) => (

@@ -515,11 +515,14 @@ function WikiViewer() {
             </div>
           </div>
           <div className={styles.wikigraph}>
-            {contribute && totalPoint ? (
-              <WikiGraph total_point={totalPoint} users={contribute} />
-            ) : (
-              <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
-            )}
+            <div className={styles.wikigraphTitle}>문서별 기여도</div>
+            <div className={styles.wikigraphContent}>
+              {contribute && totalPoint ? (
+                <WikiGraph total_point={totalPoint} users={contribute} />
+              ) : (
+                <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
+              )}
+            </div>
           </div>
         </div>
         <div className={styles.wikicontent}>
