@@ -8,8 +8,8 @@
 
 .g_name {
   margin-top: 0px;
-  margin-bottom: 20px;
-  font-size: 23px;
+  margin-bottom: 2rem;
+  font-size: 3.2rem;
   font-weight: 700;
   text-align: left;
   width: 100%;
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -28,17 +28,17 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-right: 20px;
+  margin-right: 2rem;
 }
 
 .doughnut {
-  width: 150px;
-  height: 150px;
+  width: 15rem;
+  height: 15rem;
 }
 
 .centerText {
   position: absolute;
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #000;
   text-align: center;
@@ -48,37 +48,43 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-right: 40px;
+  margin-right: 1rem;
+}
+
+.legendLabel {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 0.8rem;
 }
 
 .legendColor {
-  width: 12px;
-  height: 12px;
-  margin-right: 8px;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.8rem;
   border-radius: 100%;
   flex-shrink: 0;
 }
 
 .legendname {
-  font-size: 14px;
-  margin-right: 5px;
+  font-size: 2rem;
+  margin-right: 0.5rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .legendper {
-  font-size: 12px;
+  font-size: 1.5rem;
   color: rgba(116, 116, 116, 1);
 }
 
 .footerText {
-  margin-top: 15px;
-  font-size: 12px;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
   color: #ff6b6b;
   text-align: right;
   width: 100%;
@@ -87,12 +93,12 @@
 @media only screen and (max-width: 767px) {
   .g_container {
     width: 100%;
-    padding: 10px;
+    padding: 1rem;
   }
 
   .g_name {
-    margin-bottom: 15px;
-    font-size: 16px;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
     text-align: left;
   }
 
@@ -102,24 +108,24 @@
   }
 
   .doughnut {
-    width: 120px;
-    height: 120px;
+    width: 12rem;
+    height: 12rem;
   }
 
   .centerText {
-    font-size: 20px;
+    font-size: 2rem;
   }
 
   .legendname {
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 
   .legendper {
-    font-size: 11px;
+    font-size: 1.1rem;
   }
 
   .footerText {
-    font-size: 10px;
+    font-size: 1rem;
     text-align: center;
   }
 }
