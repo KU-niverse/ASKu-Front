@@ -244,7 +244,6 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       },
       onError: (error: any) => {
         console.error(error)
-        console.log(error)
         if (error.response?.status === 403) {
           setLoginModalVisible(true)
         }
@@ -273,7 +272,6 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
 
   const handleSendClick = () => {
     if (!isLoggedIn) {
-      console.log(`???`, { isLoggedIn })
       setLoginModalVisible(true)
       return
     }
