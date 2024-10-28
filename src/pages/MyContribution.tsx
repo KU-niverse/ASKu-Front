@@ -124,13 +124,13 @@ const MyContribution: React.FC = () => {
             {')'}
           </span>
         </div>
-        {myWiki && myWiki.data.length === 0 ? (
+        {myWiki && myWiki.data.length === 12 ? (
           <div className={styles.noList}>
             <div className={styles.warningsign}>
               <img alt={'warningsign'} src={warning} />
             </div>
             <div className={styles.warningtext}>
-              {'아직 기여한 목록이'}
+              {'아직 기여 목록이'}
               <br />
               {'없습니다'}
             </div>

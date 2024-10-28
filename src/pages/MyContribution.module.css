@@ -70,6 +70,11 @@
 .noList {
   text-align: center;
   padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 부모의 높이에 따라 달라질 수 있음 */
 }
 
 .warningsign {
@@ -85,9 +90,12 @@
 }
 
 .warningtext {
-  font-size: 1.8rem;
-  color: #999;
+  display: flex;
+  font-size: 3rem;
+  color: black;
   font-weight: 500;
+  flex-direction: column;
+  margin-top: 2rem;
 }
 
 .paginationWrapper {
