@@ -12,6 +12,7 @@ import FormatTimeAgo from '../components/FormatTimeAgo'
 import SearchResultBox from '../components/SearchResultBox'
 import Paging from '../components/Paging'
 import Footer from '../components/Footer'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -196,7 +197,12 @@ const SearchResearch = () => {
                 />
               </div>
             ))}
-            <div className={styles.pagingContainer}>
+            <div className={docs.length === 0 ? styles.cautionContainer : styles.hidden}>
+              <img src={CautionIcon} alt="cautionIcon" className={styles.cautionIcon} />
+              <p>검색결과가 없습니다.</p>
+              <p>다른 검색어를 입력해주세요.</p>
+            </div>
+            <div className={docs.length === 0 ? styles.hidden : styles.pagingContainer}>
               <Paging total={docs.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
             </div>
             <div className={styles.linkToNew}>

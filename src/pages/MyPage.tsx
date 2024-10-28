@@ -274,7 +274,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
     error: myContributeError,
   } = useQuery('myContribute', fetchMyContribute)
 
-  console.log(myDebate)
+  // console.log(myDebate)
 
   if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
