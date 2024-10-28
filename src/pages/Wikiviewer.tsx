@@ -402,15 +402,10 @@ function WikiViewer() {
 
                   return (
                     <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
-                      <span
-                        style={{
-                          fontWeight: tabCount === 0 ? '600' : '500',
-                          fontSize: tabCount === 0 ? '2rem' : '1.6rem',
-                        }}
-                      >
+                      <span className={tabCount === 0 ? styles.wikilistBigItem : styles.wikilistSmallItem}>
                         {' '}
                         {tabs}
-                        <span className={styles.wikiIndex}>
+                        <span className={tabCount === 0 ? styles.wikiBigIndex : styles.wikiSmallIndex}>
                           {item.index}
                           {'.\r'}
                         </span>

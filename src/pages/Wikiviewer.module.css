@@ -232,13 +232,26 @@
 }
 .wikilist li {
   cursor: pointer;
-  margin-bottom: 7px;
+  margin-bottom: 0.7rem;
+}
+
+.wikilistBigItem {
+  font-weight: 600;
+  font-size: 2rem;
+}
+.wikilistSmallItem {
+  font-weight: 500;
   font-size: 1.6rem;
 }
-.wikiIndex {
-  font-size: 2rem;
+.wikiBigIndex {
   font-weight: 600;
-  color: rgba(222, 58, 88);
+  color: #de3a58;
+  font-size: 2rem;
+}
+.wikiSmallIndex {
+  font-weight: 500;
+  color: #de3a58cc;
+  font-size: 1.6rem;
 }
 .wikilistTitle {
   display: flex;
@@ -447,5 +460,34 @@ li {
   }
   .wikititleBtn {
     flex-grow: 1;
+  }
+  .wikilistTitle button {
+    font-size: 1.6rem;
+    width: 11.6rem;
+    height: 4.3rem;
+    margin-right: 0;
+  }
+  .wikilistBigItem,
+  .wikiBigIndex {
+    font-size: 2.4rem;
+  }
+  .wikilistSmallItem,
+  .wikiSmallIndex {
+    font-size: 2rem;
+  }
+  .wikiaskFoot {
+    width: 95%;
+  }
+  .tocExpandedButton {
+    width: 97%;
+  }
+  .tocexpandedButtonText,
+  .addQues,
+  .moreQues {
+    font-size: 1.6rem;
+  }
+  .quesTitle,
+  .quesNum span {
+    font-size: 1.9rem;
   }
 }
