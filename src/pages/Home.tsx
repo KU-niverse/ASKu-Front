@@ -19,7 +19,6 @@ import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
 import subArrow from '../img/homeSubArrow.svg'
-import ChatbotModal from '../components/ChatbotModal'
 
 interface HistoryResponse {
   success: boolean

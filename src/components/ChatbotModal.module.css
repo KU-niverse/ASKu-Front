@@ -27,6 +27,7 @@
   justify-items: center;
   border-radius: 3.9rem;
   background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  cursor: pointer;
 }
 
 .hoverModalText {
@@ -327,7 +328,6 @@
   position: relative;
   bottom: 75px;
   left: 505px;
-  cursor: pointer;
   display: none;
 }
 
