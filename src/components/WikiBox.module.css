@@ -94,3 +94,13 @@
 .wikiText * {
   font-size: 2rem;
 }
+
+/* 모바일 뷰 */
+@media only screen and (max-width: 767px) {
+  .wikiContentTitle span {
+    font-size: 2.4rem;
+  }
+  .wikiIndex {
+    font-size: 2.4rem;
+  }
+}
