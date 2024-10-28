@@ -104,25 +104,28 @@
   }
 
   .graphAndLegend {
-    flex-direction: column;
     align-items: center;
   }
 
   .doughnut {
-    width: 12rem;
-    height: 12rem;
+    width: 22rem;
+    height: 22rem;
   }
 
   .centerText {
-    font-size: 2rem;
+    font-size: 3rem;
+  }
+
+  .legendItem {
+    margin: 0.6rem 0;
   }
 
   .legendname {
-    font-size: 1.2rem;
+    font-size: 2.3rem;
   }
 
   .legendper {
-    font-size: 1.1rem;
+    font-size: 1.7rem;
   }
 
   .footerText {
