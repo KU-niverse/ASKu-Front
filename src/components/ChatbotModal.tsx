@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect, useRef, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -49,10 +49,35 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
+  const location = useLocation()
+  const nav = useNavigate()
+  const from = location.state?.from || '/'
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
   // }
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      if (res.status === 201 && res.data.success === true) {
+        setIsLoggedIn(true)
+      } else if (res.status === 401) {
+        setIsLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        nav(from)
+      }
+    } catch (error) {
+      console.error(error)
+      setIsLoggedIn(false)
+      if (error.response.status === 401) {
+        setIsLoggedIn(false)
+        nav(from)
+      }
+      alert('에러가 발생하였습니다')
+      nav(from)
+    }
+  }
+
   const [user, setUser] = useState<UserData | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
@@ -114,6 +139,10 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       setPreviousChatHistory([])
     }
   }, [isLoggedIn])
+
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
 
   useEffect(() => {
     if (chatResponse.length > 0) {
@@ -215,6 +244,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       },
       onError: (error: any) => {
         console.error(error)
+        console.log(error)
         if (error.response?.status === 403) {
           setLoginModalVisible(true)
         }
@@ -243,6 +273,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
 
   const handleSendClick = () => {
     if (!isLoggedIn) {
+      console.log(`???`, { isLoggedIn })
       setLoginModalVisible(true)
       return
     }
