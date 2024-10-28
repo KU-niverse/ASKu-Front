@@ -1,26 +1,31 @@
+.switchContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 .hidden {
   display: none;
 }
 .toggleText1 {
   position: absolute;
-  font-size: 11px;
+  font-size: 1.4rem;
   color: white;
-  left: 10px;
-  top: 7px;
+  left: 1.5rem;
+  top: 1rem;
 }
 .toggleText2 {
   position: absolute;
-  font-size: 11px;
+  font-size: 1.4rem;
   color: white;
-  right: 10px;
-  top: 7px;
+  right: 1.5rem;
+  top: 1rem;
 }
 .switch {
   position: relative;
   display: inline-block;
   justify-content: center;
-  width: 70px;
-  height: 27px;
+  width: 9.8rem;
+  height: 3.7rem;
 }
 
 .switch input {
@@ -45,9 +50,9 @@
 .slider:before {
   position: absolute;
   content: '';
-  height: 22px;
-  width: 22px;
-  bottom: 2.5px;
+  height: 2.8rem;
+  width: 2.8rem;
+  bottom: 0.46rem;
   background-color: white;
   transition: 0.3s;
 }
@@ -55,12 +60,12 @@ input:checked + .slider {
   background-color: aqua;
 }
 input:checked + .slider:before {
-  transform: translateX(41.5px);
+  transform: translateX(6rem);
 }
 .slider.rounded {
   border-radius: 34px;
 }
 .slider.rounded:before {
   border-radius: 50%;
-  left: 4px;
+  left: 0.5rem;
 }
