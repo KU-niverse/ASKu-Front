@@ -124,7 +124,7 @@ const MyContribution: React.FC = () => {
             {')'}
           </span>
         </div>
-        {myWiki && myWiki.data.length === 12 ? (
+        {myWiki && myWiki.data.length === 0 ? (
           <div className={styles.noList}>
             <div className={styles.warningsign}>
               <img alt={'warningsign'} src={warning} />
@@ -182,7 +182,7 @@ const MyContribution: React.FC = () => {
           </div>
         )}
       </div>
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

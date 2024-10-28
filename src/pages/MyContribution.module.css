@@ -2,15 +2,14 @@
   display: flex;
   flex-direction: column;
   width: 100vw;
-  min-height: 86rem;
+  min-height: 100vh;
 }
 .contentSubContainer {
   width: 100%;
-  min-height: 86rem;
-
+  flex: 1; /* 남은 공간을 차지하도록 설정 */
   margin: 0 auto;
-
   border-radius: 1.2rem;
+  min-height: 100vh;
 }
 
 .contributeHeader {
@@ -74,7 +73,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 부모의 높이에 따라 달라질 수 있음 */
 }
 
 .warningsign {
@@ -102,4 +100,8 @@
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+}
+
+.footerContainer {
+  margin-top: auto;
 }
