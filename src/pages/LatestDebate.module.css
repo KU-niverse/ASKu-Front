@@ -129,6 +129,7 @@
   .maincontent_box {
     box-shadow: none;
     margin: 0;
+    padding-right: 0;
   }
 
   .title {
