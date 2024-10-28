@@ -274,7 +274,6 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
     error: myContributeError,
   } = useQuery('myContribute', fetchMyContribute)
 
-
   if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
       <div>
@@ -621,7 +620,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
           </div>
         </div>
         <div className={styles.mobileNavContainer}>
-          <button type={'button'} onClick={() => Navigate('/')} className={styles.mobileNavBtn}>
+          <button type={'button'} onClick={() => Navigate('/mypage/mycontribution')} className={styles.mobileNavBtn}>
             <div className={styles.mobileNavText}>{'나의 기여 목록'}</div>
             <div className={styles.navArrow}>
               <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />

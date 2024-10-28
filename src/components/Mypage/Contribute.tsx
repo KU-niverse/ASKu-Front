@@ -1,7 +1,6 @@
 import styles from './Contribute.module.css'
 
 interface ContributeProps {
-  key: number
   user_id: number
   doc_id: number
   text_pointer: string
@@ -18,7 +17,6 @@ interface ContributeProps {
 
 function Contribute({
   title,
-  key,
   user_id,
   doc_id,
   text_pointer,
