@@ -57,6 +57,12 @@
 .newComment:hover {
   color: rgba(116, 116, 116, 0.8);
 }
+
+.wikiviewercontainer {
+  display: flex;
+  justify-content: center;
+}
+
 .wikiviewer {
   display: flex;
   flex-direction: column;
@@ -64,24 +70,24 @@
   align-items: center;
   margin-top: 5rem;
   width: 74%;
-  margin-left: 13%;
   margin-bottom: 3rem;
 }
 
 .wikititle {
   width: 100%;
-  height: 10.1rem;
   border: 0.1rem solid #d5d5d5;
-  border-radius: 1.2rem;
+  border-radius: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3.1rem;
+  padding: 2.9rem 5rem;
+  box-sizing: border-box;
 }
 .wikititle h1 {
   font-size: 3.6rem;
-  margin-left: 5rem;
+  margin: 0;
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -96,14 +102,17 @@
 }
 .wikititleBtn {
   display: flex;
-  margin-right: 9.5rem;
-  gap: 0.5rem;
-  margin-right: 2rem;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+.wikititleLeftBtns {
+  display: flex;
+  gap: 1rem;
 }
 .wikititleBtn button {
   width: auto;
   height: 3.6rem;
-  border-radius: 3rem;
+  border-radius: 30px;
   border: 0.2rem solid rgba(159, 19, 46, 1);
   background-color: white;
   color: rgba(159, 19, 46, 1);
@@ -126,7 +135,7 @@
   width: auto;
   border: none !important;
   position: relative;
-  border-radius: 3rem;
+  border-radius: 30px;
   background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
   height: 3.6rem;
   display: flex;
@@ -137,7 +146,6 @@
   box-sizing: border-box;
   font-size: 1.4rem;
   font-weight: 500;
-  margin-left: 1rem;
 }
 .wikititleBtnThree img {
   margin-left: 0.3rem;
@@ -171,7 +179,7 @@
   overflow: hidden;
   height: auto;
   border: 1px solid #d5d5d5;
-  border-radius: 1.2rem;
+  border-radius: 12px;
   padding: 1.9rem;
   box-sizing: border-box;
   position: relative;
@@ -243,7 +251,7 @@
 .wikilistTitle button {
   width: 9.8rem;
   height: 3.6rem;
-  border-radius: 3rem;
+  border-radius: 30px;
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   font-size: 1.4rem;
   border: none;
@@ -259,7 +267,7 @@
   height: 32.4rem;
   border: 1px solid #d5d5d5;
 
-  border-radius: 1.2rem;
+  border-radius: 12px;
   padding: 1.9rem;
 
   box-sizing: border-box;
@@ -408,6 +416,7 @@ li {
   color: #999;
 }
 
+/* 해당 width에서는 목차, 질문, 문서별 기여도를 세로로 정렬 */
 @media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
     display: flex;
@@ -421,63 +430,22 @@ li {
   }
 }
 
+/* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
   .wikiviewer {
     width: 90%;
-    margin: 5%;
   }
   .wikiBoxLists {
-    display: block;
-  }
-  .wikilist {
-    width: 80%;
-  }
-  .wikiask {
-    display: block;
-    width: 100%;
-  }
-  .wikigraph {
-    display: block;
-    width: 100%;
-  }
-  .wikititle h1 {
-    font-size: 18px;
-  }
-  .wikititleBtn {
-    width: 145px;
     display: flex;
     flex-direction: column;
-    align-items: right;
-    margin-left: 2px;
-    gap: 1px;
+    gap: 2.7rem;
   }
-  .wikititleBtnOne {
-    display: block;
-    margin-bottom: 4px;
+  .wikititle {
+    flex-wrap: wrap;
+    padding: 2.9rem 2.3rem;
+    gap: 2rem;
   }
-  .wikititleBtnTwo {
-    margin-top: 1px;
-    margin-bottom: 2px;
-  }
-  .wikititleBtnThree {
-    position: absolute;
-    right: 30px;
-    margin-top: 17px;
-    min-width: 70px;
-    white-space: nowrap;
-  }
-  .wikititleBtn img {
-    width: 16px;
-    height: 10px;
-    object-fit: contain;
-  }
-  .wikititleBtn button {
-    width: 69px;
-    height: 25px;
-    font-size: 9px;
-    padding: 6px;
-  }
-  .wikimaintitle {
-    max-width: 150px;
+  .wikititleBtn {
+    flex-grow: 1;
   }
 }
