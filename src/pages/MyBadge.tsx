@@ -45,7 +45,7 @@ function MyBadge() {
   const [myBadge, setMyBadge] = useState<BadgeData[]>([])
   const [allBadge, setAllBadge] = useState<BadgeData[]>([])
   const [page, setPage] = useState(1) // 현재 페이지 상태
-  const badgesPerPage = 7 // 페이지당 뱃지 수
+  const badgesPerPage = 8 // 페이지당 뱃지 수
 
   useEffect(() => {
     const takeMyBadge = async () => {
