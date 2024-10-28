@@ -267,6 +267,7 @@
   border-radius: 30px;
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   font-size: 1.4rem;
+  font-weight: 700;
   border: none;
   color: white;
   cursor: pointer;
@@ -313,12 +314,12 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   color: rgba(222, 58, 88, 1);
   background-color: white;
   border: none;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: underline;
   margin-bottom: 0.3rem;
 }
 .addQues:visited {
