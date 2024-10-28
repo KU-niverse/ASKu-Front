@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect, useRef, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -17,9 +17,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
-import folderImg from '../img/initialchat_folder.png'
-import plusImg from '../img/initialchat_plus.png'
-import chatImg from '../img/initialchat_chat.png'
+import chatImg from '../img/chatModal.png'
 
 interface User {
   id: number
@@ -30,13 +28,11 @@ interface UserData {
 }
 
 interface ChatbotModalProps {
-  isOpen: boolean
-  onClose: () => void
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
 }
 
-function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
+function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [initialChat, setInitialChat] = useState(true)
@@ -53,10 +49,35 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
+  const location = useLocation()
+  const nav = useNavigate()
+  const from = location.state?.from || '/'
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
   // }
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      if (res.status === 201 && res.data.success === true) {
+        setIsLoggedIn(true)
+      } else if (res.status === 401) {
+        setIsLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        nav(from)
+      }
+    } catch (error) {
+      console.error(error)
+      setIsLoggedIn(false)
+      if (error.response.status === 401) {
+        setIsLoggedIn(false)
+        nav(from)
+      }
+      alert('에러가 발생하였습니다')
+      nav(from)
+    }
+  }
+
   const [user, setUser] = useState<UserData | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
@@ -64,30 +85,9 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isMouseHover, setIsMouseHover] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const modalCloseRef = useRef<HTMLDivElement | null>(null)
-  const handleModalClose = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsModalOpen(false)
-  }
-
-  const handleMouseHover = (isHovering: boolean) => {
-    if (!scrollRef.current) return
-
-    if (isHovering) {
-      scrollRef.current.style.overflowX = 'auto'
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        setTimeoutId(null)
-      }
-    } else {
-      const id = setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.style.overflowX = 'hidden'
-        }
-      }, 2000) // 2초 후 스크롤 숨김
-      setTimeoutId(id)
-    }
-  }
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
@@ -139,6 +139,10 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
       setPreviousChatHistory([])
     }
   }, [isLoggedIn])
+
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
 
   useEffect(() => {
     if (chatResponse.length > 0) {
@@ -240,6 +244,7 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
       },
       onError: (error: any) => {
         console.error(error)
+        console.log(error)
         if (error.response?.status === 403) {
           setLoginModalVisible(true)
         }
@@ -268,6 +273,7 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
 
   const handleSendClick = () => {
     if (!isLoggedIn) {
+      console.log(`???`, { isLoggedIn })
       setLoginModalVisible(true)
       return
     }
@@ -339,102 +345,105 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
     setReferenceList(references)
   }
 
-  return (
-    isModalOpen && (
+  return isModalOpen ? (
+    <div
+      className={styles.chatbotModalWrapper}
+      ref={modalCloseRef}
+      onClick={() => {
+        setIsModalOpen(false)
+        setIsMouseHover(false)
+      }}
+      role={'button'}
+      tabIndex={-1}
+      onKeyDown={(e) => null}
+    >
       <div
-        className={styles.chatbotModalWrapper}
-        ref={modalCloseRef}
-        onClick={handleModalClose}
+        className={styles.chatbot}
+        onClick={(event: React.MouseEvent<HTMLElement>) => event.stopPropagation()}
         role={'button'}
         tabIndex={-1}
         onKeyDown={(e) => null}
       >
-        <div
-          className={styles.chatbot}
-          onClick={(event: React.MouseEvent<HTMLElement>) => event.stopPropagation()}
-          role={'button'}
-          tabIndex={-1}
-          onKeyDown={(e) => null}
-        >
-          <div className={styles.chatbotHeader}>
-            <div className={styles.title}>
-              <img src={haho} alt={'haho'} className={styles.haho} />
-              <div>{'AI 챗봇: 하호'}</div>
+        <div className={styles.chatbotHeader}>
+          <div className={styles.title}>
+            <img src={haho} alt={'haho'} className={styles.haho} />
+            <div>{'AI 챗봇: 하호'}</div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <div className={styles.button}>
+              <button
+                type={'button'}
+                className={styles.buttonText}
+                onClick={() =>
+                  window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
+                }
+              >
+                <img src={infoIcon} className={styles.smallIcon} alt="info" />
+                {'도움말'}
+              </button>
             </div>
-            <div className={styles.buttonContainer}>
-              <div className={styles.button}>
-                <button
-                  type={'button'}
-                  className={styles.buttonText}
-                  onClick={() =>
-                    window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
-                  }
-                >
-                  <img src={infoIcon} className={styles.smallIcon} alt="info" />
-                  {'도움말'}
-                </button>
-              </div>
-              <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
-                <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
-                <button type={'button'} className={styles.buttonText}>
-                  {'채팅 초기화'}
-                </button>
-              </div>
+            <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
+              <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
+              <button type={'button'} className={styles.buttonText}>
+                {'채팅 초기화'}
+              </button>
             </div>
           </div>
-          {previousChatHistory.length === 0 && initialChat ? (
-            <div className={styles.initialChatbox}>
-              <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
-              <div className={styles.initialSummaryContent}>
-                <div className={styles.initialSummaryTitle}>{'AI 챗봇'}</div>
-                {`고려대학교 학칙을 기반으로 답변해주는 AI`}
-                <br />
-                {`챗봇에게 궁금한 점을 바로 질문해보세요!`}
-              </div>
+        </div>
+        {previousChatHistory.length === 0 && initialChat ? (
+          <div className={styles.initialChatbox}>
+            <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
+            <div className={styles.initialSummaryContent}>
+              <div className={styles.initialSummaryTitle}>{'AI 챗봇'}</div>
+              {`고려대학교 학칙을 기반으로 답변해주는 AI`}
+              <br />
+              {`챗봇에게 궁금한 점을 바로 질문해보세요!`}
             </div>
-          ) : (
-            <div className={styles.chat}>
-              {previousChatHistory.length !== 0 && (
-                <>
-                  {previousChatHistory.map((item) => (
-                    <Fragment key={item.id}>
-                      <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                      <ChatAnswer
-                        key={`answer-${item.id}`}
-                        content={item.a_content}
-                        qnaId={item.id}
-                        reference={item.reference}
-                        blockIconZip={!isLoggedIn}
-                        onAddReferenceSuggestion={onAddReferenceSuggestion}
-                        recommendedQuestions={[]} // 초기 빈 배열
-                        onRecommendQuestionClick={handleRecommendQuestionClick}
-                      />
-                    </Fragment>
-                  ))}
-                </>
-              )}
-              {chatResponse.map((item) => {
-                if (item.isQuestion) {
-                  return <ChatQuestion key={item.id} content={item.content} />
-                }
-                return (
-                  <ChatAnswer
-                    key={item.id}
-                    content={item.content}
-                    reference={item.reference}
-                    qnaId={item.qnaId}
-                    blockIconZip={item.isSuggest}
-                    onAddReferenceSuggestion={onAddReferenceSuggestion}
-                    recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
-                    onRecommendQuestionClick={handleRecommendQuestionClick}
-                  />
-                )
-              })}
-              <div ref={chatBottomRef} />
-              {loading && !isStreaming && <Spinner />}
-            </div>
-          )}
+          </div>
+        ) : (
+          <div className={styles.chat}>
+            {previousChatHistory.length !== 0 && (
+              <>
+                {previousChatHistory.map((item) => (
+                  <Fragment key={item.id}>
+                    <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                    <ChatAnswer
+                      key={`answer-${item.id}`}
+                      content={item.a_content}
+                      qnaId={item.id}
+                      reference={item.reference}
+                      blockIconZip={!isLoggedIn}
+                      onAddReferenceSuggestion={onAddReferenceSuggestion}
+                      recommendedQuestions={[]} // 초기 빈 배열
+                      onRecommendQuestionClick={handleRecommendQuestionClick}
+                    />
+                  </Fragment>
+                ))}
+              </>
+            )}
+            {chatResponse.map((item) => {
+              if (item.isQuestion) {
+                return <ChatQuestion key={item.id} content={item.content} />
+              }
+              return (
+                <ChatAnswer
+                  key={item.id}
+                  content={item.content}
+                  reference={item.reference}
+                  qnaId={item.qnaId}
+                  blockIconZip={item.isSuggest}
+                  onAddReferenceSuggestion={onAddReferenceSuggestion}
+                  recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
+                  onRecommendQuestionClick={handleRecommendQuestionClick}
+                />
+              )
+            })}
+            <div ref={chatBottomRef} />
+            {loading && !isStreaming && <Spinner />}
+          </div>
+        )}
 
+        <div className={styles.suggestAndPrompt}>
           <div
             className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
             ref={suggestContainerRef}
@@ -526,7 +535,7 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
           <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
             <textarea
               className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-              placeholder={'AI에게 무엇이든 물어보세요!'}
+              placeholder={'하호에게 무엇이든 물어보세요!'}
               value={inputValue}
               onChange={inputChange}
               onKeyDown={handleKeyDown}
@@ -551,7 +560,28 @@ function ChatbotModal({ isOpen, onClose, isLoggedIn, setIsLoggedIn }: ChatbotMod
           </div>
         </div>
       </div>
-    )
+    </div>
+  ) : (
+    <button
+      className={styles.modalButton}
+      type="button"
+      onMouseEnter={() => setIsMouseHover(true)}
+      onMouseLeave={() => setIsMouseHover(false)}
+      onClick={() => setIsModalOpen(true)}
+    >
+      {isMouseHover ? (
+        <div className={styles.hoverModal}>
+          <div className={styles.hoverModalText}>
+            {'하호에게'}
+            <br />
+            {'물어보세요!'}
+          </div>
+          <img src={haho} alt={'Chatbot_Modal'} className={styles.hoverModalImg} />
+        </div>
+      ) : (
+        <img src={haho} alt={'Chatbot_Modal'} className={styles.chatbotModalImg} />
+      )}
+    </button>
   )
 }
 

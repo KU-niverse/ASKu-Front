@@ -19,7 +19,6 @@ import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
 import subArrow from '../img/homeSubArrow.svg'
-import ChatbotModal from '../components/ChatbotModal'
 
 interface HistoryResponse {
   success: boolean
@@ -143,7 +142,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [randomTitle, setRandomTitle] = useState('ASKu사용방법')
-  const [ChatbotModalOpen, setChatbotModalOpen] = useState(true)
 
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
   const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
@@ -351,14 +349,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
         </div>
       </div>
-      {ChatbotModalOpen && (
-        <ChatbotModal
-          isOpen={ChatbotModalOpen}
-          onClose={() => setChatbotModalOpen(false)}
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setLoggedIn}
-        />
-      )}
       <Footer />
     </div>
   )
