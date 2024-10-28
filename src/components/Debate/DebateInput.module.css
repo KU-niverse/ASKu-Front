@@ -1,22 +1,33 @@
-.container {
-  margin: 50px 30px;
+.container_grey {
+  margin: 50px 0px;
   border: 1px solid rgba(213, 213, 213, 1);
   border-radius: 12px;
 }
-
-.title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(240, 240, 240, 1);
-  border-bottom: 1px solid rgba(213, 213, 213, 1);
-  border-radius: 12px 12px 0 0;
+.container_red {
+  margin: 50px 0px;
+  border: 1px solid #de3a58;
+  border-radius: 12px;
 }
-.title {
-  font-size: 16px;
-  font-weight: 700;
-  padding-left: 16px;
+.sendBtn_red{
+cursor: pointer;
+background: linear-gradient(to right, #9f132e, #de3a58);
+width: 4rem;
+height: 4rem;
+border-radius: 50%;
+cursor: pointer;
+padding: 0.8rem;
+box-sizing: border-box;
 }
+.sendBtn_grey{
+  cursor: pointer;
+  background: #D5D5D5;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.8rem;
+  box-sizing: border-box;
+  }
 
 .title img {
   height: 30px;
@@ -34,6 +45,7 @@
   border-radius: 12px;
   box-sizing: border-box;
   padding: 10px;
+  flex-direction: row-reverse;
 }
 
 .textarea {
@@ -44,11 +56,12 @@
   padding: 5px;
   border-radius: 12px;
   font-size: 14px;
+  outline: none;
 }
 
 @media only screen and (max-width: 767px) {
   .container {
-    margin: 50px 0;
+    margin: 7% 0;
   }
   .textbox {
     font-size: 16px;
