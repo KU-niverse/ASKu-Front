@@ -7,7 +7,6 @@ import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import falseBk from '../img/bookmarkfalse.svg'
 import trueBk from '../img/bookmarkFill.svg'
-import VectorRight from '../img/VectorRight.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
 import comment from '../img/comment_icon.svg'
@@ -19,6 +18,7 @@ import Footer from '../components/Footer'
 import question from '../img/wiki_qustion.svg'
 import arrowUp from '../img/arrow_up_red.svg'
 import arrowDown from '../img/arrow_down_red.svg'
+import arrowForward from '../img/arrow_forward.svg'
 
 interface AxiosErrorResponse {
   message: string
@@ -381,8 +381,7 @@ function WikiViewer() {
               </div>
 
               <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
-                &nbsp;{'다음 문서\r'}
-                <img src={VectorRight} alt={'다음 문서 아이콘'} />
+                <img src={arrowForward} alt={'다음 문서 아이콘'} />
               </button>
             </div>
           </div>

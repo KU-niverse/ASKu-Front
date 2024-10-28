@@ -104,12 +104,13 @@
   display: flex;
   gap: 1.5rem;
   justify-content: space-between;
+  align-items: center;
 }
 .wikititleLeftBtns {
   display: flex;
   gap: 1rem;
 }
-.wikititleBtn button {
+.wikititleLeftBtns button {
   width: auto;
   height: 3.6rem;
   border-radius: 30px;
@@ -132,25 +133,24 @@
   height: 1.6rem;
 }
 .wikititleBtnThree {
-  width: auto;
+  cursor: pointer;
   border: none !important;
   position: relative;
-  border-radius: 30px;
+  border-radius: 100%;
   background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
-  height: 3.6rem;
+  box-shadow: 0px 1px 7px 0px #f3b0bc;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white !important;
-  padding: 0 1.5rem;
-  box-sizing: border-box;
-  font-size: 1.4rem;
-  font-weight: 500;
+  padding: 0;
 }
 .wikititleBtnThree img {
-  margin-left: 0.3rem;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.5rem;
+  height: 2rem;
+  margin-left: 0.5rem;
 }
 .wikiBoxLists {
   width: 100%;
