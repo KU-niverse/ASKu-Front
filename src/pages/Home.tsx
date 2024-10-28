@@ -227,9 +227,14 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
         /* 모바일 뷰 */
         <div className={styles.mobileViewContainer}>
           <div className={styles.mobileTitleContainer}>
+            <div className={styles.mobileTitlePink}>AI챗봇: 하호에게</div>
+            <div className={styles.mobileTitleBlack}>무엇이든 물어보세요!</div>
             <SearchInputComponent inputValue={inputValue} setInputValue={setInputValue} />
           </div>
-          <div>b</div>
+          <div className={styles.mobileButtonContainer}>버튼1 버튼2 버튼3</div>
+          <div className={styles.chatBotContainer}>
+            <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
+          </div>
         </div>
       ) : (
         /* 데스크 탑 뷰 */
