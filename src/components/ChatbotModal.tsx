@@ -73,7 +73,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
         setIsLoggedIn(false)
         nav(from)
       }
-      alert('에러가 발생하였습니다')
+      // alert('에러가 발생하였습니다')
       nav(from)
     }
   }
@@ -526,7 +526,18 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
           </div>
 
           {isLoginModalVisible && (
-            <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
+            <div
+              onClick={() => {
+                setIsModalOpen(false)
+                setIsMouseHover(false)
+              }}
+              role={'button'}
+              tabIndex={-1}
+              aria-label={'Close modal'}
+              onKeyDown={(e) => null}
+            >
+              <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
+            </div>
           )}
           {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
           {ClearModalOpen && (
