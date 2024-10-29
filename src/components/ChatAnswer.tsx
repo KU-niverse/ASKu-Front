@@ -107,7 +107,6 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
     <div className={styles.answerBox}>
       <img src={haho} alt={'character'} className={styles.character} />
       <p className={styles.chatText}>{processedContent}</p>
-      <img alt={'dots'} src={dots} className={styles.dots} />
       <div className={styles.iconZip} style={{ visibility: blockIconZip ? 'hidden' : 'inherit' }}>
         <img
           role={'presentation'}
@@ -161,8 +160,8 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
               </button>
             )}
             {parsedReferences?.references.map(({ link }) => (
-              <div key={link}>
-                <Link to={`/wiki/${link}`} className={styles.reference_link}>
+              <div key={link} className={styles.reference_link}>
+                <Link to={`/wiki/${link}`}>
                   {'참고문서: '}
                   {link}
                 </Link>
