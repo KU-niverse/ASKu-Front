@@ -12,7 +12,7 @@
 .recentTitle {
   width: 89px;
   position: relative;
-  font-size: 14.5px;
+  font-size: 2.4rem;
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
@@ -35,17 +35,17 @@
 }
 .listTitle {
   font-family: Pretendard;
-  font-size: 11px;
+  font-size: 1.8rem;
   font-weight: 600;
   line-height: 17px;
   letter-spacing: 0em;
   text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 144px;
+  width: 70%;
 }
 .listTimestamp {
-  font-size: 8px;
+  font-size: 1.4rem;
   font-weight: 400;
   line-height: 17px;
   letter-spacing: 0em;

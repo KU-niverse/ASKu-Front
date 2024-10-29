@@ -62,7 +62,14 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
   return (
     <div>
       <b className={styles.searchTitle}>{'토론 검색'}</b>
-      <div>
+      <div className={styles.searchInputContainer}>
+        <img
+          role={'presentation'}
+          className={styles.searchIcon}
+          src={word ? searchIcon_red : searchIcon_grey}
+          onClick={handleDebateSearch}
+          alt={'검색'}
+        />
         <input
           className={styles.searchInput}
           type={'text'}
@@ -73,12 +80,6 @@ const DebateSearch = ({ title }: DebateSearchProps) => {
           onKeyDown={handleKeyDown}
         />
 
-        <img
-          className={styles.searchIcon}
-          src={word ? searchIcon_red : searchIcon_grey}
-          onClick={handleDebateSearch}
-          alt={'검색'}
-        />
         <img className={word ? styles.cancelIcon : styles.hidden} src={cancelIcon} onClick={delWord} alt={'검색'} />
       </div>
       <div className={showResult ? styles.result : styles.hidden}>

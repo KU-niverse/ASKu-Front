@@ -1,9 +1,9 @@
 .q_list {
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border-radius: 1.2rem;
+  border: 0.1rem solid #d5d5d5;
   padding: 30px 0;
-  margin-top: 10px;
+  margin-top: 25px;
 }
 .q_header {
   display: flex;
@@ -33,11 +33,12 @@
 }
 
 .q_mynick {
-  font-size: 16px;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 .q_date {
-  margin-left: 20px;
-  font-size: 12px;
+  margin-left: 2rem;
+  font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
 .q_backhead {
@@ -53,6 +54,7 @@
 
 .q_icon {
   color: rgba(159, 19, 46, 1);
+  font-size: 2rem;
 }
 
 .q_index {
@@ -62,7 +64,8 @@
   padding-right: 5px;
 }
 .q_content {
-  padding-left: 10px;
+  font-size: 2rem;
+  padding-left: 1rem;
   cursor: pointer;
 }
 
@@ -134,6 +137,13 @@
   align-items: center;
 }
 
+.commentCount {
+  font-size: 1.6rem;
+}
+
+.q_editbtn span {
+  font-size: 1.4rem;
+}
 @media only screen and (max-width: 767px) {
   .q_middle,
   .q_mynick {

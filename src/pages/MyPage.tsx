@@ -274,8 +274,6 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
     error: myContributeError,
   } = useQuery('myContribute', fetchMyContribute)
 
-  console.log(myDebate)
-
   if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
       <div>
@@ -290,9 +288,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
 
   return (
     <div className={styles.pagewrap}>
-      <div>
+      <div className={styles.headerContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
+      {/* 웹 뷰 */}
       <div className={styles.myPageContainer}>
         <div className={styles.navContainer}>
           <div className={styles.navSubContainer}>
@@ -604,7 +603,50 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
           ) : null}
         </div>
       </div>
-      <div>
+
+      {/* 모바일 뷰 */}
+      <div className={styles.mobileMyPageContainer}>
+        <div className={styles.mobileProfileContainer}>
+          <div className={styles.mobileProfileBox}>
+            {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
+              <MyProfile
+                nick={mypageData.data[0].nickname}
+                point={mypageData.data[0].point}
+                badge={mypageData.data[0].rep_badge_name}
+                badgeimg={mypageData.data[0].rep_badge_image}
+                percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
+              />
+            )}
+          </div>
+        </div>
+        <div className={styles.mobileNavContainer}>
+          <button type={'button'} onClick={() => Navigate('/')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 기여 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 뱃지 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/myquestion')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 질문'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mycomment')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 토론'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+        </div>
+      </div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

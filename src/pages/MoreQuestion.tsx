@@ -10,6 +10,8 @@ import Footer from '../components/Footer'
 import Switch from '../components/Switch'
 import QuestionInput from '../components/QuestionInput'
 import SpinnerMypage from '../components/SpinnerMypage'
+import docLink from '../img/doc_link.svg'
+import noQuestion from '../img/noQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -88,6 +90,7 @@ const MoreQuestion: React.FC = () => {
   const location = useLocation()
   const defaultOpt = location.state
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const [isToggled, setIsToggled] = useState(false)
   const flag = isToggled ? 1 : 0
@@ -116,6 +119,10 @@ const MoreQuestion: React.FC = () => {
     })
   }, [title])
 
+  const handleDocLinkClick = () => {
+    navigate(`/wiki/${encodeURIComponent(title)}`)
+  }
+
   if (userInfoLoading || titlesLoading || questionsLoading) {
     return (
       <div>
@@ -132,22 +139,46 @@ const MoreQuestion: React.FC = () => {
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>
-                <p className={styles.q_pagename}>{title}</p>
-                <p className={styles.q_headline}>{'문서의 질문'}</p>
+                <div className={styles.q_pagename}>{title}</div>
+                <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
-              <div className={styles.switch}>
-                <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-              </div>
+
+              <button type="button" className={styles.docLinkBtn} onClick={handleDocLinkClick}>
+                <img role={'presentation'} alt={docLink} src={docLink} />
+                문서 바로가기
+              </button>
             </div>
+
             <QuestionInput
               onQuestionSubmit={handleQuestionSubmit}
               title={title}
               defaultOpt={defaultOpt}
               wikiData={undefined}
             />
+
             <div>
+              {/* 헤더 섹션: 제목과 인기순 토글 */}
+              <div className={styles.questionHeaderContainer}>
+                <div className={styles.questionTitle}>해당 질문들</div>
+                <div className={styles.switch}>
+                  <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+                </div>
+              </div>
+
+              {/* 질문 리스트 */}
               {questionData?.data.length === 0 ? (
-                <p>{'아직 작성한 질문이 없습니다.'}</p>
+                <div className={styles.noQuestionsContainer}>
+                  <div className={styles.noQuestionsContent}>
+                    {/* 아이콘 */}
+                    <img role={'presentation'} src={noQuestion} alt={noQuestion} className={styles.noQuestionsIcon} />
+
+                    {/* 텍스트 */}
+                    <p className={styles.noQuestionsText}>
+                      아직 질문이
+                      <br /> 없습니다
+                    </p>
+                  </div>
+                </div>
               ) : (
                 questionData?.data.map((question) => (
                   <Question

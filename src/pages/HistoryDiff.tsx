@@ -7,6 +7,7 @@ import axios, { AxiosError } from 'axios'
 import his2 from '../img/his2.png'
 import styles from './HistoryDiff.module.css'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
@@ -92,45 +93,39 @@ const HistoryDiff = () => {
   const newText = comparisonData?.jsonData.rev_text || ''
 
   return (
-    <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.header}>
-        <span>
-          <img alt={'히스토리'} src={his2} />
-          {'히스토리\r'}
-        </span>
-      </div>
-      <div className={styles.historyCompare}>
-        <div className={styles.historyTitle}>
-          <p className={styles.listTitle}>{title}</p>
-          <p className={styles.listTitle2}>{'문서의 변경 내용'}</p>
-        </div>
-        <div className={styles.historyDiff}>
-          <div className={styles.verCompare}>
-            <span className={styles.verCompareNum}>
-              {'VERSION'}
-              {Number(ver) - 1}
-            </span>
-            &nbsp;
-            <span className={styles.verCompareVs} />
-            &nbsp;
-            <span className={styles.verCompareNum}>
-              {'VERSION'}
-              {ver}
-            </span>
+    <>
+      <div className={styles.historyDiffContainer}>
+        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        <div className={styles.historyDiffContent}>
+          <div className={styles.historyDiffTitle}>
+            <p className={styles.docTitle}>{title}</p>
+            <p className={styles.listTitles}>{'문서의 변경 내용'}</p>
           </div>
-          <div className={styles.diffBox}>
-            <ReactDiffViewer
-              oldValue={oldText}
-              newValue={newText}
-              splitView={isSplit}
-              styles={{ diffContainer: styles.diffBox }}
-              showDiffOnly
-            />
+          <div className={styles.historyDiffBox}>
+            <div className={styles.verCompare}>
+              <span className={styles.verCompareNum}>
+                {'VERSION'}
+                {Number(ver) - 1}
+              </span>
+              <span className={styles.verCompareNum}>
+                {'VERSION'}
+                {ver}
+              </span>
+            </div>
+            <div className={styles.diffBox}>
+              <ReactDiffViewer
+                oldValue={oldText}
+                newValue={newText}
+                splitView={isSplit}
+                styles={{ diffContainer: styles.diffBox }}
+                showDiffOnly
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   )
 }
 
