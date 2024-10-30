@@ -370,13 +370,17 @@ function WikiViewer() {
             <div className={styles.wikititleBtn}>
               <div className={styles.wikititleLeftBtns}>
                 <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
-                  <img alt={'토론하기 버튼'} src={debate} />
-                  &nbsp;{'토론하기\r'}
+                  <div className={styles.wikititleBtnContent}>
+                    <img alt={'토론하기 버튼'} src={debate} />
+                    &nbsp;{'토론하기\r'}
+                  </div>
                 </button>
 
                 <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
-                  <img alt={'히스토리 버튼'} src={his} />
-                  &nbsp;{'히스토리\r'}
+                  <div className={styles.wikititleBtnContent}>
+                    <img alt={'히스토리 버튼'} src={his} />
+                    &nbsp;{'히스토리\r'}
+                  </div>
                 </button>
               </div>
 
