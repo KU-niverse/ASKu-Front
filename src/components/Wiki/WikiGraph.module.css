@@ -1,38 +1,74 @@
 .g_container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .g_name {
   margin-top: 0px;
-  margin-bottom: 30px;
-  font-size: 18px;
+  margin-bottom: 20px;
+  font-size: 23px;
   font-weight: 700;
+  text-align: left;
+  width: 100%;
+}
+
+.graphAndLegend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.graphContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-right: 20px;
+}
+
+.doughnut {
+  width: 150px;
+  height: 150px;
+}
+
+.centerText {
+  position: absolute;
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
 }
 
 .legend {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  width: 100%;
-  grid-row-gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 40px;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-bottom: 8px;
 }
 
 .legendColor {
   width: 12px;
   height: 12px;
-  margin-right: 10px;
+  margin-right: 8px;
   border-radius: 100%;
+  flex-shrink: 0;
 }
 
 .legendname {
   font-size: 14px;
   margin-right: 5px;
+  font-weight: 700;
 }
 
 .legendper {
@@ -40,22 +76,50 @@
   color: rgba(116, 116, 116, 1);
 }
 
+.footerText {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #ff6b6b;
+  text-align: right;
+  width: 100%;
+}
+
 @media only screen and (max-width: 767px) {
   .g_container {
-    width: 300px;
+    width: 100%;
+    padding: 10px;
   }
 
-  .legend {
-    width: 100%;
+  .g_name {
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .graphAndLegend {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .doughnut {
+    width: 120px;
+    height: 120px;
+  }
+
+  .centerText {
+    font-size: 20px;
   }
 
   .legendname {
     font-size: 12px;
-    margin-right: 5px;
   }
 
   .legendper {
-    font-size: 12px;
-    color: rgba(116, 116, 116, 1);
+    font-size: 11px;
+  }
+
+  .footerText {
+    font-size: 10px;
+    text-align: center;
   }
 }

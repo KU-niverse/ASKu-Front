@@ -38,6 +38,7 @@
   align-items: center;
   flex-direction: column;
   width:100%;
+  cursor: pointer;
 }
 .contentsTwo {
   width: auto;
@@ -98,7 +99,7 @@
   width: 100%;
 }
 .docTitle {
-  font-size: 60%;
+  font-size: 1.2rem;
   color: #DE3A58;
   cursor: pointer;
   overflow: hidden;

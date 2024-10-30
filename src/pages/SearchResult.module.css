@@ -20,8 +20,8 @@
   row-gap: 0px;
   min-height: 80vh;
   height: auto;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 12rem;
+  padding-right:12rem;
 }
 .searchText{
   color:#DE3A58;
@@ -37,7 +37,7 @@
 }
 .header h4 {
   margin: 0px;
-  font-size: 25px;
+  font-size: 3.6rem;
   font-weight: 700;
 }
 .header img {
@@ -120,17 +120,18 @@
 
 .linkToNew {
   margin-top: 10px;
-  text-align: right; /* 우측 정렬을 위해 text-align을 right로 설정합니다. */
+  text-align: center;
 }
 .link {
   color: rgba(116, 116, 116, 1);
-  font-size: 15px;
+  font-size: 1.6rem;
   text-decoration: none;
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  margin-bottom: 5%
+  margin-bottom: 5%;
+  text-decoration-line : underline;
 }
 .link:hover {
   text-decoration: underline;
@@ -139,6 +140,7 @@
   color: #DE3A58;
   font-weight: 700;
   margin-bottom: 0px;
+  font-size: 2.4rem;
 }
 
 .recents {
@@ -156,16 +158,18 @@
   align-items: center;
   justify-content: space-between;
   margin: 15px 0px 15px 0px;
-  font-size: 14px;
+  font-size: 1.8rem;
   cursor: pointer;
   white-space: nowrap; /* 텍스트가 한 줄을 넘어가지 않도록 함 */
 }
 .listTitle {
   font-weight: 600;
+  font-size: 1.8rem;
 }
 .listTimestamp {
   margin-left: 5px;
   font-weight: 400;
+  font-size: 1.4rem;
 }
 
 /* 스타일을 초기화하고 싶은 경우 */
@@ -189,7 +193,6 @@
     display: flex;
     padding: 30px;
     flex-direction: column;
-    width: 94%;
     height: auto;
     margin-left: 3%;
   }
@@ -203,6 +206,7 @@
     height: auto;
     margin-left: 3%;
   }
+  
   .type {
     width: 95%;
   }
@@ -216,6 +220,7 @@
     display: none;
   }
   .link {
-    font-size: 12px;
+    font-size: 10px;
+    margin: 3.4rem;
   }
 }

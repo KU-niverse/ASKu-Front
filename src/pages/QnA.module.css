@@ -19,15 +19,26 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
 }
 .frontheader {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
+.q_pagename {
+  font-size: 3.6rem;
+  font-weight: 700;
+  margin: 2rem 0;
+  align-self: center;
+  color: #de3a58;
+}
+.q_headline {
+  font-size: 3.6rem;
+  font-weight: 700;
+  padding-left: 1.5rem;
+}
+
 .backheader {
   padding-right: 30px;
 }
@@ -79,7 +90,9 @@
 
 .no_answer {
   width: 100%;
-  margin-left: 30px;
+  margin-left: 3rem;
+  font-size: 1.6rem;
+  font-weight: 500;
 }
 
 .c_header {
@@ -88,7 +101,7 @@
   flex-wrap: wrap;
   width: 100%;
   border-radius: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border: 0.1rem solid #d5d5d5;
   margin-bottom: 10px;
   margin-top: 20px;
   align-items: center;
@@ -118,6 +131,9 @@
   background: linear-gradient(180deg, #db3956, #9f142f);
 }
 
+.q_editbtn span {
+  font-size: 1.5rem;
+}
 @media only screen and (max-width: 767px) {
   .content {
     display: flex;

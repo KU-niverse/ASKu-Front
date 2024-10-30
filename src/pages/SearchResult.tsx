@@ -7,11 +7,10 @@ import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
 import search from '../img/SearchResult.svg'
 import styles from './SearchResult.module.css'
-import ResultBox from '../components/ResultBox'
-import Question from '../components/Question'
 import ResultQues from '../components/ResultQues'
 import FormatTimeAgo from '../components/FormatTimeAgo'
 import SearchResultBox from '../components/SearchResultBox'
+import Paging from '../components/Paging'
 import Footer from '../components/Footer'
 
 interface UserInfo {
@@ -80,6 +79,13 @@ const SearchResearch = () => {
   const [type, setType] = useState('all')
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const { data: loginStatusData } = useCheckLoginStatus()
+  const [page, setPage] = useState<number>(1)
+  const perPage = 7
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber)
+  }
 
   const {
     data: docs = [],
@@ -179,7 +185,7 @@ const SearchResearch = () => {
         </div>
         <div className={styles.boxes}>
           <div className={isClicked ? '' : styles.hidden}>
-            {docs.map((item: any, index: number) => (
+            {docs.slice(startIndex, endIndex).map((item: any, index: number) => (
               <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
                 <SearchResultBox
                   title={item.title}
@@ -190,6 +196,9 @@ const SearchResearch = () => {
                 />
               </div>
             ))}
+            <div className={styles.pagingContainer}>
+              <Paging total={docs.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+            </div>
             <div className={styles.linkToNew}>
               <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
                 {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}

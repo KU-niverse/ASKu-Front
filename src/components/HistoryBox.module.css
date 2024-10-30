@@ -67,9 +67,22 @@
   font-weight: 700;
   font-size: 1.95rem;
 }
+.bigversion {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: 700;
+  font-size: 2.3rem;
+}
 .versionimg {
   width: 6.7rem;
   height: 6.7rem;
+}
+.bigversionimg {
+  width: 8rem;
+  height: 8rem;
 }
 .docTitleContainer {
   padding: 0 1.3rem;
@@ -155,4 +168,9 @@
 .vercmpimg {
   width: 1.7rem;
   height: 1.7rem;
+}
+.rollbackimg {
+  width: 1.6rem;
+  height: 1.5rem;
+  margin-bottom: 0.3rem;
 }

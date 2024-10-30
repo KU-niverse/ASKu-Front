@@ -1,9 +1,9 @@
 .q_list {
-  width: 80%;
-  margin-left: 10%;
+  width: 90%;
   border-radius: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #d5d5d5;
   padding: 20px 0;
+  margin-left: 58px;
   margin-top: 10px;
 }
 .q_header {
@@ -13,15 +13,35 @@
   align-content: center;
   padding: 0px 30px 8px 30px;
 }
+.q_fronthead {
+  display: flex;
+  align-items: center;
+}
 
+.q_box {
+  width: 26px;
+  height: 26px;
+  align-self: center;
+  margin-right: 10px;
+}
+
+.q_box img {
+  padding-left: 0;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
 .q_mynick {
-  font-size: 16px;
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 .q_date {
-  margin-left: 20px;
-  font-size: 12px;
+  margin-left: 2rem;
+  font-weight: 400;
+  font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_num {
   font-size: 18px;
   font-weight: 700;
@@ -46,10 +66,13 @@
 
 .q_icon {
   color: rgba(159, 19, 46, 1);
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .q_content {
-  padding-left: 10px;
+  padding-left: 1rem;
+  font-size: 2rem;
 }
 
 .q_footer {
@@ -79,9 +102,17 @@
   font-size: 16px;
   font-weight: bold;
 }
+.q_comment span {
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
 
-.q_like {
-  margin-left: 3px;
+.q_comment img {
+  object-fit: contain;
+  cursor: pointer;
+  width: 18px;
 }
 
 .q_backfooter button {
