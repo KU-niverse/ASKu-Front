@@ -407,7 +407,6 @@
   font-weight: 700;
 }
 .wikigraphContent {
-  padding-left: 2.1rem;
   height: 21rem;
   display: flex;
   align-items: center;
@@ -467,6 +466,9 @@ li {
     flex-wrap: wrap;
     padding: 2.9rem 2.3rem;
     gap: 2rem;
+  }
+  .wikimaintitle {
+    width: 100%;
   }
   .wikititleBtn {
     flex-grow: 1;
