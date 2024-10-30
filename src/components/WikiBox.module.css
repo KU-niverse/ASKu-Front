@@ -19,6 +19,7 @@
 
 .wikiArrowIcon {
   margin-left: 2.2rem;
+  margin-right: 1.5rem;
   width: 4rem;
   height: 4rem;
 }
@@ -102,5 +103,9 @@
   }
   .wikiIndex {
     font-size: 2.4rem;
+  }
+  .wikiArrowIcon {
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
