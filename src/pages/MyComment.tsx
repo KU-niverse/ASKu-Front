@@ -112,7 +112,7 @@ const MyComment = () => {
             {/* <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
           </div>
         </div>
-        {mypageData && myDebate && myDebate.message && myDebate.message.length !== 0 ? (
+        {mypageData && myDebate && myDebate.message && myDebate.message.length === 0 ? (
           <>
             <img src={emptyDebate} alt={'empty_Debate'} className={styles.emptyDebate} />
             <p className={styles.emptyDebateText}>
