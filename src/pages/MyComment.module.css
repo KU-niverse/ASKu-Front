@@ -3,6 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
 .content {
   display: flex;
   padding: 30px 0;
@@ -12,6 +13,7 @@
   margin-left: 13%;
   flex: 1;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -27,6 +29,7 @@
   font-weight: bold;
   padding-left: 30px;
 }
+
 .switch {
   padding-right: 30px;
 }
@@ -35,11 +38,49 @@
   .content {
     display: flex;
     flex-direction: column;
-    width: 86%;
-    margin: 7%;
-    padding: initial;
+    width: 100%;
+    margin: 3rem 0 0 0;
+    padding: 0;
   }
+
+  .header {
+    display: flex;
+    border: 0;
+    box-shadow: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .debate_num {
+    font-size: 20px;
+    font-weight: 800;
+    padding-left: 0.5rem;
+    margin-top: 1rem;
+    background: linear-gradient(to bottom, #9f132e, #de3a58);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .comment {
     font-size: 20px;
+    font-weight: 800;
+    padding-left: 3rem;
+    margin-top: 1rem;
+  }
+
+  .emptyDebate {
+    height: 10rem;
+    width: 10rem;
+    align-self: center;
+    margin-top: 10rem;
+  }
+
+  .emptyDebateText {
+    font-size: 3rem;
+    font-weight: 500;
+    align-self: center;
+    margin-top: 2rem;
+    text-align: center;
   }
 }

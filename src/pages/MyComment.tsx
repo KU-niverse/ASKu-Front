@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import Comment from '../components/Comment'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
+import emptyDebate from '../img/emptyQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -101,13 +102,25 @@ const MyComment = () => {
       </div>
       <div className={styles.content}>
         <div className={styles.header}>
-          <p className={styles.comment}>{'내가 쓴 토론'}</p>
+          <p className={styles.comment}>{'내가 참여한 토론'}</p>
+          <p className={styles.debate_num}>
+            {'('}
+            {myDebate.message.length}
+            {')'}
+          </p>
           <div className={styles.switch}>
             {/* <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
           </div>
         </div>
-        {mypageData && myDebate && myDebate.message && myDebate.message.length === 0 ? (
-          <p>{'아직 작성한 토론이 없습니다.'}</p>
+        {mypageData && myDebate && myDebate.message && myDebate.message.length !== 0 ? (
+          <>
+            <img src={emptyDebate} alt={'empty_Debate'} className={styles.emptyDebate} />
+            <p className={styles.emptyDebateText}>
+              {'아직 작성된'}
+              <br />
+              {'토론이 없습니다'}
+            </p>
+          </>
         ) : (
           mypageData &&
           myDebate &&
