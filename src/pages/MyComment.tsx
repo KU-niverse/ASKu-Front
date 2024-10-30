@@ -99,7 +99,7 @@ const MyComment = () => {
       <div>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
-      <div className={styles.content}>
+      <div className={styles.list}>
         <div className={styles.header}>
           <p className={styles.comment}>{'내가 쓴 토론'}</p>
           <div className={styles.switch}>
