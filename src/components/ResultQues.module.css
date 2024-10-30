@@ -140,3 +140,8 @@
     font-size: 1.8rem;
   }
 }
+@media only screen and (min-width: 768px) and (max-width: 940px) {
+  * {
+    font-size: 50%;
+}
+}
