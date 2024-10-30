@@ -472,7 +472,7 @@ function WikiViewer() {
                           }}
                           className={styles.quesul}
                         >
-                          <span className={styles.quesTitle}>Q. {item.content}</span>
+                          <span className={styles.quesTitle}>{item.content}</span>
                           <span className={styles.quesNum}>
                             <span>{item.like_count}</span>
                             <img alt={'좋아요'} src={comment} />
