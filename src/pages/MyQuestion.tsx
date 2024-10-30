@@ -7,6 +7,7 @@ import MyQuestionList from '../components/MyQuestionList'
 import Footer from '../components/Footer'
 import Switch from '../components/Switch'
 import SpinnerMypage from '../components/SpinnerMypage'
+import emptyQuestion from '../img/emptyQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -144,7 +145,14 @@ function MyQuestion() {
           {myQuestionError || mypageError ? (
             <div>에러: {(myQuestionError || mypageError).message}</div>
           ) : questions.length === 0 ? (
-            <p>아직 작성한 질문이 없습니다.</p>
+            <>
+              <img src={emptyQuestion} alt={'empty_Qution'} className={styles.emptyQuestion} />
+              <p className={styles.emptyQuestionText}>
+                {'아직 작성된'}
+                <br />
+                {'질문이 없습니다'}
+              </p>
+            </>
           ) : (
             questions.map((question) => (
               <MyQuestionList
