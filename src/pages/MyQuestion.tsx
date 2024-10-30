@@ -132,6 +132,11 @@ function MyQuestion() {
         <div className={styles.content}>
           <div className={styles.header}>
             <p className={styles.question}>{'내가 쓴 질문'}</p>
+            <p className={styles.question_num}>
+              {'('}
+              {questions.length}
+              {')'}
+            </p>
             <div className={styles.switch}>
               <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
             </div>
