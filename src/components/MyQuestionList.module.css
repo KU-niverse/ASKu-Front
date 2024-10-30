@@ -5,6 +5,7 @@
   padding: 30px 0;
   margin-top: 10px;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
@@ -35,11 +36,13 @@
 .q_mynick {
   font-size: 16px;
 }
+
 .q_date {
   margin-left: 20px;
   font-size: 12px;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_backhead {
   cursor: pointer;
 }
@@ -87,6 +90,7 @@
   font-weight: bold;
   align-self: center;
 }
+
 .q_comment {
   display: flex;
   align-content: center;
@@ -132,16 +136,15 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .q_middle,
-  .q_mynick {
-    font-size: 14px;
-  }
-  .q_comment {
-    margin-left: 10px;
-  }
-
-  .q_index {
-    font-size: 12px;
+  .q_list {
+    margin: 0;
+    padding: 0 0 0 0;
+    box-shadow: none;
+    border-bottom: 0.3rem solid rgba(213, 213, 213, 1);
+    border-radius: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .q_footer img {
@@ -150,27 +153,42 @@
     object-fit: contain;
     align-self: center;
   }
+
+  .q_footer {
+    margin: 0;
+    padding: 0 2rem 0 0;
+  }
+
+  .commentCount {
+    font-size: 2rem;
+    margin: 0 1rem 0 0;
+  }
+
   .q_footer button {
     font-size: 12px;
     width: max-content;
     height: max-content;
   }
-  .q_date,
-  .q_footer span {
-    font-size: 12px;
-  }
 
   .q_header,
-  .q_footer {
-    padding-left: 16px;
-    padding-right: 16px;
+  .q_index,
+  .q_like {
+    display: none;
   }
 
   .q_middle {
-    padding-left: 16px;
-    padding-right: 20px;
+    padding: 0 0 0 2rem;
+    margin-top: 1.8rem;
+    margin-bottom: 1.7rem;
   }
-  .q_list {
-    padding: 16px 0;
+
+  .q_icon,
+  .q_content {
+    font-size: 2rem;
+    color: black;
+    margin: 0 0 0 0.2rem;
+    padding: 0;
   }
+
+
 }
