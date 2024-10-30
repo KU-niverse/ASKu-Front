@@ -14,6 +14,7 @@
   flex: 1;
 }
 
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -30,12 +31,13 @@
   padding-left: 30px;
 }
 
+
 .switch {
   padding-right: 30px;
 }
 
 @media only screen and (max-width: 767px) {
-  .content {
+  .list {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -61,6 +63,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
 
   .comment {
     font-size: 20px;

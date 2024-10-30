@@ -100,7 +100,7 @@ const MyComment = () => {
       <div>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
-      <div className={styles.content}>
+      <div className={styles.list}>
         <div className={styles.header}>
           <p className={styles.comment}>{'내가 참여한 토론'}</p>
           <p className={styles.debate_num}>
