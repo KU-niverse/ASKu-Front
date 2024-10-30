@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import Pagination from '../components/Pagination'
 import styles from './MyComment.module.css'
 import Header from '../components/Header'
 import Comment from '../components/Comment'
@@ -67,6 +68,7 @@ interface MyInfoData {
 const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -138,10 +140,11 @@ const MyComment = () => {
             />
           ))
         )}
+        <div style={{ marginTop: '3.5rem' }}>
+          <Pagination total={myDebate.message.length} limit={10} page={page} setPage={setPage} />
+        </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }
