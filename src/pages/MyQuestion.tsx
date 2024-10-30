@@ -4,6 +4,7 @@ import axios from 'axios'
 import styles from './MyQuestion.module.css'
 import Header from '../components/Header'
 import MyQuestionList from '../components/MyQuestionList'
+import Pagination from '../components/Pagination'
 import Footer from '../components/Footer'
 import Switch from '../components/Switch'
 import SpinnerMypage from '../components/SpinnerMypage'
@@ -116,6 +117,7 @@ function MyQuestion() {
   const [isToggled, setIsToggled] = useState(false)
   const arrange = isToggled ? 'popularity' : 'latest'
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
 
   const { isLoading: isLoadingMyQuestion, error: myQuestionError, data: myQuestionData } = useMyQuestion(arrange)
   const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
@@ -173,6 +175,9 @@ function MyQuestion() {
               />
             ))
           )}
+          <div style={{ marginTop: '3.5rem' }}>
+            <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
+          </div>
         </div>
       )}
       <Footer />
