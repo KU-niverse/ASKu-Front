@@ -84,7 +84,8 @@ h4 {
 
 @media only screen and (max-width: 767px) {
   .wikiQues_header {
-    margin-top: 20px;
+    display: block;
+    margin-top: 5rem;
   }
 }
 
@@ -207,8 +208,24 @@ h4 {
     margin-left: 0;
   }
 
+  .title {
+    background: transparent;
+    border-bottom: 0.2rem solid rgba(213, 213, 213, 1);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
   .wikichar_title {
-    width: 60%;
+    display: block;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .wikichar_title_text {
+    margin: 0;
   }
 
   .wikichar_char {
@@ -238,8 +255,6 @@ h4 {
   .summary {
     height: 60px;
   }
-
-
 
   .edit form {
     width: 100%;

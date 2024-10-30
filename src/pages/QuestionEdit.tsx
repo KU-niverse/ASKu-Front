@@ -252,11 +252,11 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
         <form onSubmit={addWikiEdit}>
           <div className={styles.wikiQues_header}>
             <div className={styles.wikichar_title}>
-              <h4>{'문서 제목'}</h4>
+              <h4 className={styles.wikichar_title_text}>{'문서 제목'}</h4>
               <input type={'text'} required disabled value={main} className={styles.title} />
             </div>
             <div className={styles.wikiQues_lists}>
-              <h4>{'목차'}</h4>
+              <h4 className={styles.wikichar_title_text}>{'목차'}</h4>
               <div className={styles.q_dropdown}>
                 <WikiDropDown
                   defaultOpt={selectedTitle}
