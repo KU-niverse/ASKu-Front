@@ -153,8 +153,8 @@
 
 @media only screen and (max-width: 767px) {
   .q_list {
-    margin: 0 0 0 3.1rem;
-    width: 85%;
+    margin: 0;
+    width: auto;
     padding: 1.1rem 0 1.6rem 1.8rem;
     box-shadow: none;
     border-radius: 0.9rem;
@@ -213,6 +213,10 @@
 
   .q_footer {
     padding: 0;
+  }
+
+  .q_frontfooter {
+    column-gap: 0.9rem;
   }
 
   .q_date {
