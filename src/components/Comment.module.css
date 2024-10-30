@@ -5,6 +5,7 @@
   padding: 16px 0;
   margin-top: 10px;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
@@ -16,11 +17,13 @@
 .q_mynick {
   font-size: 16px;
 }
+
 .q_date {
   margin-left: 20px;
   font-size: 12px;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_backhead {
   cursor: pointer;
 }
@@ -97,10 +100,22 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .q_list {
+    margin: 0;
+    padding: 0 0 0 0;
+    box-shadow: none;
+    border-bottom: 0.3rem solid rgba(213, 213, 213, 1);
+    border-radius: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .q_middle,
   .q_mynick {
     font-size: 14px;
   }
+
   .q_comment {
     margin-left: 10px;
   }
@@ -111,26 +126,42 @@
     object-fit: contain;
     align-self: center;
   }
+
   .q_footer button {
     font-size: 12px;
     width: max-content;
     height: max-content;
   }
+
   .q_date,
   .q_footer span {
     font-size: 12px;
   }
-  .q_header,
+
   .q_footer {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 0 0 0 2rem;
+    margin-top: 1.8rem;
+    margin-bottom: 1.7rem;
   }
 
-  .q_middle {
-    padding-left: 16px;
-    padding-right: 20px;
+  .debate_content {
+    font-size: 2rem;
+    color: black;
+    margin: 0 0 0 0.2rem;
+    padding: 0;
   }
-  .q_list {
-    padding: 16px 0;
+
+  .campaignIcon {
+    height: 1.7rem;
+    width: 1.7rem;
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .q_header,
+  .q_backhead,
+  .q_middle,
+  .q_backfooter {
+    display: none;
   }
 }
