@@ -83,17 +83,22 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
     setView((currentState) => !currentState) // on, off 개념 boolean
   }
 
+  const tabCount = index.split('.').length - 1
+  const tabs = (tabCount + 1) * 3.6
+
   return (
     <div className={styles.wikiContents}>
-      <li role={'presentation'} onClick={toggleView} className={styles.wikiContentlist}>
+      <li
+        role={'presentation'}
+        onClick={contentWithResponsiveImages ? toggleView : null}
+        className={isOpen ? styles.wikiContentlistOpen : styles.wikiContentlistClose}
+      >
         <div className={styles.wikiContentTitle}>
           <span className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</span>
           <span>{title}</span>
-          <div className={isOpen ? '' : styles.hidden}>
-            <img className={styles.wikiArrowIcon} src={arrowDown} alt="Arrow Down" />
-          </div>
-          <div className={isOpen ? styles.hidden : ''}>
-            <img className={styles.wikiArrowIcon} src={arrowUp} alt="Arrow Up" />
+          <div className={contentWithResponsiveImages ? styles.wikiArrow : styles.hidden}>
+            <img className={isOpen ? styles.hidden : styles.wikiArrowIcon} src={arrowDown} alt="Arrow Down" />
+            <img className={isOpen ? styles.wikiArrowIcon : styles.hidden} src={arrowUp} alt="Arrow Up" />
           </div>
         </div>
         <div className={isZero ? `${styles.hidden}` : `${styles.wikiContentBtns}`}>
@@ -105,7 +110,10 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
           </button>
         </div>
       </li>
-      <div className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}>
+      <div
+        style={{ paddingLeft: `${tabs}rem`, borderBottom: '0.1rem solid #d5d5d5', paddingBottom: '1.4rem' }}
+        className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}
+      >
         <div dangerouslySetInnerHTML={{ __html: contentWithResponsiveImages }} />
       </div>
     </div>
