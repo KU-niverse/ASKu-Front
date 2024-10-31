@@ -206,6 +206,11 @@ h4 {
   margin: 0;
 }
 
+.submitText.active {
+  color: rgba(222, 58, 88, 1);
+  opacity: 1;
+}
+
 .char_one {
   height: 35px;
   width: 80px;
@@ -300,6 +305,12 @@ h4 {
 
   .submitWiki {
     margin: 0px 0px 30px 0px;
+  }
+
+  .submitWiki.active {
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    cursor: pointer;
+    opacity: 1;
   }
 
   .summary {

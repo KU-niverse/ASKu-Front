@@ -300,10 +300,12 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                <p className={styles.submitText}>{'정책에 맞게 작성하였음을 확인합니다.\r'}</p>
+                <p className={`${styles.submitText} ${isChecked ? styles.active : ''}`}>
+                  {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                </p>
               </a>
             </span>
-            <button type={'submit'} className={styles.submitWiki}>
+            <button type={'submit'} className={`${styles.submitWiki} ${isChecked ? styles.active : ''}`}>
               {'생성하기'}
             </button>
           </div>
