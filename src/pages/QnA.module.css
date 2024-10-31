@@ -168,13 +168,19 @@
     padding-left: 0.8rem;
   }
 
-  .backheader {
-    padding: 0;
+  .backheader button {
+    padding: 0.7rem 1.1rem 0.8rem 1.1rem;
+    border-radius: 3.2rem;
+    border: none;
+    height: 2.8rem;
+    width: 10rem;
+    background: linear-gradient(to right, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    font-size: 0.5rem;
   }
 
   .backheader img {
-    width: 15px;
-    height: 16px;
+    width: 1.7rem;
+    height: 1.4rem;
     object-fit: contain;
     align-self: center;
   }
