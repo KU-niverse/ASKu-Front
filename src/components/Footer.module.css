@@ -13,6 +13,7 @@
   .footer {
     height: 13rem;
     background-color: rgba(238, 238, 238, 1);
+    border: none;
   }
 }
 
