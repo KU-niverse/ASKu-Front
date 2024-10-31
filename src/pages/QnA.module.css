@@ -13,6 +13,7 @@
   height: auto;
   margin-left: 13%;
 }
+
 .header {
   display: flex;
   flex-direction: row;
@@ -20,6 +21,7 @@
   align-items: center;
   width: 100%;
 }
+
 .frontheader {
   display: flex;
   flex-direction: row;
@@ -33,30 +35,33 @@
   align-self: center;
   color: #de3a58;
 }
+
 .q_headline {
   font-size: 3.6rem;
   font-weight: 700;
   padding-left: 1.5rem;
 }
 
-.backheader {
-  padding-right: 30px;
-}
 .backheader button {
-  border-radius: 30px;
-  border-color: rgba(159, 19, 46, 1);
-  border-width: 2px;
-  height: 36px;
-  width: 128px;
-  background-color: white;
-  color: rgba(159, 19, 46, 1);
-  font-size: 14px;
-  font-weight: bold;
+  padding: 1.1rem 1.7rem 1rem 1.7rem;
+  border-radius: 3.2rem;
+  border: none;
+  height: 4.5rem;
+  width: 15.5rem;
+  background: linear-gradient(rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  box-shadow: 0 0.4rem 1rem 0 rgba(159, 19, 46, 0.2);
+}
+
+.q_linkbtn {
+  padding-left: 0.4rem;
 }
 
 .backheader img {
@@ -74,6 +79,7 @@
 .switch {
   padding-right: 30px;
 }
+
 .q_pagename {
   font-size: 36px;
   font-weight: bold;
@@ -81,6 +87,7 @@
   margin: 20px 0px;
   /* align-self: center; */
 }
+
 .q_headline {
   /* align-self: last baseline; */
   font-size: 24px;
@@ -121,6 +128,7 @@
   margin: 20px 0;
   color: rgba(159, 19, 46, 1);
 }
+
 .c_num {
   margin-left: 7px;
   padding: 2px 14px;
@@ -134,36 +142,52 @@
 .q_editbtn span {
   font-size: 1.5rem;
 }
+
 @media only screen and (max-width: 767px) {
   .content {
     display: flex;
     flex-direction: column;
-    width: 86%;
-    margin: 7%;
+    width: auto;
+    margin: 2rem 2rem 0 2rem;
     padding: initial;
   }
 
+  .header {
+    padding-bottom: 1.5rem;
+    border-bottom: 0.35rem solid rgba(159, 19, 46, 1);
+  }
+
   .q_pagename {
-    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    font-size: 3rem;
   }
+
   .q_headline {
-    font-size: 16px;
-    padding-left: 10px;
+    font-size: 3rem;
+    padding-left: 0.8rem;
   }
+
+  .backheader {
+    padding: 0;
+  }
+
   .backheader img {
     width: 15px;
     height: 16px;
     object-fit: contain;
     align-self: center;
   }
+
   .backheader button {
     font-size: 12px;
     width: max-content;
     height: 25px;
+    color: white;
   }
 
   .q_linkbtn {
-    font-size: 12px;
+    font-size: 1.5rem;
   }
 
   .q_cheader {
@@ -202,10 +226,12 @@
   .c_header img {
     height: 20px;
   }
+
   .c_headline {
     font-size: 20px;
     padding-left: 10px;
   }
+
   .c_num {
     font-size: 13px;
     padding: 2px 13px;

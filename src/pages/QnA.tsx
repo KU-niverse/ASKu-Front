@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import QuestionQnA from '../components/QuestionQnA'
 import Footer from '../components/Footer'
 import CommentQna from '../components/CommentQna'
-import link_icon from '../img/link_icon.png'
+import link_icon from '../img/link_icon_new.svg'
 import comment_icon from '../img/comment_icon.png'
 
 interface UserInfo {
