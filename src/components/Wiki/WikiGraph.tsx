@@ -18,16 +18,39 @@ interface WikiGraphProps {
   users: User[]
 }
 
-function WikiGraph({ total_point, users }: WikiGraphProps) {
-  const getColor = (index: number): string => {
-    const colors = ['#f9e48e', '#f26262', '#6cd395', 'rgba(217, 217, 217, 1)']
+const getColor = (index: number): string => {
+  const colors = ['#f9e48e', '#f26262', '#6cd395', 'rgba(217, 217, 217, 1)']
 
-    // Ensure index is within the valid range
-    const validIndex = Math.min(Math.max(index, 0), colors.length - 1)
+  // Ensure index is within the valid range
+  const validIndex = Math.min(Math.max(index, 0), colors.length - 1)
 
-    return colors[validIndex]
+  return colors[validIndex]
+}
+
+const calculateContributions = (contributions: Contribution[]) => {
+  let topContributions
+
+  if (contributions.length > 4) {
+    // 기여한 사용자의 수가 4명 초과인 경우 3명만 자르고 나머지는 기타로 합침
+    topContributions = contributions.slice(0, 3)
+    let otherContributionValue = 0
+    contributions.slice(3).forEach((contribution: Contribution) => {
+      otherContributionValue += contribution.value
+    })
+    topContributions.push({
+      name: '기타',
+      value: otherContributionValue,
+      description: `${otherContributionValue.toFixed(2)}%`,
+      color: getColor(3),
+    })
+  } else {
+    // 기여한 사용자의 수가 4명 이하인 경우 contributions 배열을 그대로 반환
+    topContributions = contributions
   }
+  return topContributions
+}
 
+function WikiGraph({ total_point, users }: WikiGraphProps) {
   // Calculate contributions and sort them
   const contributions: Contribution[] = users.map((user: User, index: number) => ({
     name: user.nickname,
@@ -39,19 +62,7 @@ function WikiGraph({ total_point, users }: WikiGraphProps) {
   // Sort contributions by value in descending order
   contributions.sort((a, b) => b.value - a.value)
 
-  // Select top 3 contributions, and calculate the "Other" contribution
-  const topContributions = contributions.slice(0, 3)
-
-  let otherContributionValue = 0
-  contributions.slice(3).forEach((contribution: Contribution) => {
-    otherContributionValue += contribution.value
-  })
-  topContributions.push({
-    name: '기타',
-    value: otherContributionValue,
-    description: `${otherContributionValue.toFixed(2)}%`,
-    color: getColor(3),
-  })
+  const topContributions = calculateContributions(contributions)
 
   const radius = 50
   const circumference = 2 * Math.PI * radius
@@ -66,8 +77,8 @@ function WikiGraph({ total_point, users }: WikiGraphProps) {
             <div className={styles.legendItem} key={item.name}>
               <div className={styles.legendColor} style={{ background: item.color }} />
               <div className={styles.legendLabel}>
-                <span className={styles.legendname}>{item.name}</span>
-                <span className={styles.legendper}> {item.description}</span>
+                <div className={styles.legendname}>{item.name}</div>
+                <div className={styles.legendper}> {item.description}</div>
               </div>
             </div>
           ))}
