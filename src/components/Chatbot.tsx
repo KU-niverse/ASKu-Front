@@ -53,6 +53,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [isStreaming, setIsStreaming] = useState(false)
   const [scrollPos, setScrollPos] = useState(0) // virtual scroll 초기 값
   const [windowHeight, setWindowHeight] = useState(window.innerHeight) // 현재 창 높이
+  const [visibleItems, setVisibleItems] = useState(new Set())
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
@@ -325,7 +326,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   useLayoutEffect(() => {
     scrollToBottom()
-    console.log('-----스크롤 내림')
   }, [previousChatHistory]) // history fetch 완료 후 scrolltobottom
 
   useEffect(() => {
@@ -338,7 +338,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   function onScroll() {
     if (scrollRef.current) {
-      console.log('Current scrollTop:', scrollRef.current.scrollTop)
       setScrollPos(scrollRef.current.scrollTop)
     }
   }
@@ -353,21 +352,12 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     return () => {
       if (scrollElement) {
         scrollElement.removeEventListener('scroll', onScroll)
-        console.log('재랜더링 됨.')
       }
     }
   }, [previousChatHistory])
 
-  console.log('스크롤 위치:', scrollPos)
-
   // 컴포넌트가 마운트될 때 현재 스크롤 위치를 즉시 설정
   useEffect(() => {
-    // 새로고침 시 즉시 현재 스크롤 위치를 가져옴
-    const initialScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
-    console.log(scrollRef.current)
-    console.log(window.scrollY)
-    setScrollPos(initialScrollPos)
-
     // 스크롤 이벤트 리스너 등록
     const handleScroll = () => {
       const currentScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
@@ -382,13 +372,38 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     }
   }, [])
 
-  console.log('스크롤 위치111:', scrollPos)
-
   useEffect(() => {
     const handleResize = () => setWindowHeight(window.innerHeight)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('data-id')
+          if (entry.isIntersecting) {
+            setVisibleItems((prev) => new Set(prev).add(id)) // 요소가 보이면 추가
+          } else {
+            setVisibleItems((prev) => {
+              const updated = new Set(prev)
+              updated.delete(id) // 요소가 사라지면 제거
+              return updated
+            })
+          }
+        })
+      },
+      { root: scrollRef.current, threshold: 0.0, rootMargin: '300px' }, // 스크롤 영역에서 보이면 바로 감지
+    )
+
+    const items = document.querySelectorAll('[data-id]')
+    items.forEach((item) => observer.observe(item))
+
+    return () => {
+      items.forEach((item) => observer.unobserve(item))
+    }
+  }, [previousChatHistory])
 
   return (
     <div className={styles.chatbot}>
@@ -451,17 +466,25 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
             <>
               {previousChatHistory.map((item) => (
                 <Fragment key={item.id}>
-                  <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                  <ChatAnswer
-                    key={`answer-${item.id}`}
-                    content={item.a_content}
-                    qnaId={item.id}
-                    reference={item.reference}
-                    blockIconZip={!isLoggedIn}
-                    onAddReferenceSuggestion={onAddReferenceSuggestion}
-                    recommendedQuestions={[]} // 초기 빈 배열
-                    onRecommendQuestionClick={handleRecommendQuestionClick}
-                  />
+                  <div data-id={item.id} className={styles.chatSet}>
+                    {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
+                      <>
+                        <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                        <ChatAnswer
+                          key={`answer-${item.id}`}
+                          content={item.a_content}
+                          qnaId={item.id}
+                          reference={item.reference}
+                          blockIconZip={!isLoggedIn}
+                          onAddReferenceSuggestion={onAddReferenceSuggestion}
+                          recommendedQuestions={[]} // 초기 빈 배열
+                          onRecommendQuestionClick={handleRecommendQuestionClick}
+                        />
+                      </>
+                    ) : (
+                      <div className="skeleton" style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
+                    )}
+                  </div>
                 </Fragment>
               ))}
             </>
