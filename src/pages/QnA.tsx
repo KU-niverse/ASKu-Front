@@ -9,6 +9,7 @@ import QuestionQnA from '../components/QuestionQnA'
 import Footer from '../components/Footer'
 import CommentQna from '../components/CommentQna'
 import link_icon from '../img/link_icon_new.svg'
+import emptyAnswer from '../img/emptyAnswer.svg'
 import comment_icon from '../img/comment_icon.png'
 
 interface UserInfo {
@@ -155,14 +156,26 @@ const QnA: React.FC = () => {
             is_bad={false}
           />
         )}
-        <div className={styles.c_header}>
-          <img src={comment_icon} alt={'comment'} />
-          <span className={styles.c_headline}>{'답변'}</span>
-          {questionData && questionData.data && (
-            <span className={styles.c_num}>{questionData.data[0].answer_count}</span>
-          )}
+        <div className={styles.c_div}>
+          <div className={styles.c_header}>
+            <img src={comment_icon} alt={'comment'} />
+            {questionData && questionData.data && (
+              <span className={styles.c_headline}>
+                {'답변 '}
+                {questionData.data[0].answer_count}
+                {'개'}
+              </span>
+            )}
+          </div>
           {answerData && Array.isArray(answerData.data) && answerData.data.length === 0 ? (
-            <p className={styles.no_answer}>{'아직 작성된 답변이 없습니다.'}</p>
+            <>
+              <img src={emptyAnswer} alt={'empty_Answer'} className={styles.no_answer_img} />
+              <p className={styles.no_answer}>
+                {'아직 답변이'}
+                <br />
+                {'없습니다'}
+              </p>
+            </>
           ) : (
             Array.isArray(answerData?.data) &&
             answerData.data.map((data) => (
@@ -184,9 +197,7 @@ const QnA: React.FC = () => {
           )}
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }
