@@ -85,6 +85,7 @@
   font-weight: bold;
   padding-left: 30px;
   margin: 20px 0px;
+  padding: 0;
   /* align-self: center; */
 }
 
@@ -179,7 +180,7 @@
   }
 
   .backheader img {
-    width: 1.7rem;
+    width: 1.4rem;
     height: 1.4rem;
     object-fit: contain;
     align-self: center;
