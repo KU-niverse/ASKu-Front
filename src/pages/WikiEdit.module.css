@@ -112,7 +112,7 @@ h4 {
 
 .summary {
   width: 100%;
-  height: 4rem;
+  height: 6rem;
   margin-top: 1rem;
   padding: 1.5rem 1.5rem 1.4rem 1.5rem;
   box-sizing: border-box;
@@ -125,6 +125,7 @@ h4 {
   width: 100%;
   margin-top: 2rem;
   display: flex;
+  flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
   margin-bottom: 30px;
@@ -185,8 +186,8 @@ h4 {
 }
 
 .submitWiki {
-  width: 100%;
-  height: 6.4rem;
+  width: 28.1rem;
+  height: 5.5rem;
   border: none;
   background-color: rgba(213, 213, 213, 1);
   color: white;
@@ -196,6 +197,12 @@ h4 {
   cursor: pointer;
   margin: 0px 0px 0px 25px;
   margin-bottom: 20px;
+}
+
+.submitWiki.active {
+  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  cursor: pointer;
+  opacity: 1;
 }
 
 .submitText {
@@ -304,17 +311,13 @@ h4 {
   }
 
   .submitWiki {
+    width: 100%;
+    height: 6.8rem;
     margin: 0px 0px 30px 0px;
   }
 
-  .submitWiki.active {
-    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-    cursor: pointer;
-    opacity: 1;
-  }
-
   .summary {
-    height: 60px;
+    height: 5.6rem;
   }
 
   .edit form {
