@@ -2,7 +2,6 @@
   display: none;
 }
 .quesul {
-  width: 100%;
   cursor: pointer;
   margin-top: 2.4rem;
   padding: 1.1rem 0;
@@ -163,11 +162,9 @@
 }
 .wikiBoxLists {
   width: 100%;
-  /* display: flex;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between; */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
   column-gap: 2.4rem;
   position: relative;
   padding-bottom: 5.6rem;
@@ -181,9 +178,8 @@
   height: 0.4rem; /* border-bottom의 두께 */
   background: linear-gradient(165.15deg, #9f132e 9.61%, #de3a58 90.96%);
 }
-
 .wikilist {
-  /* width: 44.5rem; */
+  width: 33%;
   max-height: 32.4rem;
   overflow: hidden;
   height: auto;
@@ -284,17 +280,15 @@
   margin-right: 2.1rem;
 }
 .wikiask {
+  width: 33%;
   display: flex;
   flex-direction: column;
-  /* width: 44.5rem; */
+  justify-content: space-between;
   height: 32.4rem;
   border: 1px solid #d5d5d5;
-
   border-radius: 12px;
   padding: 1.9rem 2.3rem;
-
   box-sizing: border-box;
-  position: relative;
 }
 
 .wikiaskTitle {
@@ -303,16 +297,14 @@
   margin-left: 1.7rem;
   font-size: 3.2rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.3rem;
 }
 
 .wikiaskTitle h2 {
   margin: 0px;
 }
 .wikiaskFoot {
-  width: 90%;
-  position: absolute;
-  bottom: 15px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -355,15 +347,14 @@
   padding: 0;
   border-color: rgba(237, 237, 237, 0.5);
 }
-
 .quesWrap p {
   margin: 0;
   padding: 0;
 }
-
-.quesTitle {
-  display: block;
+.queslist {
   width: 100%;
+}
+.quesTitle {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -393,7 +384,7 @@
 }
 
 .wikigraph {
-  /* width: 45.8rem; */
+  width: 33%;
   height: 32.4rem;
   border: 1px solid #d9d9d9;
   border-radius: 12px;
@@ -441,7 +432,6 @@ li {
 /* 해당 width에서는 목차, 질문, 문서별 기여도를 세로로 정렬 */
 @media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
-    display: flex;
     flex-direction: column;
     gap: 2.7rem;
   }
@@ -456,6 +446,11 @@ li {
 @media only screen and (max-width: 767px) {
   .wikiviewer {
     width: 90%;
+  }
+  .wikilist,
+  .wikiask,
+  .wikigraph {
+    width: 100%;
   }
   .wikiBoxLists {
     display: flex;
@@ -486,9 +481,6 @@ li {
   .wikilistSmallItem,
   .wikiSmallIndex {
     font-size: 2rem;
-  }
-  .wikiaskFoot {
-    width: 95%;
   }
   .tocExpandedButton {
     width: 97%;
