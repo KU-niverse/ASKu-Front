@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState, useEffect, useRef, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
@@ -51,6 +51,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
+  const [scrollPos, setScrollPos] = useState(0) // virtual scroll 초기 값
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight) // 현재 창 높이
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
@@ -255,7 +257,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const scrollToBottom = () => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => {
+      chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 50) // 지연 시간 50ms => 렌더링 시간 지연 고려
   }
 
   const handleSendClick = () => {
@@ -319,9 +323,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     scrollToBottom()
   }, [chatResponse])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollToBottom()
-  }, [previousChatHistory])
+    console.log('-----스크롤 내림')
+  }, [previousChatHistory]) // history fetch 완료 후 scrolltobottom
 
   useEffect(() => {
     scrollToBottom()
@@ -330,6 +335,60 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
     setReferenceList(references)
   }
+
+  function onScroll() {
+    if (scrollRef.current) {
+      console.log('Current scrollTop:', scrollRef.current.scrollTop)
+      setScrollPos(scrollRef.current.scrollTop)
+    }
+  }
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', onScroll)
+    } else {
+      console.error('scrollRef is not assigned to any element')
+    }
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', onScroll)
+        console.log('재랜더링 됨.')
+      }
+    }
+  }, [previousChatHistory])
+
+  console.log('스크롤 위치:', scrollPos)
+
+  // 컴포넌트가 마운트될 때 현재 스크롤 위치를 즉시 설정
+  useEffect(() => {
+    // 새로고침 시 즉시 현재 스크롤 위치를 가져옴
+    const initialScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
+    console.log(scrollRef.current)
+    console.log(window.scrollY)
+    setScrollPos(initialScrollPos)
+
+    // 스크롤 이벤트 리스너 등록
+    const handleScroll = () => {
+      const currentScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
+      setScrollPos(currentScrollPos)
+    }
+
+    const scrollElement = scrollRef.current || window
+    scrollElement.addEventListener('scroll', handleScroll)
+
+    return () => {
+      scrollElement.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  console.log('스크롤 위치111:', scrollPos)
+
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <div className={styles.chatbot}>
@@ -387,7 +446,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           </div>
         </div>
       ) : (
-        <div className={styles.chat}>
+        <div className={styles.chat} ref={scrollRef} style={{ overflowY: 'auto', maxHeight: '500px' }}>
           {previousChatHistory.length !== 0 && (
             <>
               {previousChatHistory.map((item) => (
