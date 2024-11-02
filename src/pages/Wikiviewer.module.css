@@ -185,7 +185,7 @@
   height: auto;
   border: 1px solid #d5d5d5;
   border-radius: 12px;
-  padding: 1.9rem;
+  padding: 1.9rem 2.3rem;
   box-sizing: border-box;
   position: relative;
   transition: max-height 0.3s ease;
@@ -261,7 +261,7 @@
 .wikilistTitle {
   display: flex;
   justify-content: space-between;
-  margin-left: 2.1rem;
+  margin-left: 1.7rem;
   font-size: 3.2rem;
   font-weight: 700;
   margin-bottom: 2.2rem;
@@ -277,7 +277,6 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-right: 2.1rem;
 }
 .wikiask {
   width: 33%;
@@ -430,7 +429,7 @@ li {
 }
 
 /* 해당 width에서는 목차, 질문, 문서별 기여도를 세로로 정렬 */
-@media (min-width: 768px) and (max-width: 1023px) {
+/*@media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
     flex-direction: column;
     gap: 2.7rem;
@@ -440,7 +439,7 @@ li {
   .wikigraph {
     width: 60%;
   }
-}
+} */
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
