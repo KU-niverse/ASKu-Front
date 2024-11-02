@@ -91,7 +91,13 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
       <li
         role={'presentation'}
         onClick={contentWithResponsiveImages ? toggleView : null}
-        className={isOpen ? styles.wikiContentlistOpen : styles.wikiContentlistClose}
+        className={
+          !contentWithResponsiveImages
+            ? styles.wikiContentlist
+            : isOpen
+              ? styles.wikiContentlistOpen
+              : styles.wikiContentlistClose
+        }
       >
         <div className={styles.wikiContentTitle}>
           <span className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</span>

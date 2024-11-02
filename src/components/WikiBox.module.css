@@ -68,6 +68,14 @@
   width: 100%;
   margin-bottom: 2.5rem;
 }
+.wikiContentlist {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+  padding-bottom: 1rem;
+}
 .wikiContentlistOpen {
   list-style-type: none;
   display: flex;
