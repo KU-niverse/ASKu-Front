@@ -52,7 +52,7 @@ function WikiViewer() {
   }
 
   return (
-    <>
+    <div className={styles.pageWrap}>
       <div className={styles.wikiRawContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className={styles.wikiRawContent}>
@@ -76,8 +76,10 @@ function WikiViewer() {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
+    </div>
   )
 }
 
