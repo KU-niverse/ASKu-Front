@@ -175,7 +175,7 @@ function MyBadge() {
           )}
         </div>
       </div>
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>
