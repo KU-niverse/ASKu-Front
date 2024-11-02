@@ -31,7 +31,7 @@
 }
 @media only screen and (max-width: 767px) {
   .mybadgecontent {
-    padding: 5rem 1rem;
+    padding: 3rem 1rem;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -43,9 +43,8 @@
     padding: 0 1rem;
   }
   .b_headline {
-    font-size: 2.4rem;
-    font-weight: 700;
     margin-left: 3rem;
+    margin-bottom: 1.5rem;
   }
   .b_list {
     width: 90%;

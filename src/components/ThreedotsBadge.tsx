@@ -8,9 +8,10 @@ import styles from './ThreedotsBadge.module.css'
 interface ThreedotsBadgeProps {
   badge_id: number
   badge_disabled: boolean
+  is_rep_badge: boolean
 }
 
-function ThreedotsBadge({ badge_id, badge_disabled }: ThreedotsBadgeProps) {
+function ThreedotsBadge({ badge_id, badge_disabled, is_rep_badge }: ThreedotsBadgeProps) {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
     e.preventDefault()
@@ -40,11 +41,11 @@ function ThreedotsBadge({ badge_id, badge_disabled }: ThreedotsBadgeProps) {
     <button
       type="button"
       onClick={handleClick}
-      className={badge_disabled ? styles.disabledbtn : styles.menubtn}
-      disabled={badge_disabled}
+      className={is_rep_badge ? styles.repbtn : badge_disabled ? styles.disabledbtn : styles.menubtn}
+      disabled={badge_disabled || is_rep_badge}
     >
-      <span className={badge_disabled ? styles.disabledText : styles.menuText}>
-        {badge_disabled ? '잠긴 뱃지' : '대표 뱃지로 설정'}
+      <span className={styles.menuText}>
+        {is_rep_badge ? '현재 대표 뱃지' : badge_disabled ? '잠긴 뱃지' : '대표 뱃지로 설정'}
       </span>
     </button>
   )

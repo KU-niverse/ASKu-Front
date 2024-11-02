@@ -39,11 +39,30 @@ interface BadgeResponse {
   data: BadgeData[]
 }
 
+interface User {
+  id: number
+  name: string
+  login_id: string
+  stu_id: string
+  email: string
+  rep_badge_id: number
+  nickname: string
+  created_at: Date
+  point: number
+  is_admin: boolean
+  is_authorized: boolean
+  restrict_period: number | null
+  restrict_count: number
+  rep_badge_name: string
+  rep_badge_image: string
+}
+
 function MyBadge() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [loading, setLoading] = useState(true)
   const [myBadge, setMyBadge] = useState<BadgeData[]>([])
   const [allBadge, setAllBadge] = useState<BadgeData[]>([])
+  const [repBadgeId, setRepBadgeId] = useState<number | null>(null)
   const [page, setPage] = useState(1) // 현재 페이지 상태
   const badgesPerPage = 8 // 페이지당 뱃지 수
 
@@ -81,6 +100,10 @@ function MyBadge() {
     takeAllBadge()
   }, [])
 
+  useEffect(() => {
+    setRepBadgeId(userInfo?.rep_badge_id || null)
+  }, [userInfo])
+
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
   }
@@ -98,7 +121,11 @@ function MyBadge() {
     const aIsMyBadge = myBadgeIds.has(a.id)
     const bIsMyBadge = myBadgeIds.has(b.id)
 
-    // 먼저 내 뱃지인 경우를 우선 정렬하고, 그 외에는 id 순서로 정렬
+    // 현재 대표 뱃지를 가장 위에 정렬
+    if (a.id === repBadgeId) return -1
+    if (b.id === repBadgeId) return 1
+
+    // 내 뱃지인 경우를 우선 정렬하고, 그 외에는 id 순서로 정렬
     if (aIsMyBadge && !bIsMyBadge) {
       return -1
     }
@@ -137,6 +164,7 @@ function MyBadge() {
                 event={data.event}
                 count={data.history_count}
                 myBadgeIds={myBadgeIds}
+                repBadgeId={repBadgeId}
               />
             ))
           )}
