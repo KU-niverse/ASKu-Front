@@ -231,7 +231,22 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <div className={styles.mobileTitleBlack}>무엇이든 물어보세요!</div>
             <SearchInputComponent inputValue={inputValue} setInputValue={setInputValue} />
           </div>
-          <div className={styles.mobileButtonContainer}>버튼1 버튼2 버튼3</div>
+
+          <div className={styles.mobileButtonContainer}>
+            <div>챗봇 모달</div>
+            <button type="button" className={styles.mobileButton}>
+              인기질문
+            </button>
+            <button type="button" className={styles.mobileButton}>
+              인기문서
+            </button>
+            <button type="button" className={styles.mobileButton}>
+              토론방
+            </button>
+            <button type="button" className={styles.mobileButton}>
+              랜덤문서
+            </button>
+          </div>
           <div className={styles.chatBotContainer}>
             <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
           </div>

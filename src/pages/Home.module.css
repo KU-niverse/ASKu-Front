@@ -194,8 +194,9 @@
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
     flex-direction: column;
-    align-content: center;
     flex-wrap: nowrap;
+    padding: 3rem;
+    width: 102%;
   }
 }
 
@@ -413,7 +414,7 @@
 
 .mobileTitlePink {
   align-self: flex-start;
-  font-size: 4rem;
+  font-size: 4.5rem;
   margin-top: 2rem;
   margin-left: 3rem;
   font-weight: 700;
@@ -422,7 +423,31 @@
 
 .mobileTitleBlack {
   align-self: flex-start;
-  font-size: 4rem;
+  font-size: 4.5rem;
   margin-left: 3rem;
   font-weight: 700;
+}
+
+.mobileButtonContainer {
+  display: flex;
+  flex-direction: row;
+
+  padding: 3rem;
+  overflow-x: auto; /* 좌우 스크롤 활성화 */
+  white-space: nowrap; /* 버튼들이 한 줄에 이어지도록 설정 */
+}
+
+.mobileButton {
+  font-size: 2rem;
+  padding: 3rem;
+  display: flex;
+  background: rgba(238, 238, 238, 1);
+  margin: 1rem;
+  width: 100%;
+  height: 5rem;
+  border-radius: 30.42px;
+  align-items: center;
+  justify-content: center;
+  color: rgba(116, 116, 116, 1);
+  border: none;
 }

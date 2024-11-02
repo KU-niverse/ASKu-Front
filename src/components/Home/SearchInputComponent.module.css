@@ -32,17 +32,20 @@
 
 @media (max-width: 767px) {
   .inputContainer {
+    padding: 1rem;
     display: flex;
     align-items: center;
     width: 90%; /* 모바일에서는 전체 너비 사용 */
-    height: 4.3rem; /* 높이 조정 */
-    margin-top: 1.5rem; /* 마진 조정 */
+    height: 4rem; /* 높이 조정 */
+    margin-top: 2rem; /* 마진 조정 */
   }
 
   .headerInput {
     border: 1px solid rgba(116, 116, 116, 1);
-    border-radius: 2rem;
+    border-radius: 3.5rem;
     width: 100%; /* 입력 필드의 너비를 부모 요소에 맞게 설정 */
+    height: 155%;
+    font-weight: 500;
   }
 
   .headerInput:focus {
