@@ -99,9 +99,7 @@ const MyComment = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      </div>
+      {loadingMyDebate || loadingMypage ? null : <Header userInfo={userInfo} setUserInfo={setUserInfo} />}
       <div className={styles.content}>
         <div className={styles.header}>
           <p className={styles.comment}>{'내가 참여한 토론'}</p>
