@@ -122,48 +122,59 @@
 
 @media only screen and (max-width: 767px) {
 
-  .q_middle,
+  .q_middle {}
+
   .q_mynick {
-    font-size: 14px;
+    font-size: 1.7rem;
   }
 
   .q_comment {
     margin-left: 10px;
   }
 
-  /* .q_footer img{
-  width: 15px;
-  height: 16px;
-  object-fit: contain;
-  align-self: center;
-}
-.q_footer button{
-  font-size: 12px;
-  width: max-content;
-  height: 25px;
-} */
-
   .q_date {
-    font-size: 12px;
+    font-size: 1.3rem;
+    margin-left: 1.4rem;
   }
 
   .q_message {
     font-size: 10px;
   }
 
-  .q_index {
-    font-size: 12px;
+  .q_header {}
+
+  .q_middle {
+    margin: 1.4rem 0 0 0;
+    font-size: 4rem;
   }
 
-  .q_header,
-  .q_middle,
+  .q_index {
+    font-size: 1.6rem;
+  }
+
   .q_footer {
+    margin-top: 1.8rem;
     padding-left: 0px;
     padding-right: 0px;
   }
 
+  .q_fronthead {
+    margin-top: 1.8rem;
+  }
+
+  .q_box img {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .q_box {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+  }
+
   .q_list {
-    padding: 0px;
-    margin: 0 16px;
+    padding: 0;
+    margin: 0;
   }
 }
