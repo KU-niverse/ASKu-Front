@@ -1,18 +1,19 @@
 .q_list {
   width: 100%;
-  border-top: 1px solid rgba(213, 213, 213, 1);
-  margin: 0 20px;
+  margin: 3rem 0 3rem 0;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 12px;
+  padding: 0;
 }
 
 .q_fronthead {
   display: flex;
   align-items: center;
+  height: auto;
 }
 
 .q_box {
@@ -23,21 +24,29 @@
 }
 
 .q_box img {
+  width: 3rem;
+  height: 3rem;
   padding-left: 0;
   margin: 0;
 }
 
 .q_mynick {
-  font-size: 16px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  justify-self: center;
+  align-self: center;
 }
+
 .q_date {
-  margin-left: 16px;
-  font-size: 12px;
+  margin-left: 2rem;
+  font-size: 1.4rem;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_backhead {
   cursor: pointer;
 }
+
 .q_backhead img {
   max-height: 6px;
   max-width: 24px;
@@ -45,15 +54,17 @@
 
 .q_middle {
   display: flex;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 700;
-  padding: 0 12px 18px 12px;
+  padding: 0;
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
 }
 
 .q_footer {
   display: flex;
   justify-content: space-between;
-  padding: 0px 12px 0px;
+  padding: 0;
   align-items: center;
   padding-bottom: 15px;
 }
@@ -63,6 +74,7 @@
   flex-direction: row;
   align-content: baseline;
 }
+
 .q_index {
   display: flex;
   align-content: center;
@@ -109,13 +121,16 @@
 } */
 
 @media only screen and (max-width: 767px) {
+
   .q_middle,
   .q_mynick {
     font-size: 14px;
   }
+
   .q_comment {
     margin-left: 10px;
   }
+
   /* .q_footer img{
   width: 15px;
   height: 16px;
@@ -135,6 +150,7 @@
   .q_message {
     font-size: 10px;
   }
+
   .q_index {
     font-size: 12px;
   }
