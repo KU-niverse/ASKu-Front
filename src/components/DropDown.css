@@ -1,6 +1,7 @@
 .dropdown-container {
   cursor: pointer;
 }
+
 .dropdown {
   width: 166px;
   margin-left: 20px;
@@ -35,8 +36,11 @@
     width: 125px;
   }
 
-  .dropdownmenu,
+  .dropdownmenu {
+    font-size: 2.7rem;
+  }
+
   .dropdownph {
-    font-size: 14px;
+    font-size: 2rem;
   }
 }
