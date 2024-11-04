@@ -268,7 +268,9 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   }
 
   const scrollToBottom = () => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => {
+      chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 50) // 지연 시간 50ms => 렌더링 시간 지연 고려
   }
 
   const handleSendClick = () => {
@@ -578,7 +580,10 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       type="button"
       onMouseEnter={() => setIsMouseHover(true)}
       onMouseLeave={() => setIsMouseHover(false)}
-      onClick={() => setIsModalOpen(true)}
+      onClick={() => {
+        setIsModalOpen(true)
+        scrollToBottom()
+      }}
     >
       {isMouseHover ? (
         <div className={styles.hoverModal}>
