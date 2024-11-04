@@ -130,19 +130,35 @@
     margin: 0;
   }
 
+  .q_cbox {
+    height: 23rem;
+
+  }
+
   .q_clastheader {
+    padding-top: 3rem;
     margin-left: auto;
+    height: 4rem;
+  }
+
+  .textnum {
+    color: black;
   }
 
   .q_clastheader button {
-    width: 70px;
-    height: 25px;
-    font-size: 12px;
+    width: 7rem;
+    height: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .q_ctextarea {
+    font-size: 1.7rem;
+    height: 12rem;
   }
 
   .q_ctextarea::placeholder {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 300;
   }
 
   .textnum {
