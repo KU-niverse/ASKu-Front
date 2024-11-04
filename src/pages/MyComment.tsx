@@ -140,11 +140,13 @@ const MyComment = () => {
             />
           ))
         )}
-        <div style={{ marginTop: '3.5rem' }}>
-          <Pagination total={myDebate.message.length} limit={10} page={page} setPage={setPage} />
-        </div>
+        {myDebate?.message.length > 10 && (
+          <div style={{ marginTop: '3.5rem' }}>
+            <Pagination total={myDebate.message.length} limit={10} page={page} setPage={setPage} />
+          </div>
+        )}
       </div>
-      <Footer />
+      {loadingMyDebate || loadingMypage ? null : <Footer />}
     </div>
   )
 }
