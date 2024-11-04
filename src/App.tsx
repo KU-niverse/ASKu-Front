@@ -96,7 +96,9 @@ function App() {
         <Route path={'/wiki/morequestion/:title/:question_id'} element={<QnA />} />
         <Route path={'/oauth-kopas/:uuid'} element={<Oauth />} />
       </Routes>
-      <ChatbotModal isLoggedIn={loggedIn} setIsLoggedIn={setLoggedIn} />
+      <div className={'chatbot-modal'}>
+        <ChatbotModal isLoggedIn={loggedIn} setIsLoggedIn={setLoggedIn} />
+      </div>
     </Router>
   )
 }
