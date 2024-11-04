@@ -130,7 +130,7 @@ function MyQuestion() {
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
         <SpinnerMypage />
       ) : (
-        <div>
+        <>
           <Header userInfo={userInfo} setUserInfo={setUserInfo} />
           <div className={styles.content}>
             <div className={styles.header}>
@@ -181,9 +181,9 @@ function MyQuestion() {
               </div>
             )}
           </div>
-        </div>
+          <Footer />
+        </>
       )}
-      {isLoadingMyQuestion || isLoadingMypage ? null : <Footer />}
     </div>
   )
 }
