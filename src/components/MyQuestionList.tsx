@@ -90,8 +90,8 @@ function MyQuestionList({
             <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
           </div>
           <div className={styles.q_comment}>
-            <img src={comment_icon} alt={'comment'} />
             <span className={styles.commentCount}>{answer_count}</span>
+            <img src={comment_icon} alt={'comment'} />
           </div>
         </div>
         <div className={styles.q_backfooter} />
