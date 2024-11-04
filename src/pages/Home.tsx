@@ -21,6 +21,8 @@ import version from '../img/version.svg'
 import subArrow from '../img/homeSubArrow.svg'
 import mobile_haho_btn from '../img/mobile_haho_btn.svg'
 import SearchInputComponent from '../components/Home/SearchInputComponent'
+import FormatTimeAgo from '../components/FormatTimeAgo'
+import PopularQuestion from '../components/PopularQuestion'
 
 interface HistoryResponse {
   success: boolean
@@ -160,6 +162,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const PopularDoclistMobile = historys ? historys.slice(0, 8) : []
   const debateListData = debates ? debates.slice(0, 3) : []
   const questionList = popularQuestions ? popularQuestions.slice(0, 4) : []
+  const questionListMobile = popularQuestions ? popularQuestions.slice(0, 8) : []
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {
@@ -291,26 +294,19 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           {showComponent === 'popularQuestions' && (
             <div className={styles.popularQuestionsContainer}>
               {questionList.map((question: PopularQuestion) => (
-                <div key={question.id} className={styles.questionItem}>
-                  {/* <p className={styles.questionTitle}>{question.title}</p>
-                  <p className={styles.questionContent}>{question.content}</p>
-                  <p className={styles.questionAuthor}>작성자: {question.nickname}</p>
-                  <p className={styles.questionLikes}>좋아요: {question.like_count}</p> */}
-                  id: {question.id}, user_id {question.user_id}, content {question.content}, created_at{' '}
-                  {question.created_at}, like_count {question.like_count}, nickname {question.nickname}, index_title
-                  {question.index_title}, answer_count {question.answer_count}, title {question.title}
-                </div>
+                <PopularQuestion
+                  key={question.id}
+                  id={question.id}
+                  nickname={question.nickname}
+                  title={question.title}
+                  created_at={question.created_at}
+                  answer_count={question.answer_count}
+                />
               ))}
             </div>
           )}
           {showComponent === 'popularDocs' && (
             <div className={styles.popularDocsContainer}>
-              {/* {PopularDoclist.map((doc: HistoryItem) => (
-                <div key={doc.id} className={styles.docItem}>
-                  <p className={styles.docTitle}>{doc.title}</p>
-                  <p className={styles.docVersion}>최신 버전: {doc.latest_ver}</p>
-                </div>
-              ))} */}
               {PopularDoclistMobile.map((item) => (
                 <div key={item.id}>
                   <PopularDoc version={item.latest_ver} title={item.title} />

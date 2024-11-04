@@ -499,3 +499,10 @@
   padding: 2.5rem;
   border-radius: 50px;
 }
+
+.popularQuestionsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
+  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+}
