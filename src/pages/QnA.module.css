@@ -210,6 +210,7 @@
 }
 
 @media only screen and (max-width: 767px) {
+
   .content {
     display: flex;
     flex-direction: column;
@@ -292,6 +293,7 @@
 
   .c_div {
     margin-top: 1.4rem;
+    padding: 1.5rem 1.4rem 1.5rem 1.4rem;
   }
 
   .textnum {
@@ -300,24 +302,28 @@
   }
 
   .c_header {
-    margin-top: 1.4rem;
+    margin-top: 0;
     padding: 1.2rem 1.6rem 1.7rem 1.6rem;
     width: auto;
-    border-radius: 1rem;
-    border: 0.2rem solid rgba(213, 213, 213, 1);
+    padding: 0;
+    height: 2rem;
   }
 
   .c_header img {
     padding: 0;
     margin: 0;
-    width: 1.9rem;
-    height: 1.8rem;
+    width: 2.3rem;
+    height: 2.2rem;
   }
 
   .c_headline {
-    font-size: 1.9rem;
+    font-size: 2.2rem;
     padding-left: 1rem;
     margin: 0;
+  }
+
+  .no_answer {
+    margin-bottom: 5rem;
   }
 
   .c_num {
