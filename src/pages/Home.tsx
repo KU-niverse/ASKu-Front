@@ -157,6 +157,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const { data: historys } = useQuery<HistoryItem[], Error>('historyList', fetchDocsViews)
   const { data: debates, isLoading } = useQuery<DebateData[], Error>('debateList', fetchDebateList)
   const PopularDoclist = historys ? historys.slice(0, 7) : []
+  const PopularDoclistMobile = historys ? historys.slice(0, 8) : []
   const debateListData = debates ? debates.slice(0, 3) : []
   const questionList = popularQuestions ? popularQuestions.slice(0, 4) : []
 
@@ -310,7 +311,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                   <p className={styles.docVersion}>최신 버전: {doc.latest_ver}</p>
                 </div>
               ))} */}
-              {PopularDoclist.map((item) => (
+              {PopularDoclistMobile.map((item) => (
                 <div key={item.id}>
                   <PopularDoc version={item.latest_ver} title={item.title} />
                 </div>
