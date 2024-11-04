@@ -54,7 +54,7 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
           <div className={styles.q_like}>
             <img src={campaign} alt={'campaign'} className={styles.campaignIcon} />
             <span role={'presentation'} onClick={linktoComment} className={styles.debate_content}>
-              {subject}
+              {content}
             </span>
           </div>
         </div>
