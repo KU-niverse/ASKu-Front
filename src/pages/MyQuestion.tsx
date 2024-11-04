@@ -175,12 +175,14 @@ function MyQuestion() {
               />
             ))
           )}
-          <div style={{ marginTop: '3.5rem' }}>
-            <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
-          </div>
+          {questions?.length > 10 && (
+            <div style={{ marginTop: '3.5rem' }}>
+              <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
+            </div>
+          )}
         </div>
       )}
-      <Footer />
+      {isLoadingMyQuestion || isLoadingMypage ? null : <Footer />}
     </div>
   )
 }
