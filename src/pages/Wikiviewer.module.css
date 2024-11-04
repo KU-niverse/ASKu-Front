@@ -429,7 +429,7 @@ li {
 }
 
 /* 해당 width에서는 목차, 질문, 문서별 기여도를 세로로 정렬 */
-/*@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
     flex-direction: column;
     gap: 2.7rem;
@@ -437,9 +437,9 @@ li {
   .wikilist,
   .wikiask,
   .wikigraph {
-    width: 60%;
+    width: 100%;
   }
-} */
+}
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {

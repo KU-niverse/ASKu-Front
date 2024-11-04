@@ -134,7 +134,7 @@ function LatestDebate() {
           </div>
         </div>
       </div>
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

@@ -19,12 +19,12 @@
   height: auto;
   width: auto;
   display: grid;
-  grid-template-columns: repeat(12,1fr);
+  grid-template-columns: repeat(12, 1fr);
   margin: 0 12rem;
   grid-gap: 2.4rem;
   flex-direction: row;
   flex: 1;
-  padding-top:3.2rem;
+  padding-top: 3.2rem;
 }
 
 .sidebar {
@@ -44,7 +44,7 @@
 }
 .sidebar div {
   width: 100%;
-  font-size:3.5rem;
+  font-size: 3.5rem;
   font-weight: 600;
 }
 .maincontent {
@@ -62,16 +62,16 @@
   font-size: 3.6rem;
   font-weight: 700;
   margin-top: 0;
-  border-bottom: 4px solid #9F132E;
+  border-bottom: 4px solid #9f132e;
   padding-bottom: 1.9rem;
   margin-bottom: 2.9rem;
-  color:#DE3A58;
+  color: #de3a58;
 }
 .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #DE3A58;
+  color: #de3a58;
   font-size: 5rem;
   font-weight: 700;
   margin-bottom: 3rem;
@@ -80,12 +80,16 @@
 }
 .menu2 {
 }
-.debateRecent{
+.debateRecent {
   margin-top: 10rem;
 }
-.debatesearch{
+.debatesearch {
   width: 100%;
   margin-bottom: 20rem;
+}
+
+.footerContainer {
+  margin-top: auto;
 }
 
 @media only screen and (max-width: 767px) {
@@ -118,12 +122,10 @@
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
     padding: 10px;
     box-sizing: border-box;
-
   }
 
   .debateRecent {
-    display:none;
-
+    display: none;
   }
 
   .maincontent_box {
@@ -141,5 +143,4 @@
   .menu2 {
     margin: 0;
   }
-
 }

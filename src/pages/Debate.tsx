@@ -240,7 +240,7 @@ const Debate: React.FC = () => {
         </div>
       </div>
 
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>
