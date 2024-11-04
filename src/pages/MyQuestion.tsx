@@ -127,59 +127,60 @@ function MyQuestion() {
 
   return (
     <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
         <SpinnerMypage />
       ) : (
-        <div className={styles.content}>
-          <div className={styles.header}>
-            <p className={styles.question}>{'내가 쓴 질문'}</p>
-            <p className={styles.question_num}>
-              {'('}
-              {questions.length}
-              {')'}
-            </p>
-            <div className={styles.switch}>
-              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-            </div>
-          </div>
-          {myQuestionError || mypageError ? (
-            <div>에러: {(myQuestionError || mypageError).message}</div>
-          ) : questions.length === 0 ? (
-            <>
-              <img src={emptyQuestion} alt={'empty_Qution'} className={styles.emptyQuestion} />
-              <p className={styles.emptyQuestionText}>
-                {'아직 작성된'}
-                <br />
-                {'질문이 없습니다'}
+        <div>
+          <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+          <div className={styles.content}>
+            <div className={styles.header}>
+              <p className={styles.question}>{'내가 쓴 질문'}</p>
+              <p className={styles.question_num}>
+                {'('}
+                {questions.length}
+                {')'}
               </p>
-            </>
-          ) : (
-            questions.map((question) => (
-              <MyQuestionList
-                key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-                id={question.id}
-                doc_id={question.doc_id}
-                user_id={question.user_id}
-                index_title={question.index_title}
-                content={question.content}
-                created_at={question.created_at}
-                answer_or_not={question.answer_or_not}
-                is_bad={question.is_bad}
-                docsname={question.doc_title}
-                nick={mypageData.data[0].nickname}
-                like_count={question.like_count}
-                answer_count={question.answer_count}
-                badge_image={question.badge_image}
-              />
-            ))
-          )}
-          {questions?.length > 10 && (
-            <div style={{ marginTop: '3.5rem' }}>
-              <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
+              <div className={styles.switch}>
+                <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+              </div>
             </div>
-          )}
+            {myQuestionError || mypageError ? (
+              <div>에러: {(myQuestionError || mypageError).message}</div>
+            ) : questions.length === 0 ? (
+              <>
+                <img src={emptyQuestion} alt={'empty_Qution'} className={styles.emptyQuestion} />
+                <p className={styles.emptyQuestionText}>
+                  {'아직 작성된'}
+                  <br />
+                  {'질문이 없습니다'}
+                </p>
+              </>
+            ) : (
+              questions.map((question) => (
+                <MyQuestionList
+                  key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                  id={question.id}
+                  doc_id={question.doc_id}
+                  user_id={question.user_id}
+                  index_title={question.index_title}
+                  content={question.content}
+                  created_at={question.created_at}
+                  answer_or_not={question.answer_or_not}
+                  is_bad={question.is_bad}
+                  docsname={question.doc_title}
+                  nick={mypageData.data[0].nickname}
+                  like_count={question.like_count}
+                  answer_count={question.answer_count}
+                  badge_image={question.badge_image}
+                />
+              ))
+            )}
+            {questions?.length > 10 && (
+              <div style={{ marginTop: '3.5rem' }}>
+                <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
+              </div>
+            )}
+          </div>
         </div>
       )}
       {isLoadingMyQuestion || isLoadingMypage ? null : <Footer />}
