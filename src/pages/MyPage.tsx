@@ -274,7 +274,6 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
     error: myContributeError,
   } = useQuery('myContribute', fetchMyContribute)
 
-
   if (loadingMypage || loadingMyQuestion || loadingMyDebate || loadingMyBadge || loadingMyWiki || loadingMyContribute) {
     return (
       <div>

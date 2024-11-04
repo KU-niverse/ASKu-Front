@@ -160,7 +160,7 @@ const SearchResearch = () => {
   }
 
   return (
-    <div>
+    <div className={styles.SearchResultContainer}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.results}>
         <div className={styles.header}>
@@ -259,7 +259,9 @@ const SearchResearch = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }
