@@ -409,6 +409,10 @@
   width: 17px;
 }
 
+.mobileViewContainer {
+  display: flex;
+  flex-direction: column;
+}
 .mobileTitleContainer {
   display: flex;
   flex-direction: column;
@@ -435,6 +439,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-right: 3.1rem;
   overflow-x: auto; /* 좌우 스크롤 활성화 */
   white-space: nowrap; /* 버튼들이 한 줄에 이어지도록 설정 */
 }
