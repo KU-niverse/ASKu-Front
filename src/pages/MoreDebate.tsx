@@ -134,8 +134,9 @@ const MoreDebate: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }

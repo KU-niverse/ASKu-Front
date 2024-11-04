@@ -93,7 +93,7 @@ const HistoryDiff = () => {
   const newText = comparisonData?.jsonData.rev_text || ''
 
   return (
-    <>
+    <div className={styles.pageWrap}>
       <div className={styles.historyDiffContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className={styles.historyDiffContent}>
@@ -124,8 +124,10 @@ const HistoryDiff = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
+    </div>
   )
 }
 

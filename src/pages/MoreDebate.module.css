@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .title {
   font-size: 3.6rem;
   font-weight: 700;
@@ -87,19 +93,24 @@
   margin: 37px 12px 21px 12px;
   padding-bottom: 35px;
 }
-.menu1,.menu2{
+.menu1,
+.menu2 {
   font-size: 2.4rem;
 }
 
 .none {
   color: #000;
   text-align: center;
-  font-size: 19px;
+  font-size: 25.6px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.footerContainer {
+  margin-top: auto;
 }
 
 @media only screen and (max-width: 767px) {
@@ -168,6 +179,5 @@
   }
 }
 .cautionIcon {
-  width: 47px;
-
+  width: 62.39px;
 }

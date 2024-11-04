@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { useState, useEffect, useRef, Fragment, useLayoutEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef, Fragment } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useResizeDetector } from 'react-resize-detector'
 import ChatAnswer from './ChatAnswer'
 import ChatQuestion from './ChatQuestion'
-import styles from './Chatbot.module.css'
+import styles from './ChatbotModal.module.css'
 import send from '../img/send.png'
 import Spinner from './Spinner'
 import LoginModal from './LoginModal'
@@ -17,9 +17,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import infoIcon from '../img/Info.svg'
 import refreshIcon from '../img/Refresh.svg'
 import haho from '../img/3d_haho.png'
-import folderImg from '../img/initialchat_folder.png'
-import plusImg from '../img/initialchat_plus.png'
-import chatImg from '../img/initialchat_chat.png'
+import chatImg from '../img/chatModal.png'
 
 interface User {
   id: number
@@ -29,12 +27,12 @@ interface UserData {
   data: User[]
 }
 
-interface ChatbotProps {
+interface ChatbotModalProps {
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
 }
 
-function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
+function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [initialChat, setInitialChat] = useState(true)
@@ -51,13 +49,35 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
-  const [scrollPos, setScrollPos] = useState(0) // virtual scroll 초기 값
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight) // 현재 창 높이
-  const [visibleItems, setVisibleItems] = useState(new Set())
+  const location = useLocation()
+  const nav = useNavigate()
+  const from = location.state?.from || '/'
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
   // }
+  const checkLoginStatus = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      if (res.status === 201 && res.data.success === true) {
+        setIsLoggedIn(true)
+      } else if (res.status === 401) {
+        setIsLoggedIn(false)
+        alert('로그인이 필요한 서비스 입니다.')
+        nav(from)
+      }
+    } catch (error) {
+      console.error(error)
+      setIsLoggedIn(false)
+      if (error.response.status === 401) {
+        setIsLoggedIn(false)
+        nav(from)
+      }
+      // alert('에러가 발생하였습니다')
+      nav(from)
+    }
+  }
+
   const [user, setUser] = useState<UserData | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
@@ -65,24 +85,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const suggestContainerRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const handleMouseHover = (isHovering: boolean) => {
-    if (!scrollRef.current) return
-
-    if (isHovering) {
-      scrollRef.current.style.overflowX = 'auto'
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        setTimeoutId(null)
-      }
-    } else {
-      const id = setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.style.overflowX = 'hidden'
-        }
-      }, 2000) // 2초 후 스크롤 숨김
-      setTimeoutId(id)
-    }
-  }
+  const [isMouseHover, setIsMouseHover] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const modalCloseRef = useRef<HTMLDivElement | null>(null)
 
   const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value)
@@ -134,6 +139,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       setPreviousChatHistory([])
     }
   }, [isLoggedIn])
+
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
 
   useEffect(() => {
     if (chatResponse.length > 0) {
@@ -235,6 +244,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       },
       onError: (error: any) => {
         console.error(error)
+        console.log(error)
         if (error.response?.status === 403) {
           setLoginModalVisible(true)
         }
@@ -265,6 +275,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const handleSendClick = () => {
     if (!isLoggedIn) {
+      console.log(`???`, { isLoggedIn })
       setLoginModalVisible(true)
       return
     }
@@ -324,9 +335,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     scrollToBottom()
   }, [chatResponse])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     scrollToBottom()
-  }, [previousChatHistory]) // history fetch 완료 후 scrolltobottom
+  }, [previousChatHistory])
 
   useEffect(() => {
     scrollToBottom()
@@ -336,122 +347,54 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     setReferenceList(references)
   }
 
-  function onScroll() {
-    if (scrollRef.current) {
-      setScrollPos(scrollRef.current.scrollTop)
-    }
-  }
-
-  useEffect(() => {
-    const scrollElement = scrollRef.current
-    if (scrollElement) {
-      scrollElement.addEventListener('scroll', onScroll)
-    } else {
-      console.error('scrollRef is not assigned to any element')
-    }
-    return () => {
-      if (scrollElement) {
-        scrollElement.removeEventListener('scroll', onScroll)
-      }
-    }
-  }, [previousChatHistory])
-
-  // 컴포넌트가 마운트될 때 현재 스크롤 위치를 즉시 설정
-  useEffect(() => {
-    // 스크롤 이벤트 리스너 등록
-    const handleScroll = () => {
-      const currentScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
-      setScrollPos(currentScrollPos)
-    }
-
-    const scrollElement = scrollRef.current || window
-    scrollElement.addEventListener('scroll', handleScroll)
-
-    return () => {
-      scrollElement.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleResize = () => setWindowHeight(window.innerHeight)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute('data-id')
-          if (entry.isIntersecting) {
-            setVisibleItems((prev) => new Set(prev).add(id)) // 요소가 보이면 추가
-          } else {
-            setVisibleItems((prev) => {
-              const updated = new Set(prev)
-              updated.delete(id) // 요소가 사라지면 제거
-              return updated
-            })
-          }
-        })
-      },
-      { root: scrollRef.current, threshold: 0.0, rootMargin: '300px' }, // 스크롤 영역에서 보이면 바로 감지
-    )
-
-    const items = document.querySelectorAll('[data-id]')
-    items.forEach((item) => observer.observe(item))
-
-    return () => {
-      items.forEach((item) => observer.unobserve(item))
-    }
-  }, [previousChatHistory])
-
-  return (
-    <div className={styles.chatbot}>
-      <div className={styles.chatbotHeader}>
-        <div className={styles.title}>
-          <img src={haho} alt={'haho'} className={styles.haho} />
-          <div>{'AI 챗봇: 하호'}</div>
-        </div>
-        <div className={styles.buttonContainer}>
-          <div className={styles.button}>
-            <button
-              type={'button'}
-              className={styles.buttonText}
-              onClick={() =>
-                window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
-              }
-            >
-              <img src={infoIcon} className={styles.smallIcon} alt="info" />
-              {'도움말'}
-            </button>
+  return isModalOpen ? (
+    <div
+      className={styles.chatbotModalWrapper}
+      ref={modalCloseRef}
+      onClick={() => {
+        setIsModalOpen(false)
+        setIsMouseHover(false)
+      }}
+      role={'button'}
+      tabIndex={-1}
+      onKeyDown={(e) => null}
+    >
+      <div
+        className={styles.chatbot}
+        onClick={(event: React.MouseEvent<HTMLElement>) => event.stopPropagation()}
+        role={'button'}
+        tabIndex={-1}
+        onKeyDown={(e) => null}
+      >
+        <div className={styles.chatbotHeader}>
+          <div className={styles.title}>
+            <img src={haho} alt={'haho'} className={styles.haho} />
+            <div>{'AI 챗봇: 하호'}</div>
           </div>
-          <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
-            <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
-            <button type={'button'} className={styles.buttonText}>
-              {'채팅 초기화'}
-            </button>
-          </div>
-        </div>
-      </div>
-      {previousChatHistory.length === 0 && initialChat ? (
-        <div className={styles.initialChatbox}>
-          <div className={styles.initialMessage}>
-            {`고려대학교의 모-든`}
-            <br />
-            {`정보를 한 번에 보기`}
-          </div>
-          <div className={styles.initialSummaryImgWrap}>
-            <img src={folderImg} alt={'summary_img'} className={styles.initialSummaryImg} />
-            <img src={plusImg} alt={'summary_img'} id={styles.plusImg} />
-            <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
-          </div>
-          <div className={styles.initialSummary}>
-            <div className={styles.initialSummaryContent}>
-              <div className={styles.initialSummaryTitle}>{'WIKI'}</div>
-              {`재학생이 직접 작성한, 학교 생활에 대한`}
-              <br />
-              {`믿음직한 정보와 각종 팁을 검색해보세요!`}
+          <div className={styles.buttonContainer}>
+            <div className={styles.button}>
+              <button
+                type={'button'}
+                className={styles.buttonText}
+                onClick={() =>
+                  window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
+                }
+              >
+                <img src={infoIcon} className={styles.smallIcon} alt="info" />
+                {'도움말'}
+              </button>
             </div>
+            <div role={'presentation'} className={styles.button} onClick={handleClearModal}>
+              <img src={refreshIcon} className={styles.smallIcon} alt={'refresh'} />
+              <button type={'button'} className={styles.buttonText}>
+                {'채팅 초기화'}
+              </button>
+            </div>
+          </div>
+        </div>
+        {previousChatHistory.length === 0 && initialChat ? (
+          <div className={styles.initialChatbox}>
+            <img src={chatImg} alt={'summary_img'} className={styles.initialSummaryImg} />
             <div className={styles.initialSummaryContent}>
               <div className={styles.initialSummaryTitle}>{'AI 챗봇'}</div>
               {`고려대학교 학칙을 기반으로 답변해주는 AI`}
@@ -459,172 +402,203 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
               {`챗봇에게 궁금한 점을 바로 질문해보세요!`}
             </div>
           </div>
-        </div>
-      ) : (
-        <div className={styles.chat} ref={scrollRef} style={{ overflowY: 'auto', maxHeight: '500px' }}>
-          {previousChatHistory.length !== 0 && (
-            <>
-              {previousChatHistory.map((item) => (
-                <Fragment key={item.id}>
-                  <div data-id={item.id} className={styles.chatSet}>
-                    {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
-                      <>
-                        <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                        <ChatAnswer
-                          key={`answer-${item.id}`}
-                          content={item.a_content}
-                          qnaId={item.id}
-                          reference={item.reference}
-                          blockIconZip={!isLoggedIn}
-                          onAddReferenceSuggestion={onAddReferenceSuggestion}
-                          recommendedQuestions={[]} // 초기 빈 배열
-                          onRecommendQuestionClick={handleRecommendQuestionClick}
-                        />
-                      </>
-                    ) : (
-                      <div className="skeleton" style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
-                    )}
-                  </div>
-                </Fragment>
-              ))}
-            </>
-          )}
-          {chatResponse.map((item) => {
-            if (item.isQuestion) {
-              return <ChatQuestion key={item.id} content={item.content} />
-            }
-            return (
-              <ChatAnswer
-                key={item.id}
-                content={item.content}
-                reference={item.reference}
-                qnaId={item.qnaId}
-                blockIconZip={item.isSuggest}
-                onAddReferenceSuggestion={onAddReferenceSuggestion}
-                recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
-                onRecommendQuestionClick={handleRecommendQuestionClick}
-              />
-            )
-          })}
-          <div ref={chatBottomRef} />
-          {loading && !isStreaming && <Spinner />}
-        </div>
-      )}
+        ) : (
+          <div className={styles.chat}>
+            {previousChatHistory.length !== 0 && (
+              <>
+                {previousChatHistory.map((item) => (
+                  <Fragment key={item.id}>
+                    <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                    <ChatAnswer
+                      key={`answer-${item.id}`}
+                      content={item.a_content}
+                      qnaId={item.id}
+                      reference={item.reference}
+                      blockIconZip={!isLoggedIn}
+                      onAddReferenceSuggestion={onAddReferenceSuggestion}
+                      recommendedQuestions={[]} // 초기 빈 배열
+                      onRecommendQuestionClick={handleRecommendQuestionClick}
+                    />
+                  </Fragment>
+                ))}
+              </>
+            )}
+            {chatResponse.map((item) => {
+              if (item.isQuestion) {
+                return <ChatQuestion key={item.id} content={item.content} />
+              }
+              return (
+                <ChatAnswer
+                  key={item.id}
+                  content={item.content}
+                  reference={item.reference}
+                  qnaId={item.qnaId}
+                  blockIconZip={item.isSuggest}
+                  onAddReferenceSuggestion={onAddReferenceSuggestion}
+                  recommendedQuestions={item.recommendedQuestions || []} // 추천 질문 배열 전달
+                  onRecommendQuestionClick={handleRecommendQuestionClick}
+                />
+              )
+            })}
+            <div ref={chatBottomRef} />
+            {loading && !isStreaming && <Spinner />}
+          </div>
+        )}
 
-      <div
-        className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
-        ref={suggestContainerRef}
-        style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
-      >
-        <p id={styles.ref}>
-          {SuggestContainerState === 'initial'
-            ? '추천 질문이에요:)'
-            : SuggestContainerState === 'suggest'
-              ? '추천 질문이에요:)'
-              : SuggestContainerState === 'reference'
-                ? '참고 문서'
-                : null}
-        </p>
-        <div className={styles.suggest}>
-          {SuggestContainerState === 'initial' && (
-            <>
-              <span
-                role={'presentation'}
-                id={'ref_res_1'}
-                className={styles.textBox}
-                style={{ marginLeft: '0px' }}
-                onClick={() => handleSuggestClick('너는 누구야?')}
-              >
-                {'너는 누구야?\r'}
-              </span>
-              <span
-                role={'presentation'}
-                id={'ref_res_2'}
-                className={styles.textBox}
-                onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
-              >
-                {'휴학은 최대 몇 년까지 가능해?\r'}
-              </span>
-              <span
-                role={'presentation'}
-                id={'ref_res_3'}
-                className={styles.textBox}
-                onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
-              >
-                {'강의 최소 출석 일수에 대해 알려줘.\r'}
-              </span>
-              <span
-                role={'presentation'}
-                id={'ref_res_4'}
-                className={styles.textBox}
-                onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
-              >
-                {'이중전공은 어떻게 해?\r'}
-              </span>
-            </>
-          )}
-          {SuggestContainerState === 'suggest' &&
-            chatResponse.length > 0 &&
-            chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
-              <span
-                role={'presentation'}
-                key={`ref_res_${index + 1}`}
-                className={styles.textBox}
-                onClick={() => handleRecommendQuestionClick(question)}
-              >
-                {question}
-              </span>
-            ))}
-          {SuggestContainerState === 'reference' &&
-            referenceList.length > 0 &&
-            referenceList.map((ref, index) => (
-              <span
-                role={'presentation'}
-                id={`ref_res_${index + 1}`}
-                className={styles.textBox}
-                style={index === 0 ? { marginLeft: '0px' } : {}}
-                onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
-                key={ref.link}
-              >
-                {`${ref.link}`}
-              </span>
-            ))}
-        </div>
-      </div>
+        <div className={styles.suggestAndPrompt}>
+          <div
+            className={`${styles.suggestContainer} ${loading ? styles.disabled : ''}`}
+            ref={suggestContainerRef}
+            style={{ display: SuggestContainerState === '' || loading ? 'none' : 'grid' }}
+          >
+            <p id={styles.ref}>
+              {SuggestContainerState === 'initial'
+                ? '추천 질문이에요:)'
+                : SuggestContainerState === 'suggest'
+                  ? '추천 질문이에요:)'
+                  : SuggestContainerState === 'reference'
+                    ? '참고 문서'
+                    : null}
+            </p>
+            <div className={styles.suggest}>
+              {SuggestContainerState === 'initial' && (
+                <>
+                  <span
+                    role={'presentation'}
+                    id={'ref_res_1'}
+                    className={styles.textBox}
+                    style={{ marginLeft: '0px' }}
+                    onClick={() => handleSuggestClick('너는 누구야?')}
+                  >
+                    {'너는 누구야?\r'}
+                  </span>
+                  <span
+                    role={'presentation'}
+                    id={'ref_res_2'}
+                    className={styles.textBox}
+                    onClick={() => handleSuggestClick('휴학은 최대 몇 년까지 가능해?')}
+                  >
+                    {'휴학은 최대 몇 년까지 가능해?\r'}
+                  </span>
+                  <span
+                    role={'presentation'}
+                    id={'ref_res_3'}
+                    className={styles.textBox}
+                    onClick={() => handleSuggestClick('강의 최소 출석 일수에 대해 알려줘.')}
+                  >
+                    {'강의 최소 출석 일수에 대해 알려줘.\r'}
+                  </span>
+                  <span
+                    role={'presentation'}
+                    id={'ref_res_4'}
+                    className={styles.textBox}
+                    onClick={() => handleSuggestClick('이중전공은 어떻게 해?')}
+                  >
+                    {'이중전공은 어떻게 해?\r'}
+                  </span>
+                </>
+              )}
+              {SuggestContainerState === 'suggest' &&
+                chatResponse.length > 0 &&
+                chatResponse[chatResponse.length - 1].recommendedQuestions?.map((question: string, index: number) => (
+                  <span
+                    role={'presentation'}
+                    key={`ref_res_${index + 1}`}
+                    className={styles.textBox}
+                    onClick={() => handleRecommendQuestionClick(question)}
+                  >
+                    {question}
+                  </span>
+                ))}
+              {SuggestContainerState === 'reference' &&
+                referenceList.length > 0 &&
+                referenceList.map((ref, index) => (
+                  <span
+                    role={'presentation'}
+                    id={`ref_res_${index + 1}`}
+                    className={styles.textBox}
+                    style={index === 0 ? { marginLeft: '0px' } : {}}
+                    onClick={() => window.open(`/wiki/${ref.link}`, '_blank')}
+                    key={ref.link}
+                  >
+                    {`${ref.link}`}
+                  </span>
+                ))}
+            </div>
+          </div>
 
-      {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
-      {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
-      {ClearModalOpen && (
-        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
-      )}
-      <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
-        <textarea
-          className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-          placeholder={'AI에게 무엇이든 물어보세요!'}
-          value={inputValue}
-          onChange={inputChange}
-          onKeyDown={handleKeyDown}
-          ref={inputRef}
-          disabled={loading}
-        />
-        <button
-          type={'button'}
-          onClick={loading ? undefined : handleSendClick}
-          style={{
-            cursor: loading ? 'not-allowed' : 'pointer',
-            backgroundColor: 'transparent',
-            border: 'none',
-            marginRight: '1.5rem',
-            display: 'flex',
-            alignItems: 'center', // 수직 가운데 정렬
-          }}
-          disabled={loading}
-        >
-          <img src={send} alt={'전송'} className={styles.sendBtn} />
-        </button>
+          {isLoginModalVisible && (
+            <div
+              onClick={() => {
+                setIsModalOpen(false)
+                setIsMouseHover(false)
+              }}
+              role={'button'}
+              tabIndex={-1}
+              aria-label={'Close modal'}
+              onKeyDown={(e) => null}
+            >
+              <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />
+            </div>
+          )}
+          {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
+          {ClearModalOpen && (
+            <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
+          )}
+          <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
+            <textarea
+              className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
+              placeholder={'하호에게 무엇이든 물어보세요!'}
+              value={inputValue}
+              onChange={inputChange}
+              onKeyDown={handleKeyDown}
+              ref={inputRef}
+              disabled={loading}
+            />
+            <button
+              type={'button'}
+              onClick={loading ? undefined : handleSendClick}
+              style={{
+                cursor: loading ? 'not-allowed' : 'pointer',
+                backgroundColor: 'transparent',
+                border: 'none',
+                marginRight: '1.5rem',
+                display: 'flex',
+                alignItems: 'center', // 수직 가운데 정렬
+              }}
+              disabled={loading}
+            >
+              <img src={send} alt={'전송'} className={styles.sendBtn} />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+  ) : (
+    <button
+      className={styles.modalButton}
+      type="button"
+      onMouseEnter={() => setIsMouseHover(true)}
+      onMouseLeave={() => setIsMouseHover(false)}
+      onClick={() => {
+        setIsModalOpen(true)
+        scrollToBottom()
+      }}
+    >
+      {isMouseHover ? (
+        <div className={styles.hoverModal}>
+          <div className={styles.hoverModalText}>
+            {'하호에게'}
+            <br />
+            {'물어보세요!'}
+          </div>
+          <img src={haho} alt={'Chatbot_Modal'} className={styles.hoverModalImg} />
+        </div>
+      ) : (
+        <img src={haho} alt={'Chatbot_Modal'} className={styles.chatbotModalImg} />
+      )}
+    </button>
   )
 }
 
-export default Chatbot
+export default ChatbotModal

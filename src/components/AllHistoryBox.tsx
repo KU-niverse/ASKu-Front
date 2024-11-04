@@ -36,9 +36,16 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
   }
 
   return (
-    <div className={styles.historyBox}>
+    <div className={styles.allHistoryBox}>
       <div className={styles.contentsOne}>
-        <div className={styles.versionContainer}>
+        <div
+          className={styles.versionContainer}
+          role={'presentation'}
+          onClick={() => {
+            const encodedTitle = encodeURIComponent(title)
+            nav(`/wiki/${encodedTitle}`)
+          }}
+        >
           <img className={styles.versionimg} src={versionimg} alt={'버전이미지'} />
           <div className={styles.version}>
             {'V'}
@@ -58,6 +65,8 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
           </div>
         </div>
       </div>
+      <div className={styles.verticalLine} />
+      {/* 웹 뷰 오른쪽 contents */}
       <div className={styles.contentsTwo}>
         <div className={styles.summaryContainer}>
           <div className={styles.summaryTitle}>{'수정 요약: '}</div>
@@ -81,6 +90,31 @@ const AllHistoryBox = (props: HistoryBoxProps) => {
               {'전 버전이랑 비교하기\r'}
             </span>
           </div>
+        </div>
+      </div>
+
+      {/* 모바일 뷰 오른쪽 contents */}
+      <div className={styles.mobileContentsTwo}>
+        <div className={styles.infoLine}>
+          <div className={styles.user}>{user}</div>
+          <div className={styles.timestamp}>{timestamp}</div>
+          <div className={styles.threedot}>
+            <ThreedotsReport type={1} target={target} />
+          </div>
+        </div>
+        <div className={styles.summaryContainer}>
+          <div className={styles.summaryTitle}>{'수정 요약: '}</div>
+          <div className={styles.summary}>{summary}</div>
+        </div>
+        <div className={styles.allversionBtns}>
+          <span role={'presentation'} onClick={handleRawView} className={`${styles.versionbtn}`}>
+            <img className={styles.rawviewimg} src={rawView} alt={'RAW 버전 미리보기 버튼'} />
+            {'RAW 버전 미리보기\r'}
+          </span>
+          <span role={'presentation'} onClick={handleCompare} className={`${styles.versionbtn}`}>
+            <img className={styles.vercmpimg} src={verCmp} alt={'전 버전이랑 비교하기 버튼'} />
+            {'전 버전이랑 비교하기\r'}
+          </span>
         </div>
       </div>
     </div>

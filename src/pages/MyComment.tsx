@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import Pagination from '../components/Pagination'
 import styles from './MyComment.module.css'
 import Header from '../components/Header'
 import Comment from '../components/Comment'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
+import emptyDebate from '../img/emptyQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -66,6 +68,7 @@ interface MyInfoData {
 const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -96,18 +99,28 @@ const MyComment = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      </div>
+      {loadingMyDebate || loadingMypage ? null : <Header userInfo={userInfo} setUserInfo={setUserInfo} />}
       <div className={styles.content}>
         <div className={styles.header}>
-          <p className={styles.comment}>{'내가 쓴 토론'}</p>
+          <p className={styles.comment}>{'내가 참여한 토론'}</p>
+          <p className={styles.debate_num}>
+            {'('}
+            {myDebate.message.length}
+            {')'}
+          </p>
           <div className={styles.switch}>
             {/* <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
           </div>
         </div>
         {mypageData && myDebate && myDebate.message && myDebate.message.length === 0 ? (
-          <p>{'아직 작성한 토론이 없습니다.'}</p>
+          <>
+            <img src={emptyDebate} alt={'empty_Debate'} className={styles.emptyDebate} />
+            <p className={styles.emptyDebateText}>
+              {'아직 작성된'}
+              <br />
+              {'토론이 없습니다'}
+            </p>
+          </>
         ) : (
           mypageData &&
           myDebate &&
@@ -125,10 +138,13 @@ const MyComment = () => {
             />
           ))
         )}
+        {myDebate?.message.length > 10 && (
+          <div style={{ marginTop: '3.5rem' }}>
+            <Pagination total={myDebate.message.length} limit={10} page={page} setPage={setPage} />
+          </div>
+        )}
       </div>
-      <div>
-        <Footer />
-      </div>
+      {loadingMyDebate || loadingMypage ? null : <Footer />}
     </div>
   )
 }

@@ -7,7 +7,6 @@ import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import falseBk from '../img/bookmarkfalse.svg'
 import trueBk from '../img/bookmarkFill.svg'
-import VectorRight from '../img/VectorRight.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
 import comment from '../img/comment_icon.svg'
@@ -19,6 +18,7 @@ import Footer from '../components/Footer'
 import question from '../img/wiki_qustion.svg'
 import arrowUp from '../img/arrow_up_red.svg'
 import arrowDown from '../img/arrow_down_red.svg'
+import arrowForward from '../img/arrow_forward.svg'
 
 interface AxiosErrorResponse {
   message: string
@@ -354,212 +354,218 @@ function WikiViewer() {
   return (
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div className={styles.wikiviewer}>
-        <div className={styles.wikititle}>
-          <h1 className={styles.wikimaintitle}>
-            {title}
-            <img
-              role={'presentation'}
-              src={imageSource}
-              alt={'북마크 버튼'}
-              onClick={handleClickBookmark}
-              className={styles.bookmarkImg}
-            />
-          </h1>
-          <div className={styles.wikititleBtn}>
-            <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
-              <img alt={'토론하기 버튼'} src={debate} />
-              &nbsp;{'토론하기\r'}
-            </button>
+      <div className={styles.wikiviewercontainer}>
+        <div className={styles.wikiviewer}>
+          <div className={styles.wikititle}>
+            <h1 className={styles.wikimaintitle}>
+              {title}
+              <img
+                role={'presentation'}
+                src={imageSource}
+                alt={'북마크 버튼'}
+                onClick={handleClickBookmark}
+                className={styles.bookmarkImg}
+              />
+            </h1>
+            <div className={styles.wikititleBtn}>
+              <div className={styles.wikititleLeftBtns}>
+                <button type={'button'} onClick={linkToDebate} className={styles.wikititleBtnOne}>
+                  <div className={styles.wikititleBtnContent}>
+                    <img alt={'토론하기 버튼'} src={debate} />
+                    &nbsp;{'토론하기\r'}
+                  </div>
+                </button>
 
-            <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
-              <img alt={'히스토리 버튼'} src={his} />
-              &nbsp;{'히스토리\r'}
-            </button>
+                <button type={'button'} onClick={linkToHistory} className={styles.wikititleBtnTwo}>
+                  <div className={styles.wikititleBtnContent}>
+                    <img alt={'히스토리 버튼'} src={his} />
+                    &nbsp;{'히스토리\r'}
+                  </div>
+                </button>
+              </div>
 
-            <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
-              &nbsp;{'다음 문서\r'}
-              <img src={VectorRight} alt={'다음 문서 아이콘'} />
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.wikiBoxLists}>
-          <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
-            <div className={styles.wikilistTitle}>
-              목차
-              <button type={'button'} onClick={linkToAllEdit}>
-                {'편집하기'}
+              <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+                <img src={arrowForward} alt={'다음 문서 아이콘'} />
               </button>
             </div>
-            <div>
-              {allContent.map((item: Content) => {
-                const tabCount = item.index.split('.').length - 1
-                const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
+          </div>
+
+          <div className={styles.wikiBoxLists}>
+            <div className={styles.wikilist + (isTocExpanded ? ` ${styles.expanded}` : '')}>
+              <div className={styles.wikilistTitle}>
+                {'목차'}
+                <button type={'button'} onClick={linkToAllEdit}>
+                  {'편집하기'}
+                </button>
+              </div>
+              <div>
+                {allContent.map((item: Content) => {
+                  const tabCount = item.index.split('.').length - 1
+                  const tabs = '\u00a0\u00a0\u00a0'.repeat(tabCount)
+
+                  return (
+                    <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
+                      <span className={tabCount === 0 ? styles.wikilistBigItem : styles.wikilistSmallItem}>
+                        {' '}
+                        {tabs}
+                        <span className={tabCount === 0 ? styles.wikiBigIndex : styles.wikiSmallIndex}>
+                          {item.index}
+                          {'.\r'}
+                        </span>
+                        {item.title}
+                      </span>
+                    </li>
+                  )
+                })}
+              </div>
+
+              <div className={styles.tocExpandedButtonContainer}>
+                <button
+                  type={'button'}
+                  onClick={() => setIsTocExpanded(!isTocExpanded)}
+                  className={styles.tocExpandedButton}
+                >
+                  <div className={styles.tocexpandedButtonText}>
+                    {isTocExpanded ? '목차 접기' : '목차 더보기'}
+                    <img
+                      src={isTocExpanded ? arrowUp : arrowDown}
+                      alt={isTocExpanded ? 'Collapse Icon' : 'Expand Icon'}
+                      className={styles.tocexpandedButtonIcon}
+                    />
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.wikiask}>
+              <div>
+                <div className={styles.wikiaskTitle}>
+                  {'질문'}
+                  <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+                </div>
+                <div className={styles.quesWrap}>
+                  {ques.length === 0 ? (
+                    <div className={styles.noQuestion}>
+                      <div className={styles.askWrapper}>
+                        <span className={styles.askText}>{'질문할래요'}</span>
+                        <img src={question} alt={'질문할래요 아이콘'} className={styles.askIcon} />
+                      </div>
+                      <p className={styles.noneComment}>{'아직 질문이 존재하지 않습니다'}</p>
+                    </div>
+                  ) : (
+                    <>
+                      {ques.slice(0, 3).map((item, index) => (
+                        <div className={styles.queslist} key={item.id}>
+                          <div
+                            role={'presentation'}
+                            onClick={() => {
+                              const encodedTitle = encodeURIComponent(title)
+                              track('click_question_in_wiki', { index })
+                              nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
+                                state: {
+                                  question_id: item.id,
+                                  user_id: item.user_id,
+                                  content: item.content,
+                                  created_at: item.created_at,
+                                  like_count: item.like_count,
+                                  nick: item.nickname,
+                                  index_title: item.index_title,
+                                  answer_count: item.answer_count,
+                                  title,
+                                },
+                              })
+                            }}
+                            className={styles.quesul}
+                          >
+                            <div className={styles.quesTitle}>{item.content}</div>
+                            <div className={styles.quesNum}>
+                              <span>{item.like_count}</span>
+                              <img alt={'좋아요'} src={comment} />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      {ques.length > 4 && (
+                        <div className={styles.moreIndicator}>
+                          <span>{'.'}</span>
+                          <span>{'.'}</span>
+                          <span>{'.'}</span>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className={styles.wikiaskFoot}>
+                <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
+                  <button type={'button'} className={styles.addQues}>
+                    {'나도 질문하기'} <img src={question} alt={'질문할래요 아이콘'} className={styles.askIcon} />
+                  </button>
+                </Link>
+                <Link
+                  to={`/wiki/morequestion/${encodeURIComponent(title)}`}
+                  onClick={() => {
+                    track('view_question_list', {
+                      title,
+                    })
+                  }}
+                >
+                  <button type={'button'} className={styles.moreQues}>
+                    {'질문 더보기'}
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className={styles.wikigraph}>
+              <div className={styles.wikigraphTitle}>{'문서별 기여도'}</div>
+              <div className={styles.wikigraphContent}>
+                {contribute && totalPoint ? (
+                  <WikiGraph total_point={totalPoint} users={contribute} />
+                ) : (
+                  <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.wikicontent}>
+            {allContent.length === 0 ? (
+              <p>
+                <span className={styles.noneComment}>{'"위키 문서가 없습니다. '}</span>
+                <span role={'presentation'} className={styles.newComment} onClick={() => nav('/newwiki')}>
+                  {'새 문서를 생성해주세요"\r'}
+                </span>
+              </p>
+            ) : (
+              allContent.map((item) => {
+                // 0. 들어가며 일시 질문 및 편집 막기 위해 판단
+                let isZero
+
+                if (item.index === '0') {
+                  isZero = true
+                } else {
+                  isZero = false
+                }
 
                 return (
-                  <li role={'presentation'} onClick={() => handleClick(Number(item.section))} key={item.section}>
-                    <span
-                      style={{
-                        fontWeight: tabCount === 0 ? '600' : '500',
-                        fontSize: tabCount === 0 ? '2rem' : '1.6rem',
-                      }}
-                    >
-                      {' '}
-                      {tabs}
-                      <span className={styles.wikiIndex}>
-                        {item.index}
-                        {'.\r'}
-                      </span>
-                      {item.title}
-                    </span>
-                  </li>
-                )
-              })}
-            </div>
-
-            <div className={styles.tocExpandedButtonContainer}>
-              <button
-                type="button"
-                onClick={() => setIsTocExpanded(!isTocExpanded)}
-                className={styles.tocExpandedButton}
-              >
-                <div className={styles.tocexpandedButtonText}>
-                  {isTocExpanded ? '목차 접기' : '목차 더보기'}
-                  <img
-                    src={isTocExpanded ? arrowUp : arrowDown}
-                    alt={isTocExpanded ? 'Collapse Icon' : 'Expand Icon'}
-                    className={styles.tocexpandedButtonIcon}
-                  />
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.wikiask}>
-            <div className={styles.wikiaskTitle}>
-              질문
-              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-            </div>
-            <div className={styles.quesWrap}>
-              {ques.length === 0 ? (
-                <div className={styles.noQuestion}>
-                  <div className={styles.askWrapper}>
-                    <span className={styles.askText}>질문할래요</span>
-                    <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
+                  <div
+                    ref={(el) => {
+                      if (el) myDivRef.current[Number(item.section)] = el
+                    }}
+                    key={item.section}
+                  >
+                    <WikiBox
+                      title={item.title}
+                      content={item.content}
+                      index={item.index}
+                      section={item.section}
+                      main={title}
+                      isZero={isZero}
+                    />
                   </div>
-                  <p className={styles.noneComment}>아직 질문이 존재하지 않습니다</p>
-                </div>
-              ) : (
-                <>
-                  {ques.slice(0, 3).map((item, index) => (
-                    <div className={styles.queslist} key={item.id}>
-                      <ul
-                        role={'presentation'}
-                        onClick={() => {
-                          const encodedTitle = encodeURIComponent(title)
-                          track('click_question_in_wiki', { index })
-                          nav(`/wiki/morequestion/${encodedTitle}/${item.id}`, {
-                            state: {
-                              question_id: item.id,
-                              user_id: item.user_id,
-                              content: item.content,
-                              created_at: item.created_at,
-                              like_count: item.like_count,
-                              nick: item.nickname,
-                              index_title: item.index_title,
-                              answer_count: item.answer_count,
-                              title,
-                            },
-                          })
-                        }}
-                        className={styles.quesul}
-                      >
-                        <span className={styles.quesTitle}>Q. {item.content}</span>
-                        <span className={styles.quesNum}>
-                          <span>{item.like_count}</span>
-                          <img alt={'좋아요'} src={comment} />
-                        </span>
-                      </ul>
-                    </div>
-                  ))}
-                  {ques.length > 4 && (
-                    <div className={styles.moreIndicator}>
-                      <span>.</span>
-                      <span>.</span>
-                      <span>.</span>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-
-            <div className={styles.wikiaskFoot}>
-              <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
-                <button type={'button'} className={styles.addQues}>
-                  {'나도 질문하기'} <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
-                </button>
-              </Link>
-              <Link
-                to={`/wiki/morequestion/${encodeURIComponent(title)}`}
-                onClick={() => {
-                  track('view_question_list', {
-                    title,
-                  })
-                }}
-              >
-                <button type={'button'} className={styles.moreQues}>
-                  {'질문 더보기'}
-                </button>
-              </Link>
-            </div>
-          </div>
-          <div className={styles.wikigraph}>
-            {contribute && totalPoint ? (
-              <WikiGraph total_point={totalPoint} users={contribute} />
-            ) : (
-              <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
+                )
+              })
             )}
           </div>
-        </div>
-        <div className={styles.wikicontent}>
-          {allContent.length === 0 ? (
-            <p>
-              <span className={styles.noneComment}>{'"위키 문서가 없습니다. '}</span>
-              <span role={'presentation'} className={styles.newComment} onClick={() => nav('/newwiki')}>
-                {'새 문서를 생성해주세요"\r'}
-              </span>
-            </p>
-          ) : (
-            allContent.map((item) => {
-              // 0. 들어가며 일시 질문 및 편집 막기 위해 판단
-              let isZero
-
-              if (item.index === '0') {
-                isZero = true
-              } else {
-                isZero = false
-              }
-
-              return (
-                <div
-                  ref={(el) => {
-                    if (el) myDivRef.current[Number(item.section)] = el
-                  }}
-                  key={item.section}
-                >
-                  <WikiBox
-                    title={item.title}
-                    content={item.content}
-                    index={item.index}
-                    section={item.section}
-                    main={title}
-                    isZero={isZero}
-                  />
-                </div>
-              )
-            })
-          )}
         </div>
       </div>
       <Footer />

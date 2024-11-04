@@ -415,7 +415,7 @@ function Header({ userInfo, setUserInfo }: any) {
           ) : (
             <div className={styles.signContainer}>
               <button type={'button'} className={styles.registerBtn}>
-                <a href={'https://www.koreapas.com/m/member_join_new.php'}>{'간편회원가입'} </a>
+                <a href={'https://www.koreapas.com/m/member_join_new.php'}>{'회원가입'} </a>
               </button>
 
               <Link to={'/signin'}>
