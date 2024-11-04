@@ -99,6 +99,71 @@
   width: 18px;
 }
 
+.q_list {
+  margin: 0;
+  padding: 0 0 0 0;
+  box-shadow: none;
+  border-bottom: 0.2rem solid rgba(213, 213, 213, 1);
+  border-radius: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.q_middle,
+.q_mynick {
+  font-size: 14px;
+}
+
+.q_comment {
+  margin-left: 10px;
+}
+
+.q_footer img {
+  width: 15px;
+  height: 16px;
+  object-fit: contain;
+  align-self: center;
+}
+
+.q_footer button {
+  font-size: 12px;
+  width: max-content;
+  height: max-content;
+}
+
+.q_date,
+.q_footer span {
+  font-size: 12px;
+}
+
+.q_footer {
+  padding: 0 0 0 2rem;
+  margin-top: 1.8rem;
+  margin-bottom: 1.7rem;
+}
+
+.debate_content {
+  font-size: 2rem;
+  color: black;
+  margin: 0 0 0 0.2rem;
+  padding: 0;
+}
+
+.campaignIcon {
+  height: 1.7rem;
+  width: 1.7rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+}
+
+.q_header,
+.q_backhead,
+.q_middle,
+.q_backfooter {
+  display: none;
+}
+
 @media only screen and (max-width: 767px) {
   .q_list {
     margin: 0;
