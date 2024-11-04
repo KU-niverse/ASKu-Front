@@ -8,9 +8,12 @@
   height: 6rem;
   background-color: #ffffff;
 }
+
 @media only screen and (max-width: 767px) {
   .footer {
-    height: 10rem;
+    height: 13rem;
+    background-color: rgba(238, 238, 238, 1);
+    border: none;
   }
 }
 
@@ -28,9 +31,11 @@
   font-weight: 400;
   margin-bottom: 0.1rem;
 }
+
 @media only screen and (max-width: 767px) {
   .footerButton {
     margin-bottom: 0.5rem;
+    background-color: rgba(238, 238, 238, 1);
   }
 }
 
@@ -43,13 +48,25 @@
   color: black;
 }
 
+@media only screen and (max-width: 767px) {
+  .footerTitle {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.5rem;
+    background-color: rgba(238, 238, 238, 1);
+    margin-bottom: 0.7rem;
+  }
+}
+
 .linkContainer {
   display: flex;
   flex-direction: row;
 }
+
 @media only screen and (max-width: 767px) {
   .linkContainer {
     flex-direction: column;
+    background-color: rgba(238, 238, 238, 1);
   }
 }
 
@@ -67,9 +84,10 @@
   position: absolute;
   right: 3rem;
 }
+
 @media only screen and (max-width: 767px) {
   .logoWrap {
-    bottom: 1.5rem;
+    bottom: 3rem;
   }
 }
 
