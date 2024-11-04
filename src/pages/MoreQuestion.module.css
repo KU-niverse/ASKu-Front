@@ -142,11 +142,13 @@
   }
 
   .q_pagename {
-    font-size: 2rem;
+    font-size: 2.8rem;
+    margin: 0;
   }
 
   .q_headline {
-    font-size: 1.6rem;
-    padding-left: 1rem;
+    font-size: 2.8rem;
+    padding-left: 0.9rem;
+    color: black;
   }
 }
