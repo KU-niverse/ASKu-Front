@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .title {
   font-size: 3.6rem;
   font-weight: 700;
@@ -101,6 +107,10 @@
   line-height: normal;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.footerContainer {
+  margin-top: auto;
 }
 
 @media only screen and (max-width: 767px) {
