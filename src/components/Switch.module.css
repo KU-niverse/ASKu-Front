@@ -1,6 +1,7 @@
 .hidden {
   display: none;
 }
+
 .toggleText1 {
   position: absolute;
   font-size: 11px;
@@ -8,6 +9,7 @@
   left: 10px;
   top: 7px;
 }
+
 .toggleText2 {
   position: absolute;
   font-size: 11px;
@@ -15,6 +17,7 @@
   right: 10px;
   top: 7px;
 }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -38,7 +41,7 @@
   right: 0;
   bottom: 0;
 
-  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  background: linear-gradient(to right, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   transition: 0.3s;
 }
 
@@ -51,16 +54,57 @@
   background-color: white;
   transition: 0.3s;
 }
-input:checked + .slider {
+
+input:checked+.slider {
   background-color: aqua;
 }
-input:checked + .slider:before {
+
+input:checked+.slider:before {
   transform: translateX(41.5px);
 }
+
 .slider.rounded {
   border-radius: 34px;
 }
+
 .slider.rounded:before {
   border-radius: 50%;
   left: 4px;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .switch {
+    width: 9rem;
+    height: 3.5rem;
+  }
+
+  .slider:before {
+    height: 2.7rem;
+    width: 2.7rem;
+    transform: translateX(-10%);
+    /* 왼쪽으로 50% 이동하여 정확히 가운데 위치 */
+  }
+
+  input:checked+.slider:before {
+    /*토글 움직인 위치 조정*/
+    transform: translateX(5.2rem);
+  }
+
+  .toggleText1 {
+    position: absolute;
+    font-size: 1.2rem;
+    color: white;
+    transform: translateX(-10%);
+    left: 2rem;
+    top: 1rem;
+  }
+
+  .toggleText2 {
+    position: absolute;
+    font-size: 1.2rem;
+    color: white;
+    transform: translateX(-10%);
+    top: 1rem;
+  }
 }
