@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState, useEffect, useRef, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
@@ -51,6 +51,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([])
   const isInitialLoad = useRef(true) // 컴포넌트가 처음 로드될 때 true로 설정
   const [isStreaming, setIsStreaming] = useState(false)
+  const [scrollPos, setScrollPos] = useState(0) // virtual scroll 초기 값
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight) // 현재 창 높이
+  const [visibleItems, setVisibleItems] = useState(new Set())
 
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
@@ -255,7 +258,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const scrollToBottom = () => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => {
+      chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 50) // 지연 시간 50ms => 렌더링 시간 지연 고려
   }
 
   const handleSendClick = () => {
@@ -319,9 +324,9 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     scrollToBottom()
   }, [chatResponse])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollToBottom()
-  }, [previousChatHistory])
+  }, [previousChatHistory]) // history fetch 완료 후 scrolltobottom
 
   useEffect(() => {
     scrollToBottom()
@@ -330,6 +335,75 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   const onAddReferenceSuggestion = (references: { link: string; value: string }[]) => {
     setReferenceList(references)
   }
+
+  function onScroll() {
+    if (scrollRef.current) {
+      setScrollPos(scrollRef.current.scrollTop)
+    }
+  }
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', onScroll)
+    } else {
+      console.error('scrollRef is not assigned to any element')
+    }
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', onScroll)
+      }
+    }
+  }, [previousChatHistory])
+
+  // 컴포넌트가 마운트될 때 현재 스크롤 위치를 즉시 설정
+  useEffect(() => {
+    // 스크롤 이벤트 리스너 등록
+    const handleScroll = () => {
+      const currentScrollPos = scrollRef.current ? scrollRef.current.scrollTop : window.scrollY
+      setScrollPos(currentScrollPos)
+    }
+
+    const scrollElement = scrollRef.current || window
+    scrollElement.addEventListener('scroll', handleScroll)
+
+    return () => {
+      scrollElement.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('data-id')
+          if (entry.isIntersecting) {
+            setVisibleItems((prev) => new Set(prev).add(id)) // 요소가 보이면 추가
+          } else {
+            setVisibleItems((prev) => {
+              const updated = new Set(prev)
+              updated.delete(id) // 요소가 사라지면 제거
+              return updated
+            })
+          }
+        })
+      },
+      { root: scrollRef.current, threshold: 0.0, rootMargin: '300px' }, // 스크롤 영역에서 보이면 바로 감지
+    )
+
+    const items = document.querySelectorAll('[data-id]')
+    items.forEach((item) => observer.observe(item))
+
+    return () => {
+      items.forEach((item) => observer.unobserve(item))
+    }
+  }, [previousChatHistory])
 
   return (
     <div className={styles.chatbot}>
@@ -387,22 +461,30 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           </div>
         </div>
       ) : (
-        <div className={styles.chat}>
+        <div className={styles.chat} ref={scrollRef} style={{ overflowY: 'auto', maxHeight: '500px' }}>
           {previousChatHistory.length !== 0 && (
             <>
               {previousChatHistory.map((item) => (
                 <Fragment key={item.id}>
-                  <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                  <ChatAnswer
-                    key={`answer-${item.id}`}
-                    content={item.a_content}
-                    qnaId={item.id}
-                    reference={item.reference}
-                    blockIconZip={!isLoggedIn}
-                    onAddReferenceSuggestion={onAddReferenceSuggestion}
-                    recommendedQuestions={[]} // 초기 빈 배열
-                    onRecommendQuestionClick={handleRecommendQuestionClick}
-                  />
+                  <div data-id={item.id} className={styles.chatSet}>
+                    {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
+                      <>
+                        <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                        <ChatAnswer
+                          key={`answer-${item.id}`}
+                          content={item.a_content}
+                          qnaId={item.id}
+                          reference={item.reference}
+                          blockIconZip={!isLoggedIn}
+                          onAddReferenceSuggestion={onAddReferenceSuggestion}
+                          recommendedQuestions={[]} // 초기 빈 배열
+                          onRecommendQuestionClick={handleRecommendQuestionClick}
+                        />
+                      </>
+                    ) : (
+                      <div className="skeleton" style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
+                    )}
+                  </div>
                 </Fragment>
               ))}
             </>
