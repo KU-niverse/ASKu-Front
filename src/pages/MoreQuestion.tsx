@@ -143,9 +143,9 @@ const MoreQuestion: React.FC = () => {
                 <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
 
-              <button type="button" className={styles.docLinkBtn} onClick={handleDocLinkClick}>
+              <button type={'button'} className={styles.docLinkBtn} onClick={handleDocLinkClick}>
                 <img role={'presentation'} alt={docLink} src={docLink} />
-                문서 바로가기
+                <span>{'문서 바로가기'}</span>
               </button>
             </div>
 
@@ -174,8 +174,8 @@ const MoreQuestion: React.FC = () => {
 
                     {/* 텍스트 */}
                     <p className={styles.noQuestionsText}>
-                      아직 질문이
-                      <br /> 없습니다
+                      {'아직 질문이\r'}
+                      <br /> {'없습니다\r'}
                     </p>
                   </div>
                 </div>
