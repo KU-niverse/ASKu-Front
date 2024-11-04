@@ -1,6 +1,7 @@
 .hidden {
   display: none;
 }
+.allHistoryBox,
 .historyBox {
   width: 100%;
   height: 17.5rem;
@@ -10,8 +11,8 @@
   box-sizing: border-box;
   border: 0.1rem #d5d5d5 solid;
   display: grid;
-  grid-template-columns: 1fr 4.5fr;
-  padding: 1.3rem 0;
+  grid-template-columns: 1fr 0fr 4.5fr;
+  align-items: center;
 }
 .contents {
   width: 100%;
@@ -23,11 +24,14 @@
 }
 .contentsOne {
   min-width: 12rem;
-  border-right: 0.1rem #d5d5d5 solid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.verticalLine {
+  border-right: 0.1rem solid #d5d5d5;
+  height: 80%;
 }
 .contentsTwo {
   display: flex;
@@ -55,8 +59,12 @@
   cursor: pointer;
 }
 .versionContainer {
+  cursor: pointer;
   position: relative;
   margin-top: 0.6rem;
+}
+.bigversionContainer {
+  position: relative;
 }
 .version {
   position: absolute;
@@ -173,4 +181,75 @@
   width: 1.6rem;
   height: 1.5rem;
   margin-bottom: 0.3rem;
+}
+
+/* 모바일 뷰 */
+.mobileContentsTwo {
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  .allHistoryBox {
+    height: 18rem;
+    border-radius: 2.7rem;
+    box-shadow: revert;
+    border: 0.1rem solid #d5d5d5cc;
+  }
+  .historyBox {
+    height: 21rem;
+    border-radius: 2.7rem;
+    box-shadow: revert;
+    border: 0.1rem solid #d5d5d5cc;
+  }
+  .versionimg {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  .bigversionimg {
+    width: 6.8rem;
+    width: 6.8rem;
+  }
+  .bigversion {
+    font-size: 1.9rem;
+  }
+  .version {
+    font-size: 1.6rem;
+  }
+  .docTitle {
+    background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 1.8rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    height: min-content;
+    margin-top: 1rem;
+  }
+  .verticalLine {
+    border-right: 0.05rem #d5d5d5 solid;
+  }
+  .contentsTwo {
+    display: none;
+  }
+  .mobileContentsTwo {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2.2rem 0.7rem 2.2rem;
+  }
+  .infoLine {
+    box-sizing: border-box;
+    margin-bottom: 0;
+  }
+  .summary {
+    margin-bottom: 2rem;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  .allversionBtns {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .versionbtn {
+    font-size: 1.6rem;
+  }
 }

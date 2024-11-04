@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Debate.module.css'
 import Header from '../components/Header'
@@ -170,6 +172,8 @@ const Debate: React.FC = () => {
     return data && data.success
   }
 
+  const nav = useNavigate()
+
   return (
     <div className={styles.container}>
       <div>
@@ -179,7 +183,15 @@ const Debate: React.FC = () => {
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <div className={styles.header}>
-            <p className={styles.debate2}>{title}</p>
+            <p
+              className={styles.debate2}
+              onClick={() => {
+                const encodedTitle = encodeURIComponent(title)
+                nav(`/wiki/${encodedTitle}`)
+              }}
+            >
+              {title}
+            </p>
             <p className={styles.debate}>&nbsp;문서 기반 토론</p>
           </div>
           <DebateTitle title={title} subject={subject} />
@@ -228,7 +240,7 @@ const Debate: React.FC = () => {
         </div>
       </div>
 
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

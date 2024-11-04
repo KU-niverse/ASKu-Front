@@ -95,9 +95,11 @@ const History = () => {
   const visibleHistorys = historys.slice(startIndex, endIndex)
 
   return (
-    <>
-      <div className={styles.historyContainer}>
+    <div className={styles.pageWrap}>
+      <div className={styles.historyHeaderContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+      </div>
+      <div className={styles.historyContainer}>
         <div className={styles.historyContent}>
           <div className={styles.historyList}>
             <div className={styles.historyTitle}>
@@ -125,14 +127,20 @@ const History = () => {
                 </div>
               ))
             )}
-            <div className={styles.pagingContainer}>
-              <Paging total={historys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
-            </div>
+            {historys.length > perPage ? (
+              <div className={styles.pagingContainer}>
+                <Paging total={historys.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+              </div>
+            ) : (
+              <div className={styles.blank} />
+            )}
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
+    </div>
   )
 }
 
