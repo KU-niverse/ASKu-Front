@@ -19,6 +19,7 @@ import randomLeft from '../img/randomLeft.svg'
 import randomRight from '../img/randomRight.svg'
 import version from '../img/version.svg'
 import subArrow from '../img/homeSubArrow.svg'
+import mobile_haho_btn from '../img/mobile_haho_btn.svg'
 import SearchInputComponent from '../components/Home/SearchInputComponent'
 
 interface HistoryResponse {
@@ -144,6 +145,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [randomTitle, setRandomTitle] = useState('ASKu사용방법')
+  const [showComponent, setShowComponent] = useState<string>('chatbot') // 모바일 - 어떤 컴포넌트를 보여줄지 결정하는 상태
 
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
   const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
@@ -220,6 +222,10 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
     }
   }, [])
 
+  const handleButtonClick = (component: string) => {
+    setShowComponent(component)
+  }
+
   return (
     <div className={styles.pageWrap}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
@@ -233,23 +239,41 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
 
           <div className={styles.mobileButtonContainer}>
-            <div>챗봇 모달</div>
-            <button type="button" className={styles.mobileButton}>
+            <button type="button" className={styles.mobileChatbotButton} onClick={() => handleButtonClick('chatbot')}>
+              <img src={mobile_haho_btn} alt="모바일 하호" />
+            </button>
+            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('popularQuestions')}>
               인기질문
             </button>
-            <button type="button" className={styles.mobileButton}>
+            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('popularDocs')}>
               인기문서
             </button>
-            <button type="button" className={styles.mobileButton}>
+            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('debateRoom')}>
               토론방
             </button>
-            <button type="button" className={styles.mobileButton}>
+            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('randomDoc')}>
               랜덤문서
             </button>
           </div>
-          <div className={styles.chatBotContainer}>
-            <Chatbot isLoggedIn={isLoggedIn} setIsLoggedIn={setLoggedIn} />
-          </div>
+
+          {/* 조건부 렌더링 */}
+          {showComponent === 'chatbot' && (
+            <div className={styles.chatBotContainer}>
+              <Chatbot isLoggedIn={loggedIn} setIsLoggedIn={setLoggedIn} />
+            </div>
+          )}
+          {showComponent === 'popularQuestions' && (
+            <div className={styles.popularQuestionsContainer}>{/* 인기 질문 컴포넌트를 렌더링 */}</div>
+          )}
+          {showComponent === 'popularDocs' && (
+            <div className={styles.popularDocsContainer}>{/* 인기 문서 컴포넌트를 렌더링 */}</div>
+          )}
+          {showComponent === 'debateRoom' && (
+            <div className={styles.debateRoomContainer}>{/* 토론방 컴포넌트를 렌더링 */}</div>
+          )}
+          {showComponent === 'randomDoc' && (
+            <div className={styles.randomDocContainer}>{/* 랜덤 문서 컴포넌트를 렌더링 */}</div>
+          )}
         </div>
       ) : (
         /* 데스크 탑 뷰 */
