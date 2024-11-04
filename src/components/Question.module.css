@@ -118,7 +118,7 @@
 
 .q_backfooter button {
   border-radius: 30px;
-  border: 2px solid rgba(159, 19, 46, 1);
+  border: 0.3rem solid rgba(159, 19, 46, 1);
   height: 36px;
   width: 220px;
   background-color: white;
@@ -198,7 +198,9 @@
     height: max-content;
   }
 
-  .q_footer span {}
+  .q_backfooter button {
+    border: 0.3rem solid rgba(159, 19, 46, 1);
+  }
 
   .q_date {
     font-size: 1.2rem;
