@@ -439,7 +439,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 3.1rem;
+  padding: 2rem;
   overflow-x: auto; /* 좌우 스크롤 활성화 */
   white-space: nowrap; /* 버튼들이 한 줄에 이어지도록 설정 */
 }
@@ -456,7 +456,33 @@
   align-items: center;
   justify-content: center;
   color: rgba(116, 116, 116, 1);
+  cursor: pointer;
   border: none;
+}
+
+.mobileChatbotButtonContainer {
+  margin-right: 2rem;
+}
+.mobileChatbotButton {
+  font-size: 2rem;
+  display: flex;
+  background: rgba(238, 238, 238, 1);
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+  color: rgba(116, 116, 116, 1);
+  border: none;
+  cursor: pointer;
+}
+.mobileButton.clicked {
+  background: black;
+  color: white;
+}
+.mobileChatbotButton.clicked {
+  background: black;
+  color: white;
 }
 
 .mobileChatbotButton {
@@ -464,4 +490,12 @@
   margin-right: -1rem;
   border: none;
   background: none;
+}
+
+.popularDocsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
+  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+  border-radius: 50px;
 }

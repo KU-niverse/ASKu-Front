@@ -27,18 +27,22 @@
   align-items: center;
   box-sizing: border-box;
 }
-@media only screen and (max-width: 767px) {
-  .contents {
-    margin-top: 10px;
-    padding-bottom: 4px;
-  }
-}
+
 .contentsOne {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width:100%;
+  width: 100%;
 }
+@media only screen and (max-width: 767px) {
+  .contentsOne {
+    background-color: rgb(253, 243, 241);
+    border-radius: 25px;
+    height: 20rem;
+    justify-content: center;
+  }
+}
+
 .contentsTwo {
   width: auto;
   display: flex;
@@ -54,6 +58,12 @@
   width: 60%;
 }
 
+@media only screen and (max-width: 767px) {
+  .versionContainer {
+    width: 10rem;
+  }
+}
+
 .version {
   position: absolute;
   top: 65%;
@@ -65,7 +75,7 @@
 }
 @media only screen and (max-width: 767px) {
   .version {
-    font-size: 18px;
+    font-size: 2rem;
     margin-right: 15px;
   }
 }
@@ -94,12 +104,18 @@
     margin-right: 5px;
   }
 }
-.docTitleContainer{
+.docTitleContainer {
   width: 100%;
 }
+@media only screen and (max-width: 767px) {
+  .docTitleContainer {
+    width: 50%;
+  }
+}
+
 .docTitle {
   font-size: 1.2rem;
-  color: #DE3A58;
+  color: #de3a58;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -112,9 +128,19 @@
   width: 100%;
 }
 @media only screen and (max-width: 767px) {
-  .docTitle {
+  .versionIcon {
     font-size: 12px;
     margin-right: 5px;
+    margin-top: 2rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .docTitle {
+    font-size: 12px;
+    padding-top: 5%;
+    color: black;
+    padding-bottom: 5%;
   }
 }
 .timestamp {

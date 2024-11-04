@@ -141,6 +141,7 @@ const checkLoginStatus = async () => {
 
 const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const [mobileViewMode, setMobileViewMode] = useState<boolean>(window.innerWidth <= 767)
+  const [clickedMobileButton, setClickedMobileButton] = useState<string | null>('chatbot')
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
@@ -224,6 +225,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
 
   const handleButtonClick = (component: string) => {
     setShowComponent(component)
+    setClickedMobileButton(component)
   }
 
   return (
@@ -239,19 +241,42 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
 
           <div className={styles.mobileButtonContainer}>
-            <button type="button" className={styles.mobileChatbotButton} onClick={() => handleButtonClick('chatbot')}>
-              <img src={mobile_haho_btn} alt="모바일 하호" />
-            </button>
-            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('popularQuestions')}>
+            <div className={styles.mobileChatbotButtonContainer}>
+              <button
+                type="button"
+                className={`${styles.mobileChatbotButton} ${clickedMobileButton === 'chatbot' ? styles.clicked : ''}`}
+                onClick={() => handleButtonClick('chatbot')}
+              >
+                <img className={styles.mobileChatbotImg} src={mobile_haho_btn} alt="모바일 하호" />
+              </button>
+            </div>
+            <button
+              type="button"
+              className={`${styles.mobileButton} ${clickedMobileButton === 'popularQuestions' ? styles.clicked : ''}`}
+              onClick={() => handleButtonClick('popularQuestions')}
+            >
               인기질문
             </button>
-            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('popularDocs')}>
+            <button
+              type="button"
+              className={`${styles.mobileButton} ${clickedMobileButton === 'popularDocs' ? styles.clicked : ''}`}
+              onClick={() => handleButtonClick('popularDocs')}
+            >
               인기문서
             </button>
-            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('debateRoom')}>
+
+            <button
+              type="button"
+              className={`${styles.mobileButton} ${clickedMobileButton === 'debateRoom' ? styles.clicked : ''}`}
+              onClick={() => handleButtonClick('debateRoom')}
+            >
               토론방
             </button>
-            <button type="button" className={styles.mobileButton} onClick={() => handleButtonClick('randomDoc')}>
+            <button
+              type="button"
+              className={`${styles.mobileButton} ${clickedMobileButton === 'randomDoc' ? styles.clicked : ''}`}
+              onClick={() => handleButtonClick('randomDoc')}
+            >
               랜덤문서
             </button>
           </div>
@@ -263,16 +288,54 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             </div>
           )}
           {showComponent === 'popularQuestions' && (
-            <div className={styles.popularQuestionsContainer}>{/* 인기 질문 컴포넌트를 렌더링 */}</div>
+            <div className={styles.popularQuestionsContainer}>
+              {questionList.map((question: PopularQuestion) => (
+                <div key={question.id} className={styles.questionItem}>
+                  {/* <p className={styles.questionTitle}>{question.title}</p>
+                  <p className={styles.questionContent}>{question.content}</p>
+                  <p className={styles.questionAuthor}>작성자: {question.nickname}</p>
+                  <p className={styles.questionLikes}>좋아요: {question.like_count}</p> */}
+                  id: {question.id}, user_id {question.user_id}, content {question.content}, created_at{' '}
+                  {question.created_at}, like_count {question.like_count}, nickname {question.nickname}, index_title
+                  {question.index_title}, answer_count {question.answer_count}, title {question.title}
+                </div>
+              ))}
+            </div>
           )}
           {showComponent === 'popularDocs' && (
-            <div className={styles.popularDocsContainer}>{/* 인기 문서 컴포넌트를 렌더링 */}</div>
+            <div className={styles.popularDocsContainer}>
+              {/* {PopularDoclist.map((doc: HistoryItem) => (
+                <div key={doc.id} className={styles.docItem}>
+                  <p className={styles.docTitle}>{doc.title}</p>
+                  <p className={styles.docVersion}>최신 버전: {doc.latest_ver}</p>
+                </div>
+              ))} */}
+              {PopularDoclist.map((item) => (
+                <div key={item.id}>
+                  <PopularDoc version={item.latest_ver} title={item.title} />
+                </div>
+              ))}
+            </div>
           )}
           {showComponent === 'debateRoom' && (
-            <div className={styles.debateRoomContainer}>{/* 토론방 컴포넌트를 렌더링 */}</div>
+            <div className={styles.debateRoomContainer}>
+              {debateListData.map((debate: DebateData) => (
+                <div key={debate.id} className={styles.debateItem}>
+                  <p className={styles.debateTitle}>{debate.title}</p>
+                  <p className={styles.debateSubject}>{debate.subject}</p>
+                  <p className={styles.debateAuthor}>작성자 ID: {debate.user_id}</p>
+                  <p className={styles.debateDate}>생성일: {new Date(debate.created_at).toLocaleDateString()}</p>
+                </div>
+              ))}
+            </div>
           )}
           {showComponent === 'randomDoc' && (
-            <div className={styles.randomDocContainer}>{/* 랜덤 문서 컴포넌트를 렌더링 */}</div>
+            <div className={styles.randomDocContainer}>
+              <p className={styles.randomDocTitle}>랜덤 문서: {randomTitle}</p>
+              <button type="button" onClick={handleRandomDoc} className={styles.randomDocButton}>
+                다른 랜덤 문서 보기
+              </button>
+            </div>
           )}
         </div>
       ) : (
