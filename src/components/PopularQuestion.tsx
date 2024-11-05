@@ -88,6 +88,7 @@ const PopularQuestion = (props: PopularQuestionProps) => {
       </div>
       <div className={styles.footer}>
         <div className={styles.timeAgo}>{FormatTimeAgo(created_at)}</div>
+
         <div className={styles.answerCountContainer}>
           <img src={answer_count_img} alt={'badge'} className={styles.answer_count_img} />
           <div

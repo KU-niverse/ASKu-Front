@@ -458,7 +458,6 @@
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
   border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
 }
 
 .mobileChatbotButtonContainer {
@@ -476,14 +475,15 @@
   color: rgba(116, 116, 116, 1);
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
 }
 .mobileButton.clicked {
   background: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
   color: white;
 }
 .mobileChatbotButton.clicked {
   background: black !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
   color: white;
 }
 
@@ -503,6 +503,13 @@
 }
 
 .popularQuestionsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
+  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+}
+
+.debateRoomContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
   gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */

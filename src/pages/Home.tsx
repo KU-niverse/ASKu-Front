@@ -23,6 +23,7 @@ import mobile_haho_btn from '../img/mobile_haho_btn.svg'
 import SearchInputComponent from '../components/Home/SearchInputComponent'
 import FormatTimeAgo from '../components/FormatTimeAgo'
 import PopularQuestion from '../components/PopularQuestion'
+import PopularDebate from '../components/PopularDebate'
 
 interface HistoryResponse {
   success: boolean
@@ -121,10 +122,16 @@ const fetchDocsViews = async (): Promise<HistoryItem[]> => {
 }
 
 const fetchDebateList = async (): Promise<DebateData[]> => {
-  const res = await axios.get<DebateResponse>(`${process.env.REACT_APP_HOST}/debate/all/recent`, {
-    withCredentials: true,
-  })
-  return res.data.data
+  try {
+    const res = await axios.get<DebateResponse>(`${process.env.REACT_APP_HOST}/debate/all/recent`, {
+      withCredentials: true,
+    })
+    console.log('Fetched Debate Data:', res.data.data) // 콘솔에 Debate 데이터를 출력
+    return res.data.data
+  } catch (error) {
+    console.error('Error fetching debate list:', error) // 에러가 발생할 경우 콘솔에 에러 출력
+    throw error // 에러를 다시 throw 하여 호출한 함수가 처리할 수 있도록 합니다.
+  }
 }
 const fetchPopularKeywords = async () => {
   const response = await axios.get(`${process.env.REACT_APP_HOST}/search/popular`)
@@ -161,6 +168,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const PopularDoclist = historys ? historys.slice(0, 7) : []
   const PopularDoclistMobile = historys ? historys.slice(0, 8) : []
   const debateListData = debates ? debates.slice(0, 3) : []
+  const debateListDataMobile = debates ? debates.slice(0, 6) : []
   const questionList = popularQuestions ? popularQuestions.slice(0, 4) : []
   const questionListMobile = popularQuestions ? popularQuestions.slice(0, 8) : []
 
@@ -319,13 +327,18 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           )}
           {showComponent === 'debateRoom' && (
             <div className={styles.debateRoomContainer}>
-              {debateListData.map((debate: DebateData) => (
-                <div key={debate.id} className={styles.debateItem}>
-                  <p className={styles.debateTitle}>{debate.title}</p>
-                  <p className={styles.debateSubject}>{debate.subject}</p>
-                  <p className={styles.debateAuthor}>작성자 ID: {debate.user_id}</p>
-                  <p className={styles.debateDate}>생성일: {new Date(debate.created_at).toLocaleDateString()}</p>
-                </div>
+              {debateListDataMobile.map((debate: DebateData) => (
+                <PopularDebate
+                  key={debate.id}
+                  id={debate.id}
+                  doc_id={debate.doc_id}
+                  user_id={debate.user_id}
+                  subject={debate.subject}
+                  title={debate.title}
+                  created_at={debate.created_at}
+                  recent_edited_at={debate.recent_edited_at}
+                  done_or_not={debate.done_or_not}
+                />
               ))}
             </div>
           )}
