@@ -53,6 +53,11 @@
   cursor: default;
   margin-left: 1.8rem;
 }
+@media only screen and (max-width: 767px) {
+  .title {
+    font-size: 5rem;
+  }
+}
 
 .haho {
   margin-right: 1.6rem;
@@ -308,6 +313,15 @@
   margin-right: 7.4rem;
 }
 
+@media only screen and (max-width: 767px) {
+  .suggestContainer {
+    display: flex !important;
+    flex-direction: column;
+    padding-left: 0rem;
+    margin-right: 2rem;
+  }
+}
+
 .suggest {
   grid-row: 2 / 2 span;
   display: flex;
@@ -334,6 +348,25 @@
   /* 줄바꿈을 방지 */
   white-space: nowrap;
   overflow-x: auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .textBox {
+    display: flex;
+    border: 1px solid #9f132e;
+    height: 16px; /* 높이 줄이기 */
+    border-radius: 16px; /* 경계 반경 줄이기 */
+    font-size: 1.3rem; /* 폰트 크기 줄이기 */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 0.2rem; /* 여백 줄이기 */
+    padding: 0.4rem 1.5rem 0.3rem 1.5rem; /* 패딩 줄이기 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow-x: auto;
+    align-items: center;
+  }
 }
 
 .textBox:hover {
