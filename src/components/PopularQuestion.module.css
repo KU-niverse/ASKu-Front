@@ -26,7 +26,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 1rem;
   margin-bottom: 3rem;
 }
 
@@ -50,7 +50,7 @@
   color: #fff; /* 텍스트 색상 흰색 */
   background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%); /* 그라디언트 배경 */
   padding: 1.25rem 2rem; /* 패딩을 추가하여 버튼처럼 보이도록 */
-  border-radius: 12px; /* 모서리를 둥글게 */
+  border-radius: 50px; /* 모서리를 둥글게 */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 떠 있는 느낌을 줌 */
   text-align: center; /* 텍스트 가운데 정렬 */
   text-decoration: none; /* 텍스트 장식 제거 */

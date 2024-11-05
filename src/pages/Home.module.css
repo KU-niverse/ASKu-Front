@@ -458,6 +458,7 @@
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
   border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
 }
 
 .mobileChatbotButtonContainer {
@@ -466,7 +467,7 @@
 .mobileChatbotButton {
   font-size: 2rem;
   display: flex;
-  background: rgba(238, 238, 238, 1);
+  background: rgba(238, 238, 238, 1) !important;
   width: 8rem;
   height: 8rem;
   border-radius: 100%;
@@ -475,13 +476,14 @@
   color: rgba(116, 116, 116, 1);
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
 }
 .mobileButton.clicked {
   background: black;
   color: white;
 }
 .mobileChatbotButton.clicked {
-  background: black;
+  background: black !important;
   color: white;
 }
 
