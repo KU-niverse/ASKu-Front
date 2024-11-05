@@ -197,6 +197,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
       const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/random`, {
         withCredentials: true,
       })
+
       if (response.status === 200) {
         setRandomTitle(response.data.title)
       }
@@ -297,10 +298,12 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                 <PopularQuestion
                   key={question.id}
                   id={question.id}
+                  question_id={String(question.id)}
                   nickname={question.nickname}
                   title={question.title}
                   created_at={question.created_at}
                   answer_count={question.answer_count}
+                  content={question.content}
                 />
               ))}
             </div>

@@ -1,252 +1,87 @@
-.hidden {
-  display: none;
-}
-
-.historyBox {
-  width: 100%;
-  height: 101px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin-bottom: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  border: 0.5px solid rgba(213, 213, 213, 1);
-}
-@media only screen and (max-width: 767px) {
-  .historyBox {
-    position: relative;
-    height: 115px;
-    padding: 15px;
-  }
-}
-.contents {
+.PopularQuestionContainer {
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.contentsOne {
-  display: flex;
-  align-items: center;
   flex-direction: column;
-  width: 100%;
-}
-@media only screen and (max-width: 767px) {
-  .contentsOne {
-    background-color: rgb(253, 243, 241);
-    border-radius: 25px;
-    height: 20rem;
-    justify-content: center;
-  }
-}
-
-.contentsTwo {
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.contentsTwo img {
-  cursor: pointer;
-}
-.versionContainer {
-  position: relative;
-  width: 60%;
-}
-
-@media only screen and (max-width: 767px) {
-  .versionContainer {
-    width: 10rem;
-  }
-}
-
-.version {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-weight: 700;
-  font-size: 70%;
-}
-@media only screen and (max-width: 767px) {
-  .version {
-    font-size: 2rem;
-    margin-right: 15px;
-  }
-}
-.summary {
-  display: inline-block;
-  max-width: 400px;
-  font-size: 18px;
-  color: rgba(0, 0, 0, 1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-@media only screen and (max-width: 767px) {
-  .summary {
-    font-size: 13px;
-  }
-}
-.user {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 1);
-  margin-right: 20px;
-}
-@media only screen and (max-width: 767px) {
-  .user {
-    font-size: 11px;
-    margin-right: 5px;
-  }
-}
-.docTitleContainer {
-  width: 100%;
-}
-@media only screen and (max-width: 767px) {
-  .docTitleContainer {
-    width: 50%;
-  }
-}
-
-.docTitle {
-  font-size: 1.2rem;
-  color: #de3a58;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  font-weight: 700;
-  padding-top: 10%;
-  word-break: keep-all;
-}
-.versionIcon {
-  width: 100%;
-}
-@media only screen and (max-width: 767px) {
-  .versionIcon {
-    font-size: 12px;
-    margin-right: 5px;
-    margin-top: 2rem;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .docTitle {
-    font-size: 12px;
-    padding-top: 5%;
-    color: black;
-    padding-bottom: 5%;
-  }
-}
-.timestamp {
-  font-size: 13px;
-  color: rgba(116, 116, 116, 1);
-  margin-right: 7px;
-}
-@media only screen and (max-width: 767px) {
-  .timestamp {
-    font-size: 11px;
-  }
-}
-.versionText {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.allversionText {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-@media only screen and (max-width: 767px) {
-  .versionText {
-    position: absolute;
-    bottom: 18px;
-  }
-  .allversionText {
-    width: 100%;
-    position: absolute;
-    bottom: 18px;
-  }
-}
-.versionBtns {
-  width: 450px;
-  padding-top: 18px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.allversionBtns {
-  width: 100%;
-  padding-top: 15px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.allVerBtn {
-  min-width: 292px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
-  cursor: pointer;
-  margin-left: 15px;
-}
-.versionbtn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
-  cursor: pointer;
-  margin-left: 10px;
-}
-.versionbtn img {
-  width: 20px;
-  height: 16px;
-  margin-right: 5px;
-}
-@media only screen and (max-width: 767px) {
-  .versionBtns {
-    width: 100%;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .allversionBtns {
-    width: 95%;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .allVerBtn {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    min-width: 220px;
-  }
-  .versionbtn {
-    font-size: 11px;
-    margin-left: 0px;
-    margin-right: 6px;
-  }
-  .versionbtn img {
-    width: 13px;
-    height: 11px;
-    margin-right: 3px;
-  }
+  background-color: rgb(253, 243, 241);
+  border-radius: 25px;
+  height: 23rem;
+  justify-content: center;
+  padding: 3rem;
 }
 
-/* 현재 그냥 popularDocs CSS 복붙*/
+.header {
+  display: flex;
+  flex-direction: row;
+}
+.nickname {
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 600;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+.repBadge {
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  border: 0.1rem solid #d5d5d5;
+  margin-right: 1.5rem;
+}
+
+.title {
+  color: #f86982;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  display: inline-block; /* 블록처럼 동작해서 배경색과 패딩을 적용 */
+  color: #fff; /* 텍스트 색상 흰색 */
+  background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%); /* 그라디언트 배경 */
+  padding: 0.75rem 1.25rem; /* 패딩을 추가하여 버튼처럼 보이도록 */
+  border-radius: 12px; /* 모서리를 둥글게 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 떠 있는 느낌을 줌 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  text-decoration: none; /* 텍스트 장식 제거 */
+  font-weight: bold; /* 버튼 텍스트 강조 */
+  transition: transform 0.1s ease; /* 클릭 시 눌리는 효과를 위한 전환 효과 */
+}
+/* 클릭 시 효과 */
+.title:active {
+  transform: scale(0.97); /* 클릭할 때 살짝 눌리는 느낌을 줌 */
+}
+
+.content {
+  font-weight: 600;
+}
+
+.timeAgo {
+  color: rgba(158, 158, 158, 1);
+}
+
+.answerCountContainer {
+  display: flex;
+  align-items: center;
+}
+
+.answer_count_img {
+  margin-right: 1rem;
+  width: 80%;
+  height: 80%;
+}
+
+.answerCount {
+  color: #f86982;
+  font-weight: 600;
+}
