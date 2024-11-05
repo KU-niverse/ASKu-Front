@@ -24,6 +24,7 @@ import SearchInputComponent from '../components/Home/SearchInputComponent'
 import FormatTimeAgo from '../components/FormatTimeAgo'
 import PopularQuestion from '../components/PopularQuestion'
 import PopularDebate from '../components/PopularDebate'
+import RandomDoc from '../components/RandomDoc'
 
 interface HistoryResponse {
   success: boolean
@@ -95,6 +96,22 @@ interface RandomDocResponse {
   title: string
 }
 
+interface RandomDocItem {
+  title: string
+}
+
+// 모바일 8개의 랜덤 문서를 가져오는 함수 정의
+const fetchRandomDocs = async (): Promise<RandomDocItem[]> => {
+  const promises = Array.from({ length: 8 }).map(() =>
+    axios.get(`${process.env.REACT_APP_HOST}/wiki/random`, { withCredentials: true }),
+  )
+
+  const responses = await Promise.all(promises)
+  return responses.map((response) => ({
+    title: response.data.title,
+  }))
+}
+
 function useRandomDoc() {
   return useQuery<RandomDocResponse, Error>(
     'randomDoc',
@@ -156,7 +173,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [randomTitle, setRandomTitle] = useState('ASKu사용방법')
   const [showComponent, setShowComponent] = useState<string>('chatbot') // 모바일 - 어떤 컴포넌트를 보여줄지 결정하는 상태
-
+  const [randomDocs, setRandomDocs] = useState<RandomDocItem[]>([])
   const { data: popularKeywords = [], isLoading: isKeywordsLoading } = useQuery('popularKeywords', fetchPopularKeywords)
   const { data: popularQuestions = [], isLoading: isQuestionsLoading } = useQuery(
     'popularQuestions',
@@ -214,6 +231,20 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
       console.error('Error fetching random document:', error)
     }
   }
+
+  // 처음 렌더링될 때 한 번만 랜덤 문서를 가져오기 위한 useEffect
+  useEffect(() => {
+    const loadRandomDocs = async () => {
+      try {
+        const docs = await fetchRandomDocs()
+        setRandomDocs(docs)
+      } catch (error) {
+        console.error('랜덤 문서 가져오기 에러:', error)
+      }
+    }
+
+    loadRandomDocs()
+  }, [])
 
   useEffect(() => {
     track('view_home')
@@ -344,10 +375,11 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           )}
           {showComponent === 'randomDoc' && (
             <div className={styles.randomDocContainer}>
-              <p className={styles.randomDocTitle}>랜덤 문서: {randomTitle}</p>
-              <button type="button" onClick={handleRandomDoc} className={styles.randomDocButton}>
-                다른 랜덤 문서 보기
-              </button>
+              {randomDocs?.map((doc, index) => (
+                <div key={doc.title}>
+                  <RandomDoc randomDocs={[doc]} />
+                </div>
+              ))}
             </div>
           )}
         </div>
