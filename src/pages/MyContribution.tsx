@@ -52,8 +52,7 @@ interface DocumentContribution {
 
 const MyContribution: React.FC = () => {
   const [page, setPage] = useState(1)
-  const contributionPerPage = 5
-
+  const contributionPerPage = 13
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber)
   }
