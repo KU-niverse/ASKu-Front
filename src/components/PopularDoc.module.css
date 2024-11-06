@@ -66,7 +66,7 @@
 
 .version {
   position: absolute;
-  top: 65%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -75,7 +75,7 @@
 }
 @media only screen and (max-width: 767px) {
   .version {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-right: 15px;
   }
 }
@@ -123,6 +123,7 @@
   font-weight: 700;
   padding-top: 10%;
   word-break: keep-all;
+  height: 4rem;
 }
 .versionIcon {
   width: 100%;

@@ -46,6 +46,7 @@
     width: 100%; /* 입력 필드의 너비를 부모 요소에 맞게 설정 */
     height: 155%;
     font-weight: 500;
+    padding-left: 7rem;
   }
 
   .headerInput:focus {
@@ -53,8 +54,5 @@
   }
   .searchIcon {
     margin-left: 2.5rem;
-  }
-  .headerInput::placeholder {
-    padding-left: 1.5rem;
   }
 }

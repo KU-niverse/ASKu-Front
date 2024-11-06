@@ -35,4 +35,11 @@
   padding-top: 5%;
   color: black;
   font-weight: 700;
+  height: 4rem;
+}
+.versionIcon {
+  width: 100%;
+  font-size: 12px;
+  margin-right: 5px;
+  margin-top: 2rem;
 }

@@ -43,6 +43,13 @@
   border-bottom: 0.1rem solid rgba(213, 213, 213, 0.5);
 }
 
+@media only screen and (max-width: 767px) {
+  .chatbotHeader {
+    margin-left: 0rem;
+    margin-right: 2rem;
+  }
+}
+
 .title {
   display: flex;
   flex: row;
