@@ -16,7 +16,7 @@
   .chatbot {
     width: 90%; /* 화면 폭을 90%로 설정 */
     height: 100%; /* 높이를 자동으로 조정 */
-
+    margin-top: -2rem;
     padding: 10px; /* 내부 여백 조절 */
   }
 }
@@ -62,7 +62,7 @@
 }
 @media only screen and (max-width: 767px) {
   .title {
-    font-size: 5rem;
+    font-size: 6rem;
   }
 }
 
@@ -73,6 +73,11 @@
   padding: 0.3rem;
   border-radius: 50%;
   background: linear-gradient(to bottom, #ff768f, #de3a58);
+}
+@media only screen and (max-width: 767px) {
+  .haho {
+    display: none;
+  }
 }
 
 .buttonContainer {
@@ -110,6 +115,13 @@
   padding: 0;
 }
 
+@media only screen and (max-width: 767px) {
+  .buttonText {
+    font-size: 1.8rem;
+    font-weight: 420;
+  }
+}
+
 /* 대화만 포함하는 컨테이너 */
 .chat {
   grid-column: 1 / span 6;
@@ -121,7 +133,11 @@
   padding: 0;
   margin: 0;
 }
-
+@media only screen and (max-width: 767px) {
+  .chat {
+    grid-row: 2 / span 7;
+  }
+}
 .initialChatbox {
   grid-column: 1/6 span;
   grid-row: 2/5 span;
@@ -322,8 +338,7 @@
 
 @media only screen and (max-width: 767px) {
   .suggestContainer {
-    display: flex !important;
-    flex-direction: column;
+    grid-row: 9 / span 2;
     padding-left: 0rem;
     margin-right: 2rem;
   }
@@ -416,7 +431,7 @@
   border: none;
   margin-left: 2.7rem;
   resize: none;
-  margin-top: 1.9rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   font-size: 1.7rem;
   font-weight: 500;
@@ -425,6 +440,14 @@
   /* 인터넷 익스플로러 */
   scrollbar-width: none;
   /* 파이어폭스 */
+}
+
+@media only screen and (max-width: 767px) {
+  .promptWrap {
+    grid-column: 1 / span 6;
+    grid-row: 10 / span 1;
+    margin-top: 4rem;
+  }
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
