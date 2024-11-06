@@ -17,14 +17,17 @@
   font-size: 3.2rem;
 }
 
+.wikiArrow {
+  height: 4rem;
+}
 .wikiArrowIcon {
   margin-left: 2.2rem;
+  margin-right: 1.5rem;
   width: 4rem;
   height: 4rem;
 }
 
 .wikiContentBtns {
-  width: 115px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,18 +66,34 @@
 
 .wikiContents {
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 .wikiContentlist {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: default;
+  padding-bottom: 1rem;
+}
+.wikiContentlistOpen {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
-  padding-bottom: 1.7rem;
+  padding-bottom: 1.3rem;
+}
+.wikiContentlistClose {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 2.4rem;
   border-bottom: 0.1rem solid #d5d5d5;
 }
-.wikiText {
+.wikiContentlist .wikiText {
   font-size: 8rem;
   width: 100%;
   word-break: break-word;
@@ -93,4 +112,18 @@
 
 .wikiText * {
   font-size: 2rem;
+}
+
+/* 모바일 뷰 */
+@media only screen and (max-width: 767px) {
+  .wikiContentTitle span {
+    font-size: 2.4rem;
+  }
+  .wikiIndex {
+    font-size: 2.4rem;
+  }
+  .wikiArrowIcon {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }

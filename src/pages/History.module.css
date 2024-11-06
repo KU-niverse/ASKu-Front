@@ -1,6 +1,11 @@
 .hidden {
   display: none;
 }
+.pageWrap {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
 .historyContainer {
   display: flex;
   flex-direction: column;
@@ -55,7 +60,7 @@
   font-size: 3.6rem;
   padding: 0 0.3rem;
   margin: 0;
-  min-width: 31rem;
+  white-space: nowrap;
 }
 .docTitle {
   font-size: 3.6rem;
@@ -88,5 +93,58 @@
   color: #de3a58;
 }
 .pagingContainer {
-  margin: 7.6rem 0;
+  margin: 5rem 0;
+}
+.footerContainer {
+  margin-top: auto;
+}
+.linkToNew {
+  margin-top: 10px;
+  text-align: center;
+}
+.link {
+  color: rgba(116, 116, 116, 1);
+  font-size: 1.6rem;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 5%;
+  text-decoration-line: underline;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.blank {
+  height: 2rem;
+}
+
+/* 모바일 뷰 */
+@media only screen and (max-width: 767px) {
+  .allhistoryTitle {
+    margin-top: 5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .docTitle,
+  .listTitleStart,
+  .listTitles {
+    font-size: 3.2rem;
+  }
+  .historyTitle {
+    margin-top: 5rem;
+  }
+  .historyTypes {
+    margin-left: 0;
+  }
+  .historyTypes p {
+    font-size: 2.5rem;
+  }
+  .historyContent {
+    width: 90%;
+  }
+  .blank {
+    height: 0rem;
+  }
 }

@@ -1,53 +1,91 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  height: 80px;
+  border-bottom: 4px solid #9f132e;
+}
+.debateRecent {
   width: 100%;
 }
 
 .debate {
-  font-size: 30px;
+  font-size: 3.6rem;
   font-weight: bolder;
-  color: white;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 2.7rem;
 }
 
 .debatecontent {
   height: auto;
   width: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  min-height: 80vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2.4rem;
+  margin-left: 12rem;
+  margin-right: 12rem;
+  margin-top: 7.7rem;
+  margin-bottom: 7rem;
 }
-
-.sidebar {
-  width: 25%;
-  height: auto;
-  background-color: rgba(254, 242, 244, 1);
+.caution {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
-  box-sizing: border-box;
+  margin: 8rem 0;
 }
-.sidebar div {
-  width: 100%;
-  margin-bottom: 30px;
+.cautionIcon {
+  width: 7.8rem;
+  height: 7.8rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar {
+  grid-column: 9/12;
+  height: fit-content;
+  background-color: #fef2f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  box-sizing: border-box;
+  border-radius: 12px;
+  position: -webkit-sticky;
+  position: sticky;
+  align-self: flex-start;
+  top: 10rem;
 }
 .debateSearch {
   width: 100%;
+  margin-bottom: 10rem;
 }
 .maincontent {
   background-color: white;
-  width: 75%;
   height: auto;
+  grid-column: 2/9;
+  padding-right: 3.3rem;
 }
-.nonecomment{
-  margin-left: 40px;
+.nonecomment {
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+.debate2 {
+  font-size: 3.6rem;
+  font-weight: bolder;
+  color: #de3a58;
+  margin-top: 0;
+  margin-bottom: 2.7rem;
+  cursor: pointer;
 }
 
+.footerContainer {
+  margin-top: auto;
+}
 
 @media only screen and (max-width: 767px) {
   .debate {
@@ -56,9 +94,10 @@
 
   .debatecontent {
     width: 86%;
-    margin: 0 7%;
+    margin: 3% 7%;
     flex-direction: column;
     min-height: 80vh;
+    display: flex;
   }
 
   .maincontent {

@@ -1,4 +1,5 @@
 .searchTitle {
+  font-weight: 700;
   width: 89px;
   position: relative;
   font-size: 2.4rem;
@@ -6,40 +7,63 @@
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
+  margin:0;
 }
+
 .searchInput {
-  position: absolute;
-  border-radius: 35px;
-  background-color: #fff;
-  border: 1px solid rgba(116, 116, 116, 0.5);
-  box-sizing: content-box;
-  width: 15%;
-  height: 28px;
-  padding-left: 50px;
-  margin-top: 13.2px;
-  font-size: 9.6px;
+  height: 3.7rem;
+  padding-left: 2rem;
+  font-size: 1.6rem;
   color: #000;
   font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin:1rem;
+  width:80%;
 }
 .searchInputContainer{
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top:3rem;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: border-box;
+}
+.InputContainer{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top:3rem;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: border-box;
 }
 .searchIcon {
   width: 12px;
   height: 12px;
   position: relative;
   cursor: pointer;
-  left: 6%;
-  top: 3rem;
+  margin-left: 2rem;
 }
 .cancelIcon {
-  position: absolute;
-  top: 22.5rem;
   width: 12px;
   height: 12px;
   cursor: pointer;
-  margin-right: 28rem;
-  right: 0px;
+  padding-right: 2rem;
+}
+.headerInput{
+  height: 3.7rem;
+  padding-left: 2rem;
+  font-size: 1.6rem;
+  color: #000;
+  font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin:1rem;
+  width:80%;
 }
 
 .hidden {
@@ -49,8 +73,8 @@
 .result {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
   padding-left: 10px;
+  font-size: 4rem;
 }
 
 .resultList {
@@ -59,7 +83,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 8px;
+  font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
@@ -70,4 +94,10 @@
 .linkTo {
   text-decoration: none; /* 밑줄 제거 */
   color: black; /* 기본 텍스트 색상 유지 */
+}
+@media only screen and (max-width: 767px) {
+  .resultList{
+    width: 100%;
+  }
+
 }

@@ -4,6 +4,7 @@
   margin-left: 10%;
   margin-top: 60px;
 }
+
 .edit form {
   width: 90%;
   height: auto;
@@ -14,6 +15,7 @@
 .editTitle {
   margin-left: 7.5rem;
 }
+
 h4 {
   margin: 0px;
   margin-bottom: 15px;
@@ -27,13 +29,16 @@ h4 {
   width: 100%;
   margin-bottom: 30px;
 }
+
 .wikichar_title {
   width: 70%;
   margin-bottom: 20px;
 }
+
 .wikichar_char {
   width: 25%;
 }
+
 .wikiManual {
   font-size: 2rem;
   height: 45px;
@@ -42,6 +47,7 @@ h4 {
   cursor: pointer;
   color: #747474;
 }
+
 .wikiManual:hover {
   text-decoration: underline;
 }
@@ -54,19 +60,22 @@ h4 {
   padding-right: 10px;
   margin-top: 5px;
 }
+
 .QuesWikiManu p {
   height: 30px;
   margin: 0px;
 }
+
 .title {
   font-size: 1.8rem;
   width: 90%;
   height: 45px;
   border-radius: 12px;
-  border: 2px solid rgba(213, 213, 213, 1);
+  border: 0.2rem solid rgba(213, 213, 213, 1);
   padding-left: 15px;
   box-sizing: border-box;
 }
+
 .wikiQues_header {
   display: flex;
   align-items: center;
@@ -75,79 +84,138 @@ h4 {
 
 @media only screen and (max-width: 767px) {
   .wikiQues_header {
-    margin-top: 20px;
+    display: block;
+    margin-top: 5rem;
   }
 }
+
 .wikiQues_lists {
-  width: 40%;
+  width: 100%;
 }
 
 .queslist {
   width: 100%;
   height: 45px;
   border-radius: 12px;
-  border: 2px solid rgba(213, 213, 213, 1);
+  border: 0.2rem solid rgba(213, 213, 213, 1);
 }
+
 .editorbox {
   margin-bottom: 20px;
   margin-top: 10px;
 }
+
 .editorbox2 {
-  margin-top: 10px;
-  margin-bottom: 80px;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
+
 .summary {
   width: 100%;
-  height: 50px;
-  padding: 10px;
+  height: 6rem;
+  margin-top: 1rem;
+  padding: 1.5rem 1.5rem 1.4rem 1.5rem;
   box-sizing: border-box;
-  border: 2px solid rgba(213, 213, 213, 1);
-  border-radius: 12px;
-  resize: none;
-  font-size: 16px;
-  display: flex;
-  line-height: 1.7;
+  border: 0.2rem solid rgba(213, 213, 213, 1);
+  border-radius: 0.8rem;
+  font-size: 2rem;
 }
+
 .submitbox {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 2rem;
   display: flex;
+  flex-direction: row;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 30px;
 }
+
 .submitbox span {
   font-size: 18px;
 }
+
 .chkdiv {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 4rem;
   padding: 2px;
 }
+
 .chkdiv a {
   font-size: 1.8rem;
 }
+
 .chkbox {
-  width: 20px;
-  height: 20px;
-  margin: 0px;
-  margin-top: 2px;
-  margin-right: 8px;
-  accent-color: rgba(222, 58, 88, 1);
+  -webkit-appearance: none;
+  /* Chrome, Safari, Edge */
+  -moz-appearance: none;
+  /* Firefox */
+  appearance: none;
+  /* 기본 체크박스 스타일 제거 */
+
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.8rem 0 0;
   box-sizing: border-box;
+  border: 0.2rem solid rgba(213, 213, 213, 1);
+  border-radius: 0.4rem;
+  position: relative;
+  /* 체크 표시를 위해 상대적 위치 지정 */
+  background-color: white;
+  /* 기본 배경색 설정 */
 }
+
+.chkbox:checked {
+  background-color: rgba(222, 58, 88, 1);
+  /* 선택 시 배경색 */
+  border-color: rgba(222, 58, 88, 1);
+  /* 선택 시 테두리 색상 */
+}
+
+.chkbox:checked::after {
+  content: '✔';
+  color: white;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 중앙 정렬을 위해 변환 */
+  font-size: 1.8rem;
+  /* 체크 표시 크기 조정 */
+}
+
 .submitWiki {
-  width: 217px;
-  height: 50px;
+  width: 28.1rem;
+  height: 5.5rem;
   border: none;
-  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  background-color: rgba(213, 213, 213, 1);
   color: white;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 2rem;
+  font-weight: 700;
   cursor: pointer;
   margin: 0px 0px 0px 25px;
   margin-bottom: 20px;
+}
+
+.submitWiki.active {
+  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  cursor: pointer;
+  opacity: 1;
+}
+
+.submitText {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgba(213, 213, 213, 1);
+  text-decoration: underline;
+  margin: 0;
+}
+
+.submitText.active {
+  color: rgba(222, 58, 88, 1);
+  opacity: 1;
 }
 
 .char_one {
@@ -156,17 +224,20 @@ h4 {
   border-radius: 30px 0px 0px 30px;
   cursor: pointer;
 }
+
 .char_two {
   height: 35px;
   width: 80px;
   border-radius: 0px 30px 30px 0px;
   cursor: pointer;
 }
+
 .btn_sty_one {
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   color: white;
   border: none;
 }
+
 .btn_sty_two {
   background-color: white;
   border: 2px solid rgba(159, 19, 46, 1);
@@ -174,16 +245,63 @@ h4 {
 }
 
 @media only screen and (max-width: 767px) {
-  .wikichar_title {
-    width: 60%;
+  .edit {
+    margin: 0 3.1rem 0 3.1rem;
+    width: 90%;
   }
+
+  .editTitle {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    margin-left: 0;
+  }
+
+  .title {
+    background: transparent;
+    border-bottom: 0.2rem solid rgba(213, 213, 213, 1);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 0;
+    width: 100%;
+    height: 5rem;
+  }
+
+  .wikichar {
+    margin: 0;
+  }
+
+  .wikichar_title {
+    display: block;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .wikichar_title_text {
+    margin: 0;
+  }
+
   .wikichar_char {
     width: 40%;
   }
 
-  .wikiManual {
-    font-size: 14px;
+  .QuesWikiManu {
+    margin-top: 3rem;
   }
+
+  .QuesWikiManuText {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+
+  .wikiManual {
+    font-size: 2rem;
+    font-weight: 700;
+    color: black;
+    text-decoration: underline;
+  }
+
   .submitbox {
     display: flex;
     flex-direction: column;
@@ -191,23 +309,32 @@ h4 {
     width: 100%;
     right: auto;
   }
+
   .submitbox span {
     font-size: 15px;
   }
+
   .submitWiki {
+    width: 100%;
+    height: 6.8rem;
     margin: 0px 0px 30px 0px;
   }
+
   .summary {
-    height: 60px;
+    height: 5.6rem;
   }
-  .edit {
-    width: 90%;
-    margin-left: 5%;
-  }
+
   .edit form {
     width: 100%;
     margin: 0;
   }
+
+  .icon {
+    height: 1.8rem;
+    width: 1.8rem;
+    margin-left: 0.3rem;
+  }
+
   .chkbox {
     width: 15px;
     height: 15px;

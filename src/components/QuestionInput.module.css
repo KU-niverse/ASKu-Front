@@ -4,11 +4,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .q_cfrontheader {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .q_cheadline {
   font-size: 2.4rem;
   font-weight: 700;
@@ -28,7 +30,8 @@
 }
 
 .q_cbox.focused {
-  border: 1px solid #eb516d; /* focus 되었을 때 빨간색으로 */
+  border: 1px solid #eb516d;
+  /* focus 되었을 때 빨간색으로 */
 }
 
 .q_ctextarea {
@@ -68,15 +71,19 @@
   height: 35px;
   font-size: 1.4rem;
   border: none;
-  color: white; /* 기본 텍스트 색상 */
+  color: white;
+  /* 기본 텍스트 색상 */
   cursor: pointer;
   margin-left: auto;
 }
 
 .q_csubmit.disabled {
-  background: #d5d5d5; /* 비활성화 색상 */
-  cursor: not-allowed; /* 비활성화된 상태에서 마우스 커서 변경 */
-  color: #ffffff; /* 비활성화된 텍스트 색상 */
+  background: #d5d5d5;
+  /* 비활성화 색상 */
+  cursor: not-allowed;
+  /* 비활성화된 상태에서 마우스 커서 변경 */
+  color: #ffffff;
+  /* 비활성화된 텍스트 색상 */
 }
 
 .textnum {
@@ -92,7 +99,12 @@
   height: 4.8rem;
   font-size: 1.4rem;
 }
+
 @media only screen and (max-width: 767px) {
+  .q_c {
+    height: 33rem;
+  }
+
   .q_cheader {
     display: flex;
     align-items: center;
@@ -100,26 +112,53 @@
   }
 
   .q_cfrontheader {
-    flex: 1 1 100%;
+    width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 2.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .q_dropdown {
+    width: 21rem;
+    margin-right: 2rem;
   }
 
   .q_cheadline {
     font-size: 18px;
+    margin: 0;
+  }
+
+  .q_cbox {
+    height: 23rem;
+
   }
 
   .q_clastheader {
+    padding-top: 3rem;
     margin-left: auto;
+    height: 4rem;
+  }
+
+  .textnum {
+    color: black;
   }
 
   .q_clastheader button {
-    width: 70px;
-    height: 25px;
-    font-size: 12px;
+    width: 7rem;
+    height: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .q_ctextarea {
+    font-size: 1.7rem;
+    height: 12rem;
   }
 
   .q_ctextarea::placeholder {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 300;
   }
 
   .textnum {

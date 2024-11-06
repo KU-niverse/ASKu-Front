@@ -16,7 +16,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 24px 24px;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   overflow-y: scroll;
   scrollbar-width: none;
   margin-left: 5%;
@@ -237,7 +237,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr 1fr 0.7fr 0.7fr;
-  height: 75vh;
+  height: 95%;
   column-gap: 24px;
 }
 
@@ -373,6 +373,7 @@
   grid-row: 4/5;
   display: flex;
   height: fit-content;
+  margin-bottom: 1rem;
 }
 
 .randomDocBack {
@@ -409,4 +410,5 @@
 
 .randomBtn {
   width: 17px;
+  cursor: pointer;
 }

@@ -48,12 +48,12 @@ function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 <p className={styles.modal_text}>{'로그인 후 ASKU를 이용해주세요!'}</p>
                 <img className={styles.haho_login} src={haho_login} alt={'character'} />
                 <Link to={'/signin'}>
-                  <button type={'button'} className={styles.signin}>
+                  <button type={'button'} className={styles.signin} onClick={onClose}>
                     {'로그인'}
                   </button>
                 </Link>
                 <a href={'https://www.koreapas.com/m/member_join_new.php'}>
-                  <button type={'button'} className={styles.signup}>
+                  <button type={'button'} className={styles.signup} onClick={onClose}>
                     {'회원가입'}
                   </button>
                 </a>

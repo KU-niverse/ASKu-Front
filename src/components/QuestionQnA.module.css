@@ -5,6 +5,7 @@
   margin-top: 10px;
   border: 1px solid #d5d5d5;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
@@ -35,11 +36,13 @@
 .q_mynick {
   font-size: 1.6rem;
 }
+
 .q_date {
   margin-left: 2rem;
   font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_backhead {
   cursor: pointer;
 }
@@ -113,6 +116,7 @@
 
 .q_backfooter button {
   border-radius: 30px;
+  border-style: solid;
   border-color: rgba(159, 19, 46, 1);
   border-width: 2px;
   height: 36px;
@@ -141,13 +145,23 @@
 .q_editbtn span {
   font-size: 1.5rem;
 }
+
 @media only screen and (max-width: 767px) {
+
   .q_middle,
   .q_mynick {
     font-size: 1.4rem;
   }
+
   .q_comment {
     margin-left: 1rem;
+  }
+
+  .q_footer {
+    height: 3.8rem;
+    padding-top: 1.2rem;
+    padding-left: 1.3rem;
+    padding-right: 1.2rem;
   }
 
   .q_footer img {
@@ -156,29 +170,27 @@
     object-fit: contain;
     align-self: center;
   }
+
   .q_footer button {
-    font-size: 1.2rem;
     width: max-content;
-    height: 2.5rem;
-  }
-  .q_date,
-  .q_footer span {
-    font-size: 12px;
-  }
-  .q_header,
-  .q_footer {
-    padding-left: 16px;
-    padding-right: 16px;
+    height: 100%;
   }
 
+  .q_date,
+  .q_footer span {
+    font-size: 1.4rem;
+  }
+
+  .q_header,
   .q_middle {
-    padding-left: 16px;
-    padding-right: 20px;
+    padding-left: 1.3rem;
+    padding-right: 1.2rem;
   }
 
   .q_index {
     font-size: 12px;
   }
+
   .q_list {
     padding: 16px 0;
   }

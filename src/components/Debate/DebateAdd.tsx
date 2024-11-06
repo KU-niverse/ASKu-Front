@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import styles from './DebateAdd.module.css'
 import addButton from '../../img/addButton.svg'
+import submit from '../../img/send.png'
 
 interface DebateAddProps {
   title: string
@@ -94,19 +95,26 @@ const DebateAdd = ({ title }: DebateAddProps) => {
         <button className={IsClick ? styles.none : styles.addButton} onClick={handleClick} type={'submit'}>
           <img src={addButton} alt={'생성'} className={styles.plusIcon} />
         </button>
-        <textarea
-          className={IsClick ? styles.addInput : styles.none}
-          placeholder={'생성할 토론방을 입력하세요.'}
-          // eslint-disable-next-line arrow-parens
-          onChange={(e) => setWord(e.target.value)}
-          onKeyDown={handleKeyDown}
-        >
-          {word}
-        </textarea>
-        {/* <button className={styles.createButton} type={'button'} onClick={handleCreate}>
-          {'생성\r'}
-        </button> */}
-        {/* 버튼 예쁘게 달기 실패해서 없애버렸습니다.. */}
+        <div className={IsClick ? styles.addInput : styles.none}>
+          <div className={styles.textbox}>
+            <textarea
+              className={styles.textarea}
+              placeholder={'생성할 토론방을 입력하세요.'}
+              // eslint-disable-next-line arrow-parens
+              onChange={(e) => setWord(e.target.value)}
+              onKeyDown={handleKeyDown}
+            >
+              {word}
+            </textarea>
+            <img
+              className={word ? styles.sendBtn_red : styles.sendBtn_grey}
+              role={'presentation'}
+              src={submit}
+              alt={'submit'}
+              onClick={handleCreate}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )

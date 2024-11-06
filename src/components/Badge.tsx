@@ -3,7 +3,9 @@ import ThreedotsBadge from './ThreedotsBadge'
 // import FormatDate from './FormatDate'
 import locked from '../img/locked.svg'
 
-function Badge({ myBadgeIds, id, name, image, description, event, count }: any) {
+function Badge({ myBadgeIds, id, name, image, description, event, count, repBadgeId }: any) {
+  const isRepBadge = id === repBadgeId
+
   return (
     <div className={`${styles.b_content} ${myBadgeIds.has(id) ? styles.myBadgeStyle : styles.normalBadgeStyle}`}>
       <div className={`${styles.b_thumb}`}>
@@ -23,7 +25,7 @@ function Badge({ myBadgeIds, id, name, image, description, event, count }: any) 
         <div className={`${styles.b_badgename}`}>{myBadgeIds.has(id) ? name : '잠긴 뱃지입니다'}</div>
         <div className={`${styles.b_badgedescription}`}>{description}</div>
         <div className={`${styles.b_repbadgebtn}`}>
-          <ThreedotsBadge badge_id={id} badge_disabled={!myBadgeIds.has(id)} />
+          <ThreedotsBadge badge_id={id} badge_disabled={!myBadgeIds.has(id)} is_rep_badge={isRepBadge} />
         </div>
       </div>
     </div>

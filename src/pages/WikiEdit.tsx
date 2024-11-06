@@ -196,11 +196,11 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: { loggedIn: boolean; setLoggedIn: (
             </div>
           </div>
           <div>
-            <h4>{'문서 내용'}</h4>
+            <h4 className={styles.QuesWikiManuText}>{'문서 내용'}</h4>
             <div className={styles.editorbox}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>
-            <h4>{'히스토리 요약'}</h4>
+            <h4 className={styles.QuesWikiManuText}>{'히스토리 요약'}</h4>
             <textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
@@ -217,10 +217,14 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: { loggedIn: boolean; setLoggedIn: (
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                <p className={`${styles.submitText} ${isChecked ? styles.active : ''}`}>
+                  {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                </p>
               </a>
             </span>
-            <input type={'submit'} value={'생성하기'} className={styles.submitWiki} />
+            <button type={'submit'} className={`${styles.submitWiki} ${isChecked ? styles.active : ''}`}>
+              {'생성하기'}
+            </button>
           </div>
         </form>
       </div>

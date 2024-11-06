@@ -7,6 +7,8 @@
   word-break: keep-all;
   align-items: center;
   max-width: 80%;
+  position: relative;
+  overflow: visible;
 }
 
 @media screen and (max-width: 767px) {
@@ -63,8 +65,8 @@
 .iconZip {
   display: flex;
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  bottom: 0rem;
+  right: -7.5rem;
   flex-direction: row;
   width: auto;
 }
@@ -76,11 +78,10 @@
 }
 
 .icon {
-  cursor: pointer;
-  width: 11px;
-  min-width: 11px;
-  height: 11px;
-  margin-right: 11px;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
   cursor: pointer;
 }
 
@@ -103,27 +104,15 @@
   background-color: white;
   position: absolute;
   z-index: 100;
-  margin-top: 10px;
-  margin-left: 115px;
-  width: 450px;
-  min-height: 100px;
+  margin-top: 1rem;
+  margin-left: 10rem;
+  width: 40rem;
+  min-height: 10rem;
   height: auto;
-  box-shadow: 0px 4px 8px 0px #0000001a;
-  border-radius: 12px;
-  top: 110px;
-  right: 5px;
-  background-color: white;
-  position: absolute;
-  z-index: 100;
-  margin-top: 10px;
-  margin-left: 115px;
-  width: 450px;
-  min-height: 100px;
-  height: auto;
-  box-shadow: 0px 4px 8px 0px #0000001a;
-  border-radius: 12px;
-  top: 110px;
-  right: 5px;
+  box-shadow: 0px 0.4rem 0.8rem 0px #0000001a;
+  border-radius: 1.2rem;
+  top: 11rem;
+  right: 0.5rem;
 }
 
 @media screen and (max-width: 500px) {
@@ -144,35 +133,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .reference_text {
-  font-size: 11px;
+  font-size: 4rem;
   width: 80%;
   height: auto;
   word-break: keep-all;
-  font-size: 11px;
-  width: 80%;
-  height: auto;
-  word-break: keep-all;
+}
+
+.reference_link {
+  height: 1.5rem;
 }
 
 .closeBtn {
   position: absolute;
   right: 0px;
   cursor: pointer;
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  right: 0px;
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
+  width: 1rem;
+  height: 1rem;
 }
 
 .reference_title {
@@ -190,14 +169,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 30px;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
+  height: 3rem;
   width: 100%;
 }
 
