@@ -344,6 +344,23 @@
   }
 }
 
+@media only screen and (max-height: 760px) {
+  .chat {
+    grid-row: 2 / span 6; /* 더 위로 배치 */
+  }
+  .suggestContainer {
+    grid-row: 8 / span 2; /* 더 위로 배치 */
+    margin-top: 4rem;
+  }
+
+  .promptWrap {
+    grid-row: 10 / span 1; /* promptWrap을 더 아래로 배치 */
+    height: auto; /* 높이를 자동으로 조정 */
+    margin-top: 0rem;
+    padding: none;
+  }
+}
+
 .suggest {
   grid-row: 2 / 2 span;
   display: flex;

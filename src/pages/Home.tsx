@@ -371,6 +371,11 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                   done_or_not={debate.done_or_not}
                 />
               ))}
+              <div className={styles.moreContainer}>
+                <Link className={styles.more} to={`/latestdebate`}>
+                  <p className={styles.SubTitleMore}>{'토론방 더보기'}</p>
+                </Link>
+              </div>
             </div>
           )}
           {showComponent === 'randomDoc' && (

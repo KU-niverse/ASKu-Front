@@ -50,6 +50,15 @@
   margin-top: 0px;
 }
 
+@media only screen and (max-width: 900px) {
+  .SubTitleMore {
+    margin-left: 0rem;
+    font-size: 1.7rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
 .HotDebate {
   grid-column: 1/7;
   grid-row: 2/3;
@@ -516,6 +525,8 @@
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
   gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
+  justify-items: center; /* 가로 방향 가운데 정렬 */
+  align-items: center; /* 세로 방향 가운데 정렬 */
 }
 
 .randomDocContainer {
@@ -523,4 +534,9 @@
   grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
   gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
+}
+.moreContainer {
+  grid-column: 1 / -1; /* 마지막 열 전체를 차지 */
+  justify-self: center; /* 가로 방향 가운데 정렬 */
+  align-self: center; /* 세로 방향 가운데 정렬 */
 }
