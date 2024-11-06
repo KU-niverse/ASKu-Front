@@ -333,7 +333,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           )}
           {showComponent === 'popularQuestions' && (
             <div className={styles.popularQuestionsContainer}>
-              {questionList.map((question: PopularQuestion) => (
+              {questionListMobile.map((question: PopularQuestion) => (
                 <PopularQuestion
                   key={question.id}
                   id={question.id}
