@@ -31,8 +31,6 @@ function useDebateMessages(title: string, debateId: number) {
         `${process.env.REACT_APP_HOST}/debate/view/${encodeURIComponent(title)}/${debateId}`,
         { withCredentials: true },
       )
-      console.log('Fetched Debate Messages:', res.data) // 콘솔에 Debate 메시지 데이터를 출력
-
       return res.data
     },
     {

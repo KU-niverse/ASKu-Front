@@ -143,7 +143,6 @@ const fetchDebateList = async (): Promise<DebateData[]> => {
     const res = await axios.get<DebateResponse>(`${process.env.REACT_APP_HOST}/debate/all/recent`, {
       withCredentials: true,
     })
-    console.log('Fetched Debate Data:', res.data.data) // 콘솔에 Debate 데이터를 출력
     return res.data.data
   } catch (error) {
     console.error('Error fetching debate list:', error) // 에러가 발생할 경우 콘솔에 에러 출력
