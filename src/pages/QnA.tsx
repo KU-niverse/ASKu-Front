@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import styles from './QnA.module.css'
@@ -11,6 +11,8 @@ import CommentQna from '../components/CommentQna'
 import link_icon from '../img/link_icon_new.svg'
 import emptyAnswer from '../img/emptyAnswer.svg'
 import comment_icon from '../img/comment_icon.png'
+import Question from '../components/Question'
+import question from '../img/wiki_qustion.svg'
 
 interface UserInfo {
   id: number
@@ -139,21 +141,23 @@ const QnA: React.FC = () => {
           </div>
         </div>
         {questionData && questionData.data && (
-          <QuestionQnA
-            question_id={parseInt(question_id!, 10)}
-            user_id={questionData.data[0].user_id}
-            nick={questionData.data[0].nickname}
-            content={questionData.data[0].content}
-            like_count={questionData.data[0].like_count}
-            created_at={questionData.data[0].created_at}
-            index_title={questionData.data[0].index_title}
-            answer_count={questionData.data[0].answer_count}
-            title={title!}
-            badge_image={questionData.data[0].badge_image}
+          <Question
             current_user_id={currentUserId ? currentUserId.id : null}
+            key={parseInt(question_id!, 10)}
+            id={parseInt(question_id!, 10)}
             doc_id={0}
+            user_id={questionData.data[0].user_id}
+            index_title={questionData.data[0].index_title}
+            content={questionData.data[0].content}
+            created_at={questionData.data[0].created_at}
             answer_or_not={false}
             is_bad={false}
+            nick={questionData.data[0].nickname}
+            like_count={questionData.data[0].like_count}
+            title={title!}
+            answer_count={questionData.data[0].answer_count}
+            badge_image={questionData.data[0].badge_image}
+            index={0}
           />
         )}
         <div className={styles.c_div}>
@@ -196,6 +200,11 @@ const QnA: React.FC = () => {
             ))
           )}
         </div>
+        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
+          <button type={'button'} className={styles.addQues}>
+            {'나도 질문하기'} <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
+          </button>
+        </Link>
       </div>
       <Footer />
     </div>

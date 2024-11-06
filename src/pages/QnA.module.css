@@ -99,16 +99,17 @@
 .no_answer {
   justify-self: center;
   width: 100%;
-  font-size: 3.2rem;
-  font-weight: 400;
+  font-size: 3.5rem;
+  font-weight: 500;
   text-align: center;
   height: 8rem;
+  margin: 3rem 0 10rem 0;
 }
 
 .no_answer_img {
   height: 10rem;
   align-self: center;
-  margin: 0;
+  margin: 5rem 0 0 0;
   padding: 0;
 }
 
@@ -116,34 +117,47 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
+  width: auto;
   border-radius: 12px;
   border: 0.1rem solid #d5d5d5;
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 2rem;
   align-items: center;
-  padding-bottom: 30px;
+  justify-items: center;
+  padding: 1.8rem 3.2rem 0.5rem 3.2rem;
 }
 
 .c_header {
   display: flex;
   flex-direction: row;
-  margin-right: auto;
-  margin-top: 0;
-  margin-bottom: 0;
+  width: 100%;
+  height: 5rem;
 }
 
 .c_header img {
-  margin: 2rem 0px 20px 4.2rem;
+  margin: 0 1.8rem 0 0;
   height: 2.3rem;
+  width: 3rem;
   align-self: center;
 }
 
 .c_headline {
   font-size: 2.4rem;
   font-weight: 700;
-  margin: 2rem 0px 20px 1rem;
+  margin: 0;
   color: black;
+  align-self: center;
+}
+
+.no_answer_img {
+  width: 100%;
+}
+
+.no_answer_img img {
+  width: 10rem;
+  height: 10rem;
+  align-self: center;
+  justify-self: center;
+  margin-left: 10rem;
 }
 
 .c_num {
@@ -160,12 +174,48 @@
   font-size: 1.5rem;
 }
 
+.addQues {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgba(222, 58, 88, 1);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+}
+
+.addQues:visited {
+  color: rgba(222, 58, 88, 1);
+  text-decoration: none;
+}
+
+.addQuesLink {
+  width: auto;
+  margin-top: 4.5rem;
+  text-decoration: none;
+  /* 밑줄 제거 */
+  color: inherit;
+  /* 텍스트 색상을 상속 */
+}
+
+.askIcon {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: 0.2rem;
+}
+
 @media only screen and (max-width: 767px) {
+
   .content {
     display: flex;
     flex-direction: column;
     width: auto;
-    margin: 2rem 2rem 0 2rem;
+    margin: 0 3rem 3rem 3rem;
     padding: initial;
   }
 
@@ -241,30 +291,39 @@
     font-size: 14px;
   }
 
+  .c_div {
+    margin-top: 1.4rem;
+    padding: 1.5rem 1.4rem 1.5rem 1.4rem;
+  }
+
   .textnum {
     font-size: 12px;
     margin-top: 10px;
   }
 
   .c_header {
-    margin-top: 1.4rem;
+    margin-top: 0;
     padding: 1.2rem 1.6rem 1.7rem 1.6rem;
     width: auto;
-    border-radius: 1rem;
-    border: 0.2rem solid rgba(213, 213, 213, 1);
+    padding: 0;
+    height: 2rem;
   }
 
   .c_header img {
     padding: 0;
     margin: 0;
-    width: 1.9rem;
-    height: 1.8rem;
+    width: 2.3rem;
+    height: 2.2rem;
   }
 
   .c_headline {
-    font-size: 1.9rem;
+    font-size: 2.2rem;
     padding-left: 1rem;
     margin: 0;
+  }
+
+  .no_answer {
+    margin-bottom: 5rem;
   }
 
   .c_num {
