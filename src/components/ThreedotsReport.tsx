@@ -17,7 +17,7 @@ interface ThreedotsReportProps {
 
 const fetchLoginStatus = async (): Promise<boolean> => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
     return res.status === 201 && res.data.success === true
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {

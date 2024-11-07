@@ -26,7 +26,7 @@ interface User {
 }
 
 interface UserData {
-  data: User[]
+  data: User
 }
 
 interface ChatbotProps {
@@ -100,6 +100,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
       withCredentials: true,
     })
+    console.log('res.data', res.data)
     return res.data
   }
 
@@ -119,8 +120,8 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   }
 
   const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
-    ['chatHistory', user?.data[0].id],
-    () => fetchPreviousChatHistory(user?.data[0].id),
+    ['chatHistory', user?.data.id],
+    () => fetchPreviousChatHistory(user?.data.id),
     {
       enabled: !!user, // Only fetch chat history if userId is available
       onSuccess: (data) => {
@@ -154,7 +155,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: user.data[0].id,
+          user_id: user.data.id,
         })
         return response.data
       }
@@ -595,7 +596,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
       {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
       {ClearModalOpen && (
-        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data[0].id} />
+        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data.id} />
       )}
       <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
         <textarea

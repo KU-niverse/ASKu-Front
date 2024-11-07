@@ -15,7 +15,7 @@ const LS_KEY_ID = 'LS_KEY_ID' // 로컬스토리지에 저장할 키
 const LS_KEY_SAVE_ID_FLAG = 'LS_KEY_SAVE_ID_FLAG' // 아이디 저장하기 체크여부
 
 const fetchLoginStatus = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  const response = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
   return response.data
 }
 

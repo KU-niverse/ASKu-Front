@@ -27,7 +27,7 @@ interface LoginStatusResponse {
 }
 
 const fetchLoginStatus = async (): Promise<LoginStatusResponse> => {
-  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
   return res.data
 }
 
@@ -82,7 +82,7 @@ const MobileChatBotPage = () => {
   return (
     <>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={() => {}} />
+      <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={() => { }} />
     </>
   )
 }

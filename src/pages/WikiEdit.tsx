@@ -38,7 +38,7 @@ interface WikiDocs {
 }
 
 const fetchLoginStatus = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
   return res.data
 }
 

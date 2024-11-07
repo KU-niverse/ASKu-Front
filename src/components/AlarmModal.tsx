@@ -77,7 +77,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
           withCredentials: true,
         })
         if (res.status === 201 && res.data.success === true) {
@@ -213,21 +213,21 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
           <div className={styles.alarmContent}>
             {notifications.length > 0
               ? notifications.map((notification) => (
-                  <div key={notification.id}>
-                    <Link to={generateLink(notification)} className={styles.alarmLink}>
-                      <p className={styles.alarmText}>{notification.message}</p>
-                    </Link>
-                    <hr
-                      style={{
-                        height: '0.3px',
-                        opacity: '0.7',
-                        backgroundColor: '#D5D5D5',
-                        width: '100%',
-                        marginLeft: '10px',
-                      }}
-                    />
-                  </div>
-                ))
+                <div key={notification.id}>
+                  <Link to={generateLink(notification)} className={styles.alarmLink}>
+                    <p className={styles.alarmText}>{notification.message}</p>
+                  </Link>
+                  <hr
+                    style={{
+                      height: '0.3px',
+                      opacity: '0.7',
+                      backgroundColor: '#D5D5D5',
+                      width: '100%',
+                      marginLeft: '10px',
+                    }}
+                  />
+                </div>
+              ))
               : null}
           </div>
         </div>

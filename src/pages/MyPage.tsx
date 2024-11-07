@@ -207,7 +207,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
       } else if (res.status === 401) {
@@ -393,10 +393,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                       ))}
                   {myBadge && myBadge.data && myBadge.data.length < 4
                     ? Array(4 - myBadge.data.length).fill(
-                        <div className={styles.lockedImage}>
-                          <img src={locked} alt={'locked'} />
-                        </div>,
-                      )
+                      <div className={styles.lockedImage}>
+                        <img src={locked} alt={'locked'} />
+                      </div>,
+                    )
                     : null}
                 </div>
                 <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.moreBadge}>
