@@ -72,7 +72,7 @@ interface TitleData {
 }
 
 interface ContributionData {
-  message: Contribution[]
+  data: Contribution[]
 }
 
 interface UserAuthResponse {
@@ -177,11 +177,11 @@ function WikiViewer() {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contributions/${title}`, {
       withCredentials: true,
     })
-    const data = response.data.message.map((contribution: { point: string; nickname: string }) => ({
+    const data = response.data.data.map((contribution: { point: string; nickname: string }) => ({
       ...contribution,
       point: parseInt(contribution.point, 10),
     }))
-    return { message: data }
+    return { data }
   }
 
   const { data: wikiData, isLoading: wikiLoading, error: wikiError } = useQuery(['wikiData', title], fetchWiki)
@@ -220,10 +220,10 @@ function WikiViewer() {
 
   useEffect(() => {
     if (contributeData) {
-      setContribute(contributeData.message)
-      const total = contributeData.message.reduce((acc, item) => acc + item.point, 0)
+      setContribute(contributeData.data)
+      const total = contributeData.data.reduce((acc, item) => acc + item.point, 0)
       setTotalPoint(total)
-      setBlank(contributeData.message.length === 0)
+      setBlank(contributeData.data.length === 0)
       setLoading(false)
     }
   }, [contributeData])
