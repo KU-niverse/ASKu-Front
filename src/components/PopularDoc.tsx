@@ -17,14 +17,24 @@ const PopularDoc = (props: HistoryBoxProps) => {
 
   return (
     <div className={styles.contents}>
-      <div
-        className={styles.contentsOne}
-        onClick={() => {
-          const encodedTitle = encodeURIComponent(title)
-          nav(`/wiki/${encodedTitle}`)
-        }}
-      >
-        <div className={styles.versionContainer}>
+      <div className={styles.contentsOne}>
+        <div
+          className={styles.versionContainer}
+          onClick={() => {
+            const encodedTitle = encodeURIComponent(title)
+            nav(`/wiki/${encodedTitle}`)
+          }}
+          role="button" // 버튼 역할을 추가하여 시각적 의미 부여
+          tabIndex={0} // 키보드 접근성 추가
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              // Enter 또는 스페이스 키로도 nav 호출
+              e.preventDefault()
+              const encodedTitle = encodeURIComponent(title)
+              nav(`/wiki/${encodedTitle}`)
+            }
+          }}
+        >
           <img src={versionimg} alt={'버전이미지'} className={styles.versionIcon} />
           <div className={styles.version}>
             {'V'}

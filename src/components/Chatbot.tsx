@@ -600,7 +600,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
         <textarea
           className={`${styles.prompt} ${loading ? styles.disabled : ''}`}
-          placeholder={'AI에게 무엇이든 물어보세요!'}
+          placeholder={'하호에게 궁금한 점을 질문하세요!'}
           value={inputValue}
           onChange={inputChange}
           onKeyDown={handleKeyDown}

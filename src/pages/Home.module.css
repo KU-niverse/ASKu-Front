@@ -8,10 +8,10 @@
 
 .popDocList {
   display: grid;
-  grid-template-columns: repeat(7,1fr);
+  grid-template-columns: repeat(7, 1fr);
 }
 
-.homeWrap {
+.desktopViewContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 24px 24px;
@@ -50,11 +50,20 @@
   margin-top: 0px;
 }
 
+@media only screen and (max-width: 900px) {
+  .SubTitleMore {
+    margin-left: 0rem;
+    font-size: 1.7rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
 .HotDebate {
   grid-column: 1/7;
   grid-row: 2/3;
   margin-bottom: 2%;
-  border-bottom: solid #EBEBEB 1px;
+  border-bottom: solid #ebebeb 1px;
   padding-bottom: 2%;
 }
 
@@ -62,7 +71,7 @@
   grid-column: 1/7;
   grid-row: 3/4;
   margin-bottom: 2%;
-  border-bottom: solid #EBEBEB 1px;
+  border-bottom: solid #ebebeb 1px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -72,13 +81,11 @@
 .recommendTag {
   grid-column: 3/6;
   grid-row: 4/5;
-
-
 }
 
 .HomePart {
   margin-bottom: 10px;
-  border-bottom: solid #EBEBEB 2px;
+  border-bottom: solid #ebebeb 2px;
 }
 
 .HotDebateList {
@@ -87,7 +94,7 @@
   height: 70%;
 }
 
-.questionList {
+.questionLpopularQuestionsContainerist {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -188,16 +195,20 @@
 }
 
 .chatBotContainer {
-  height: 80vh;
+  height: 70vh;
   font-size: 100px;
   grid-column: 1/2;
 }
 
 @media only screen and (max-width: 767px) {
   .chatBotContainer {
+    display: flex;
+    align-items: center;
     flex-direction: column;
-    align-content: center;
     flex-wrap: nowrap;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -211,7 +222,7 @@
   grid-column: 1/7;
   grid-row: 1/2;
   margin-bottom: 2%;
-  border-bottom: solid #EBEBEB 1px;
+  border-bottom: solid #ebebeb 1px;
   padding-bottom: 1%;
 }
 
@@ -229,7 +240,6 @@
   margin-top: 0px;
   font-size: 2.4rem;
   margin-bottom: 5%;
-
 }
 
 .realTime {
@@ -240,7 +250,6 @@
   height: 95%;
   column-gap: 24px;
 }
-
 
 @media (max-width: 767px) {
   .realTime {
@@ -286,7 +295,6 @@
 .realTimerank:hover {
   color: #fff;
   background-color: #000;
-
 }
 
 .question {
@@ -317,7 +325,6 @@
   text-decoration: none;
   align-items: flex-start;
   margin-right: 10px;
-
 }
 
 .rankWrap {
@@ -380,19 +387,23 @@
   width: 90%;
   padding-top: 5%;
 }
-.randomBackContainer{
+
+.randomBackContainer {
   text-align: center;
 }
-.more{
+
+.more {
   display: flex;
   align-items: center;
 }
-.randomDocTitleContainer{
+
+.randomDocTitleContainer {
   width: 50%;
   text-align: center;
   font-weight: 700;
   word-break: keep-all;
 }
+
 .randomLink {
   text-decoration: none;
   /* 밑줄 제거 */
@@ -411,4 +422,152 @@
 .randomBtn {
   width: 17px;
   cursor: pointer;
+}
+
+.mobileViewContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileTitleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileTitlePink {
+  align-self: flex-start;
+  font-size: 4.5rem;
+  margin-top: 2rem;
+  margin-left: 3rem;
+  font-weight: 700;
+  color: #f86982;
+}
+
+.mobileTitleBlack {
+  align-self: flex-start;
+  font-size: 4.5rem;
+  margin-left: 3rem;
+  font-weight: 700;
+}
+
+.mobileButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2rem;
+  overflow-x: auto;
+  /* 좌우 스크롤 활성화 */
+  white-space: nowrap;
+  /* 버튼들이 한 줄에 이어지도록 설정 */
+}
+
+.mobileButtonContainer::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari에서 스크롤바 숨김 */
+}
+
+.mobileButton {
+  font-size: 2rem;
+  padding: 3rem;
+  display: flex;
+  background: rgba(238, 238, 238, 1);
+  margin: 0.5rem;
+  width: 100%;
+  height: 5rem;
+  border-radius: 30.42px;
+  align-items: center;
+  justify-content: center;
+  color: rgba(116, 116, 116, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.mobileChatbotButtonContainer {
+  margin-right: 2rem;
+}
+
+.mobileChatbotButton {
+  font-size: 2rem;
+  display: flex;
+  background: rgba(238, 238, 238, 1) !important;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+  color: rgba(116, 116, 116, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.mobileButton.clicked {
+  background: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* 버튼에 그림자 추가 */
+  color: white;
+}
+
+.mobileChatbotButton.clicked {
+  background: black !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* 버튼에 그림자 추가 */
+  color: white;
+}
+
+.mobileChatbotButton {
+  margin-left: 1rem;
+  margin-right: -1rem;
+  border: none;
+  background: none;
+}
+
+.popularDocsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+  border-radius: 50px;
+}
+
+.popularQuestionsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+}
+
+.debateRoomContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+  justify-items: center;
+  /* 가로 방향 가운데 정렬 */
+  align-items: center;
+  /* 세로 방향 가운데 정렬 */
+}
+
+.randomDocContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
+  padding: 2.5rem;
+}
+
+.moreContainer {
+  grid-column: 1 / -1;
+  /* 마지막 열 전체를 차지 */
+  justify-self: center;
+  /* 가로 방향 가운데 정렬 */
+  align-self: center;
+  /* 세로 방향 가운데 정렬 */
 }

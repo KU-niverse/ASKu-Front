@@ -119,43 +119,10 @@ div.navDebate:hover {
   }
 }
 
-.inputcontainer {
-  display: flex;
-  align-items: center; /* 아이템을 수직 가운데 정렬 */
-  position: relative;
-  height: 3rem;
-  width: 6rem;
-}
-
-.searchIcon {
-  width: 3rem;
-  height: 3rem;
-  position: absolute;
-  cursor: pointer;
-  z-index: 1; /* 아이콘을 입력 필드 위에 놓이도록 */
-  margin-left: 1rem;
-  padding-top: 0.2rem;
-}
 @media only screen and (max-width: 767px) {
   .inputcontainer {
     display: none;
   }
-}
-
-.headerInput {
-  border: none;
-  height: 100%;
-  padding-left: 5rem;
-  font-size: 2.4rem;
-  font-weight: 600;
-}
-.headerInput:focus {
-  border: none; /* 포커스 시에도 테두리 없음 */
-  outline: none; /* 포커스 시 기본 outline 제거 */
-}
-.headerInput::placeholder {
-  color: #cccbcb;
-  font-size: 2rem;
 }
 .icon {
   width: 20px; /* Adjust the size as needed */
@@ -375,6 +342,11 @@ div.navDebate:hover {
   margin-right: 1.5rem;
 }
 
+@media only screen and (max-width: 767px) {
+  .searchInputContainer {
+    display: none;
+  }
+}
 @media only screen and (max-width: 767px) {
   .repBadge {
     margin-left: 3.75rem;

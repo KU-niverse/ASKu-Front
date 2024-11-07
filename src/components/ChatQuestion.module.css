@@ -11,8 +11,8 @@
 
 @media screen and (max-width: 767px) {
   .questionBox {
-    width: calc(100vw - 50px);
-    margin-right: 15px;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .questionBox {
@@ -102,5 +102,5 @@
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #D5D5D5, #6F6F6F);
+  background: linear-gradient(to bottom, #d5d5d5, #6f6f6f);
 }

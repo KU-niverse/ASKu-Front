@@ -23,6 +23,7 @@ import all_document from '../img/all_document.svg'
 import recent_debate from '../img/recent_debate.svg'
 import random_document from '../img/random_document.svg'
 import arrow_down from '../img/arrow_down.svg'
+import SearchInputComponent from './Home/SearchInputComponent'
 
 interface UserData {
   id: number
@@ -290,34 +291,8 @@ function Header({ userInfo, setUserInfo }: any) {
         </div>
 
         {/* 검색 입력 필드 */}
-        <div className={styles.inputcontainer}>
-          <img
-            role={'presentation'}
-            src={inputValue.trim() ? searchIconRed : searchIconBlack} // inputValue가 있으면 searchIconRed, 없으면 searchIconBlack
-            alt={'icon'}
-            className={styles.searchIcon}
-            onClick={() => {
-              if (inputValue.trim() !== '') {
-                Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
-                setInputValue('')
-              }
-            }}
-          />
-          <input
-            className={styles.headerInput}
-            placeholder={'어떤 정보를 찾으시나요?'}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                if (inputValue.trim() !== '') {
-                  window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
-                  setInputValue('')
-                }
-              }
-            }}
-          />
+        <div className={styles.searchInputContainer}>
+          <SearchInputComponent inputValue={inputValue} setInputValue={setInputValue} />
         </div>
 
         {/* 왼쪽 네비게이션 버튼 영역 (최근 변경, 최근 토론, 랜덤 문서 등) */}

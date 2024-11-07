@@ -6,7 +6,7 @@
   border-radius: 20px;
   border: 0.1rem solid;
   border-color: rgba(213, 213, 213, 0.8);
-  background: linear-gradient(to bottom, #FFEEF0, #FFFFFF);
+  background: linear-gradient(to bottom, #ffeef0, #ffffff);
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -17,20 +17,15 @@
   justify-content: flex-start;
 }
 
-@media only screen and (max-width: 900px) {
-  .chatBot {
-    margin-right: calc((100vw - 750px) / 2);
-    margin-left: calc((100vw - 750px) / 2);
-  }
-}
-
 @media only screen and (max-width: 767px) {
-  .chatBot {
-    display: none;
-  }
-
-  .chatBot {
-    display: none;
+  .chatbot {
+    width: 90%;
+    /* 화면 폭을 90%로 설정 */
+    height: 100%;
+    /* 높이를 자동으로 조정 */
+    margin-top: -2rem;
+    padding: 10px;
+    /* 내부 여백 조절 */
   }
 }
 
@@ -46,14 +41,21 @@
 
 /* 챗봇박스 헤더 - 로고, 도움말/초기화 버튼 포함 */
 .chatbotHeader {
-  grid-column: 1/ span 6;
-  grid-row: 1/ span 1;
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 1;
   display: flex;
   flex: row;
   justify-content: space-between;
   margin-left: 3.2rem;
   margin-right: 3.2rem;
   border-bottom: 0.1rem solid rgba(213, 213, 213, 0.5);
+}
+
+@media only screen and (max-width: 767px) {
+  .chatbotHeader {
+    margin-left: 0rem;
+    margin-right: 2rem;
+  }
 }
 
 .title {
@@ -67,13 +69,25 @@
   margin-left: 1.8rem;
 }
 
+@media only screen and (max-width: 767px) {
+  .title {
+    font-size: 6rem;
+  }
+}
+
 .haho {
   margin-right: 1.6rem;
   width: 3rem;
   height: 3rem;
   padding: 0.3rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
+}
+
+@media only screen and (max-width: 767px) {
+  .haho {
+    display: none;
+  }
 }
 
 .buttonContainer {
@@ -111,16 +125,29 @@
   padding: 0;
 }
 
+@media only screen and (max-width: 767px) {
+  .buttonText {
+    font-size: 1.8rem;
+    font-weight: 420;
+  }
+}
+
 /* 대화만 포함하는 컨테이너 */
 .chat {
-  grid-column: 1/span 6;
-  grid-row: 2/span 5;
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 5;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: scroll;
   padding: 0;
   margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .chat {
+    grid-row: 2 / span 7;
+  }
 }
 
 .initialChatbox {
@@ -143,7 +170,7 @@
   font-size: 3.2rem;
   letter-spacing: 9%;
   font-weight: 700;
-  background: linear-gradient(to right, #9F132E, #FF768F);
+  background: linear-gradient(to right, #9f132e, #ff768f);
   background-clip: text;
   white-space: nowrap;
   /* 줄바꿈을 방지 */
@@ -206,7 +233,7 @@
   justify-self: center;
   font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -305,7 +332,6 @@
   cursor: pointer;
 }
 
-
 /* 챗봇 추천 질문 컨테이너 */
 .suggestContainer {
   grid-row: 7 / span 2;
@@ -320,6 +346,45 @@
   box-sizing: border-box;
   /* height: auto; */
   margin-right: 7.4rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .suggestContainer {
+    grid-row: 9 / span 2;
+    padding-left: 0rem;
+    margin-right: 2rem;
+    padding-bottom: 1.8rem;
+  }
+
+  .promptWrap {
+    grid-row: 10 / span 1;
+    /* promptWrap을 더 아래로 배치 */
+    margin-top: 0rem;
+    padding: none;
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media only screen and (max-height: 760px) {
+  .chat {
+    grid-row: 2 / span 6;
+    /* 더 위로 배치 */
+  }
+
+  .suggestContainer {
+    grid-row: 8 / span 2;
+    /* 더 위로 배치 */
+    margin-top: 4rem;
+    padding-bottom: 1.8rem;
+  }
+
+  .promptWrap {
+    grid-row: 10 / span 1;
+    /* promptWrap을 더 아래로 배치 */
+    margin-top: 0rem;
+    padding: none;
+    margin-bottom: 0.8rem;
+  }
 }
 
 .suggest {
@@ -350,6 +415,31 @@
   /* 줄바꿈을 방지 */
   white-space: nowrap;
   overflow-x: auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .textBox {
+    display: flex;
+    border: 1px solid #9f132e;
+    height: 16px;
+    /* 높이 줄이기 */
+    border-radius: 16px;
+    /* 경계 반경 줄이기 */
+    font-size: 1.3rem;
+    /* 폰트 크기 줄이기 */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 0.2rem;
+    /* 여백 줄이기 */
+    padding: 0.4rem 1.5rem 0.3rem 1.5rem;
+    /* 패딩 줄이기 */
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+    overflow-x: auto;
+    align-items: center;
+  }
 }
 
 .textBox:hover {
@@ -392,7 +482,7 @@
   border: none;
   margin-left: 2.7rem;
   resize: none;
-  margin-top: 1.9rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   font-size: 1.7rem;
   font-weight: 500;
@@ -401,6 +491,19 @@
   /* 인터넷 익스플로러 */
   scrollbar-width: none;
   /* 파이어폭스 */
+}
+
+@media only screen and (max-width: 767px) {
+  .promptWrap {
+    grid-column: 1 / span 6;
+    grid-row: 10 / span 1;
+    margin-top: 4rem;
+    height: 45%;
+  }
+
+  .prompt {
+    font-size: 1.5rem;
+  }
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
