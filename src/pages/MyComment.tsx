@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
-import Pagination from '../components/Pagination'
 import styles from './MyComment.module.css'
 import Header from '../components/Header'
 import Comment from '../components/Comment'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
 import emptyDebate from '../img/emptyQuestion.svg'
+import Paging from '../components/Paging'
 
 interface UserInfo {
   id: number
@@ -69,6 +69,7 @@ const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [page, setPage] = useState<number>(1)
+  const pageNumber = 10
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -138,11 +139,9 @@ const MyComment = () => {
             />
           ))
         )}
-        {myDebate?.message.length > 10 && (
-          <div style={{ marginTop: '3.5rem' }}>
-            <Pagination total={myDebate.message.length} limit={10} page={page} setPage={setPage} />
-          </div>
-        )}
+        <div style={{ marginTop: '5.5rem' }}>
+          <Paging total={myDebate.message.length} perPage={pageNumber} activePage={page} onChange={setPage} />
+        </div>
       </div>
       {loadingMyDebate || loadingMypage ? null : <Footer />}
     </div>
