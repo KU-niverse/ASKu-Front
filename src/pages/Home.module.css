@@ -195,7 +195,7 @@
 }
 
 .chatBotContainer {
-  height: 80vh;
+  height: 70vh;
   font-size: 100px;
   grid-column: 1/2;
 }
@@ -386,19 +386,23 @@
   width: 90%;
   padding-top: 5%;
 }
+
 .randomBackContainer {
   text-align: center;
 }
+
 .more {
   display: flex;
   align-items: center;
 }
+
 .randomDocTitleContainer {
   width: 50%;
   text-align: center;
   font-weight: 700;
   word-break: keep-all;
 }
+
 .randomLink {
   text-decoration: none;
   /* 밑줄 제거 */
@@ -422,6 +426,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .mobileTitleContainer {
   display: flex;
   flex-direction: column;
@@ -449,12 +454,17 @@
   flex-direction: row;
   align-items: center;
   padding: 2rem;
-  overflow-x: auto; /* 좌우 스크롤 활성화 */
-  white-space: nowrap; /* 버튼들이 한 줄에 이어지도록 설정 */
+  overflow-x: auto;
+  /* 좌우 스크롤 활성화 */
+  white-space: nowrap;
+  /* 버튼들이 한 줄에 이어지도록 설정 */
 }
+
 .mobileButtonContainer::-webkit-scrollbar {
-  display: none; /* Chrome, Safari에서 스크롤바 숨김 */
+  display: none;
+  /* Chrome, Safari에서 스크롤바 숨김 */
 }
+
 .mobileButton {
   font-size: 2rem;
   padding: 3rem;
@@ -474,6 +484,7 @@
 .mobileChatbotButtonContainer {
   margin-right: 2rem;
 }
+
 .mobileChatbotButton {
   font-size: 2rem;
   display: flex;
@@ -487,14 +498,18 @@
   border: none;
   cursor: pointer;
 }
+
 .mobileButton.clicked {
   background: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* 버튼에 그림자 추가 */
   color: white;
 }
+
 .mobileChatbotButton.clicked {
   background: black !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 버튼에 그림자 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* 버튼에 그림자 추가 */
   color: white;
 }
 
@@ -507,36 +522,50 @@
 
 .popularDocsContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
-  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
   border-radius: 50px;
 }
 
 .popularQuestionsContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
-  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
 }
 
 .debateRoomContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
-  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
-  justify-items: center; /* 가로 방향 가운데 정렬 */
-  align-items: center; /* 세로 방향 가운데 정렬 */
+  justify-items: center;
+  /* 가로 방향 가운데 정렬 */
+  align-items: center;
+  /* 세로 방향 가운데 정렬 */
 }
 
 .randomDocContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 구성 */
-  gap: 2rem; /* 각 그리드 아이템 사이의 간격 설정 */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2개의 열로 구성 */
+  gap: 2rem;
+  /* 각 그리드 아이템 사이의 간격 설정 */
   padding: 2.5rem;
 }
+
 .moreContainer {
-  grid-column: 1 / -1; /* 마지막 열 전체를 차지 */
-  justify-self: center; /* 가로 방향 가운데 정렬 */
-  align-self: center; /* 세로 방향 가운데 정렬 */
+  grid-column: 1 / -1;
+  /* 마지막 열 전체를 차지 */
+  justify-self: center;
+  /* 가로 방향 가운데 정렬 */
+  align-self: center;
+  /* 세로 방향 가운데 정렬 */
 }
