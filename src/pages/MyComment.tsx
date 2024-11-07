@@ -69,7 +69,9 @@ const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [page, setPage] = useState<number>(1)
-  const pageNumber = 10
+  const perPage = 10
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -126,21 +128,23 @@ const MyComment = () => {
           mypageData &&
           myDebate &&
           myDebate.message &&
-          myDebate.message.map((debate: MyDebateMessage) => (
-            <Comment
-              key={debate.debate_id}
-              id={debate.debate_id}
-              subject={debate.debate_subject}
-              content={debate.debate_content}
-              created_at={new Date(debate.debate_content_time)}
-              is_bad={debate.is_bad}
-              docsname={debate.doc_title}
-              nick={mypageData.data[0].nickname}
-            />
-          ))
+          myDebate.message
+            .slice(startIndex, endIndex)
+            .map((debate: MyDebateMessage) => (
+              <Comment
+                key={debate.debate_id}
+                id={debate.debate_id}
+                subject={debate.debate_subject}
+                content={debate.debate_content}
+                created_at={new Date(debate.debate_content_time)}
+                is_bad={debate.is_bad}
+                docsname={debate.doc_title}
+                nick={mypageData.data[0].nickname}
+              />
+            ))
         )}
         <div style={{ marginTop: '5.5rem' }}>
-          <Paging total={myDebate.message.length} perPage={pageNumber} activePage={page} onChange={setPage} />
+          <Paging total={myDebate.message.length} perPage={perPage} activePage={page} onChange={setPage} />
         </div>
       </div>
       {loadingMyDebate || loadingMypage ? null : <Footer />}
