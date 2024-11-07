@@ -28,6 +28,7 @@
   justify-items: center;
   border-radius: 3.9rem;
   background: linear-gradient(to bottom, #ff768f, #de3a58);
+  filter: drop-shadow(0px 4px 20px rgba(251, 112, 137, 0.45));
   cursor: pointer;
 }
 
