@@ -21,6 +21,7 @@
 .recentLists {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
 }
 .recentLists ul {
   display: flex;

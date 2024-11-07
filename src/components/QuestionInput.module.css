@@ -75,6 +75,7 @@
   /* 기본 텍스트 색상 */
   cursor: pointer;
   margin-left: auto;
+  font-weight: 700;
 }
 
 .q_csubmit.disabled {
@@ -132,7 +133,6 @@
 
   .q_cbox {
     height: 23rem;
-
   }
 
   .q_clastheader {

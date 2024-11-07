@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
 import styles from './MoreDebate.module.css'
 import Header from '../components/Header'
@@ -72,6 +74,7 @@ const MoreDebate: React.FC = () => {
   const { title } = useParams<{ title: string }>()
   const { isLoading, isError, error, data: debateListData } = useDebateList(title)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const navigate = useNavigate()
 
   React.useEffect(() => {
     track('view_wiki_debate_list')
@@ -84,7 +87,16 @@ const MoreDebate: React.FC = () => {
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <p className={styles.title}>
-            <span className={styles.pink}>{title}</span> 문서의 토론 목록
+            <span
+              className={styles.pink}
+              onClick={() => {
+                const encodedTitle = encodeURIComponent(title)
+                navigate(`/wiki/${encodedTitle}`)
+              }}
+            >
+              {title}
+            </span>{' '}
+            문서의 토론 목록
           </p>
           <div className={styles.menu}>
             <span className={styles.menu1}>{'항목'}</span>

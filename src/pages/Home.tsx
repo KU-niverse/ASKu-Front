@@ -448,7 +448,6 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
             <div className={styles.PopularQuestion}>
               <div className={styles.HomeTitle}>
                 <p className={styles.HomeSubTitle}>{'실시간 인기 질문'}</p>
-                <p className={styles.SubTitleMore}>{'질문 더보기'}</p>
               </div>
               <div className={styles.questionList}>
                 {isQuestionsLoading ? (
@@ -515,7 +514,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                 {isKeywordsLoading ? (
                   <p>{'Loading...'}</p>
                 ) : (
-                  popularKeywords.slice(0, 5).map((keyword: PopularKeyword, index: number) => (
+                  popularKeywords.slice(0, 11).map((keyword: PopularKeyword, index: number) => (
                     <Link
                       to={`/result/${encodeURIComponent(keyword.keyword).replace(/\./g, '%2E')}/${encodeURIComponent('popularsearch')}`}
                       className={styles.realrankWrap}

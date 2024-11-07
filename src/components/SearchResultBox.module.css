@@ -18,7 +18,7 @@
   cursor: pointer;
   border: 0.5px solid rgba(213, 213, 213, 1);
 }
-.versionIcon{
+.versionIcon {
   width: 20%;
   height: 70%;
 }
@@ -47,9 +47,8 @@
   justify-content: space-around;
   display: flex;
   flex-direction: column;
-  border-left: solid #D5D5D5 2px;
+  border-left: solid #d5d5d5 1px;
   padding-left: 5%;
-
 }
 
 .title {
@@ -83,7 +82,7 @@
 @media only screen and (max-width: 767px) {
   .resultbox {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     width: 100%;
     height: 120px; /* 최대 높이 설정 */
     overflow: hidden;
@@ -94,7 +93,7 @@
     box-sizing: border-box;
     cursor: pointer;
     border: 0.5px solid rgba(213, 213, 213, 1);
-    padding-left:0;
+    padding-left: 0;
   }
 
   .versionContainer {
@@ -103,7 +102,7 @@
     grid-column: 1 / 2;
     align-items: center;
     justify-content: center;
-    margin:0;
+    margin: 0;
   }
 
   .contents {
@@ -114,15 +113,14 @@
     justify-content: space-around;
     display: flex;
     flex-direction: column;
-    border-left: solid #D5D5D5 2px;
+    border-left: solid #d5d5d5 2px;
     padding-left: 5%;
   }
-  .version{
-    top:60%;
+  .version {
+    top: 60%;
     font-size: 13px;
   }
-  .versionImg{
+  .versionImg {
     width: 45px;
   }
-
 }

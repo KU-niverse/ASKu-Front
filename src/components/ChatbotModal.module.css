@@ -2,8 +2,9 @@
   width: 8.4rem;
   height: 8.2rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
   cursor: pointer;
+  filter: drop-shadow(0px 4px 20px rgba(251, 112, 137, 0.45));
 }
 
 .modalButton {
@@ -26,7 +27,8 @@
   align-items: center;
   justify-items: center;
   border-radius: 3.9rem;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
+  filter: drop-shadow(0px 4px 20px rgba(251, 112, 137, 0.45));
   cursor: pointer;
 }
 
@@ -75,7 +77,7 @@
   border-radius: 20px;
   border: 0.1rem solid;
   border-color: rgba(213, 213, 213, 0.8);
-  background: linear-gradient(to bottom, #FFEEF0, #FFFFFF);
+  background: linear-gradient(to bottom, #ffeef0, #ffffff);
 }
 
 @media only screen and (max-width: 900px) {
@@ -107,8 +109,8 @@
 
 /* 챗봇박스 헤더 - 로고, 도움말/초기화 버튼 포함 */
 .chatbotHeader {
-  grid-column: 1/ span 6;
-  grid-row: 1/ span 1;
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 1;
   display: flex;
   flex: row;
   justify-content: space-between;
@@ -134,7 +136,7 @@
   height: 4rem;
   padding: 0.3rem;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
 }
 
 .buttonContainer {
@@ -176,8 +178,8 @@
 
 /* 대화만 포함하는 컨테이너 */
 .chat {
-  grid-column: 1/span 6;
-  grid-row: 2/span 5;
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 5;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -217,7 +219,7 @@
   font-size: 3.2rem;
   letter-spacing: 9%;
   font-weight: 700;
-  background: linear-gradient(to right, #9F132E, #FF768F);
+  background: linear-gradient(to right, #9f132e, #ff768f);
   background-clip: text;
   white-space: nowrap;
   /* 줄바꿈을 방지 */
@@ -259,7 +261,7 @@
   justify-self: center;
   font-size: 2.8rem;
   font-weight: 700;
-  background: linear-gradient(to bottom, #FF768F, #DE3A58);
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
