@@ -346,7 +346,7 @@
   height: 13.7rem;
   box-sizing: border-box;
   /* height: auto; */
-  margin-right: 7.4rem;
+  margin-right: 6rem;
   margin-top: 1rem;
 }
 
@@ -377,8 +377,9 @@
   .suggestContainer {
     grid-row: 8 / span 2;
     /* 더 위로 배치 */
-    margin-top: 4rem;
-    padding-bottom: 1.6rem;
+    margin-top: 0rem;
+    padding-bottom: 5rem;
+    margin-right: 3rem;
   }
 
   .promptWrap {
@@ -474,7 +475,7 @@
   align-content: center;
   border: 0.14rem solid rgba(222, 58, 88, 1);
   border-radius: 60px;
-  width: 90%;
+  width: 85%;
   height: 40%;
 }
 
