@@ -39,7 +39,6 @@ import RouteChangeTracker from './RouteChangeTracker'
 import MyContribution from './pages/MyContribution'
 import ChatbotModal from './components/ChatbotModal'
 
-
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
 
