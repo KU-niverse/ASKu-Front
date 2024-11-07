@@ -67,8 +67,9 @@ const ChatAnswer: React.FC<ChatAnswerProps> = ({
 
   useEffect(() => {
     if (content) {
-      const newContent = content.split('\n').map((line) => (
-        <Fragment key={`content-line-${line}`}>
+      const newContent = content.split('\n').map((line, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Fragment key={`content-line-${index}-${line}`}>
           {line}
           <br />
         </Fragment>
