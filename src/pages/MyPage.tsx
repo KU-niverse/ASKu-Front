@@ -153,7 +153,7 @@ interface MyContributionMessage {
 interface MyContributionProps {
   status: number
   success: boolean
-  message: MyContributionMessage
+  data: MyContributionMessage
 }
 
 interface MyPageProps {
@@ -355,13 +355,13 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                   <div className={styles.contentTitle}>{'내 프로필'}</div>
                 </div>
                 <div className={styles.profileBox}>
-                  {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
+                  {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
                     <MyProfile
                       nick={mypageData.data[0].nickname}
                       point={mypageData.data[0].point}
                       badge={mypageData.data[0].rep_badge_name}
                       badgeimg={mypageData.data[0].rep_badge_image}
-                      percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
+                      percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
                     />
                   )}
                 </div>
@@ -434,13 +434,13 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                 <div>
                   <div className={styles.contributionBox}>
                     <div className={styles.graph}>
-                      {myContribute && myContribute.message && myContribute.message.docs.length === 0 ? (
+                      {myContribute && myContribute.data && myContribute.data.docs.length === 0 ? (
                         <p />
                       ) : (
                         myContribute &&
-                        myContribute.message &&
-                        myContribute.message.docs && (
-                          <Graph total_point={myContribute.message.point} docs={myContribute.message.docs} />
+                        myContribute.data &&
+                        myContribute.data.docs && (
+                          <Graph total_point={myContribute.data.point} docs={myContribute.data.docs} />
                         )
                       )}
                     </div>
@@ -608,13 +608,13 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
       <div className={styles.mobileMyPageContainer}>
         <div className={styles.mobileProfileContainer}>
           <div className={styles.mobileProfileBox}>
-            {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
+            {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
               <MyProfile
                 nick={mypageData.data[0].nickname}
                 point={mypageData.data[0].point}
                 badge={mypageData.data[0].rep_badge_name}
                 badgeimg={mypageData.data[0].rep_badge_image}
-                percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
+                percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
               />
             )}
           </div>
