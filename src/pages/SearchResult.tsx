@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
+
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
@@ -40,7 +40,7 @@ const fetchDocs = async (title: string) => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
     withCredentials: true,
   })
-  return result.data.message
+  return result.data.data
 }
 
 const fetchQues = async (title: string) => {
@@ -168,9 +168,9 @@ const SearchResearch = () => {
           <h4 className={styles.searchText}>
             {'"'}
             {title}
-            {'"'}
+            {'" '}
           </h4>
-          <h4>&nbsp;검색 결과</h4>
+          <h4 dangerouslySetInnerHTML={{ __html: '&nbsp;검색 결과' }} />
         </div>
         <div className={styles.typeWrap}>
           <p className={styles.type}>
@@ -198,9 +198,9 @@ const SearchResearch = () => {
               </div>
             ))}
             <div className={docs.length === 0 ? styles.cautionContainer : styles.hidden}>
-              <img src={CautionIcon} alt="cautionIcon" className={styles.cautionIcon} />
-              <p>검색결과가 없습니다.</p>
-              <p>다른 검색어를 입력해주세요.</p>
+              <img src={CautionIcon} alt={'cautionIcon'} className={styles.cautionIcon} />
+              <p>{'검색결과가 없습니다.'}</p>
+              <p>{'다른 검색어를 입력해주세요.'}</p>
             </div>
             <div className={docs.length === 0 ? styles.hidden : styles.pagingContainer}>
               <Paging total={docs.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
@@ -234,7 +234,7 @@ const SearchResearch = () => {
           </div>
         </div>
         <div className={styles.recents}>
-          <p className={styles.recentTitle}>최근 변경</p>
+          <p className={styles.recentTitle}>{'최근 변경'}</p>
           <div className={styles.recentWrap}>
             {historys.slice(0, 8).map((item: any, index: number) => {
               const timestamp = FormatTimeAgo(item.created_at)
