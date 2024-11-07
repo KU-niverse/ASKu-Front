@@ -127,7 +127,6 @@ function MyQuestion() {
 
   const questions = myQuestionData?.data || []
   const user = mypageData?.data[0] // 사용자 정보는 한 개만 있다고 가정
-
   return (
     <div className={styles.container}>
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
@@ -159,9 +158,10 @@ function MyQuestion() {
                 </p>
               </>
             ) : (
-              questions.slice(startIndex, endIndex).map((question) => (
+              questions.slice(startIndex, endIndex).map((question, index) => (
                 <MyQuestionList
-                  key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`${question.id}-${index}`}
                   id={question.id}
                   doc_id={question.doc_id}
                   user_id={question.user_id}

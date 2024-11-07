@@ -99,7 +99,6 @@ const MyComment = () => {
   if (debateError || mypageError) {
     return <div>{'Error loading data'}</div>
   }
-
   return (
     <div className={styles.container}>
       {loadingMyDebate || loadingMypage ? null : <Header userInfo={userInfo} setUserInfo={setUserInfo} />}
@@ -128,20 +127,19 @@ const MyComment = () => {
           mypageData &&
           myDebate &&
           myDebate.message &&
-          myDebate.message
-            .slice(startIndex, endIndex)
-            .map((debate: MyDebateMessage) => (
-              <Comment
-                key={debate.debate_id}
-                id={debate.debate_id}
-                subject={debate.debate_subject}
-                content={debate.debate_content}
-                created_at={new Date(debate.debate_content_time)}
-                is_bad={debate.is_bad}
-                docsname={debate.doc_title}
-                nick={mypageData.data[0].nickname}
-              />
-            ))
+          myDebate.message.slice(startIndex, endIndex).map((debate: MyDebateMessage, index) => (
+            <Comment
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${debate.debate_id}-${index}`}
+              id={debate.debate_id}
+              subject={debate.debate_subject}
+              content={debate.debate_content}
+              created_at={new Date(debate.debate_content_time)}
+              is_bad={debate.is_bad}
+              docsname={debate.doc_title}
+              nick={mypageData.data[0].nickname}
+            />
+          ))
         )}
         <div style={{ marginTop: '5.5rem' }}>
           <Paging total={myDebate.message.length} perPage={perPage} activePage={page} onChange={setPage} />
