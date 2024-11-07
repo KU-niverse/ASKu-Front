@@ -13,21 +13,19 @@
   box-sizing: border-box;
   cursor: pointer;
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   column-gap: 2.4rem;
   padding-top: 0;
-  height: 18rem;
-
-
+  height: 20rem;
 }
-.bkTag{
+.bkTag {
   display: flex;
   grid-column: 4 / 5;
   justify-content: center;
   height: 3.6rem;
 }
-.body{
-  background: #F9F9F9;
+.body {
+  background: #f9f9f9;
 }
 
 .contents {
@@ -39,17 +37,17 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.versionContainer{
+.versionContainer {
   grid-column: 1/2;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.contentContainer{
+.contentContainer {
   grid-column: 2/5;
 }
-.version{
+.version {
   position: absolute;
   top: 60%;
   left: 50%;
@@ -88,20 +86,20 @@
   color: blue; /* 링크 색상을 원하는 색상으로 조정 */
 }
 @media only screen and (max-width: 767px) {
-.versionContainer{
-  border-right: solid #D5D5D5 1px;
-  padding-right: 2rem;
-}
-.bkbox{
-  border: 1px solid rgba(213, 213, 213, 0.80);
-}
-.version{
-  left: 40%;
-}
-.bkbox{
-  box-shadow: none;
-}
-.content{
-  max-height: 8rem;
-}
+  .versionContainer {
+    border-right: solid #d5d5d5 1px;
+    padding-right: 2rem;
+  }
+  .bkbox {
+    border: 1px solid rgba(213, 213, 213, 0.8);
+  }
+  .version {
+    left: 40%;
+  }
+  .bkbox {
+    box-shadow: none;
+  }
+  .content {
+    max-height: 8rem;
+  }
 }
