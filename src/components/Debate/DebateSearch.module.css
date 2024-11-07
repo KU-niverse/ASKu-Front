@@ -7,7 +7,7 @@
   font-family: Pretendard;
   color: #de3a58;
   text-align: left;
-  margin:0;
+  margin: 0;
 }
 
 .searchInput {
@@ -18,24 +18,24 @@
   font-family: Pretendard;
   outline: none;
   border: none;
-  margin:1rem;
-  width:80%;
+  margin: 1rem;
+  width: 80%;
 }
-.searchInputContainer{
+.searchInputContainer {
   display: flex;
   align-items: center;
   flex-direction: row;
-  margin-top:3rem;
+  margin-top: 3rem;
   border-radius: 35px;
   background-color: #fff;
   border: 1px solid rgba(116, 116, 116, 0.5);
   box-sizing: border-box;
 }
-.InputContainer{
+.InputContainer {
   display: flex;
   align-items: center;
   flex-direction: row;
-  margin-top:3rem;
+  margin-top: 3rem;
   border-radius: 35px;
   background-color: #fff;
   border: 1px solid rgba(116, 116, 116, 0.5);
@@ -54,16 +54,15 @@
   cursor: pointer;
   padding-right: 2rem;
 }
-.headerInput{
+.headerInput {
   height: 3.7rem;
-  padding-left: 2rem;
   font-size: 1.6rem;
   color: #000;
   font-family: Pretendard;
   outline: none;
   border: none;
-  margin:1rem;
-  width:80%;
+  margin: 1rem;
+  width: 80%;
 }
 
 .hidden {
@@ -88,7 +87,6 @@
   cursor: pointer;
   padding-left: 10px;
   margin-bottom: 0px;
-
 }
 
 .linkTo {
@@ -96,8 +94,7 @@
   color: black; /* 기본 텍스트 색상 유지 */
 }
 @media only screen and (max-width: 767px) {
-  .resultList{
+  .resultList {
     width: 100%;
   }
-
 }
