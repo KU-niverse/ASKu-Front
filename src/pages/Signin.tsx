@@ -64,7 +64,7 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
   const mutation = useMutation(
     async () => {
       const response = await axios.post(
-        `${process.env.REACT_APP_HOST}/user/auth/signin`,
+        `${process.env.REACT_APP_HOST}/auth/signin`,
         {
           login_id: id,
           password,

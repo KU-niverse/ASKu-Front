@@ -393,10 +393,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                       ))}
                   {myBadge && myBadge.data && myBadge.data.length < 4
                     ? Array(4 - myBadge.data.length).fill(
-                      <div className={styles.lockedImage}>
-                        <img src={locked} alt={'locked'} />
-                      </div>,
-                    )
+                        <div className={styles.lockedImage}>
+                          <img src={locked} alt={'locked'} />
+                        </div>,
+                      )
                     : null}
                 </div>
                 <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.moreBadge}>
