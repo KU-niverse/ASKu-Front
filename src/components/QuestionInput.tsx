@@ -62,7 +62,7 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
   }
 
   const mutation = useMutation(
-    async (newQuestion: { index_title: string; content: string }) => {
+    async (newQuestion: { index_title: string; content: string; title: string }) => {
       const res = await axios.post(`${process.env.REACT_APP_HOST}/question/new/${title}`, newQuestion, {
         withCredentials: true,
       })
@@ -97,7 +97,7 @@ const QuestionInput = ({ onQuestionSubmit, title, wikiData, defaultOpt }: Questi
       alert('질문을 입력해주세요.')
       return
     }
-    mutation.mutate({ index_title: selectedOption, content: questionContent })
+    mutation.mutate({ index_title: selectedOption, content: questionContent, title })
   }
 
   const countCharacters = () => {

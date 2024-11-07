@@ -79,7 +79,7 @@ const submitQuestion = async ({
   submitData,
 }: {
   title: string
-  submitData: { index_title: string; content: string }
+  submitData: { index_title: string; content: string; title: string }
 }) => {
   const res = await axios.post(`${process.env.REACT_APP_HOST}/question/new/${encodeURIComponent(title)}`, submitData, {
     withCredentials: true,
@@ -111,7 +111,7 @@ const MoreQuestion: React.FC = () => {
     },
   })
 
-  const handleQuestionSubmit = async (submitData: { index_title: string; content: string }) => {
+  const handleQuestionSubmit = async (submitData: { index_title: string; content: string; title: string }) => {
     mutation.mutate({ title, submitData })
   }
 
@@ -169,7 +169,7 @@ const MoreQuestion: React.FC = () => {
             <div>
               {/* 헤더 섹션: 제목과 인기순 토글 */}
               <div className={styles.questionHeaderContainer}>
-                <div className={styles.questionTitle}>해당 질문들</div>
+                <div className={styles.questionTitle}>{'해당 질문들'}</div>
                 <div className={styles.switch}>
                   <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
                 </div>
