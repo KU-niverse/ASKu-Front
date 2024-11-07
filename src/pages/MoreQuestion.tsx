@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
@@ -139,7 +141,15 @@ const MoreQuestion: React.FC = () => {
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>
-                <div className={styles.q_pagename}>{title}</div>
+                <div
+                  className={styles.q_pagename}
+                  onClick={() => {
+                    const encodedTitle = encodeURIComponent(title)
+                    navigate(`/wiki/${encodedTitle}`)
+                  }}
+                >
+                  {title}
+                </div>
                 <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
 
