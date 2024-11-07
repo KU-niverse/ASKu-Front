@@ -94,7 +94,7 @@ const MyContribution: React.FC = () => {
     {
       status: number
       success: boolean
-      message: { docs: DocumentContribution[]; point: number }
+      data: { docs: DocumentContribution[]; point: number }
     },
     Error
   >('myContribute', async () => {
@@ -104,19 +104,19 @@ const MyContribution: React.FC = () => {
 
   // Loading or Error state
   if (loadingUserInfo || loadingMyWiki || loadingMyContribute) {
-    return <div>Loading...</div>
+    return <div>{'Loading...'}</div>
   }
 
   if (userInfoError || myWikiError || myContributeError) {
-    return <div>Error loading data</div>
+    return <div>{'Error loading data'}</div>
   }
 
   return (
     <div className={styles.pagewrap}>
-      <Header userInfo={userInfo} setUserInfo={() => {}} />
+      <Header userInfo={userInfo} setUserInfo={() => { }} />
       <div className={styles.contentSubContainer}>
         <div className={styles.contributeHeader}>
-          <div className={styles.contentTitle}>나의 기여 목록</div>
+          <div className={styles.contentTitle}>{'나의 기여 목록'}</div>
           <span className={styles.contentNum}>
             {'('}
             {myWiki && myWiki.data ? myWiki.data.length : 0}
@@ -138,10 +138,10 @@ const MyContribution: React.FC = () => {
           <div>
             <div className={styles.contributionBox}>
               <div className={styles.graph}>
-                {myContribute && myContribute.message.docs.length === 0 ? (
+                {myContribute && myContribute.data.docs.length === 0 ? (
                   <p />
                 ) : (
-                  myContribute && <Graph total_point={myContribute.message.point} docs={myContribute.message.docs} />
+                  myContribute && <Graph total_point={myContribute.data.point} docs={myContribute.data.docs} />
                 )}
               </div>
             </div>
