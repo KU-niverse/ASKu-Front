@@ -508,6 +508,17 @@
   .prompt {
     font-size: 1.5rem;
   }
+
+  .sendBtn {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #9f132e, #de3a58);
+    width: 2.7rem !important;
+    height: 2.7rem !important;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0.6rem !important;
+    box-sizing: border-box;
+  }
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
