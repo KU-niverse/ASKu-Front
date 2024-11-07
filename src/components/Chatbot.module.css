@@ -555,9 +555,9 @@
 
 .sendBtn {
   cursor: pointer;
-  background: linear-gradient(to right, #9f132e, #de3a58);
-  width: 3rem;
-  height: 3rem;
+  background: linear-gradient(to bottom, #9f132e, #de3a58);
+  width: 3.7rem;
+  height: 3.7rem;
   border-radius: 50%;
   cursor: pointer;
   padding: 0.8rem;
