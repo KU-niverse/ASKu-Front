@@ -62,7 +62,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .legendColor {
@@ -76,7 +76,7 @@
 .legendname {
   font-size: 2rem;
   margin-right: 0.5rem;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
