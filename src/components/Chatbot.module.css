@@ -11,6 +11,11 @@
   height: 100%;
   box-sizing: border-box;
 }
+.chatSet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
 @media only screen and (max-width: 767px) {
   .chatbot {
@@ -58,7 +63,7 @@
   flex: row;
   align-items: center;
   font-weight: 700;
-  font-size: 4rem;
+  font-size: 5rem;
   color: rgb(0, 0, 0);
   cursor: default;
   margin-left: 1.8rem;
@@ -399,6 +404,8 @@
   height: 20px;
   border-radius: 20px;
   font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;

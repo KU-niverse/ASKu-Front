@@ -17,8 +17,10 @@ html {
   .container {
     transition: all 0.3s ease;
     position: relative;
-  }
+    border-bottom: 0px;
+    box-shadow: none;
 }
+  }
 
 .flexContainer {
   display: grid;
@@ -315,6 +317,7 @@ div.navDebate:hover {
   cursor: pointer;
   font-weight: 700;
   font-size: 1.9rem;
+  white-space: nowrap;
 }
 .registerBtn a:visited {
   text-decoration: none; /* 호버 및 클릭 시에도 밑줄 제거 */
@@ -501,7 +504,7 @@ div.navDebate:hover {
   border: none;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0rem 1rem;
   cursor: pointer;
   border-top: 1px solid #d5d5d5;
 }
@@ -527,7 +530,7 @@ div.navDebate:hover {
 #mobileBookmark {
   width: 3.2rem;
   margin-left: 3.5rem;
-  margin-right: 3rem;
+  margin-right: 2rem;
 }
 
 .randomDocs {

@@ -4,9 +4,11 @@ import axios from 'axios'
 import styles from './MyQuestion.module.css'
 import Header from '../components/Header'
 import MyQuestionList from '../components/MyQuestionList'
+import Pagination from '../components/Pagination'
 import Footer from '../components/Footer'
 import Switch from '../components/Switch'
 import SpinnerMypage from '../components/SpinnerMypage'
+import emptyQuestion from '../img/emptyQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -115,6 +117,7 @@ function MyQuestion() {
   const [isToggled, setIsToggled] = useState(false)
   const arrange = isToggled ? 'popularity' : 'latest'
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
 
   const { isLoading: isLoadingMyQuestion, error: myQuestionError, data: myQuestionData } = useMyQuestion(arrange)
   const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
@@ -124,45 +127,63 @@ function MyQuestion() {
 
   return (
     <div className={styles.container}>
-      <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
         <SpinnerMypage />
       ) : (
-        <div className={styles.content}>
-          <div className={styles.header}>
-            <p className={styles.question}>{'내가 쓴 질문'}</p>
-            <div className={styles.switch}>
-              <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+        <>
+          <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+          <div className={styles.content}>
+            <div className={styles.header}>
+              <p className={styles.question}>{'내가 쓴 질문'}</p>
+              <p className={styles.question_num}>
+                {'('}
+                {questions.length}
+                {')'}
+              </p>
+              <div className={styles.switch}>
+                <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+              </div>
             </div>
+            {myQuestionError || mypageError ? (
+              <div>에러: {(myQuestionError || mypageError).message}</div>
+            ) : questions.length === 0 ? (
+              <>
+                <img src={emptyQuestion} alt={'empty_Qution'} className={styles.emptyQuestion} />
+                <p className={styles.emptyQuestionText}>
+                  {'아직 작성된'}
+                  <br />
+                  {'질문이 없습니다'}
+                </p>
+              </>
+            ) : (
+              questions.map((question) => (
+                <MyQuestionList
+                  key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                  id={question.id}
+                  doc_id={question.doc_id}
+                  user_id={question.user_id}
+                  index_title={question.index_title}
+                  content={question.content}
+                  created_at={question.created_at}
+                  answer_or_not={question.answer_or_not}
+                  is_bad={question.is_bad}
+                  docsname={question.doc_title}
+                  nick={mypageData.data[0].nickname}
+                  like_count={question.like_count}
+                  answer_count={question.answer_count}
+                  badge_image={question.badge_image}
+                />
+              ))
+            )}
+            {questions?.length > 10 && (
+              <div style={{ marginTop: '3.5rem' }}>
+                <Pagination total={questions.length} limit={10} page={page} setPage={setPage} />
+              </div>
+            )}
           </div>
-          {myQuestionError || mypageError ? (
-            <div>에러: {(myQuestionError || mypageError).message}</div>
-          ) : questions.length === 0 ? (
-            <p>아직 작성한 질문이 없습니다.</p>
-          ) : (
-            questions.map((question) => (
-              <MyQuestionList
-                key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-                id={question.id}
-                doc_id={question.doc_id}
-                user_id={question.user_id}
-                index_title={question.index_title}
-                content={question.content}
-                created_at={question.created_at}
-                answer_or_not={question.answer_or_not}
-                is_bad={question.is_bad}
-                docsname={question.doc_title}
-                nick={mypageData.data[0].nickname}
-                like_count={question.like_count}
-                answer_count={question.answer_count}
-                badge_image={question.badge_image}
-              />
-            ))
-          )}
-        </div>
+          <Footer />
+        </>
       )}
-      <Footer />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import edit from '../img/edit.png'
 import styles from './Comment.module.css'
 import ThreedotsReport from './ThreedotsReport'
 import FormatDate from './FormatDate'
+import campaign from '../img/campaign.svg'
 
 interface CommentProps {
   id: number
@@ -51,8 +52,9 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
       <div className={styles.q_footer}>
         <div className={styles.q_frontfooter}>
           <div className={styles.q_like}>
-            <span role={'presentation'} onClick={linktoComment} className={styles.likeCount}>
-              {subject} {'토론방\r'}
+            <img src={campaign} alt={'campaign'} className={styles.campaignIcon} />
+            <span role={'presentation'} onClick={linktoComment} className={styles.debate_content}>
+              {content}
             </span>
           </div>
         </div>

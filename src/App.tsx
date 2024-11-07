@@ -36,6 +36,9 @@ import WikiRawPrev from './pages/WikiRawPrev'
 import MobileChatBotPage from './pages/MobileChatbotPage'
 import Oauth from './pages/Oauth'
 import RouteChangeTracker from './RouteChangeTracker'
+import MyContribution from './pages/MyContribution'
+import ChatbotModal from './components/ChatbotModal'
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -85,6 +88,7 @@ function App() {
         <Route path={'/mybookmark'} element={<MyBookmark loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path={'/mypage/myquestion'} element={<MyQuestion />} />
         <Route path={'/mypage/mybadge'} element={<MyBadge />} />
+        <Route path={'/mypage/mycontribution'} element={<MyContribution />} />
         <Route path={'/wiki/morequestion/:title'} element={<MoreQuestion />} />
         <Route path={'/wiki/qna'} element={<QnA />} />
         <Route path={'/Test'} element={<Test />} />
@@ -95,6 +99,9 @@ function App() {
         <Route path={'/wiki/morequestion/:title/:question_id'} element={<QnA />} />
         <Route path={'/oauth-kopas/:uuid'} element={<Oauth />} />
       </Routes>
+      <div className={'chatbot-modal'}>
+        <ChatbotModal isLoggedIn={loggedIn} setIsLoggedIn={setLoggedIn} />
+      </div>
     </Router>
   )
 }

@@ -5,6 +5,7 @@
   padding: 30px 0;
   margin-top: 25px;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
@@ -36,11 +37,13 @@
   font-size: 1.6rem;
   font-weight: 600;
 }
+
 .q_date {
   margin-left: 2rem;
   font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_backhead {
   cursor: pointer;
 }
@@ -53,7 +56,7 @@
 }
 
 .q_icon {
-  color: rgba(159, 19, 46, 1);
+  color: black;
   font-size: 2rem;
 }
 
@@ -63,6 +66,7 @@
   font-weight: 700;
   padding-right: 5px;
 }
+
 .q_content {
   font-size: 2rem;
   padding-left: 1rem;
@@ -89,6 +93,7 @@
   font-weight: bold;
   align-self: center;
 }
+
 .q_comment {
   display: flex;
   align-content: center;
@@ -113,8 +118,7 @@
 
 .q_backfooter button {
   border-radius: 30px;
-  border-color: rgba(159, 19, 46, 1);
-  border-width: 2px;
+  border: 0.3rem solid rgba(159, 19, 46, 1);
   height: 36px;
   width: 220px;
   background-color: white;
@@ -127,6 +131,7 @@
   flex-direction: row;
   justify-content: center;
 }
+
 .q_backfooter img {
   width: 18px;
   object-fit: contain;
@@ -144,16 +149,40 @@
 .q_editbtn span {
   font-size: 1.4rem;
 }
+
 @media only screen and (max-width: 767px) {
-  .q_middle,
-  .q_mynick {
-    font-size: 14px;
+
+  .q_middle {
+    font-size: 1.8rem;
+    margin: 1.2rem 0 0 0;
+    padding: 0;
   }
+
+  .q_mynick {
+    font-size: 1.8rem;
+  }
+
+  .q_backhead img {
+    padding-top: 0.8rem;
+    height: 1.5rem;
+    width: 2rem;
+  }
+
+  .q_box {
+    margin-right: 0.3rem;
+  }
+
   .q_index {
     font-size: 12px;
   }
+
   .q_comment {
     margin-left: 10px;
+  }
+
+  .q_footer {
+    padding: 0;
+    margin-top: 1.9rem;
   }
 
   .q_footer img {
@@ -162,26 +191,28 @@
     object-fit: contain;
     align-self: center;
   }
+
   .q_footer button {
     font-size: 12px;
     width: max-content;
     height: max-content;
   }
-  .q_date,
-  .q_footer span {
-    font-size: 12px;
-  }
-  .q_header,
-  .q_footer {
-    padding-left: 16px;
-    padding-right: 16px;
+
+  .q_backfooter button {
+    border: 0.3rem solid rgba(159, 19, 46, 1);
   }
 
-  .q_middle {
-    padding-left: 16px;
-    padding-right: 20px;
+  .q_date {
+    font-size: 1.2rem;
   }
+
+  .q_header {
+    padding: 0;
+  }
+
   .q_list {
-    padding: 16px 0;
+    padding: 1.3rem 0.9rem 1.2rem 1.3rem;
+    margin: 1.6rem 0 0 0;
+    width: auto;
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './PopularDoc.module.css'
@@ -40,14 +42,7 @@ const PopularDoc = (props: HistoryBoxProps) => {
           </div>
         </div>
         <div className={styles.docTitleContainer}>
-          <div
-            role={'presentation'}
-            className={styles.docTitle}
-            onClick={() => {
-              const encodedTitle = encodeURIComponent(title)
-              nav(`/wiki/${encodedTitle}`)
-            }}
-          >
+          <div role={'presentation'} className={styles.docTitle}>
             {title}
           </div>
         </div>

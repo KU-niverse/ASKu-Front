@@ -16,11 +16,11 @@ const ChatQuestion = ({ content }: ChatQuestionProps) => {
       <p className={styles.chatText}>{content}</p>
       <img src={catIcon} alt={'character'} className={styles.character} />
       <img alt={'dots'} src={dots} className={styles.dots} />
-      <div className={styles.iconZip}>
+      {/* <div className={styles.iconZip}>
         <img className={styles.icon} src={like} alt={'like'} />
         <img className={styles.icon} src={unlike} alt={'unlike'} />
         <img className={styles.icon} src={reference} alt={'reference link'} />
-      </div>
+      </div> */}
     </div>
   )
 }

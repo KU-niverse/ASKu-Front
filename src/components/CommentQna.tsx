@@ -36,7 +36,7 @@ function CommentQna({
       <div className={`${styles.q_header}`}>
         <div className={styles.q_fronthead}>
           <div className={styles.q_box}>
-            <img className={styles.q_badge} src={badge_image} alt={'badge'} />
+            <img src={badge_image} alt={'badge'} />
           </div>
           <span className={styles.q_mynick}>{nickname}</span>
           <span className={styles.q_date}>{formattedDate}</span>
