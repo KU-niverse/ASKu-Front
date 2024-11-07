@@ -53,20 +53,25 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
   })
 
   const sendLikeCommentFeedback = async (comment: string) => {
-    const response = await axios.post(
-      `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
-      {
-        feedback_id: feedbackId,
-        content: comment,
-      },
-      {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+        {
+          feedback_id: feedbackId, // 피드백 ID
+          content: comment, // 댓글 내용
         },
-      },
-    )
-    return response.data
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      return response.data
+    } catch (error) {
+      console.error('Error sending feedback:', error)
+      throw error
+    }
   }
 
   const likeCommentMutation = useMutation(sendLikeCommentFeedback, {
@@ -103,11 +108,11 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
     }
   }, [isOpen])
 
-  useEffect(() => {
-    if (isOpen) {
-      likeMutation.mutate()
-    }
-  }, [isOpen])
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     likeMutation.mutate()
+  //   }
+  // }, [isOpen])
 
   useEffect(() => {
     if (feedbackId && inputValue.trim() !== '') {
@@ -118,11 +123,16 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
       if (!feedbackId) {
-        // 피드백 아이디가 없으면, 피드백 아이디가 설정될 때까지 기다림
-        setTimeout(() => {
-          handleSendMessage()
-        }, 100)
+        // 피드백 아이디가 없는 경우, 먼저 `likeMutation.mutate()`를 호출하여 피드백을 생성
+        likeMutation.mutate(undefined, {
+          onSuccess: (data) => {
+            setFeedbackId(data.id)
+            // 피드백 ID가 생성된 후 댓글 전송
+            likeCommentMutation.mutate(inputValue)
+          },
+        })
       } else {
+        // 피드백 아이디가 이미 있는 경우, 바로 댓글을 전송
         likeCommentMutation.mutate(inputValue)
       }
     }
@@ -159,7 +169,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
                 </div>
                 <textarea
                   className={styles.feedback_text}
-                  value={inputValue}
+                  defaultValue={inputValue}
                   onChange={inputChange}
                   onKeyDown={handleKeyDown}
                   ref={inputRef}
