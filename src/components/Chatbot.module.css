@@ -11,6 +11,7 @@
   height: 100%;
   box-sizing: border-box;
 }
+
 .chatSet {
   display: flex;
   flex-direction: column;
@@ -346,6 +347,7 @@
   box-sizing: border-box;
   /* height: auto; */
   margin-right: 7.4rem;
+  margin-top: 1rem;
 }
 
 @media only screen and (max-width: 767px) {
@@ -353,7 +355,8 @@
     grid-row: 9 / span 2;
     padding-left: 0rem;
     margin-right: 2rem;
-    padding-bottom: 1.8rem;
+    padding-bottom: 1.6rem;
+    margin-top: 0;
   }
 
   .promptWrap {
@@ -375,7 +378,7 @@
     grid-row: 8 / span 2;
     /* 더 위로 배치 */
     margin-top: 4rem;
-    padding-bottom: 1.8rem;
+    padding-bottom: 1.6rem;
   }
 
   .promptWrap {
@@ -393,18 +396,18 @@
   /* 아이템이 넘칠 경우 줄바꿈 */
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.5rem 0.5rem;
+  gap: 0rem 0.5rem;
   overflow-y: scroll;
   box-sizing: border-box;
 }
 
 /* 추천 질문 내의 각 항목 */
 .textBox {
-  border: 1px solid #9f132e;
+  border: 0.14rem solid rgba(222, 58, 88, 1);
   height: 20px;
   border-radius: 20px;
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
   line-height: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -420,8 +423,8 @@
 @media only screen and (max-width: 767px) {
   .textBox {
     display: flex;
-    border: 1px solid #9f132e;
-    height: 16px;
+    border: 0.1rem solid rgba(222, 58, 88, 1);
+    height: 3.3rem;
     /* 높이 줄이기 */
     border-radius: 16px;
     /* 경계 반경 줄이기 */
@@ -433,7 +436,7 @@
     text-align: center;
     margin-top: 0.2rem;
     /* 여백 줄이기 */
-    padding: 0.4rem 1.5rem 0.3rem 1.5rem;
+    padding: 0rem 1rem 0rem 1rem;
     /* 패딩 줄이기 */
     white-space: nowrap;
     /* 줄바꿈 방지 */
@@ -469,7 +472,7 @@
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  border: 1px solid #9f132e;
+  border: 0.14rem solid rgba(222, 58, 88, 1);
   border-radius: 60px;
   width: 90%;
   height: 40%;
