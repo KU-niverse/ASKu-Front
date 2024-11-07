@@ -156,7 +156,7 @@ const fetchPopularKeywords = async () => {
 
 const fetchPopularQuestions = async () => {
   const response = await axios.get(`${process.env.REACT_APP_HOST}/question/popular`)
-  return response.data.data
+  return response.data.result
 }
 
 const checkLoginStatus = async () => {
