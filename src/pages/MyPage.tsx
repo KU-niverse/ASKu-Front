@@ -250,7 +250,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   }
 
   const fetchMyWiki = async (): Promise<MyWikiProps> => {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/wikihistory`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/me/wikihistory/${mypageData.data[0].id}`, {
+      withCredentials: true,
+    })
+    console.log(mypageData.data[0].id)
     return res.data
   }
 
