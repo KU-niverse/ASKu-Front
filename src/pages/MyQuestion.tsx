@@ -118,7 +118,9 @@ function MyQuestion() {
   const arrange = isToggled ? 'popularity' : 'latest'
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [page, setPage] = useState<number>(1)
-  const pageNumber = 10
+  const perPage = 10
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
 
   const { isLoading: isLoadingMyQuestion, error: myQuestionError, data: myQuestionData } = useMyQuestion(arrange)
   const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
@@ -157,7 +159,7 @@ function MyQuestion() {
                 </p>
               </>
             ) : (
-              questions.map((question) => (
+              questions.slice(startIndex, endIndex).map((question) => (
                 <MyQuestionList
                   key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
                   id={question.id}
@@ -177,7 +179,7 @@ function MyQuestion() {
               ))
             )}
             <div style={{ marginTop: '5.5rem' }}>
-              <Paging total={questions.length} perPage={pageNumber} activePage={page} onChange={setPage} />
+              <Paging total={questions.length} perPage={perPage} activePage={page} onChange={setPage} />
             </div>
           </div>
           <Footer />
