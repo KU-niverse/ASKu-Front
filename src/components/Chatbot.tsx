@@ -100,7 +100,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
       withCredentials: true,
     })
-    console.log('res.data', res.data)
     return res.data
   }
 
