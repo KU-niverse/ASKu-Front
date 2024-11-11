@@ -115,6 +115,7 @@
   right: 0.5rem;
 }
 
+
 @media screen and (max-width: 500px) {
   .reference_wrap {
     width: calc(100vw - 100px);
@@ -143,7 +144,8 @@
 }
 
 .reference_link {
-  height: 1.5rem;
+  height: auto;
+  line-height: 1.5rem;
 }
 
 .closeBtn {
@@ -159,8 +161,9 @@
   font-weight: 800;
   margin: 0;
   color: #9f132e;
-  font-weight: 800;
+  font-weight: 600;
   margin: 0;
+  font-size: 1.6rem;
 }
 
 .header {
