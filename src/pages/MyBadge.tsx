@@ -25,18 +25,28 @@ interface UserInfo {
   rep_badge_image: string
 }
 
-interface BadgeData {
-  badge_id: number
+interface BadgeIcon {
   id: number
   name: string
   image: string
   description: string
   event: boolean
+  cont: boolean
+}
+interface BadgeData {
+  id: number
+  user_id: number
+  badge_id: number
+  is_bad: boolean
+  created_at: Date
+  badge: BadgeIcon
   history_count: number
 }
 
 interface BadgeResponse {
+  success: boolean
   data: BadgeData[]
+  message: string
 }
 
 interface User {
@@ -69,7 +79,7 @@ function MyBadge() {
   useEffect(() => {
     const takeMyBadge = async () => {
       try {
-        const res = await axios.get<BadgeResponse>(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, {
+        const res = await axios.get<BadgeResponse>(`${process.env.REACT_APP_HOST}/badge/me/history`, {
           withCredentials: true,
         })
         if (res.status === 201) {
@@ -85,7 +95,7 @@ function MyBadge() {
   useEffect(() => {
     const takeAllBadge = async () => {
       try {
-        const response = await axios.get<BadgeResponse>(`${process.env.REACT_APP_HOST}/user/mypage/badges`, {
+        const response = await axios.get<BadgeResponse>(`${process.env.REACT_APP_HOST}/badge/all`, {
           withCredentials: true,
         })
         if (response.status === 201) {
@@ -147,7 +157,12 @@ function MyBadge() {
       <div className={styles.mybadgecontent}>
         <div className={styles.b_header}>
           <p className={styles.b_headline}>
-            나의 뱃지 목록 <span className={styles.badgeCount}>({myBadge.length})</span>
+            {'나의 뱃지 목록 '}
+            <span className={styles.badgeCount}>
+              {'('}
+              {myBadge.length}
+              {')'}
+            </span>
           </p>
         </div>
         <div className={styles.b_list}>
@@ -158,10 +173,10 @@ function MyBadge() {
               <Badge
                 key={data.id}
                 id={data.id}
-                name={data.name}
-                image={data.image}
-                description={data.description}
-                event={data.event}
+                name={data.badge.name}
+                image={data.badge.image}
+                description={data.badge.description}
+                event={data.badge.event}
                 count={data.history_count}
                 myBadgeIds={myBadgeIds}
                 repBadgeId={repBadgeId}

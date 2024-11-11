@@ -245,7 +245,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   }
 
   const fetchMyBadge = async (): Promise<BadgeDataProps> => {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/badge/me/history`, { withCredentials: true })
     return res.data
   }
 
