@@ -25,6 +25,7 @@ interface HistoryItem {
 }
 
 interface HistoryResponse {
+  data: any
   success: boolean
   message: HistoryItem[]
 }
@@ -55,10 +56,8 @@ function useGetHistory(type: string, page: number, perPage: number) {
   return useQuery<HistoryItem[], AxiosError>(
     ['historys', type, page],
     async () => {
-      const result = await axios.get<HistoryResponse>(
-        `${process.env.REACT_APP_HOST}/wiki/historys?type=${type}&page=${page}&perPage=${perPage}`,
-      )
-      return result.data.message
+      const result = await axios.get<HistoryResponse>(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
+      return result.data.data.message
     },
     {
       keepPreviousData: true,
