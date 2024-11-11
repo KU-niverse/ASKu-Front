@@ -43,10 +43,10 @@ interface Question {
   user_id: string
   content: string
   created_at: string
-  like_count: number
+  like_count: string
   nickname: string
   index_title: string
-  answer_count: number
+  answer_count: string
 }
 
 interface Contribution {
