@@ -79,7 +79,7 @@ interface User {
 interface MyPageDataProps {
   success: boolean
   message: string
-  data: User[]
+  data: User
 }
 
 interface WikiHistoryEntry {
@@ -304,7 +304,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
             <div className={styles.userGreeting}>
               {`안녕하세요,`}
               <br />
-              {`${mypageData.data[0].nickname} 님!`}
+              {`${mypageData.data.nickname} 님!`}
             </div>
             <div className={styles.allNavigators}>
               <button
@@ -363,10 +363,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                 <div className={styles.profileBox}>
                   {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
                     <MyProfile
-                      nick={mypageData.data[0].nickname}
-                      point={mypageData.data[0].point}
-                      badge={mypageData.data[0].rep_badge_name}
-                      badgeimg={mypageData.data[0].rep_badge_image}
+                      nick={mypageData.data.nickname}
+                      point={mypageData.data.point}
+                      badge={mypageData.data.rep_badge_name}
+                      badgeimg={mypageData.data.rep_badge_image}
                       percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
                     />
                   )}
@@ -616,10 +616,10 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
           <div className={styles.mobileProfileBox}>
             {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
               <MyProfile
-                nick={mypageData.data[0].nickname}
-                point={mypageData.data[0].point}
-                badge={mypageData.data[0].rep_badge_name}
-                badgeimg={mypageData.data[0].rep_badge_image}
+                nick={mypageData.data.nickname}
+                point={mypageData.data.point}
+                badge={mypageData.data.rep_badge_name}
+                badgeimg={mypageData.data.rep_badge_image}
                 percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
               />
             )}
