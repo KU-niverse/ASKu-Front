@@ -11,7 +11,7 @@ interface PopularQuestionProps {
   nickname: string
   title: string
   created_at: Date
-  answer_count: number
+  answer_count: string
   content: string
   question_id: string // question_id 추가
 }
