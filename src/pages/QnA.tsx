@@ -59,10 +59,10 @@ interface QuestionDataItem {
   user_id: number
   nickname: string
   content: string
-  like_count_string: string
+  like_count: string
   created_at: Date
   index_title: string
-  answer_count_string: string
+  answer_count: string
   badge_image: string
 }
 
@@ -163,9 +163,9 @@ const QnA: React.FC = () => {
             answer_or_not={false}
             is_bad={false}
             nick={questionData.data[0].nickname}
-            like_count={Number(questionData.data[0].like_count_string)}
+            like_count={Number(questionData.data[0].like_count)}
             title={title!}
-            answer_count={Number(questionData.data[0].answer_count_string)}
+            answer_count={Number(questionData.data[0].answer_count)}
             badge_image={questionData.data[0].badge_image}
             index={0}
           />
@@ -176,7 +176,7 @@ const QnA: React.FC = () => {
             {questionData && questionData.data && (
               <span className={styles.c_headline}>
                 {'답변 '}
-                {Number(questionData.data[0].answer_count_string)}
+                {Number(questionData.data[0].answer_count)}
                 {'개'}
               </span>
             )}

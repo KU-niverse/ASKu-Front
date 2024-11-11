@@ -46,7 +46,7 @@ interface UserData {
 interface MypageDataResponse {
   success: boolean
   message: string
-  data: UserData[]
+  data: UserData
 }
 
 interface RandomDocResponse {
@@ -151,8 +151,8 @@ function Header({ userInfo, setUserInfo }: any) {
 
   // 유저 데이터에 따른 닉네임 설정
   useEffect(() => {
-    if (isLoggedIn && userData && Array.isArray(userData.data) && userData.data.length > 0) {
-      const fetchedUserInfo = userData.data[0]
+    if (isLoggedIn && userData) {
+      const fetchedUserInfo = userData.data
       if (typeof setUserInfo === 'function') {
         setUserInfo(fetchedUserInfo)
       } else {
@@ -194,7 +194,7 @@ function Header({ userInfo, setUserInfo }: any) {
   // 로그아웃 함수: 서버에서 로그아웃 요청 후 상태 초기화
   const signOut = async () => {
     try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/signout`, {
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/auth/signout`, {
         withCredentials: true,
       })
       if (result.status === 200) {
@@ -307,12 +307,12 @@ function Header({ userInfo, setUserInfo }: any) {
                 color: location.pathname === '/' ? 'black' : '#979797',
               }}
             >
-              Home
+              {'Home\r'}
             </div>
           </Link>
 
           {/* 문서  */}
-          <Link to="/allhistory">
+          <Link to={'/allhistory'}>
             <div
               className={styles.navDocs}
               style={{
@@ -324,12 +324,12 @@ function Header({ userInfo, setUserInfo }: any) {
                     : '#979797', // 그 외 경로는 회색
               }}
             >
-              문서
+              {'문서\r'}
             </div>
           </Link>
           {/* 토론 */}
 
-          <Link to="/latestdebate">
+          <Link to={'/latestdebate'}>
             <div
               className={styles.navDebate}
               style={{
@@ -340,7 +340,7 @@ function Header({ userInfo, setUserInfo }: any) {
                     : '#979797',
               }}
             >
-              토론
+              {'토론\r'}
             </div>
           </Link>
         </div>
@@ -352,24 +352,24 @@ function Header({ userInfo, setUserInfo }: any) {
             ) : (
               <div className={styles.nicknameContainer}>
                 <div className={styles.nickname_badge}>
-                  <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                  {/* <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} /> API 수정 후 다시 주석 해제하기 */}
                 </div>
                 <div className={styles.nickname}>
                   <div className={styles.nicknameText}>{nicknameText}</div>
-                  <div className={styles.honorific}> 님</div>
+                  <div className={styles.honorific}>{' 님'}</div>
                   <img src={arrow_down} alt={'arrow_down'} className={styles.arrowDown} />
                 </div>
 
                 {/* 호버 시 나타나는 메뉴 */}
                 <div className={styles.dropdownMenu}>
-                  <button type="button" onClick={() => Nav('/mypage')} className={styles.menuItem}>
-                    마이페이지
+                  <button type={'button'} onClick={() => Nav('/mypage')} className={styles.menuItem}>
+                    {'마이페이지\r'}
                   </button>
-                  <button type="button" onClick={() => Nav('/mybookmark')} className={styles.menuItem}>
-                    관심목록
+                  <button type={'button'} onClick={() => Nav('/mybookmark')} className={styles.menuItem}>
+                    {'관심목록\r'}
                   </button>
-                  <button type="button" onClick={signOut} className={styles.menuItem}>
-                    로그아웃
+                  <button type={'button'} onClick={signOut} className={styles.menuItem}>
+                    {'로그아웃\r'}
                   </button>
                 </div>
               </div>
@@ -412,7 +412,7 @@ function Header({ userInfo, setUserInfo }: any) {
           <div
             className={styles.buttonWrap}
             onClick={handleMobileMenu}
-            role="button"
+            role={'button'}
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -427,21 +427,25 @@ function Header({ userInfo, setUserInfo }: any) {
               <div
                 className={styles.overlay}
                 onClick={handleMobileMenu}
-                role="button"
+                role={'button'}
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     handleMobileMenu()
                   }
                 }}
-                aria-label="닫기" // 레이블 추가
+                aria-label={'닫기'} // 레이블 추가
               />
               <div className={`${styles.mobileMenuWrap} ${mobileHeaderOpen ? styles.open : ''}`}>
                 {isLoggedIn ? (
                   <div className={styles.mobileUserInfo}>
-                    <img src={userInfo?.rep_badge_image || mobileMypage} alt="user badge" className={styles.repBadge} />
+                    <img
+                      src={userInfo?.rep_badge_image || mobileMypage}
+                      alt={'user badge'}
+                      className={styles.repBadge}
+                    />
                     <div className={styles.nicknameText}>{nicknameText}</div>
-                    <div className={styles.honorific}>&nbsp;님</div>
+                    <div className={styles.honorific}>{'&nbsp;님'}</div>
                   </div>
                 ) : (
                   <Link to={'/signin'} className={styles.mobileLoginText}>
