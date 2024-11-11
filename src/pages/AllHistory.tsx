@@ -11,6 +11,7 @@ import Paging from '../components/Paging'
 import SpinnerMypage from '../components/SpinnerMypage'
 
 interface HistoryItem {
+  wiki_doc: History
   id: number
   user_id: number
   doc_id: number
@@ -19,11 +20,16 @@ interface HistoryItem {
   created_at: string
   diff: number
   is_rollback: number
-  doc_title: string
-  nick: string
+  user: UserName
   is_bad: number
 }
 
+interface UserName {
+  nickname: string
+}
+interface History {
+  title: string
+}
 interface HistoryResponse {
   data: any
   success: boolean
@@ -197,9 +203,9 @@ const AllHistory: React.FC = () => {
                   <AllHistoryBox
                     version={item.version}
                     summary={item.summary}
-                    user={item.nick}
+                    user={item.user.nickname}
                     timestamp={FormatTimeAgo(item.created_at)}
-                    title={item.doc_title}
+                    title={item.wiki_doc.title}
                     target={item.id}
                     type={type}
                   />
