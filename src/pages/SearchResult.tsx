@@ -52,6 +52,8 @@ const fetchQues = async (title: string) => {
 
 const fetchHistory = async (type: string) => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
+  console.log(result.data.message)
+  console.log(type)
   return result.data.message
 }
 
