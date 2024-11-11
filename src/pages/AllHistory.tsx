@@ -63,7 +63,6 @@ function useGetHistory(type: string, page: number, perPage: number) {
     ['historys', type, page],
     async () => {
       const result = await axios.get<HistoryResponse>(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
-      console.log(result.data.data)
       return result.data.data.message
     },
     {
