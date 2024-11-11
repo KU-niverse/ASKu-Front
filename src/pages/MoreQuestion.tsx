@@ -63,7 +63,7 @@ const fetchUserInfo = async () => {
 
 const fetchTitles = async () => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
-  return res.data.titles
+  return res.data.data
 }
 
 const fetchQuestions = async (title: string, flag: number) => {
