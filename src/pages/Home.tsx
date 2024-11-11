@@ -278,49 +278,49 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
         /* 모바일 뷰 */
         <div className={styles.mobileViewContainer}>
           <div className={styles.mobileTitleContainer}>
-            <div className={styles.mobileTitlePink}>AI챗봇: 하호에게</div>
-            <div className={styles.mobileTitleBlack}>무엇이든 물어보세요!</div>
+            <div className={styles.mobileTitlePink}>{'AI챗봇: 하호에게'}</div>
+            <div className={styles.mobileTitleBlack}>{'무엇이든 물어보세요!'}</div>
             <SearchInputComponent inputValue={inputValue} setInputValue={setInputValue} />
           </div>
 
           <div className={styles.mobileButtonContainer}>
             <div className={styles.mobileChatbotButtonContainer}>
               <button
-                type="button"
+                type={'button'}
                 className={`${styles.mobileChatbotButton} ${clickedMobileButton === 'chatbot' ? styles.clicked : ''}`}
                 onClick={() => handleButtonClick('chatbot')}
               >
-                <img className={styles.mobileChatbotImg} src={mobile_haho_btn} alt="모바일 하호" />
+                <img className={styles.mobileChatbotImg} src={mobile_haho_btn} alt={'모바일 하호'} />
               </button>
             </div>
             <button
-              type="button"
+              type={'button'}
               className={`${styles.mobileButton} ${clickedMobileButton === 'popularQuestions' ? styles.clicked : ''}`}
               onClick={() => handleButtonClick('popularQuestions')}
             >
-              인기질문
+              {'인기질문\r'}
             </button>
             <button
-              type="button"
+              type={'button'}
               className={`${styles.mobileButton} ${clickedMobileButton === 'popularDocs' ? styles.clicked : ''}`}
               onClick={() => handleButtonClick('popularDocs')}
             >
-              인기문서
+              {'인기문서\r'}
             </button>
 
             <button
-              type="button"
+              type={'button'}
               className={`${styles.mobileButton} ${clickedMobileButton === 'debateRoom' ? styles.clicked : ''}`}
               onClick={() => handleButtonClick('debateRoom')}
             >
-              토론방
+              {'토론방\r'}
             </button>
             <button
-              type="button"
+              type={'button'}
               className={`${styles.mobileButton} ${clickedMobileButton === 'randomDoc' ? styles.clicked : ''}`}
               onClick={() => handleButtonClick('randomDoc')}
             >
-              랜덤문서
+              {'랜덤문서\r'}
             </button>
           </div>
 
@@ -340,7 +340,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                   nickname={question.nickname}
                   title={question.title}
                   created_at={question.created_at}
-                  answer_count={question.answer_count}
+                  answer_count={String(question.answer_count)}
                   content={question.content}
                 />
               ))}
@@ -526,7 +526,10 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
                         })
                       }}
                     >
-                      <p className={styles.realTimerank}>#{keyword.keyword}</p>
+                      <p className={styles.realTimerank}>
+                        {'#'}
+                        {keyword.keyword}
+                      </p>
                     </Link>
                   ))
                 )}

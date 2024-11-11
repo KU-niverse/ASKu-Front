@@ -9,15 +9,21 @@ interface BadgeModalProps {
   onClose: () => void
 }
 
+interface BadgeIcon {
+  id: number
+  image: string
+  name: string
+  description: string
+  event: boolean
+  cont: boolean
+}
 interface Badge {
   id: number
   user_id: number
   badge_id: number
   created_at: Date
   is_bad: boolean
-  image: string
-  name: string
-  description: string
+  badge: BadgeIcon
 }
 
 interface MyBadgeResponse {
@@ -48,7 +54,7 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
   }, [isOpen])
 
   const fetchBadges = async (): Promise<MyBadgeResponse> => {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/badge/me/history`, { withCredentials: true })
     return res.data
   }
 
@@ -124,8 +130,8 @@ function BadgeModal({ isOpen, onClose }: BadgeModalProps) {
                         <img
                           role={'presentation'}
                           key={badge.id}
-                          src={badge.image}
-                          alt={badge.name}
+                          src={badge.badge.image}
+                          alt={badge.badge.name}
                           onClick={() => handleRepBadge(badge.badge_id)}
                           className={styles.badge}
                         />
