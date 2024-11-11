@@ -11,7 +11,7 @@ interface PopularQuestionProps {
   nickname: string
   title: string
   created_at: Date
-  answer_count: number
+  answer_count_string: string
   content: string
   question_id: string // question_id 추가
 }
@@ -20,10 +20,10 @@ interface QuestionDataItem {
   user_id: number
   nickname: string
   content: string
-  like_count: number
+  like_count: string
   created_at: Date
   index_title: string
-  answer_count: number
+  answer_count: string
   badge_image: string
 }
 
@@ -40,17 +40,17 @@ const fetchQuestion = async (question_id: string) => {
 
 const PopularQuestion = (props: PopularQuestionProps) => {
   const nav = useNavigate()
-  const { id, nickname, title, created_at, answer_count, content, question_id } = props
-
+  const { id, nickname, title, created_at, answer_count_string, content, question_id } = props
+  const answer_count: number = Number(answer_count_string)
   // 질문 데이터를 가져오는 useQuery
   const { data: questionData, isLoading, error } = useQuery(['question', question_id], () => fetchQuestion(question_id))
 
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <div>{'로딩 중...'}</div>
   }
 
   if (error) {
-    return <div>질문 데이터를 불러오는 중 오류가 발생했습니다.</div>
+    return <div>{'질문 데이터를 불러오는 중 오류가 발생했습니다.'}</div>
   }
 
   // 질문 데이터에서 배지 이미지 가져오기
@@ -92,7 +92,7 @@ const PopularQuestion = (props: PopularQuestionProps) => {
         <div className={styles.answerCountContainer}>
           <img src={answer_count_img} alt={'badge'} className={styles.answer_count_img} />
           <div
-            role="button" // 역할 추가: 버튼처럼 보이도록 설정
+            role={'button'} // 역할 추가: 버튼처럼 보이도록 설정
             tabIndex={0} // 키보드 접근성을 위한 포커스 가능하게 설정
             onClick={() => {
               nav(`wiki/morequestion/${encodeURIComponent(title)}/${id}`)
