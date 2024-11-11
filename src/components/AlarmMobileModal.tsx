@@ -70,11 +70,11 @@ interface Info {
   id?: number
 }
 
-function AlarmMobileModal({ isOpen, handleMobileAlarmModal }: any) {
+function AlarmMobileModal({ isOpen, handleMobileAlarmModal, user_id }: any) {
   useEffect(() => {
     if (isOpen) {
       axios
-        .get(`${process.env.REACT_APP_HOST}/notification/user`, {
+        .get(`${process.env.REACT_APP_HOST}/notification/user/${user_id}`, {
           withCredentials: true,
         })
         .then((response) => {
