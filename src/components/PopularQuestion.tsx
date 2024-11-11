@@ -11,7 +11,7 @@ interface PopularQuestionProps {
   nickname: string
   title: string
   created_at: Date
-  answer_count_string: string
+  answer_count: string
   content: string
   question_id: string // question_id 추가
 }
@@ -40,8 +40,8 @@ const fetchQuestion = async (question_id: string) => {
 
 const PopularQuestion = (props: PopularQuestionProps) => {
   const nav = useNavigate()
-  const { id, nickname, title, created_at, answer_count_string, content, question_id } = props
-  const answer_count: number = Number(answer_count_string)
+  const { id, nickname, title, created_at, answer_count, content, question_id } = props
+  const answer_count_num: number = Number(answer_count)
   // 질문 데이터를 가져오는 useQuery
   const { data: questionData, isLoading, error } = useQuery(['question', question_id], () => fetchQuestion(question_id))
 
@@ -106,7 +106,7 @@ const PopularQuestion = (props: PopularQuestionProps) => {
             }}
             className={styles.answerCount}
           >
-            {answer_count}
+            {answer_count_num}
           </div>
         </div>
       </div>
