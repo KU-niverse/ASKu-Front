@@ -59,10 +59,10 @@ interface QuestionDataItem {
   user_id: number
   nickname: string
   content: string
-  like_count: number
+  like_count_string: string
   created_at: Date
   index_title: string
-  answer_count: number
+  answer_count_string: string
   badge_image: string
 }
 
@@ -163,9 +163,9 @@ const QnA: React.FC = () => {
             answer_or_not={false}
             is_bad={false}
             nick={questionData.data[0].nickname}
-            like_count={questionData.data[0].like_count}
+            like_count={Number(questionData.data[0].like_count_string)}
             title={title!}
-            answer_count={questionData.data[0].answer_count}
+            answer_count={Number(questionData.data[0].answer_count_string)}
             badge_image={questionData.data[0].badge_image}
             index={0}
           />
@@ -176,7 +176,7 @@ const QnA: React.FC = () => {
             {questionData && questionData.data && (
               <span className={styles.c_headline}>
                 {'답변 '}
-                {questionData.data[0].answer_count}
+                {Number(questionData.data[0].answer_count_string)}
                 {'개'}
               </span>
             )}
@@ -212,7 +212,7 @@ const QnA: React.FC = () => {
         </div>
         <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
           <button type={'button'} className={styles.addQues}>
-            {'나도 질문하기'} <img src={question} alt="질문할래요 아이콘" className={styles.askIcon} />
+            {'나도 질문하기'} <img src={question} alt={'질문할래요 아이콘'} className={styles.askIcon} />
           </button>
         </Link>
       </div>
