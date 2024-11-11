@@ -35,15 +35,21 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface BadgeIcon {
+  id: number
+  image: string
+  name: string
+  description: string
+  event: boolean
+  cont: boolean
+}
 interface Badge {
   id: number
   user_id: number
   badge_id: number
   created_at: Date
   is_bad: boolean
-  image: string
-  name: string
-  description: string
+  badge: BadgeIcon
 }
 
 interface BadgeDataProps {
@@ -384,19 +390,19 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
                       .slice(0, 4)
                       .map((badge: Badge) => (
                         <img
-                          title={badge.name}
+                          title={badge.badge.name}
                           key={badge.id}
-                          src={badge.image}
-                          alt={badge.name}
+                          src={badge.badge.image}
+                          alt={badge.badge.name}
                           className={styles.badgeImage}
                         />
                       ))}
                   {myBadge && myBadge.data && myBadge.data.length < 4
                     ? Array(4 - myBadge.data.length).fill(
-                      <div className={styles.lockedImage}>
-                        <img src={locked} alt={'locked'} />
-                      </div>,
-                    )
+                        <div className={styles.lockedImage}>
+                          <img src={locked} alt={'locked'} />
+                        </div>,
+                      )
                     : null}
                 </div>
                 <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.moreBadge}>

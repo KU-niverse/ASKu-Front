@@ -83,6 +83,7 @@ function MyBadge() {
           withCredentials: true,
         })
         if (res.status === 201) {
+          console.log(res)
           setMyBadge(res.data.data)
         }
       } catch (error) {
