@@ -13,7 +13,7 @@ interface PopularQuestion {
   like_count: number
   nickname: string
   index_title: string
-  answer_count: number
+  answer_count: string
   title: string
 }
 

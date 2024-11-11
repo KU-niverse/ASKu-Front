@@ -82,7 +82,7 @@ const MobileChatBotPage = () => {
   return (
     <>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={() => { }} />
+      <ChatbotMobile userId={userId} isLoggedIn={isLoggedIn} setIsLoggedIn={() => {}} />
     </>
   )
 }

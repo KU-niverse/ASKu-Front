@@ -69,10 +69,10 @@ interface PopularQuestion {
   user_id: number
   content: string
   created_at: Date
-  like_count: number
+  like_count: string
   nickname: string
   index_title: string
-  answer_count: number
+  answer_count: string
   title: string
 }
 interface DebateData {
