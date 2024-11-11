@@ -177,7 +177,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
 
   const signOut = async () => {
     try {
-      const result = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/signout`, {
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/auth/signout`, {
         withCredentials: true,
       })
       if (result.status === 200) {
