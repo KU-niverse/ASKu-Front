@@ -68,7 +68,7 @@ interface QuestionData {
 }
 
 interface TitleData {
-  titles: wikititle[]
+  data: wikititle[]
 }
 
 interface ContributionData {
@@ -214,7 +214,7 @@ function WikiViewer() {
 
   useEffect(() => {
     if (titlesData) {
-      settitles(titlesData.titles)
+      settitles(titlesData.data)
     }
   }, [titlesData])
 
