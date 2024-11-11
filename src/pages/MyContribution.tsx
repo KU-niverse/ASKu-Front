@@ -113,7 +113,7 @@ const MyContribution: React.FC = () => {
 
   return (
     <div className={styles.pagewrap}>
-      <Header userInfo={userInfo} setUserInfo={() => { }} />
+      <Header userInfo={userInfo} setUserInfo={() => {}} />
       <div className={styles.contentSubContainer}>
         <div className={styles.contributeHeader}>
           <div className={styles.contentTitle}>{'나의 기여 목록'}</div>

@@ -416,7 +416,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
             [더보기]
           </span>
         </div> */}
-        { }
+        {}
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <input
             type={'button'}
