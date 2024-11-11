@@ -352,7 +352,7 @@ function Header({ userInfo, setUserInfo }: any) {
             ) : (
               <div className={styles.nicknameContainer}>
                 <div className={styles.nickname_badge}>
-                  {/* <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} /> API 수정 후 다시 주석 해제하기 */}
+                  <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
                 </div>
                 <div className={styles.nickname}>
                   <div className={styles.nicknameText}>{nicknameText}</div>
