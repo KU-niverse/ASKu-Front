@@ -26,8 +26,6 @@
   align-self: flex-start;
   width: 4rem;
   height: 4rem;
-  border-radius: 50%;
-  background: linear-gradient(to bottom, #ff768f, #de3a58);
 }
 
 .chatText {
@@ -114,7 +112,6 @@
   top: 11rem;
   right: 0.5rem;
 }
-
 
 @media screen and (max-width: 500px) {
   .reference_wrap {
