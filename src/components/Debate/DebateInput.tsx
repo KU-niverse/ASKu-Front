@@ -52,8 +52,6 @@ function useSubmitDebate(title: string, debateId: number) {
     {
       onSuccess: () => {
         alert('의견이 성공적으로 등록되었습니다.')
-        // 성공적으로 의견을 등록한 후에 필요한 동작을 수행합니다.
-        // 예: 입력 필드 초기화, 페이지 새로고침 등
       },
       onError: (error: AxiosError) => {
         console.error('의견 등록 에러:', error)
@@ -87,11 +85,6 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   }
 
   const handleSubmit = async () => {
-    if (!loginStatusData?.success) {
-      alert('로그인이 필요한 서비스입니다.')
-      navigate('/signin')
-      return
-    }
     if (debateContent.trim() === '') {
       alert('글을 입력해주세요.')
       return
