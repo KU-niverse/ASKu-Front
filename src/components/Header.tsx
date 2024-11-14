@@ -153,7 +153,11 @@ function Header({ userInfo, setUserInfo }: any) {
   useEffect(() => {
     if (isLoggedIn && userData) {
       const fetchedUserInfo = userData.data
-      setUserInfo(fetchedUserInfo)
+      if (typeof setUserInfo === 'function') {
+        setUserInfo(fetchedUserInfo)
+      } else {
+        console.error('setUserInfo is not a function')
+      }
       if (fetchedUserInfo.nickname) {
         setNicknameText(fetchedUserInfo.nickname)
       }
