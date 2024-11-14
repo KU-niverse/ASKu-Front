@@ -184,7 +184,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         setInputValue('')
       },
       onSuccess: (data) => {
-        console.log('🚀 ~ Chatbot ~ data:', data)
         try {
           const newRecommendedQuestions = data.recommended_questions || []
           setRecommendedQuestions(newRecommendedQuestions)
