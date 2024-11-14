@@ -444,7 +444,7 @@ function Header({ userInfo, setUserInfo }: any) {
                       className={styles.repBadge}
                     />
                     <div className={styles.nicknameText}>{nicknameText}</div>
-                    <div className={styles.honorific}>{'&nbsp;님'}</div>
+                    <div className={styles.honorific}>{'님'}</div>
                   </div>
                 ) : (
                   <Link to={'/signin'} className={styles.mobileLoginText}>
