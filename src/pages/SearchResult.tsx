@@ -171,7 +171,7 @@ const SearchResearch = () => {
     })
     nav('/newwiki')
   }
-  console.log('history!!!!!!!!', historys)
+
   return (
     <div className={styles.SearchResultContainer}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
