@@ -75,7 +75,6 @@ const MyComment = () => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
       withCredentials: true,
     })
-    console.log(res)
     return res.data
   }
 
