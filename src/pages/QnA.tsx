@@ -86,7 +86,6 @@ const fetchAnswers = async (question_id: string) => {
   const res = await axios.get<AnswerResponse>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
     withCredentials: true,
   })
-  console.log(res)
   return res.data
 }
 

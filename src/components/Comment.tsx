@@ -14,7 +14,7 @@ interface CommentProps {
   created_at: Date
   is_bad: boolean
   docsname: string
-  nick: string
+  nick?: string
 }
 
 function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: CommentProps) {
@@ -67,6 +67,10 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
       </div>
     </div>
   )
+}
+
+Comment.defaultProps = {
+  nick: 'Anonymous', // 기본값으로 "Anonymous" 설정
 }
 
 export default Comment
