@@ -9,7 +9,7 @@ import falseBk from '../img/bookmarkfalse.svg'
 import trueBk from '../img/bookmarkFill.svg'
 import debate from '../img/debate.svg'
 import his from '../img/his.svg'
-import comment from '../img/comment_icon.svg'
+import likeIcon from '../img/likeFill.png'
 import WikiBox from '../components/WikiBox'
 import Switch from '../components/Switch'
 import WikiGraph from '../components/Wiki/WikiGraph'
@@ -68,7 +68,7 @@ interface QuestionData {
 }
 
 interface TitleData {
-  titles: wikititle[]
+  data: wikititle[]
 }
 
 interface ContributionData {
@@ -214,7 +214,7 @@ function WikiViewer() {
 
   useEffect(() => {
     if (titlesData) {
-      settitles(titlesData.titles)
+      settitles(titlesData.data)
     }
   }, [titlesData])
 
@@ -480,7 +480,7 @@ function WikiViewer() {
                             <div className={styles.quesTitle}>{item.content}</div>
                             <div className={styles.quesNum}>
                               <span>{item.like_count}</span>
-                              <img alt={'좋아요'} src={comment} />
+                              <img alt={'좋아요'} src={likeIcon} />
                             </div>
                           </div>
                         </div>

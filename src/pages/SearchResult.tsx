@@ -32,6 +32,19 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface RecentItem {
+  created_at: Date
+  diff: number
+  doc_id: number
+  id: number
+  is_rollback: boolean
+  summary: string
+  user: { nickname: string }
+  user_id: number
+  version: number
+  wiki_doc: { title: string }
+}
+
 interface UserAuthResponse {
   success: boolean
 }
@@ -50,11 +63,9 @@ const fetchQues = async (title: string) => {
   return result.data.data
 }
 
-const fetchHistory = async (type: string) => {
+const fetchHistory = async (type: string): Promise<RecentItem[]> => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
-  console.log(result.data.message)
-  console.log(type)
-  return result.data.message
+  return result.data.data.message
 }
 
 function useCheckLoginStatus() {
@@ -241,18 +252,18 @@ const SearchResearch = () => {
             {historys.slice(0, 8).map((item: any, index: number) => {
               const timestamp = FormatTimeAgo(item.created_at)
               return (
-                <ul key={item.title}>
+                <ul key={item.wiki_doc.title}>
                   <Link
-                    to={`/wiki/${encodeURIComponent(item.doc_title)}`}
+                    to={`/wiki/${encodeURIComponent(item.wiki_doc.title)}`}
                     className={styles.linkTo}
                     onClick={() => {
                       track('click_recent_edit_wiki_in_search_result', {
-                        title: item.title,
+                        title: item.wiki_doc.title,
                         index,
                       })
                     }}
                   >
-                    <span className={styles.listTitle}>{item.doc_title}</span>
+                    <span className={styles.listTitle}>{item.wiki_doc.title}</span>
                   </Link>
                   <span className={styles.listTimestamp}>{timestamp}</span>
                 </ul>
