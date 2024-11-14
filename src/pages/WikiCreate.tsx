@@ -211,11 +211,15 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: WikiCreateProps) => {
                 {'정책에 맞게 작성하였음을 확인합니다.\r'}
               </a>
             </span>
-            <input type={'submit'} value={'생성하기'} className={`${styles.submitWiki}`} />
+            <button type={'submit'} className={`${styles.submitWiki} ${isChecked ? styles.active : ''}`}>
+              {'생성하기'}
+            </button>
           </div>
         </form>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }
