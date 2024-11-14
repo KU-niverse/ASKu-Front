@@ -215,7 +215,9 @@ const WikiCreate = ({ loggedIn, setLoggedIn }: WikiCreateProps) => {
           </div>
         </form>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }
