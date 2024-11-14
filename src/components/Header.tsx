@@ -130,7 +130,7 @@ function Header({ userInfo, setUserInfo }: any) {
         const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
           withCredentials: true,
         })
-        if (res.status === 200 && res.data.success === true) {
+        if (res.status === 201 && res.data.success === true) {
           setIsLoggedIn(true)
         } else if (res.status === 401) {
           setIsLoggedIn(false)
@@ -153,11 +153,7 @@ function Header({ userInfo, setUserInfo }: any) {
   useEffect(() => {
     if (isLoggedIn && userData) {
       const fetchedUserInfo = userData.data
-      if (typeof setUserInfo === 'function') {
-        setUserInfo(fetchedUserInfo)
-      } else {
-        console.error('setUserInfo is not a function')
-      }
+      setUserInfo(fetchedUserInfo)
       if (fetchedUserInfo.nickname) {
         setNicknameText(fetchedUserInfo.nickname)
       }
@@ -445,7 +441,7 @@ function Header({ userInfo, setUserInfo }: any) {
                       className={styles.repBadge}
                     />
                     <div className={styles.nicknameText}>{nicknameText}</div>
-                    <div className={styles.honorific}>&nbsp;님</div>
+                    <div className={styles.honorific}>{'&nbsp;님'}</div>
                   </div>
                 ) : (
                   <Link to={'/signin'} className={styles.mobileLoginText}>
