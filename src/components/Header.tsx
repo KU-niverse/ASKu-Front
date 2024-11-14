@@ -278,6 +278,8 @@ function Header({ userInfo, setUserInfo }: any) {
     track('click_header_navi', { type: '즐겨찾는 문서' })
     Nav('/mybookmark')
   }
+
+  console.log('@@@user info', userInfo)
   return (
     // 전체 헤더 컨테이너 (모바일 헤더 높이 상태에 따라 스타일이 동적으로 적용됨)
     <div className={styles.container}>
@@ -351,7 +353,7 @@ function Header({ userInfo, setUserInfo }: any) {
             ) : (
               <div className={styles.nicknameContainer}>
                 <div className={styles.nickname_badge}>
-                  <img src={userInfo.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                  <img src={userInfo?.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
                 </div>
                 <div className={styles.nickname}>
                   <div className={styles.nicknameText}>{nicknameText}</div>
