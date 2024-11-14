@@ -36,7 +36,9 @@ function WikiViewer() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const fetchWiki = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`)
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys/${title}/version/${ver}`, {
+      withCredentials: true,
+    })
     return response.data
   }
 
