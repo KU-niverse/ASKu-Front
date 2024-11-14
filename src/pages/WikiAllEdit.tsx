@@ -233,7 +233,9 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
           </div>
         </form>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }
