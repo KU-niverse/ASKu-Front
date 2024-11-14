@@ -23,6 +23,15 @@ import chatImg from '../img/initialchat_chat.png'
 
 interface User {
   id: number
+  created_at: Date
+  email: string
+  is_admin: number
+  is_authorized: number
+  nickname: string
+  rep_badge_id: number
+  rep_badge_image: string
+  rep_badge_name: string
+  restrict_count: number
 }
 
 interface UserData {
@@ -58,7 +67,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   // const closeLoginModal = () => {
   //   setLoginModalVisible(false)
   // }
-  const [user, setUser] = useState<UserData | null>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
 
@@ -114,13 +123,14 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
   })
 
   const fetchPreviousChatHistory = async (userId: number) => {
-    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId}`)
+    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId}`, {
+      withCredentials: true,
+    })
     return response.data
   }
-
   const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
-    ['chatHistory', user?.data.id],
-    () => fetchPreviousChatHistory(user?.data.id),
+    ['chatHistory', user?.id],
+    () => fetchPreviousChatHistory(user!.id),
     {
       enabled: !!user, // Only fetch chat history if userId is available
       onSuccess: (data) => {
@@ -154,7 +164,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: user.data.id,
+          user_id: user.id,
         })
         return response.data
       }
@@ -174,6 +184,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         setInputValue('')
       },
       onSuccess: (data) => {
+        console.log('🚀 ~ Chatbot ~ data:', data)
         try {
           const newRecommendedQuestions = data.recommended_questions || []
           setRecommendedQuestions(newRecommendedQuestions)
@@ -421,7 +432,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
               }
             >
-              <img src={infoIcon} className={styles.smallIcon} alt="info" />
+              <img src={infoIcon} className={styles.smallIcon} alt={'info'} />
               {'도움말'}
             </button>
           </div>
@@ -482,7 +493,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                         />
                       </>
                     ) : (
-                      <div className="skeleton" style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
+                      <div className={'skeleton'} style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
                     )}
                   </div>
                 </Fragment>
@@ -595,7 +606,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       {isLoginModalVisible && <LoginModal isOpen={isLoginModalVisible} onClose={() => setLoginModalVisible(false)} />}
       {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
       {ClearModalOpen && (
-        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data.id} />
+        <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.id} />
       )}
       <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
         <textarea
