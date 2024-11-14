@@ -34,19 +34,33 @@ interface BadgeIcon {
   cont: boolean
 }
 interface BadgeData {
-  id: number
-  user_id: number
-  badge_id: number
-  is_bad: boolean
-  created_at: Date
   badge: BadgeIcon
-  history_count: number
+  badge_id: number
+  created_at: Date
+  id: number
+  is_bad: boolean
+  user_id: number
+  hisory_count: number
 }
 
 interface BadgeResponse {
   success: boolean
   data: BadgeData[]
   message: string
+}
+
+interface AllBadgeResponse {
+  data: AllBadgeData[]
+  success: boolean
+}
+
+interface AllBadgeData {
+  description: string
+  event: number
+  history_count: string
+  id: number
+  image: string
+  name: string
 }
 
 interface User {
@@ -71,7 +85,7 @@ function MyBadge() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [loading, setLoading] = useState(true)
   const [myBadge, setMyBadge] = useState<BadgeData[]>([])
-  const [allBadge, setAllBadge] = useState<BadgeData[]>([])
+  const [allBadge, setAllBadge] = useState<AllBadgeData[]>([])
   const [repBadgeId, setRepBadgeId] = useState<number | null>(null)
   const [page, setPage] = useState(1) // 현재 페이지 상태
   const badgesPerPage = 8 // 페이지당 뱃지 수
@@ -83,7 +97,7 @@ function MyBadge() {
           withCredentials: true,
         })
         if (res.status === 201) {
-          console.log(res)
+          console.log(res.data.data)
           setMyBadge(res.data.data)
         }
       } catch (error) {
@@ -96,9 +110,11 @@ function MyBadge() {
   useEffect(() => {
     const takeAllBadge = async () => {
       try {
-        const response = await axios.get<BadgeResponse>(`${process.env.REACT_APP_HOST}/badge/all`, {
+        const response = await axios.get<AllBadgeResponse>(`${process.env.REACT_APP_HOST}/badge/all`, {
           withCredentials: true,
         })
+        console.log('🚀 ~ takeAllBadge ~ response.data:', response.data)
+        console.log('🚀 ~ takeAllBadge ~ response.data.data:', response.data.data)
         if (response.status === 201) {
           setAllBadge(response.data.data)
         }
@@ -174,10 +190,10 @@ function MyBadge() {
               <Badge
                 key={data.id}
                 id={data.id}
-                name={data.badge.name}
-                image={data.badge.image}
-                description={data.badge.description}
-                event={data.badge.event}
+                name={data.name}
+                image={data.image}
+                description={data.description}
+                event={data.event}
                 count={data.history_count}
                 myBadgeIds={myBadgeIds}
                 repBadgeId={repBadgeId}
