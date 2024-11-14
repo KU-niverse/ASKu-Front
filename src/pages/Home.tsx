@@ -186,7 +186,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   const debateListData = debates ? debates.slice(0, 3) : []
   const debateListDataMobile = debates ? debates.slice(0, 6) : []
   const questionList = popularQuestions ? popularQuestions.slice(0, 4) : []
-  const questionListMobile = popularQuestions ? popularQuestions.slice(0, 8) : []
+  const questionListMobile = popularQuestions ? popularQuestions.slice(0, 6) : []
 
   const { data: isLoggedIn, refetch: refetchLoginStatus } = useQuery('loginStatus', checkLoginStatus, {
     onSuccess: (data) => {
