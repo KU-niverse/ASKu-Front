@@ -72,7 +72,7 @@ interface QuestionData {
 
 interface UserInfoResponse {
   success: boolean
-  data: UserInfo[]
+  data: UserInfo
 }
 
 const fetchUserInfo = async () => {
@@ -86,6 +86,7 @@ const fetchAnswers = async (question_id: string) => {
   const res = await axios.get<AnswerResponse>(`${process.env.REACT_APP_HOST}/question/answer/${question_id}`, {
     withCredentials: true,
   })
+  console.log(res)
   return res.data
 }
 
@@ -106,14 +107,14 @@ const QnA: React.FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   const { data: userInfoData } = useQuery('userInfo', fetchUserInfo, {
-    onSuccess: (data) => setUserInfo(data.data[0]),
+    onSuccess: (data) => setUserInfo(data.data),
   })
   const { data: answerData, error: answerError } = useQuery(['answers', question_id], () => fetchAnswers(question_id!))
   const { data: questionData, error: questionError } = useQuery(['question', question_id], () =>
     fetchQuestion(question_id!),
   )
 
-  const currentUserId = userInfoData?.data[0]
+  const currentUserId = userInfoData?.data
 
   const linktoWiki = () => {
     const encodedTitle = encodeURIComponent(title!)
