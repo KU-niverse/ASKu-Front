@@ -72,7 +72,7 @@ interface UserData {
 interface MypageDataResponse {
   success: boolean
   message: string
-  data: UserData[]
+  data: UserData
 }
 
 // useQuery 훅을 사용하여 내가 쓴 질문 데이터 가져오기
@@ -126,7 +126,6 @@ function MyQuestion() {
   const { isLoading: isLoadingMypage, error: mypageError, data: mypageData } = useMypageData()
 
   const questions = myQuestionData?.data || []
-  const user = mypageData?.data[0] // 사용자 정보는 한 개만 있다고 가정
   return (
     <div className={styles.container}>
       {isLoadingMyQuestion || isLoadingMypage ? ( // 로딩 중 표시
@@ -147,7 +146,10 @@ function MyQuestion() {
               </div>
             </div>
             {myQuestionError || mypageError ? (
-              <div>에러: {(myQuestionError || mypageError).message}</div>
+              <div>
+                {'에러: '}
+                {(myQuestionError || mypageError).message}
+              </div>
             ) : questions.length === 0 ? (
               <>
                 <img src={emptyQuestion} alt={'empty_Qution'} className={styles.emptyQuestion} />
@@ -171,7 +173,7 @@ function MyQuestion() {
                   answer_or_not={question.answer_or_not}
                   is_bad={question.is_bad}
                   docsname={question.doc_title}
-                  nick={mypageData.data[0].nickname}
+                  nick={mypageData.data.nickname}
                   like_count={question.like_count}
                   answer_count={question.answer_count}
                   badge_image={question.badge_image}
