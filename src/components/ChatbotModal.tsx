@@ -21,6 +21,15 @@ import chatImg from '../img/chatModal.png'
 
 interface User {
   id: number
+  created_at: Date
+  email: string
+  is_admin: number
+  is_authorized: number
+  nickname: string
+  rep_badge_id: number
+  rep_badge_image: string
+  rep_badge_name: string
+  restrict_count: number
 }
 
 interface UserData {
@@ -78,7 +87,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
     }
   }
 
-  const [user, setUser] = useState<UserData | null>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
 
@@ -124,8 +133,8 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   }
 
   const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
-    ['chatHistory', user?.data.id],
-    () => fetchPreviousChatHistory(user?.data.id),
+    ['chatHistory', user?.id],
+    () => fetchPreviousChatHistory(user!.id),
     {
       enabled: !!user, // Only fetch chat history if userId is available
       onSuccess: (data) => {
@@ -163,7 +172,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: user.data.id,
+          user_id: user.id,
         })
         return response.data
       }
@@ -380,7 +389,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
                   window.open('https://034179.notion.site/AI-b72545cea3ef421cbfc59ad6ed89fced?pvs=4', '_blank')
                 }
               >
-                <img src={infoIcon} className={styles.smallIcon} alt="info" />
+                <img src={infoIcon} className={styles.smallIcon} alt={'info'} />
                 {'도움말'}
               </button>
             </div>
@@ -543,7 +552,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
           )}
           {RefreshModalOpen && <RefreshModal isOpen={RefreshModalOpen} onClose={() => setRefreshModalOpen(false)} />}
           {ClearModalOpen && (
-            <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.data.id} />
+            <ClearModal isOpen={ClearModalOpen} onClose={() => setClearModalOpen(false)} userId={user?.id} />
           )}
           <div className={styles.promptWrap} style={SuggestContainerState !== 'initial' ? { marginTop: '25px' } : {}}>
             <textarea
@@ -577,7 +586,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
   ) : (
     <button
       className={styles.modalButton}
-      type="button"
+      type={'button'}
       onMouseEnter={() => setIsMouseHover(true)}
       onMouseLeave={() => setIsMouseHover(false)}
       onClick={() => {

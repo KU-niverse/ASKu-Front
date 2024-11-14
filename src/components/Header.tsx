@@ -29,7 +29,7 @@ interface UserData {
   id: number
   name: string
   login_id: string
-  stu_id: string
+  stuId: string
   email: string
   rep_badge_id: number
   nickname: string
@@ -55,20 +55,20 @@ interface RandomDocResponse {
 
 // 유저 정보 useQuery 훅: 사용자 정보를 서버에서 가져와 캐싱합니다.
 function useUserInfo() {
-  return useQuery<MypageDataResponse, AxiosError>(
+  return useQuery<UserData, AxiosError>(
     'userInfo',
     async () => {
       const response = await axios.get<MypageDataResponse>(`${process.env.REACT_APP_HOST}/user/mypage/info`, {
         withCredentials: true,
       })
-      return response.data
+      return response.data.data
     },
     {
       retry: false,
       onError: (error) => {
         console.error('사용자 정보 가져오기 에러:', error)
       },
-      enabled: !!sessionStorage.getItem('user'), // sessionStorage에 유저 정보가 있을 때만 실행
+      // enabled: !!sessionStorage.getItem('user'), // sessionStorage에 유저 정보가 있을 때만 실행
     },
   )
 }
@@ -152,7 +152,7 @@ function Header({ userInfo, setUserInfo }: any) {
   // 유저 데이터에 따른 닉네임 설정
   useEffect(() => {
     if (isLoggedIn && userData) {
-      const fetchedUserInfo = userData.data
+      const fetchedUserInfo = userData
       if (typeof setUserInfo === 'function') {
         setUserInfo(fetchedUserInfo)
       } else {
@@ -278,7 +278,6 @@ function Header({ userInfo, setUserInfo }: any) {
     track('click_header_navi', { type: '즐겨찾는 문서' })
     Nav('/mybookmark')
   }
-
   return (
     // 전체 헤더 컨테이너 (모바일 헤더 높이 상태에 따라 스타일이 동적으로 적용됨)
     <div className={styles.container}>
@@ -445,7 +444,7 @@ function Header({ userInfo, setUserInfo }: any) {
                       className={styles.repBadge}
                     />
                     <div className={styles.nicknameText}>{nicknameText}</div>
-                    <div className={styles.honorific}>{'&nbsp;님'}</div>
+                    <div className={styles.honorific}>{'님'}</div>
                   </div>
                 ) : (
                   <Link to={'/signin'} className={styles.mobileLoginText}>
