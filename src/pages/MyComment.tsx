@@ -16,7 +16,6 @@ interface UserInfo {
   stu_id: string
   email: string
   rep_badge_id: number
-  nickname: string
   created_at: Date
   point: number
   is_admin: boolean
@@ -54,7 +53,6 @@ interface MyInfoData {
   stu_id: string
   email: string
   rep_badge_id: number
-  nickname: string
   created_at: Date
   point: number
   is_admin: boolean
@@ -77,6 +75,7 @@ const MyComment = () => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
       withCredentials: true,
     })
+    console.log(res)
     return res.data
   }
 
@@ -137,7 +136,6 @@ const MyComment = () => {
               created_at={new Date(debate.debate_content_time)}
               is_bad={debate.is_bad}
               docsname={debate.doc_title}
-              nick={mypageData.data[0].nickname}
             />
           ))
         )}
