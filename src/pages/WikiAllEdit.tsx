@@ -75,7 +75,6 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
 
   const { data: queryUserInfo } = useQuery<UserInfo, AxiosError>('userInfo', fetchUserInfo, {
     onSuccess: (data) => {
-      console.log('🚀 ~ WikiEdit ~ queryUserInfo:', queryUserInfo)
       if (data) {
         setLoggedIn(true)
       } else {
