@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
 import { useQuery, useMutation } from 'react-query'
@@ -16,6 +16,12 @@ interface WikiEditProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+interface UserInfoResponse {
+  data: UserInfo
+  message: string
+  success: boolean
+}
+
 interface UserInfo {
   id: number
   name: string
@@ -26,8 +32,8 @@ interface UserInfo {
   nickname: string
   created_at: Date
   point: number
-  is_admin: boolean
-  is_authorized: boolean
+  is_admin: number
+  is_authorized: number
   restrict_period: number | null
   restrict_count: number
   rep_badge_name: string
@@ -41,8 +47,13 @@ interface WikiDocs {
 }
 
 const fetchUserInfo = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
-  return res.data
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
+    return res.data
+  } catch (error) {
+    console.error('Error fetching user info:', error) // 에러 로그
+    throw error // 에러를 throw하여 useQuery에서 처리할 수 있도록 함
+  }
 }
 
 const fetchWiki = async (title: string) => {
@@ -62,9 +73,10 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
 
   const from = location.state?.from || '/'
 
-  const { data: queryUserInfo } = useQuery('userInfo', fetchUserInfo, {
+  const { data: queryUserInfo } = useQuery<UserInfo, AxiosError>('userInfo', fetchUserInfo, {
     onSuccess: (data) => {
-      if (data.success) {
+      console.log('🚀 ~ WikiEdit ~ queryUserInfo:', queryUserInfo)
+      if (data) {
         setLoggedIn(true)
       } else {
         setLoggedIn(false)
