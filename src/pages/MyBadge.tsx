@@ -97,7 +97,6 @@ function MyBadge() {
           withCredentials: true,
         })
         if (res.status === 201) {
-          console.log(res.data.data)
           setMyBadge(res.data.data)
         }
       } catch (error) {
@@ -113,8 +112,6 @@ function MyBadge() {
         const response = await axios.get<AllBadgeResponse>(`${process.env.REACT_APP_HOST}/badge/all`, {
           withCredentials: true,
         })
-        console.log('🚀 ~ takeAllBadge ~ response.data:', response.data)
-        console.log('🚀 ~ takeAllBadge ~ response.data.data:', response.data.data)
         if (response.status === 201) {
           setAllBadge(response.data.data)
         }
