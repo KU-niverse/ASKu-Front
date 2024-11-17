@@ -522,7 +522,7 @@ function WikiViewer() {
                 {contribute && totalPoint ? (
                   <WikiGraph total_point={totalPoint} users={contribute} />
                 ) : (
-                  <p className={styles.noneComment}>{'"기여도가 존재하지 않습니다"'}</p>
+                  <p className={styles.noneComment}>{'아직 기여도가 존재하지 않습니다'}</p>
                 )}
               </div>
             </div>
