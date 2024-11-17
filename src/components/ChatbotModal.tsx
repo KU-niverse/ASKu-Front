@@ -73,17 +73,14 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       } else if (res.status === 401) {
         setIsLoggedIn(false)
         alert('로그인이 필요한 서비스 입니다.')
-        nav(from)
       }
     } catch (error) {
       console.error(error)
       setIsLoggedIn(false)
       if (error.response.status === 401) {
         setIsLoggedIn(false)
-        nav(from)
       }
       // alert('에러가 발생하였습니다')
-      nav(from)
     }
   }
 

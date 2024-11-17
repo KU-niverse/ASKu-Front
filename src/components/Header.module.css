@@ -342,6 +342,10 @@ div.navDebate:hover {
   margin-right: 1.5rem;
 }
 
+.searchInputContainer {
+  grid-column: 3/7;
+}
+
 @media only screen and (max-width: 767px) {
   .searchInputContainer {
     display: none;

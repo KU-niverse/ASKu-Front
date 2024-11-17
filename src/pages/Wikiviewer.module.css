@@ -400,6 +400,7 @@
   height: 21rem;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .wikicontent {
   width: 100%;
