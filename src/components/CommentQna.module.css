@@ -1,6 +1,6 @@
 .q_list {
   width: 100%;
-  margin: 3rem 0 3rem 0;
+  margin: 3rem 0 0rem 0;
 }
 
 .q_header {
@@ -121,8 +121,8 @@
 } */
 
 @media only screen and (max-width: 767px) {
-
-  .q_middle {}
+  .q_middle {
+  }
 
   .q_mynick {
     font-size: 1.7rem;
@@ -141,7 +141,8 @@
     font-size: 10px;
   }
 
-  .q_header {}
+  .q_header {
+  }
 
   .q_middle {
     margin: 1.4rem 0 0 0;
