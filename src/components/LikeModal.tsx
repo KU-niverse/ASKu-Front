@@ -16,7 +16,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const queryClient = useQueryClient()
-  const [feedbackId, setFeedbackId] = useState('')
+  const [feedbackId, setFeedbackId] = useState<number>()
 
   const sendLikeFeedback = async () => {
     const response = await axios.post(
@@ -55,7 +55,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
   const sendLikeCommentFeedback = async (comment: string) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+        `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
         {
           feedback_id: feedbackId, // 피드백 ID
           content: comment, // 댓글 내용
