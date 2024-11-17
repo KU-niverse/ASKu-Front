@@ -542,3 +542,7 @@ div.navDebate:hover {
   height: auto;
   cursor: pointer;
 }
+
+.disabled {
+  display: none; /* 해당 요소를 보이지 않게 처리 */
+}
