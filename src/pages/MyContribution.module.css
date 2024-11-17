@@ -4,9 +4,11 @@
   width: 100vw;
   min-height: 100vh;
 }
+
 .contentSubContainer {
   width: 100%;
-  flex: 1; /* 남은 공간을 차지하도록 설정 */
+  flex: 1;
+  /* 남은 공간을 차지하도록 설정 */
   margin: 0 auto;
   border-radius: 1.2rem;
   min-height: 100vh;
@@ -78,7 +80,7 @@
 .warningsign {
   width: 4rem;
   height: 4rem;
-  margin: 0 auto;
+  margin: 12rem auto;
   background-color: #fef2f4;
   border-radius: 50%;
   display: flex;
