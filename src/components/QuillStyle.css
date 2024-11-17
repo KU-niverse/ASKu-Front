@@ -25,3 +25,9 @@
 /* .react-quill:focus {
     border-color: #333; /* Change this color as needed 
   } */
+
+/* placeholder 스타일 조정 */
+.ql-editor::before {
+  font-size: 1.95rem; /* placeholder 텍스트 크기 */
+  color: #aaa; /* placeholder 텍스트 색상 */
+}
