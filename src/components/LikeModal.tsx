@@ -47,7 +47,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
         onClose()
       } else {
         console.error(error)
-        alert(error.response?.data?.message || '문제가 발생하였습니다.')
+        // alert(error.response?.data?.message || '문제가 발생하였습니다.')
       }
     },
   })
@@ -83,7 +83,7 @@ function LikeModal({ isOpen, onClose, qnaId }: LikeModalProps) {
     onError: (error: any) => {
       console.error(error)
       onClose()
-      alert(error.response?.data?.message || '문제가 발생하였습니다')
+      // alert(error.response?.data?.message || '문제가 발생하였습니다')
     },
   })
 
