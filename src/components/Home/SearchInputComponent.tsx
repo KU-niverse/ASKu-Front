@@ -35,7 +35,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ inputValue = '', set
           if (e.key === 'Enter') {
             e.preventDefault()
             if (inputValue.trim() !== '') {
-              window.location.href = `/result/${encodeURIComponent(inputValue)}/${encodeURIComponent(`search`)}`
+              Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
               setInputValue('')
             }
           }
