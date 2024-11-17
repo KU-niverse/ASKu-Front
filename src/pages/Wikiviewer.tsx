@@ -333,7 +333,6 @@ function WikiViewer() {
         nextTitle = titles[0]
       }
       nav(`/wiki/${encodeURIComponent(nextTitle)}`)
-      window.location.reload()
     } else {
       console.error('현재 title을 찾을 수 없습니다.')
     }
