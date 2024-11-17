@@ -19,8 +19,8 @@ html {
     position: relative;
     border-bottom: 0px;
     box-shadow: none;
-}
   }
+}
 
 .flexContainer {
   display: grid;
@@ -537,4 +537,8 @@ div.navDebate:hover {
   width: 15px;
   height: auto;
   cursor: pointer;
+}
+
+.disabled {
+  display: none; /* 해당 요소를 보이지 않게 처리 */
 }

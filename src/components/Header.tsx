@@ -351,7 +351,7 @@ function Header({ userInfo, setUserInfo }: any) {
               <div />
             ) : (
               <div className={styles.nicknameContainer}>
-                <div className={styles.nickname_badge}>
+                <div className={`${styles.nickname_badge} ${!userInfo?.rep_badge_image ? styles.disabled : ''}`}>
                   <img src={userInfo?.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
                 </div>
                 <div className={styles.nickname}>
