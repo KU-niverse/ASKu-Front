@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import styles from './History.module.css'
 import Header from '../components/Header'
 import his2 from '../img/his2.png'
@@ -50,6 +50,7 @@ const History = () => {
   const { title } = useParams<{ title: string }>()
   const [page, setPage] = useState<number>(1)
   const perPage = 6
+  const Nav = useNavigate()
 
   const {
     isLoading,
@@ -68,8 +69,13 @@ const History = () => {
       enabled: !!title, // title이 있을 때만 쿼리 실행
       retry: false,
       onError: (err: AxiosError) => {
+        if (err.response?.status === 401) {
+          alert('로그인이 필요한 서비스입니다')
+          Nav('/signin')
+          return
+        }
         console.error('위키 히스토리 가져오기 에러:', err)
-        alert(error.response?.data || '에러가 발생했습니다.')
+        alert(err.response?.data || '에러가 발생했습니다.')
       },
     },
   )
