@@ -102,7 +102,11 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
         <div className={styles.bookmarkContents}>
           <div className={styles.header}>
             <p className={styles.text}>{'나의 관심 목록'}&nbsp;</p>
-            <div className={styles.number}>({lists.length})</div>
+            <div className={styles.number}>
+              {'('}
+              {lists.length}
+              {')'}
+            </div>
           </div>
           {lists?.length === 0 ? (
             <div className={styles.caution}>
@@ -125,10 +129,12 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
           )}
         </div>
       </div>
-      <div className={lists?.length === 0 ? styles.hidden : styles.pagingContainer}>
+      {lists?.length !== 0 && (
         <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+      )}
+      <div className={styles.footerContainer}>
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }
