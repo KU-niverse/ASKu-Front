@@ -538,7 +538,9 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
           </div>
         </div>
       )}
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }

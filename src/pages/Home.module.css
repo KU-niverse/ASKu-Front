@@ -109,6 +109,10 @@
   height: calc(100% - 10px);
 }
 
+.footerContainer {
+  margin-top: auto;
+}
+
 @media only screen and (max-width: 900px) {
   .logo {
     margin-left: 100px;
