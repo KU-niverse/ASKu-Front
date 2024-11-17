@@ -115,8 +115,13 @@ function Header({ userInfo, setUserInfo }: any) {
   const Nav = useNavigate()
   const location = useLocation()
 
-  const { data: userData, isFetching: isLoadingUser } = useUserInfo()
+  const { data: userData, isFetching: isLoadingUser, refetch } = useUserInfo()
   const { data: randomDoc, refetch: refetchRandomDoc } = useRandomDoc()
+
+  useEffect(() => {
+    // 새로고침 시 실행
+    refetch()
+  }, [refetch])
 
   // 로그아웃 함수: 로그인 상태를 해제하고 초기화
   const logOut = () => {
