@@ -27,6 +27,7 @@ function ThreedotsBadge({ badge_id, badge_disabled, is_rep_badge }: ThreedotsBad
       )
       if (response.status === 201) {
         alert('대표 뱃지가 변경되었습니다.')
+        window.location.reload() // 페이지 새로고침
       } else if (response.status === 400) {
         alert(response.data.message)
       } else {
