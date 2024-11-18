@@ -1,3 +1,9 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .content {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -5,9 +11,8 @@
   padding: 0 12rem;
   padding-top: 30px;
   flex-direction: column;
-  min-height: 80vh;
-  height: auto;
   background: #f9f9f9;
+  flex: 1;
 }
 
 .cautionIcon {
@@ -16,6 +21,8 @@
 
 .page {
   background-color: #f9f9f9;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
 }
 
 .none {
@@ -52,11 +59,6 @@
   row-gap: 3.2rem;
 }
 
-.pagingContainer {
-  padding: 3rem 0;
-  background: #f9f9f9;
-}
-
 .hidden {
   visibility: hidden;
 }
@@ -85,20 +87,19 @@
   align-items: center;
 }
 
-@media only screen and (max-width: 767px) {
-  .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
 
+@media only screen and (max-width: 767px) {
   .content {
     display: flex;
     flex-direction: column;
-    height: auto;
     margin: 0;
     padding: 0;
-    background: #fff;
+    background: white;
   }
 
   .bookmarkContents {
@@ -108,15 +109,11 @@
     padding: 2rem 2rem;
   }
 
-  .pagingContainer {
-    background: #fff;
+  .page {
+    background-color: white;
   }
 
   .caution {
     margin-top: 50%;
-  }
-
-  .footerContainer {
-    margin-top: auto;
   }
 }
