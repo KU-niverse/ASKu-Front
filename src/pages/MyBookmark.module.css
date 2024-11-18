@@ -7,11 +7,15 @@
   flex-direction: column;
   min-height: 80vh;
   height: auto;
-  background: #F9F9F9;
+  background: #f9f9f9;
 }
 
 .cautionIcon {
   width: 7.8rem;
+}
+
+.page {
+  background-color: #f9f9f9;
 }
 
 .none {
@@ -50,7 +54,7 @@
 
 .pagingContainer {
   padding: 3rem 0;
-  background: #F9F9F9;
+  background: #f9f9f9;
 }
 
 .hidden {
@@ -62,14 +66,13 @@
   display: flex;
   align-items: center;
   font-weight: 700;
-
 }
 
 .number {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #9F132E 9.61%, #DE3A58 90.96%);
+  background: linear-gradient(to bottom, #9f132e 9.61%, #de3a58 90.96%);
   background-clip: text;
   -webkit-background-clip: text;
   border-radius: 11px;
@@ -80,7 +83,6 @@
 .texts {
   display: flex;
   align-items: center;
-
 }
 
 @media only screen and (max-width: 767px) {
@@ -117,5 +119,4 @@
   .footerContainer {
     margin-top: auto;
   }
-
 }

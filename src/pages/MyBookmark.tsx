@@ -130,9 +130,11 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
             )}
           </div>
         </div>
-        {lists?.length !== 0 && (
-          <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
-        )}
+        <div className={styles.page}>
+          {lists?.length !== 0 && (
+            <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+          )}
+        </div>
       </div>
       <div className={styles.footerContainer}>
         <Footer />
