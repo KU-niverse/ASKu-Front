@@ -504,7 +504,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                         />
                       </>
                     ) : (
-                      <div className={'skeleton'} style={{ height: '1000px' }} /> // 보이지 않는 요소는 플레이스홀더
+                      <div className={'skeleton'} style={{ height: '500px' }} /> // 보이지 않는 요소는 플레이스홀더
                     )}
                   </div>
                 </Fragment>
