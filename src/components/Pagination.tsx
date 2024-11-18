@@ -55,10 +55,10 @@ const Pagination: React.FC<PaginationProps> = ({ total, limit, page, setPage }) 
       {!isMobile ? (
         // Desktop View
         <>
-          <button type={'button'} className={styles.Button} onClick={goToFirst} disabled={page === 1}>
+          <button type={'button'} className={styles.Button} onClick={goToFirst} disabled={page === 1 || numPages === 0}>
             <img src={leftDoubleArrow} alt={'왼쪽 더블 화살표'} />
           </button>
-          <button type={'button'} className={styles.Button} onClick={goToLeft} disabled={page === 1}>
+          <button type={'button'} className={styles.Button} onClick={goToLeft} disabled={page === 1 || numPages === 0}>
             <img src={leftArrow} alt={'왼쪽 화살표'} style={{ marginRight: '22px' }} />
           </button>
           <div className={styles.Numbers}>
@@ -74,24 +74,39 @@ const Pagination: React.FC<PaginationProps> = ({ total, limit, page, setPage }) 
               </button>
             ))}
           </div>
-          <button type={'button'} className={styles.Button} onClick={goToRight} disabled={page === numPages}>
+          <button
+            type={'button'}
+            className={styles.Button}
+            onClick={goToRight}
+            disabled={page === numPages || numPages === 0}
+          >
             <img src={leftArrow} alt={'오른쪽 화살표'} style={{ transform: 'rotate(180deg)', marginLeft: '22px' }} />
           </button>
-          <button type={'button'} className={styles.Button} onClick={goToLast} disabled={page === numPages}>
+          <button
+            type={'button'}
+            className={styles.Button}
+            onClick={goToLast}
+            disabled={page === numPages || numPages === 0}
+          >
             <img src={leftDoubleArrow} alt={'오른쪽 더블 화살표'} style={{ transform: 'rotate(180deg)' }} />
           </button>
         </>
       ) : (
         // Mobile View
         <div className={styles.MobileNav} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button type={'button'} className={styles.Button} onClick={goToLeft} disabled={page === 1}>
+          <button type={'button'} className={styles.Button} onClick={goToLeft} disabled={page === 1 || numPages === 0}>
             <img src={leftArrow} alt={'왼쪽 화살표'} />
           </button>
           <span className={styles.mobileNumbers} style={{ whiteSpace: 'nowrap' }}>
-            <span style={{ fontWeight: 'bold' }}>{page}</span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;{numPages}
+            <span style={{ fontWeight: 'bold' }}>{numPages === 0 ? 0 : page}</span>&nbsp;&nbsp;&nbsp; |
+            &nbsp;&nbsp;&nbsp;{numPages}
           </span>
-
-          <button type={'button'} className={styles.Button} onClick={goToRight} disabled={page === numPages}>
+          <button
+            type={'button'}
+            className={styles.Button}
+            onClick={goToRight}
+            disabled={page === numPages || numPages === 0}
+          >
             <img src={leftArrow} alt={'오른쪽 화살표'} style={{ transform: 'rotate(180deg)' }} />
           </button>
         </div>
