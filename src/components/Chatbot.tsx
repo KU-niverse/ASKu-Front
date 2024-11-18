@@ -175,7 +175,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
       if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: user.id,
+          user_id: userInfo.data.id,
         })
         return response.data
       }
