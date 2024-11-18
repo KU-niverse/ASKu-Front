@@ -121,7 +121,9 @@ function WikiViewer() {
   const location = useLocation()
   const [isToggled, setIsToggled] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [bookmarks, setBookmarks] = useState<any[]>([])
   const [isBookmark, setIsBookmark] = useState(false)
+  const [wikiTitle, setWikiTitle] = useState('') // 현재 문서의 제목
   const { title } = useParams()
   const [allText, setAllText] = useState('')
   const [allContent, setAllContent] = useState<Content[]>([])
@@ -149,12 +151,46 @@ function WikiViewer() {
     flagToggle()
   }, [isToggled])
 
+  const fetchBookmarks = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/favorite`, {
+        withCredentials: true,
+      })
+      // 'title' 속성만 추출
+      const bookmarkTitles = response.data.message.map((bookmark: { title: string }) => bookmark.title)
+
+      setBookmarks(bookmarkTitles)
+    } catch (error) {
+      console.error('Error fetching bookmarks:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBookmarks()
+  }, [])
+
   const fetchWiki = async (): Promise<WikiData> => {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
       withCredentials: true,
     })
+
     return response.data
   }
+
+  // title 비교 후 isBookmark 업데이트
+  useEffect(() => {
+    if (title && bookmarks.length > 0) {
+      const normalizedTitle = title.trim().toLowerCase() // 공백 제거 및 소문자로 변환
+      const isMatched = bookmarks.some((bookmark) => bookmark.trim().toLowerCase() === normalizedTitle)
+      setIsBookmark(isMatched) // 비교 결과로 업데이트
+    }
+  }, [title, bookmarks])
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    fetchBookmarks()
+    fetchWiki()
+  }, [])
 
   const fetchQues = async (): Promise<QuestionData> => {
     const response = await axios.get(
@@ -201,9 +237,12 @@ function WikiViewer() {
     if (wikiData) {
       setAllContent(wikiData.contents)
       setFavorite(wikiData.is_favorite)
-      setImageSource(wikiData.is_favorite ? trueBk : falseBk)
     }
   }, [wikiData])
+
+  useEffect(() => {
+    setImageSource(isBookmark ? trueBk : falseBk) // isBookmark 상태에 따라 이미지 업데이트
+  }, [isBookmark])
 
   useEffect(() => {
     if (quesData) {
@@ -261,9 +300,16 @@ function WikiViewer() {
     },
   )
 
+  const deleteBookmark = async () => {
+    const response = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
+      withCredentials: true,
+    })
+    return response.data
+  }
+
   const deleteBookmarkMutation = useMutation(
     async () => {
-      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${encodeURIComponent(title)}`, {
+      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
         withCredentials: true,
       })
       return result.data
@@ -320,6 +366,14 @@ function WikiViewer() {
   const linkToDebate = () => {
     const encodedTitle = encodeURIComponent(title!)
     nav(`/debate/${encodedTitle}`)
+  }
+
+  const handleNextWikiClick = async () => {
+    // 먼저 linkToNextWiki 실행
+    linkToNextWiki()
+
+    // 그런 다음 fetchBookmarks 실행
+    await fetchBookmarks()
   }
 
   const linkToNextWiki = () => {
@@ -383,7 +437,7 @@ function WikiViewer() {
                 </button>
               </div>
 
-              <button type={'button'} onClick={linkToNextWiki} className={styles.wikititleBtnThree}>
+              <button type={'button'} onClick={handleNextWikiClick} className={styles.wikititleBtnThree}>
                 <img src={arrowForward} alt={'다음 문서 아이콘'} />
               </button>
             </div>
