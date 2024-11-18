@@ -98,45 +98,43 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
   return (
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <div style={{ height: 'auto' }}>
-        <div className={styles.content}>
-          <div className={styles.bookmarkContents}>
-            <div className={styles.header}>
-              <p className={styles.text}>{'나의 관심 목록'}&nbsp;</p>
-              <div className={styles.number}>
-                {'('}
-                {lists.length}
-                {')'}
-              </div>
+      <div className={styles.content}>
+        <div className={styles.bookmarkContents}>
+          <div className={styles.header}>
+            <p className={styles.text}>{'나의 관심 목록'}&nbsp;</p>
+            <div className={styles.number}>
+              {'('}
+              {lists.length}
+              {')'}
             </div>
-            {lists?.length === 0 ? (
-              <div className={styles.caution}>
-                <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
-                <p className={styles.none}>{'아직 관심 목록이'}</p>
-                <p className={styles.none}>{'없습니다.'}</p>
-              </div>
-            ) : (
-              lists.slice(startIndex, endIndex).map((item: any) => (
-                <div key={item.title}>
-                  <BookmarkBox
-                    title={item.title}
-                    content={item.recent_filtered_content}
-                    is_favorite
-                    result={false}
-                    version={item.latest_ver}
-                  />
-                </div>
-              ))
-            )}
           </div>
+          {lists?.length === 0 ? (
+            <div className={styles.caution}>
+              <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
+              <p className={styles.none}>{'아직 관심 목록이'}</p>
+              <p className={styles.none}>{'없습니다.'}</p>
+            </div>
+          ) : (
+            lists.slice(startIndex, endIndex).map((item: any) => (
+              <div key={item.title}>
+                <BookmarkBox
+                  title={item.title}
+                  content={item.recent_filtered_content}
+                  is_favorite
+                  result={false}
+                  version={item.latest_ver}
+                />
+              </div>
+            ))
+          )}
         </div>
+      </div>
+      <div className={styles.footerContainer}>
         <div className={styles.page}>
           {lists?.length !== 0 && (
             <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
           )}
         </div>
-      </div>
-      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>
