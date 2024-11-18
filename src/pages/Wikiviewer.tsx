@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation, useParams } from 'react-router-dom/dist
 import React, { useRef, useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { track } from '@amplitude/analytics-browser'
-import { useQuery, useMutation } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import Header from '../components/Header'
 import styles from './Wikiviewer.module.css'
 import falseBk from '../img/bookmarkfalse.svg'
@@ -138,6 +138,7 @@ function WikiViewer() {
   const [isTocExpanded, setIsTocExpanded] = useState(false)
   const { data: loginStatusData } = useCheckLoginStatus()
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const queryClient = useQueryClient()
 
   const flagToggle = () => {
     if (!isToggled) {
@@ -284,6 +285,7 @@ function WikiViewer() {
           setFavorite(true)
           setImageSource(trueBk)
           alert('즐겨찾기에 추가되었습니다')
+          queryClient.invalidateQueries('bookmarks')
         } else {
           alert('문제가 발생하였습니다')
         }
@@ -307,32 +309,22 @@ function WikiViewer() {
     return response.data
   }
 
-  const deleteBookmarkMutation = useMutation(
-    async () => {
-      const result = await axios.delete(`${process.env.REACT_APP_HOST}/wiki/favorite/${title}`, {
-        withCredentials: true,
-      })
-      return result.data
+  const deleteBookmarkMutation = useMutation(deleteBookmark, {
+    onSuccess: () => {
+      setFavorite(false)
+      setImageSource(falseBk)
+      alert('즐겨찾기에서 삭제되었습니다')
+      queryClient.invalidateQueries('bookmarks')
     },
-    {
-      onSuccess: (data) => {
-        if (data.success) {
-          setFavorite(false)
-          setImageSource(falseBk)
-          alert('즐겨찾기에서 삭제되었습니다')
-        } else {
-          alert('문제가 발생하였습니다')
-        }
-      },
-      onError: (error: unknown) => {
-        // const axiosError = error as CustomAxiosError
-        // alert(axiosError.response?.data.message)
-        setFavorite(false)
-        setImageSource(falseBk)
-        alert('즐겨찾기에서 삭제되었습니다')
-      },
+    onError: (error: any) => {
+      // console.error(error)
+      // alert(error.response?.data?.message || '문제가 발생하였습니다')
+      setFavorite(false)
+      setImageSource(falseBk)
+      alert('즐겨찾기에서 삭제되었습니다')
+      queryClient.invalidateQueries('bookmarks')
     },
-  )
+  })
 
   const handleClickBookmark = async () => {
     if (favorite) {

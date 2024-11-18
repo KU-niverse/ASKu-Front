@@ -78,7 +78,6 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
     const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/favorite`, {
       withCredentials: true,
     })
-    console.log(response)
     return response.data.message
   }
 
