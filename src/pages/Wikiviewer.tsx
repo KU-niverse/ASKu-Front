@@ -184,6 +184,8 @@ function WikiViewer() {
       const normalizedTitle = title.trim().toLowerCase() // 공백 제거 및 소문자로 변환
       const isMatched = bookmarks.some((bookmark) => bookmark.trim().toLowerCase() === normalizedTitle)
       setIsBookmark(isMatched) // 비교 결과로 업데이트
+      setFavorite(isMatched)
+      setImageSource(isBookmark ? trueBk : falseBk) // isBookmark 상태에 따라 이미지 업데이트
     }
   }, [title, bookmarks])
 
@@ -237,14 +239,10 @@ function WikiViewer() {
   useEffect(() => {
     if (wikiData) {
       setAllContent(wikiData.contents)
-      setFavorite(wikiData.is_favorite)
     }
   }, [wikiData])
 
-  useEffect(() => {
-    setImageSource(isBookmark ? trueBk : falseBk) // isBookmark 상태에 따라 이미지 업데이트
-    setFavorite(isBookmark) // isBookmark 상태에 따라 favorite 업데이트
-  }, [isBookmark])
+  useEffect(() => {}, [isBookmark])
 
   useEffect(() => {
     if (quesData) {
