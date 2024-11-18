@@ -243,6 +243,7 @@ function WikiViewer() {
 
   useEffect(() => {
     setImageSource(isBookmark ? trueBk : falseBk) // isBookmark 상태에 따라 이미지 업데이트
+    setFavorite(isBookmark) // isBookmark 상태에 따라 favorite 업데이트
   }, [isBookmark])
 
   useEffect(() => {
