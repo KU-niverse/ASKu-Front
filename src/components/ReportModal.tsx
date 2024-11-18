@@ -31,7 +31,7 @@ function ReportModal({ type, target, isOpen, onClose }: ReportModalProps) {
   const requestBody = {
     target,
     reason_id: selectedReason,
-    comment: reportContent,
+    comment: reportContent || '없음',
   }
 
   const mutation = useMutation(
@@ -57,6 +57,10 @@ function ReportModal({ type, target, isOpen, onClose }: ReportModalProps) {
   const handleSubmit = () => {
     if (selectedReason === null) {
       alert('신고 사유를 선택해주세요.')
+      return
+    }
+    if (selectedReason == 8 && reportContent == '') {
+      alert('신고 사유를 입력해주세요.')
       return
     }
     mutation.mutate()
