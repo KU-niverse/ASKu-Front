@@ -330,9 +330,10 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const chatBottomRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [chatResponse])
+  // useEffect(() => {
+  //   scrollToBottom()
+  // }, [chatResponse])
+  // 기존 채팅 출력 화면 고정 -> 채팅 시작 한 번, 채팅 출력 완료 한 번으로 수정
 
   useLayoutEffect(() => {
     scrollToBottom()
