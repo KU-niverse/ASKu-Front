@@ -101,6 +101,7 @@ function Header({ userInfo, setUserInfo }: any) {
   const [navContainerRightWidth, setNavContainerRightWidth] = useState('150px') // 네비게이션 바 우측 너비
   const [navContainerRightMargin, setNavContainerRightMargin] = useState('100px') // 네비게이션 바 우측 마진
   const [nicknameText, setNicknameText] = useState('') // 유저 닉네임
+  const [repBadgeImg, setRepBadgeImg] = useState('') // 대표 뱃지 이미지
   const [isAlarmVisible, setIsAlarmVisible] = useState(false) // 알람 창 표시 여부
   const [mobileHeaderOpen, setMobileHeaderOpen] = useState(false) // 모바일 헤더 열림 상태
   const default_height = '60px' // 기본 모바일 헤더 높이
@@ -165,6 +166,9 @@ function Header({ userInfo, setUserInfo }: any) {
       }
       if (fetchedUserInfo.nickname) {
         setNicknameText(fetchedUserInfo.nickname)
+      }
+      if (fetchedUserInfo.rep_badge_image) {
+        setRepBadgeImg(fetchedUserInfo.rep_badge_image)
       }
       setLoadingMypage(false)
     }
@@ -356,8 +360,8 @@ function Header({ userInfo, setUserInfo }: any) {
               <div />
             ) : (
               <div className={styles.nicknameContainer}>
-                <div className={`${styles.nickname_badge} ${!userInfo?.rep_badge_image ? styles.disabled : ''}`}>
-                  <img src={userInfo?.rep_badge_image} alt={'rep_badge'} className={styles.repBadge} />
+                <div className={`${styles.nickname_badge} ${!repBadgeImg ? styles.disabled : ''}`}>
+                  <img src={repBadgeImg} alt={'rep_badge'} className={styles.repBadge} />
                 </div>
                 <div className={styles.nickname}>
                   <div className={styles.nicknameText}>{nicknameText}</div>
@@ -444,11 +448,7 @@ function Header({ userInfo, setUserInfo }: any) {
               <div className={`${styles.mobileMenuWrap} ${mobileHeaderOpen ? styles.open : ''}`}>
                 {isLoggedIn ? (
                   <div className={styles.mobileUserInfo}>
-                    <img
-                      src={userInfo?.rep_badge_image || mobileMypage}
-                      alt={'user badge'}
-                      className={styles.repBadge}
-                    />
+                    <img src={repBadgeImg || mobileMypage} alt={'user badge'} className={styles.repBadge} />
                     <div className={styles.nicknameText}>{nicknameText}</div>
                     <div className={styles.honorific}>{'님'}</div>
                   </div>

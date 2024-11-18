@@ -56,16 +56,18 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
   }
 
   return (
-    <Menu
-      menuButton={
-        <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt="Menu" />
-        </MenuButton>
-      }
-    >
-      <MenuItem className={styles.menuitem} onClick={handleReportClick}>
-        {'신고하기\r'}
-      </MenuItem>
+    <>
+      <Menu
+        menuButton={
+          <MenuButton className={styles.menubtn}>
+            <img src={threedots} alt="Menu" />
+          </MenuButton>
+        }
+      >
+        <MenuItem className={styles.menuitem} onClick={handleReportClick}>
+          {'신고하기\r'}
+        </MenuItem>
+      </Menu>
       {isReportModalVisible && (
         <ReportModal
           type={type}
@@ -74,7 +76,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
           onClose={() => setReportModalVisible(false)}
         />
       )}
-    </Menu>
+    </>
   )
 }
 

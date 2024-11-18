@@ -32,7 +32,7 @@ interface UserInfo {
 interface HistoryItem {
   version: number
   summary: string
-  nick: string
+  user: { nickname: string }
   created_at: string
   is_bad?: boolean
   id?: number
@@ -69,11 +69,6 @@ const History = () => {
       enabled: !!title, // title이 있을 때만 쿼리 실행
       retry: false,
       onError: (err: AxiosError) => {
-        if (err.response?.status === 401) {
-          alert('로그인이 필요한 서비스입니다')
-          Nav('/signin')
-          return
-        }
         console.error('위키 히스토리 가져오기 에러:', err)
         alert(err.response?.data || '에러가 발생했습니다.')
       },
@@ -123,7 +118,7 @@ const History = () => {
                   <HistoryBox
                     version={item.version}
                     summary={item.summary}
-                    user={item.nick || ''} // 닉네임이 없을 경우 빈 문자열 처리
+                    user={item.user.nickname || ''} // 닉네임이 없을 경우 빈 문자열 처리
                     timestamp={FormatTimeAgo(item.created_at)}
                     title={title}
                     target={item.id || 0} // id가 없을 경우 0 처리
