@@ -292,7 +292,7 @@ function WikiViewer() {
       onError: (error: AxiosError) => {
         const axiosError = error as CustomAxiosError
         if (axiosError.response?.status === 401) {
-          alert(axiosError.response.data.message)
+          alert('로그인이 필요한 서비스입니다.')
           nav('/signin')
         } else {
           alert(axiosError.response.data.message)
