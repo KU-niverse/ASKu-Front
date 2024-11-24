@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
 import styles from './Debate.module.css'
 import Header from '../components/Header'
@@ -12,6 +14,7 @@ import DebateContent from '../components/Debate/DebateContent'
 import DebateInput from '../components/Debate/DebateInput'
 import DebateSearch from '../components/Debate/DebateSearch'
 import DebateRecent from '../components/Debate/DebateRecent'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -65,7 +68,7 @@ function useCheckLoginStatus() {
   return useQuery<UserAuthResponse, AxiosError>(
     'loginStatus',
     async () => {
-      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
         withCredentials: true,
       })
       return res.data
@@ -169,22 +172,28 @@ const Debate: React.FC = () => {
     return data && data.success
   }
 
+  const nav = useNavigate()
+
   return (
     <div className={styles.container}>
       <div>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
 
-      <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
-      </div>
-
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
+          <div className={styles.header}>
+            <p
+              className={styles.debate2}
+              onClick={() => {
+                const encodedTitle = encodeURIComponent(title)
+                nav(`/wiki/${encodedTitle}`)
+              }}
+            >
+              {title}
+            </p>
+            <p className={styles.debate}>&nbsp;문서 기반 토론</p>
+          </div>
           <DebateTitle title={title} subject={subject} />
           {isError ? (
             <div>
@@ -194,7 +203,11 @@ const Debate: React.FC = () => {
           ) : (
             isDebateContentData(debateContentData) &&
             (debateContentData.data.length === 0 ? (
-              <p className={styles.nonecomment}>{'아직 작성된 토론 메세지가 없습니다.'}</p>
+              <div className={styles.caution}>
+                <img src={CautionIcon} alt={'caution'} className={styles.cautionIcon} />
+                <p className={styles.nonecomment}>{'작성된 토론이'}</p>
+                <p className={styles.nonecomment}>{'없습니다.'}</p>
+              </div>
             ) : (
               (debateContentData.data as DebateMessage[]).map((debate, index) => (
                 <DebateContent
@@ -227,7 +240,7 @@ const Debate: React.FC = () => {
         </div>
       </div>
 
-      <div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

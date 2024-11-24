@@ -1,68 +1,77 @@
-.header {
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  height: 80px;
-  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
 }
-
-.mypage {
-  font-size: 30px;
-  font-weight: bolder;
-  color: white;
-}
-
 .mybadgecontent {
-  width: 74%;
-  margin-left: 13%;
-  height: auto;
-  padding: 30px 0px;
+  padding: 7rem 0;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .b_header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  border-radius: 12px;
-  align-items: center;
+  width: 111rem;
+  margin-bottom: 3.4rem;
 }
-
 .b_headline {
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 10px;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
 }
-.b_header button {
-  background: none;
-  box-shadow: none;
-  border: none;
-}
-
 .b_list {
+  width: 111rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
-  width: auto;
-  /* justify-content: space-around; */
-  margin: 0 1% 0 1%;
+  column-gap: 2.4rem;
+  row-gap: 3.4rem;
+  margin-bottom: 3rem;
 }
-@media only screen and (max-width: 980px) {
+.badgeCount {
+  color: #c52b47;
+  font-weight: 700;
+  font-size: 3rem;
+}
+.paginationWrapper {
+  margin-top: 1.5rem;
+}
+.footerContainer {
+  margin-top: auto;
+}
+@media only screen and (max-width: 767px) {
   .mybadgecontent {
-    margin-left: 5%;
-    width: 90%;
-    padding: 0 0 30px 0px;
+    padding: 3rem 1rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .b_header {
+    width: 100%;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
   }
   .b_headline {
-    font-size: 18px;
+    margin-left: 3rem;
+    margin-bottom: 1.5rem;
   }
   .b_list {
+    width: 90%;
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     align-items: center;
-    width: auto;
-    /* justify-content: space-around; */
-    margin: 0 1% 0 1%;
+    row-gap: 2rem;
+    padding: 0 1rem;
+  }
+  .badgeCount {
+    color: #c52b47;
+    font-weight: 700;
+    font-size: 2.4rem;
+  }
+  .paginationWrapper {
+    margin-top: 0;
   }
 }

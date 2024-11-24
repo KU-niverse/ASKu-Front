@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6'
 import { useQuery, useMutation } from 'react-query'
@@ -16,6 +16,12 @@ interface WikiEditProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+interface UserInfoResponse {
+  data: UserInfo
+  message: string
+  success: boolean
+}
+
 interface UserInfo {
   id: number
   name: string
@@ -26,8 +32,8 @@ interface UserInfo {
   nickname: string
   created_at: Date
   point: number
-  is_admin: boolean
-  is_authorized: boolean
+  is_admin: number
+  is_authorized: number
   restrict_period: number | null
   restrict_count: number
   rep_badge_name: string
@@ -41,8 +47,13 @@ interface WikiDocs {
 }
 
 const fetchUserInfo = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
-  return res.data
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
+    return res.data
+  } catch (error) {
+    console.error('Error fetching user info:', error) // 에러 로그
+    throw error // 에러를 throw하여 useQuery에서 처리할 수 있도록 함
+  }
 }
 
 const fetchWiki = async (title: string) => {
@@ -62,9 +73,9 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
 
   const from = location.state?.from || '/'
 
-  const { data: queryUserInfo } = useQuery('userInfo', fetchUserInfo, {
+  const { data: queryUserInfo } = useQuery<UserInfo, AxiosError>('userInfo', fetchUserInfo, {
     onSuccess: (data) => {
-      if (data.success) {
+      if (data) {
         setLoggedIn(true)
       } else {
         setLoggedIn(false)
@@ -174,28 +185,26 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
         <form onSubmit={addWikiEdit}>
           <div className={styles.wikichar}>
             <div className={styles.wikichar_title}>
-              <h4>{'문서 제목'}</h4>
+              <h4 className={styles.wikichar_title_text}>{'문서 제목'}</h4>
               <input type={'text'} disabled value={title} className={styles.title} />
             </div>
-            <div className={styles.wikichar_char}>
-              <h4>{'위키 작성 방법'}</h4>
+          </div>
+          <div>
+            <div className={styles.QuesWikiManu}>
+              <h4 className={styles.QuesWikiManuText}>{'문서 내용'}</h4>
               <p
                 role={'presentation'}
                 onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
                 className={styles.wikiManual}
               >
-                {'위키 문법 알아보기!'}
-                {'\r'}
-                <FaArrowUpRightFromSquare />
+                <p className={styles.wikiManual}>{'위키 작성 방법'}</p>
+                <FaArrowUpRightFromSquare className={styles.icon} />
               </p>
             </div>
-          </div>
-          <div>
-            <h4>{'문서 내용'}</h4>
             <div className={styles.editorbox}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>
-            <h4>{'히스토리 요약'}</h4>
+            <h4 className={styles.QuesWikiManuText}>{'히스토리 요약'}</h4>
             <textarea
               className={styles.summary}
               value={summary}
@@ -212,16 +221,20 @@ const WikiEdit = ({ loggedIn, setLoggedIn }: WikiEditProps) => {
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                <p className={`${styles.submitText} ${isChecked ? styles.active : ''}`}>
+                  {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                </p>
               </a>
             </span>
-            <button type={'submit'} className={styles.submitWiki}>
+            <button type={'submit'} className={`${styles.submitWiki} ${isChecked ? styles.active : ''}`}>
               {'생성하기'}
             </button>
           </div>
         </form>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }

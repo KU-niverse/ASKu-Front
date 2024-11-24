@@ -1,7 +1,6 @@
 import styles from './Contribute.module.css'
 
 interface ContributeProps {
-  key: number
   user_id: number
   doc_id: number
   text_pointer: string
@@ -18,7 +17,6 @@ interface ContributeProps {
 
 function Contribute({
   title,
-  key,
   user_id,
   doc_id,
   text_pointer,
@@ -34,10 +32,14 @@ function Contribute({
   // 주어진 created_at 값을 그대로 사용하여 Date 객체 생성
   const utcDate = new Date(created_at)
 
-  // UTC 시간에 9시간을 더한 후 시간을 표시
+  // UTC 시간에 9시간을 더함
   utcDate.setHours(utcDate.getHours() + 9)
-  const formattedDate = utcDate.toISOString().replace('T', ' ').replace('.000Z', '').replace(/-/g, '.')
 
+  // 날짜와 시간을 표시
+  // const formattedDate = utcDate.toISOString().replace('T', ' ').replace('.000Z', '').replace(/-/g, '.')
+
+  // 날짜만 표시
+  const formattedDate = utcDate.toISOString().slice(0, 10).replace(/-/g, '.')
   const maxLength = 80
 
   // 글자 수가 maxLength를 넘으면 뒤에 "..."을 붙이고 아니면 그대로 반환
@@ -53,12 +55,11 @@ function Contribute({
           {title}
           <span className={styles.cb_summary}>
             {' - '}
-            {truncateContent(summary)}
+            {summary}
           </span>
         </span>
       </div>
-
-      <div className={styles.cb_back}>
+      <div className={styles.back}>
         <span className={styles.cb_num}>
           {'+'}
           {displayDiff}

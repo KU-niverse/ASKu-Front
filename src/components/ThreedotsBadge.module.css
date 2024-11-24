@@ -1,14 +1,52 @@
 .menubtn {
+  width: 13.6rem;
+  height: 3.9rem;
   border: none;
-  background: none;
+  outline: none;
+  border-radius: 28.46px;
+  background: black;
+  color: white;
   cursor: pointer;
+  font-weight: 700;
+  padding: 1rem 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.menubtn img {
-  width: 23.4px;
-  object-fit: contain;
+.disabledbtn {
+  width: 13.6rem;
+  height: 3.9rem;
+  border: none;
+  outline: none;
+  border-radius: 28.46px;
+  background: #d5d5d5;
+  color: white;
+  cursor: default;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.menuitem {
-  width: auto;
+.repbtn {
+  width: 13.6rem;
+  height: 3.9rem;
+  border: none;
+  outline: none;
+  border-radius: 28.46px;
+  background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%);
+  color: white;
+  cursor: default;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuText {
+  font-size: 1.3rem;
+  font-weight: 700;
 }

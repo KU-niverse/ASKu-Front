@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import axios, { AxiosError } from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
 import styles from './MoreDebate.module.css'
 import Header from '../components/Header'
@@ -11,6 +13,7 @@ import DebateList from '../components/Debate/DebateList'
 import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -71,6 +74,7 @@ const MoreDebate: React.FC = () => {
   const { title } = useParams<{ title: string }>()
   const { isLoading, isError, error, data: debateListData } = useDebateList(title)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const navigate = useNavigate()
 
   React.useEffect(() => {
     track('view_wiki_debate_list')
@@ -80,50 +84,55 @@ const MoreDebate: React.FC = () => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
 
-      <div className={styles.header}>
-        <p className={styles.debate}>
-          {'토론 ('}
-          {title}
-          {')'}
-        </p>
-      </div>
-
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
-          <div className={styles.maincontent_box}>
-            <p className={styles.title}>{'이 문서의 토론 목록'}</p>
-            <div className={styles.menu}>
-              <span className={styles.menu1}>{'항목'}</span>
-              <span className={styles.menu2}>{'수정 시간'}</span>
-            </div>
-
-            {isLoading ? (
-              <p className={styles.none}>{'데이터를 불러오는 중입니다.'}</p>
-            ) : isError ? (
-              <p className={styles.none}>
-                {'에러: '}
-                {error?.message}
-              </p>
-            ) : debateListData?.data.length === 0 ? (
-              <p className={styles.none}>{'아직 생성된 토론방이 없습니다.'}</p>
-            ) : (
-              debateListData?.data.map((data) => (
-                <DebateList
-                  key={data.id}
-                  id={data.id}
-                  doc_id={data.doc_id}
-                  user_id={data.user_id}
-                  subject={data.subject}
-                  created_at={data.created_at}
-                  recent_edited_at={data.recent_edited_at}
-                  done_or_not={data.done_or_not}
-                  done_at={data.done_at}
-                  is_bad={data.is_bad}
-                  title={title}
-                />
-              ))
-            )}
+          <p className={styles.title}>
+            <span
+              className={styles.pink}
+              onClick={() => {
+                const encodedTitle = encodeURIComponent(title)
+                navigate(`/wiki/${encodedTitle}`)
+              }}
+            >
+              {title}
+            </span>{' '}
+            문서의 토론 목록
+          </p>
+          <div className={styles.menu}>
+            <span className={styles.menu1}>{'항목'}</span>
+            <span className={styles.menu2}>{'수정 시간'}</span>
           </div>
+
+          {isLoading ? (
+            <p className={styles.none}>{'데이터를 불러오는 중입니다.'}</p>
+          ) : isError ? (
+            <p className={styles.none}>
+              {'에러: '}
+              {error?.message}
+            </p>
+          ) : debateListData?.data.length === 0 ? (
+            <div className={styles.caution}>
+              <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
+              <p className={styles.none}>{'아직 생성된'}</p>
+              <p className={styles.none}>{'토론방이 없습니다.'}</p>
+            </div>
+          ) : (
+            debateListData?.data.map((data) => (
+              <DebateList
+                key={data.id}
+                id={data.id}
+                doc_id={data.doc_id}
+                user_id={data.user_id}
+                subject={data.subject}
+                created_at={data.created_at}
+                recent_edited_at={data.recent_edited_at}
+                done_or_not={data.done_or_not}
+                done_at={data.done_at}
+                is_bad={data.is_bad}
+                title={title}
+              />
+            ))
+          )}
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
@@ -137,8 +146,9 @@ const MoreDebate: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import { useNavigate } from 'react-router-dom'
 import styles from './LatestDebateList.module.css'
 import FormatDate from '../FormatDate'
@@ -15,18 +16,7 @@ interface LatestDebateListProps {
   title: string
 }
 
-function LatestDebateList({
-  id,
-  doc_id,
-  user_id,
-  subject,
-  created_at,
-  recent_edited_at,
-  done_or_not,
-  done_at,
-  is_bad,
-  title,
-}: LatestDebateListProps) {
+function LatestDebateList({ id, subject, recent_edited_at, title }: LatestDebateListProps) {
   const formattedDate = FormatDate(recent_edited_at)
   const nav = useNavigate()
   const linktoDebateRoom = () => {

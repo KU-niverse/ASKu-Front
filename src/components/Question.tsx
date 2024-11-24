@@ -58,8 +58,10 @@ function Question({
         content,
         created_at,
         like_count,
+        answer_count,
         nick,
         index_title,
+        badge_image,
       },
     })
   }
@@ -80,6 +82,7 @@ function Question({
         index_title,
         answer_count,
         title,
+        badge_image,
       },
     })
   }

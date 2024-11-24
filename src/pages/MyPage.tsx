@@ -12,6 +12,10 @@ import Graph from '../components/Mypage/Graph'
 import MyProfile from '../components/Mypage/MyProfile'
 import SpinnerMypage from '../components/SpinnerMypage'
 import Paging from '../components/Paging'
+import Arrow from '../img/mypagearrow.svg'
+import moreBadgeArrow from '../img/morebadgearrow.svg'
+import locked from '../img/locked.svg'
+import warning from '../img/warning.svg'
 
 interface UserInfo {
   id: number
@@ -31,15 +35,21 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface BadgeIcon {
+  id: number
+  image: string
+  name: string
+  description: string
+  event: boolean
+  cont: boolean
+}
 interface Badge {
   id: number
   user_id: number
   badge_id: number
   created_at: Date
   is_bad: boolean
-  image: string
-  name: string
-  description: string
+  badge: BadgeIcon
 }
 
 interface BadgeDataProps {
@@ -69,7 +79,7 @@ interface User {
 interface MyPageDataProps {
   success: boolean
   message: string
-  data: User[]
+  data: User
 }
 
 interface WikiHistoryEntry {
@@ -149,7 +159,7 @@ interface MyContributionMessage {
 interface MyContributionProps {
   status: number
   success: boolean
-  message: MyContributionMessage
+  data: MyContributionMessage
 }
 
 interface MyPageProps {
@@ -158,18 +168,41 @@ interface MyPageProps {
 }
 
 const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
-  const [page, setPage] = useState(1) // 현재 페이지 상태 추가
+  const [type, setType] = useState<string>('myprofile')
+  const [page, setPage] = useState(1) // 현재 페이지 상태 추가: 기여 목록, 질문 목록, 토론 목록에서 사용
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-  const perPage = 12 // 페이지당 보여줄 컴포넌트 갯수
-  const [contributionPage, setContributionPage] = useState(1) // 기여 목록 페이지 상태 추가
-  const contributionPerPage = 7 // 기여 목록 페이지당 항목 수
+  const contributionPerPage = 5 // 기여 목록 페이지당 항목 수
+  const questionPerPage = 10 // 질문 목록 페이지당 항목 수
+  const debatePerPage = 10 // 토론 목록 페이지당 항목 수
+
+  const signOut = async () => {
+    try {
+      const result = await axios.get(`${process.env.REACT_APP_HOST}/auth/signout`, {
+        withCredentials: true,
+      })
+      if (result.status === 200) {
+        alert(result.data.message)
+        setLoggedIn(false)
+        window.location.href = '/'
+      }
+    } catch (error) {
+      console.error(error)
+      alert(error.response.data.message)
+    }
+  }
+
+  const fetchMyPageData = async (): Promise<MyPageDataProps> => {
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
+    return res.data
+  }
+
+  const handleClickBtn = (selected: string) => {
+    setType(selected)
+    setPage(1)
+  }
 
   const handlePageChange = (pageNumber: number) => {
     setPage(pageNumber) // 페이지 번호 업데이트
-  }
-
-  const handleContributionPageChange = (pageNumber: number) => {
-    setContributionPage(pageNumber) // 기여 목록 페이지 번호 업데이트
   }
 
   // login status 체크하기
@@ -180,7 +213,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
       } else if (res.status === 401) {
@@ -205,11 +238,6 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
     checkLoginStatus()
   }, [])
 
-  const fetchMyPageData = async (): Promise<MyPageDataProps> => {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/info`, { withCredentials: true })
-    return res.data
-  }
-
   const fetchMyQuestion = async (): Promise<MyQuestionProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/questionhistory/latest`, {
       withCredentials: true,
@@ -223,7 +251,7 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   }
 
   const fetchMyBadge = async (): Promise<BadgeDataProps> => {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/badgehistory`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/badge/me/history`, { withCredentials: true })
     return res.data
   }
 
@@ -265,217 +293,366 @@ const MyPage = ({ loggedIn, setLoggedIn }: MyPageProps) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div>
+    <div className={styles.pagewrap}>
+      <div className={styles.headerContainer}>
         <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       </div>
-      <div className={styles.header}>
-        <p className={styles.mypage}>{'MYPAGE'}</p>
-      </div>
-      <div className={`${styles.mypagecontent}`}>
-        <div className={styles.uppercontent}>
-          <div className={styles.leftcontent}>
-            <div className={styles.profile}>
-              <div className={styles.profileheader}>
-                <p className={styles.title}>{'내 프로필'}</p>
-                {/* <Link to='/changeinfo'className={styles.edit_link} >
-                <button className={styles.edit}>수정하기</button>
-                </Link> */}
-              </div>
-
-              {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.message && (
-                <MyProfile
-                  nick={mypageData.data[0].nickname}
-                  point={mypageData.data[0].point}
-                  badge={mypageData.data[0].rep_badge_name}
-                  badgeimg={mypageData.data[0].rep_badge_image}
-                  percent={parseFloat(myContribute.message.ranking_percentage).toFixed(2)}
-                />
-              )}
+      {/* 웹 뷰 */}
+      <div className={styles.myPageContainer}>
+        <div className={styles.navContainer}>
+          <div className={styles.navSubContainer}>
+            <div className={styles.userGreeting}>
+              {`안녕하세요,`}
+              <br />
+              {`${mypageData.data.nickname} 님!`}
             </div>
-            <div className={styles.badge}>
-              <div className={styles.badgeheader}>
-                <p className={styles.title}>
+            <div className={styles.allNavigators}>
+              <button
+                type={'button'}
+                onClick={() => handleClickBtn('myprofile')}
+                className={type === 'myprofile' ? styles.nowNav : styles.defaultNav}
+              >
+                {'내 프로필'}
+                <div className={styles.navArrow}>
+                  <img alt={'myPageNavArrow'} src={Arrow} />
+                </div>
+              </button>
+              <button
+                type={'button'}
+                onClick={() => handleClickBtn('mycontribution')}
+                className={type === 'mycontribution' ? styles.nowNav : styles.defaultNav}
+              >
+                {'기여 목록'}
+                <div className={styles.navArrow}>
+                  <img alt={'myPageNavArrow'} src={Arrow} />
+                </div>
+              </button>
+              <button
+                type={'button'}
+                onClick={() => handleClickBtn('myquestion')}
+                className={type === 'myquestion' ? styles.nowNav : styles.defaultNav}
+              >
+                {'내가 쓴 질문'}
+                <div className={styles.navArrow}>
+                  <img alt={'myPageNavArrow'} src={Arrow} />
+                </div>
+              </button>
+              <button
+                type={'button'}
+                onClick={() => handleClickBtn('mydebate')}
+                className={type === 'mydebate' ? styles.nowNav : styles.defaultNav}
+              >
+                {'내가 쓴 토론'}
+                <div className={styles.navArrow}>
+                  <img alt={'myPageNavArrow'} src={Arrow} />
+                </div>
+              </button>
+            </div>
+            <button type={'button'} onClick={signOut} className={styles.logout}>
+              {'로그아웃'}
+            </button>
+          </div>
+        </div>
+        <div className={styles.contentContainer}>
+          {type === 'myprofile' ? (
+            <div className={styles.contentSubContainer}>
+              <div className={styles.profileContainer}>
+                <div className={styles.profileHeader}>
+                  <div className={styles.contentTitle}>{'내 프로필'}</div>
+                </div>
+                <div className={styles.profileBox}>
+                  {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
+                    <MyProfile
+                      nick={mypageData.data.nickname}
+                      point={mypageData.data.point}
+                      badge={mypageData.data.rep_badge_name}
+                      badgeimg={mypageData.data.rep_badge_image}
+                      percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className={styles.badgeHeader}>
+                <div className={styles.contentTitle}>
                   {'뱃지 '}
-                  <span style={{ color: '#9F132E' }}>
+                  <span className={styles.contentNum}>
                     {'('}
                     {myBadge && myBadge.data ? myBadge.data.length : 0}
                     {')'}
                   </span>
-                </p>
-                <Link to={'/mypage/mybadge'} className={styles.b_link}>
-                  <button type={'button'} className={styles.edit}>
-                    {' 더보기'}
-                  </button>
-                </Link>
+                </div>
               </div>
-
-              <div className={styles.badgegrid}>
-                {myBadge && myBadge.data && myBadge.data.length === 0 ? (
-                  <p>{'아직 획득한 뱃지가 없습니다.'}</p>
-                ) : (
-                  myBadge &&
-                  myBadge.data &&
-                  myBadge.data
-                    .slice((page - 1) * perPage, page * perPage)
-                    .map((badge: Badge) => (
-                      <img
-                        title={badge.name}
-                        key={badge.id}
-                        src={badge.image}
-                        alt={badge.name}
-                        className={styles.badgeImage}
-                      />
-                    ))
-                )}
-              </div>
-
-              <div className={styles.paginationWrapper}>
-                {myBadge.data && myBadge.data.length > perPage && (
-                  <Paging total={myBadge.data.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.rightcontent}>
-            <div className={`${styles.cb}`}>
-              <p className={styles.title2}>
-                {'기여 목록 '}
-                <span style={{ color: '#9F132E' }}>
-                  {'('}
-                  {myWiki && myWiki.data ? myWiki.data.length : 0}
-                  {')'}
-                </span>
-              </p>
-              <div className={styles.graph}>
-                {myContribute && myContribute.message && myContribute.message.docs.length === 0 ? (
-                  <p />
-                ) : (
-                  myContribute &&
-                  myContribute.message &&
-                  myContribute.message.docs && (
-                    <Graph total_point={myContribute.message.point} docs={myContribute.message.docs} />
-                  )
-                )}
-              </div>
-              {myWiki && myWiki.message && myWiki.data.length === 0 ? (
-                <p>{'아직 기여한 내역이 없습니다.'}</p>
-              ) : (
-                <div>
-                  {myWiki &&
-                    myWiki.message &&
-                    myWiki.data
-                      .slice((contributionPage - 1) * contributionPerPage, contributionPage * contributionPerPage)
-                      .map((wiki: WikiHistoryEntry) => (
-                        <Contribute
-                          key={wiki.id}
-                          user_id={wiki.user_id}
-                          doc_id={wiki.doc_id}
-                          text_pointer={wiki.text_pointer}
-                          version={wiki.version}
-                          summary={wiki.summary}
-                          created_at={wiki.created_at}
-                          count={wiki.count}
-                          diff={wiki.diff}
-                          is_bad={wiki.is_bad}
-                          is_rollback={wiki.is_rollback}
-                          is_q_based={wiki.is_q_based}
-                          title={wiki.title}
+              <div className={styles.badgeContent}>
+                <div className={styles.badgesContainer}>
+                  {myBadge &&
+                    myBadge.data &&
+                    myBadge.data
+                      .slice(0, 4)
+                      .map((badge: Badge) => (
+                        <img
+                          title={badge.badge.name}
+                          key={badge.id}
+                          src={badge.badge.image}
+                          alt={badge.badge.name}
+                          className={styles.badgeImage}
                         />
                       ))}
+                  {myBadge && myBadge.data && myBadge.data.length < 4
+                    ? Array(4 - myBadge.data.length).fill(
+                        <div className={styles.lockedImage}>
+                          <img src={locked} alt={'locked'} />
+                        </div>,
+                      )
+                    : null}
+                </div>
+                <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.moreBadge}>
+                  <span className={styles.moreBadgeText}>{'뱃지 더보기'}</span>
+                  <span className={styles.moreBadgeImg}>
+                    <img alt={'morebadge'} src={moreBadgeArrow} className={styles.moreBadgeImgContent} />
+                  </span>
+                </button>
+              </div>
+            </div>
+          ) : type === 'mycontribution' ? (
+            <div className={styles.contentSubContainer}>
+              <div className={styles.contributeHeader}>
+                <div className={styles.contentTitle}>
+                  {'기여 목록 '}
+                  <span className={styles.contentNum}>
+                    {'('}
+                    {myWiki && myWiki.data ? myWiki.data.length : 0}
+                    {')'}
+                  </span>
+                </div>
+              </div>
+              {myWiki && myWiki.message && myWiki.data.length === 0 ? (
+                <div className={styles.noList}>
+                  <div className={styles.warningsign}>
+                    <img alt={'warningsign'} src={warning} />
+                  </div>
+                  <div className={styles.warningtext}>
+                    {'아직 기여한'}
+                    <br />
+                    {'내역이 없습니다'}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className={styles.contributionBox}>
+                    <div className={styles.graph}>
+                      {myContribute && myContribute.data && myContribute.data.docs.length === 0 ? (
+                        <p />
+                      ) : (
+                        myContribute &&
+                        myContribute.data &&
+                        myContribute.data.docs && (
+                          <Graph total_point={myContribute.data.point} docs={myContribute.data.docs} />
+                        )
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.contributionList}>
+                    {myWiki &&
+                      myWiki.message &&
+                      myWiki.data
+                        .slice((page - 1) * contributionPerPage, page * contributionPerPage)
+                        .map((wiki: WikiHistoryEntry) => (
+                          <div className={styles.contributionElement}>
+                            <Contribute
+                              key={wiki.id}
+                              user_id={wiki.user_id}
+                              doc_id={wiki.doc_id}
+                              text_pointer={wiki.text_pointer}
+                              version={wiki.version}
+                              summary={wiki.summary}
+                              created_at={wiki.created_at}
+                              count={wiki.count}
+                              diff={wiki.diff}
+                              is_bad={wiki.is_bad}
+                              is_rollback={wiki.is_rollback}
+                              is_q_based={wiki.is_q_based}
+                              title={wiki.title}
+                            />
+                          </div>
+                        ))}
+                  </div>
+                  <div className={styles.paginationWrapper}>
+                    {myWiki.data && myWiki.data.length > contributionPerPage && (
+                      <Paging
+                        total={myWiki.data.length}
+                        perPage={contributionPerPage}
+                        activePage={page}
+                        onChange={handlePageChange}
+                      />
+                    )}
+                  </div>
                 </div>
               )}
-
-              <div className={styles.paginationWrapper}>
-                {myWiki.data && myWiki.data.length > contributionPerPage && (
-                  <Paging
-                    total={myWiki.data.length}
-                    perPage={contributionPerPage}
-                    activePage={contributionPage}
-                    onChange={handleContributionPageChange}
-                  />
-                )}
-              </div>
             </div>
-
-            <div className={`${styles.ask}`}>
-              <div className={styles.askheader}>
-                <p className={styles.title}>
-                  {'내가 쓴 질문'}{' '}
-                  <span style={{ color: '#9F132E' }}>
+          ) : type === 'myquestion' ? (
+            <div className={styles.contentSubContainer}>
+              <div className={styles.questionHeader}>
+                <div className={styles.contentTitle}>
+                  {'내가 쓴 질문 '}
+                  <span className={styles.contentNum}>
                     {'('}
                     {myQuestion && myQuestion.data ? myQuestion.data.length : 0}
-                    {')\r'}
+                    {')'}
                   </span>
-                </p>
-                <Link to={'/mypage/myquestion'} className={styles.q_link}>
-                  <button type={'button'} className={styles.edit}>
-                    {'더보기'}
-                  </button>
-                </Link>
+                </div>
               </div>
               {myQuestion && myQuestion.message && myQuestion.data.length === 0 ? (
-                <p>{'아직 작성한 질문이 없습니다.'}</p>
+                <div className={styles.noList}>
+                  <div className={styles.warningsign}>
+                    <img alt={'warningsign'} src={warning} />
+                  </div>
+                  <div className={styles.warningtext}>
+                    {'아직 작성한'}
+                    <br />
+                    {'질문이 없습니다'}
+                  </div>
+                </div>
               ) : (
-                myQuestion &&
-                myQuestion.message &&
-                myQuestion.data &&
-                myQuestion.data.slice(0, 5).map((question: QuestionEntry) => (
-                  <QuestionList
-                    key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
-                    id={question.id}
-                    doc_id={question.doc_id}
-                    user_id={question.user_id}
-                    index_title={question.index_title}
-                    content={question.content}
-                    time={question.created_at}
-                    is_bad={question.is_bad}
-                    nickname={question.nickname}
-                    like_count={question.like_count}
-                    doc_title={question.doc_title}
-                    answer_count={question.answer_count}
-                  />
-                ))
+                <div>
+                  <div className={styles.questionList}>
+                    {myQuestion &&
+                      myQuestion.message &&
+                      myQuestion.data &&
+                      myQuestion.data
+                        .slice((page - 1) * questionPerPage, page * questionPerPage)
+                        .map((question: QuestionEntry) => (
+                          <div className={styles.questionElement}>
+                            <QuestionList
+                              key={question.id} // 반복되는 컴포넌트의 경우 key를 설정해야 합니다.
+                              id={question.id}
+                              doc_id={question.doc_id}
+                              user_id={question.user_id}
+                              index_title={question.index_title}
+                              content={question.content}
+                              time={question.created_at}
+                              is_bad={question.is_bad}
+                              nickname={question.nickname}
+                              like_count={question.like_count}
+                              doc_title={question.doc_title}
+                              answer_count={question.answer_count}
+                            />
+                          </div>
+                        ))}
+                  </div>
+                  <div className={styles.paginationWrapper}>
+                    {myQuestion.data && myQuestion.data.length > questionPerPage && (
+                      <Paging
+                        total={myQuestion.data.length}
+                        perPage={questionPerPage}
+                        activePage={page}
+                        onChange={handlePageChange}
+                      />
+                    )}
+                  </div>
+                </div>
               )}
             </div>
-            <div className={styles.comment}>
-              <div className={styles.commentheader}>
-                <p className={styles.title}>
-                  {'내가 쓴 토론'}{' '}
-                  <span style={{ color: '#9F132E' }}>
+          ) : type === 'mydebate' ? (
+            <div className={styles.contentSubContainer}>
+              <div className={styles.debateHeader}>
+                <div className={styles.contentTitle}>
+                  {'내가 쓴 토론 '}
+                  <span className={styles.contentNum}>
                     {'('}
                     {myDebate && myDebate.message ? myDebate.message.length : 0}
-                    {')\r'}
+                    {')'}
                   </span>
-                </p>
-                <Link to={'/mypage/mycomment'} className={styles.c_link}>
-                  <button type={'button'} className={styles.edit}>
-                    {'더보기'}
-                  </button>
-                </Link>
+                </div>
               </div>
               {myDebate && myDebate.message && myDebate.message.length === 0 ? (
-                <p>{'아직 작성한 토론이 없습니다.'}</p>
+                <div className={styles.noList}>
+                  <div className={styles.warningsign}>
+                    <img alt={'warningsign'} src={warning} />
+                  </div>
+                  <div className={styles.warningtext}>
+                    {'아직 작성한'}
+                    <br />
+                    {'토론이 없습니다'}
+                  </div>
+                </div>
               ) : (
-                myDebate &&
-                myDebate.message &&
-                myDebate.message.slice(0, 5).map((debate: Debate) => (
-                  <CommentList
-                    key={debate.debate_id} // 여기에 키 추가
-                    id={debate.debate_id}
-                    subject={debate.debate_subject}
-                    content={debate.debate_content}
-                    time={debate.debate_content_time}
-                    doc_title={debate.doc_title}
-                  />
-                ))
+                <div>
+                  <div className={styles.debateList}>
+                    {myDebate &&
+                      myDebate.message &&
+                      myDebate.message.slice((page - 1) * debatePerPage, page * debatePerPage).map((debate: Debate) => (
+                        <div className={styles.debateElement}>
+                          <CommentList
+                            key={debate.debate_id} // 여기에 키 추가
+                            id={debate.debate_id}
+                            subject={debate.debate_subject}
+                            content={debate.debate_content}
+                            time={debate.debate_content_time}
+                            doc_title={debate.doc_title}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <div className={styles.paginationWrapper}>
+                    {myDebate.message && myDebate.message.length > debatePerPage && (
+                      <Paging
+                        total={myDebate.message.length}
+                        perPage={debatePerPage}
+                        activePage={page}
+                        onChange={handlePageChange}
+                      />
+                    )}
+                  </div>
+                </div>
               )}
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
-      <div>
+
+      {/* 모바일 뷰 */}
+      <div className={styles.mobileMyPageContainer}>
+        <div className={styles.mobileProfileContainer}>
+          <div className={styles.mobileProfileBox}>
+            {mypageData && mypageData.data && myBadge && myBadge.data && myContribute && myContribute.data && (
+              <MyProfile
+                nick={mypageData.data.nickname}
+                point={mypageData.data.point}
+                badge={mypageData.data.rep_badge_name}
+                badgeimg={mypageData.data.rep_badge_image}
+                percent={parseFloat(myContribute.data.ranking_percentage).toFixed(2)}
+              />
+            )}
+          </div>
+        </div>
+        <div className={styles.mobileNavContainer}>
+          <button type={'button'} onClick={() => Navigate('/mypage/mycontribution')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 기여 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mybadge')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'나의 뱃지 목록'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/myquestion')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 질문'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+          <button type={'button'} onClick={() => Navigate('/mypage/mycomment')} className={styles.mobileNavBtn}>
+            <div className={styles.mobileNavText}>{'내가 쓴 토론'}</div>
+            <div className={styles.navArrow}>
+              <img className={styles.mobileNavArrowImg} alt={'myPageMobileNavArrow'} src={Arrow} />
+            </div>
+          </button>
+        </div>
+      </div>
+      <div className={styles.footerContainer}>
         <Footer />
       </div>
     </div>

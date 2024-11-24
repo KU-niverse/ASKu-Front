@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
@@ -10,6 +12,8 @@ import Footer from '../components/Footer'
 import Switch from '../components/Switch'
 import QuestionInput from '../components/QuestionInput'
 import SpinnerMypage from '../components/SpinnerMypage'
+import docLink from '../img/doc_link.svg'
+import noQuestion from '../img/noQuestion.svg'
 
 interface UserInfo {
   id: number
@@ -59,7 +63,7 @@ const fetchUserInfo = async () => {
 
 const fetchTitles = async () => {
   const res = await axios.get(`${process.env.REACT_APP_HOST}/wiki/titles`)
-  return res.data.titles
+  return res.data.data
 }
 
 const fetchQuestions = async (title: string, flag: number) => {
@@ -75,7 +79,7 @@ const submitQuestion = async ({
   submitData,
 }: {
   title: string
-  submitData: { index_title: string; content: string }
+  submitData: { index_title: string; content: string; title: string }
 }) => {
   const res = await axios.post(`${process.env.REACT_APP_HOST}/question/new/${encodeURIComponent(title)}`, submitData, {
     withCredentials: true,
@@ -88,6 +92,7 @@ const MoreQuestion: React.FC = () => {
   const location = useLocation()
   const defaultOpt = location.state
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const [isToggled, setIsToggled] = useState(false)
   const flag = isToggled ? 1 : 0
@@ -106,7 +111,7 @@ const MoreQuestion: React.FC = () => {
     },
   })
 
-  const handleQuestionSubmit = async (submitData: { index_title: string; content: string }) => {
+  const handleQuestionSubmit = async (submitData: { index_title: string; content: string; title: string }) => {
     mutation.mutate({ title, submitData })
   }
 
@@ -115,6 +120,10 @@ const MoreQuestion: React.FC = () => {
       title,
     })
   }, [title])
+
+  const handleDocLinkClick = () => {
+    navigate(`/wiki/${encodeURIComponent(title)}`)
+  }
 
   if (userInfoLoading || titlesLoading || questionsLoading) {
     return (
@@ -132,22 +141,54 @@ const MoreQuestion: React.FC = () => {
           <div>
             <div className={styles.header}>
               <div className={styles.frontheader}>
-                <p className={styles.q_pagename}>{title}</p>
-                <p className={styles.q_headline}>{'문서의 질문'}</p>
+                <div
+                  className={styles.q_pagename}
+                  onClick={() => {
+                    const encodedTitle = encodeURIComponent(title)
+                    navigate(`/wiki/${encodedTitle}`)
+                  }}
+                >
+                  {title}
+                </div>
+                <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
-              <div className={styles.switch}>
-                <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
-              </div>
+
+              <button type={'button'} className={styles.docLinkBtn} onClick={handleDocLinkClick}>
+                <img role={'presentation'} alt={docLink} src={docLink} />
+                <span>{'문서 바로가기'}</span>
+              </button>
             </div>
+
             <QuestionInput
               onQuestionSubmit={handleQuestionSubmit}
               title={title}
               defaultOpt={defaultOpt}
               wikiData={undefined}
             />
+
             <div>
+              {/* 헤더 섹션: 제목과 인기순 토글 */}
+              <div className={styles.questionHeaderContainer}>
+                <div className={styles.questionTitle}>{'해당 질문들'}</div>
+                <div className={styles.switch}>
+                  <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+                </div>
+              </div>
+
+              {/* 질문 리스트 */}
               {questionData?.data.length === 0 ? (
-                <p>{'아직 작성한 질문이 없습니다.'}</p>
+                <div className={styles.noQuestionsContainer}>
+                  <div className={styles.noQuestionsContent}>
+                    {/* 아이콘 */}
+                    <img role={'presentation'} src={noQuestion} alt={noQuestion} className={styles.noQuestionsIcon} />
+
+                    {/* 텍스트 */}
+                    <p className={styles.noQuestionsText}>
+                      {'아직 질문이\r'}
+                      <br /> {'없습니다\r'}
+                    </p>
+                  </div>
+                </div>
               ) : (
                 questionData?.data.map((question) => (
                   <Question

@@ -1,61 +1,100 @@
-/* 스타일을 초기화하고 싶은 경우 */
-.linkTo {
-  text-decoration: none; /* 밑줄 제거 */
-  color: black; /* 기본 텍스트 색상 유지 */
-}
-
-/* 클릭 시 스타일 변경하고 싶은 경우 */
-.linkTo:hover {
-  text-decoration: underline;
-  text-decoration: none; /* 클릭 시 밑줄 표시 */
-}
-
-.hidden {
-  display: none;
-}
 .searchTitle {
-  font-size: 18px;
   font-weight: 700;
-  line-height: 22px;
-  letter-spacing: 0em;
+  width: 89px;
+  position: relative;
+  font-size: 2.4rem;
+  display: inline-block;
+  font-family: Pretendard;
+  color: #de3a58;
   text-align: left;
-  color: rgba(159, 19, 46, 1);
+  margin: 0;
 }
-.inputcontainer {
+
+.searchInput {
+  height: 3.7rem;
+  padding-left: 2rem;
+  font-size: 1.6rem;
+  color: #000;
+  font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin: 1rem;
+  width: 80%;
+}
+.searchInputContainer {
   display: flex;
-  width: 25%;
-}
-.headerInput {
-  border: 2px solid #d5d5d5;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 3rem;
   border-radius: 35px;
-  width: 20%;
-  height: 40px;
-  padding-left: 20px;
-  position: absolute;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
+  box-sizing: border-box;
+}
+.InputContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 3rem;
+  border-radius: 35px;
+  background-color: #fff;
+  border: 1px solid rgba(116, 116, 116, 0.5);
   box-sizing: border-box;
 }
 .searchIcon {
-  width: 21px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   position: relative;
   cursor: pointer;
-  left: 85%;
-  top: 10px;
-  z-index: 20;
+  margin-left: 2rem;
 }
-.resultContainer {
+.cancelIcon {
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  padding-right: 2rem;
+}
+.headerInput {
+  height: 3.7rem;
+  font-size: 1.6rem;
+  color: #000;
+  font-family: Pretendard;
+  outline: none;
+  border: none;
+  margin: 1rem;
+  width: 80%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.result {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  padding-left: 10px;
+  font-size: 4rem;
 }
+
 .resultList {
-  width: 90%;
+  width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 14px;
+  font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
   padding-left: 10px;
+  margin-bottom: 0px;
+}
+
+.linkTo {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 기본 텍스트 색상 유지 */
+}
+@media only screen and (max-width: 767px) {
+  .resultList {
+    width: 100%;
+  }
 }

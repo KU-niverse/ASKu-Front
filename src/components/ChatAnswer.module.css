@@ -1,61 +1,50 @@
 .answerBox {
+  align-self: flex-start;
   display: flex;
   flex-direction: row;
-  background-color: #fef2f4;
-  margin-top: 25px;
-  width: calc(100% - 50px);
-  height: auto;
-  border-radius: 12px;
-  margin-right: 50px;
-  margin-left: 20px;
+  margin-top: 3.9rem;
+  margin-left: 2.3rem;
   word-break: keep-all;
-  position: relative;
-  min-height: 92px;
   align-items: center;
-  max-width: 800px;
+  max-width: 80%;
+  position: relative;
+  overflow: visible;
 }
+
 @media screen and (max-width: 767px) {
   .answerBox {
     width: calc(100vw - 50px);
     margin-left: 15px;
   }
+
   .answerBox {
     width: calc(100vw - 50px);
   }
 }
-.characterWrapper {
-  width: 92px;
-  min-height: 92px;
-  height: 100%;
-  position: static;
-  padding-top: 15px;
-}
-.characterContainer {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: linear-gradient(180deg, #ff768f 0%, #de3a58 100%);
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-}
+
 .character {
-  width: 42px;
-  height: 42px;
+  align-self: flex-start;
+  width: 4rem;
+  height: 4rem;
 }
 
 .chatText {
   width: calc(100% - 50px);
-  margin-left: 0px;
-  font-size: 12px;
+  background-color: #ffdce0;
+  border-radius: 21.66px;
+  font-size: 1.5rem;
+  color: #9f132e;
+  text-align: center;
+  padding-left: 2.3rem;
+  padding-right: 2.3rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  margin-left: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 0;
   letter-spacing: 0.5px;
   line-height: 150%;
   word-break: break-word;
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
 
 .dots {
@@ -74,22 +63,23 @@
 .iconZip {
   display: flex;
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  bottom: 0rem;
+  right: -7.5rem;
   flex-direction: row;
   width: auto;
 }
+
 @media screen and (max-width: 767px) {
   .iconZip {
-    left: 70%;
+    display: none;
   }
 }
+
 .icon {
-  cursor: pointer;
-  width: 11px;
-  min-width: 11px;
-  height: 11px;
-  margin-right: 11px;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
   cursor: pointer;
 }
 
@@ -102,6 +92,7 @@
   .chatTextWrap {
     max-width: 220px;
   }
+
   .chatTextWrap {
     max-width: 220px;
   }
@@ -111,33 +102,23 @@
   background-color: white;
   position: absolute;
   z-index: 100;
-  margin-top: 10px;
-  margin-left: 115px;
-  width: 450px;
-  min-height: 100px;
+  margin-top: 1rem;
+  margin-left: 10rem;
+  width: 40rem;
+  min-height: 10rem;
   height: auto;
-  box-shadow: 0px 4px 8px 0px #0000001a;
-  border-radius: 12px;
-  top: 110px;
-  right: 5px;
-  background-color: white;
-  position: absolute;
-  z-index: 100;
-  margin-top: 10px;
-  margin-left: 115px;
-  width: 450px;
-  min-height: 100px;
-  height: auto;
-  box-shadow: 0px 4px 8px 0px #0000001a;
-  border-radius: 12px;
-  top: 110px;
-  right: 5px;
+  box-shadow: 0px 0.4rem 0.8rem 0px #0000001a;
+  border-radius: 1.2rem;
+  top: 11rem;
+  right: 0.5rem;
 }
+
 @media screen and (max-width: 500px) {
   .reference_wrap {
     width: calc(100vw - 100px);
     margin-left: 0px;
   }
+
   .reference_wrap {
     width: calc(100vw - 100px);
     margin-left: 0px;
@@ -150,34 +131,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
+
 .reference_text {
-  font-size: 11px;
+  font-size: 4rem;
   width: 80%;
   height: auto;
   word-break: keep-all;
-  font-size: 11px;
-  width: 80%;
+}
+
+.reference_link {
   height: auto;
-  word-break: keep-all;
+  line-height: 1.5rem;
 }
 
 .closeBtn {
   position: absolute;
   right: 0px;
   cursor: pointer;
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  right: 0px;
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
+  width: 1rem;
+  height: 1rem;
 }
 
 .reference_title {
@@ -185,8 +158,9 @@
   font-weight: 800;
   margin: 0;
   color: #9f132e;
-  font-weight: 800;
+  font-weight: 600;
   margin: 0;
+  font-size: 1.6rem;
 }
 
 .header {
@@ -195,16 +169,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 30px;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
+  height: 3rem;
   width: 100%;
 }
+
 .ruleButton {
   background-color: #9f132e;
   color: white;

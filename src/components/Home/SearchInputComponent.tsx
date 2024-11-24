@@ -1,44 +1,53 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import searchIconBlack from '../../img/search_icon_black.svg'
+import searchIconRed from '../../img/search_icon_red.svg'
+import styles from './SearchInputComponent.module.css'
 
-import logo from '../../img/logo_big.png'
-import styles from '../../pages/Home.module.css'
-import searchIcon from '../../img/search_icon.svg'
+interface SearchInputProps {
+  inputValue?: string
+  setInputValue?: (value: string) => void
+}
 
-const SearchInputComponent: React.FC = () => {
-  const [inputValue, setInputValue] = useState('')
-
-  const navigate = useNavigate()
-
-  const handleSearch = () => {
-    if (inputValue.trim() !== '') {
-      navigate(`/result/${encodeURIComponent(inputValue)}/search`)
-      setInputValue('')
-    }
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSearch()
-    }
-  }
+const SearchInputComponent: React.FC<SearchInputProps> = ({ inputValue = '', setInputValue = () => {} }) => {
+  const Nav = useNavigate()
 
   return (
     <div className={styles.inputContainer}>
-      <img src={logo} className={styles.logo} alt={'logo'} />
-      <input
-        className={`${styles.searchInput} ${inputValue.trim() !== '' ? styles.active : ''}`}
-        placeholder={'Wiki 검색어를 입력하세요.'}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        value={inputValue}
+      <img
+        role={'presentation'}
+        src={inputValue.trim() ? searchIconRed : searchIconBlack} // inputValue가 있으면 searchIconRed, 없으면 searchIconBlack
+        alt={'icon'}
+        className={styles.searchIcon}
+        onClick={() => {
+          if (inputValue.trim() !== '') {
+            Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
+            setInputValue('')
+          }
+        }}
       />
-      <div className={styles.searchIconContainer}>
-        <img role={'presentation'} src={searchIcon} alt={'icon'} className={styles.searchIcon} onClick={handleSearch} />
-      </div>
+      <input
+        className={styles.headerInput}
+        placeholder={'어떤 정보를 찾으시나요?'}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            if (inputValue.trim() !== '') {
+              Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)
+              setInputValue('')
+            }
+          }
+        }}
+      />
     </div>
   )
+}
+
+SearchInputComponent.defaultProps = {
+  inputValue: '',
+  setInputValue: () => {},
 }
 
 export default SearchInputComponent

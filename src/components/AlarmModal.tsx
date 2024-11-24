@@ -70,14 +70,14 @@ interface Info {
   id?: number
 }
 
-const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
+const AlarmModal = ({ isAlarmVisible, handleAlarm, user_id }: any) => {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+        const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
           withCredentials: true,
         })
         if (res.status === 201 && res.data.success === true) {
@@ -110,7 +110,7 @@ const AlarmModal = ({ isAlarmVisible, handleAlarm }: any) => {
   useEffect(() => {
     if (isAlarmVisible) {
       axios
-        .get(`${process.env.REACT_APP_HOST}/notification/user`, {
+        .get(`${process.env.REACT_APP_HOST}/notification/user/${user_id}`, {
           withCredentials: true,
         })
         .then((response) => {

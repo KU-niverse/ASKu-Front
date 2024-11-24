@@ -6,6 +6,8 @@ import { FaChevronDown, FaChevronRight } from 'react-icons/fa6'
 import { track } from '@amplitude/analytics-browser'
 import WikiToHtml from './Wiki/WikiToHtml'
 import styles from './WikiBox.module.css'
+import arrowUp from '../img/arrow_up_black.svg'
+import arrowDown from '../img/arrow_down_black.svg'
 
 interface Content {
   index: string
@@ -30,7 +32,7 @@ function useCheckLoginStatus() {
   return useQuery<UserAuthResponse, AxiosError>(
     'loginStatus',
     async () => {
-      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
         withCredentials: true,
       })
       return res.data
@@ -81,33 +83,43 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
     setView((currentState) => !currentState) // on, off 개념 boolean
   }
 
+  const tabCount = index.split('.').length - 1
+  const tabs = (tabCount + 1) * 3.6
+
   return (
     <div className={styles.wikiContents}>
-      <li role={'presentation'} onClick={toggleView} className={styles.wikiContentlist}>
+      <li
+        role={'presentation'}
+        onClick={contentWithResponsiveImages ? toggleView : null}
+        className={
+          !contentWithResponsiveImages
+            ? styles.wikiContentlist
+            : isOpen
+              ? styles.wikiContentlistOpen
+              : styles.wikiContentlistClose
+        }
+      >
         <div className={styles.wikiContentTitle}>
-          <span className={isOpen ? '' : styles.hidden}>
-            <FaChevronDown size={'16'} color={'rgba(222, 58, 88, 1)'} />
-          </span>
-          <span className={isOpen ? styles.hidden : ''}>
-            <FaChevronRight size={'16'} color={'rgba(222, 58, 88, 1)'} />
-          </span>
-          <span className={styles.wikiIndex}>
-            &nbsp;{index}
-            &nbsp;
-          </span>
+          <span className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</span>
           <span>{title}</span>
+          <div className={contentWithResponsiveImages ? styles.wikiArrow : styles.hidden}>
+            <img className={isOpen ? styles.hidden : styles.wikiArrowIcon} src={arrowDown} alt="Arrow Down" />
+            <img className={isOpen ? styles.wikiArrowIcon : styles.hidden} src={arrowUp} alt="Arrow Up" />
+          </div>
         </div>
         <div className={isZero ? `${styles.hidden}` : `${styles.wikiContentBtns}`}>
           <button type={'button'} onClick={linkToWikiEdit} className={styles.wikiContentBtn}>
             {'편집\r'}
           </button>
-          <button type={'button'} onClick={linkToWikiQue} className={styles.wikiContentBtn}>
+          <button type={'button'} onClick={linkToWikiQue} className={styles.wikiContentQuestionBtn}>
             {'질문\r'}
           </button>
         </div>
       </li>
-      <hr />
-      <div className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}>
+      <div
+        style={{ paddingLeft: `${tabs}rem`, borderBottom: '0.1rem solid #d5d5d5', paddingBottom: '1.4rem' }}
+        className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}
+      >
         <div dangerouslySetInnerHTML={{ __html: contentWithResponsiveImages }} />
       </div>
     </div>

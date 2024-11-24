@@ -32,6 +32,7 @@ interface DropDownProps {
 
 const DropDown = ({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOptionDisabled }: DropDownProps) => {
   const [wikiData, setWikiData] = useState<WikiData>({ contents: [] })
+  const [selectedOption, setSelectedOption] = useState<DropDownOption | null>(null)
 
   useEffect(() => {
     const takeWikiData = async () => {
@@ -77,10 +78,12 @@ const DropDown = ({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
     defaultOption = defaultOpt
   }
 
-  const onSelect = (selectedOption: DropDownOption) => {
-    onSelectedOption(selectedOption.value)
-    onSelectedTitle(selectedOption.label)
-    // Additional logic can be added here
+  const onSelect = (selected: DropDownOption | null) => {
+    if (selected) {
+      setSelectedOption(selected)
+      onSelectedOption(selected.value)
+      onSelectedTitle(selected.label)
+    }
   }
 
   return (
@@ -92,7 +95,7 @@ const DropDown = ({ defaultOpt, onSelectedOption, onSelectedTitle, title, isOpti
         placeholderClassName={styles.dropdownph}
         options={options}
         onChange={onSelect}
-        value={defaultOption}
+        value={selectedOption || defaultOption}
         placeholder={'Select an option'}
       />
     </div>

@@ -1,11 +1,12 @@
 .q_list {
-  width: 80%;
-  margin-left: 10%;
+  width: 90%;
   border-radius: 12px;
-  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #d5d5d5;
   padding: 20px 0;
+  margin-left: 58px;
   margin-top: 10px;
 }
+
 .q_header {
   display: flex;
   justify-content: space-between;
@@ -14,14 +15,37 @@
   padding: 0px 30px 8px 30px;
 }
 
-.q_mynick {
-  font-size: 16px;
+.q_fronthead {
+  display: flex;
+  align-items: center;
 }
+
+.q_box {
+  width: 26px;
+  height: 26px;
+  align-self: center;
+  margin-right: 10px;
+}
+
+.q_box img {
+  padding-left: 0;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
+
+.q_mynick {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
 .q_date {
-  margin-left: 20px;
-  font-size: 12px;
+  margin-left: 2rem;
+  font-weight: 400;
+  font-size: 1.2rem;
   color: rgba(116, 116, 116, 1);
 }
+
 .q_num {
   font-size: 18px;
   font-weight: 700;
@@ -29,9 +53,11 @@
   display: flex;
   align-items: center;
 }
+
 .q_num img {
   margin-left: 8px;
 }
+
 .q_backhead {
   cursor: pointer;
 }
@@ -46,10 +72,13 @@
 
 .q_icon {
   color: rgba(159, 19, 46, 1);
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .q_content {
-  padding-left: 10px;
+  padding-left: 1rem;
+  font-size: 2rem;
 }
 
 .q_footer {
@@ -71,6 +100,7 @@
   font-size: 16px;
   font-weight: bold;
 }
+
 .q_comment {
   display: flex;
   align-content: center;
@@ -80,8 +110,17 @@
   font-weight: bold;
 }
 
-.q_like {
-  margin-left: 3px;
+.q_comment span {
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.q_comment img {
+  object-fit: contain;
+  cursor: pointer;
+  width: 18px;
 }
 
 .q_backfooter button {
@@ -100,6 +139,7 @@
   flex-direction: row;
   justify-content: center;
 }
+
 .q_letter {
   font-size: 14px;
   font-weight: 400;
@@ -112,18 +152,48 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .q_middle,
-  .q_mynick {
-    font-size: 14px;
+  .q_list {
+    margin: 0;
+    width: auto;
+    padding: 1.1rem 1.7rem 1.6rem 1.8rem;
+    box-shadow: none;
+    border-radius: 1rem;
   }
+
+  .q_header {
+    padding: 0;
+  }
+
+  .q_middle {
+    padding: 0;
+    margin-top: 1.1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .q_box {
+    margin-right: 0.5rem;
+  }
+
+  .badge_image {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .q_mynick {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
   .q_num {
     font-size: 15px;
   }
+
   .q_like {
     margin-left: 1px;
     width: 18px;
     height: 18px;
   }
+
   .q_comment {
     margin-left: 10px;
   }
@@ -134,15 +204,25 @@
     object-fit: contain;
     align-self: center;
   }
+
   .q_footer button {
     font-size: 12px;
     width: max-content;
     height: max-content;
   }
-  .q_date,
-  .q_footer span {
+
+  .q_footer {
+    padding: 0;
+  }
+
+  .q_frontfooter {
+    column-gap: 0.9rem;
+  }
+
+  .q_date {
     font-size: 12px;
   }
+
   .q_letter {
     display: none;
   }

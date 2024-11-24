@@ -1,0 +1,46 @@
+.container {
+  width: 32%;
+  background: linear-gradient(to bottom, #000 0%, #666 100%);
+  border-radius: 14.11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.subject {
+  text-align: center;
+  color: #fff;
+  font-size: 11px;
+  overflow: hidden;
+  margin: 8%;
+  margin-bottom: 5%;
+  width: 80%;
+}
+.question {
+  margin: 0px;
+  font-size: 1.5rem;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+  font-weight: 700;
+}
+.joinDebate {
+  font-size: 1.3rem;
+  height: 20%;
+  border-radius: 19.381px;
+  background-color: #fff;
+  margin-bottom: 5%;
+  margin-right: auto;
+  margin-left: auto;
+  color: #de3a58;
+  border-color: #00000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}

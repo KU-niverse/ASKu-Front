@@ -17,7 +17,7 @@ interface ThreedotsReportProps {
 
 const fetchLoginStatus = async (): Promise<boolean> => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+    const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
     return res.status === 201 && res.data.success === true
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -56,16 +56,18 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
   }
 
   return (
-    <Menu
-      menuButton={
-        <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt="Menu" />
-        </MenuButton>
-      }
-    >
-      <MenuItem className={styles.menuitem} onClick={handleReportClick}>
-        {'신고하기\r'}
-      </MenuItem>
+    <>
+      <Menu
+        menuButton={
+          <MenuButton className={styles.menubtn}>
+            <img src={threedots} alt="Menu" />
+          </MenuButton>
+        }
+      >
+        <MenuItem className={styles.menuitem} onClick={handleReportClick}>
+          {'신고하기\r'}
+        </MenuItem>
+      </Menu>
       {isReportModalVisible && (
         <ReportModal
           type={type}
@@ -74,7 +76,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
           onClose={() => setReportModalVisible(false)}
         />
       )}
-    </Menu>
+    </>
   )
 }
 

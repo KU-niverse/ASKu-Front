@@ -15,7 +15,7 @@ const LS_KEY_ID = 'LS_KEY_ID' // 로컬스토리지에 저장할 키
 const LS_KEY_SAVE_ID_FLAG = 'LS_KEY_SAVE_ID_FLAG' // 아이디 저장하기 체크여부
 
 const fetchLoginStatus = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+  const response = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
   return response.data
 }
 
@@ -64,7 +64,7 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
   const mutation = useMutation(
     async () => {
       const response = await axios.post(
-        `${process.env.REACT_APP_HOST}/user/auth/signin`,
+        `${process.env.REACT_APP_HOST}/auth/signin`,
         {
           login_id: id,
           password,
@@ -142,6 +142,8 @@ const Signin = ({ loggedIn, setLoggedIn }: SigninProps) => {
       <form onSubmit={handleOnSubmit}>
         <div className={styles.login_input}>
           <input type={'text'} value={id} onChange={(e) => setId(e.target.value)} placeholder={'아이디를 입력하세요'} />
+        </div>
+        <div className={styles.login_input}>
           <input
             type={'password'}
             value={password}

@@ -1,0 +1,112 @@
+.PopularQuestionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: rgb(253, 243, 241);
+  border-radius: 25px;
+  height: 27rem;
+  justify-content: center;
+  padding: 2.5rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+.nickname {
+  display: flex;
+  flex-basis: 50%; /* 너비를 flex-basis로 설정 */
+  justify-content: flex-start;
+  font-weight: 600;
+  font-size: 1.5rem;
+  align-items: center;
+  /* 1줄 제한 및 ... 처리 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 0; /* 확장되지 않도록 설정 */
+  flex-shrink: 1; /* 너비보다 길 경우 축소 가능하게 설정 */
+}
+.body {
+  display: flex;
+  flex: 1; /* body가 가능한 공간을 차지 */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4.5rem;
+}
+.repBadge {
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  border: 0.1rem solid #d5d5d5;
+  margin-right: 1.5rem;
+}
+
+.title {
+  color: #f86982;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  display: inline-block; /* 블록처럼 동작해서 배경색과 패딩을 적용 */
+  color: #fff; /* 텍스트 색상 흰색 */
+  background: linear-gradient(180deg, #ff768f 0%, #de3a58 100%); /* 그라디언트 배경 */
+  padding: 1.25rem 2rem; /* 패딩을 추가하여 버튼처럼 보이도록 */
+  border-radius: 50px; /* 모서리를 둥글게 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자를 추가하여 떠 있는 느낌을 줌 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  text-decoration: none; /* 텍스트 장식 제거 */
+  font-weight: bold; /* 버튼 텍스트 강조 */
+  transition: transform 0.1s ease; /* 클릭 시 눌리는 효과를 위한 전환 효과 */
+  /* 1줄 제한 및 ... 처리 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 클릭 시 효과 */
+.title:active {
+  transform: scale(0.97); /* 클릭할 때 살짝 눌리는 느낌을 줌 */
+}
+
+.content {
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+  font-size: 2rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 최대 2줄로 제한 */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  height: 5rem;
+}
+
+.timeAgo {
+  color: rgba(158, 158, 158, 1);
+}
+
+.answerCountContainer {
+  display: flex;
+  align-items: center;
+}
+
+.answer_count_img {
+  margin-right: 1rem;
+  width: 80%;
+  height: 80%;
+}
+
+.answerCount {
+  color: #f86982;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}

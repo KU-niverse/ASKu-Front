@@ -1,16 +1,20 @@
 .hidden {
   display: none;
 }
-.history {
-  min-height: 80vh;
-}
-.header {
+.pageWrap {
   display: flex;
-  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+.historyContainer {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  height: 80px;
-  width: 100%;
+}
+.historyContent {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
 }
 .historyBtn {
   width: 74%;
@@ -19,54 +23,128 @@
   display: flex;
 }
 .historyBtn p {
-  margin: 0px 10px 0px 10px;
+  margin: 0rem 1rem 0rem 1rem;
   cursor: pointer;
 }
 .header span {
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: bolder;
   color: white;
 }
 .header img {
-  margin-right: 10px;
+  margin-right: 1rem;
 }
-.historyTitle {
-  width: 100%;
+.allhistoryTitle {
   display: flex;
   align-items: center;
   flex-direction: row;
+  align-items: flex-end;
+  margin-top: 7.7rem;
+  margin-bottom: 3.1rem;
+}
+.historyTitle {
+  display: flex;
+  align-items: center;
+  margin-top: 7.7rem;
+  margin-bottom: 3.1rem;
+  gap: 0.5rem;
+  width: 100%;
+}
+.listTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-right: 1rem;
+}
+.listTitles {
+  font-weight: 700;
+  font-size: 3.6rem;
+  padding: 0 0.3rem;
+  margin: 0;
+  white-space: nowrap;
+}
+.docTitle {
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: #de3a58;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .historyTypes {
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  color: gray;
+  margin-left: 5rem;
+  color: #747474;
+  padding-bottom: 0.8rem;
 }
 .historyTypes p {
-  margin-right: 15px;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-right: 2rem;
   cursor: pointer;
+  margin-bottom: 0;
 }
 .clickType {
-  color: rgba(159, 19, 46, 1);
+  color: #de3a58;
 }
-.listTitle {
-  font-size: 24px;
-  font-weight: 700;
-  margin-right: 10px;
+.listTitleStart {
+  font-size: 3.6rem;
+  color: #de3a58;
 }
-.listTitle2 {
-  font-size: 18px;
-  font-weight: 700;
+.pagingContainer {
+  margin: 5rem 0;
 }
-.historyList {
-  width: 74%;
-  margin-left: 13%;
-  height: auto;
+.footerContainer {
+  margin-top: auto;
 }
+.linkToNew {
+  margin-top: 10px;
+  text-align: center;
+}
+.link {
+  color: rgba(116, 116, 116, 1);
+  font-size: 1.6rem;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 5%;
+  text-decoration-line: underline;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.blank {
+  height: 2rem;
+}
+
+/* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
-  .historyList {
+  .allhistoryTitle {
+    margin-top: 5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .docTitle,
+  .listTitleStart,
+  .listTitles {
+    font-size: 3.2rem;
+  }
+  .historyTitle {
+    margin-top: 5rem;
+  }
+  .historyTypes {
+    margin-left: 0;
+  }
+  .historyTypes p {
+    font-size: 2.5rem;
+  }
+  .historyContent {
     width: 90%;
-    margin-left: 5%;
-    height: auto;
+  }
+  .blank {
+    height: 0rem;
   }
 }

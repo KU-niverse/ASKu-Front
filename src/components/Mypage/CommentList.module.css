@@ -1,26 +1,23 @@
 .comment_list {
   display: flex;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 0;
+  gap: 3px;
 }
 .comment_icon {
-  padding-top: 5px;
-}
-.comment_png {
-  object-fit: contain;
-  position: relative;
-  vertical-align: top;
-  width: 18px;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .comment_content {
+  font-weight: 600;
+  font-size: 1.9rem;
   padding-left: 10px;
   cursor: pointer;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) {
   .comment_icon img {
     height: 12px;
     width: 12px;
@@ -30,4 +27,4 @@
   .comment_list {
     font-size: 14px;
   }
-}
+} */

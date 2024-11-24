@@ -13,13 +13,13 @@ interface PopularQuestion {
   like_count: number
   nickname: string
   index_title: string
-  answer_count: number
+  answer_count: string
   title: string
 }
 
 const fetchPopularQuestions = async () => {
   const response = await axios.get(`${process.env.REACT_APP_HOST}/question/popular`)
-  return response.data.data
+  return response.data.result
 }
 
 const RealTimePopularQuestionsComponent: React.FC = () => {

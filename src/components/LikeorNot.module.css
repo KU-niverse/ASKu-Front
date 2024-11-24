@@ -4,12 +4,15 @@
 }
 
 .likeimg {
-  height: 19px;
-  width: 18px;
+  height: 1.8rem;
+  width: 1.8rem;
   object-fit: contain;
   cursor: pointer;
 }
 
 .likeCount {
+  font-size: 1.6rem;
   margin-left: 5px;
+  font-weight: 700;
+  color: #747474;
 }

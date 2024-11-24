@@ -7,6 +7,8 @@ import Header from '../components/Header'
 import styles from './MyBookmark.module.css'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
+import Paging from '../components/Paging'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -33,14 +35,22 @@ interface MyBookmarkProps {
 
 const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
   const nav = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
+  const perPage = 8
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber)
+  }
+
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
 
   // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
       } else if (res.status === 401) {
@@ -89,22 +99,44 @@ const MyBookmark = ({ loggedIn, setLoggedIn }: MyBookmarkProps) => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.content}>
-        <div className={styles.header}>
-          <h3>{'즐겨찾기 한 문서'}</h3>
-          <div className={styles.texts}>
-            <span>{'문서'}</span>
-            <div className={styles.number}>{lists.length}</div>
-          </div>
-        </div>
-        <div>
-          {lists.map((item: any) => (
-            <div key={item.title}>
-              <BookmarkBox title={item.title} content={item.recent_filtered_content} is_favorite result={false} />
+        <div className={styles.bookmarkContents}>
+          <div className={styles.header}>
+            <p className={styles.text}>{'나의 관심 목록'}&nbsp;</p>
+            <div className={styles.number}>
+              {'('}
+              {lists.length}
+              {')'}
             </div>
-          ))}
+          </div>
+          {lists?.length === 0 ? (
+            <div className={styles.caution}>
+              <img src={CautionIcon} alt={'삭제'} className={styles.cautionIcon} />
+              <p className={styles.none}>{'아직 관심 목록이'}</p>
+              <p className={styles.none}>{'없습니다.'}</p>
+            </div>
+          ) : (
+            lists.slice(startIndex, endIndex).map((item: any) => (
+              <div key={item.title}>
+                <BookmarkBox
+                  title={item.title}
+                  content={item.recent_filtered_content}
+                  is_favorite
+                  result={false}
+                  version={item.latest_ver}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <div className={styles.page}>
+          {lists?.length !== 0 && (
+            <Paging total={lists.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+          )}
+        </div>
+        <Footer />
+      </div>
     </div>
   )
 }

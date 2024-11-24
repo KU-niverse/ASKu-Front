@@ -26,7 +26,7 @@ const Signup = ({ loggedIn, setLoggedIn }: any) => {
   // 로그인 체크 후 우회
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, { withCredentials: true })
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/auth/issignedin`, { withCredentials: true })
       if (res.status === 201 && res.data.success === true) {
         setLoggedIn(true)
         nav('/')

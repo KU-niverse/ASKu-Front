@@ -4,36 +4,56 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .q_cfrontheader {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .q_cheadline {
-  font-size: 24px;
-  font-weight: bold;
-  color: rgba(159, 19, 46, 1);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: black;
 }
 
 .q_cbox {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: auto;
+  height: 17.5rem;
   font-size: 18px;
   border-radius: 12px;
   border: 1px solid rgba(213, 213, 213, 1);
   box-sizing: border-box;
   padding: 10px;
 }
+
+.q_cbox.focused {
+  border: 1px solid #eb516d;
+  /* focus 되었을 때 빨간색으로 */
+}
+
 .q_ctextarea {
   resize: none;
   border: none;
   width: 100%;
   height: auto;
-  padding: 5px;
+  padding: 8px;
   border-radius: 12px;
   font-size: 18px;
+  outline: none;
+}
+
+.q_ctextarea::placeholder {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #cccbcb;
+}
+
+.q_ctextarea:focus {
+  outline: none;
+  border: none;
 }
 
 .q_clastheader {
@@ -41,29 +61,51 @@
   flex-direction: row;
   align-items: center;
   margin-left: auto;
-  margin-top: 7px;
+  margin-top: -1.5rem;
 }
 
-.q_clastheader button {
+.q_csubmit {
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  width: 100px;
-  border-radius: 12px;
+  width: 85px;
+  border-radius: 50px;
   height: 35px;
-  font-size: 14px;
+  font-size: 1.4rem;
   border: none;
   color: white;
+  /* 기본 텍스트 색상 */
   cursor: pointer;
   margin-left: auto;
+  font-weight: 700;
+}
+
+.q_csubmit.disabled {
+  background: #d5d5d5;
+  /* 비활성화 색상 */
+  cursor: not-allowed;
+  /* 비활성화된 상태에서 마우스 커서 변경 */
+  color: #ffffff;
+  /* 비활성화된 텍스트 색상 */
 }
 
 .textnum {
-  font-size: 14px;
-  color: rgba(116, 116, 116, 1);
-  margin-right: 10px;
-  margin-top: 15px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #d5d5d5;
+  margin-right: 1rem;
+  margin-top: 1.5rem;
+}
+
+.q_dropdown {
+  width: 18rem;
+  height: 4.8rem;
+  font-size: 1.4rem;
 }
 
 @media only screen and (max-width: 767px) {
+  .q_c {
+    height: 33rem;
+  }
+
   .q_cheader {
     display: flex;
     align-items: center;
@@ -71,29 +113,56 @@
   }
 
   .q_cfrontheader {
-    flex: 1 1 100%;
+    width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 2.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .q_dropdown {
+    width: 21rem;
+    margin-right: 2rem;
   }
 
   .q_cheadline {
     font-size: 18px;
+    margin: 0;
+  }
+
+  .q_cbox {
+    height: 23rem;
   }
 
   .q_clastheader {
+    padding-top: 3rem;
     margin-left: auto;
-  }
-
-  .q_clastheader button {
-    width: 70px;
-    height: 25px;
-    font-size: 12px;
-  }
-
-  .q_ctextarea {
-    font-size: 14px;
+    height: 4rem;
   }
 
   .textnum {
-    font-size: 12px;
-    margin-top: 10px;
+    color: black;
+  }
+
+  .q_clastheader button {
+    width: 7rem;
+    height: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .q_ctextarea {
+    font-size: 1.7rem;
+    height: 12rem;
+  }
+
+  .q_ctextarea::placeholder {
+    font-size: 1.6rem;
+    font-weight: 300;
+  }
+
+  .textnum {
+    font-size: 1.2rem;
+    margin-top: 1rem;
   }
 }

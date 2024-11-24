@@ -234,22 +234,29 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
     <div className={styles.container}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.edit}>
+        <h4 className={styles.editTitle}>{'문서 수정하기'}</h4>
         <div>
           <QuestionFor
             nick={stateData.nick}
             content={stateData.content}
             like_count={stateData.like_count}
             created_at={stateData.created_at}
+            badge_image={stateData.badge_image}
+            id={stateData.qid}
+            user_id={stateData.user_id}
+            answer_count={stateData.answer_count || 0}
+            title={stateData.title || '제목 없음'}
+            index_title={stateData.index_title || '전체'}
           />
         </div>
         <form onSubmit={addWikiEdit}>
           <div className={styles.wikiQues_header}>
             <div className={styles.wikichar_title}>
-              <h4>{'문서 제목'}</h4>
+              <h4 className={styles.wikichar_title_text}>{'문서 제목'}</h4>
               <input type={'text'} required disabled value={main} className={styles.title} />
             </div>
             <div className={styles.wikiQues_lists}>
-              <h4>{'목차'}</h4>
+              <h4 className={styles.wikichar_title_text}>{'목차'}</h4>
               <div className={styles.q_dropdown}>
                 <WikiDropDown
                   defaultOpt={selectedTitle}
@@ -263,20 +270,20 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
           </div>
           <div>
             <div className={styles.QuesWikiManu}>
-              <h4>{'문서 내용'}</h4>
+              <h4 className={styles.QuesWikiManuText}>{'문서 내용'}</h4>
               <p
                 role={'presentation'}
                 onClick={() => nav('/wiki/ASKu%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95')}
                 className={styles.wikiManual}
               >
-                {'위키 문법 알아보기!'}&nbsp;
-                <FaArrowUpRightFromSquare />
+                <p className={styles.wikiManual}>{'위키 작성 방법'}</p>
+                <FaArrowUpRightFromSquare className={styles.icon} />
               </p>
             </div>
             <div className={styles.editorbox2}>
               <Editor value={desc} onChange={onEditorChange} />
             </div>
-            <h4>{'히스토리 요약'}</h4>
+            <h4 className={styles.QuesWikiManuText}>{'히스토리 요약'}</h4>
             <textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
@@ -293,10 +300,12 @@ const QuestionEdit = ({ loggedIn, setLoggedIn }: QuestionEditProps) => {
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                <p className={`${styles.submitText} ${isChecked ? styles.active : ''}`}>
+                  {'정책에 맞게 작성하였음을 확인합니다.\r'}
+                </p>
               </a>
             </span>
-            <button type={'submit'} className={styles.submitWiki}>
+            <button type={'submit'} className={`${styles.submitWiki} ${isChecked ? styles.active : ''}`}>
               {'생성하기'}
             </button>
           </div>

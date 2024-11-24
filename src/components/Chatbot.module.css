@@ -1,105 +1,244 @@
-.chatBot {
+.chatbot {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(16.67%, auto));
+  grid-template-rows: repeat(auto-fill, minmax(10%, auto));
+  align-content: stretch;
+  border-radius: 20px;
+  border: 0.1rem solid;
+  border-color: rgba(213, 213, 213, 0.8);
+  background: linear-gradient(to bottom, #ffeef0, #ffffff);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.chatSet {
   display: flex;
-  flex-direction: row;
-  flex: 1;
-  border-radius: 12px;
-  box-shadow: 0px 5px 20px -5px #00000033;
-  margin-right: 20px;
-  margin-left: 75px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  min-width: 700px;
-  min-height: 350px;
+  flex-direction: column;
+  justify-content: flex-start;
 }
-@media only screen and (max-width: 1300px) {
-  .chatBot {
-    margin-right: 75px;
-  }
-}
-@media only screen and (max-width: 900px) {
-  .chatBot {
-    margin-right: calc((100vw - 750px) / 2);
-    margin-left: calc((100vw - 750px) / 2);
-  }
-}
+
 @media only screen and (max-width: 767px) {
-  .chatBot {
-    display: none;
-  }
-  .chatBot {
-    display: none;
+  .chatbot {
+    width: 90%;
+    /* 화면 폭을 90%로 설정 */
+    height: 100%;
+    /* 높이를 자동으로 조정 */
+    margin-top: -2rem;
+    padding: 10px;
+    /* 내부 여백 조절 */
   }
 }
 
 .sideBar {
   display: flex;
   background: linear-gradient(to bottom, #9f132e, #de3a58);
-  min-width: 90px;
+  min-width: 150px;
+  min-height: 400px;
   height: auto;
   border-radius: 12px 0px 0px 12px;
   justify-content: center;
-  padding-left: 15px;
-  padding-right: 10px;
 }
 
-.textWrap {
+/* 챗봇박스 헤더 - 로고, 도움말/초기화 버튼 포함 */
+.chatbotHeader {
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 1;
   display: flex;
-  flex-direction: column;
-  font-weight: 400;
-  font-size: 12px;
-  color: #747474;
-  margin-top: 20px;
+  flex: row;
+  justify-content: space-between;
+  margin-left: 3.2rem;
+  margin-right: 3.2rem;
+  border-bottom: 0.1rem solid rgba(213, 213, 213, 0.5);
+}
+
+@media only screen and (max-width: 767px) {
+  .chatbotHeader {
+    margin-left: 0rem;
+    margin-right: 2rem;
+  }
 }
 
 .title {
+  display: flex;
+  flex: row;
+  align-items: center;
   font-weight: 700;
-  font-size: 14px;
-  color: #fff;
+  font-size: 5rem;
+  color: rgb(0, 0, 0);
   cursor: default;
-  text-align: center;
-  width: 85px;
-  background-color: rgba(0, 0, 0, 0);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-left: 15px;
+  margin-left: 1.8rem;
 }
+
+@media only screen and (max-width: 767px) {
+  .title {
+    font-size: 6rem;
+  }
+}
+
+.haho {
+  margin-right: 1.6rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
+}
+
+@media only screen and (max-width: 767px) {
+  .haho {
+    display: none;
+  }
+}
+
 .buttonContainer {
   display: flex;
-  cursor: pointer;
   align-items: center;
-  justify-items: start;
-  margin-top: 15px;
+  justify-content: start;
+  padding: 0;
+  margin: 0;
+  gap: 1.6rem;
+  flex: 0 0 auto;
 }
+
 .button {
-  width: 85px;
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
-  background-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
-  text-align: start;
-}
-
-/* 입력창을 포함한 챗봇 컨테이너 */
-.chatbox {
   display: flex;
-  flex-direction: column; /* 세로 방향으로 배치 */
-  flex: 1; /* 가로 방향으로 flex 1 */
   align-items: center;
-  width: 900px;
-  height: 100%;
 }
 
-/* 대화만 포함하는 챗봇 컨테이너 */
+.smallIcon {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.4rem;
+  filter: hue-rotate(0deg) brightness(0.8);
+  vertical-align: middle;
+}
+
+.buttonText {
+  height: 1.7rem;
+  font-size: 1.4rem;
+  border: none;
+  color: rgba(158, 158, 158, 1);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .buttonText {
+    font-size: 1.8rem;
+    font-weight: 420;
+  }
+}
+
+/* 대화만 포함하는 컨테이너 */
 .chat {
-  flex: 1;
-  width: 100%;
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 5;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   overflow-y: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .chat {
+    grid-row: 2 / span 7;
+  }
+}
+
+.initialChatbox {
+  grid-column: 1/6 span;
+  grid-row: 2/5 span;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(16.67%, auto));
+  justify-items: center;
+  align-items: center;
+  grid-template-rows: repeat(5, 1fr);
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.initialMessage {
+  grid-row: 1/ 2 span;
+  grid-column: 3/ 2 span;
+  align-self: end;
+  font-size: 3.2rem;
+  letter-spacing: 9%;
+  font-weight: 700;
+  background: linear-gradient(to right, #9f132e, #ff768f);
+  background-clip: text;
+  white-space: nowrap;
+  /* 줄바꿈을 방지 */
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.initialSummaryImgWrap {
+  grid-row: 3 / 3 span;
+  grid-column: 2 / 4 span;
+  justify-self: stretch;
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+  justify-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.initialSummaryImg {
+  width: 45%;
+  height: auto;
+  /* 높이는 자동으로 설정하여 비율 유지 */
+  object-fit: contain;
+  /* 이미지 비율을 유지하면서 맞춤 */
+}
+
+#plusImg {
+  max-width: 3rem;
+  height: auto;
+  /* 높이는 자동으로 설정하여 비율 유지 */
+  object-fit: contain;
+  /* 이미지 비율을 유지하면서 맞춤 */
+}
+
+.initialSummary {
+  grid-row: 6 / 1 span;
+  grid-column: 2 / 4 span;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 3rem;
+  justify-content: center;
+  white-space: nowrap;
+  /* 줄바꿈을 방지 */
   width: 100%;
-  background-color: red;
-  background: linear-gradient(150deg, rgba(255, 229, 234, 0.4) -27.56%, #fff 53.28%);
+}
+
+.initialSummaryContent {
+  line-height: 167%;
+  text-align: center;
+  font-size: 1.2rem;
+  color: rgba(151, 151, 151, 1);
+  justify-self: center;
+}
+
+.initialSummaryTitle {
+  text-align: center;
+  justify-self: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(to bottom, #ff768f, #de3a58);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1.1rem;
 }
 
 .defaultChat {
@@ -184,75 +323,129 @@
 }
 
 .icon {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   margin-right: 15px;
   cursor: pointer;
   width: 15px;
   height: 15px;
   margin-right: 15px;
   cursor: pointer;
-}
-.sidebarIcon {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
 }
 
 /* 챗봇 추천 질문 컨테이너 */
 .suggestContainer {
-  display: flex;
-  width: calc(100% - 100px);
-  flex-direction: column;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 14px;
+  grid-row: 7 / span 2;
+  grid-column: 1 / span 6;
+  justify-self: end;
+  display: grid;
+  grid-template-rows: repeat(3, 33.33%);
+  padding-left: 7rem;
+  align-content: stretch;
+  max-width: 90%;
+  height: 13.7rem;
+  box-sizing: border-box;
+  /* height: auto; */
+  margin-right: 6rem;
+  margin-top: 1rem;
 }
 
-.suggestScrollbar {
-  display: flex;
-  flex-direction: row;
-  width: 500px;
-  flex: 1;
-  overflow-x: hidden;
+@media only screen and (max-width: 767px) {
+  .suggestContainer {
+    grid-row: 9 / span 2;
+    padding-left: 0rem;
+    margin-right: 2rem;
+    padding-bottom: 1.6rem;
+    margin-top: 0;
+  }
+
+  .promptWrap {
+    grid-row: 10 / span 1;
+    /* promptWrap을 더 아래로 배치 */
+    margin-top: 0rem;
+    padding: none;
+    margin-bottom: 0.8rem;
+  }
 }
-.scrollbarContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: auto;
-  margin-left: 0;
-  margin-right: 0;
-  overflow-x: visible; /* 필요시 가로 스크롤을 표시 */
+
+@media only screen and (max-height: 760px) {
+  .chat {
+    grid-row: 2 / span 6;
+    /* 더 위로 배치 */
+  }
+
+  .suggestContainer {
+    grid-row: 8 / span 2;
+    /* 더 위로 배치 */
+    margin-top: 0rem;
+    padding-bottom: 5rem;
+    margin-right: 3rem;
+  }
+
+  .promptWrap {
+    grid-row: 10 / span 1;
+    /* promptWrap을 더 아래로 배치 */
+    margin-top: 0rem;
+    padding: none;
+    margin-bottom: 0.8rem;
+  }
 }
+
 .suggest {
-  position: relative;
+  grid-row: 2 / 2 span;
   display: flex;
-  flex-direction: row;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  /* 아이템이 넘칠 경우 줄바꿈 */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0rem 0.5rem;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }
+
 
 /* 추천 질문 내의 각 항목 */
 .textBox {
-  margin-left: 0px;
-  margin-right: 10px;
-  font-weight: 550;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #9f132e;
-  width: 140px;
+  border: 0.14rem solid rgba(222, 58, 88, 1);
   height: 20px;
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  padding-left: 23px;
-  padding-right: 18px;
-  padding-top: 4px;
-  padding-bottom: 4px;
   text-align: center;
+  margin-top: 0.3rem;
+  /* 순서대로 padding-top, padding-right, padding-bottom, padding-left */
+  padding: 0.6rem 2rem 0.4rem 2rem;
+  /* 줄바꿈을 방지 */
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .textBox {
+    display: flex;
+    border: 0.1rem solid rgba(222, 58, 88, 1);
+    height: 3.3rem;
+    /* 높이 줄이기 */
+    border-radius: 16px;
+    /* 경계 반경 줄이기 */
+    font-size: 1.3rem;
+    /* 폰트 크기 줄이기 */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 0.2rem;
+    /* 여백 줄이기 */
+    padding: 0rem 1rem 0rem 1rem;
+    /* 패딩 줄이기 */
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+    overflow-x: auto;
+    align-items: center;
+  }
 }
 
 .textBox:hover {
@@ -261,44 +454,83 @@
 }
 
 #ref {
+  grid-row: 1 / 1 span;
+  justify-self: end;
+  align-self: end;
   font-weight: 700;
-  color: #9f132e;
-  font-size: 13px;
+  color: rgba(222, 58, 88, 1);
+  font-size: 2rem;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .promptWrap {
+  overflow: visible;
+  grid-column: 1 / span 6;
+  grid-row: 9 / span 2;
+  justify-self: center;
+  align-self: center;
   display: flex;
-  width: calc(100% - 100px);
-  height: 60px;
-  border: 1px solid #9f132e;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  margin-top: 0px;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  border: 0.14rem solid rgba(222, 58, 88, 1);
+  border-radius: 60px;
+  width: 85%;
+  height: 40%;
 }
+
 .prompt {
   overflow-y: scroll;
-  position: relative;
-  top: 0px;
-  left: 0px;
-  box-sizing: border-box;
-  width: calc(100% - 40px);
-  line-height: 15px;
-  max-height: 30px;
+  align-self: center;
+  flex: 1;
   border: none;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-left: 2.7rem;
   resize: none;
-  padding-top: 10px;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 1.7rem;
+  font-weight: 500;
+  height: 40%;
+  -ms-overflow-style: none;
+  /* 인터넷 익스플로러 */
+  scrollbar-width: none;
+  /* 파이어폭스 */
+}
+
+@media only screen and (max-width: 767px) {
+  .promptWrap {
+    grid-column: 1 / span 6;
+    grid-row: 10 / span 1;
+    margin-top: 4rem;
+    height: 45%;
+  }
+
+  .prompt {
+    font-size: 1.5rem;
+  }
+
+  .sendBtn {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #9f132e, #de3a58);
+    width: 2.7rem !important;
+    height: 2.7rem !important;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0.6rem !important;
+    box-sizing: border-box;
+  }
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
 
 /* 스크롤바의 전체 너비를 설정 */
 ::-webkit-scrollbar {
-  width: 10px; /* 세로 스크롤바의 너비 */
-  height: 12px; /* 가로 스크롤바의 높이 */
+  width: 1rem;
+  /* 세로 스크롤바의 너비 */
+  height: 0.5rem;
+  /* 가로 스크롤바의 높이 */
 }
 
 /* 스크롤바 트랙 */
@@ -310,7 +542,8 @@
 ::-webkit-scrollbar-thumb {
   background: #d7d7d7;
   border-radius: 10px;
-  border: 2px solid #f1f1f1; /* 핸들에 테두리를 추가하여 더 세련된 효과 */
+  border: 2px solid #f1f1f1;
+  /* 핸들에 테두리를 추가하여 더 세련된 효과 */
 }
 
 /* 스크롤바 핸들 (호버 상태) */
@@ -326,6 +559,7 @@
   outline: none;
   outline: none;
 }
+
 .prompt:disabled {
   background-color: #fff;
   color: #747474;
@@ -335,27 +569,13 @@
 
 .sendBtn {
   cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 65px;
-  right: 10px;
-  background-image: linear-gradient(to right, #9f132e, #de3a58);
-  width: 50px;
-  height: 25px;
-  border-radius: 20px;
+  background: linear-gradient(to bottom, #9f132e, #de3a58);
+  width: 3.7rem;
+  height: 3.7rem;
+  border-radius: 50%;
   cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 30px;
-  right: 10px;
-  background-image: linear-gradient(to right, #9f132e, #de3a58);
-  width: 50px;
-  height: 25px;
-  border-radius: 20px;
+  padding: 0.8rem;
+  box-sizing: border-box;
 }
 
 .disabled {

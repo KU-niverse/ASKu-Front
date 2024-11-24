@@ -3,14 +3,51 @@
 }
 .quesul {
   cursor: pointer;
+  margin-top: 2.4rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid #d5d5d5;
+
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  align-items: center;
 }
 .noneComment {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   color: rgba(116, 116, 116, 1);
+  text-align: center;
+  margin-top: 1rem;
 }
+.noQuestion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.askWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5.5rem;
+  margin-bottom: 1rem;
+}
+
+.askIcon {
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-left: 0.2rem;
+}
+
+.askText {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: rgba(222, 58, 88, 1);
+}
+
 .newComment {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   color: rgba(116, 116, 116, 1);
   cursor: pointer;
@@ -19,187 +56,290 @@
 .newComment:hover {
   color: rgba(116, 116, 116, 0.8);
 }
+
+.wikiviewercontainer {
+  display: flex;
+  justify-content: center;
+}
+
 .wikiviewer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 5rem;
   width: 74%;
-  margin-left: 13%;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 }
 
 .wikititle {
   width: 100%;
-  height: 80px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border: 0.1rem solid #d5d5d5;
   border-radius: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 3.1rem;
+  padding: 2.9rem 5rem;
+  box-sizing: border-box;
 }
 .wikititle h1 {
-  font-size: 25px;
-  margin-left: 20px;
+  font-size: 3.6rem;
+  margin: 0;
   display: flex;
   align-items: center;
   flex-direction: row;
   word-break: break-word;
 }
 .bookmarkImg {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 1.5rem;
+
   cursor: pointer;
-  width: 20px;
+  width: 2.151rem;
+  height: 3rem;
 }
 .wikititleBtn {
   display: flex;
-  margin-right: 95px;
-  gap: 5px;
-  margin-right: 20px;
-}
-.wikititleBtn button {
-  width: auto;
-  height: 36px;
-  border-radius: 30px;
-  border: 2px solid rgba(159, 19, 46, 1);
-  background-color: white;
-  color: rgba(159, 19, 46, 1);
-  cursor: pointer;
-  display: flex;
-  /* flex-direction: row; */
+  gap: 1.5rem;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center; 
-  padding: 0 15px; 
-  box-sizing: border-box;
-  font-size: 14px; 
-  font-weight: 500;
 }
-.wikititleBtn img {
-  margin-right: 2px; 
-  width: 16px; 
-  height: 16px; 
+.wikititleLeftBtns {
+  display: flex;
+  gap: 1rem;
 }
-.wikititleBtnThree{
+.wikititleBtnContent {
+  padding: 0 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(159, 19, 46, 1);
+}
+.wikititleLeftBtns button {
   width: auto;
-  position: relative;
+  height: 3.6rem;
   border-radius: 30px;
+  border: 0.2rem solid transparent;
+  background-image: linear-gradient(#fff, #fff), linear-gradient(165.15deg, #9f132e 9.61%, #de3a58 90.96%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wikititleBtnOne img {
+  margin-right: 0.1rem;
+  width: 2.1rem;
+  height: 2.1rem;
+}
+.wikititleBtnTwo img {
+  margin-right: 0.2rem;
+  width: 1.3rem;
+  height: 1.6rem;
+}
+.wikititleBtnThree {
+  cursor: pointer;
+  border: none !important;
+  position: relative;
+  border-radius: 100%;
   background: linear-gradient(-90deg, #9f132e 31.77%, #de3a58);
-  height: 36px;
+  box-shadow: 0px 1px 7px 0px #f3b0bc;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white !important;
-  padding: 0 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 0;
 }
 .wikititleBtnThree img {
-  margin-left: 3px; 
-  width: 16px; 
-  height: 16px; 
+  width: 1.5rem;
+  height: 2rem;
+  margin-left: 0.5rem;
 }
 .wikiBoxLists {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  column-gap: 2.4rem;
+  position: relative;
+  padding-bottom: 5.6rem;
+}
+.wikiBoxLists::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.4rem; /* border-bottom의 두께 */
+  background: linear-gradient(165.15deg, #9f132e 9.61%, #de3a58 90.96%);
 }
 .wikilist {
-  width: 28%;
-  min-height: 303px;
+  width: 33%;
+  max-height: 32.4rem;
+  overflow: hidden;
   height: auto;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #d5d5d5;
   border-radius: 12px;
-  margin-bottom: 20px;
-  padding: 18px;
-  padding-top: 23px;
+  padding: 1.9rem 2.3rem;
   box-sizing: border-box;
+  position: relative;
+  transition: max-height 0.3s ease;
+}
+
+.wikilistContainer {
+  position: relative;
+  width: 100%;
+  padding-right: 10px;
+}
+.wikilist.expanded {
+  max-height: none;
+  padding-bottom: 30px;
+}
+
+.tocExpandedButtonContainer {
+  width: 100%;
+  background-color: black;
+}
+
+.tocExpandedButton {
+  width: 93%;
+  display: flex;
+  justify-content: flex-end;
+
+  font-weight: 700;
+  background-color: white;
+  color: rgba(222, 58, 88, 1);
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  padding-top: 0px;
+  padding-bottom: 15px;
+  bottom: 0px;
+}
+
+.tocexpandedButtonText {
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  text-decoration: underline;
+}
+
+.tocexpandedButtonIcon {
+  width: 2.4rem;
+  height: 2.4rem;
 }
 .wikilist li {
   cursor: pointer;
-  margin-bottom: 7px;
-  font-size: 14px;
+  margin-bottom: 0.7rem;
 }
-.wikiIndex {
-  color: rgba(222, 58, 88, 1);
+
+.wikilistBigItem {
+  font-weight: 600;
+  font-size: 2rem;
+}
+.wikilistSmallItem {
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+.wikiBigIndex {
+  font-weight: 600;
+  color: #de3a58;
+  font-size: 2rem;
+}
+.wikiSmallIndex {
+  font-weight: 500;
+  color: #de3a58cc;
+  font-size: 1.6rem;
 }
 .wikilistTitle {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-}
-
-h2 {
-  margin: 0px;
-  font-size: 18px;
+  margin-left: 1.7rem;
+  font-size: 3.2rem;
   font-weight: 700;
+  margin-bottom: 2.2rem;
 }
 
 .wikilistTitle button {
-  width: 70px;
-  height: 27px;
+  width: 9.8rem;
+  height: 3.6rem;
   border-radius: 30px;
   background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
-  font-size: 11px;
+  font-size: 1.4rem;
+  font-weight: 700;
   border: none;
   color: white;
   cursor: pointer;
-  margin-bottom: 20px;
 }
 .wikiask {
-  width: 28%;
-  height: 303px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 32.4rem;
+  border: 1px solid #d5d5d5;
   border-radius: 12px;
-  margin-bottom: 20px;
-  padding: 18px;
-  padding-top: 23px;
+  padding: 1.9rem 2.3rem;
   box-sizing: border-box;
-  position: relative;
 }
+
 .wikiaskTitle {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-left: 1.7rem;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 1.3rem;
 }
 
 .wikiaskTitle h2 {
   margin: 0px;
 }
 .wikiaskFoot {
-  width: 90%;
-  position: absolute;
-  bottom: 25px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 .addQues {
-  font-size: 12px;
-  font-weight: 700;
-  color: rgba(159, 19, 46, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(222, 58, 88, 1);
   background-color: white;
   border: none;
   cursor: pointer;
+  text-decoration: underline;
+  margin-bottom: 0.3rem;
 }
+.addQues:visited {
+  color: rgba(222, 58, 88, 1);
+  text-decoration: none;
+}
+.addQuesLink {
+  margin-top: 3px;
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 텍스트 색상을 상속 */
+}
+
 .moreQues {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(116, 116, 116, 1);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(222, 58, 88);
   background-color: white;
   border: none;
   cursor: pointer;
+  text-decoration: underline;
 }
 .customHr {
   margin: 0;
@@ -210,138 +350,148 @@ h2 {
   margin: 0;
   padding: 0;
 }
-.quesWrap ul {
-  padding: 3px 0px 3px 0px;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0px 5px 0px;
-  font-size: 14px;
-  align-items: center;
+.queslist {
+  width: 100%;
 }
 .quesTitle {
-  width: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: black;
-  font-size: 14px;
+  font-size: 1.6rem;
   font-weight: 700;
+  margin-right: 1.5rem;
 }
 .quesNum {
-  font-size: 14px;
+  font-size: 1.6rem;
   font-weight: 700;
   color: rgba(116, 116, 116, 1);
   display: flex;
   align-items: center;
 }
 .quesNum img {
-  margin-left: 10px;
+  margin-left: 1rem;
   cursor: pointer;
-  width: 18px;
-  height: 17px;
+  width: 1.8rem;
+  height: 1.7rem;
   object-fit: contain;
 }
 
+.quesNum span {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
 .wikigraph {
-  width: 38%;
-  height: 303px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+  width: 33%;
+  height: 32.4rem;
+  border: 1px solid #d9d9d9;
   border-radius: 12px;
-  margin-bottom: 20px;
-  padding: 18px;
-  padding-top: 23px;
+  padding: 1.9rem;
   box-sizing: border-box;
+}
+.wikigraphTitle {
+  margin-left: 2.1rem;
+  margin-bottom: 2.4rem;
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+.wikigraphContent {
+  height: 21rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .wikicontent {
   width: 100%;
   height: auto;
   min-height: 500px;
-  border: 1px solid rgba(213, 213, 213, 1);
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
-  margin-bottom: 20px;
-  padding: 18px;
-  padding-top: 23px;
+  margin-bottom: 2rem;
+  padding-top: 3rem;
   box-sizing: border-box;
 }
 li {
   list-style-type: none;
 }
+
+.moreIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.moreIndicator span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: #999;
+}
+
+/* 해당 width에서는 목차, 질문, 문서별 기여도를 세로로 정렬 */
 @media (min-width: 768px) and (max-width: 1023px) {
   .wikiBoxLists {
-    display: block;
+    flex-direction: column;
+    gap: 2.7rem;
   }
-  .wikilist {
-    width: 229px;
-  }
-  .wikiask {
-    display: block;
-    width: 350px;
-  }
+  .wikilist,
+  .wikiask,
   .wikigraph {
-    display: block;
-    width: 350px;
+    width: 100%;
   }
 }
 
+/* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
   .wikiviewer {
     width: 90%;
-    margin: 5%;
+  }
+  .wikilist,
+  .wikiask,
+  .wikigraph {
+    width: 100%;
   }
   .wikiBoxLists {
-    display: block;
-  }
-  .wikilist {
-    width: 80%;
-  }
-  .wikiask {
-    display: block;
-    width: 100%;
-  }
-  .wikigraph {
-    display: block;
-    width: 100%;
-  }
-  .wikititle h1 {
-    font-size: 18px;
-  }
-  .wikititleBtn {
-    width: 145px;
     display: flex;
     flex-direction: column;
-    align-items: right;
-    margin-left: 2px;
-    gap: 1px;
+    gap: 2.7rem;
   }
-  .wikititleBtnOne {
-    display: block;
-    margin-bottom: 4px;
+  .wikititle {
+    flex-wrap: wrap;
+    padding: 2.9rem 2.3rem;
+    gap: 2rem;
   }
-  .wikititleBtnTwo {
-    margin-top: 1px;
-    margin-bottom: 2px;
-}
-  .wikititleBtnThree {
-    position: absolute;
-    right: 30px;
-    margin-top: 17px;
-    min-width: 70px; /* 최소 너비 설정 */
-    white-space: nowrap; /* 줄바꿈 방지 */
+  .wikimaintitle {
+    width: 100%;
   }
-  .wikititleBtn img {
-    width: 16px;
-    height: 10px;
-    object-fit: contain;
+  .wikititleBtn {
+    flex-grow: 1;
   }
-  .wikititleBtn button {
-    width: 69px;
-    height: 25px;
-    font-size: 9px;
-    padding: 6px;
+  .wikilistTitle button {
+    font-size: 1.6rem;
+    width: 11.6rem;
+    height: 4.3rem;
+    margin-right: 0;
   }
-  .wikimaintitle{
-    max-width: 150px;
+  .wikilistBigItem,
+  .wikiBigIndex {
+    font-size: 2.4rem;
+  }
+  .wikilistSmallItem,
+  .wikiSmallIndex {
+    font-size: 2rem;
+  }
+  .tocExpandedButton {
+    width: 97%;
+  }
+  .tocexpandedButtonText,
+  .addQues,
+  .moreQues {
+    font-size: 1.6rem;
+  }
+  .quesTitle,
+  .quesNum span {
+    font-size: 1.9rem;
   }
 }

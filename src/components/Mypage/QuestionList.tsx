@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import styles from './QuestionList.module.css'
 import comment_icon from '../../img/comment_icon.png'
-import nocomment_icon from '../../img/nocomment_icon.png'
+// import nocomment_icon from '../../img/nocomment_icon.png'
 
 interface QuestionListProps {
   id: number
@@ -68,18 +68,18 @@ function QuestionList({
       <div role={'presentation'} onClick={linktoAnswer} className={styles.comment_icon}>
         {answer_count === 0 ? ( // answer_count가 0일 때
           <>
+            <span className={styles.comment_num}>{answer_count}</span>
             <img
               className={styles.comment_png}
-              src={nocomment_icon} // nocomment_icon을 보여줌
-              alt={'nocomment_icon'}
+              src={comment_icon} // nocomment_icon을 보여줌
+              alt={'comment_icon'}
             />
-            <span className={styles.comment_num}>{answer_count}</span>
           </>
         ) : (
           // answer_count가 0이 아닐 때
           <>
-            <img className={styles.comment_png} src={comment_icon} alt={'comment_icon'} />
             <span className={styles.comment_num}>{answer_count}</span>
+            <img className={styles.comment_png} src={comment_icon} alt={'comment_icon'} />
           </>
         )}{' '}
       </div>

@@ -3,8 +3,8 @@ import { useMutation, useQuery } from 'react-query'
 import axios, { AxiosError } from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { track } from '@amplitude/analytics-browser'
-import submit from '../../img/submit.png'
 import styles from './DebateInput.module.css'
+import submit from '../../img/send.png'
 
 interface DebateInputProps {
   onDebateSubmit: (submitData: { content: string }) => Promise<void>
@@ -24,7 +24,7 @@ function useCheckLoginStatus() {
   return useQuery<UserAuthResponse, AxiosError>(
     'loginStatus',
     async () => {
-      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
         withCredentials: true,
       })
       return res.data
@@ -52,8 +52,6 @@ function useSubmitDebate(title: string, debateId: number) {
     {
       onSuccess: () => {
         alert('의견이 성공적으로 등록되었습니다.')
-        // 성공적으로 의견을 등록한 후에 필요한 동작을 수행합니다.
-        // 예: 입력 필드 초기화, 페이지 새로고침 등
       },
       onError: (error: AxiosError) => {
         console.error('의견 등록 에러:', error)
@@ -87,11 +85,6 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   }
 
   const handleSubmit = async () => {
-    if (!loginStatusData?.success) {
-      alert('로그인이 필요한 서비스입니다.')
-      navigate('/signin')
-      return
-    }
     if (debateContent.trim() === '') {
       alert('글을 입력해주세요.')
       return
@@ -123,17 +116,7 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
-        <span>{'의견 달기'}</span>
-        <img
-          role={'presentation'}
-          src={submit}
-          alt={'submit'}
-          onClick={handleSubmit}
-          style={{ cursor: isSubmitting ? 'wait' : 'pointer' }} // 롤백 중 커서 변경
-        />
-      </div>
+    <div className={debateContent ? styles.container_red : styles.container_grey}>
       <div className={styles.textbox}>
         <textarea
           rows={4}
@@ -142,6 +125,14 @@ function DebateInput({ onDebateSubmit, title, debateId }: DebateInputProps) {
           value={debateContent}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+        />
+        <img
+          className={debateContent ? styles.sendBtn_red : styles.sendBtn_grey}
+          role={'presentation'}
+          src={submit}
+          alt={'submit'}
+          onClick={handleSubmit}
+          style={{ cursor: isSubmitting ? 'wait' : 'pointer' }} // 롤백 중 커서 변경
         />
       </div>
     </div>

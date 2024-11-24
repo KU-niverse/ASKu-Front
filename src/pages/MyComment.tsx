@@ -6,6 +6,8 @@ import Header from '../components/Header'
 import Comment from '../components/Comment'
 import Footer from '../components/Footer'
 import SpinnerMypage from '../components/SpinnerMypage'
+import emptyDebate from '../img/emptyQuestion.svg'
+import Paging from '../components/Paging'
 
 interface UserInfo {
   id: number
@@ -14,7 +16,6 @@ interface UserInfo {
   stu_id: string
   email: string
   rep_badge_id: number
-  nickname: string
   created_at: Date
   point: number
   is_admin: boolean
@@ -52,7 +53,6 @@ interface MyInfoData {
   stu_id: string
   email: string
   rep_badge_id: number
-  nickname: string
   created_at: Date
   point: number
   is_admin: boolean
@@ -66,6 +66,10 @@ interface MyInfoData {
 const MyComment = () => {
   const [isToggled, setIsToggled] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
+  const perPage = 10
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
 
   const fetchMyDebate = async (): Promise<MyDebateProps> => {
     const res = await axios.get(`${process.env.REACT_APP_HOST}/user/mypage/debatehistory`, {
@@ -93,42 +97,52 @@ const MyComment = () => {
   if (debateError || mypageError) {
     return <div>{'Error loading data'}</div>
   }
-
   return (
     <div className={styles.container}>
-      <div>
-        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      </div>
+      {loadingMyDebate || loadingMypage ? null : <Header userInfo={userInfo} setUserInfo={setUserInfo} />}
       <div className={styles.content}>
         <div className={styles.header}>
-          <p className={styles.comment}>{'내가 쓴 토론'}</p>
+          <p className={styles.comment}>{'내가 참여한 토론'}</p>
+          <p className={styles.debate_num}>
+            {'('}
+            {myDebate.message.length}
+            {')'}
+          </p>
           <div className={styles.switch}>
             {/* <Switch isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)}/> */}
           </div>
         </div>
         {mypageData && myDebate && myDebate.message && myDebate.message.length === 0 ? (
-          <p>{'아직 작성한 토론이 없습니다.'}</p>
+          <>
+            <img src={emptyDebate} alt={'empty_Debate'} className={styles.emptyDebate} />
+            <p className={styles.emptyDebateText}>
+              {'아직 작성된'}
+              <br />
+              {'토론이 없습니다'}
+            </p>
+          </>
         ) : (
           mypageData &&
           myDebate &&
           myDebate.message &&
-          myDebate.message.map((debate: MyDebateMessage) => (
+          myDebate.message.slice(startIndex, endIndex).map((debate: MyDebateMessage, index) => (
             <Comment
-              key={debate.debate_id}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${debate.debate_id}-${index}`}
               id={debate.debate_id}
               subject={debate.debate_subject}
               content={debate.debate_content}
               created_at={new Date(debate.debate_content_time)}
               is_bad={debate.is_bad}
               docsname={debate.doc_title}
-              nick={mypageData.data[0].nickname}
             />
           ))
         )}
+        <div style={{ marginTop: '5.5rem' }}>
+          <Paging total={myDebate.message.length} perPage={perPage} activePage={page} onChange={setPage} />
+        </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      {loadingMyDebate || loadingMypage ? null : <Footer />}
     </div>
   )
 }

@@ -1,26 +1,36 @@
+.switchContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 .hidden {
   display: none;
 }
+
 .toggleText1 {
   position: absolute;
-  font-size: 11px;
+  font-size: 1.4rem;
   color: white;
-  left: 10px;
-  top: 8px;
+  left: 1.5rem;
+  top: 1rem;
+  font-weight: 700;
 }
+
 .toggleText2 {
   position: absolute;
-  font-size: 11px;
+  font-size: 1.4rem;
   color: white;
-  right: 10px;
-  top: 8px;
+  right: 1.5rem;
+  top: 1rem;
+  font-weight: 700;
 }
+
 .switch {
   position: relative;
   display: inline-block;
   justify-content: center;
-  width: 70px;
-  height: 27px;
+  width: 9.8rem;
+  height: 3.7rem;
 }
 
 .switch input {
@@ -38,29 +48,69 @@
   right: 0;
   bottom: 0;
 
-  background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+  background: linear-gradient(to right, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
   transition: 0.3s;
 }
 
 .slider:before {
   position: absolute;
   content: '';
-  height: 22px;
-  width: 22px;
-  bottom: 2.5px;
+  height: 2.8rem;
+  width: 2.8rem;
+  bottom: 0.46rem;
   background-color: white;
   transition: 0.3s;
 }
+
 input:checked + .slider {
   background-color: aqua;
 }
+
 input:checked + .slider:before {
-  transform: translateX(41.5px);
+  transform: translateX(6rem);
 }
+
 .slider.rounded {
   border-radius: 34px;
 }
+
 .slider.rounded:before {
   border-radius: 50%;
-  left: 4px;
+  left: 0.5rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .switch {
+    width: 9rem;
+    height: 3.5rem;
+  }
+
+  .slider:before {
+    height: 2.7rem;
+    width: 2.7rem;
+    transform: translateX(-10%);
+    /* 왼쪽으로 50% 이동하여 정확히 가운데 위치 */
+  }
+
+  input:checked + .slider:before {
+    /*토글 움직인 위치 조정*/
+    transform: translateX(5.2rem);
+  }
+
+  .toggleText1 {
+    position: absolute;
+    font-size: 1.2rem;
+    color: white;
+    transform: translateX(-10%);
+    left: 2rem;
+    top: 1rem;
+  }
+
+  .toggleText2 {
+    position: absolute;
+    font-size: 1.2rem;
+    color: white;
+    transform: translateX(-10%);
+    top: 1rem;
+  }
 }

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
+
 import { useQuery } from 'react-query'
 import { track } from '@amplitude/analytics-browser'
 import Header from '../components/Header'
 import search from '../img/SearchResult.svg'
 import styles from './SearchResult.module.css'
-import ResultBox from '../components/ResultBox'
-import Question from '../components/Question'
 import ResultQues from '../components/ResultQues'
 import FormatTimeAgo from '../components/FormatTimeAgo'
-import BookmarkBox from '../components/BookmarkBox'
+import SearchResultBox from '../components/SearchResultBox'
+import Paging from '../components/Paging'
 import Footer from '../components/Footer'
+import CautionIcon from '../img/DebateCautionIcon.svg'
 
 interface UserInfo {
   id: number
@@ -32,6 +32,19 @@ interface UserInfo {
   rep_badge_image: string
 }
 
+interface RecentItem {
+  created_at: Date
+  diff: number
+  doc_id: number
+  id: number
+  is_rollback: boolean
+  summary: string
+  user: { nickname: string }
+  user_id: number
+  version: number
+  wiki_doc: { title: string }
+}
+
 interface UserAuthResponse {
   success: boolean
 }
@@ -40,7 +53,7 @@ const fetchDocs = async (title: string) => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/query/${title}`, {
     withCredentials: true,
   })
-  return result.data.message
+  return result.data.data
 }
 
 const fetchQues = async (title: string) => {
@@ -50,16 +63,16 @@ const fetchQues = async (title: string) => {
   return result.data.data
 }
 
-const fetchHistory = async (type: string) => {
+const fetchHistory = async (type: string): Promise<RecentItem[]> => {
   const result = await axios.get(`${process.env.REACT_APP_HOST}/wiki/historys?type=${type}`)
-  return result.data.message
+  return result.data.data.message
 }
 
 function useCheckLoginStatus() {
   return useQuery<UserAuthResponse, AxiosError>(
     'loginStatus',
     async () => {
-      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/user/auth/issignedin`, {
+      const res = await axios.get<UserAuthResponse>(`${process.env.REACT_APP_HOST}/auth/issignedin`, {
         withCredentials: true,
       })
       return res.data
@@ -80,6 +93,13 @@ const SearchResearch = () => {
   const [type, setType] = useState('all')
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const { data: loginStatusData } = useCheckLoginStatus()
+  const [page, setPage] = useState<number>(1)
+  const perPage = 7
+  const startIndex = (page - 1) * perPage
+  const endIndex = page * perPage
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber)
+  }
 
   const {
     data: docs = [],
@@ -153,16 +173,17 @@ const SearchResearch = () => {
   }
 
   return (
-    <div>
+    <div className={styles.SearchResultContainer}>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.results}>
         <div className={styles.header}>
           <img alt={'검색 결과'} src={search} />
-          <h4>
+          <h4 className={styles.searchText}>
             {'"'}
             {title}
-            {'" 검색결과'}
+            {'" '}
           </h4>
+          <h4 dangerouslySetInnerHTML={{ __html: '&nbsp;검색 결과' }} />
         </div>
         <div className={styles.typeWrap}>
           <p className={styles.type}>
@@ -175,76 +196,85 @@ const SearchResearch = () => {
               <div className={isClicked ? styles.numberGray : styles.numberRed}>{ques.length}</div>
             </button>
           </p>
-          <p className={styles.title}>{'최근 변경'}</p>
         </div>
-        <div className={styles.contents}>
-          <div className={styles.boxes}>
-            <div className={isClicked ? '' : styles.hidden}>
-              {docs.map((item: any, index: number) => (
-                <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
-                  <BookmarkBox
-                    title={item.title}
-                    content={item.recent_filtered_content}
-                    is_favorite={item.is_favorite}
-                    result
-                  />
-                </div>
-              ))}
-              <div className={styles.linkToNew}>
-                <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
-                  {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
-                </button>
+        <div className={styles.boxes}>
+          <div className={isClicked ? '' : styles.hidden}>
+            {docs.slice(startIndex, endIndex).map((item: any, index: number) => (
+              <div role={'presentation'} key={item.title} onClick={() => handleDocsClick(item.title, index)}>
+                <SearchResultBox
+                  title={item.title}
+                  content={item.recent_filtered_content}
+                  is_favorite={item.is_favorite}
+                  result
+                  version={item.latest_ver}
+                />
               </div>
+            ))}
+            <div className={docs.length === 0 ? styles.cautionContainer : styles.hidden}>
+              <img src={CautionIcon} alt={'cautionIcon'} className={styles.cautionIcon} />
+              <p>{'검색결과가 없습니다.'}</p>
+              <p>{'다른 검색어를 입력해주세요.'}</p>
             </div>
-            <div className={isClicked ? styles.hidden : ''}>
-              {ques.map((item: any, index: number) => (
-                <div className={styles.queboxes} key={item.id}>
-                  <ResultQues
-                    index={index}
-                    key={item.id}
-                    id={item.id}
-                    doc_id={item.doc_id}
-                    user_id={item.user_id}
-                    index_title={item.index_title}
-                    content={item.content}
-                    created_at={item.created_at}
-                    answer_count={item.answer_count}
-                    is_bad={item.is_bad}
-                    nick={item.nickname}
-                    like_count={item.like_count}
-                    title={item.title}
-                  />
-                </div>
-              ))}
+            <div className={docs.length === 0 ? styles.hidden : styles.pagingContainer}>
+              <Paging total={docs.length} perPage={perPage} activePage={page} onChange={handlePageChange} />
+            </div>
+            <div className={styles.linkToNew}>
+              <button type={'button'} className={styles.link} onClick={handleNewwikiClick}>
+                {'원하시는 문서가 없으신가요? 새로운 문서를 생성해보세요\r'}
+              </button>
             </div>
           </div>
-          <div className={styles.recents}>
-            <div className={styles.recentWrap}>
-              {historys.slice(0, 8).map((item: any, index: number) => {
-                const timestamp = FormatTimeAgo(item.created_at)
-                return (
-                  <ul key={item.title}>
-                    <Link
-                      to={`/wiki/${encodeURIComponent(item.doc_title)}`}
-                      className={styles.linkTo}
-                      onClick={() => {
-                        track('click_recent_edit_wiki_in_search_result', {
-                          title: item.title,
-                          index,
-                        })
-                      }}
-                    >
-                      <span className={styles.listTitle}>{item.doc_title}</span>
-                    </Link>
-                    <span className={styles.listTimestamp}>{timestamp}</span>
-                  </ul>
-                )
-              })}
-            </div>
+          <div className={isClicked ? styles.hidden : ''}>
+            {ques.map((item: any, index: number) => (
+              <div className={styles.queboxes} key={item.id}>
+                <ResultQues
+                  index={index}
+                  key={item.id}
+                  id={item.id}
+                  doc_id={item.doc_id}
+                  user_id={item.user_id}
+                  index_title={item.index_title}
+                  content={item.content}
+                  created_at={item.created_at}
+                  answer_count={item.answer_count}
+                  is_bad={item.is_bad}
+                  nick={item.nickname}
+                  like_count={item.like_count}
+                  title={item.title}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.recents}>
+          <p className={styles.recentTitle}>{'최근 변경'}</p>
+          <div className={styles.recentWrap}>
+            {historys.slice(0, 8).map((item: any, index: number) => {
+              const timestamp = FormatTimeAgo(item.created_at)
+              return (
+                <ul key={item.wiki_doc.title}>
+                  <Link
+                    to={`/wiki/${encodeURIComponent(item.wiki_doc.title)}`}
+                    className={styles.linkTo}
+                    onClick={() => {
+                      track('click_recent_edit_wiki_in_search_result', {
+                        title: item.wiki_doc.title,
+                        index,
+                      })
+                    }}
+                  >
+                    <span className={styles.listTitle}>{item.wiki_doc.title}</span>
+                  </Link>
+                  <span className={styles.listTimestamp}>{timestamp}</span>
+                </ul>
+              )
+            })}
           </div>
         </div>
       </div>
-      <Footer />
+      <div className={styles.footerContainer}>
+        <Footer />
+      </div>
     </div>
   )
 }
