@@ -16,7 +16,7 @@ function UnlikeModal({ isOpen, onClose, qnaId }: UnlikeModalProps) {
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const queryClient = useQueryClient()
-  const [feedbackId, setFeedbackId] = useState('')
+  const [feedbackId, setFeedbackId] = useState<number>()
 
   const sendUnLikeFeedback = async () => {
     const response = await axios.post(
@@ -54,7 +54,7 @@ function UnlikeModal({ isOpen, onClose, qnaId }: UnlikeModalProps) {
 
   const sendUnLikeCommentFeedback = async (comment: string) => {
     const response = await axios.post(
-      `${process.env.REACT_APP_AI}/chatbot/feedback/comment/`,
+      `${process.env.REACT_APP_AI}/chatbot/feedback/comment`,
       {
         feedback_id: feedbackId,
         content: comment,
