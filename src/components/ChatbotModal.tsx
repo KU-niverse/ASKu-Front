@@ -121,19 +121,29 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
     onError: () => {
       setIsLoggedIn(false)
     },
+    refetchInterval: 5000, // 5초마다 fetch
     enabled: Boolean(isLoggedIn), // Only fetch user info if logged in
   })
 
   const fetchPreviousChatHistory = async (userId: number) => {
-    const response = await axios.get(`${process.env.REACT_APP_AI}/chatbot/${userId}`)
-    return response.data
+    const url = `${process.env.REACT_APP_AI}/chatbot/${userId}`
+    // console.log('Fetching chat history from:', url)
+    try {
+      const response = await axios.get(url, { withCredentials: true })
+      return response.data // 여기서 데이터를 반환
+    } catch (error) {
+      console.error('Error in fetchPreviousChatHistory:', error)
+      throw error // 에러를 던져 useQuery에서 처리
+    }
   }
 
   const { data: previousHistory, refetch: refetchPreviousChatHistory } = useQuery(
     ['chatHistory', user?.id],
-    () => fetchPreviousChatHistory(user!.id),
+    () => fetchPreviousChatHistory(userInfo?.data.id),
     {
-      enabled: !!user, // Only fetch chat history if userId is available
+      enabled: Boolean(user), // user가 정의된 경우 fetch
+      refetchInterval: 5000, // 5초마다 fetch
+      refetchIntervalInBackground: true, // 백그라운드에서도 fetch
       onSuccess: (data) => {
         setPreviousChatHistory(data)
       },
@@ -169,7 +179,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
       if (user) {
         const response = await axios.post(`${process.env.REACT_APP_AI}/chatbot/`, {
           q_content: inputValue,
-          user_id: user.id,
+          user_id: userInfo.data.id,
         })
         return response.data
       }

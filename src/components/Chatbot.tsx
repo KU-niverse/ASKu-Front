@@ -125,7 +125,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
 
   const fetchPreviousChatHistory = async (userId: number) => {
     const url = `${process.env.REACT_APP_AI}/chatbot/${userId}`
-    console.log('Fetching chat history from:', url)
+    // console.log('Fetching chat history from:', url)
     try {
       const response = await axios.get(url, { withCredentials: true })
       return response.data // 여기서 데이터를 반환
