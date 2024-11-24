@@ -402,6 +402,7 @@
   box-sizing: border-box;
 }
 
+
 /* 추천 질문 내의 각 항목 */
 .textBox {
   border: 0.14rem solid rgba(222, 58, 88, 1);
@@ -420,6 +421,7 @@
   white-space: nowrap;
   overflow-x: auto;
 }
+
 
 @media only screen and (max-width: 767px) {
   .textBox {
