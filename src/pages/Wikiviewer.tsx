@@ -246,7 +246,7 @@ function WikiViewer() {
     }
   }, [wikiData])
 
-  useEffect(() => { }, [isBookmark])
+  useEffect(() => {}, [isBookmark])
   useEffect(() => {
     if (quesData) {
       setQues(quesData.data)
