@@ -10,11 +10,12 @@ import EditModal from './EditModal'
 import ReportModal from './ReportModal'
 
 interface ThreedotsMenuProps {
+  encodedTitle: string
   questionId: number
   type: number
 }
 
-function ThreedotsMenu({ questionId, type }: ThreedotsMenuProps) {
+function ThreedotsMenu({ encodedTitle, questionId, type }: ThreedotsMenuProps) {
   const [isEditModalVisible, setEditModalVisible] = useState(false)
   const closeEditModal = () => {
     setEditModalVisible(false)
@@ -58,7 +59,7 @@ function ThreedotsMenu({ questionId, type }: ThreedotsMenuProps) {
       })
       if (response.status === 200) {
         alert(response.data.message)
-        window.location.reload()
+        Navigate(`/wiki/morequestion/${encodedTitle}`)
       }
     } catch (error) {
       console.error(error)
