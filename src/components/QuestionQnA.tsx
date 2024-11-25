@@ -45,8 +45,8 @@ function QuestionQnA({
   const type = 2
   const nav = useNavigate()
   const location = useLocation()
+  const encodedTitle = encodeURIComponent(title)
   const linktoQuestionEdit = () => {
-    const encodedTitle = encodeURIComponent(title)
     nav(`/question/edit/${encodedTitle}`, {
       state: {
         from: location.pathname,
@@ -73,7 +73,7 @@ function QuestionQnA({
         </div>
         <div className={styles.q_backhead}>
           {user_id === current_user_id ? (
-            <ThreedotsMenu questionId={question_id} type={type} />
+            <ThreedotsMenu encodedTitle={encodedTitle} questionId={question_id} type={type} />
           ) : (
             <ThreedotsReport target={question_id} type={type} />
           )}
