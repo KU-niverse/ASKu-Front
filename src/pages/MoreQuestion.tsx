@@ -94,10 +94,13 @@ const MoreQuestion: React.FC = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [isToggled, setIsToggled] = useState(false)
   const flag = isToggled ? 1 : 0
 
-  const { data: userInfo, isLoading: userInfoLoading } = useQuery('userInfo', fetchUserInfo)
+  const { data: userInfoData, isLoading: userInfoLoading } = useQuery('userInfo', fetchUserInfo, {
+    onSuccess: (data) => setUserInfo(data.data),
+  })
   const { data: titles = [], isLoading: titlesLoading } = useQuery('titles', fetchTitles)
   const { data: questionData, isLoading: questionsLoading } = useQuery(
     ['questions', title, flag],
@@ -192,7 +195,7 @@ const MoreQuestion: React.FC = () => {
               ) : (
                 questionData?.data.map((question) => (
                   <Question
-                    current_user_id={userInfo?.id ?? null}
+                    current_user_id={userInfo?.id}
                     key={question.id}
                     id={question.id}
                     doc_id={question.doc_id}
