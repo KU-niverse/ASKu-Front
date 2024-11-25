@@ -125,7 +125,7 @@ const MoreQuestion: React.FC = () => {
     navigate(`/wiki/${encodeURIComponent(title)}`)
   }
 
-  if (userInfoLoading || titlesLoading || questionsLoading) {
+  if (titlesLoading || questionsLoading) {
     return (
       <div>
         <SpinnerMypage />
