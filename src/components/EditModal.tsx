@@ -11,7 +11,9 @@ interface EditModalProps {
 }
 
 const fetchQuestion = async (questionId: number) => {
-  const { data } = await axios.get(`${process.env.REACT_APP_HOST}/question/${questionId}`, { withCredentials: true })
+  const { data } = await axios.get(`${process.env.REACT_APP_HOST}/question/lookup/${questionId}`, {
+    withCredentials: true,
+  })
   return data
 }
 
@@ -35,7 +37,7 @@ function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
 
   useEffect(() => {
     if (data) {
-      setQuestionContent(data.content)
+      setQuestionContent(data?.data[0].content)
     }
   }, [data])
 
