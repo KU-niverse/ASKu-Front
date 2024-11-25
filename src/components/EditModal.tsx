@@ -42,7 +42,7 @@ function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
   const mutation = useMutation(editQuestion, {
     onSuccess: () => {
       queryClient.invalidateQueries(['question', questionId])
-      alert('Question updated successfully!')
+      alert('질문이 성공적으로 수정되었습니다.')
       onClose()
     },
     onError: (error: any) => {

@@ -71,24 +71,48 @@ function ThreedotsMenu({ questionId, type }: ThreedotsMenuProps) {
   }
 
   return (
-    <Menu
-      menuButton={
-        <MenuButton className={styles.menubtn}>
-          <img src={threedots} alt={'Menu'} />
-        </MenuButton>
-      }
-    >
-      <MenuItem
-        className={styles.menuitem}
-        onClick={(e: ClickEvent) => {
-          checkLoginStatus()
-          e.syntheticEvent.stopPropagation()
-          e.syntheticEvent.preventDefault()
-          setReportModalVisible(true)
-        }}
+    <>
+      <Menu
+        menuButton={
+          <MenuButton className={styles.menubtn}>
+            <img src={threedots} alt={'Menu'} />
+          </MenuButton>
+        }
       >
-        {'신고하기\r'}
-      </MenuItem>
+        <MenuItem
+          className={styles.menuitem}
+          onClick={(e: ClickEvent) => {
+            checkLoginStatus()
+            e.syntheticEvent.stopPropagation()
+            e.syntheticEvent.preventDefault()
+            setReportModalVisible(true)
+          }}
+        >
+          {'신고하기\r'}
+        </MenuItem>
+        <MenuItem
+          className={styles.menuitem}
+          onClick={(e: ClickEvent) => {
+            checkLoginStatus()
+            e.syntheticEvent.stopPropagation()
+            e.syntheticEvent.preventDefault()
+            setEditModalVisible(true)
+          }}
+        >
+          {'수정하기\r'}
+        </MenuItem>
+        <MenuItem
+          className={styles.menuitem}
+          onClick={(e: ClickEvent) => {
+            checkLoginStatus()
+            e.syntheticEvent.stopPropagation()
+            e.syntheticEvent.preventDefault()
+            onQuestionDelete()
+          }}
+        >
+          {'삭제하기\r'}
+        </MenuItem>
+      </Menu>
       {isReportModalVisible && (
         <ReportModal
           target={questionId}
@@ -97,34 +121,10 @@ function ThreedotsMenu({ questionId, type }: ThreedotsMenuProps) {
           onClose={() => setReportModalVisible(false)}
         />
       )}
-
-      <MenuItem
-        className={styles.menuitem}
-        onClick={(e: ClickEvent) => {
-          checkLoginStatus()
-          e.syntheticEvent.stopPropagation()
-          e.syntheticEvent.preventDefault()
-          setEditModalVisible(true)
-        }}
-      >
-        {'수정하기\r'}
-      </MenuItem>
       {isEditModalVisible && (
         <EditModal questionId={questionId} isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />
       )}
-
-      <MenuItem
-        className={styles.menuitem}
-        onClick={(e: ClickEvent) => {
-          checkLoginStatus()
-          e.syntheticEvent.stopPropagation()
-          e.syntheticEvent.preventDefault()
-          onQuestionDelete()
-        }}
-      >
-        {'삭제하기\r'}
-      </MenuItem>
-    </Menu>
+    </>
   )
 }
 
