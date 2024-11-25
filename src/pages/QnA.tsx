@@ -106,9 +106,7 @@ const QnA: React.FC = () => {
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
-  const { data: userInfoData, isLoading: userInfoLoading } = useQuery('userInfo', fetchUserInfo, {
-    onSuccess: (data) => setUserInfo(data.data),
-  })
+  const { data: userInfoData, isLoading: userInfoLoading } = useQuery('currentUserInfo', fetchUserInfo)
   const { data: answerData, error: answerError } = useQuery(['answers', question_id], () => fetchAnswers(question_id!))
   const { data: questionData, error: questionError } = useQuery(['question', question_id], () =>
     fetchQuestion(question_id!),
@@ -159,7 +157,7 @@ const QnA: React.FC = () => {
         </div>
         {questionData && questionData.data && (
           <Question
-            current_user_id={userInfo?.id}
+            current_user_id={userInfoData?.data?.id}
             key={parseInt(question_id!, 10)}
             id={parseInt(question_id!, 10)}
             doc_id={0}
