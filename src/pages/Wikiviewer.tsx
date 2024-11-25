@@ -170,12 +170,16 @@ function WikiViewer() {
     fetchBookmarks()
   }, [])
 
-  const fetchWiki = async (): Promise<WikiData> => {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
-      withCredentials: true,
-    })
-
-    return response.data
+  const fetchWiki = async (): Promise<WikiData | null> => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/contents/${title}`, {
+        withCredentials: true,
+      })
+      return response.data
+    } catch (error) {
+      console.error(error)
+      return null
+    }
   }
 
   // title 비교 후 isBookmark 업데이트
@@ -189,11 +193,11 @@ function WikiViewer() {
     }
   }, [title, bookmarks])
 
-  // 컴포넌트가 마운트될 때 데이터 가져오기
-  useEffect(() => {
-    fetchBookmarks()
-    fetchWiki()
-  }, [])
+  // // 컴포넌트가 마운트될 때 데이터 가져오기
+  // useEffect(() => {
+  //   fetchWiki()
+  //   fetchBookmarks()
+  // }, [])
 
   const fetchQues = async (): Promise<QuestionData> => {
     const response = await axios.get(
@@ -243,7 +247,6 @@ function WikiViewer() {
   }, [wikiData])
 
   useEffect(() => {}, [isBookmark])
-
   useEffect(() => {
     if (quesData) {
       setQues(quesData.data)
