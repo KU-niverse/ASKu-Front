@@ -145,7 +145,7 @@
   color: rgba(222, 58, 88, 1);
 }
 
-@media only screen and (max-width: 48rem) {
+@media only screen and (max-width: 48em) {
   .login_headers {
     display: none;
   }
