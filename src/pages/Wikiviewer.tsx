@@ -37,6 +37,13 @@ interface Content {
   title: string
   content: string
 }
+interface Bookmark {
+  title: string
+}
+
+interface BookmarkResponse {
+  message: Bookmark[]
+}
 
 interface Question {
   id: string
@@ -154,15 +161,24 @@ function WikiViewer() {
 
   const fetchBookmarks = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_HOST}/wiki/favorite`, {
+      const response = await axios.get<BookmarkResponse>(`${process.env.REACT_APP_HOST}/wiki/favorite`, {
         withCredentials: true,
       })
-      // 'title' 속성만 추출
-      const bookmarkTitles = response.data.message.map((bookmark: { title: string }) => bookmark.title)
 
+      const bookmarkTitles = response.data.message.map((bookmark) => bookmark.title)
       setBookmarks(bookmarkTitles)
+
+      // title과 북마크 데이터 비교
+      if (title) {
+        const normalizedTitle = title.trim().toLowerCase()
+        const isMatched = bookmarkTitles.some((bookmark) => bookmark.trim().toLowerCase() === normalizedTitle)
+        setIsBookmark(isMatched)
+        setImageSource(isMatched ? trueBk : falseBk)
+      }
     } catch (error) {
       console.error('Error fetching bookmarks:', error)
+      setIsBookmark(false)
+      setImageSource(falseBk)
     }
   }
 
@@ -182,22 +198,25 @@ function WikiViewer() {
     }
   }
 
-  // title 비교 후 isBookmark 업데이트
   useEffect(() => {
     if (title && bookmarks.length > 0) {
-      const normalizedTitle = title.trim().toLowerCase() // 공백 제거 및 소문자로 변환
+      const normalizedTitle = title.trim().toLowerCase() // 공백 제거 및 소문자 변환
       const isMatched = bookmarks.some((bookmark) => bookmark.trim().toLowerCase() === normalizedTitle)
-      setIsBookmark(isMatched) // 비교 결과로 업데이트
+      setIsBookmark(isMatched) // 북마크 상태 업데이트
       setFavorite(isMatched)
-      setImageSource(isBookmark ? trueBk : falseBk) // isBookmark 상태에 따라 이미지 업데이트
+      setImageSource(isMatched ? trueBk : falseBk) // 북마크 상태에 따라 이미지 설정
+    } else {
+      // 북마크 데이터가 없는 경우 기본값 설정
+      setIsBookmark(false)
+      setImageSource(falseBk)
     }
-  }, [title, bookmarks])
 
-  // // 컴포넌트가 마운트될 때 데이터 가져오기
-  // useEffect(() => {
-  //   fetchWiki()
-  //   fetchBookmarks()
-  // }, [])
+  }, [title, bookmarks])
+  useEffect(() => {
+    fetchBookmarks()
+    fetchWiki()
+  }, [])
+
 
   const fetchQues = async (): Promise<QuestionData> => {
     const response = await axios.get(
@@ -363,10 +382,14 @@ function WikiViewer() {
   }
 
   const handleNextWikiClick = async () => {
-    // 먼저 linkToNextWiki 실행
+    // 상태 초기화
+    setIsBookmark(false)
+    setImageSource(falseBk)
+
+    // 다음 문서로 이동
     linkToNextWiki()
 
-    // 그런 다음 fetchBookmarks 실행
+    // 북마크 데이터 재검사
     await fetchBookmarks()
   }
 
@@ -380,7 +403,11 @@ function WikiViewer() {
         // eslint-disable-next-line prefer-destructuring
         nextTitle = titles[0]
       }
+      // title 업데이트 후 북마크 상태를 확인
       nav(`/wiki/${encodeURIComponent(nextTitle)}`)
+      setTimeout(() => {
+        fetchBookmarks() // 북마크 데이터 재로드
+      }, 100) // title이 변경되었음을 보장
     } else {
       console.error('현재 title을 찾을 수 없습니다.')
     }

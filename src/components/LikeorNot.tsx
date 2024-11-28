@@ -48,19 +48,20 @@ const LikeorNot = ({ questionId, like_count, user_id, nick }: LikeorNotProps) =>
     },
     {
       onMutate: () => {
+        const previousIsLiked = isLiked // 이전 상태 저장
         const newIsLiked = !isLiked
         setIsLiked(newIsLiked)
         setCurrentLikeCount(currentLikeCount + (newIsLiked ? 1 : -1))
         localStorage.setItem(`likeStatus_${user_id}_${questionId}`, newIsLiked.toString())
+        return { previousIsLiked, previousLikeCount: currentLikeCount } // rollback 데이터 반환
       },
-      onError: (error: AxiosError) => {
+      onError: (error: AxiosError, _, context: any) => {
         console.error(error)
-        setCurrentLikeCount(currentLikeCount)
-        setIsLiked(isLiked)
 
         if (error.response) {
           if (error.response.status === 400) {
             alert('이미 좋아요를 눌렀습니다.')
+            setIsLiked(true)
           } else if (error.response.status === 401) {
             alert('로그인이 필요한 서비스 입니다.')
           } else if (error.response.status === 403) {
@@ -71,12 +72,24 @@ const LikeorNot = ({ questionId, like_count, user_id, nick }: LikeorNotProps) =>
         } else {
           alert('에러가 발생하였습니다')
         }
+
+        if (context?.previousIsLiked !== undefined) {
+          setIsLiked(context.previousIsLiked)
+          setCurrentLikeCount(context.previousLikeCount)
+          localStorage.setItem(`likeStatus_${user_id}_${questionId}`, context.previousIsLiked.toString())
+        }
       },
       onSettled: () => {
         queryClient.invalidateQueries('loginStatus')
       },
     },
   )
+
+  useEffect(() => {
+    const storedLikeStatus = localStorage.getItem(`likeStatus_${user_id}_${questionId}`) === 'true'
+    setIsLiked(storedLikeStatus)
+    console.log(isLiked)
+  }, [questionId, user_id]) // questionId나 user_id가 바뀔 때마다 확인
 
   useEffect(() => {
     refetchLoginStatus()
