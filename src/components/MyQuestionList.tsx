@@ -69,9 +69,6 @@ function MyQuestionList({
           <span className={styles.q_mynick}>{nick}</span>
           <span className={styles.q_date}>{formattedDate}</span>
         </div>
-        <div className={styles.q_backhead}>
-          <ThreedotsMenu questionId={id} type={type} />
-        </div>
       </div>
       <div className={styles.q_middle}>
         <span className={styles.q_icon}>{'Q. '}</span>

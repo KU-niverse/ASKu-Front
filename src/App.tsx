@@ -17,7 +17,6 @@ import MyBadge from './pages/MyBadge'
 import History from './pages/History'
 import HistoryDiff from './pages/HistoryDiff'
 import MoreQuestion from './pages/MoreQuestion'
-import Test from './pages/Test'
 import MyComment from './pages/MyComment'
 import MyBookmark from './pages/MyBookmark'
 import SearchResult from './pages/SearchResult'
@@ -90,7 +89,6 @@ function App() {
         <Route path={'/mypage/mycontribution'} element={<MyContribution />} />
         <Route path={'/wiki/morequestion/:title'} element={<MoreQuestion />} />
         <Route path={'/wiki/qna'} element={<QnA />} />
-        <Route path={'/Test'} element={<Test />} />
         <Route path={'/mypage/mycomment'} element={<MyComment />} />
         <Route path={'/debate/:title/:subject/'} element={<Debate />} />
         <Route path={'/debate/:title'} element={<MoreDebate />} />

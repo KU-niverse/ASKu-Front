@@ -47,9 +47,9 @@ function Question({
   const type = 2
   const nav = useNavigate()
   const location = useLocation()
+  const encodedTitle = encodeURIComponent(title)
 
   const linktoQuestionEdit = () => {
-    const encodedTitle = encodeURIComponent(title)
     nav(`/question/edit/${encodedTitle}`, {
       state: {
         from: location.pathname,
@@ -70,7 +70,6 @@ function Question({
     track('click_question_in_list', {
       index,
     })
-    const encodedTitle = encodeURIComponent(title)
     nav(`/wiki/morequestion/${encodedTitle}/${id}`, {
       state: {
         question_id: id,
@@ -99,7 +98,7 @@ function Question({
         </div>
         <div className={styles.q_backhead}>
           {user_id === current_user_id ? (
-            <ThreedotsMenu questionId={id} type={type} />
+            <ThreedotsMenu encodedTitle={encodedTitle} questionId={id} type={type} />
           ) : (
             <ThreedotsReport target={id} type={type} />
           )}

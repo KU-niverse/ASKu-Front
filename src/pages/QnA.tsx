@@ -15,6 +15,7 @@ import emptyAnswer from '../img/emptyAnswer.svg'
 import comment_icon from '../img/comment_icon.png'
 import Question from '../components/Question'
 import question from '../img/wiki_qustion.svg'
+import SpinnerMypage from '../components/SpinnerMypage'
 
 interface UserInfo {
   id: number
@@ -105,15 +106,11 @@ const QnA: React.FC = () => {
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
-  const { data: userInfoData } = useQuery('userInfo', fetchUserInfo, {
-    onSuccess: (data) => setUserInfo(data.data),
-  })
+  const { data: userInfoData, isLoading: userInfoLoading } = useQuery('currentUserInfo', fetchUserInfo)
   const { data: answerData, error: answerError } = useQuery(['answers', question_id], () => fetchAnswers(question_id!))
   const { data: questionData, error: questionError } = useQuery(['question', question_id], () =>
     fetchQuestion(question_id!),
   )
-
-  const currentUserId = userInfoData?.data
 
   const linktoWiki = () => {
     const encodedTitle = encodeURIComponent(title!)
@@ -122,6 +119,14 @@ const QnA: React.FC = () => {
 
   if (questionError || answerError) {
     console.error('Error fetching data:', questionError || answerError)
+  }
+
+  if (userInfoLoading) {
+    return (
+      <div>
+        <SpinnerMypage />
+      </div>
+    )
   }
 
   return (
@@ -152,7 +157,7 @@ const QnA: React.FC = () => {
         </div>
         {questionData && questionData.data && (
           <Question
-            current_user_id={currentUserId ? currentUserId.id : null}
+            current_user_id={userInfoData?.data?.id}
             key={parseInt(question_id!, 10)}
             id={parseInt(question_id!, 10)}
             doc_id={0}
