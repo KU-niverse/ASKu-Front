@@ -210,13 +210,11 @@ function WikiViewer() {
       setIsBookmark(false)
       setImageSource(falseBk)
     }
-
   }, [title, bookmarks])
   useEffect(() => {
     fetchBookmarks()
     fetchWiki()
   }, [])
-
 
   const fetchQues = async (): Promise<QuestionData> => {
     const response = await axios.get(
