@@ -119,7 +119,6 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     onError: () => {
       setIsLoggedIn(false)
     },
-    refetchInterval: 5000, // 5초마다 fetch
     enabled: Boolean(isLoggedIn), // Only fetch user info if logged in
   })
 
@@ -139,8 +138,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     () => fetchPreviousChatHistory(userInfo?.data.id),
     {
       enabled: Boolean(user), // user가 정의된 경우 fetch
-      refetchInterval: 5000, // 5초마다 fetch
-      refetchIntervalInBackground: true, // 백그라운드에서도 fetch
+      staleTime: Infinity, // 데이터를 항상 신선한 상태로 간주
       onSuccess: (data) => {
         setPreviousChatHistory(data)
       },
@@ -226,7 +224,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                   updatedResponses[updatedResponses.length - 1].qnaId = newQnaId
                 } else {
                   updatedResponses.push({
-                    id: Date.now(), // Adding a unique key
+                    id: newQnaId,
                     content: tempAnswer,
                     isQuestion: false,
                     blockIconZip: false, // 여기서 아이콘을 항상 표시하도록 설정
@@ -486,29 +484,31 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
         <div className={styles.chat} ref={scrollRef} style={{ overflowY: 'auto', maxHeight: '500px' }}>
           {previousChatHistory.length !== 0 && (
             <>
-              {previousChatHistory.map((item) => (
-                <Fragment key={item.id}>
-                  <div data-id={item.id} className={styles.chatSet}>
-                    {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
-                      <>
-                        <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                        <ChatAnswer
-                          key={`answer-${item.id}`}
-                          content={item.a_content}
-                          qnaId={item.id}
-                          reference={item.reference}
-                          blockIconZip={!isLoggedIn}
-                          onAddReferenceSuggestion={onAddReferenceSuggestion}
-                          recommendedQuestions={[]} // 초기 빈 배열
-                          onRecommendQuestionClick={handleRecommendQuestionClick}
-                        />
-                      </>
-                    ) : (
-                      <div className={'skeleton'} style={{ height: '500px' }} /> // 보이지 않는 요소는 플레이스홀더
-                    )}
-                  </div>
-                </Fragment>
-              ))}
+              {previousChatHistory
+                .filter((historyItem) => !chatResponse.some((responseItem) => responseItem.id === historyItem.id))
+                .map((item) => (
+                  <Fragment key={item.id}>
+                    <div data-id={item.id} className={styles.chatSet}>
+                      {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
+                        <>
+                          <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                          <ChatAnswer
+                            key={`answer-${item.id}`}
+                            content={item.a_content}
+                            qnaId={item.id}
+                            reference={item.reference}
+                            blockIconZip={!isLoggedIn}
+                            onAddReferenceSuggestion={onAddReferenceSuggestion}
+                            recommendedQuestions={[]} // 초기 빈 배열
+                            onRecommendQuestionClick={handleRecommendQuestionClick}
+                          />
+                        </>
+                      ) : (
+                        <div className={'skeleton'} style={{ height: '500px' }} /> // 보이지 않는 요소는 플레이스홀더
+                      )}
+                    </div>
+                  </Fragment>
+                ))}
             </>
           )}
           {chatResponse.map((item) => {

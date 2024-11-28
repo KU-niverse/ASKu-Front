@@ -11,7 +11,9 @@ interface EditModalProps {
 }
 
 const fetchQuestion = async (questionId: number) => {
-  const { data } = await axios.get(`${process.env.REACT_APP_HOST}/question/${questionId}`, { withCredentials: true })
+  const { data } = await axios.get(`${process.env.REACT_APP_HOST}/question/lookup/${questionId}`, {
+    withCredentials: true,
+  })
   return data
 }
 
@@ -35,14 +37,14 @@ function EditModal({ isOpen, onClose, questionId }: EditModalProps) {
 
   useEffect(() => {
     if (data) {
-      setQuestionContent(data.content)
+      setQuestionContent(data?.data[0].content)
     }
   }, [data])
 
   const mutation = useMutation(editQuestion, {
     onSuccess: () => {
       queryClient.invalidateQueries(['question', questionId])
-      alert('Question updated successfully!')
+      alert('질문이 성공적으로 수정되었습니다.')
       onClose()
     },
     onError: (error: any) => {
