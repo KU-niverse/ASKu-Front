@@ -33,7 +33,7 @@ td {
 }
 
 /* 해상도 ~767px*/
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 48em) {
   * {
     font-size: 40%;
   }
