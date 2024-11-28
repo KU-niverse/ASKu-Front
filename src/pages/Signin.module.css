@@ -146,6 +146,153 @@
 }
 
 @media only screen and (max-width: 48em) {
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+  }
+
+  .logo {
+    width: 200px;
+    height: 61.8px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+
+  .login_headers {
+    font-size: 30px;
+    margin-bottom: auto;
+  }
+
+  .login_instruction {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 14.4px;
+    margin-bottom: 22.2px;
+    margin-top: 15px;
+  }
+
+  .login_input input {
+    width: 274.8px;
+    height: 38.4px;
+    font-size: 11.4px;
+    border-radius: 7.2px;
+    margin-bottom: 7.8px;
+    background-color: rgb(255, 255, 255, 1);
+    border: 1.2px solid rgba(213, 213, 213, 1);
+    padding: 6px;
+    padding-left: 15px;
+    box-sizing: border-box;
+  }
+
+  .login_input input:not(:placeholder-shown) {
+    border-color: rgba(222, 58, 88, 1);
+  }
+
+  .login_btn {
+    width: 274.8px;
+    height: 38.4px;
+    background: linear-gradient(to left, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    border-radius: 7.2px;
+    color: white;
+    border: none;
+    font-size: 14.4px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0px 6px 15px -3px rgba(159, 19, 46, 0.35);
+  }
+
+  .login_remem {
+    color: rgba(116, 116, 116, 1);
+    align-self: flex-start;
+    display: flex;
+  }
+
+  .id_rem {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+  }
+
+  .id_remem_checked {
+    color: rgba(222, 58, 88, 1);
+  }
+
+  .login_remem input[type='checkbox'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 1.2px solid rgba(213, 213, 213, 1);
+    border-radius: 2.4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
+  }
+
+  .login_remem input[type='checkbox']:checked {
+    background: linear-gradient(to top, rgba(159, 19, 46, 1), rgba(222, 58, 88, 1));
+    border: 0.6px solid rgba(213, 213, 213, 1);
+  }
+
+  .login_remem input[type='checkbox']:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.8px;
+    height: 3.6px;
+    border: solid white;
+    border-width: 0 1.8px 1.8px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .login_signup {
+    margin-top: 13.8px;
+    margin-bottom: 23.4px;
+  }
+
+  .login_signup a {
+    color: rgba(116, 116, 116, 1);
+    font-weight: bold;
+    font-size: 13.8px;
+    text-decoration-line: none;
+  }
+
+  .login_signup a:hover {
+    color: rgba(222, 58, 88, 1);
+  }
+
+  .login_find {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 7.8px;
+    width: 234px;
+    padding: 6px;
+    padding-top: 0px;
+    box-sizing: border-box;
+  }
+
+  .login_find a {
+    font-size: 10.8px;
+    color: rgba(116, 116, 116, 1);
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.6px
+  }
+
+  .login_find a:hover {
+    color: rgba(222, 58, 88, 1);
+  }
+
   .login_headers {
     display: none;
   }
@@ -180,11 +327,5 @@
   .login_input {
     justify-self: center;
     align-self: center;
-  }
-
-  .login_find {
-    width: 90%;
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
   }
 }
