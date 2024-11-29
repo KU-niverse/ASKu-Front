@@ -444,17 +444,17 @@
 
 .mobileTitlePink {
   align-self: flex-start;
-  font-size: 4.5rem;
-  margin-top: 2rem;
-  margin-left: 3rem;
+  font-size: 28.8px;
+  margin-top: 12.8px;
+  margin-left: 19px;
   font-weight: 700;
   color: #f86982;
 }
 
 .mobileTitleBlack {
   align-self: flex-start;
-  font-size: 4.5rem;
-  margin-left: 3rem;
+  font-size: 28.8px;
+  margin-left: 19px;
   font-weight: 700;
 }
 
@@ -462,7 +462,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 2rem;
+  padding: 12.8px;
   overflow-x: auto;
   /* 좌우 스크롤 활성화 */
   white-space: nowrap;
@@ -491,15 +491,15 @@
 }
 
 .mobileChatbotButtonContainer {
-  margin-right: 2rem;
+  margin-right: 12.8px;
 }
 
 .mobileChatbotButton {
-  font-size: 2rem;
+  font-size: 12.8px;
   display: flex;
   background: rgba(238, 238, 238, 1) !important;
-  width: 8rem;
-  height: 8rem;
+  width: 51.2px;
+  height: 51.2px;
   border-radius: 100%;
   align-items: center;
   justify-content: center;
@@ -523,8 +523,8 @@
 }
 
 .mobileChatbotButton {
-  margin-left: 1rem;
-  margin-right: -1rem;
+  margin-left: 6.4px;
+  margin-right: -6.4px;
   border: none;
   background: none;
 }

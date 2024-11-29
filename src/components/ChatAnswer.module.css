@@ -15,10 +15,24 @@
   .answerBox {
     width: calc(100vw - 50px);
     margin-left: 15px;
+    margin-top: 24.96px;
   }
 
   .answerBox {
     width: calc(100vw - 50px);
+  }
+
+  .character {
+    width: 25.6px;
+    height: 25.6px;
+  }
+  .chatText {
+    font-size: 9.6px;
+    padding-left: 14.72px;
+    padding-right: 14.72px;
+    padding-top: 7.04px;
+    padding-bottom: 7.04px;
+    margin-left: 4.8px;
   }
 }
 
@@ -117,11 +131,12 @@
   .reference_wrap {
     width: calc(100vw - 100px);
     margin-left: 0px;
-  }
-
-  .reference_wrap {
-    width: calc(100vw - 100px);
-    margin-left: 0px;
+    margin-top: 6.4px;
+    width: 256px;
+    min-height: 64px;
+    border-radius: 7.68px;
+    top: 70.4px;
+    right: 3.2px;
   }
 }
 
