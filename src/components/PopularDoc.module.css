@@ -39,7 +39,7 @@
   .contentsOne {
     background-color: rgb(253, 243, 241);
     border-radius: 25px;
-    height: 20rem;
+    height: 128px;
     justify-content: center;
   }
 }
@@ -61,7 +61,7 @@
 
 @media only screen and (max-width: 767px) {
   .versionContainer {
-    width: 10rem;
+    width: 64px;
   }
 }
 
@@ -76,7 +76,7 @@
 }
 @media only screen and (max-width: 767px) {
   .version {
-    font-size: 1.8rem;
+    font-size: 11.52px;
     margin-right: 15px;
   }
 }
@@ -133,7 +133,7 @@
   .versionIcon {
     font-size: 12px;
     margin-right: 5px;
-    margin-top: 2rem;
+    margin-top: 12.8px;
   }
 }
 
@@ -143,6 +143,7 @@
     padding-top: 5%;
     color: black;
     padding-bottom: 5%;
+    height: 25.6px;
   }
 }
 .timestamp {
