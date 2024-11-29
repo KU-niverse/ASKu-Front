@@ -11,7 +11,7 @@
 
 @media only screen and (max-width: 767px) {
   .footer {
-    height: 13rem;
+    height: 83.2px;
     background-color: rgba(238, 238, 238, 1);
     border: none;
   }
@@ -34,13 +34,13 @@
 
 @media only screen and (max-width: 767px) {
   .footerButton {
-    margin-bottom: 0.5rem;
+    margin-bottom: 3.2px;
+    font-size: 7.68px;
     background-color: rgba(238, 238, 238, 1);
   }
 }
 
 .footerTitle {
-  margin-left: 3rem;
   font-weight: 700;
   font-size: 1.5rem;
   background-color: #ffffff;
@@ -50,11 +50,12 @@
 
 @media only screen and (max-width: 767px) {
   .footerTitle {
+    margin-left: 19.2px;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.6);
-    margin-bottom: 0.5rem;
+    margin-bottom: 3.2px;
     background-color: rgba(238, 238, 238, 1);
-    margin-bottom: 0.7rem;
+    margin-bottom: 4.48px;
   }
 }
 
@@ -87,11 +88,12 @@
 
 @media only screen and (max-width: 767px) {
   .logoWrap {
-    bottom: 3rem;
+    right: 19.2px;
+    bottom: 19.2px;
   }
 }
 
 .logoGray {
-  width: 6rem;
+  width: 38.4px;
   height: auto;
 }
