@@ -529,6 +529,9 @@
 
   .prompt {
     font-size: 9.6px;
+    margin-left: 17.28px;
+    margin-top: 12.8px;
+    margin-bottom: 12.8px;
   }
 
   .sendBtn {
