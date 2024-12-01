@@ -78,11 +78,52 @@
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
+  .profileImg {
+    width: 119px;
+    height: 113px;
+    margin-bottom: 3px;
+  }
+  .profileImgContent {
+    height: 96.6px;
+    width: 96.6px;
+  }
+  .rowNick {
+    margin-bottom: 24px;
+  }
+  .name {
+    font-size: 21px;
+  }
+  .nameText {
+    font-size: 21px;
+  }
+  .rowBadge,
+  .rowPoint {
+    gap: 6px;
+  }
+  .titleLine {
+    font-size: 12.3px;
+  }
+  .rowTitle {
+    min-width: 58.6px;
+    font-size: 12.3px;
+  }
+  .badgeText {
+    font-size: 12.3px;
+  }
+  .pointText {
+    font-size: 12.3px;
+    margin-right: 6.6px;
+  }
+  .rankText {
+    font-size: 8.5px;
+  }
+
   .infoRows {
     background-color: white;
     width: 100%;
     max-width: revert;
     padding: 17px 23px;
     border-radius: 18px;
+    gap: 11px;
   }
 }
