@@ -31,8 +31,11 @@
 
 .contentNum {
   font-size: 3rem;
-  color: #de3a58;
   font-weight: 700;
+  background-image: linear-gradient(to top, #de3a58, #9f132e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .contributionBox {

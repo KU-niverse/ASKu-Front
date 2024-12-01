@@ -30,7 +30,10 @@
   margin-bottom: 3rem;
 }
 .badgeCount {
-  color: #c52b47;
+  background-image: linear-gradient(to top, #de3a58, #9f132e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
   font-weight: 700;
   font-size: 3rem;
 }
@@ -69,9 +72,8 @@
     margin-bottom: 20px;
   }
   .badgeCount {
-    color: #c52b47;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 20px;
   }
   .paginationWrapper {
     margin-top: 0;
