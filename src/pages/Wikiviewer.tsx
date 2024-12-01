@@ -482,7 +482,7 @@ function WikiViewer() {
                         {tabs}
                         <span className={tabCount === 0 ? styles.wikiBigIndex : styles.wikiSmallIndex}>
                           {item.index}
-                          {'.\r'}
+                          {'. '}
                         </span>
                         {item.title}
                       </span>

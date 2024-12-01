@@ -112,12 +112,12 @@
   }
 
   .doughnut {
-    width: 20rem;
-    height: 20rem;
+    width: 132px;
+    height: 132px;
   }
 
   .centerText {
-    font-size: 3rem;
+    font-size: 20px;
   }
 
   .legendItem {
