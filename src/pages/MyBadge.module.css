@@ -42,7 +42,7 @@
 }
 @media only screen and (max-width: 767px) {
   .mybadgecontent {
-    padding: 3rem 1rem;
+    padding: 20px 7px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -50,12 +50,13 @@
   }
   .b_header {
     width: 100%;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
+    margin-bottom: 13px;
+    padding: 0 7px;
   }
   .b_headline {
-    margin-left: 3rem;
-    margin-bottom: 1.5rem;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
   }
   .b_list {
     width: 90%;
@@ -63,13 +64,14 @@
     grid-template-columns: 1fr;
     justify-items: center;
     align-items: center;
-    row-gap: 2rem;
-    padding: 0 1rem;
+    row-gap: 13px;
+    padding: 0 7px;
+    margin-bottom: 20px;
   }
   .badgeCount {
     color: #c52b47;
     font-weight: 700;
-    font-size: 2.4rem;
+    font-size: 16px;
   }
   .paginationWrapper {
     margin-top: 0;

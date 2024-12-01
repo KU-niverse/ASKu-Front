@@ -8,7 +8,7 @@
   align-items: center;
   background-color: white;
   border-radius: 3rem;
-  box-shadow: 0rem 0.2rem 6rem -0.5rem #00000014;
+  box-shadow: 0px 2px 60px -5px #00000014;
 }
 .myBadgeStyle .b_thumb img {
   width: 13.4rem;
@@ -46,6 +46,31 @@
 
 @media only screen and (max-width: 767px) {
   .b_content {
+    height: 122px;
+    gap: 17px;
+    padding: 0 24px;
+    border-radius: 30px;
     border: 1px solid #d5d5d5cc;
+  }
+  .myBadgeStyle .b_thumb img {
+    min-width: 89.3px;
+    height: 89.3px;
+    border: 0.7px solid rgba(116, 116, 116, 1);
+  }
+  .normalBadgeStyle .b_thumb {
+    min-width: 89.3px;
+    height: 89.3px;
+    border: 0.7px solid rgba(116, 116, 116, 1);
+  }
+  .b_people {
+    font-size: 8px;
+  }
+  .b_badgename {
+    margin-bottom: 6.6px;
+    font-size: 14.6px;
+  }
+  .b_badgedescription {
+    font-size: 11px;
+    margin-bottom: 13.3px;
   }
 }
