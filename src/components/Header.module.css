@@ -161,7 +161,7 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .nicknameText {
-    font-size: 3.5rem;
+    font-size: 20px;
   }
 }
 
@@ -177,7 +177,7 @@ div.navDebate:hover {
 }
 @media only screen and (max-width: 767px) {
   .honorific {
-    font-size: 3.5rem;
+    font-size: 20px;
     font-weight: 600;
   }
 }
@@ -350,6 +350,9 @@ div.navDebate:hover {
   .searchInputContainer {
     display: none;
   }
+  .mobileMenuText {
+    font-size: 15px !important;
+  }
 }
 @media only screen and (max-width: 767px) {
   .repBadge {
@@ -357,6 +360,12 @@ div.navDebate:hover {
     width: 7rem; /* 모바일 화면에서는 더 작은 크기로 설정 */
     height: 7rem;
     margin-right: 10px; /* 여백도 모바일에 맞게 조정 */
+  }
+  .repBadge {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #d5d5d5;
+    margin-right: 10px;
   }
 }
 
@@ -369,6 +378,19 @@ div.navDebate:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  .mobileIcon {
+    width: 20px !important;
+    height: 20px !important;
+    margin-left: 20px !important;
+    margin-right: 15px !important;
+  }
+  .logOutText {
+    font-size: 15px !important;
+  }
+  .mobileLoginText {
+    margin-left: 20px !important;
+    font-size: 20px !important;
   }
 }
 
