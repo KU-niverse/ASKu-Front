@@ -414,7 +414,7 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
           }
         })
       },
-      { root: scrollRef.current, threshold: 0.0, rootMargin: '300px' }, // 스크롤 영역에서 보이면 바로 감지
+      { root: scrollRef.current, threshold: 0.1, rootMargin: '500px' }, // 스크롤 영역에서 보이면 바로 감지
     )
 
     const items = document.querySelectorAll('[data-id]')
