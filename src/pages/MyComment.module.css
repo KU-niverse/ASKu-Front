@@ -14,7 +14,6 @@
   flex: 1;
 }
 
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -30,7 +29,6 @@
   font-weight: bold;
   padding-left: 30px;
 }
-
 
 .switch {
   padding-right: 30px;
@@ -63,7 +61,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-
 .comment {
   font-size: 20px;
   font-weight: 800;
@@ -91,7 +88,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 3rem 0 0 0;
+    margin: 10px 0 0 0;
     padding: 0;
   }
 
@@ -108,18 +105,17 @@
     font-size: 20px;
     font-weight: 800;
     padding-left: 0.5rem;
-    margin-top: 1rem;
+    margin-top: 0;
     background: linear-gradient(to bottom, #9f132e, #de3a58);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-
   .comment {
     font-size: 20px;
     font-weight: 800;
     padding-left: 3rem;
-    margin-top: 1rem;
+    margin-top: 0;
   }
 
   .emptyDebate {

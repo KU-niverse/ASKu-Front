@@ -446,6 +446,7 @@ li {
 @media only screen and (max-width: 767px) {
   .wikiviewer {
     width: 90%;
+    margin-top: 16px;
   }
   .wikilist,
   .wikiask,
