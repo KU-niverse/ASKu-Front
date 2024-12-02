@@ -50,3 +50,17 @@
   font-size: 1.3rem;
   font-weight: 700;
 }
+
+@media only screen and (max-width: 767px) {
+  .menubtn,
+  .disabledbtn,
+  .repbtn {
+    width: 90.6px;
+    height: 26px;
+    padding: 6.6px 16px;
+  }
+
+  .menuText {
+    font-size: 8.6px;
+  }
+}
