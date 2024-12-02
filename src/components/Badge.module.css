@@ -53,12 +53,12 @@
     border: 1px solid #d5d5d5cc;
   }
   .myBadgeStyle .b_thumb img {
-    min-width: 89.3px;
+    width: 89.3px;
     height: 89.3px;
     border: 0.7px solid rgba(116, 116, 116, 1);
   }
   .normalBadgeStyle .b_thumb {
-    min-width: 89.3px;
+    width: 89.3px;
     height: 89.3px;
     border: 0.7px solid rgba(116, 116, 116, 1);
   }
