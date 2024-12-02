@@ -85,6 +85,10 @@ input:checked + .slider:before {
     height: 23px;
   }
 
+  .slider {
+    bottom: 0.2px;
+  }
+
   .slider:before {
     height: 18px;
     width: 18px;

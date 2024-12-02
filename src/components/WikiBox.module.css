@@ -115,20 +115,36 @@
 
 /* 모바일 뷰 */
 @media only screen and (max-width: 767px) {
+  .wikiContentBtn {
+    width: 54.6px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .wikiContentQuestionBtn {
+    margin-left: 7.3px;
+    width: 54.6px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .wikiContentTitle {
+    align-items: center;
+  }
+
   .wikiContentTitle span {
     font-size: 2.4rem;
+    height: 2.4rem;
   }
   .wikiIndex {
     font-size: 2.4rem;
     text-align: center;
+    width: 4rem;
+    margin-right: 2rem;
   }
   .wikiArrowIcon {
     margin-left: 1rem;
     margin-right: 1rem;
-  }
-  .wikiIndex {
-    width: 4rem;
-    margin-right: 2rem;
   }
   .wikiText {
     padding-left: 4rem !important;
