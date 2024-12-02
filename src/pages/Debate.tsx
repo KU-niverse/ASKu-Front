@@ -191,8 +191,8 @@ const Debate: React.FC = () => {
               }}
             >
               {title}
+              <span className={styles.debate}>&nbsp;문서 기반 토론</span>
             </p>
-            <p className={styles.debate}>&nbsp;문서 기반 토론</p>
           </div>
           <DebateTitle title={title} subject={subject} />
           {isError ? (

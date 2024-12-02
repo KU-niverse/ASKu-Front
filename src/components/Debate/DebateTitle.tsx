@@ -11,8 +11,10 @@ function DebateTitle({ title, subject }: DebateTitleProps) {
     <div className={styles.container}>
       <div className={styles.content}>
         <img src={speaker} alt={'speaker'} />
-        <span className={styles.part}>&nbsp;{subject}</span>
-        <span className={styles.part2}>{'에 대해서'}</span>
+        <span className={styles.part}>
+          &nbsp;{subject}
+          {'에 대해서'}
+        </span>
       </div>
     </div>
   )
