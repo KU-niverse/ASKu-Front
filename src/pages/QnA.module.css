@@ -26,6 +26,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-right: 1rem;
 }
 
 .q_pagename {
@@ -63,6 +64,7 @@
 
 .q_linkbtn {
   padding-left: 0.4rem;
+  white-space: nowrap;
 }
 
 .backheader img {
@@ -95,6 +97,7 @@
   font-size: 24px;
   font-weight: bold;
   padding-left: 15px;
+  color: black;
 }
 
 .no_answer {
@@ -215,7 +218,7 @@
     display: flex;
     flex-direction: column;
     width: auto;
-    margin: 0 3rem 3rem 3rem;
+    margin: 2rem 3rem 3rem 3rem;
     padding: initial;
   }
 

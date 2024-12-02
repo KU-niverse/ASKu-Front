@@ -86,7 +86,7 @@ input:checked + .slider:before {
   }
 
   .slider {
-    bottom: 0.2px;
+    bottom: 0px;
   }
 
   .slider:before {
