@@ -376,7 +376,6 @@
     margin-top: -10px;
     margin-bottom: 1px;
   }
-
   .promptWrap {
     grid-row: 10 / span 1;
     /* promptWrap을 더 아래로 배치 */
@@ -390,14 +389,6 @@
   .chat {
     grid-row: 2 / span 6;
     /* 더 위로 배치 */
-  }
-
-  .suggestContainer {
-    grid-row: 8 / span 2;
-    /* 더 위로 배치 */
-    margin-top: 0rem;
-    padding-bottom: 5rem;
-    margin-right: 3rem;
   }
 }
 
@@ -532,6 +523,10 @@
     margin-left: 17.28px;
     margin-top: 12.8px;
     margin-bottom: 12.8px;
+  }
+
+  .prompt::placeholder {
+    align-items: center;
   }
 
   .sendBtn {
