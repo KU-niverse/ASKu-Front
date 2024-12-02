@@ -59,6 +59,11 @@ function MyQuestionList({
     nav(`/wiki/morequestion/${encodedTitle}`)
   }
 
+  const linktoAnswer = () => {
+    const encodedTitle = encodeURIComponent(title)
+    nav(`/wiki/morequestion/${encodedTitle}/${id}`)
+  }
+
   return (
     <div className={styles.q_list}>
       <div className={styles.q_header}>
@@ -86,7 +91,7 @@ function MyQuestionList({
           <div className={styles.q_like}>
             <LikeorNot questionId={id} like_count={like_count} user_id={user_id} />
           </div>
-          <div className={styles.q_comment}>
+          <div role={'presentation'} onClick={linktoAnswer} className={styles.q_comment}>
             <span className={styles.commentCount}>{answer_count}</span>
             <img src={comment_icon} alt={'comment'} />
           </div>
