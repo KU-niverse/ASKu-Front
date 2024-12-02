@@ -114,7 +114,7 @@ function ChatbotModal({ isLoggedIn, setIsLoggedIn }: ChatbotModalProps) {
     return res.data
   }
 
-  const { data: userInfo, refetch: refetchUserInfo } = useQuery('userInfo', getUserInfo, {
+  const { data: userInfo, refetch: refetchUserInfo } = useQuery('userChatInfo', getUserInfo, {
     onSuccess: (data) => {
       setUser(data)
     },
