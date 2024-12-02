@@ -8,6 +8,7 @@
 }
 
 .comment_content {
+  flex: 1;
   font-weight: 600;
   font-size: 1.9rem;
   padding-left: 10px;
