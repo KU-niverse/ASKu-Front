@@ -15,7 +15,6 @@
 }
 
 .debatecontent {
-  min-height: 80vh;
   height: auto;
   width: auto;
   display: grid;
@@ -24,7 +23,7 @@
   grid-gap: 2.4rem;
   flex-direction: row;
   flex: 1;
-  padding-top: 3.2rem;
+  padding-top: 6rem;
 }
 
 .sidebar {
@@ -79,7 +78,7 @@
   color: #de3a58;
   font-size: 5rem;
   font-weight: 700;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 .menu1 {
 }
@@ -145,7 +144,9 @@
     margin-bottom: 19px;
   }
 
-  .menu,
+  .menu {
+    margin-bottom: 10px;
+  }
   .menu1,
   .menu2 {
     margin: 0;

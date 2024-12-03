@@ -144,14 +144,16 @@ const MoreDebate: React.FC = () => {
               />
             ))
           )}
-          <div className={styles.pagingContainer}>
-            <Paging
-              total={debateListData?.data.length}
-              perPage={perPage}
-              activePage={page}
-              onChange={handlePageChange}
-            />
-          </div>
+          {debateListData?.data.length === 0 ? null : (
+            <div className={styles.pagingContainer}>
+              <Paging
+                total={debateListData?.data.length}
+                perPage={perPage}
+                activePage={page}
+                onChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
