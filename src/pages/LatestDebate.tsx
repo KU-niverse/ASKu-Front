@@ -97,7 +97,10 @@ function LatestDebate() {
       <div className={styles.debatecontent}>
         <div className={styles.maincontent}>
           <div className={styles.maincontent_box}>
-            <p className={styles.title}>{'최근 토론'}</p>
+            <p className={styles.title}>
+              {'최근 토론 '}
+              <span className={styles.title2}>목록</span>
+            </p>
             <div className={styles.menu}>
               <span className={styles.menu1}>{'항목'}</span>
               <span className={styles.menu2}>{'수정 시간'}</span>
