@@ -198,6 +198,12 @@
   text-decoration: none;
 }
 
+.addQuesLinkContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .addQuesLink {
   width: auto;
   margin-top: 4.5rem;
