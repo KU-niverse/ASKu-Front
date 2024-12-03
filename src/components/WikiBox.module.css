@@ -5,15 +5,15 @@
   display: flex;
   font-size: 3.2rem;
   font-weight: 600;
+  gap: 1rem;
 }
 
-.wikiContentTitle span {
+.wikiContentTitleText {
   font-size: 3.2rem;
   font-weight: 600;
 }
 .wikiIndex {
   color: rgba(222, 58, 88, 1);
-  width: 7rem;
   font-size: 3.2rem;
 }
 
@@ -21,8 +21,7 @@
   height: 4rem;
 }
 .wikiArrowIcon {
-  margin-left: 2.2rem;
-  margin-right: 1.5rem;
+  margin-right: 2rem;
   width: 4rem;
   height: 4rem;
 }
@@ -30,7 +29,6 @@
 .wikiContentBtns {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .wikiContentBtn {
@@ -80,14 +78,14 @@
   list-style-type: none;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 }
 .wikiContentlistClose {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
   padding-bottom: 2.4rem;
   border-bottom: 0.1rem solid #d5d5d5;
@@ -128,25 +126,17 @@
     font-size: 9px;
   }
 
-  .wikiContentTitle {
-    align-items: center;
-  }
-
-  .wikiContentTitle span {
+  .wikiContentTitleText {
     font-size: 2.4rem;
-    height: 2.4rem;
   }
   .wikiIndex {
     font-size: 2.4rem;
-    text-align: center;
-    width: 4rem;
-    margin-right: 2rem;
-  }
-  .wikiArrowIcon {
-    margin-left: 1rem;
-    margin-right: 1rem;
   }
   .wikiText {
     padding-left: 4rem !important;
+  }
+  .wikiArrowIcon {
+    padding-bottom: 0.5rem;
+    box-sizing: border-box;
   }
 }
