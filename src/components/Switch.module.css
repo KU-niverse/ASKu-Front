@@ -85,15 +85,15 @@ input:checked + .slider:before {
     height: 23px;
   }
 
-  .slider {
-    bottom: 0px;
-  }
-
   .slider:before {
     height: 18px;
     width: 18px;
-    transform: translateX(-4%);
-    /* 왼쪽으로 50% 이동하여 정확히 가운데 위치 */
+    /* transform: translateX(-3%); */
+    bottom: 3px;
+  }
+
+  .slider.rounded:before {
+    left: 3.3px;
   }
 
   input:checked + .slider:before {
@@ -116,5 +116,6 @@ input:checked + .slider:before {
     color: white;
     transform: translateX(-10%);
     top: 6.6px;
+    right: 10px;
   }
 }
