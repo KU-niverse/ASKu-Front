@@ -114,6 +114,10 @@
   margin-top: auto;
 }
 
+.pagingContainer {
+  margin-top: 3.5rem;
+}
+
 @media only screen and (max-width: 940px) {
   .debate {
     font-size: 20px;
@@ -137,6 +141,9 @@
     background-color: white;
     width: 100%;
     margin-right: 0px;
+    margin-top: 32px;
+    margin-bottom: 10px;
+    padding: 0;
   }
 
   .debateSearch {
@@ -155,7 +162,7 @@
     border-radius: 12px;
     background-color: rgba(254, 242, 244, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: 15px 15px 3px 15px;
     box-sizing: border-box;
   }
 

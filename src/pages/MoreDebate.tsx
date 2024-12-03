@@ -14,6 +14,7 @@ import DebateSearch from '../components/Debate/DebateSearch'
 import DebateAdd from '../components/Debate/DebateAdd'
 import DebateRecent from '../components/Debate/DebateRecent'
 import CautionIcon from '../img/DebateCautionIcon.svg'
+import Paging from '../components/Paging'
 
 interface UserInfo {
   id: number
@@ -74,11 +75,20 @@ const MoreDebate: React.FC = () => {
   const { title } = useParams<{ title: string }>()
   const { isLoading, isError, error, data: debateListData } = useDebateList(title)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [page, setPage] = useState<number>(1)
+  const perPage = 7
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber)
+  }
   const navigate = useNavigate()
 
   React.useEffect(() => {
     track('view_wiki_debate_list')
   }, [])
+
+  const startIndex = (page - 1) * perPage
+  const endIndex = startIndex + perPage
+  const visibleDebates = debateListData?.data.slice(startIndex, endIndex)
 
   return (
     <div className={styles.container}>
@@ -117,7 +127,8 @@ const MoreDebate: React.FC = () => {
               <p className={styles.none}>{'토론방이 없습니다.'}</p>
             </div>
           ) : (
-            debateListData?.data.map((data) => (
+            debateListData &&
+            visibleDebates.map((data) => (
               <DebateList
                 key={data.id}
                 id={data.id}
@@ -133,6 +144,14 @@ const MoreDebate: React.FC = () => {
               />
             ))
           )}
+          <div className={styles.pagingContainer}>
+            <Paging
+              total={debateListData?.data.length}
+              perPage={perPage}
+              activePage={page}
+              onChange={handlePageChange}
+            />
+          </div>
         </div>
         <div className={styles.sidebar}>
           <div className={styles.debateSearch}>
