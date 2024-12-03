@@ -39,9 +39,9 @@ function CommentList({ id, subject, content, time, doc_title }: CommentListProps
       <div className={styles.comment_icon}>
         <img className={styles.comment_png} src={campaign} alt={'comment_icon'} />
       </div>
-      <span role={'presentation'} onClick={linktoComment} className={styles.comment_content}>
+      <div role={'presentation'} onClick={linktoComment} className={styles.comment_content}>
         {content}
-      </span>
+      </div>
       {/* <div role={'presentation'} onClick={linktoComment} className={styles.comment_icon}>
         {answer_count === 0 ? ( // answer_count가 0일 때
           <>

@@ -34,7 +34,7 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
   }
 
   return (
-    <div className={styles.q_list}>
+    <div role={'presentation'} onClick={linktoComment} className={styles.q_list}>
       <div className={styles.q_header}>
         <div className={styles.q_fronthead}>
           <span className={styles.q_mynick}>{nick}</span>
@@ -53,9 +53,7 @@ function Comment({ id, subject, content, created_at, is_bad, docsname, nick }: C
         <div className={styles.q_frontfooter}>
           <div className={styles.q_like}>
             <img src={campaign} alt={'campaign'} className={styles.campaignIcon} />
-            <span role={'presentation'} onClick={linktoComment} className={styles.debate_content}>
-              {content}
-            </span>
+            <span className={styles.debate_content}>{content}</span>
           </div>
         </div>
         <div className={styles.q_backfooter}>

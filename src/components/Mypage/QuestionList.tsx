@@ -61,7 +61,7 @@ function QuestionList({
     <div className={styles.ask_list}>
       <div className={styles.ask_front}>
         <span className={styles.ask_icon}>{'Q.'}</span>
-        <span role={'presentation'} onClick={linktoAnswer} className={styles.ask_content}>
+        <span role={'presentation'} onClick={linktoQuestion} className={styles.ask_content}>
           {truncateContent(content)}
         </span>
       </div>

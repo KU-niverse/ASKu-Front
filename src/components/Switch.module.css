@@ -81,36 +81,40 @@ input:checked + .slider:before {
 
 @media only screen and (max-width: 767px) {
   .switch {
-    width: 9rem;
-    height: 3.5rem;
+    width: 60px;
+    height: 23px;
+  }
+
+  .slider {
+    bottom: 0px;
   }
 
   .slider:before {
-    height: 2.7rem;
-    width: 2.7rem;
-    transform: translateX(-10%);
+    height: 18px;
+    width: 18px;
+    transform: translateX(-4%);
     /* 왼쪽으로 50% 이동하여 정확히 가운데 위치 */
   }
 
   input:checked + .slider:before {
     /*토글 움직인 위치 조정*/
-    transform: translateX(5.2rem);
+    transform: translateX(35.5px);
   }
 
   .toggleText1 {
     position: absolute;
-    font-size: 1.2rem;
+    font-size: 8px;
     color: white;
     transform: translateX(-10%);
-    left: 2rem;
-    top: 1rem;
+    left: 13px;
+    top: 6.6px;
   }
 
   .toggleText2 {
     position: absolute;
-    font-size: 1.2rem;
+    font-size: 8px;
     color: white;
     transform: translateX(-10%);
-    top: 1rem;
+    top: 6.6px;
   }
 }

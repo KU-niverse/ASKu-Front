@@ -145,8 +145,8 @@ const QnA: React.FC = () => {
               }}
             >
               {title}
+              <span className={styles.q_headline}>{'문서의 질문'}</span>
             </div>
-            <div className={styles.q_headline}>{'문서의 질문'}</div>
           </div>
           <div className={styles.backheader}>
             <button type={'button'} onClick={linktoWiki} className={styles.q_editbtn}>

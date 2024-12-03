@@ -15,10 +15,7 @@
 
 .debate {
   font-size: 3.6rem;
-  font-weight: bolder;
   color: #000;
-  margin-top: 0;
-  margin-bottom: 2.7rem;
 }
 
 .debatecontent {
@@ -91,7 +88,9 @@
   .debate {
     font-size: 20px;
   }
-
+  .debate2 {
+    font-size: 20px;
+  }
   .debatecontent {
     width: 86%;
     margin: 3% 7%;

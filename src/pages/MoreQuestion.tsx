@@ -150,13 +150,13 @@ const MoreQuestion: React.FC = () => {
                   }}
                 >
                   {title}
+                  <span className={styles.q_headline}>{'문서의 질문'}</span>
                 </div>
-                <div className={styles.q_headline}>{'문서의 질문'}</div>
               </div>
 
               <button type={'button'} className={styles.docLinkBtn} onClick={handleDocLinkClick}>
                 <img role={'presentation'} alt={docLink} src={docLink} />
-                <span>{'문서 바로가기'}</span>
+                <span className={styles.q_linkbtn}>{'문서 바로가기'}</span>
               </button>
             </div>
 

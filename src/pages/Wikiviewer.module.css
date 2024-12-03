@@ -446,6 +446,7 @@ li {
 @media only screen and (max-width: 767px) {
   .wikiviewer {
     width: 90%;
+    margin-top: 16px;
   }
   .wikilist,
   .wikiask,
@@ -469,9 +470,9 @@ li {
     flex-grow: 1;
   }
   .wikilistTitle button {
-    font-size: 1.6rem;
-    width: 11.6rem;
-    height: 4.3rem;
+    font-size: 9px;
+    width: 60px;
+    height: 23px;
     margin-right: 0;
   }
   .wikilistBigItem,
