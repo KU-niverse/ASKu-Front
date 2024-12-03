@@ -41,6 +41,7 @@
   position: sticky;
   align-self: flex-start;
   top: 10rem;
+  margin-bottom: 2rem;
 }
 .sidebar div {
   width: 100%;
@@ -114,6 +115,7 @@
     background-color: white;
     width: 100%;
     padding: 0;
+    margin: 20px 0;
   }
 
   .debateSearch {
@@ -121,7 +123,7 @@
     border-radius: 12px;
     background-color: rgba(254, 242, 244, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: 10px 15px;
     box-sizing: border-box;
   }
 
