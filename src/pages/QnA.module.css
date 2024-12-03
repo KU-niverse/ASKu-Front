@@ -84,7 +84,7 @@
 }
 
 .q_pagename {
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: bold;
   padding-left: 30px;
   margin: 20px 0px;
@@ -94,9 +94,9 @@
 
 .q_headline {
   /* align-self: last baseline; */
-  font-size: 24px;
+  font-size: 3.6rem;
   font-weight: bold;
-  padding-left: 15px;
+  padding-left: 1rem;
   color: black;
 }
 
