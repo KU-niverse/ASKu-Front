@@ -41,7 +41,8 @@
 .q_headline {
   font-size: 3.6rem;
   font-weight: bold;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
+  color: black;
 }
 
 .q_linkbtn {
@@ -160,7 +161,6 @@
   .q_headline {
     font-size: 2.8rem;
     padding-left: 0.9rem;
-    color: black;
   }
 
   .questionHeaderContainer {

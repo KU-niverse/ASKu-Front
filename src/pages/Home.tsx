@@ -180,7 +180,7 @@ const Home: React.FC<HomeProps> = ({ loggedIn, setLoggedIn }) => {
   )
   // const { isError, error, data: historys } = fetchDocsViews()
   const { data: historys } = useQuery<HistoryItem[], Error>('historyList', fetchDocsViews)
-  const { data: debates, isLoading } = useQuery<DebateData[], Error>('debateList', fetchDebateList)
+  const { data: debates, isLoading } = useQuery<DebateData[], Error>('recentDebates', fetchDebateList)
   const PopularDoclist = historys ? historys.slice(0, 7) : []
   const PopularDoclistMobile = historys ? historys.slice(0, 8) : []
   const debateListData = debates ? debates.slice(0, 3) : []

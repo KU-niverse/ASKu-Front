@@ -215,11 +215,13 @@ const QnA: React.FC = () => {
             ))
           )}
         </div>
-        <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
-          <button type={'button'} className={styles.addQues}>
-            {'나도 질문하기'} <img src={question} alt={'질문할래요 아이콘'} className={styles.askIcon} />
-          </button>
-        </Link>
+        <div className={styles.addQuesLinkContainer}>
+          <Link to={`/wiki/morequestion/${encodeURIComponent(title)}`} className={styles.addQuesLink}>
+            <button type={'button'} className={styles.addQues}>
+              {'나도 질문하기'} <img src={question} alt={'질문할래요 아이콘'} className={styles.askIcon} />
+            </button>
+          </Link>
+        </div>
       </div>
       <Footer />
     </div>

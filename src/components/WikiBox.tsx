@@ -100,8 +100,8 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
         }
       >
         <div className={styles.wikiContentTitle}>
-          <span className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</span>
-          <span>{title}</span>
+          <div className={styles.wikiIndex}>&nbsp;{index}. &nbsp;</div>
+          <div className={styles.wikiContentTitleText}>{title}</div>
           <div className={contentWithResponsiveImages ? styles.wikiArrow : styles.hidden}>
             <img className={isOpen ? styles.hidden : styles.wikiArrowIcon} src={arrowDown} alt="Arrow Down" />
             <img className={isOpen ? styles.wikiArrowIcon : styles.hidden} src={arrowUp} alt="Arrow Up" />

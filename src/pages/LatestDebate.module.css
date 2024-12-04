@@ -15,7 +15,6 @@
 }
 
 .debatecontent {
-  min-height: 80vh;
   height: auto;
   width: auto;
   display: grid;
@@ -24,7 +23,7 @@
   grid-gap: 2.4rem;
   flex-direction: row;
   flex: 1;
-  padding-top: 3.2rem;
+  padding-top: 6rem;
 }
 
 .sidebar {
@@ -41,6 +40,7 @@
   position: sticky;
   align-self: flex-start;
   top: 10rem;
+  margin-bottom: 2rem;
 }
 .sidebar div {
   width: 100%;
@@ -67,6 +67,10 @@
   margin-bottom: 2.9rem;
   color: #de3a58;
 }
+.title2 {
+  font-size: 3.6rem;
+  color: black;
+}
 .menu {
   display: flex;
   justify-content: space-between;
@@ -74,7 +78,7 @@
   color: #de3a58;
   font-size: 5rem;
   font-weight: 700;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 .menu1 {
 }
@@ -114,6 +118,7 @@
     background-color: white;
     width: 100%;
     padding: 0;
+    margin: 20px 0 15px 0;
   }
 
   .debateSearch {
@@ -121,7 +126,7 @@
     border-radius: 12px;
     background-color: rgba(254, 242, 244, 1);
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: 10px 15px;
     box-sizing: border-box;
   }
 
@@ -139,7 +144,9 @@
     margin-bottom: 19px;
   }
 
-  .menu,
+  .menu {
+    margin-bottom: 10px;
+  }
   .menu1,
   .menu2 {
     margin: 0;

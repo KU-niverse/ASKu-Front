@@ -60,6 +60,8 @@
   .normalBadgeStyle .b_thumb {
     width: 89.3px;
     height: 89.3px;
+    min-width: 89.3px;
+    min-height: 89.3px;
     border: 0.7px solid rgba(116, 116, 116, 1);
   }
   .b_people {
