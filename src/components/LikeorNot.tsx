@@ -88,7 +88,6 @@ const LikeorNot = ({ questionId, like_count, user_id, nick }: LikeorNotProps) =>
   useEffect(() => {
     const storedLikeStatus = localStorage.getItem(`likeStatus_${user_id}_${questionId}`) === 'true'
     setIsLiked(storedLikeStatus)
-    console.log(isLiked)
   }, [questionId, user_id]) // questionId나 user_id가 바뀔 때마다 확인
 
   useEffect(() => {
