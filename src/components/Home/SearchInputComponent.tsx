@@ -26,14 +26,13 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ inputValue = '', set
           }
         }}
       />
-      <input
-        type={'text'}
+      <textarea
         className={styles.headerInput}
         placeholder={'어떤 정보를 찾으시나요?'}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        onKeyUp={(e) => {
-          if (e.key === 'Enter' || (e.key === 'Shift' && e.shiftKey)) {
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
             e.preventDefault()
             if (inputValue.trim() !== '') {
               Nav(`/result/${encodeURIComponent(inputValue).replace(/\./g, '%2E')}/${encodeURIComponent(`search`)}`)

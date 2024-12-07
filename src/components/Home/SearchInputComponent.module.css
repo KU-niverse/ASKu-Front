@@ -36,24 +36,23 @@
     display: flex;
     align-items: center;
     width: 90%; /* 모바일에서는 전체 너비 사용 */
-    height: 25.6px; /* 높이 조정 */
+    height: 29px; /* 높이 조정 */
     margin-top: 12.8px; /* 마진 조정 */
+    border: 1px solid rgba(116, 116, 116, 1);
+    border-radius: 22.4px;
   }
 
   .headerInput {
-    border: 1px solid rgba(116, 116, 116, 1);
-    border-radius: 22.4px;
     width: 100%; /* 입력 필드의 너비를 부모 요소에 맞게 설정 */
-    height: 155%;
+    height: 50%;
     font-weight: 500;
     padding-left: 44.8px;
+    overflow: hidden;
   }
 
-  .headerInput:focus {
-    border: 1px solid rgba(116, 116, 116, 1);
-  }
   .searchIcon {
     margin-left: 16px;
+    padding-top: 0rem;
   }
   .headerInput::placeholder {
     color: #cccbcb;
