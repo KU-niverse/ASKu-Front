@@ -72,7 +72,7 @@ function ThreedotsMenu({ encodedTitle, questionId, type }: ThreedotsMenuProps) {
   }
 
   return (
-    <>
+    <div className={styles.menucontainer}>
       <Menu
         menuButton={
           <MenuButton className={styles.menubtn}>
@@ -125,7 +125,7 @@ function ThreedotsMenu({ encodedTitle, questionId, type }: ThreedotsMenuProps) {
       {isEditModalVisible && (
         <EditModal questionId={questionId} isOpen={isEditModalVisible} onClose={() => setEditModalVisible(false)} />
       )}
-    </>
+    </div>
   )
 }
 
