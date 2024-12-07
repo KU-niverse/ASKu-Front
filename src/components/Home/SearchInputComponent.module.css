@@ -22,8 +22,10 @@
   padding-left: 5rem;
   font-size: 2.4rem;
   font-weight: 600;
-  overflow: hidden;
   resize: none;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 }
 .headerInput:focus {
   border: none; /* 포커스 시에도 테두리 없음 */
@@ -32,6 +34,9 @@
 .headerInput::placeholder {
   color: #cccbcb;
   font-size: 2rem;
+}
+.headerInput:-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
 
 @media (max-width: 767px) {
