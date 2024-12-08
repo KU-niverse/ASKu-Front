@@ -127,32 +127,32 @@ const MoreDebate: React.FC = () => {
               <p className={styles.none}>{'토론방이 없습니다.'}</p>
             </div>
           ) : (
-            debateListData &&
-            visibleDebates.map((data) => (
-              <DebateList
-                key={data.id}
-                id={data.id}
-                doc_id={data.doc_id}
-                user_id={data.user_id}
-                subject={data.subject}
-                created_at={data.created_at}
-                recent_edited_at={data.recent_edited_at}
-                done_or_not={data.done_or_not}
-                done_at={data.done_at}
-                is_bad={data.is_bad}
-                title={title}
-              />
-            ))
-          )}
-          {debateListData?.data.length === 0 ? null : (
-            <div className={styles.pagingContainer}>
-              <Paging
-                total={debateListData?.data.length}
-                perPage={perPage}
-                activePage={page}
-                onChange={handlePageChange}
-              />
-            </div>
+            <>
+              {debateListData &&
+                visibleDebates.map((data) => (
+                  <DebateList
+                    key={data.id}
+                    id={data.id}
+                    doc_id={data.doc_id}
+                    user_id={data.user_id}
+                    subject={data.subject}
+                    created_at={data.created_at}
+                    recent_edited_at={data.recent_edited_at}
+                    done_or_not={data.done_or_not}
+                    done_at={data.done_at}
+                    is_bad={data.is_bad}
+                    title={title}
+                  />
+                ))}
+              <div className={styles.pagingContainer}>
+                <Paging
+                  total={debateListData?.data.length}
+                  perPage={perPage}
+                  activePage={page}
+                  onChange={handlePageChange}
+                />
+              </div>
+            </>
           )}
         </div>
         <div className={styles.sidebar}>

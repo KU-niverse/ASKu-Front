@@ -160,29 +160,31 @@ function MyQuestion() {
                 </p>
               </>
             ) : (
-              questions.slice(startIndex, endIndex).map((question, index) => (
-                <MyQuestionList
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={`${question.id}-${index}`}
-                  id={question.id}
-                  doc_id={question.doc_id}
-                  user_id={question.user_id}
-                  index_title={question.index_title}
-                  content={question.content}
-                  created_at={question.created_at}
-                  answer_or_not={question.answer_or_not}
-                  is_bad={question.is_bad}
-                  docsname={question.doc_title}
-                  nick={mypageData.data.nickname}
-                  like_count={question.like_count}
-                  answer_count={question.answer_count}
-                  badge_image={question.badge_image}
-                />
-              ))
+              <>
+                {questions.slice(startIndex, endIndex).map((question, index) => (
+                  <MyQuestionList
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`${question.id}-${index}`}
+                    id={question.id}
+                    doc_id={question.doc_id}
+                    user_id={question.user_id}
+                    index_title={question.index_title}
+                    content={question.content}
+                    created_at={question.created_at}
+                    answer_or_not={question.answer_or_not}
+                    is_bad={question.is_bad}
+                    docsname={question.doc_title}
+                    nick={mypageData.data.nickname}
+                    like_count={question.like_count}
+                    answer_count={question.answer_count}
+                    badge_image={question.badge_image}
+                  />
+                ))}
+                <div style={{ marginTop: '5.5rem' }}>
+                  <Paging total={questions.length} perPage={perPage} activePage={page} onChange={setPage} />
+                </div>
+              </>
             )}
-            <div style={{ marginTop: '5.5rem' }}>
-              <Paging total={questions.length} perPage={perPage} activePage={page} onChange={setPage} />
-            </div>
           </div>
           <Footer />
         </>

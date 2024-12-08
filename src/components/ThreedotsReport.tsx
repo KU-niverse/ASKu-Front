@@ -56,7 +56,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
   }
 
   return (
-    <>
+    <div className={styles.menucontainer}>
       <Menu
         menuButton={
           <MenuButton className={styles.menubtn}>
@@ -76,7 +76,7 @@ function ThreedotsReport({ type, target }: ThreedotsReportProps) {
           onClose={() => setReportModalVisible(false)}
         />
       )}
-    </>
+    </div>
   )
 }
 

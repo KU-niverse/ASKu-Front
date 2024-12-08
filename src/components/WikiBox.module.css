@@ -88,13 +88,13 @@
   align-items: flex-start;
   cursor: pointer;
   padding-bottom: 2.4rem;
-  border-bottom: 0.1rem solid #d5d5d5;
+  border-bottom: 1px solid #d5d5d5;
 }
 .wikiContentlist .wikiText {
   font-size: 8rem;
   width: 100%;
   word-break: break-word;
-  border-bottom: 0.1rem solid #d5d5d5;
+  border-bottom: 1px solid #d5d5d5;
 }
 .wikiText a {
   width: 100%;
@@ -156,7 +156,6 @@
   }
   .wikiContentlistClose {
     padding-bottom: 16px;
-    border-bottom: 1px solid #d5d5d5;
   }
 
   .wikiText a {

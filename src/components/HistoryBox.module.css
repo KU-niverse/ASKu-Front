@@ -189,7 +189,7 @@
 }
 @media only screen and (max-width: 767px) {
   .allHistoryBox {
-    height: 18rem;
+    height: 18.5rem;
     border-radius: 2.7rem;
     box-shadow: revert;
     border: 0.1rem solid #d5d5d5cc;
@@ -238,16 +238,18 @@
   }
   .infoLine {
     box-sizing: border-box;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
   .summary {
-    margin-bottom: 2rem;
+    font-size: 2.6rem;
+    margin-bottom: 1.5rem;
     -webkit-line-clamp: 1;
     line-clamp: 1;
   }
   .allversionBtns {
     flex-direction: row;
     flex-wrap: wrap;
+    row-gap: 0.9rem;
   }
   .versionbtn {
     font-size: 1.6rem;
