@@ -102,7 +102,9 @@ interface RandomDocItem {
 
 // 모바일 8개의 랜덤 문서를 가져오는 함수 정의
 const fetchRandomDocs = async (): Promise<RandomDocItem[]> => {
-  const promises = Array.from({ length: 8 }).map(() => axios.get(`${process.env.REACT_APP_HOST}/wiki/random`))
+  const promises = Array.from({ length: 8 }).map(() =>
+    axios.get(`${process.env.REACT_APP_HOST}/wiki/random`, { withCredentials: true }),
+  )
 
   const responses = await Promise.all(promises)
   return responses.map((response) => ({
