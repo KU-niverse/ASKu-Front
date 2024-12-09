@@ -99,7 +99,7 @@
 
 .character {
   align-self: flex-start;
-  width: 4rem;
-  height: 4rem;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
 }
