@@ -530,8 +530,11 @@
   .prompt {
     font-size: 9.6px;
     margin-left: 17.28px;
-    margin-top: 12.8px;
-    margin-bottom: 12.8px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 50%;
+    outline: none;
+    border: none;
   }
 
   .sendBtn {

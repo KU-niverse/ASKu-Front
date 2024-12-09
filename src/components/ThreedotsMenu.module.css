@@ -11,3 +11,10 @@
 .menuitem {
   width: auto;
 }
+
+/* 모바일 뷰 */
+@media only screen and (max-width: 767px) {
+  .menucontainer ul {
+    min-width: revert;
+  }
+}
