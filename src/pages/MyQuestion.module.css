@@ -41,6 +41,10 @@
   padding-right: 30px;
 }
 
+.pagingContainer {
+  margin: 5.5rem 0;
+}
+
 @media only screen and (max-width: 767px) {
   .content {
     display: flex;
