@@ -180,7 +180,7 @@ function MyQuestion() {
                     badge_image={question.badge_image}
                   />
                 ))}
-                <div style={{ marginTop: '5.5rem' }}>
+                <div className={styles.pagingContainer}>
                   <Paging total={questions.length} perPage={perPage} activePage={page} onChange={setPage} />
                 </div>
               </>

@@ -117,7 +117,7 @@ const WikiBox: React.FC<WikiBoxProps> = ({ main, title, content: rawContent, ind
         </div>
       </li>
       <div
-        style={{ paddingLeft: `${tabs}rem`, borderBottom: '0.1rem solid #d5d5d5', paddingBottom: '1.4rem' }}
+        style={{ paddingLeft: `${tabs}rem`, borderBottom: '1px solid #d5d5d5', paddingBottom: '1.4rem' }}
         className={isOpen ? `${styles.wikiText}` : `${styles.hidden}`}
       >
         <div dangerouslySetInnerHTML={{ __html: contentWithResponsiveImages }} />

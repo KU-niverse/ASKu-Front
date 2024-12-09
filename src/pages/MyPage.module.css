@@ -228,6 +228,7 @@
 }
 .questionElement {
   border-bottom: 0.1rem #d5d5d5 solid;
+  min-height: 3.8rem;
   height: 3.8rem;
 }
 
@@ -246,6 +247,7 @@
 .debateElement {
   border-bottom: 0.1rem #d5d5d5 solid;
   height: 3.8rem;
+  min-height: 3.8rem;
 }
 .footerContainer {
   margin-top: auto;

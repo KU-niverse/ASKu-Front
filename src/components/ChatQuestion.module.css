@@ -95,11 +95,16 @@
   .chatTextWrap {
     max-width: 220px;
   }
+
+  .character {
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .character {
   align-self: flex-start;
-  width: 26px;
-  height: 26px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
 }

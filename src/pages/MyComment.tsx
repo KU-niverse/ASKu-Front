@@ -138,7 +138,7 @@ const MyComment = () => {
                   docsname={debate.doc_title}
                 />
               ))}
-            <div style={{ marginTop: '5.5rem' }}>
+            <div className={styles.pagingContainer}>
               <Paging total={myDebate.message.length} perPage={perPage} activePage={page} onChange={setPage} />
             </div>
           </>
