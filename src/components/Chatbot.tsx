@@ -398,32 +398,32 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute('data-id')
-          if (entry.isIntersecting) {
-            setVisibleItems((prev) => new Set(prev).add(id)) // 요소가 보이면 추가
-          } else {
-            setVisibleItems((prev) => {
-              const updated = new Set(prev)
-              updated.delete(id) // 요소가 사라지면 제거
-              return updated
-            })
-          }
-        })
-      },
-      { root: scrollRef.current, threshold: 0.1, rootMargin: '500px' }, // 스크롤 영역에서 보이면 바로 감지
-    )
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         const id = entry.target.getAttribute('data-id')
+  //         if (entry.isIntersecting) {
+  //           setVisibleItems((prev) => new Set(prev).add(id)) // 요소가 보이면 추가
+  //         } else {
+  //           setVisibleItems((prev) => {
+  //             const updated = new Set(prev)
+  //             updated.delete(id) // 요소가 사라지면 제거
+  //             return updated
+  //           })
+  //         }
+  //       })
+  //     },
+  //     { root: scrollRef.current, threshold: 0.1, rootMargin: '500px' }, // 스크롤 영역에서 보이면 바로 감지
+  //   )
 
-    const items = document.querySelectorAll('[data-id]')
-    items.forEach((item) => observer.observe(item))
+  //   const items = document.querySelectorAll('[data-id]')
+  //   items.forEach((item) => observer.observe(item))
 
-    return () => {
-      items.forEach((item) => observer.unobserve(item))
-    }
-  }, [previousChatHistory])
+  //   return () => {
+  //     items.forEach((item) => observer.unobserve(item))
+  //   }
+  // }, [previousChatHistory])
 
   return (
     <div className={styles.chatbot}>
@@ -489,23 +489,17 @@ function Chatbot({ isLoggedIn, setIsLoggedIn }: ChatbotProps) {
                 .map((item) => (
                   <Fragment key={item.id}>
                     <div data-id={item.id} className={styles.chatSet}>
-                      {visibleItems.has(String(item.id)) ? ( // 보이는 요소만 렌더링
-                        <>
-                          <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
-                          <ChatAnswer
-                            key={`answer-${item.id}`}
-                            content={item.a_content}
-                            qnaId={item.id}
-                            reference={item.reference}
-                            blockIconZip={!isLoggedIn}
-                            onAddReferenceSuggestion={onAddReferenceSuggestion}
-                            recommendedQuestions={[]} // 초기 빈 배열
-                            onRecommendQuestionClick={handleRecommendQuestionClick}
-                          />
-                        </>
-                      ) : (
-                        <div className={'skeleton'} style={{ height: '500px' }} /> // 보이지 않는 요소는 플레이스홀더
-                      )}
+                      <ChatQuestion key={`question-${item.id}`} content={item.q_content} />
+                      <ChatAnswer
+                        key={`answer-${item.id}`}
+                        content={item.a_content}
+                        qnaId={item.id}
+                        reference={item.reference}
+                        blockIconZip={!isLoggedIn}
+                        onAddReferenceSuggestion={onAddReferenceSuggestion}
+                        recommendedQuestions={[]} // 초기 빈 배열
+                        onRecommendQuestionClick={handleRecommendQuestionClick}
+                      />
                     </div>
                   </Fragment>
                 ))}
