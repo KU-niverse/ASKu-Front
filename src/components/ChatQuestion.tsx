@@ -4,7 +4,8 @@ import like from '../img/like.png'
 import unlike from '../img/unlike.png'
 import reference from '../img/reference.png'
 import dots from '../img/dots.png'
-import catIcon from '../img/hometiger.svg'
+// import catIcon from '../img/hometiger.svg'
+import catIcon from '../img/answer_tiger.png'
 
 interface ChatQuestionProps {
   content: string
